@@ -1,8 +1,4 @@
 # emondpph/quidphp-lemur
-[![Release](https://img.shields.io/github/v/release/emondpph/quidphp-lemur)](https://packagist.org/packages/emondpph/quidphp-lemur)
-[![License](https://img.shields.io/github/license/emondpph/quidphp-lemur)](https://github.com/emondpph/quidphp-lemur/blob/master/LICENSE)
-[![PHP Version](https://img.shields.io/packagist/php-v/emondpph/quidphp-lemur)](https://www.php.net)
-[![Code Size](https://img.shields.io/github/languages/code-size/emondpph/quidphp-lemur)](https://github.com/emondpph/quidphp-lemur)
 
 ## Included
 **QuidPHP/lemur** comes bundled with the following front-end packages:
