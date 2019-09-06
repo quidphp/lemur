@@ -1,5 +1,12 @@
 <?php
 declare(strict_types=1);
+
+/*
+ * This file is part of the QuidPHP package.
+ * Website: https://quidphp.com
+ * License: https://github.com/quidphp/lemur/blob/master/LICENSE
+ */
+
 namespace Quid\Lemur\Lang;
 use Quid\Core;
 
@@ -379,7 +386,7 @@ class Fr extends Core\Lang\Fr
 					'param'=>'Ce panneau contient des champs en lien avec les paramètres de la ligne'
 				]
 			],
-			
+
 			// role
 			'role'=>[
 
@@ -390,7 +397,7 @@ class Fr extends Core\Lang\Fr
 					70=>'Sous-administrateur'
 				]
 			],
-			
+
 			// route
 			'route'=>[
 
@@ -421,7 +428,7 @@ class Fr extends Core\Lang\Fr
 				// description
 				'description'=>[]
 			],
-			
+
 			// relation
 			'relation'=>[
 

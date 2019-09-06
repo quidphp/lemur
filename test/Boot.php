@@ -1,5 +1,12 @@
 <?php
 declare(strict_types=1);
+
+/*
+ * This file is part of the QuidPHP package.
+ * Website: https://quidphp.com
+ * License: https://github.com/quidphp/lemur/blob/master/LICENSE
+ */
+
 namespace Quid\Test\Lemur;
 use Quid\Lemur;
 use Quid\Base;
@@ -13,7 +20,7 @@ class Boot extends Base\Test
 	{
 		// prepare
 		$boot = Lemur\Boot::inst();
-		
+
 		// isApp
 		assert(!$boot->isApp());
 
@@ -26,7 +33,7 @@ class Boot extends Base\Test
 		assert(!empty($lang->tableDescription('user')));
 		assert(!empty($lang->colDescription('metaKeywords_en')));
 		assert(!empty($lang->panelDescription('default')));
-		
+
 		return true;
 	}
 }

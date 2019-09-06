@@ -1,5 +1,12 @@
 <?php
 declare(strict_types=1);
+
+/*
+ * This file is part of the QuidPHP package.
+ * Website: https://quidphp.com
+ * License: https://github.com/quidphp/lemur/blob/master/LICENSE
+ */
+
 namespace Quid\Lemur;
 use Quid\Core;
 
@@ -7,12 +14,12 @@ use Quid\Core;
 abstract class Boot extends Core\Boot
 {
 	// config
-	public static $config = array(
+	public static $config = [
 		'types'=>['app','cms'], // ajout cms comme type
-		'finderShortcut'=>array( // shortcut pour finder
-			'vendorLemur'=>'[vendor]/quidphp/lemur'),
-		'symlink'=>array(
-			'[vendorLemur]/js/jquery'=>'[publicJs]/jquery'),
+		'finderShortcut'=>[ // shortcut pour finder
+			'vendorLemur'=>'[vendor]/quidphp/lemur'],
+		'symlink'=>[
+			'[vendorLemur]/js/jquery'=>'[publicJs]/jquery'],
 		'concatenatePhp'=>[ // ajoute le namespace pour le concatenator php
 			'quid'=>[
 				'option'=>[
@@ -23,8 +30,8 @@ abstract class Boot extends Core\Boot
 			'option'=>[
 				'background'=>null,
 				'logo'=>null],
-			'config'=>array(
-				Core\Route::class=>array(
+			'config'=>[
+				Core\Route::class=>[
 					'metaTitle'=>['typeLabel'=>true],
 					'jsInit'=>'$(document).ready(function() { $(this).navigation(); });',
 					'docOpen'=>[
@@ -36,9 +43,9 @@ abstract class Boot extends Core\Boot
 								'jquery-ui'=>'js/jquery/jquery-ui.js',
 								'include'=>'js/include.js',
 								'type'=>'js/%type%.js']],
-						'wrapper'=>['#wrapper']]),
-				Core\Col::class=>array(
-					'generalExcerptMin'=>100)),
+						'wrapper'=>['#wrapper']]],
+				Core\Col::class=>[
+					'generalExcerptMin'=>100]],
 			'compileScss'=>[
 				'[publicCss]/cms.css'=>[
 					0=>'[vendorLemur]/scss/normalize/normalize.css',
@@ -54,9 +61,9 @@ abstract class Boot extends Core\Boot
 				'[publicJs]/cms.js'=>[
 					0=>'[vendorLemur]/js/cms',
 					10=>'[privateJs]/cms']]]
-	);
-	
-	
+	];
+
+
 	// isApp
 	// retourne vrai si la clé de l'application roulant présentement est app
 	public function isApp():bool

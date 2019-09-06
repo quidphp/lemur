@@ -1,5 +1,12 @@
 <?php
 declare(strict_types=1);
+
+/*
+ * This file is part of the QuidPHP package.
+ * Website: https://quidphp.com
+ * License: https://github.com/quidphp/lemur/blob/master/LICENSE
+ */
+
 namespace Quid\Test\Lemur;
 use Quid\TestSuite;
 use Quid\Lemur;
@@ -15,7 +22,7 @@ class Table extends Base\Test
 	{
 		// prepare
 		$db = Lemur\Boot::inst()->db();
-		
+
 		// table
 		$table = 'ormTable';
 		$tb = $db[$table];
@@ -35,7 +42,7 @@ class Table extends Base\Test
 		assert(strlen($date->formComplex('08-08-1984')) === 278);
 		assert(strlen($date->formComplex(mktime(0,0,0,8,8,1984))) === 278);
 		assert($email->generalExcerptMin() === null);
-		
+
 		// cols
 		$table = 'ormCols';
 		$tb = $db[$table];
@@ -57,7 +64,7 @@ class Table extends Base\Test
 		assert($cell->description('%:') === 'Name to represent the element:');
 		assert($row->unlink());
 		assert($db->truncate($table) instanceof \PDOStatement);
-		
+
 		// cells
 		$table = 'ormCells';
 		assert($db->truncate($table) instanceof \PDOStatement);
@@ -71,7 +78,7 @@ class Table extends Base\Test
 		assert(strlen($cells->formComplexWrap()['active']) === 196);
 		assert($row->unlink());
 		assert($db->truncate($table) instanceof \PDOStatement);
-		
+
 		// row
 		$table = 'ormRow';
 		$tb = $db[$table];
@@ -86,7 +93,7 @@ class Table extends Base\Test
 		assert($row2->routeClass('contact') === TestSuite\Assert\Contact::class);
 		assert($row2->unlink());
 		assert($db->truncate($table) instanceof \PDOStatement);
-		
+
 		return true;
 	}
 }
