@@ -1,7 +1,11 @@
 # QuidPHP/Lemur
+[![Release](https://img.shields.io/github/v/release/quidphp/lemur)](https://packagist.org/packages/quidphp/lemur)
+[![License](https://img.shields.io/github/license/quidphp/lemur)](https://github.com/quidphp/lemur/blob/master/LICENSE)
+[![PHP Version](https://img.shields.io/packagist/php-v/quidphp/lemur)](https://www.php.net)
+[![Code Size](https://img.shields.io/github/languages/code-size/quidphp/lemur)](https://github.com/quidphp/lemur)
 
 ## Included
-**QuidPHP/Core** comes bundled with the following front-end packages:
+**QuidPHP/Lemur** comes bundled with the following front-end packages:
 - [jquery/jquery](https://github.com/jquery/jquery) | jQuery - The popular JavaScript library
 - [jquery/jquery-ui](https://github.com/jquery/jquery-ui) | jQuery-UI - A minimal version of the library is used for drag & drop sorting
 - [necolas/normalize.css](https://github.com/necolas/normalize.css) | Normalize - Stylesheet for normalizing the default rules across browsers
