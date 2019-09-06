@@ -1,4 +1,4 @@
-# emondpph/quidphp-lemur
+# QuidPHP/Lemur
 
 ## Included
 **QuidPHP/lemur** comes bundled with the following front-end packages:
