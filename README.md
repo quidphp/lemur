@@ -136,13 +136,66 @@ All dependencies will be resolved by using the [Composer](https://getcomposer.or
 - *Include*: Many scripts are in the include folder. These scripts are used for the CMS but can also be reused within the application.
 
 ### Overview
-
-## CSS
+**QuidPHP/Lemur** contains 27 JavaScript files. Here is an overview:
+- [cms](js/cms)
+    - [cms.js](js/cms/cms.js) | Script of common behaviours for all pages of the CMS
+    - [general.js](js/cms/general.js) | Script of behaviours for the general navigation page of the CMS
+    - [home.js](js/cms/home.js) | Script of behaviours for the homepage of the CMS
+    - [nobody.js](js/cms/nobody.js) | Script of behaviours for all pages where the user is not logged in the CMS
+    - [somebody.js](js/cms/somebody.js) | Script of behaviours for all pages where the user is logged in the CMS
+    - [specific.js](js/cms/specific.js) | Script of behaviours for the specific form page of the CMS
+- [include](js/include)
+    - [_helper.js](js/include/_helper.js) | Script with a set of helper functions appended to the jQuery object
+    - [accordion.js](js/include/accordion.js) | Script of behaviours for an accordion-related widgets
+    - [addRemove.js](js/include/addRemove.js) | Script of behaviours for an add-remove input (like jsonArray)
+    - [ajax.js](js/include/ajax.js) | Script with some additional logic over the jQuery ajax object
+    - [appendContainer.js](js/include/appendContainer.js) | Script of behaviours for an appendContainer widget (load more)
+    - [box.js](js/include/box.js) | Script with behaviours for a box widget (popup in a fixed div)
+    - [calendar.js](js/include/calendar.js) | Script with behaviours for a calendar and a date input
+    - [clickOpen.js](js/include/clickOpen.js) | Script with some basic logic for a clickOpen widget (click trigger to show, click body to hide)
+    - [dragDrop.js](js/include/dragDrop.js) | Script with a function to activate vertical sorting (using jquery-ui)
+    - [event.js](js/include/event.js) | Script containing custom events for jQuery
+    - [expr.js](js/include/expr.js) | Script containing custom expressions for jQuery
+    - [fn.js](js/include/fn.js) | Script with some common fn functions added to jQuery
+    - [form.js](js/include/form.js) | Script with behaviours related to form and field validation
+    - [input.js](js/include/input.js) | Script containing logic for some simple inputs
+    - [navigation.js](js/include/navigation.js) | Script containing the logic related to site navigation by using the HistoryAPI
+    - [relation.js](js/include/relation.js) | Script containing logic and methods for relation-related inputs (like enumSet and filters)
+    - [scroll.js](js/include/scroll.js) | Script containing logic related to window scrolling
+    - [search.js](js/include/search.js) | Script with behaviours for search inputs
+    - [tab.js](js/include/tab.js) | Script with behaviours for a tab system and a slider
+- [jquery](js/jquery)
+    - [jquery.js](js/jquery/jquery.js) | jQuery - The popular JavaScript library
+	- [jquery-ui.js](js/jquery/jquery-ui.js) | jQuery-UI - A minimal version of the library is used for drag & drop sorting
+	
+## SCSS
 
 ### Convention
 - *Mixins*: Nesting, variables and mixins are used within the SCSS stylesheets.
 - *Include*: Some stylesheets are in the include folder. Those stylesheets are used for the CMS but can also be reused within the application.
 
 ### Overview
-
+**QuidPHP/Lemur** contains 18 CSS and SCSS stylesheets. Here is an overview:
+- [cms](scss/cms)
+    - [box.scss](scss/cms/box.scss) | Stylesheet for the various popup box route of the CMS
+    - [calendar.scss](scss/cms/calendar.scss) | Stylesheet for the calendar widget of the CMS
+    - [clickOpen.scss](scss/cms/clickOpen.scss) | Stylesheet for the various clickOpen components of the CMS
+    - [cms.scss](scss/cms/cms.scss) | Stylesheet that imports other stylesheets for the CMS
+    - [error.scss](scss/cms/error.scss) | Stylesheet for the error page of the CMS
+    - [form.scss](scss/cms/form.scss) | Stylesheet for the various form inputs of the CMS
+    - [general.scss](scss/cms/general.scss) | Stylesheet for the general navigation page of the CMS
+    - [home.scss](scss/cms/home.scss) | Stylesheet for the home page of the CMS
+    - [icon.scss](scss/cms/icon.scss) | Stylesheet containing the rules related to the icons of the CMS
+    - [icon64.scss](scss/cms/icon64.scss) | Stylesheet containing all CMS icons in base64
+    - [include.scss](scss/cms/include.scss) | Stylesheet that contains variables and mixins for the CMS
+    - [interface.scss](scss/cms/interface.scss) | Stylesheet for the main interface of the CMS
+    - [nobody.scss](scss/cms/nobody.scss) | Stylesheet for the routes where the user is not logged in the CMS
+    - [specific.scss](scss/cms/specific.scss) | Stylesheet for the specific form page of the CMS
+    - [style.scss](scss/cms/style.scss) | Stylesheet containing the root styling rules as well as common classes for the CMS
+- [include](scss/include)
+    - [component.scss](scss/include/component.scss) | Stylesheet containing various reusable component mixins
+    - [include.scss](scss/include/include.scss) | Stylesheet containing many helpers mixins
+- [normalize](scss/normalize)
+    - [normalize.css](scss/normalize/normalize.css) Normalize - Stylesheet for normalizing the default rules across browsers
+	
 **QuidPHP/Lemur** testsuite can be run by creating a new [quidphp/project](https://github.com/quidphp/project).
