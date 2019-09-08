@@ -129,6 +129,8 @@ All dependencies will be resolved by using the [Composer](https://getcomposer.or
 - [Routes](test/Routes.php) | Class for testing routes
 - [Table](test/Table.php) | Class for testing table
 
+**QuidPHP/Lemur** testsuite can be run by creating a new [quidphp/project](https://github.com/quidphp/project).
+
 ## JS
 
 ### Convention
@@ -197,5 +199,3 @@ All dependencies will be resolved by using the [Composer](https://getcomposer.or
     - [include.scss](scss/include/include.scss) | Stylesheet containing many helpers mixins
 - [normalize](scss/normalize)
     - [normalize.css](scss/normalize/normalize.css) Normalize - Stylesheet for normalizing the default rules across browsers
-	
-**QuidPHP/Lemur** testsuite can be run by creating a new [quidphp/project](https://github.com/quidphp/project).
