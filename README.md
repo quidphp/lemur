@@ -1,7 +1,7 @@
 # QuidPHP/Lemur
 
 ## About
-**QuidPHP/Lemur** is a PHP library that provides an extendable platform to create dynamic applications. It is part of the [QuidPHP](https://github.com/quidphp/project) package. 
+**QuidPHP/Lemur** is a CMS built on top of the QuidPHP framework. It is part of the [QuidPHP](https://github.com/quidphp/project) package. 
 
 ## License
 **QuidPHP/Lemur** is available as an open-source software under the [MIT license](LICENSE).
@@ -40,7 +40,9 @@ All dependencies will be resolved by using the [Composer](https://getcomposer.or
 ## Comment
 **QuidPHP/Lemur** code is commented and all methods are explained. However, most of the comments are currently written in French.
 
-## Convention
+## PHP
+
+### Convention
 **QuidPHP/Lemur** is built on the following conventions:
 - *Traits*: Traits filenames start with an underscore (_).
 - *Coding*: No curly braces are used in a IF statement if the condition can be resolved in only one statement.
@@ -49,7 +51,7 @@ All dependencies will be resolved by using the [Composer](https://getcomposer.or
 - *Auto-alias*: All class names that finishes by Alias will resolve to the existing class if no alias exists. Exemple: MyRole extents RoleAlias -> will resolve to Role if no alias is found.
 - *Core overloading*: This namespace overloads many classes from Quid\Core.
 
-## Overview
+### Overview
 **QuidPHP/Lemur** contains 64 classes and traits. Here is an overview:
 - [Boot](src/Boot.php) | Extended abstract class for the object that bootstraps the cms
 - [Cms](src/Cms)
@@ -120,11 +122,27 @@ All dependencies will be resolved by using the [Composer](https://getcomposer.or
     - [User](src/Row/User.php) | Extended class for a row of the user table, with cms logic
 - [Table](src/Table.php) | Extended class to represent an existing table within a database, adds cms config
 
-## Testing
+### Testing
 **QuidPHP/Lemur** contains 4 test classes:
 - [Boot](test/Boot.php) | Class for testing Quid\Lemur\Boot
 - [Route](test/Route.php) | Class for testing route
 - [Routes](test/Routes.php) | Class for testing routes
 - [Table](test/Table.php) | Class for testing table
+
+## JS
+
+### Convention
+- *jQuery*: All behaviours and widgets are programmed on top of the jQuery library. Many functions are connected with jQuery.fn. Custom events are used across the board, a lot of calls to the jQuery [trigger](https://api.jquery.com/trigger/) and [triggerHandler](https://api.jquery.com/triggerHandler/) methods.
+- *Include*: Many scripts are in the include folder. These scripts are used for the CMS but can also be reused within the application.
+
+### Overview
+
+## CSS
+
+### Convention
+- *Mixins*: Nesting, variables and mixins are used within the SCSS stylesheets.
+- *Include*: Some stylesheets are in the include folder. Those stylesheets are used for the CMS but can also be reused within the application.
+
+### Overview
 
 **QuidPHP/Lemur** testsuite can be run by creating a new [quidphp/project](https://github.com/quidphp/project).
