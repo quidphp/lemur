@@ -102,9 +102,9 @@ All dependencies will be resolved by using the [Composer](https://getcomposer.or
 - [Col](src/Col)
     - [Date](src/Col/Date.php) | Extended class for a date column, supports many date formats
     - [Email](src/Col/Email.php) | Extended class for a column managing email
-    - [Files](src/Col/Files.php) | Abstract extended class extended by the media and medias cols
+    - [Files](src/Col/Files.php) | Extended abstract class extended by the media and medias cols
     - [Primary](src/Col/Primary.php) | Extended class for dealing with a column which has an auto increment primary key
-    - [Relation](src/Col/Relation.php) | Abstract extended class extended for relation
+    - [Relation](src/Col/Relation.php) | Extended abstract class extended for relation
     - [Textarea](src/Col/Textarea.php) | Extended class for a column which is editable through a textarea input
 - [Lang](src/Lang)
     - [En](src/Lang/En.php) | English language content used by this namespace

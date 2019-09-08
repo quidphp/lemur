@@ -12,7 +12,7 @@ use Quid\Lemur;
 use Quid\Core;
 
 // files
-// abstract extended class extended by the media and medias cols
+// extended abstract class extended by the media and medias cols
 abstract class Files extends Core\Col\Files
 {
 	// config

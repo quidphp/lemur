@@ -12,7 +12,7 @@ use Quid\Lemur;
 use Quid\Core;
 
 // relation
-// abstract extended class extended for relation
+// extended abstract class extended for relation
 abstract class Relation extends Core\Col\Relation
 {
 	// config
