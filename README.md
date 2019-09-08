@@ -1,7 +1,7 @@
 # QuidPHP/Lemur
 
 ## About
-**QuidPHP/Lemur** is a CMS built on top of the QuidPHP framework. It is part of the [QuidPHP](https://github.com/quidphp/project) package. 
+**QuidPHP/Lemur** contains the LemurCMS, a content management system built on top of the QuidPHP framework. It is part of the [QuidPHP](https://github.com/quidphp/project) package. 
 
 ## License
 **QuidPHP/Lemur** is available as an open-source software under the [MIT license](LICENSE).
