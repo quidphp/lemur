@@ -4,7 +4,7 @@ declare(strict_types=1);
 /*
  * This file is part of the QuidPHP package.
  * Website: https://quidphp.com
- * License: https://github.com/quidphp/core/blob/master/LICENSE
+ * License: https://github.com/quidphp/lemur/blob/master/LICENSE
  */
 
 namespace Quid\Lemur\Col;
@@ -25,7 +25,7 @@ abstract class Video extends Core\Col\Video
 	public function onGet($return,array $option)
 	{
 		$return = parent::onGet($return,$option);
-		
+
 		if(!empty($return) && !empty($option['context']) && $option['context'] === 'cms:general' && $return instanceof Main\Video)
 		$return = Html::a($return->absolute(),true);
 

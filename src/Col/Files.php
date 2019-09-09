@@ -20,8 +20,8 @@ abstract class Files extends Core\Col\Files
 		'@cms'=>[
 			'route'=>['download'=>Lemur\Cms\SpecificDownload::class]]
 	];
-	
-	
+
+
 	// onGet
 	// logique onGet pour un champ files
 	// affichage spéciale si le contexte est cms:general

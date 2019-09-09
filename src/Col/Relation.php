@@ -23,8 +23,8 @@ abstract class Relation extends Core\Col\Relation
 				'specific'=>Lemur\Cms\Specific::class,
 				'specificRelation'=>Lemur\Cms\SpecificRelation::class]]
 	];
-	
-	
+
+
 	// onGet
 	// logique onGet pour un champ files
 	// affichage spéciale si le contexte est cms:general

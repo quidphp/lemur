@@ -28,9 +28,9 @@ abstract class Boot extends Core\Boot
 						__NAMESPACE__=>['closure'=>true],
 						Test::class=>['closure'=>false]]]]],
 		'@cms'=>[
-			'service'=>array(
+			'service'=>[
 				'jQuery'=>Service\JQuery::class,
-				'jQueryUi'=>Service\JQueryUi::class),
+				'jQueryUi'=>Service\JQueryUi::class],
 			'option'=>[
 				'background'=>null,
 				'logo'=>null],

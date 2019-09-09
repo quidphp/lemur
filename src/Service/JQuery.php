@@ -22,7 +22,7 @@ class JQuery extends Core\ServiceAlias
 	// retourne le javascript à lier en début de document
 	public function docOpenJs()
 	{
-		return array(0=>'js/jquery/jquery.js');
+		return [0=>'js/jquery/jquery.js'];
 	}
 }
 

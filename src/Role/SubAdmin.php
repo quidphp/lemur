@@ -20,10 +20,10 @@ class SubAdmin extends Core\RoleAlias
 		'permission'=>70,
 		'can'=>[
 			'login'=>['cms'=>true]],
-		'@cms'=>array(
-			'can'=>array(
+		'@cms'=>[
+			'can'=>[
 				'home'=>[
-					'infoPopup'=>true]),
+					'infoPopup'=>true]],
 			'db'=>[
 				'*'=>[
 					'insert'=>true,
@@ -61,7 +61,7 @@ class SubAdmin extends Core\RoleAlias
 					'add'=>false],
 				'logSql'=>[
 					'add'=>false]]
-		)
+		]
 	];
 }
 

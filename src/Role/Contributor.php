@@ -20,7 +20,7 @@ class Contributor extends Core\RoleAlias
 		'permission'=>50,
 		'can'=>[
 			'login'=>['cms'=>true]],
-		'@cms'=>array(
+		'@cms'=>[
 			'db'=>[
 				'*'=>[
 					'rows'=>false,
@@ -56,7 +56,7 @@ class Contributor extends Core\RoleAlias
 				'logSql'=>[
 					'view'=>false]
 			]
-		)
+		]
 	];
 }
 

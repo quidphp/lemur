@@ -20,8 +20,8 @@ class Email extends Core\Col\Email
 		'@cms'=>[
 			'generalExcerptMin'=>null]
 	];
-	
-	
+
+
 	// onGet
 	// sur onGet retourne le courriel dans un lien a:mailto
 	public function onGet($return,array $option)

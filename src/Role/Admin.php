@@ -18,10 +18,10 @@ class Admin extends Core\Role\Admin
 	public static $config = [
 		'can'=>[
 			'login'=>['cms'=>true]],
-		'@cms'=>array(
-			'can'=>array(
+		'@cms'=>[
+			'can'=>[
 				'home'=>[
-					'infoPopup'=>true]),
+					'infoPopup'=>true]],
 			'db'=>[
 				'*'=>[
 					'truncate'=>false,
@@ -68,7 +68,7 @@ class Admin extends Core\Role\Admin
 					'truncate'=>true,
 					'empty'=>true]
 			]
-		)
+		]
 	];
 }
 

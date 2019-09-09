@@ -436,10 +436,10 @@ class Specific extends Core\RouteAlias
 		$row = $this->row();
 		$table = $this->table();
 		$session = $this->session();
-		
+
 		if($key === null)
 		$key = static::boot()->typePrimary();
-		
+
 		if($table->hasPermission('viewApp') && $session->canViewRow($row))
 		{
 			$row = $this->row();

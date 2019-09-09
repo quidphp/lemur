@@ -19,7 +19,7 @@ class Editor extends Core\RoleAlias
 		'permission'=>60,
 		'can'=>[
 			'login'=>['cms'=>true]],
-		'@cms'=>array(
+		'@cms'=>[
 			'db'=>[
 				'*'=>[
 					'rows'=>false,
@@ -55,7 +55,7 @@ class Editor extends Core\RoleAlias
 				'logSql'=>[
 					'view'=>false]
 			]
-		)
+		]
 	];
 }
 

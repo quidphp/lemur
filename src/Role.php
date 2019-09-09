@@ -16,9 +16,9 @@ abstract class Role extends Core\Role
 {
 	// config
 	public static $config = [
-		'can'=>array(
-			'login'=>array(
-				'cms'=>false)),
+		'can'=>[
+			'login'=>[
+				'cms'=>false]],
 		'@cms'=>[ // pour cms
 			'can'=>[
 				'account'=>true,

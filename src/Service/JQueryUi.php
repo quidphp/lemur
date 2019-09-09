@@ -22,7 +22,7 @@ class JQueryUi extends Core\ServiceAlias
 	// retourne le javascript à lier en début de document
 	public function docOpenJs()
 	{
-		return array(1=>'js/jquery/jquery-ui.js');
+		return [1=>'js/jquery/jquery-ui.js'];
 	}
 }
 
