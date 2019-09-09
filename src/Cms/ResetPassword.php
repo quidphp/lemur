@@ -15,68 +15,68 @@ use Quid\Core;
 // class for the reset password route of the CMS
 class ResetPassword extends Core\Route\ResetPassword
 {
-	// trait
-	use _nobody;
+    // trait
+    use _nobody;
 
 
-	// config
-	public static $config = [
-		'parent'=>Login::class
-	];
+    // config
+    public static $config = [
+        'parent'=>Login::class
+    ];
 
 
-	// submitRoute
-	// route pour soumettre le formulaire
-	public function submitRoute():Core\Route\ResetPasswordSubmit
-	{
-		return ResetPasswordSubmit::makeOverload();
-	}
+    // submitRoute
+    // route pour soumettre le formulaire
+    public function submitRoute():Core\Route\ResetPasswordSubmit
+    {
+        return ResetPasswordSubmit::makeOverload();
+    }
 
 
-	// submitAttr
-	// attribut pour le bouton submit du formulaire
-	public function submitAttr()
-	{
-		return ['icon','padLeft','reset'];
-	}
+    // submitAttr
+    // attribut pour le bouton submit du formulaire
+    public function submitAttr()
+    {
+        return ['icon','padLeft','reset'];
+    }
 
 
-	// makeForm
-	// génère le form de resetPassword
-	protected function makeForm():string
-	{
-		$r = '';
-		$route = $this->submitRoute();
-		$r = $route->formOpen();
-		$table = $this->db()->tables()->get('user');
+    // makeForm
+    // génère le form de resetPassword
+    protected function makeForm():string
+    {
+        $r = '';
+        $route = $this->submitRoute();
+        $r = $route->formOpen();
+        $table = $this->db()->tables()->get('user');
 
-		$r .= Html::divOp('top');
-		$r .= $table->col('email')->formWrap('divtable','%:',null,['data-required'=>true]);
-		$r .= Html::divClose();
+        $r .= Html::divOp('top');
+        $r .= $table->col('email')->formWrap('divtable','%:',null,['data-required'=>true]);
+        $r .= Html::divClose();
 
-		$r .= Html::divCond(static::langText('resetPassword/info'),'info');
+        $r .= Html::divCond(static::langText('resetPassword/info'),'info');
 
-		$r .= Html::divOp('bottom');
-		$r .= Html::submit(static::label(),$this->submitAttr());
-		$r .= Html::divClose();
+        $r .= Html::divOp('bottom');
+        $r .= Html::submit(static::label(),$this->submitAttr());
+        $r .= Html::divClose();
 
-		$r .= Html::formClose();
+        $r .= Html::formClose();
 
-		return $r;
-	}
+        return $r;
+    }
 
 
-	// makeButtons
-	// retourne un tableau avec les boutons sous le formulaire de connexion
-	protected function makeButtons():array
-	{
-		$return = [];
-		$return['login'] = $this->makeLogin();
-		$return['register'] = $this->makeRegister();
-		$return['about'] = $this->makeAbout();
+    // makeButtons
+    // retourne un tableau avec les boutons sous le formulaire de connexion
+    protected function makeButtons():array
+    {
+        $return = [];
+        $return['login'] = $this->makeLogin();
+        $return['register'] = $this->makeRegister();
+        $return['about'] = $this->makeAbout();
 
-		return $return;
-	}
+        return $return;
+    }
 }
 
 // config

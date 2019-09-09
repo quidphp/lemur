@@ -14,10 +14,10 @@ use Quid\Core;
 // class for the submit reset password route of the CMS
 class ResetPasswordSubmit extends Core\Route\ResetPasswordSubmit
 {
-	// config
-	public static $config = [
-		'parent'=>ResetPassword::class
-	];
+    // config
+    public static $config = [
+        'parent'=>ResetPassword::class
+    ];
 }
 
 // config

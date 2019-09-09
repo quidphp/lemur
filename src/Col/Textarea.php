@@ -15,11 +15,11 @@ use Quid\Core;
 // extended class for a column which is editable through a textarea input
 class Textarea extends Core\Col\Textarea
 {
-	// config
-	public static $config = [
-		'@cms'=>[
-			'route'=>['tableRelation'=>Lemur\Cms\SpecificTableRelation::class]]
-	];
+    // config
+    public static $config = [
+        '@cms'=>[
+            'route'=>['tableRelation'=>Lemur\Cms\SpecificTableRelation::class]]
+    ];
 }
 
 // config

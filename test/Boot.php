@@ -15,23 +15,23 @@ use Quid\Base;
 // class for testing Quid\Lemur\Boot
 class Boot extends Base\Test
 {
-	// trigger
-	public static function trigger(array $data):bool
-	{
-		// prepare
-		$boot = Lemur\Boot::inst();
+    // trigger
+    public static function trigger(array $data):bool
+    {
+        // prepare
+        $boot = Lemur\Boot::inst();
 
-		// isCms
-		assert(!$boot->isCms());
+        // isCms
+        assert(!$boot->isCms());
 
-		// lang
-		$lang = $boot->lang();
-		assert(count($lang->relation('contextType')) === 3);
-		assert(!empty($lang->tableDescription('user')));
-		assert(!empty($lang->colDescription('metaKeywords_en')));
-		assert(!empty($lang->panelDescription('default')));
+        // lang
+        $lang = $boot->lang();
+        assert(count($lang->relation('contextType')) === 3);
+        assert(!empty($lang->tableDescription('user')));
+        assert(!empty($lang->colDescription('metaKeywords_en')));
+        assert(!empty($lang->panelDescription('default')));
 
-		return true;
-	}
+        return true;
+    }
 }
 ?>

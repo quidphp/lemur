@@ -15,21 +15,21 @@ use Quid\Base;
 // extended class for a column which should serialize its value
 class Serialize extends Core\Col\Serialize
 {
-	// config
-	public static $config = [];
+    // config
+    public static $config = [];
 
 
-	// onGet
-	// onGet spécial si contexte est cms, retourne le résultat debug/export
-	public function onGet($return,array $option)
-	{
-		$return = parent::onGet($return,$option);
+    // onGet
+    // onGet spécial si contexte est cms, retourne le résultat debug/export
+    public function onGet($return,array $option)
+    {
+        $return = parent::onGet($return,$option);
 
-		if(is_array($return) && !empty($option['context']) && $option['context'] === 'cms:specific')
-		$return = Base\Debug::export($return);
+        if(is_array($return) && !empty($option['context']) && $option['context'] === 'cms:specific')
+        $return = Base\Debug::export($return);
 
-		return $return;
-	}
+        return $return;
+    }
 }
 
 // config

@@ -14,10 +14,10 @@ use Quid\Core;
 // extended class that contains the cms default configuration for the shared role (disabled per default)
 class Shared extends Core\Role\Shared
 {
-	// config
-	public static $config = [
-		'ignore'=>true
-	];
+    // config
+    public static $config = [
+        'ignore'=>true
+    ];
 }
 
 // config

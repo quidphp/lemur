@@ -14,72 +14,72 @@ use Quid\Core;
 // class for the route which allows truncating a table from the general page of the CMS
 class GeneralTruncate extends Core\RouteAlias
 {
-	// trait
-	use _common;
-	use _general;
-	use Core\Route\_formSubmit;
-	use Core\Segment\_table;
+    // trait
+    use _common;
+    use _general;
+    use Core\Route\_formSubmit;
+    use Core\Segment\_table;
 
 
-	// config
-	public static $config = [
-		'path'=>[
-			'en'=>'table/[table]/truncate',
-			'fr'=>'table/[table]/vider'],
-		'segment'=>[
-			'table'=>'structureSegmentTable'],
-		'match'=>[
-			'csrf'=>true,
-			'genuine'=>true,
-			'method'=>'post',
-			'post'=>['-table-'=>['='=>'[table]']],
-			'role'=>['>='=>20]],
-		'parent'=>General::class,
-		'group'=>'submit'
-	];
+    // config
+    public static $config = [
+        'path'=>[
+            'en'=>'table/[table]/truncate',
+            'fr'=>'table/[table]/vider'],
+        'segment'=>[
+            'table'=>'structureSegmentTable'],
+        'match'=>[
+            'csrf'=>true,
+            'genuine'=>true,
+            'method'=>'post',
+            'post'=>['-table-'=>['='=>'[table]']],
+            'role'=>['>='=>20]],
+        'parent'=>General::class,
+        'group'=>'submit'
+    ];
 
 
-	// onBefore
-	// vérifie que l'utilisateur a la permission pour truncate la table
-	protected function onBefore()
-	{
-		$return = false;
-		$table = $this->table();
+    // onBefore
+    // vérifie que l'utilisateur a la permission pour truncate la table
+    protected function onBefore()
+    {
+        $return = false;
+        $table = $this->table();
 
-		if(!empty($table) && $table->hasPermission('view','empty','truncate'))
-		$return = true;
+        if(!empty($table) && $table->hasPermission('view','empty','truncate'))
+        $return = true;
 
-		return $return;
-	}
-
-
-	// routeSuccess
-	// retourne la route en cas de succès ou échec du truncate
-	public function routeSuccess():Core\Route
-	{
-		return $this->general(false);
-	}
+        return $return;
+    }
 
 
-	// proceed
-	// truncate la table
-	protected function proceed():bool
-	{
-		$return = false;
-		$post = $this->post();
-		$post = $this->onBeforeCommit($post);
+    // routeSuccess
+    // retourne la route en cas de succès ou échec du truncate
+    public function routeSuccess():Core\Route
+    {
+        return $this->general(false);
+    }
 
-		if($post !== null)
-		$return = $this->table()->truncate(['com'=>true,'context'=>static::class]);
 
-		if(empty($return))
-		$this->failureComplete();
+    // proceed
+    // truncate la table
+    protected function proceed():bool
+    {
+        $return = false;
+        $post = $this->post();
+        $post = $this->onBeforeCommit($post);
 
-		else
-		$this->successComplete();
+        if($post !== null)
+        $return = $this->table()->truncate(['com'=>true,'context'=>static::class]);
 
-		return $return;
-	}
+        if(empty($return))
+        $this->failureComplete();
+
+        else
+        $this->successComplete();
+
+        return $return;
+    }
 }
 
 // config

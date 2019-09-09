@@ -15,21 +15,21 @@ use Quid\Base;
 // extended class for a column that manages an error object as a value
 class Error extends Core\Col\Error
 {
-	// config
-	public static $config = [];
+    // config
+    public static $config = [];
 
 
-	// onGet
-	// sur onGet recrée l'objet error si c'est du json, si cms var export
-	public function onGet($return,array $option)
-	{
-		$return = parent::onGet($return,$option);
+    // onGet
+    // sur onGet recrée l'objet error si c'est du json, si cms var export
+    public function onGet($return,array $option)
+    {
+        $return = parent::onGet($return,$option);
 
-		if(!empty($return) && !empty($option['context']) && $option['context'] === 'cms:specific')
-		$return = Base\Debug::export($return);
+        if(!empty($return) && !empty($option['context']) && $option['context'] === 'cms:specific')
+        $return = Base\Debug::export($return);
 
-		return $return;
-	}
+        return $return;
+    }
 }
 
 // config

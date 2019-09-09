@@ -14,8 +14,8 @@ use Quid\Core;
 // class for the automated sitemap.xml route of the CMS
 class Sitemap extends Core\Route\Sitemap
 {
-	// config
-	public static $config = [];
+    // config
+    public static $config = [];
 }
 
 // config

@@ -14,62 +14,62 @@ use Quid\Base\Html;
 // trait that provides commonly used methods for the CMS
 trait _common
 {
-	// isTableTop
-	// retourne vrai si la table courante est dans le tableau
-	// la page n'a pas nécessairement une table
-	protected function isTableTop(array $value)
-	{
-		$return = false;
+    // isTableTop
+    // retourne vrai si la table courante est dans le tableau
+    // la page n'a pas nécessairement une table
+    protected function isTableTop(array $value)
+    {
+        $return = false;
 
-		if(method_exists($this,'table'))
-		{
-			$table = $this->table()->name();
+        if(method_exists($this,'table'))
+        {
+            $table = $this->table()->name();
 
-			if(!empty($table) && in_array($table,$value,true))
-			$return = true;
-		}
+            if(!empty($table) && in_array($table,$value,true))
+            $return = true;
+        }
 
-		return $return;
-	}
-
-
-	// tableHiddenInput
-	// génère le input hidden pour table
-	public function tableHiddenInput():string
-	{
-		return Html::inputHidden($this->table(),static::tableInputName());
-	}
+        return $return;
+    }
 
 
-	// tableInputName
-	// retourne le nom du input pour table
-	public static function tableInputName():string
-	{
-		return '-table-';
-	}
+    // tableHiddenInput
+    // génère le input hidden pour table
+    public function tableHiddenInput():string
+    {
+        return Html::inputHidden($this->table(),static::tableInputName());
+    }
 
 
-	// panelInputName
-	// retourne le nom du input pour panel
-	public static function panelInputName():string
-	{
-		return '-panel-';
-	}
+    // tableInputName
+    // retourne le nom du input pour table
+    public static function tableInputName():string
+    {
+        return '-table-';
+    }
 
 
-	// authorLink
-	// retourne le lien web pour l'auteur
-	public static function authorLink():string
-	{
-		return Html::a(static::langText('author/uri'),static::langText('author/name'));
-	}
+    // panelInputName
+    // retourne le nom du input pour panel
+    public static function panelInputName():string
+    {
+        return '-panel-';
+    }
 
 
-	// authorEmail
-	// retourne le lien email pour l'auteur
-	public static function authorEmail():string
-	{
-		return Html::a(static::langText('author/email'),true);
-	}
+    // authorLink
+    // retourne le lien web pour l'auteur
+    public static function authorLink():string
+    {
+        return Html::a(static::langText('author/uri'),static::langText('author/name'));
+    }
+
+
+    // authorEmail
+    // retourne le lien email pour l'auteur
+    public static function authorEmail():string
+    {
+        return Html::a(static::langText('author/email'),true);
+    }
 }
 ?>

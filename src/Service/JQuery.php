@@ -14,16 +14,16 @@ use Quid\Core;
 // class to integrate jquery library
 class JQuery extends Core\ServiceAlias
 {
-	// config
-	public static $config = [];
+    // config
+    public static $config = [];
 
 
-	// docOpenJs
-	// retourne le javascript à lier en début de document
-	public function docOpenJs()
-	{
-		return [0=>'js/jquery/jquery.js'];
-	}
+    // docOpenJs
+    // retourne le javascript à lier en début de document
+    public function docOpenJs()
+    {
+        return [0=>'js/jquery/jquery.js'];
+    }
 }
 
 // config

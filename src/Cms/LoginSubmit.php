@@ -14,22 +14,22 @@ use Quid\Core;
 // class for the login submit route of the CMS
 class LoginSubmit extends Core\Route\LoginSubmit
 {
-	// trait
-	use _common;
+    // trait
+    use _common;
 
 
-	// config
-	public static $config = [
-		'parent'=>Login::class
-	];
+    // config
+    public static $config = [
+        'parent'=>Login::class
+    ];
 
 
-	// routeSuccess
-	// retourne la route vers laquelle redirigé en cas de succès par défaut, si rien dans la mémoire
-	public function routeSuccessDefault():Core\Route
-	{
-		return Home::makeOverload();
-	}
+    // routeSuccess
+    // retourne la route vers laquelle redirigé en cas de succès par défaut, si rien dans la mémoire
+    public function routeSuccessDefault():Core\Route
+    {
+        return Home::makeOverload();
+    }
 }
 
 // config

@@ -14,116 +14,116 @@ use Quid\Core;
 // class for the specific user welcome route which can send a welcome email to the user
 class SpecificUserWelcome extends Core\RouteAlias
 {
-	// trait
-	use _common;
-	use Core\Route\_specificPrimary;
-	use Core\Route\_formSubmit;
-	use Core\Segment\_primary;
+    // trait
+    use _common;
+    use Core\Route\_specificPrimary;
+    use Core\Route\_formSubmit;
+    use Core\Segment\_primary;
 
 
-	// config
-	public static $config = [
-		'path'=>[
-			'fr'=>'table/user/[primary]/courriel-bienvenue',
-			'en'=>'table/user/[primary]/welcome-emeail'],
-		'segment'=>[
-			'primary'=>'structureSegmentPrimary'],
-		'row'=>Core\Row\User::class,
-		'parent'=>Specific::class,
-		'match'=>[
-			'method'=>'post',
-			'csrf'=>true,
-			'post'=>['id'=>['='=>'[primary]'],'-table-'=>['='=>'[table]']],
-			'genuine'=>true,
-			'role'=>['>='=>20]],
-		'group'=>'specific'
-	];
+    // config
+    public static $config = [
+        'path'=>[
+            'fr'=>'table/user/[primary]/courriel-bienvenue',
+            'en'=>'table/user/[primary]/welcome-emeail'],
+        'segment'=>[
+            'primary'=>'structureSegmentPrimary'],
+        'row'=>Core\Row\User::class,
+        'parent'=>Specific::class,
+        'match'=>[
+            'method'=>'post',
+            'csrf'=>true,
+            'post'=>['id'=>['='=>'[primary]'],'-table-'=>['='=>'[table]']],
+            'genuine'=>true,
+            'role'=>['>='=>20]],
+        'group'=>'specific'
+    ];
 
 
-	// onBefore
-	// vérifie que le user peut bien recevoir un courriel de bienvenue
-	protected function onBefore()
-	{
-		$return = false;
-		$row = $this->row();
-		$table = $row->table();
+    // onBefore
+    // vérifie que le user peut bien recevoir un courriel de bienvenue
+    protected function onBefore()
+    {
+        $return = false;
+        $row = $this->row();
+        $table = $row->table();
 
-		if($table->hasPermission('view','userWelcome'))
-		{
-			if($row->isActive() && $row->allowWelcomeEmail() && $row->isUpdateable() && $row->canReceiveEmail())
-			$return = true;
-		}
+        if($table->hasPermission('view','userWelcome'))
+        {
+            if($row->isActive() && $row->allowWelcomeEmail() && $row->isUpdateable() && $row->canReceiveEmail())
+            $return = true;
+        }
 
-		return $return;
-	}
-
-
-	// onSuccess
-	// communication lors du succès
-	protected function onSuccess():self
-	{
-		static::sessionCom()->pos('user/welcome/success');
-
-		return $this;
-	}
+        return $return;
+    }
 
 
-	// onFailure
-	// communication lors d'un échec
-	protected function onFailure():self
-	{
-		static::sessionCom()->neg('user/welcome/failure');
+    // onSuccess
+    // communication lors du succès
+    protected function onSuccess():self
+    {
+        static::sessionCom()->pos('user/welcome/success');
 
-		return $this;
-	}
-
-
-	// routeSuccess
-	// retourne la route à rediriger en cas de succès ou échec de l'opération
-	public function routeSuccess():Route
-	{
-		return $this->row()->route();
-	}
+        return $this;
+    }
 
 
-	// proceed
-	// procède à envoyer le courriel
-	public function proceed():bool
-	{
-		$return = false;
-		$row = $this->row();
-		$replace = $this->emailReplace();
-		$option = $this->emailOption();
-		$post = $this->post();
-		$post = $this->onBeforeCommit($post);
+    // onFailure
+    // communication lors d'un échec
+    protected function onFailure():self
+    {
+        static::sessionCom()->neg('user/welcome/failure');
 
-		if($post !== null)
-		$return = $row->sendWelcomeEmail($replace,$option);
-
-		if(empty($return))
-		$this->failureComplete();
-
-		else
-		$this->successComplete();
-
-		return $return;
-	}
+        return $this;
+    }
 
 
-	// emailReplace
-	// replace pour l'envoie de courriel
-	protected function emailReplace():?array
-	{
-		return null;
-	}
+    // routeSuccess
+    // retourne la route à rediriger en cas de succès ou échec de l'opération
+    public function routeSuccess():Route
+    {
+        return $this->row()->route();
+    }
 
 
-	// emailOption
-	// option pour l'envoie de courriel
-	protected function emailOption():?array
-	{
-		return ['com'=>true];
-	}
+    // proceed
+    // procède à envoyer le courriel
+    public function proceed():bool
+    {
+        $return = false;
+        $row = $this->row();
+        $replace = $this->emailReplace();
+        $option = $this->emailOption();
+        $post = $this->post();
+        $post = $this->onBeforeCommit($post);
+
+        if($post !== null)
+        $return = $row->sendWelcomeEmail($replace,$option);
+
+        if(empty($return))
+        $this->failureComplete();
+
+        else
+        $this->successComplete();
+
+        return $return;
+    }
+
+
+    // emailReplace
+    // replace pour l'envoie de courriel
+    protected function emailReplace():?array
+    {
+        return null;
+    }
+
+
+    // emailOption
+    // option pour l'envoie de courriel
+    protected function emailOption():?array
+    {
+        return ['com'=>true];
+    }
 }
 
 // config

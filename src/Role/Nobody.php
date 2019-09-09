@@ -14,14 +14,14 @@ use Quid\Core;
 // extended class that issues cms default configuration for the nobody role
 class Nobody extends Core\Role\Nobody
 {
-	// config
-	public static $config = [
-		'@cms'=>[
-			'db'=>[
-				'*'=>[
-					'view'=>false]]
-		]
-	];
+    // config
+    public static $config = [
+        '@cms'=>[
+            'db'=>[
+                '*'=>[
+                    'view'=>false]]
+        ]
+    ];
 }
 
 // config

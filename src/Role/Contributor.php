@@ -14,50 +14,50 @@ use Quid\Core;
 // class which contains the cms default configuration for the contributor role (disabled per default)
 class Contributor extends Core\RoleAlias
 {
-	// config
-	public static $config = [
-		'ignore'=>true,
-		'permission'=>50,
-		'can'=>[
-			'login'=>['cms'=>true]],
-		'@cms'=>[
-			'db'=>[
-				'*'=>[
-					'rows'=>false,
-					'in'=>false,
-					'notIn'=>false,
-					'insert'=>true,
-					'update'=>true,
-					'delete'=>true],
-				'user'=>[
-					'add'=>false],
-				'session'=>[
-					'view'=>false],
-				'lang'=>[
-					'view'=>false],
-				'redirection'=>[
-					'view'=>false],
-				'email'=>[
-					'view'=>false],
-				'option'=>[
-					'view'=>false],
-				'queueEmail'=>[
-					'view'=>false],
-				'log'=>[
-					'view'=>false],
-				'logEmail'=>[
-					'view'=>false],
-				'logCron'=>[
-					'view'=>false],
-				'logError'=>[
-					'view'=>false],
-				'logHttp'=>[
-					'view'=>false],
-				'logSql'=>[
-					'view'=>false]
-			]
-		]
-	];
+    // config
+    public static $config = [
+        'ignore'=>true,
+        'permission'=>50,
+        'can'=>[
+            'login'=>['cms'=>true]],
+        '@cms'=>[
+            'db'=>[
+                '*'=>[
+                    'rows'=>false,
+                    'in'=>false,
+                    'notIn'=>false,
+                    'insert'=>true,
+                    'update'=>true,
+                    'delete'=>true],
+                'user'=>[
+                    'add'=>false],
+                'session'=>[
+                    'view'=>false],
+                'lang'=>[
+                    'view'=>false],
+                'redirection'=>[
+                    'view'=>false],
+                'email'=>[
+                    'view'=>false],
+                'option'=>[
+                    'view'=>false],
+                'queueEmail'=>[
+                    'view'=>false],
+                'log'=>[
+                    'view'=>false],
+                'logEmail'=>[
+                    'view'=>false],
+                'logCron'=>[
+                    'view'=>false],
+                'logError'=>[
+                    'view'=>false],
+                'logHttp'=>[
+                    'view'=>false],
+                'logSql'=>[
+                    'view'=>false]
+            ]
+        ]
+    ];
 }
 
 // config

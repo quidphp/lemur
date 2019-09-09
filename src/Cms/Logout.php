@@ -14,16 +14,16 @@ use Quid\Core;
 // class for the logout route of the CMS
 class Logout extends Core\Route\Logout
 {
-	// trait
-	use _common;
+    // trait
+    use _common;
 
 
-	// config
-	public static $config = [
-		'match'=>[
-			'role'=>['>='=>20]],
-		'parent'=>Login::class
-	];
+    // config
+    public static $config = [
+        'match'=>[
+            'role'=>['>='=>20]],
+        'parent'=>Login::class
+    ];
 }
 
 // config

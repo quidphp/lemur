@@ -14,16 +14,16 @@ use Quid\Core;
 // class to integrate jquery-ui library
 class JQueryUi extends Core\ServiceAlias
 {
-	// config
-	public static $config = [];
+    // config
+    public static $config = [];
 
 
-	// docOpenJs
-	// retourne le javascript à lier en début de document
-	public function docOpenJs()
-	{
-		return [1=>'js/jquery/jquery-ui.js'];
-	}
+    // docOpenJs
+    // retourne le javascript à lier en début de document
+    public function docOpenJs()
+    {
+        return [1=>'js/jquery/jquery-ui.js'];
+    }
 }
 
 // config

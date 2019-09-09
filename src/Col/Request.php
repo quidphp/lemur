@@ -15,21 +15,21 @@ use Quid\Base;
 // extended class for a column that manages a request object as a value
 class Request extends Core\Col\Request
 {
-	// config
-	public static $config = [];
+    // config
+    public static $config = [];
 
 
-	// onGet
-	// sur onGet recrée l'objet request, si cms var export
-	public function onGet($return,array $option)
-	{
-		$return = parent::onGet($return,$option);
+    // onGet
+    // sur onGet recrée l'objet request, si cms var export
+    public function onGet($return,array $option)
+    {
+        $return = parent::onGet($return,$option);
 
-		if(!empty($return) && !empty($option['context']) && $option['context'] === 'cms:specific')
-		$return = Base\Debug::export($return->safeInfo());
+        if(!empty($return) && !empty($option['context']) && $option['context'] === 'cms:specific')
+        $return = Base\Debug::export($return->safeInfo());
 
-		return $return;
-	}
+        return $return;
+    }
 }
 
 // config

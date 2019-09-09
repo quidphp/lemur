@@ -14,11 +14,11 @@ use Quid\Core;
 // class for the activate password in the CMS
 class ActivatePassword extends Core\Route\ActivatePassword
 {
-	// config
-	public static $config = [
-		'parent'=>Login::class,
-		'row'=>Core\Row\User::class
-	];
+    // config
+    public static $config = [
+        'parent'=>Login::class,
+        'row'=>Core\Row\User::class
+    ];
 }
 
 // config

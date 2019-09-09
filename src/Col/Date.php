@@ -15,11 +15,11 @@ use Quid\Core;
 // extended class for a date column, supports many date formats
 class Date extends Core\Col\Date
 {
-	// config
-	public static $config = [
-		'@cms'=>[
-			'route'=>['calendar'=>Lemur\Cms\SpecificCalendar::class]]
-	];
+    // config
+    public static $config = [
+        '@cms'=>[
+            'route'=>['calendar'=>Lemur\Cms\SpecificCalendar::class]]
+    ];
 }
 
 // config

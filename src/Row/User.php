@@ -15,40 +15,40 @@ use Quid\Core;
 // extended class for a row of the user table, with cms logic
 class User extends Core\Row\User
 {
-	// config
-	public static $config = [
-		'@cms'=>[
-			'route'=>[
-				'userWelcome'=>Lemur\Cms\SpecificUserWelcome::class],
-			'specificOperation'=>[self::class,'specificOperation']],
-	];
+    // config
+    public static $config = [
+        '@cms'=>[
+            'route'=>[
+                'userWelcome'=>Lemur\Cms\SpecificUserWelcome::class],
+            'specificOperation'=>[self::class,'specificOperation']],
+    ];
 
 
-	// specificOperation
-	// utilisé dans le cms, permet d'envoyer un courriel de bienvenue à l'utilisateur
-	public static function specificOperation(self $row):string
-	{
-		$r = '';
-		$route = $row->routeClass('userWelcome');
+    // specificOperation
+    // utilisé dans le cms, permet d'envoyer un courriel de bienvenue à l'utilisateur
+    public static function specificOperation(self $row):string
+    {
+        $r = '';
+        $route = $row->routeClass('userWelcome');
 
-		if($row->table()->hasPermission('userWelcome'))
-		{
-			if($row->isActive() && $row->allowWelcomeEmail() && $row->isUpdateable() && $row->canReceiveEmail())
-			{
-				$route = $row->routeClass('userWelcome');
+        if($row->table()->hasPermission('userWelcome'))
+        {
+            if($row->isActive() && $row->allowWelcomeEmail() && $row->isUpdateable() && $row->canReceiveEmail())
+            {
+                $route = $row->routeClass('userWelcome');
 
-				if(!empty($route))
-				{
-					$route = $route::makeOverload($row)->initSegment();
-					$data = ['confirm'=>static::langText('common/confirm')];
-					$attr = ['name'=>'--userWelcome--','value'=>1,'submit','icon','padLeft','email','data'=>$data];
-					$r .= $route->submitTitle(null,$attr);
-				}
-			}
-		}
+                if(!empty($route))
+                {
+                    $route = $route::makeOverload($row)->initSegment();
+                    $data = ['confirm'=>static::langText('common/confirm')];
+                    $attr = ['name'=>'--userWelcome--','value'=>1,'submit','icon','padLeft','email','data'=>$data];
+                    $r .= $route->submitTitle(null,$attr);
+                }
+            }
+        }
 
-		return $r;
-	}
+        return $r;
+    }
 }
 
 // config

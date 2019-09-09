@@ -14,10 +14,10 @@ use Quid\Core;
 // extended class that contains the cms default configuration for the user role (disabled per default)
 class User extends Core\Role\User
 {
-	// config
-	public static $config = [
-		'ignore'=>true
-	];
+    // config
+    public static $config = [
+        'ignore'=>true
+    ];
 }
 
 // config

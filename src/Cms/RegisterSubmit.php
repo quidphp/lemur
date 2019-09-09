@@ -14,10 +14,10 @@ use Quid\Core;
 // class for the register submit route of the CMS
 class RegisterSubmit extends Core\Route\RegisterSubmit
 {
-	//  config
-	public static $config = [
-		'parent'=>Register::class
-	];
+    //  config
+    public static $config = [
+        'parent'=>Register::class
+    ];
 }
 
 // config
