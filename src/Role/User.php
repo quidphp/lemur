@@ -16,9 +16,7 @@ class User extends Core\Role\User
 {
 	// config
 	public static $config = [
-		'ignore'=>true,
-		'can'=>[
-			'login'=>['cms'=>false]]
+		'ignore'=>true
 	];
 }
 

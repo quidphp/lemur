@@ -16,7 +16,7 @@ abstract class Boot extends Core\Boot
 {
 	// config
 	public static $config = [
-		'types'=>['app','cms'], // ajout cms comme type
+		'types'=>['cms'], // ajout cms comme type
 		'finderShortcut'=>[ // shortcut pour finder
 			'vendorLemur'=>'[vendor]/quidphp/lemur'],
 		'symlink'=>[
@@ -28,6 +28,9 @@ abstract class Boot extends Core\Boot
 						__NAMESPACE__=>['closure'=>true],
 						Test::class=>['closure'=>false]]]]],
 		'@cms'=>[
+			'service'=>array(
+				'jQuery'=>Service\JQuery::class,
+				'jQueryUi'=>Service\JQueryUi::class),
 			'option'=>[
 				'background'=>null,
 				'logo'=>null],
@@ -40,8 +43,6 @@ abstract class Boot extends Core\Boot
 							'css'=>[
 								'type'=>'css/%type%.css'],
 							'js'=>[
-								'jquery'=>'js/jquery/jquery.js',
-								'jquery-ui'=>'js/jquery/jquery-ui.js',
 								'include'=>'js/include.js',
 								'type'=>'js/%type%.js']],
 						'wrapper'=>['#wrapper']]],
@@ -63,14 +64,6 @@ abstract class Boot extends Core\Boot
 					0=>'[vendorLemur]/js/cms',
 					10=>'[privateJs]/cms']]]
 	];
-
-
-	// isApp
-	// retourne vrai si la clé de l'application roulant présentement est app
-	public function isApp():bool
-	{
-		return ($this->type() === 'app')? true:false;
-	}
 
 
 	// isCms

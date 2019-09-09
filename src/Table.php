@@ -16,9 +16,6 @@ class Table extends Core\Table
 {
 	// config
 	public static $config = [
-		'@app'=>[
-			'route'=>[
-				'cms'=>Cms\Specific::class]],
 		'@cms'=>[
 			'homeTask'=>null, // pour cms, ajouter un lien vers la page d'ajout dans task
 			'specificAddNavLink'=>null, // pour le cms, permet de diviser le lien add et view en deux

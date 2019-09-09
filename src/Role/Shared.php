@@ -16,9 +16,7 @@ class Shared extends Core\Role\Shared
 {
 	// config
 	public static $config = [
-		'ignore'=>true,
-		'can'=>[
-			'login'=>['cms'=>false]]
+		'ignore'=>true
 	];
 }
 

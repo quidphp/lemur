@@ -48,9 +48,10 @@ trait _nobody
 		$r = '';
 		$boot = static::boot();
 		$img = Html::ImgCond($boot->getOption('logo'),$boot->label());
-
+		$type = $boot->typePrimary();
+		
 		if(!empty($img))
-		$r .= Html::a($boot->schemeHost(true,'app'),$img,'logo');
+		$r .= Html::a($boot->schemeHost(true,$type),$img,'logo');
 
 		return $r;
 	}

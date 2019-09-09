@@ -3,7 +3,7 @@
  * Website: https://quidphp.com
  * License: https://github.com/quidphp/lemur/blob/master/LICENSE
  */
- 
+
 // ajax
 // script with some additional logic over the jQuery ajax object
 (function ($, document, window) {

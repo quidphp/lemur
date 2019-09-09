@@ -21,9 +21,6 @@ class Boot extends Base\Test
 		// prepare
 		$boot = Lemur\Boot::inst();
 
-		// isApp
-		assert(!$boot->isApp());
-
 		// isCms
 		assert(!$boot->isCms());
 

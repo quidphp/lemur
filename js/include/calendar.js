@@ -3,7 +3,7 @@
  * Website: https://quidphp.com
  * License: https://github.com/quidphp/lemur/blob/master/LICENSE
  */
- 
+
 // calendar
 // script with behaviours for a calendar and a date input
 (function ($, document, window) {

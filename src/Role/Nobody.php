@@ -16,10 +16,11 @@ class Nobody extends Core\Role\Nobody
 {
 	// config
 	public static $config = [
-		'db'=>[
-			'*'=>[
-				'view'=>false]
-		]
+		'@cms'=>array(
+			'db'=>[
+				'*'=>[
+					'view'=>false]]
+		)
 	];
 }
 
