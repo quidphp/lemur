@@ -54,15 +54,15 @@ abstract class Boot extends Core\Boot
                     1=>'[vendorLemur]/scss/include/include.scss',
                     2=>'[vendorLemur]/scss/include/component.scss',
                     3=>'[vendorLemur]/scss/cms/include.scss',
-                    4=>'[privateScss]/cms/include.scss',
+                    4=>'[scss]/cms/include.scss',
                     20=>'[vendorLemur]/scss/cms/cms.scss',
-                    50=>'[privateScss]/cms/cms.scss']],
+                    50=>'[scss]/cms/cms.scss']],
             'concatenateJs'=>[
                 '[publicJs]/include.js'=>[
                     0=>'[vendorLemur]/js/include'],
                 '[publicJs]/cms.js'=>[
                     0=>'[vendorLemur]/js/cms',
-                    10=>'[privateJs]/cms']]]
+                    10=>'[js]/cms']]]
     ];
 
 
