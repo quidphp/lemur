@@ -6,6 +6,9 @@
 ## License
 **QuidPHP/Lemur** is available as an open-source software under the [MIT license](LICENSE).
 
+## Documentation
+**QuidPHP/Lemur** documentation is being written. Once ready, it will be available at https://quidphp.github.io/project.
+
 ## Installation
 **QuidPHP/Lemur** can be easily installed with [Composer](https://getcomposer.org). It is available on [Packagist](https://packagist.org/packages/quidphp/lemur).
 ``` bash
@@ -15,7 +18,7 @@ Once installed, the **Quid\Lemur** namespace will be available within your PHP a
 
 ## Requirement
 **QuidPHP/Lemur** requires the following:
-- PHP 7.2+ with fileinfo, curl, openssl, posix, PDO and pdo_mysql
+- PHP 7.2+ with fileinfo, curl, openssl, PDO and pdo_mysql
 
 ## Dependency
 **QuidPHP/Lemur** has the following dependencies:
