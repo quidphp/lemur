@@ -204,7 +204,6 @@
 		position: relative;
 		text-align: left;
 		border-right: 1px solid $darkColor;
-		box-sizing: border-box;
         
 		.label {
 			@include inbl();
@@ -224,7 +223,7 @@
     
 	.in {
 		cursor: pointer;
-		padding: 10px;
+		padding: 0 10px;
 
 		&:hover {
 			background-color: $lightYellow;
@@ -398,7 +397,7 @@
 	min-width: inherit;
 	
 	.in {
-		padding: 10px;
+		padding: 0px 10px;
 		
 		&:hover {
 			background-color: $lightYellow;
@@ -491,7 +490,6 @@
 			color: $black;
 			display: block;
 			position: relative;
-			box-sizing: border-box;
             
 			a {
 				display: block;
@@ -552,7 +550,7 @@
 	text-align: center;
 	
 	.in {
-		padding: 0;
+		padding: 0 10px;
 	}
 	
 	input[type='checkbox'] {
@@ -578,7 +576,7 @@
 	min-width: inherit;
 	
 	.in {
-		padding: 0;
+		padding: 0 10px;
 	}
 }
 
