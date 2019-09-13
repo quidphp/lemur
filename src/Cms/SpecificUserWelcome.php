@@ -80,7 +80,7 @@ class SpecificUserWelcome extends Core\RouteAlias
 
     // routeSuccess
     // retourne la route à rediriger en cas de succès ou échec de l'opération
-    public function routeSuccess():Route
+    public function routeSuccess():Core\Route
     {
         return $this->row()->route();
     }

@@ -47,7 +47,7 @@
 .specific main .element.media .right .block,
 .specific main .element.medias .right .block {
 	@include inbl();
-	width: 450px;
+	width: 480px;
 	background-color: $white;
 	border-radius: 5px;
 	position: relative;
@@ -91,6 +91,7 @@
 		.message {
 			display: none;
 			text-align: center;
+            font-size: 90%;
 			font-weight: bold;
 			
 			.actionText {
