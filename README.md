@@ -19,6 +19,7 @@ Once installed, the **Quid\Lemur** namespace will be available within your PHP a
 ## Requirement
 **QuidPHP/Lemur** requires the following:
 - PHP 7.3+
+- All other requirements specified in [quidphp/core](https://github.com/quidphp/core)
 
 ## Dependency
 **QuidPHP/Lemur** has the following dependencies:
@@ -55,7 +56,7 @@ All dependencies will be resolved by using the [Composer](https://getcomposer.or
 - *Core overloading*: This namespace overloads many classes from Quid\Core.
 
 ### Overview
-**QuidPHP/Lemur** contains 64 classes and traits. Here is an overview:
+**QuidPHP/Lemur** contains 70 classes and traits. Here is an overview:
 - [Boot](src/Boot.php) | Extended abstract class for the object that bootstraps the cms
 - [Cms](src/Cms)
     - [About](src/Cms/About.php) | Class for the about popup route of the CMS
@@ -80,7 +81,7 @@ All dependencies will be resolved by using the [Composer](https://getcomposer.or
     - [ResetPassword](src/Cms/ResetPassword.php) | Class for the reset password route of the CMS
     - [ResetPasswordSubmit](src/Cms/ResetPasswordSubmit.php) | Class for the submit reset password route of the CMS
     - [Robots](src/Cms/Robots.php) | Class for the robots.txt route of the CMS
-    - [Sitemap](src/Cms/Sitemap.php) | Class for the sitemap.xml route of the CMS
+    - [Sitemap](src/Cms/Sitemap.php) | Class for the automated sitemap.xml route of the CMS
     - [Specific](src/Cms/Specific.php) | Class for the specific route of the CMS, generates the update form for a row
     - [SpecificAdd](src/Cms/SpecificAdd.php) | Class for the specific add route of the CMS, generates the insert form for a row
     - [SpecificAddSubmit](src/Cms/SpecificAddSubmit.php) | Class for the submit specific add route, to process the insertion of a new row in the CMS
@@ -105,17 +106,21 @@ All dependencies will be resolved by using the [Composer](https://getcomposer.or
 - [Col](src/Col)
     - [Date](src/Col/Date.php) | Extended class for a date column, supports many date formats
     - [Email](src/Col/Email.php) | Extended class for a column managing email
+    - [Error](src/Col/Error.php) | Extended class for a column that manages an error object as a value
     - [Files](src/Col/Files.php) | Extended abstract class extended by the media and medias cols
+    - [JsonExport](src/Col/JsonExport.php) | Extended class for a column that contains json which should be exported (similar to var_export)
     - [Primary](src/Col/Primary.php) | Extended class for dealing with a column which has an auto increment primary key
     - [Relation](src/Col/Relation.php) | Extended abstract class extended for relation
+    - [Request](src/Col/Request.php) | Extended class for a column that manages a request object as a value
+    - [Serialize](src/Col/Serialize.php) | Extended class for a column which should serialize its value
     - [Textarea](src/Col/Textarea.php) | Extended class for a column which is editable through a textarea input
+    - [Video](src/Col/Video.php) | Extended abstract class for a column containing a video from a third-party service
 - [Lang](src/Lang)
     - [En](src/Lang/En.php) | English language content used by this namespace
     - [Fr](src/Lang/Fr.php) | French language content used by this namespace
 - [Role](src/Role.php) | Extended abstract class that provides cms logic for a role
     - [Admin](src/Role/Admin.php) | Extended class which contains the cms default configuration for the admin role
     - [Contributor](src/Role/Contributor.php) | Class which contains the cms default configuration for the contributor role (disabled per default)
-    - [Cron](src/Role/Cron.php) | Extended class which contains the cms default configuration for the cron role
     - [Editor](src/Role/Editor.php) | Class which contains the cms default configuration for the editor role
     - [Nobody](src/Role/Nobody.php) | Extended class that issues cms default configuration for the nobody role
     - [Shared](src/Role/Shared.php) | Extended class that contains the cms default configuration for the shared role (disabled per default)
@@ -123,6 +128,9 @@ All dependencies will be resolved by using the [Composer](https://getcomposer.or
     - [User](src/Role/User.php) | Extended class that contains the cms default configuration for the user role (disabled per default)
 - [Row](src/Row)
     - [User](src/Row/User.php) | Extended class for a row of the user table, with cms logic
+- [Service](src/Service)
+    - [JQuery](src/Service/JQuery.php) | Class to integrate jquery library
+    - [JQueryUi](src/Service/JQueryUi.php) | Class to integrate jquery-ui library
 - [Table](src/Table.php) | Extended class to represent an existing table within a database, adds cms config
 
 ### Testing
