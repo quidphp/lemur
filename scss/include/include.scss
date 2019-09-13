@@ -73,9 +73,9 @@ $media: $uriMedia;
 		border-collapse: collapse;
 		font-weight: normal;
 		vertical-align: middle;
-		box-sizing: content-box;
-		-moz-box-sizing: border-box;
-		-ms-box-sizing: border-box;
+		box-sizing: border-box;
+		-webkit-box-sizing: content-box;
+        -moz-box-sizing: border-box;
         
 		td, th {
 			border: 0;

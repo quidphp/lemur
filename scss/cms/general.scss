@@ -183,9 +183,9 @@
 	vertical-align: middle;
 	background-color: $color;
 	min-width: 100px;
-	height: 100%;
 	position: relative;
-	
+	height: 100%;
+    
 	&:first-child .in {
 		border-left: 1px solid $darkColor;
 	}
@@ -220,7 +220,7 @@
 .general main .inner > .container table thead .rows {
 	width: 40px;
 	min-width: inherit;
-	
+    
 	.in {
 		cursor: pointer;
 		padding: 10px;
@@ -477,8 +477,8 @@
 		}
 	}
 	td {
-		height: 100%;
-		
+		min-height: 100%;
+        
 		.in {
 			@include transition(background-color);
 			border-right: 1px solid $lighterGray;
