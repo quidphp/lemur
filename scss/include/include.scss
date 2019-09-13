@@ -75,7 +75,8 @@ $media: $uriMedia;
 		vertical-align: middle;
 		box-sizing: content-box;
 		-moz-box-sizing: border-box;
-		
+		-ms-box-sizing: border-box;
+        
 		td, th {
 			border: 0;
 			padding: 0;
