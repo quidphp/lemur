@@ -204,7 +204,8 @@
 		position: relative;
 		text-align: left;
 		border-right: 1px solid $darkColor;
-		
+		box-sizing: border-box;
+        
 		.label {
 			@include inbl();
 			vertical-align: middle;
@@ -490,7 +491,8 @@
 			color: $black;
 			display: block;
 			position: relative;
-			
+			box-sizing: border-box;
+            
 			a {
 				display: block;
 				color: $black;
