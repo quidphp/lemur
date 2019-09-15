@@ -98,7 +98,7 @@ class Route extends Base\Test
         assert($route::getOverloadKeyPrepend() === 'Route');
 
         // routing
-        assert($obj2->_cast() === '/en/login');
+        assert($obj2->_cast() === '/en/login/submit');
         assert($route::allowed());
         assert(!$login::allowed());
         assert($sitemap::allowed());
@@ -125,22 +125,22 @@ class Route extends Base\Test
         assert(!$obj2->isSelected());
         assert($obj2->hasUri());
         assert(!$route::make()->hasUri());
-        assert($obj2->uri() === '/en/login');
+        assert($obj2->uri() === '/en/login/submit');
         assert($login::make()->uri() === '/');
         assert($sitemap::make()->uri() === '/sitemap.xml');
-        assert($obj2->uriOutput() === '/en/login');
-        assert($obj2->uriRelative() === '/en/login');
-        assert($obj2->uriAbsolute() === Base\Request::schemeHost().'/en/login');
-        assert($obj2->a() === "<a href='/en/login' hreflang='en'></a>");
-        assert($obj2->a('okk','#id class2','fr',['attr'=>['href'=>['lang'=>false]]]) === "<a href='/fr/connexion' id='id' class='class2'>okk</a>");
-        assert($obj2->aOpen() === "<a href='/en/login' hreflang='en'>");
-        assert($obj2->aOpen('okkk','#id class2','fr') === "<a href='/fr/connexion' id='id' class='class2' hreflang='fr'>okkk");
-        assert($obj2->aTitle() === "<a href='/en/login' hreflang='en'>Login - Submit</a>");
-        assert($obj2->aOpenTitle() === "<a href='/en/login' hreflang='en'>Login - Submit");
-        assert($obj2->aOpenTitle(3) === "<a href='/en/login' hreflang='en'>Log");
-        assert($obj2->aOpenTitle('%:','#id class2') === "<a href='/en/login' id='id' class='class2' hreflang='en'>Login - Submit:");
+        assert($obj2->uriOutput() === '/en/login/submit');
+        assert($obj2->uriRelative() === '/en/login/submit');
+        assert($obj2->uriAbsolute() === Base\Request::schemeHost().'/en/login/submit');
+        assert($obj2->a() === "<a href='/en/login/submit' hreflang='en'></a>");
+        assert($obj2->a('okk','#id class2','fr',['attr'=>['href'=>['lang'=>false]]]) === "<a href='/fr/connexion/soumettre' id='id' class='class2'>okk</a>");
+        assert($obj2->aOpen() === "<a href='/en/login/submit' hreflang='en'>");
+        assert($obj2->aOpen('okkk','#id class2','fr') === "<a href='/fr/connexion/soumettre' id='id' class='class2' hreflang='fr'>okkk");
+        assert($obj2->aTitle() === "<a href='/en/login/submit' hreflang='en'>Login - Submit</a>");
+        assert($obj2->aOpenTitle() === "<a href='/en/login/submit' hreflang='en'>Login - Submit");
+        assert($obj2->aOpenTitle(3) === "<a href='/en/login/submit' hreflang='en'>Log");
+        assert($obj2->aOpenTitle('%:','#id class2') === "<a href='/en/login/submit' id='id' class='class2' hreflang='en'>Login - Submit:");
         $loginMake = $login::make();
-        assert(strlen($obj2->formOpen()) === 207);
+        assert(strlen($obj2->formOpen()) === 214);
         assert(strlen($loginMake->formOpen(['method'=>'post'])) === 199);
         assert($loginMake->formSubmit(null,'nameOK') === "<form action='/' method='get'><button name='nameOK' type='submit'></button></form>");
         assert($loginMake->submitTitle('% ok') === "<button type='submit'>Login ok</button>");
@@ -172,14 +172,14 @@ class Route extends Base\Test
         assert($loginSubmit::parent() === Lemur\Cms\Login::class);
         assert($loginSubmit::hasPath('fr'));
         assert($loginSubmit::hasPath());
-        assert($loginSubmit::paths() === ['en'=>'login','fr'=>'connexion']);
+        assert($loginSubmit::paths() === ['en'=>'login/submit','fr'=>'connexion/soumettre']);
         assert($route::path() === false);
         assert($route::path(null,true) === null);
-        assert($login::path() === '');
-        assert($login::path('fr',true) === null);
+        assert($login::path('fr') === '');
+        assert($login::path('fr',true) === '');
         assert($loginSubmit::path() === false);
         assert($loginSubmit::path('ge',true) === false);
-        assert($loginSubmit::path('fr') === 'connexion');
+        assert($loginSubmit::path('fr') === 'connexion/soumettre');
         assert($loginSubmit::isSsl() === null);
         assert($route::isSsl() === null);
         assert($loginSubmit::isAjax() === null);
@@ -476,26 +476,26 @@ class Route extends Base\Test
         assert($match4->schemeHost(true) === $schemeHost);
 
         // uri
-        assert($match4->uri('fr') === $schemeHost.'/fr/connexion');
+        assert($match4->uri('fr') === $schemeHost.'/fr/connexion/soumettre');
         assert($match->uri('fr') === $schemeHost);
-        assert($match4->uri('fr',['query'=>['test'=>2,'james'=>'lolé']]) === $schemeHost.'/fr/connexion?test=2&james=lolé');
-        assert($match4->uri('fr',['query'=>true]) === $schemeHost.'/fr/connexion');
+        assert($match4->uri('fr',['query'=>['test'=>2,'james'=>'lolé']]) === $schemeHost.'/fr/connexion/soumettre?test=2&james=lolé');
+        assert($match4->uri('fr',['query'=>true]) === $schemeHost.'/fr/connexion/soumettre');
 
         // uriPrepare
 
         // uriOutput
-        assert($match4->uriOutput('fr',['absolute'=>true]) === $schemeHost.'/fr/connexion');
-        assert($match4->uriOutput('fr',['absolute'=>false]) === '/fr/connexion');
-        assert($match4->uriOutput('fr') === '/fr/connexion');
+        assert($match4->uriOutput('fr',['absolute'=>true]) === $schemeHost.'/fr/connexion/soumettre');
+        assert($match4->uriOutput('fr',['absolute'=>false]) === '/fr/connexion/soumettre');
+        assert($match4->uriOutput('fr') === '/fr/connexion/soumettre');
 
         // uriRelative
-        assert($match4->uriRelative('fr') === '/fr/connexion');
+        assert($match4->uriRelative('fr') === '/fr/connexion/soumettre');
 
         // uriAbsolute
-        assert($match4->uriAbsolute('fr') === $schemeHost.'/fr/connexion');
+        assert($match4->uriAbsolute('fr') === $schemeHost.'/fr/connexion/soumettre');
         assert($match5->uriAbsolute('de') === null);
-        assert($match6->uriAbsolute('en') === $schemeHost.'/en/login');
-        assert($match5->uriAbsolute('fr') === $schemeHost.'/fr/connexion');
+        assert($match6->uriAbsolute('en') === $schemeHost.'/en/login/submit');
+        assert($match5->uriAbsolute('fr') === $schemeHost.'/fr/connexion/soumettre');
 
         // allowed
         assert($match3::allowed(80,$session->role()));

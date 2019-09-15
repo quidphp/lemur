@@ -20,9 +20,48 @@ class Login extends Core\Route\Login
 
 
     // config
-    public static $config = [];
+    public static $config = [
+        'path'=>array(
+            null,
+            'fr'=>'',
+            'en'=>'')
+    ];
 
-
+    
+    // onBefore
+    // enregistre l'uri demandé si path n'est pas empty
+    protected function onBefore()
+    {
+        $return = true;
+        
+        if(!$this->request()->isPathMatchEmpty())
+        {
+            $flash = $this->session()->flash();
+            $redirect = $this->request()->absolute();
+            $flash->set('login/redirect',$redirect);
+            $return = false;
+        }
+        
+        return $return;
+    }
+    
+    
+    // fallbackRouteRedirect
+    // retourne la route login pour la redirection
+    // seulement si l'url n'est pas celle de la requête courante
+    public function fallbackRouteRedirect($context=null)
+    {
+        $return = null;
+        $request = $this->request();
+        $route = static::make();
+        
+        if($route->uriRelative() !== $request->relative())
+        $return = $route;
+        
+        return $return;
+    }
+    
+    
     // onReplace
     // change le titre et background de la route
     protected function onReplace(array $return):array

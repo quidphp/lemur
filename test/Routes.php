@@ -47,8 +47,8 @@ class Routes extends Base\Test
         assert($routes->withSegment()->count() > 5);
         assert($routes->withoutSegment()->count() > 5);
         assert($routes->active()->count() !== $routes->count());
-        assert($routes::makeBreadcrumbs('/',null,$login::make(),$loginSubmit::make()) === "<a href='/'>Login</a>/<a href='/en/login' hreflang='en'>Login - Submit</a>");
-        assert($routes::makeBreadcrumbs('/',5,$login::make(),$loginSubmit::make()) === "<a href='/'>Login</a>/<a href='/en/login' hreflang='en'>Lo...</a>");
+        assert($routes::makeBreadcrumbs('/',null,$login::make(),$loginSubmit::make()) === "<a href='/'>Login</a>/<a href='/en/login/submit' hreflang='en'>Login - Submit</a>");
+        assert($routes::makeBreadcrumbs('/',5,$login::make(),$loginSubmit::make()) === "<a href='/'>Login</a>/<a href='/en/login/submit' hreflang='en'>Lo...</a>");
 
         // classe
         assert($routes->not($routes)->add($routes)->count() > 20);
@@ -58,7 +58,7 @@ class Routes extends Base\Test
         assert($routes->not($routes->not('Home'))->count() === 1);
         assert($routes->pair('priority')['Home'] === 1);
         assert(is_numeric($routes->pairStr('priority')));
-        assert($routes->pair('path','en')['LoginSubmit'] === 'login');
+        assert($routes->pair('path','en')['LoginSubmit'] === 'login/submit');
         assert($routes->pair('label','%:',null,['error'=>false])['Home'] === 'Home:');
         assert($routes->filter(['group'=>'home'])->isCount(1));
         assert($routes->first(['group'=>'home']) === Lemur\Cms\Home::class);

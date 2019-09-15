@@ -581,6 +581,15 @@
 }
 
 
+/* IE EDGE */
+@supports (-ms-ime-align:auto) {
+    .general main .inner > .container table thead th,
+    .general main .inner > .container table tbody td {
+        box-sizing: border-box;
+    }
+}
+
+
 /* RESPONSIVE */
 @media screen and (max-width: 900px), screen and (orientation: portrait) { 
 	.general main .inner > .container {
