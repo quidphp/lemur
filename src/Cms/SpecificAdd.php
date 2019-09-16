@@ -8,9 +8,9 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Cms;
+use Quid\Base;
 use Quid\Base\Html;
 use Quid\Core;
-use Quid\Base;
 
 // specificAdd
 // class for the specific add route of the CMS, generates the insert form for a row

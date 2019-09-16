@@ -8,8 +8,8 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Col;
-use Quid\Core;
 use Quid\Base;
+use Quid\Core;
 
 // error
 // extended class for a column that manages an error object as a value

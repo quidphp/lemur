@@ -8,8 +8,8 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Col;
-use Quid\Lemur;
 use Quid\Core;
+use Quid\Lemur;
 
 // date
 // extended class for a date column, supports many date formats

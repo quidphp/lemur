@@ -8,10 +8,10 @@ declare(strict_types=1);
  */
 
 namespace Quid\Test\Lemur;
-use Quid\TestSuite;
-use Quid\Lemur;
-use Quid\Core;
 use Quid\Base;
+use Quid\Core;
+use Quid\Lemur;
+use Quid\TestSuite;
 
 // table
 // class for testing table

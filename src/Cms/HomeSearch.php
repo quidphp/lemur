@@ -8,9 +8,9 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Cms;
+use Quid\Base;
 use Quid\Base\Html;
 use Quid\Core;
-use Quid\Base;
 
 // homeSearch
 // class for the global search route accessible from the homepage of the CMS

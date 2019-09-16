@@ -8,8 +8,8 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Cms;
-use Quid\Core;
 use Quid\Base;
+use Quid\Core;
 
 // generalDelete
 // class for the route which allows deleting rows from the general navigation page of the CMS

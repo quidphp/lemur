@@ -8,8 +8,8 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Col;
-use Quid\Lemur;
 use Quid\Core;
+use Quid\Lemur;
 
 // textarea
 // extended class for a column which is editable through a textarea input

@@ -8,8 +8,8 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Cms;
-use Quid\Base\Html;
 use Quid\Base;
+use Quid\Base\Html;
 
 // _nobody
 // trait which provides commonly used methods for routes where the user is not logged in the CMS

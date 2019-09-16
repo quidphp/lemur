@@ -8,8 +8,8 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Row;
-use Quid\Lemur;
 use Quid\Core;
+use Quid\Lemur;
 
 // user
 // extended class for a row of the user table, with cms logic

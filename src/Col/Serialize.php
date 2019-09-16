@@ -8,8 +8,8 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Col;
-use Quid\Core;
 use Quid\Base;
+use Quid\Core;
 
 // serialize
 // extended class for a column which should serialize its value

@@ -8,8 +8,8 @@ declare(strict_types=1);
  */
 
 namespace Quid\Test\Lemur;
-use Quid\Lemur;
 use Quid\Base;
+use Quid\Lemur;
 
 // boot
 // class for testing Quid\Lemur\Boot

@@ -8,8 +8,8 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Cms;
-use Quid\Core;
 use Quid\Base;
+use Quid\Core;
 
 // _specificSubmit
 // trait that provides commonly used methods for the specific submit routes of the CMS

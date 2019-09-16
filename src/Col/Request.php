@@ -8,8 +8,8 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Col;
-use Quid\Core;
 use Quid\Base;
+use Quid\Core;
 
 // request
 // extended class for a column that manages a request object as a value

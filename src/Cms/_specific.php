@@ -8,10 +8,10 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Cms;
+use Quid\Base;
 use Quid\Base\Html;
 use Quid\Core;
 use Quid\Main;
-use Quid\Base;
 
 // _specific
 // trait that provides commonly used methods for the specific routes of the CMS

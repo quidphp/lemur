@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Quid\Lemur\Col;
 use Quid\Base\Html;
-use Quid\Lemur;
 use Quid\Core;
+use Quid\Lemur;
 
 // relation
 // extended abstract class extended for relation

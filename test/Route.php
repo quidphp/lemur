@@ -8,12 +8,12 @@ declare(strict_types=1);
  */
 
 namespace Quid\Test\Lemur;
-use Quid\TestSuite;
-use Quid\Lemur;
-use Quid\Core;
-use Quid\Routing;
-use Quid\Main;
 use Quid\Base;
+use Quid\Core;
+use Quid\Lemur;
+use Quid\Main;
+use Quid\Routing;
+use Quid\TestSuite;
 
 // route
 // class for testing route

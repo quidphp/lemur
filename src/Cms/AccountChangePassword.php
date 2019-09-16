@@ -8,9 +8,9 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Cms;
+use Quid\Base;
 use Quid\Base\Html;
 use Quid\Core;
-use Quid\Base;
 
 // accountChangePassword
 // class for the change password route in the CMS

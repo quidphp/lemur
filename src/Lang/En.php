@@ -16,7 +16,7 @@ class En extends Core\Lang\En
 {
     // config
     public static $config = [
-        
+
         // role
         'role'=>[
 

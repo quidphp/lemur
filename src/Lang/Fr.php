@@ -16,7 +16,7 @@ class Fr extends Core\Lang\Fr
 {
     // config
     public static $config = [
-        
+
         // role
         'role'=>[
 

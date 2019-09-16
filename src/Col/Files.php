@@ -8,8 +8,8 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Col;
-use Quid\Lemur;
 use Quid\Core;
+use Quid\Lemur;
 
 // files
 // extended abstract class extended by the media and medias cols

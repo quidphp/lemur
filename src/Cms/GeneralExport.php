@@ -8,9 +8,9 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Cms;
+use Quid\Base;
 use Quid\Core;
 use Quid\Orm;
-use Quid\Base;
 
 // generalExport
 // class for the route which generates the CSV export for the CMS

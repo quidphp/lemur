@@ -8,8 +8,8 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Cms;
-use Quid\Base\Html;
 use Quid\Base;
+use Quid\Base\Html;
 
 // _template
 // trait that grants the methods to generate the CMS HTML template
