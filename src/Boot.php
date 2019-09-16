@@ -20,7 +20,7 @@ abstract class Boot extends Core\Boot
         'finderShortcut'=>[ // shortcut pour finder
             'vendorLemur'=>'[vendor]/quidphp/lemur'],
         'symlink'=>[
-            '[vendorLemur]/js/jquery'=>'[publicJs]/jquery'],
+            '[vendorLemur]/js/vendor/jquery'=>'[publicJs]/jquery'],
         'concatenatePhp'=>[ // ajoute le namespace pour le concatenator php
             'quid'=>[
                 'option'=>[
@@ -50,7 +50,7 @@ abstract class Boot extends Core\Boot
                     'generalExcerptMin'=>100]],
             'compileScss'=>[
                 '[publicCss]/cms.css'=>[
-                    0=>'[vendorLemur]/scss/normalize/normalize.css',
+                    0=>'[vendorLemur]/scss/vendor/normalize/normalize.css',
                     1=>'[vendorLemur]/scss/include/include.scss',
                     2=>'[vendorLemur]/scss/include/component.scss',
                     3=>'[vendorLemur]/scss/cms/include.scss',

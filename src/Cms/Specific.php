@@ -465,7 +465,7 @@ class Specific extends Core\RouteAlias
             $route = SpecificDuplicate::class;
             $data = ['confirm'=>static::langText('common/confirm')];
             $attr = ['icon','duplicate','padLeft','name'=>'--duplicate--','value'=>1,'data'=>$data];
-            $r .= Html::submit($route::label(),$attr);
+            $r .= $route::make()->submitLabel(null,$attr);
         }
 
         return $r;

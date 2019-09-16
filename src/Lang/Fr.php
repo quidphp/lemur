@@ -16,6 +16,18 @@ class Fr extends Core\Lang\Fr
 {
     // config
     public static $config = [
+        
+        // role
+        'role'=>[
+
+            // label
+            'label'=>[
+                50=>'Contributeur',
+                60=>'Éditeur',
+                70=>'Sous-administrateur'
+            ]
+        ],
+
         // cms
         '@cms'=>[
 
@@ -384,17 +396,6 @@ class Fr extends Core\Lang\Fr
                     'visibility'=>"Ce panneau contient les champs en lien avec la visibilité de l'élément.",
                     'meta'=>'Ce panneau contient des champs en lien avec les méta-données de la ligne',
                     'param'=>'Ce panneau contient des champs en lien avec les paramètres de la ligne'
-                ]
-            ],
-
-            // role
-            'role'=>[
-
-                // label
-                'label'=>[
-                    50=>'Contributeur',
-                    60=>'Éditeur',
-                    70=>'Sous-administrateur'
                 ]
             ],
 

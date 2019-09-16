@@ -135,6 +135,8 @@ class Route extends Base\Test
         assert($obj2->a('okk','#id class2','fr',['attr'=>['href'=>['lang'=>false]]]) === "<a href='/fr/connexion/soumettre' id='id' class='class2'>okk</a>");
         assert($obj2->aOpen() === "<a href='/en/login/submit' hreflang='en'>");
         assert($obj2->aOpen('okkk','#id class2','fr') === "<a href='/fr/connexion/soumettre' id='id' class='class2' hreflang='fr'>okkk");
+        assert($obj2->aLabel() === "<a href='/en/login/submit' hreflang='en'>Login - Submit</a>");
+        assert($obj2->aOpenLabel() === "<a href='/en/login/submit' hreflang='en'>Login - Submit");
         assert($obj2->aTitle() === "<a href='/en/login/submit' hreflang='en'>Login - Submit</a>");
         assert($obj2->aOpenTitle() === "<a href='/en/login/submit' hreflang='en'>Login - Submit");
         assert($obj2->aOpenTitle(3) === "<a href='/en/login/submit' hreflang='en'>Log");
@@ -143,6 +145,7 @@ class Route extends Base\Test
         assert(strlen($obj2->formOpen()) === 214);
         assert(strlen($loginMake->formOpen(['method'=>'post'])) === 199);
         assert($loginMake->formSubmit(null,'nameOK') === "<form action='/' method='get'><button name='nameOK' type='submit'></button></form>");
+        assert($loginMake::submitLabel('% ok') === "<button type='submit'>Login ok</button>");
         assert($loginMake->submitTitle('% ok') === "<button type='submit'>Login ok</button>");
         assert($loginSubmit::make() instanceof $loginSubmit);
         assert($loginSubmit::makeOverload() instanceof $loginSubmit);
@@ -190,6 +193,8 @@ class Route extends Base\Test
         assert(!$route::isRedirectable());
         assert($contact::isRedirectable());
         assert(!$sitemap::isRedirectable());
+        assert($contact::shouldKeepInHistory());
+        assert($loginSubmit::shouldKeepInHistory());
         assert(!$route::hasCheck('captcha'));
         assert($route::timeout() === []);
         assert(is_array($loginSubmit::timeout()['trigger']));

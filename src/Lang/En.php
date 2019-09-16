@@ -16,6 +16,18 @@ class En extends Core\Lang\En
 {
     // config
     public static $config = [
+        
+        // role
+        'role'=>[
+
+            // label
+            'label'=>[
+                50=>'Contributor',
+                60=>'Editor',
+                70=>'Sub-Admin'
+            ]
+        ],
+
         // cms
         '@cms'=>[
 
@@ -384,17 +396,6 @@ class En extends Core\Lang\En
                     'visibility'=>'This panel contains the fields related to the visibility of the element.',
                     'meta'=>'This panel contains fields related to the metadata of the line',
                     'param'=>'This panel contains fields related to the parameters of the line'
-                ]
-            ],
-
-            // role
-            'role'=>[
-
-                // label
-                'label'=>[
-                    50=>'Contributor',
-                    60=>'Editor',
-                    70=>'Sub-Admin'
                 ]
             ],
 
