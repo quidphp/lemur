@@ -32,6 +32,7 @@ abstract class Boot extends Core\Boot
                 'jQuery'=>Service\JQuery::class,
                 'jQueryUi'=>Service\JQueryUi::class],
             'option'=>[
+                'versionQuid'=>true,
                 'background'=>null,
                 'logo'=>null],
             'config'=>[

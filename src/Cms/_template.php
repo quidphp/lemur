@@ -303,7 +303,10 @@ trait _template
     protected function footerRight():string
     {
         $r = '';
-        $version = static::boot()->version(true,true,true);
+        $boot = static::boot();
+        $showQuid = $boot->getOption('versionQuid');
+        $version = $boot->version(true,$showQuid,true);
+
         $author = $this->authorLink();
         $copyright = static::langText('footer/copyright',['version'=>$version]);
 
