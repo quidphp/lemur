@@ -27,7 +27,7 @@ class Fr extends Core\Lang\Fr
                 70=>'Sous-administrateur'
             ]
         ],
-        
+
         // relation
         'relation'=>[
 
@@ -36,7 +36,7 @@ class Fr extends Core\Lang\Fr
                 'cms'=>'Gestionnaire de contenu'
             ]
         ],
-        
+
         // cms
         '@cms'=>[
 

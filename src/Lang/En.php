@@ -36,7 +36,7 @@ class En extends Core\Lang\En
                 'cms'=>'Content management system'
             ]
         ],
-        
+
         // cms
         '@cms'=>[
 
