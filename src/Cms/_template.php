@@ -304,7 +304,7 @@ trait _template
     {
         $r = '';
         $boot = static::boot();
-        $showQuid = $boot->getOption('versionQuid');
+        $showQuid = $boot->getOption('versionQuid') ?? true;
         $version = $boot->version(true,$showQuid,true);
 
         $author = $this->authorLink();
