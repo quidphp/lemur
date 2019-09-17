@@ -27,7 +27,16 @@ class Fr extends Core\Lang\Fr
                 70=>'Sous-administrateur'
             ]
         ],
+        
+        // relation
+        'relation'=>[
 
+            // contextType
+            'contextType'=>[
+                'cms'=>'Gestionnaire de contenu'
+            ]
+        ],
+        
         // cms
         '@cms'=>[
 
@@ -428,15 +437,6 @@ class Fr extends Core\Lang\Fr
 
                 // description
                 'description'=>[]
-            ],
-
-            // relation
-            'relation'=>[
-
-                // contextType
-                'contextType'=>[
-                    'cms'=>'Gestionnaire de contenu'
-                ]
             ]
         ]
     ];

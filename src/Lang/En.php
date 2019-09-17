@@ -28,6 +28,15 @@ class En extends Core\Lang\En
             ]
         ],
 
+        // relation
+        'relation'=>[
+
+            // contextType
+            'contextType'=>[
+                'cms'=>'Content management system'
+            ]
+        ],
+        
         // cms
         '@cms'=>[
 
@@ -428,15 +437,6 @@ class En extends Core\Lang\En
 
                 // description
                 'description'=>[]
-            ],
-
-            // relation
-            'relation'=>[
-
-                // contextType
-                'contextType'=>[
-                    'cms'=>'Content management system'
-                ]
             ]
         ]
     ];
