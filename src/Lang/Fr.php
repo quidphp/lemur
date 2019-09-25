@@ -171,8 +171,8 @@ class Fr extends Core\Lang\Fr
                     'logError'=>'Log des erreurs',
                     'logHttp'=>'Log des requêtes HTTP échouées',
                     'logSql'=>'Log des requêtes SQL',
-                    'queueEmail'=>"Email en attente d'envoie",
-                    'session'=>'Suivi des session actives',
+                    'queueEmail'=>"Email en attente d'envoi",
+                    'session'=>'Suivi des sessions actives',
                     'user'=>"Utilisateurs pouvant accéder à l'application et/ou au CMS"]
             ],
 
