@@ -1,3 +1,5 @@
+"use strict";
+
 /*
  * This file is part of the QuidPHP package.
  * Website: https://quidphp.com
@@ -413,7 +415,7 @@
 		
 		if($.isString(uri))
 		{
-			$dom = document.createElement('a');
+			var $dom = document.createElement('a');
 			$dom.href = uri;
 			
 			r.scheme = $dom.protocol.substr(0, $dom.protocol.indexOf(':')) || $.currentScheme();

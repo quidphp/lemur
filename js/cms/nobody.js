@@ -1,3 +1,5 @@
+"use strict";
+
 /*
  * This file is part of the QuidPHP package.
  * Website: https://quidphp.com
@@ -9,21 +11,25 @@
 $(document).ready(function() {
 	
 	// login
+    // comportement pour la page login
 	$(this).on('route:login', function() {
 		$(this).trigger('route:nobodyCommon');
 	})
 	
 	// resetPassword
+    // comportement pour la page regénérer mon mot de passe
 	.on('route:resetPassword', function(event) {
 		$(this).trigger('route:nobodyCommon');
 	})
 	
 	// register
+    // comportement pour la page enregistrement
 	.on('route:register', function(event) {
 		$(this).trigger('route:nobodyCommon');
 	})
 	
-	// common
+    // nobodyCommon
+    // comportements commun pour toutes les pages ou l'utilisateur n'est pas connecté
 	.on('route:nobodyCommon', function(event) {
 		var browscap = $(this).find(".nobody .browscap");
 		var form = $(this).find(".nobody form");

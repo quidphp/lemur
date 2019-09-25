@@ -1,3 +1,5 @@
+"use strict";
+
 /*
  * This file is part of the QuidPHP package.
  * Website: https://quidphp.com
@@ -9,6 +11,7 @@
 $(document).ready(function() {
 
 	// changePassword
+    // comportement pour le popup changer mon mot de passe
 	$(this).on('jsBox:dialogAccountChangePassword', function(event,jsBox) {
 		var form = jsBox.find("form");
 		form.formValidate().find("[data-required],[data-pattern]").focusFirst();

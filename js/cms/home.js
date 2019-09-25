@@ -1,3 +1,5 @@
+"use strict";
+
 /*
  * This file is part of the QuidPHP package.
  * Website: https://quidphp.com
@@ -9,6 +11,7 @@
 $(document).ready(function() {
 	
 	// home
+    // comportement pour la page d'accueil du CMS une fois connecté
 	$(this).on('route:home', function() {
 		
 		var form = $(this).find(".home form");

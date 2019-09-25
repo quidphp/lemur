@@ -10,6 +10,7 @@
 // stylesheet that contains variables and mixins for the CMS
 
 // var
+// variable pour le cms
 $font: 'Helvetica Neue', 'Helvetica', sans-serif;
 $color: #2a2b69;
 $darkColor: #181844;
@@ -25,6 +26,7 @@ $green: #579758;
 $red: #8d1e2d;
 
 // nothing
+// style pour le texte Rien à afficher
 @mixin nothing($center: '') {
     display: block;
     font-weight: bold;
@@ -35,11 +37,13 @@ $red: #8d1e2d;
 }
 
 // ulOlMargin
+// margin utilisé pour les ul/ol
 @mixin ulOlMargin() {
     margin-left: 1.7rem;
 }
 
 // panelButton
+// mixin pour les styles des boutons de panneaux
 @mixin panelButton() {
     @include inbl();
     padding: 5px 15px;
@@ -60,6 +64,7 @@ $red: #8d1e2d;
 }
 
 // jqueryUi
+// quelques styles reliés à jquery-ui pour les draggable
 @mixin jqueryUi() {
     .ui-draggable-handle {
         -ms-touch-action: none;
@@ -81,6 +86,7 @@ $red: #8d1e2d;
 }
 
 // loadMore
+// mixin avec les styles pour le bouton loadMore utilisé dans les champs de relation enumSet
 @mixin loadMore() {
     @include transitions(color 0.3s);
     text-align: center;
@@ -105,6 +111,7 @@ $red: #8d1e2d;
 }
 
 // clickOpenPopup
+// mixin avec des styles de base pour le popup qui s'affiche après avoir cliqué sur le trigger d'un clickOpen
 @mixin clickOpenPopup() {
     width: 350px;
     max-width: 350px;
@@ -170,6 +177,7 @@ $red: #8d1e2d;
 }
 
 // specificNav
+// styles utilisés pour la navigation de la page spécifique
 @mixin specificNav() {
     @include inbl();
     background-color: $lightestGray;
@@ -202,6 +210,7 @@ $red: #8d1e2d;
 }
 
 // inputChoice
+// style utilisé pour faire un choix parmis plusieurs input radio ou checkbox
 @mixin inputChoice() {
     input[type='radio'],
     input[type='checkbox'] {
@@ -216,26 +225,8 @@ $red: #8d1e2d;
     }
 }
 
-// wysiwyg
-@mixin wysiwyg() {
-    ul {
-        @include ulOlMargin();
-
-        > li {
-            padding: 2px 0;
-        }
-    }
-
-    a {
-        color: $color;
-
-        &:hover {
-            color: $darkGray;
-        }
-    }
-}
-
 // tableForm
+// mixin avec les styles pour un formulaire dans une table, comme la page de connexion
 @mixin tableForm($color, $labelHover) {
     label {
         color: $color;
@@ -284,6 +275,8 @@ $red: #8d1e2d;
 }
 
 // jsonArrayBase
+// contient les styles de base pour la composante jsonArray
+// un champ complexe où l'on peut ajouté, déplacer ou supprimer des lignes
 @mixin jsonArrayBase() {
     .right > .container > .ele {
         position: relative;
@@ -341,6 +334,27 @@ $red: #8d1e2d;
 
         &:hover {
             background-color: $gray;
+        }
+    }
+}
+
+// wysiwyg
+// mixin avec quelques styles pour un bloc de style article
+// peut être utilisé pour afficher du contenu provenant d'un éditeur WYSIWYG
+@mixin wysiwyg() {
+    ul {
+        @include ulOlMargin();
+
+        > li {
+            padding: 2px 0;
+        }
+    }
+
+    a {
+        color: $color;
+
+        &:hover {
+            color: $darkGray;
         }
     }
 }

@@ -1,3 +1,5 @@
+"use strict";
+
 /*
  * This file is part of the QuidPHP package.
  * Website: https://quidphp.com
@@ -133,7 +135,7 @@
 			jsBox.trigger('jsBox:open',[$(this).data('jsBox')]);
 		})
 		.on('ajax:success', function(event,data,textStatus,jqXHR) {
-			$this = $(this);
+			var $this = $(this);
 			var callback = function() {
 				jsBox.trigger('jsBox:route');
 				$this.trigger('jsBox:success',[jsBox]);

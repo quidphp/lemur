@@ -10,6 +10,7 @@
 // stylesheet containing various reusable component mixins
 
 // jsBox
+// mixin avec les styles de base pour la box (modal)
 @mixin jsBox() {
     .jsBox {
         @include fixed(0, '', '', 0);
@@ -47,6 +48,7 @@
 }
 
 // basePopup
+// mixin avec les styles de base pour un popup
 @mixin basePopup() {
     .topRight .popup {
         left: auto;
@@ -69,6 +71,8 @@
 }
 
 // clickOpen
+// mixin avec quelques styles de base pour un widget clickOpen
+// le trigger ouvre le clickOpen, un click sur le body le ferme
 @mixin clickOpen() {
     @include inbl();
     position: relative;
@@ -130,6 +134,7 @@
 }
 
 // enumSet
+// mixin avec quelques styles de base pour un champ enumSet (recherche dans relation)
 @mixin enumSet() {
     .nothing {
         font-weight: bold;
@@ -159,6 +164,7 @@
 }
 
 // enumSetLi
+// mixin avec quelques styles de base pour le contenu d'un champ enumSet
 @mixin enumSetLi() {
     padding: 0px;
 
@@ -179,6 +185,8 @@
 }
 
 // mediaSlide
+// mixin avec règles de base utilisé pour que du contenu média s'affiche dans un slider
+// supporte les iframe
 @mixin mediaSlide($maxWidth, $paddingBottom) {
     display: none;
 

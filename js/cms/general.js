@@ -1,3 +1,5 @@
+"use strict";
+
 /*
  * This file is part of the QuidPHP package.
  * Website: https://quidphp.com
@@ -146,6 +148,7 @@ $(document).ready(function() {
 	
 	
 	// general
+    // comportement pour la page de navigation
 	$(this).on('route:general', function() {
 		
 		var search = $(this).find(".general .left > .search");

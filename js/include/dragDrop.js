@@ -1,3 +1,5 @@
+"use strict";
+
 /*
  * This file is part of the QuidPHP package.
  * Website: https://quidphp.com
@@ -16,7 +18,7 @@
 		if($.isStringNotEmpty(items))
 		{
 			$(this).each(function() {
-				sortContainment = containment || $(this);
+				var sortContainment = containment || $(this);
 				$(this).sortable({
 					axis: "y",
 					handle: '.move',

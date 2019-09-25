@@ -1,3 +1,5 @@
+"use strict";
+
 /*
  * This file is part of the QuidPHP package.
  * Website: https://quidphp.com
@@ -9,12 +11,15 @@
 $(document).ready(function() {
 	
 	// window
+    // peut forcer un changement de page, si la page est chargé de la cache
+    // nécessaire pour les formulaire
 	$(window).on("pageshow", function(event) {
 		if(event.originalEvent.persisted)
 	    window.location.href = window.location.href;
 	});
 	
 	// route:common
+    // comportements utilisés pour toutes les pages du CMS
 	$(this).on('route:common', function(event) {
 		var body = $(this).find("body");
 		var jsBox = $(this).find(".jsBox");
@@ -57,6 +62,7 @@ $(document).ready(function() {
 	})
 	
 	// route:common:com
+    // comportements utilisés pour l'outil de communication disponible sur toutes les pages
 	.on('route:commonCom', function(event) {
 		
 		var com = $(this).find("body #wrapper > .com .box");

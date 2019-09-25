@@ -10,12 +10,14 @@
 // stylesheet containing many helpers mixins
 
 // var
+// variable par défaut
 $font: 'Arial', sans-serif;
 $white: #fff;
 $black: #000;
 $media: $uriMedia;
 
 // reset
+// mixin utilisé pour attribuer des styles de base sur le document
 @mixin reset() {
     *,
     *::before,
@@ -125,6 +127,7 @@ $media: $uriMedia;
 }
 
 // default
+// mixin utilisé pour certaines fonctionnalités par défaut
 @mixin default() {
     body > div:first-child {
         margin: auto;
@@ -149,6 +152,7 @@ $media: $uriMedia;
 }
 
 // defaultClasses
+// mixin qui génère les classes par défaut
 @mixin defaultClasses() {
     .clear {
         clear: both;
@@ -182,6 +186,7 @@ $media: $uriMedia;
 }
 
 // abs
+// mixin utilisé pour positionner un élément en absolute
 @mixin abs($top: '', $right: '', $bottom: '', $left: '') {
     position: absolute;
 
@@ -202,14 +207,8 @@ $media: $uriMedia;
     }
 }
 
-// flexCenter
-@mixin flexCenter() {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 // fixed
+// mixin utilisé pour positionner un élément de façon fixed
 @mixin fixed($top: '', $right: '', $bottom: '', $left: '') {
     position: fixed;
 
@@ -230,7 +229,17 @@ $media: $uriMedia;
     }
 }
 
+// flexCenter
+// mixin utilisé pour créer un flexbox dont le contenu est centré horizontalement et verticalement
+@mixin flexCenter() {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 // wh
+// mixin utilisé pour attribuer une width et une height à un élément
+// possible d'ajouter une margin left ou top
 @mixin wh($width: 100%, $height: true, $marginLeft: '', $marginTop: '') {
     @if ($width != '') {
         width: $width;
@@ -262,6 +271,7 @@ $media: $uriMedia;
 }
 
 // inbl
+// mixin utilisé pour créer rapidement un élément en display inline-block
 @mixin inbl($verticalAlign: middle, $width: '') {
     display: inline-block;
 
@@ -275,6 +285,7 @@ $media: $uriMedia;
 }
 
 // blmw
+// mixin utilisé pour créer un élément en display block avec un maxWidth
 @mixin blmw($maxWidth: 100%, $marginAuto: '') {
     display: block;
 
@@ -288,6 +299,7 @@ $media: $uriMedia;
 }
 
 // bgimg
+// mixin utilisé pour ajouter une image d'arrière-plan
 @mixin bgimg($filename, $extension: png, $position: '') {
     background-image: url(#{$media}/#{$filename}.#{$extension});
     background-repeat: no-repeat;
@@ -298,6 +310,7 @@ $media: $uriMedia;
 }
 
 // bgimg64
+// mixin utilisé pour ajouter une image d'arrière-plan avec du code base64
 @mixin bgimg64($value, $position: '') {
     background-image: url($value);
     background-repeat: no-repeat;
@@ -308,6 +321,7 @@ $media: $uriMedia;
 }
 
 // cover
+// mixin utilisé pour que l'image d'arrière-plan s'adapte à l'espace
 @mixin cover($position: center) {
     background-size: cover;
     background-repeat: no-repeat;
@@ -318,6 +332,7 @@ $media: $uriMedia;
 }
 
 // animate
+// mixin utilisé pour créer des animations compatible avec tous les navigateurs
 @mixin animate($name, $time: 1s, $delay: 0s, $direction: normal, $fillMode: forwards) {
     -webkit-animation: $name $time $delay $direction $fillMode;
     -moz-animation: $name $time $delay $direction $fillMode;
@@ -327,6 +342,7 @@ $media: $uriMedia;
 }
 
 // animateCancel
+// mixin utilisé pour annuler une animation sur un élément
 @mixin animateCancel() {
     -webkit-animation: none;
     -moz-animation: none;
@@ -336,6 +352,8 @@ $media: $uriMedia;
 }
 
 // transition
+// mixin utilisé pour ajouter une transition sur un élément
+// fournir le nom de la propriété
 @mixin transition($prop, $duration: 0.3s) {
     transition: $prop $duration;
     -webkit-transition: $prop $duration;
@@ -345,6 +363,7 @@ $media: $uriMedia;
 }
 
 // transitionCancel
+// mixin utilisé pour annuler une transition sur un élément
 @mixin transitionCancel() {
     transition: none;
     -webkit-transition: none;
@@ -354,6 +373,7 @@ $media: $uriMedia;
 }
 
 // transitions
+// mixin utilisé pour créer plusieurs transitions sur un élément
 @mixin transitions($props...) {
     -webkit-transition: $props;
     -moz-transition: $props;
@@ -363,11 +383,13 @@ $media: $uriMedia;
 }
 
 // fade in
+// mixin pour qu'un élément s'anime avec un fadeIn
 @mixin fadeIn($time: 1s) {
     @include animate(fadein, $time);
 }
 
 // keyframes
+// mixin utilisé pour créer une animation complexe
 @mixin keyframes($name) {
     @-webkit-keyframes #{$name} {
         @content;
@@ -391,6 +413,7 @@ $media: $uriMedia;
 }
 
 // responsiveBlock
+// mixin utilisé pour annuler des styles et que l'élément s'affiche en block avec width auto
 @mixin responsiveBlock($important: '') {
     @if ($important != '') {
         display: block !important;

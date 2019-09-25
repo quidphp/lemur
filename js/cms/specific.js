@@ -1,3 +1,5 @@
+"use strict";
+
 /*
  * This file is part of the QuidPHP package.
  * Website: https://quidphp.com
@@ -9,18 +11,21 @@
 $(document).ready(function() {
 	
 	// specific
+    // comportement pour la page de modification spécifique
 	$(this).on('route:specific', function() {
 		$(this).trigger('route:specificCommon');
 		$(this).trigger('route:specificTrigger');
 	})
 	
 	// specificAdd
+    // comportement pour la page d'ajout spécifique
 	.on('route:specificAdd', function(event) {
 		$(this).trigger('route:specificCommon');
 		$(this).trigger('route:specificTrigger');
 	})
 	
 	// specificCommon
+    // comportements communs pour toutes les pages spécifiques
 	.on('route:specificCommon', function(event) {
 		var formWrapper = $(".specific .container > .form");
 		var panel = formWrapper.find(".panel");
@@ -50,7 +55,7 @@ $(document).ready(function() {
 		
 		// preparable
 		formWrapper.on('form:getPreparable', function(event) {
-			r = null;
+			var r = null;
 			
 			if(panel.length > 1)
 			r = panel;
@@ -66,6 +71,7 @@ $(document).ready(function() {
 	})
 	
 	// specificTrigger
+    // comportements communs pour la préparation des différents inputs du formulaire
 	.on('route:specificTrigger', function(event) {
 		var formWrapper = $(".specific .container > .form");
 		var form = formWrapper.find("form");
@@ -145,6 +151,7 @@ $(document).ready(function() {
 	})
 	
 	// route:specificCommon:panel
+    // comportements communs pour la préparation des panneaux du formulaire
 	.on('route:specificCommon:panel', function(event,form,panel) {
 		var panelNav = $(".specific .form .top .left ul li a");
 		var panelDescription = $(".specific .form .top .left .description");
