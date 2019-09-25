@@ -145,6 +145,8 @@ All dependencies will be resolved by using the [Composer](https://getcomposer.or
 ## JS
 
 ### Convention
+- *Strict*: All files declare *use strict* on the first line.
+- *ES5*: All code is compatible with ES5, there is no need for any JavaScript transpiler.
 - *jQuery*: All behaviours and widgets are programmed on top of the jQuery library. Many functions are connected with jQuery.fn. Custom events are used across the board, a lot of calls to the jQuery [trigger](https://api.jquery.com/trigger/) and [triggerHandler](https://api.jquery.com/triggerHandler/) methods.
 - *Include*: Many scripts are in the include folder. These scripts are used for the CMS but can also be reused within the application.
 
