@@ -33,7 +33,7 @@ abstract class Role extends Core\Role
                     'infoPopup'=>false,
                     'search'=>true]],
             'db'=>[
-                
+
                 // paramètres par défaut pour toutes les tables
                 '*'=>[ // le cms a beaucoup plus de paramètres pour chaque table
                     'view'=>true, // pouvoir voir la table dans le CMS
@@ -79,7 +79,7 @@ abstract class Role extends Core\Role
                     'generalRelation'=>true, // relatif aux relations, ne pas changer
                     'specificRelation'=>true, // relatif aux relations, ne pas changer
                     'tableRelation'=>true], // relatif aux relations, ne pas changer
-                
+
                 // ensuite ici paramètres spécifiques pour les tables
                 'user'=>[
                     'userWelcome'=>false],
