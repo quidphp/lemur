@@ -96,13 +96,24 @@
 		})
 		.on('click', function(event) {
 			event.stopPropagation();
+            
+            if($(this).triggerHandler('enumSetInput:hasChanged'))
 			$(this).trigger('ajax:beforeInit',[true]);
 		})
+        .on('enumSetInput:hasChanged', function(event) {
+            var r = false;
+            var isOpen = $(this).triggerHandler('getParent').triggerHandler('clickOpen:isOpen');
+            
+            if(isOpen === false || ($(this).inputValue(true) !== $(this).data('valueLast')))
+            r = true;
+            
+            return r;
+        })
 		.on('ajax:beforeInit', function(event,validate) {
-			var val = $(this).inputValue(true);
+			var val = $(this).inputValue(true);            
 			$(this).removeClass('invalid');
 			
-			if(validate !== true || $.isStringNotEmpty(val))
+			if($(this).is(":focus") && (validate !== true || $.isStringNotEmpty(val)))
 			{
 				$(this).trigger('keyup:clearTimeout');
 				$(this).trigger('ajax:init');
@@ -110,6 +121,8 @@
 			
 			else
 			$(this).triggerHandler('getParent').trigger('clickOpen:close');
+            
+            $(this).data('valueLast',val);
 		})
 		.on('validate:failed', function(event) {
 			$(this).triggerHandler('getPopup').trigger('clickOpen:close');
