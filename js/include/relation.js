@@ -92,6 +92,7 @@
 			$(this).trigger('ajax:beforeInit',[true]);
 		})
 		.on('keyup:onTimeout', function(event) {
+            if($(this).is(":focus"))
 			$(this).trigger('ajax:beforeInit',[true]);
 		})
 		.on('click', function(event) {
@@ -113,7 +114,7 @@
 			var val = $(this).inputValue(true);            
 			$(this).removeClass('invalid');
 			
-			if($(this).is(":focus") && (validate !== true || $.isStringNotEmpty(val)))
+			if(validate !== true || $.isStringNotEmpty(val))
 			{
 				$(this).trigger('keyup:clearTimeout');
 				$(this).trigger('ajax:init');
