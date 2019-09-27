@@ -31,7 +31,7 @@
 				$(this).triggerHandler('clickOpen:getPopup').html(data);
 			})
 			.on('ajax:error', function(event,jqXHR,textStatus,errorThrown) {
-				$(this).triggerHandler('clickOpen:getPopup').html(textStatus);
+				$(this).triggerHandler('clickOpen:getPopup').html($.parseError(jqXHR,textStatus));
 			})
 			.on('ajax:complete', function() {
 				$(this).removeClass("loading");

@@ -92,8 +92,7 @@
 							jsBox.trigger('unblock');
 						},
 						error: function(jqXHR,textStatus,errorThrown) {
-							var text = jqXHR.responseText || textStatus;
-							jsBox.trigger('jsBox:html',[text]);
+							jsBox.trigger('jsBox:html', [$.parseError(jqXHR,textStatus)]);
 							jsBox.trigger('unblock');
 						}
 					});
@@ -144,8 +143,7 @@
 			$(this).trigger('unblock');
 		})
 		.on('ajax:error', function(event,jqXHR,textStatus,errorThrown) {
-			var text = jqXHR.responseText || textStatus;
-			jsBox.trigger('jsBox:html',[text]);
+			jsBox.trigger('jsBox:html', [$.parseError(jqXHR,textStatus)]);
 			$(this).trigger('unblock');
 		});
 		

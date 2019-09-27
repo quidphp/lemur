@@ -269,7 +269,8 @@ class Route extends Base\Test
         assert(count($g2->segment()) === 10);
 
         // root
-        assert(count($obj->help()) === 11);
+        assert(count($obj->help()) === 9);
+        assert(count($obj->help(true)) === 11);
 
         // access
         assert($obj::session() instanceof Core\Session);

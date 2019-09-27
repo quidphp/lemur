@@ -152,8 +152,7 @@
 			popup.trigger('clickOpen:ready');
 		})
 		.on('ajax:error', function(event,jqXHR,textStatus,errorThrown) {
-			var text = jqXHR.responseText || textStatus;
-			$(this).triggerHandler('getResult').html(text);
+			$(this).triggerHandler('getResult').html($.parseError(jqXHR,textStatus));
 		})
 		.on('ajax:complete', function() {
 			$(this).triggerHandler('getParent').removeClass('loading');
@@ -268,8 +267,7 @@
 			$(this).triggerHandler('getResult').html(data);
 		})
 		.on('ajax:error', function(event,jqXHR,textStatus,errorThrown) {
-			var text = jqXHR.responseText || textStatus;
-			$(this).triggerHandler('getResult').html(text);
+			$(this).triggerHandler('getResult').html($.parseError(jqXHR,textStatus));
 		})
 		.on('ajax:complete', function() {
 			$(this).trigger('unblock');

@@ -71,7 +71,10 @@ class SpecificSubmit extends Core\RouteAlias
         if($post !== null)
         {
             $row = $this->row();
+            $db = $row->db();
+            $db->setExceptionClass(true); // catchable exception
             $return = $row->setUpdateChangedIncludedValid($post,['preValidate'=>true,'com'=>true,'context'=>static::class]);
+            $db->setExceptionClass(false);
         }
 
         if(empty($return))

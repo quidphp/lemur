@@ -10,6 +10,39 @@
 // script with some additional logic over the jQuery ajax object
 (function ($, document, window) {
 	
+    // parseError
+    // cette méthode gère l'affichage pour un xhr en erreur
+    $.parseError = function(xhr,textStatus)
+    {
+        var r = textStatus || null;
+        
+        if($.isStringNotEmpty(xhr.responseText))
+        {
+            r = xhr.responseText;
+            var html;
+            var parse = $.parseHtmlDocument(xhr.responseText);
+            
+            if(parse instanceof jQuery && parse.length)
+            {
+                html = parse.find(".ajax-parse-error").first().html();
+                
+                if($.isStringNotEmpty(html))
+                r = html;
+                
+                else
+                {
+                    html = parse.find("[data-tag='body']").first().html();
+                    
+                    if($.isStringNotEmpty(html))
+                    r = html;
+                }
+            }
+        }
+        
+        return r;
+    };
+    
+    
 	// ajax
 	// charge un lien ou un formulaire via ajax
 	// un événement est requis

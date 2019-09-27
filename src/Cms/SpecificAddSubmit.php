@@ -70,13 +70,18 @@ class SpecificAddSubmit extends Core\RouteAlias
     protected function proceed():?Core\Row
     {
         $return = null;
-        $table = $this->table();
         $context = static::context();
         $post = $this->post();
         $post = $this->onBeforeCommit($post);
 
         if($post !== null)
-        $return = $table->insert($post,['preValidate'=>true,'com'=>true,'context'=>$context]);
+        {
+            $table = $this->table();
+            $db = $table->db();
+            $db->setExceptionClass(true); // catchable exception
+            $return = $table->insert($post,['preValidate'=>true,'com'=>true,'context'=>$context]);
+            $db->setExceptionClass(false);
+        }
 
         if(empty($return))
         $this->failureComplete();

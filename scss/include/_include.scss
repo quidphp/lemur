@@ -67,6 +67,9 @@ $media: $uriMedia;
         max-width: 100%;
         box-sizing: content-box;
     }
+    strong {
+        font-weight: bold;
+    }
     em {
         font-style: italic;
     }
