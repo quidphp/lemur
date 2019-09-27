@@ -40,8 +40,9 @@
 				$(this).trigger('ajax:init');
 			}
 		})
-		.on('feed:error', function(event) {
+		.on('feed:error', function(event,jqXHR,textStatus) {
 			$(this).addClass('error');
+            $(this).triggerHandler('feed:target').html($.parseError(jqXHR,textStatus));
 		})
 		.on('ajax:before', function(event) {
 			$(this).addClass('loading');
@@ -50,8 +51,8 @@
 		.on('ajax:success', function(event,data,textStatus,jqXHR) {
 			$(this).trigger('feed:overwrite',[data]);
 		})
-		.on('ajax:error', function(event,qXHR,textStatus,errorThrown) {
-			$(this).trigger('feed:error');
+		.on('ajax:error', function(event,jqXHR,textStatus,errorThrown) {
+			$(this).trigger('feed:error',[jqXHR,textStatus]);
 		})
 		.on('ajax:complete', function(event) {
 			$(this).removeClass('loading');
@@ -70,8 +71,8 @@
 					parent.trigger('feed:append',[data]);
 					$(this).remove();
 				})
-				.on('ajax:error', function(event,qXHR,textStatus,errorThrown) {
-					parent.trigger('feed:error');
+				.on('ajax:error', function(event,jqXHR,textStatus,errorThrown) {
+					parent.trigger('feed:error',[jqXHR,textStatus]);
 					$(this).remove();
 				}).trigger('ajax:init');
 			});

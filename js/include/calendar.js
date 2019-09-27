@@ -55,7 +55,6 @@
 			$(this).addClass('loading');
 		})
 		.on('ajax:success', function(event,data,textStatus,jqXHR) {
-			$(this).html("");
 			$(this).html(data);
 			$(this).removeClass('loading');
 			$(this).trigger('unblock');
@@ -63,7 +62,7 @@
 			$(this).trigger('calendar:refresh');
 		})
 		.on('ajax:error', function(event,jqXHR,textStatus,errorThrown) {
-			$(this).find("> *").show();
+			$(this).html($.parseError(jqXHR,textStatus));
 			$(this).trigger('calendar:removeSelected');
 			$(this).removeClass('loading');
 			$(this).trigger('unblock');
