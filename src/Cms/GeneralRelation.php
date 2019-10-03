@@ -77,6 +77,6 @@ class GeneralRelation extends Core\RouteAlias
     }
 }
 
-// config
-GeneralRelation::__config();
+// init
+GeneralRelation::__init();
 ?>

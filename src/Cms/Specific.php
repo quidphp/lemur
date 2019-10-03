@@ -527,6 +527,6 @@ class Specific extends Core\RouteAlias
     }
 }
 
-// config
-Specific::__config();
+// init
+Specific::__init();
 ?>

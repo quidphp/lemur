@@ -250,6 +250,6 @@ class Home extends Core\Route\Home
     }
 }
 
-// config
-Home::__config();
+// init
+Home::__init();
 ?>

@@ -442,6 +442,6 @@ class En extends Core\Lang\En
     ];
 }
 
-// config
-En::__config();
+// init
+En::__init();
 ?>

@@ -51,6 +51,6 @@ class User extends Core\Row\User
     }
 }
 
-// config
-User::__config();
+// init
+User::__init();
 ?>

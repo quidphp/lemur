@@ -32,6 +32,6 @@ class Serialize extends Core\Col\Serialize
     }
 }
 
-// config
-Serialize::__config();
+// init
+Serialize::__init();
 ?>

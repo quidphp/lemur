@@ -65,6 +65,6 @@ class AccountChangePassword extends Core\Route\AccountChangePassword
     }
 }
 
-// config
-AccountChangePassword::__config();
+// init
+AccountChangePassword::__init();
 ?>

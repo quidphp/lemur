@@ -54,6 +54,6 @@ class Register extends Core\Route\Register
     }
 }
 
-// config
-Register::__config();
+// init
+Register::__init();
 ?>

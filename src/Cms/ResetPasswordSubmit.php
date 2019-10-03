@@ -20,6 +20,6 @@ class ResetPasswordSubmit extends Core\Route\ResetPasswordSubmit
     ];
 }
 
-// config
-ResetPasswordSubmit::__config();
+// init
+ResetPasswordSubmit::__init();
 ?>

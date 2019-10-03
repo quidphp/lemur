@@ -442,6 +442,6 @@ class Fr extends Core\Lang\Fr
     ];
 }
 
-// config
-Fr::__config();
+// init
+Fr::__init();
 ?>

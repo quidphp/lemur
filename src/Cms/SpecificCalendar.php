@@ -55,6 +55,6 @@ class SpecificCalendar extends Core\RouteAlias
     }
 }
 
-// config
-SpecificCalendar::__config();
+// init
+SpecificCalendar::__init();
 ?>

@@ -20,6 +20,6 @@ class User extends Core\Role\User
     ];
 }
 
-// config
-User::__config();
+// init
+User::__init();
 ?>

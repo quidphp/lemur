@@ -30,6 +30,6 @@ class Table extends Core\Table
     ];
 }
 
-// config
-Table::__config();
+// init
+Table::__init();
 ?>

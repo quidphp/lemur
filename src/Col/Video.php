@@ -33,6 +33,6 @@ abstract class Video extends Core\Col\Video
     }
 }
 
-// config
-Video::__config();
+// init
+Video::__init();
 ?>

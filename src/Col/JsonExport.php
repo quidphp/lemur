@@ -31,6 +31,6 @@ class JsonExport extends Core\Col\JsonExport
     }
 }
 
-// config
-JsonExport::__config();
+// init
+JsonExport::__init();
 ?>

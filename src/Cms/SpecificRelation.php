@@ -67,6 +67,6 @@ class SpecificRelation extends Core\RouteAlias
     }
 }
 
-// config
-SpecificRelation::__config();
+// init
+SpecificRelation::__init();
 ?>

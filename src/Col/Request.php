@@ -32,6 +32,6 @@ class Request extends Core\Col\Request
     }
 }
 
-// config
-Request::__config();
+// init
+Request::__init();
 ?>

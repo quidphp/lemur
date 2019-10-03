@@ -40,6 +40,6 @@ abstract class Relation extends Core\Col\Relation
     }
 }
 
-// config
-Relation::__config();
+// init
+Relation::__init();
 ?>

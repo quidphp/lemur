@@ -22,6 +22,6 @@ class Date extends Core\Col\Date
     ];
 }
 
-// config
-Date::__config();
+// init
+Date::__init();
 ?>

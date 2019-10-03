@@ -126,6 +126,6 @@ class SpecificUserWelcome extends Core\RouteAlias
     }
 }
 
-// config
-SpecificUserWelcome::__config();
+// init
+SpecificUserWelcome::__init();
 ?>

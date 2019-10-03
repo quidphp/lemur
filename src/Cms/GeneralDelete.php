@@ -119,6 +119,6 @@ class GeneralDelete extends Core\RouteAlias
     }
 }
 
-// config
-GeneralDelete::__config();
+// init
+GeneralDelete::__init();
 ?>

@@ -138,6 +138,6 @@ class Login extends Core\Route\Login
     }
 }
 
-// config
-Login::__config();
+// init
+Login::__init();
 ?>

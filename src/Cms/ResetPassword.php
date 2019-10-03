@@ -79,6 +79,6 @@ class ResetPassword extends Core\Route\ResetPassword
     }
 }
 
-// config
-ResetPassword::__config();
+// init
+ResetPassword::__init();
 ?>

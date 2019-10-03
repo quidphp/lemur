@@ -38,6 +38,6 @@ class Error extends Core\Route\Error
     }
 }
 
-// config
-Error::__config();
+// init
+Error::__init();
 ?>

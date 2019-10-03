@@ -53,6 +53,6 @@ class SpecificTableRelation extends Core\RouteAlias
     }
 }
 
-// config
-SpecificTableRelation::__config();
+// init
+SpecificTableRelation::__init();
 ?>

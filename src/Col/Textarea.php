@@ -22,6 +22,6 @@ class Textarea extends Core\Col\Textarea
     ];
 }
 
-// config
-Textarea::__config();
+// init
+Textarea::__init();
 ?>

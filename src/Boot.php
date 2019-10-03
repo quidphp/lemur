@@ -75,6 +75,6 @@ abstract class Boot extends Core\Boot
     }
 }
 
-// config
-Boot::__config();
+// init
+Boot::__init();
 ?>

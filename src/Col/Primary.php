@@ -21,6 +21,6 @@ class Primary extends Core\Col\Primary
     ];
 }
 
-// config
-Primary::__config();
+// init
+Primary::__init();
 ?>

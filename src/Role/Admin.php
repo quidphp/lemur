@@ -72,6 +72,6 @@ class Admin extends Core\Role\Admin
     ];
 }
 
-// config
-Admin::__config();
+// init
+Admin::__init();
 ?>

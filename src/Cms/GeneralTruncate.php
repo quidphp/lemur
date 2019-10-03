@@ -82,6 +82,6 @@ class GeneralTruncate extends Core\RouteAlias
     }
 }
 
-// config
-GeneralTruncate::__config();
+// init
+GeneralTruncate::__init();
 ?>

@@ -134,6 +134,6 @@ class SpecificDuplicate extends Core\RouteAlias
     }
 }
 
-// config
-SpecificDuplicate::__config();
+// init
+SpecificDuplicate::__init();
 ?>

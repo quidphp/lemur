@@ -57,12 +57,12 @@
 			return ($(this).hasClass('current'))? true:false;
 		})
 		.on('hashScrollTarget:getPrev', function(event) {
-			var index = $.indexer('prevStrict',$(this),$this);
+			var index = $.indexer('prev',$(this),$this,false);
 			if($.isNumeric(index))
 			return $this.eq(index);
 		})
 		.on('hashScrollTarget:getNext', function(event) {
-			var index = $.indexer('nextStrict',$(this),$this);
+			var index = $.indexer('next',$(this),$this,false);
 			if($.isNumeric(index))
 			return $this.eq(index);
 		})

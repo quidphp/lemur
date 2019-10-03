@@ -20,12 +20,13 @@ class JQueryUi extends Core\ServiceAlias
 
     // docOpenJs
     // retourne le javascript à lier en début de document
+    // inclut aussi touchpunch pour que sortable marche avec mobile
     public function docOpenJs()
     {
-        return [1=>'js/jquery/jquery-ui.js'];
+        return [1=>'js/jquery/jquery-ui.js',2=>'js/jquery/touch-punch.js'];
     }
 }
 
-// config
-JQueryUi::__config();
+// init
+JQueryUi::__init();
 ?>

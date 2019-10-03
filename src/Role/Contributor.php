@@ -60,6 +60,6 @@ class Contributor extends Core\RoleAlias
     ];
 }
 
-// config
-Contributor::__config();
+// init
+Contributor::__init();
 ?>

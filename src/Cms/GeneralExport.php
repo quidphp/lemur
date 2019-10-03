@@ -136,6 +136,6 @@ class GeneralExport extends Core\RouteAlias
     }
 }
 
-// config
-GeneralExport::__config();
+// init
+GeneralExport::__init();
 ?>

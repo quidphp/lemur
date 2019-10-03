@@ -130,6 +130,6 @@ class HomeSearch extends Core\RouteAlias
     }
 }
 
-// config
-HomeSearch::__config();
+// init
+HomeSearch::__init();
 ?>

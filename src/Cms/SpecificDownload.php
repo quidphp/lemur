@@ -68,6 +68,6 @@ class SpecificDownload extends Core\RouteAlias
     }
 }
 
-// config
-SpecificDownload::__config();
+// init
+SpecificDownload::__init();
 ?>

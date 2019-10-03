@@ -86,6 +86,6 @@ class SpecificDelete extends Core\RouteAlias
     }
 }
 
-// config
-SpecificDelete::__config();
+// init
+SpecificDelete::__init();
 ?>

@@ -48,6 +48,6 @@ class Email extends Core\Col\Email
     }
 }
 
-// config
-Email::__config();
+// init
+Email::__init();
 ?>

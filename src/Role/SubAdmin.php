@@ -65,6 +65,6 @@ class SubAdmin extends Core\RoleAlias
     ];
 }
 
-// config
-SubAdmin::__config();
+// init
+SubAdmin::__init();
 ?>

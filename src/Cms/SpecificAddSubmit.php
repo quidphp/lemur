@@ -106,6 +106,6 @@ class SpecificAddSubmit extends Core\RouteAlias
     }
 }
 
-// config
-SpecificAddSubmit::__config();
+// init
+SpecificAddSubmit::__init();
 ?>

@@ -115,6 +115,6 @@ class GeneralExportDialog extends Core\RouteAlias
     }
 }
 
-// config
-GeneralExportDialog::__config();
+// init
+GeneralExportDialog::__init();
 ?>

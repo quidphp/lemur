@@ -47,6 +47,6 @@ class Account extends Core\Route\Account
     }
 }
 
-// config
-Account::__config();
+// init
+Account::__init();
 ?>

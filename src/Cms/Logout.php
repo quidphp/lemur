@@ -26,6 +26,6 @@ class Logout extends Core\Route\Logout
     ];
 }
 
-// config
-Logout::__config();
+// init
+Logout::__init();
 ?>

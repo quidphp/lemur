@@ -20,6 +20,6 @@ class RegisterSubmit extends Core\Route\RegisterSubmit
     ];
 }
 
-// config
-RegisterSubmit::__config();
+// init
+RegisterSubmit::__init();
 ?>

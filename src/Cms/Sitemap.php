@@ -18,6 +18,6 @@ class Sitemap extends Core\Route\Sitemap
     public static $config = [];
 }
 
-// config
-Sitemap::__config();
+// init
+Sitemap::__init();
 ?>

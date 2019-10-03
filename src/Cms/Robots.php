@@ -20,6 +20,6 @@ class Robots extends Core\Route\Robots
     ];
 }
 
-// config
-Robots::__config();
+// init
+Robots::__init();
 ?>

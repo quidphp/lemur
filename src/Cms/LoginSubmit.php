@@ -32,6 +32,6 @@ class LoginSubmit extends Core\Route\LoginSubmit
     }
 }
 
-// config
-LoginSubmit::__config();
+// init
+LoginSubmit::__init();
 ?>

@@ -20,6 +20,6 @@ class Shared extends Core\Role\Shared
     ];
 }
 
-// config
-Shared::__config();
+// init
+Shared::__init();
 ?>

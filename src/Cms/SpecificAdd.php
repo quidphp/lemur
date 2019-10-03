@@ -308,6 +308,6 @@ class SpecificAdd extends Core\RouteAlias
     }
 }
 
-// config
-SpecificAdd::__config();
+// init
+SpecificAdd::__init();
 ?>

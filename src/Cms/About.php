@@ -63,6 +63,6 @@ class About extends Core\RouteAlias
     }
 }
 
-// config
-About::__config();
+// init
+About::__init();
 ?>

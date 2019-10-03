@@ -88,6 +88,6 @@ class SpecificDispatch extends Core\RouteAlias
     }
 }
 
-// config
-SpecificDispatch::__config();
+// init
+SpecificDispatch::__init();
 ?>

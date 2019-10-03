@@ -150,7 +150,7 @@
 	
 	// indexer
 	// retourne l'index du nouvel élément
-	$.indexer = function(value,current,max)
+	$.indexer = function(value,current,max,loop)
 	{
 		var r = null;
 		
@@ -169,41 +169,42 @@
 			
 			if($.isNumeric(max) && max > 0)
 			{
-				if(value === 'loopPrev')
-				{
-					if(!$.isNumeric(current) || current === 0)
-					value = 'last';
-					
-					else
-					value = 'prev';
-				}
-				
-				else if(value === 'loopNext')
-				{
-					if(!$.isNumeric(current) || current === (max - 1))
-					value = 'first';
-					
-					else
-					value = 'next';
-				}
-				
+                var first = 0;
+                var last = (max - 1);
+                
 				if(value === 'first')
-				r = 0;
+				r = first;
 				
 				else if(value ==='last')
-				r = (max - 1);
+				r = last;
 				
 				else if(value === 'next' && $.isNumeric(current))
-				r = ((current + 1) < max)? (current+1):max;
+                {
+                    r = (current + 1);
+                    
+                    if(r > last)
+                    {
+                        if(loop === true)
+                        r = first;
+                        
+                        else
+                        r = null;
+                    }
+                }
 				
 				else if(value === 'prev' && $.isNumeric(current))
-				r = ((current - 1) > 0)? (current - 1):0;
-				
-				else if(value === 'nextStrict' && $.isNumeric(current))
-				r = ((current + 1) <= max)? (current+1):null;
-				
-				else if(value === 'prevStrict' && $.isNumeric(current))
-				r = ((current - 1) >= 0)? (current - 1):null;
+                {
+                    r = (current - 1);
+                    
+                    if(r < 0)
+                    {
+                        if(loop === true)
+                        r = last;
+                        
+                        else
+                        r = null;
+                    }
+                }
 				
 				else if($.isNumeric(value) && value >= 0 && value < max)
 				r = value;

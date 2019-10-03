@@ -24,6 +24,6 @@ class Nobody extends Core\Role\Nobody
     ];
 }
 
-// config
-Nobody::__config();
+// init
+Nobody::__init();
 ?>

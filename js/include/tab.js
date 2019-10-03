@@ -14,11 +14,11 @@
 	// s'occupe de l'ouverture et la fermeture de tab
 	$.fn.tab = function()
 	{
-		$(this).on('tab:getIndex', function(event,value) {
-			return $.indexer(value,$(this).triggerHandler('tab:getCurrent'),$(this).triggerHandler('tab:getTarget'));
+		$(this).on('tab:getIndex', function(event,value,loop) {
+			return $.indexer(value,$(this).triggerHandler('tab:getCurrent'),$(this).triggerHandler('tab:getTarget'),loop);
 		})
-		.on('tab:indexer', function(event,value) {
-			var index = $(this).triggerHandler('tab:getIndex',[value]);
+		.on('tab:indexer', function(event,value,loop) {
+			var index = $(this).triggerHandler('tab:getIndex',[value,loop]);
 			if($.isNumeric(index))
 			$(this).trigger('tab:change',[index]);
 		})
@@ -38,10 +38,10 @@
 			$(this).trigger('tab:indexer',['index']);
 		})
 		.on('tab:loopNext', function(event) {
-			$(this).trigger('tab:indexer',['loopNext']);
+			$(this).trigger('tab:indexer',['next',true]);
 		})
 		.on('tab:loopPrev', function(event) {
-			$(this).trigger('tab:indexer',['loopPrev']);
+			$(this).trigger('tab:indexer',['prev',true]);
 		})
 		.on('tab:target', function(event,target) {
 			$(this).trigger('tab:indexer',[target]);
@@ -96,7 +96,7 @@
 			}
 		})
 		.on('tab:changeOrFirst', function(event,target) {
-			if(target !== null && target.length === 1)
+			if(target != null && target.length === 1)
 			target.trigger('tab:change');
 			else
 			$(this).trigger('tab:first');
@@ -243,7 +243,7 @@
 			
 			$(this).on('tab:getTarget', function(event) {
 				return target;
-			}).tab().trigger('tab:loopNext');
+			}).tab().trigger('tab:changeOrFirst');
 		};
 		
 		$(this).each(function(index, el) {
@@ -257,9 +257,9 @@
 	
 	// mediaSlider
 	// gère le js pour un media slider
-	$.fn.mediaSlider = function()
+	$.fn.mediaSlider = function(timeout)
 	{
-		$(this).slider().find(".slide").on('tab:close', function(event) {
+		$(this).slider(timeout).find(".slide").on('tab:close', function(event) {
 			var iframe = $(this).find("iframe");
 			if(iframe.length)
 			iframe.attr('src',iframe.attr('src'));

@@ -37,6 +37,6 @@ abstract class Files extends Core\Col\Files
     }
 }
 
-// config
-Files::__config();
+// init
+Files::__init();
 ?>

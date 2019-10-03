@@ -867,6 +867,6 @@ class General extends Core\RouteAlias
     }
 }
 
-// config
-General::__config();
+// init
+General::__init();
 ?>

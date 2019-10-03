@@ -28,6 +28,6 @@ class AccountChangePasswordSubmit extends Core\Route\AccountChangePasswordSubmit
     }
 }
 
-// config
-AccountChangePasswordSubmit::__config();
+// init
+AccountChangePasswordSubmit::__init();
 ?>

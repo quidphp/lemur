@@ -26,6 +26,6 @@ class JQuery extends Core\ServiceAlias
     }
 }
 
-// config
-JQuery::__config();
+// init
+JQuery::__init();
 ?>

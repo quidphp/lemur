@@ -21,6 +21,6 @@ class ActivatePassword extends Core\Route\ActivatePassword
     ];
 }
 
-// config
-ActivatePassword::__config();
+// init
+ActivatePassword::__init();
 ?>

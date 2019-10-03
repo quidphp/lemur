@@ -59,6 +59,6 @@ class Editor extends Core\RoleAlias
     ];
 }
 
-// config
-Editor::__config();
+// init
+Editor::__init();
 ?>
