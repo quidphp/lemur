@@ -15,11 +15,11 @@ body.loading {
         opacity: 0.6;
     }
 
-    .loadingIcon {
+    .loading-icon {
         display: block;
     }
 }
-body .loadingIcon {
+body .loading-icon {
     @include fixed(0, '', '', 0);
     @include wh(20px);
     z-index: 9;
@@ -28,18 +28,24 @@ body .loadingIcon {
     border-bottom-right-radius: 50%;
     display: none;
 }
-body.responsiveMenuOpen header nav {
-    display: block;
+body.responsive-menu-open header {
+    
+    > .top .burger-menu {
+        position: fixed;
+    }
+    
+    nav {
+        display: block;
+    }
 }
 
 /* HEADER */
 header > .top {
     padding: 10px 20px;
     background-color: $color;
-    position: relative;
 
-    .burgerMenu {
-        @include abs(50%, '', '', 20px);
+    .burger-menu {
+        @include abs(40px, '', '', 20px);
         @include wh(32px);
         margin-top: -16px;
         background-color: $lightYellow;
@@ -52,7 +58,7 @@ header > .top {
         @include inbl(top);
         width: 60%;
 
-        .bootLabel {
+        .boot-label {
             font-size: 2.5rem;
             font-weight: 600;
 
@@ -65,7 +71,7 @@ header > .top {
             }
         }
 
-        .contextType {
+        .context-type {
             color: $lightGray;
             font-size: 90%;
         }
@@ -159,11 +165,11 @@ header nav {
                     }
                 }
 
-                &.topLeft > ul {
+                &.top-left > ul {
                     left: 0;
                 }
 
-                &.topRight > ul {
+                &.top-right > ul {
                     left: inherit;
                     right: 0;
                 }
@@ -200,7 +206,7 @@ header nav {
                             }
                         }
 
-                        > a.toSpecificAdd {
+                        > a.specific-add {
                             @include abs(50%, 10px);
                             margin-top: -8px;
                             z-index: 3;
@@ -249,7 +255,7 @@ header nav {
             }
         }
 
-        &.slideClose .top .arrow {
+        &.slide-close .top .arrow {
             background-position: 0% 50%;
         }
 
@@ -319,7 +325,7 @@ main .inner > .top {
         margin-bottom: 3px;
     }
 
-    .subTitle {
+    .sub-title {
         font-size: 90%;
     }
 
@@ -364,10 +370,10 @@ footer .left {
     > nav > ul {
         > li {
             @include inbl();
-
+            padding: 0 12px 0 0;
+            
             > a {
                 @include inbl();
-                padding: 0 12px 0 0;
                 color: $white;
 
                 &.selected,
@@ -417,7 +423,7 @@ footer .right {
             }
         }
 
-        .burgerMenu {
+        .burger-menu {
             display: block;
         }
     }
@@ -484,7 +490,7 @@ footer .right {
                             }
                         }
 
-                        > a.toSpecificAdd {
+                        > a.specific-add {
                             display: none;
                         }
                     }

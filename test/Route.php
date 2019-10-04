@@ -13,7 +13,7 @@ use Quid\Core;
 use Quid\Lemur;
 use Quid\Main;
 use Quid\Routing;
-use Quid\TestSuite;
+use Quid\Suite;
 
 // route
 // class for testing route
@@ -25,7 +25,7 @@ class Route extends Base\Test
         // prepare
         $boot = $data['boot'];
         $type = $boot->type();
-        $contact = TestSuite\Assert\Contact::class;
+        $contact = Suite\Assert\Contact::class;
         $route = Lemur\Cms\Error::class;
         $login = Lemur\Cms\Login::class;
         $sitemap = Lemur\Cms\Sitemap::class;
@@ -86,7 +86,7 @@ class Route extends Base\Test
 
         // rowClass
         assert($route::rowClass() === null);
-        assert($contact::rowClass() === TestSuite\Row\OrmCol::class);
+        assert($contact::rowClass() === Suite\Row\OrmCol::class);
 
         // tableFromRowClass
         assert($contact::tableFromRowClass() instanceof Core\Table);
@@ -149,7 +149,7 @@ class Route extends Base\Test
         assert($loginMake->submitTitle('% ok') === "<button type='submit'>Login ok</button>");
         assert($loginSubmit::make() instanceof $loginSubmit);
         assert($loginSubmit::makeOverload() instanceof $loginSubmit);
-        assert(Core\Route\ActivatePassword::makeOverload() instanceof TestSuite\Assert\ActivatePassword);
+        assert(Core\Route\ActivatePassword::makeOverload() instanceof Suite\Assert\ActivatePassword);
         assert($loginSubmit::getOverloadClass() === Lemur\Cms\LoginSubmit::class);
         assert($loginSubmit::makeParent() instanceof Lemur\Cms\Login);
 

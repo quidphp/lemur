@@ -79,7 +79,7 @@ class Home extends Core\Route\Home
         $tables = $this->db()->tables();
         $total = $tables->filter(['hasPermission'=>true],'view')->total(true,true);
         $popup = $this->makeInfoPopup();
-        $attr = ['countInfo',(!empty($popup))? ['withPopup','anchorCorner']:null];
+        $attr = ['count-info',(!empty($popup))? ['with-popup','anchor-corner']:null];
         $r .= Html::divOp($attr);
         $r .= Html::divOp(['count','icon','info','padLeft']);
         $r .= Html::span($total['table'].' '.static::langPlural($total['table'],'lcf|common/table'));

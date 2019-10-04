@@ -89,10 +89,10 @@ $(document).ready(function() {
 			rowsCheckboxes.trigger('uncheck');
 		})
 		.on('allChecked', function() {
-			$(this).addClass('allChecked');
+			$(this).addClass('all-checked');
 		})
 		.on('notAllChecked', function() {
-			$(this).removeClass('allChecked');
+			$(this).removeClass('all-checked');
 		});
 		
 		// rowsTool
@@ -156,9 +156,9 @@ $(document).ready(function() {
 		var colsPopup = $(this).find(".general th.action .popup");
 		var rowsCheckboxes = $(this).find(".general table td.rows input[type='checkbox']");
 		var formTruncate = $(this).find(".general .truncate form");
-		var multiDelete = $(this).find(".general .tool .multiDelete form");
+		var multiDelete = $(this).find(".general .tool .multi-delete form");
 		var multiDeletePrimaries = multiDelete.find("input[name='primaries']");
-		var filter = $(this).find(".general th.filterable .filterOuter");
+		var filter = $(this).find(".general th.filterable .filter-outer");
 		
 		// search
 		if(search.length)

@@ -31,7 +31,7 @@ $(document).ready(function() {
 		var panel = formWrapper.find(".panel");
 		var form = formWrapper.find("form");
 		var fields = form.find(".element input,.element textarea");
-		var labels = form.find(".element.hasColPopup > .left .label");
+		var labels = form.find(".element.with-col-popup > .left .label");
 		
 		// submitConfirm
 		var submitConfirm = form.find("button[type='submit'][data-confirm]");
@@ -76,13 +76,13 @@ $(document).ready(function() {
 		var formWrapper = $(".specific .container > .form");
 		var form = formWrapper.find("form");
 		var panel = $(".specific .form .inside .panel");
-		var date = form.find(".element.date input[type='text']");
-		var enumSet = form.find(".element .searchEnumSet");
+		var date = form.find(".element.date .right");
+		var enumSet = form.find(".element .search-enumset");
 		var mediaAction = form.find(".element.media .block .action,.element.medias .block .action");
 		var mediaCancelAction = form.find(".element.media .block .message .close,.element.medias .block .message .close");
-		var addRemove = form.find(".element.addRemove");
+		var addRemove = form.find(".element.add-remove");
 		var checkboxSortable = form.find(".element.sortable");
-		var tableRelation = $(this).find(".element.tableRelation");
+		var tableRelation = $(this).find(".element.table-relation");
 		
 		// avec panel
 		if(panel.length > 1)
@@ -110,7 +110,7 @@ $(document).ready(function() {
 				var actionText = parent.find(".actionText");
 				var value = JSON.parse(hidden.val());
 				value.action = $(this).data('action');
-				parent.addClass('withAction');
+				parent.addClass('with-action');
 				input.hide();
 				hidden.prop('disabled',false);
 				hidden.val(JSON.stringify(value));
@@ -129,7 +129,7 @@ $(document).ready(function() {
 				var actionText = parent.find(".actionText");
 				var value = JSON.parse(hidden.val());
 				value.action = null;
-				parent.removeClass('withAction');
+				parent.removeClass('with-action');
 				input.show();
 				hidden.prop('disabled',true);
 				hidden.val(JSON.stringify(value));

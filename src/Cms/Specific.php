@@ -176,7 +176,7 @@ class Specific extends Core\RouteAlias
     protected function makeTitleBox():string
     {
         $r = Html::h1($this->makeTitle());
-        $r .= Html::divCond($this->makeRelationChilds(),['relationChilds','countInfo','withPopup','anchorCorner']);
+        $r .= Html::divCond($this->makeRelationChilds(),['relation-childs','count-info','with-popup','anchor-corner']);
 
         return $r;
     }
@@ -288,7 +288,7 @@ class Specific extends Core\RouteAlias
                 if(!empty($specific['count']))
                 {
                     $popup = $general->makeInfoPopup(true);
-                    $attr = ['count',(!empty($popup))? ['withPopup','anchorCorner']:null];
+                    $attr = ['count',(!empty($popup))? ['with-popup','anchor-corner']:null];
 
                     $r .= Html::divOp($attr);
                     $r .= $specific['count'];

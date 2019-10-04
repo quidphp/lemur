@@ -246,7 +246,7 @@ class General extends Core\RouteAlias
         $r .= Html::divCl();
 
         if($this->hasPermission('description'))
-        $r .= Html::divCond($table->description(),['description','subTitle']);
+        $r .= Html::divCond($table->description(),['description','sub-title']);
 
         $placeholder = static::langText('general/search');
         $r .= Html::divOp('search');
@@ -343,7 +343,7 @@ class General extends Core\RouteAlias
         if($this->hasPermission('info'))
         {
             $popup = $this->makeInfoPopup();
-            $attr = ['countInfo',(!empty($popup))? ['withPopup','anchorCorner']:null];
+            $attr = ['count-info',(!empty($popup))? ['with-popup','anchor-corner']:null];
 
             $r .= Html::divOp($attr);
             $r .= Html::div($this->makeCount(),['count','icon','info','padLeft']);
@@ -371,7 +371,7 @@ class General extends Core\RouteAlias
             $r .= Html::divOp('popup');
 
             if($icon === true)
-            $r .= Html::div(null,['icon','topRight','solo','info']);
+            $r .= Html::div(null,['icon','top-right','solo','info']);
 
             $r .= Html::ulOp();
 
@@ -577,11 +577,11 @@ class General extends Core\RouteAlias
             $defaultSegment = static::getDefaultSegment();
             $data = ['confirm'=>static::langText('common/confirm'),'separator'=>$defaultSegment];
 
-            $r .= Html::divOp('multiDelete');
+            $r .= Html::divOp('multi-delete');
             $r .= $route->formOpen(['data'=>$data]);
             $r .= $this->tableHiddenInput();
             $r .= Html::inputHidden(null,'primaries');
-            $r .= Html::submit(' ',['icon','solo','multiDelete']);
+            $r .= Html::submit(' ',['icon','solo','multi-delete']);
             $r .= Html::formCl();
             $r .= Html::divCl();
         }
@@ -606,7 +606,7 @@ class General extends Core\RouteAlias
             $route = $this->changeSegment('cols',true);
             $current = implode($defaultSegment,$currentCols->names());
             $data = ['href'=>$route,'char'=>static::getReplaceSegment(),'current'=>$current,'separator'=>$defaultSegment];
-            $inAttr[] = 'anchorCorner';
+            $inAttr[] = 'anchor-corner';
             $session = static::session();
 
             $checkbox = [];
@@ -628,7 +628,7 @@ class General extends Core\RouteAlias
             $r .= Html::divOp('popup');
             $r .= Html::divOp('inside');
             $r .= Html::checkbox($checkbox,$attr,$option);
-            $r .= Html::button(null,['name'=>'cols','icon','check','solo','topRight','data'=>$data]);
+            $r .= Html::button(null,['name'=>'cols','icon','check','solo','top-right','data'=>$data]);
             $r .= Html::divCl();
             $r .= Html::divCl();
         }
@@ -668,7 +668,7 @@ class General extends Core\RouteAlias
             {
                 if($isEmpty === false)
                 {
-                    $page = Html::divCond($this->makePageInput(['icon','solo','black']),'pageInput');
+                    $page = Html::divCond($this->makePageInput(['icon','solo','black']),'page-input');
 
                     $r .= Html::divOp('above');
                     $r .= Html::div($this->makeTool(),'left');
@@ -771,7 +771,7 @@ class General extends Core\RouteAlias
         $thAttr[] = ['filterable'];
 
         $html .= Html::divOp('left');
-        $class = ['filterOuter','clickOpen','anchorCorner'];
+        $class = ['filter-outer','click-open','anchor-corner'];
         $close = ['icon','solo','close'];
         $label = Html::div(null,['filter','icon','solo']);
         $html .= $this->makeFilter($col,GeneralRelation::class,$class,$close,$label);

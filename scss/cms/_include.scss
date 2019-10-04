@@ -151,7 +151,7 @@ $red: #8d1e2d;
         ul {
             list-style-type: none;
 
-            &.selectedList {
+            &.selected-list {
                 background-color: black;
                 border-bottom: 4px solid $lightGray;
             }
@@ -171,7 +171,7 @@ $red: #8d1e2d;
         }
     }
 
-    .loadMore {
+    .load-more {
         @include loadMore();
     }
 }
@@ -334,6 +334,23 @@ $red: #8d1e2d;
 
         &:hover {
             background-color: $gray;
+        }
+    }
+}
+
+// jsonArrayResponsive
+// règle pour les champs addRemove pour response
+@mixin jsonArrayResponsive() {
+    .right > .container > .ele {
+        .current {
+            width: auto;
+            display: block;
+        }
+        
+        .utils {
+            padding-top: 5px;
+            width: auto;
+            display: block;
         }
     }
 }

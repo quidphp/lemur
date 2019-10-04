@@ -103,7 +103,7 @@ class GeneralExportDialog extends Core\RouteAlias
     // retourne le lien dialog
     public function aDialog():string
     {
-        return $this->aTitle(null,['submit','icon','padLeft','download','data'=>['jsBox'=>'dialogGeneralExport']]);
+        return $this->aTitle(null,['submit','icon','padLeft','download','data'=>['modal'=>'dialogGeneralExport']]);
     }
 
 

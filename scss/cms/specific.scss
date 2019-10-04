@@ -11,7 +11,7 @@
 
 /* TOP */
 .specific main .inner > .top .left {
-    .countInfo {
+    .count-info {
         margin-left: 10px;
     }
 
@@ -22,7 +22,7 @@
 .specific main .inner > .top .right .nav {
     @include specificNav();
 
-    > .count.withPopup:hover {
+    > .count.with-popup:hover {
         background-color: $color;
         color: $white;
         border-radius: 5px;
@@ -160,7 +160,7 @@
         color: $darkGray;
     }
 }
-.specific main .inner > .container .form .panel .element.hasColPopup > .left {
+.specific main .inner > .container .form .panel .element.with-col-popup > .left {
     .label.hover {
         background-color: $color;
         border-radius: 5px;
@@ -223,12 +223,12 @@
         max-width: 1000px;
     }
 
-    .underInput {
+    .under-input {
         padding-top: 10px;
         font-size: 90%;
     }
 }
-.specific main .inner > .container .form .element > .right .relationPlain {
+.specific main .inner > .container .form .element > .right .relation-plain {
     margin-top: 5px;
 
     a {

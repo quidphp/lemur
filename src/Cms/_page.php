@@ -48,7 +48,7 @@ trait _page
         $r .= Html::divOp('title');
         $r .= Html::h1($this->getTitle());
         $r .= Html::divCl();
-        $r .= Html::divCond($this->getSubTitle(),'subTitle');
+        $r .= Html::divCond($this->getSubTitle(),'sub-title');
 
         return $r;
     }

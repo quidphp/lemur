@@ -59,7 +59,7 @@ class About extends Core\RouteAlias
     // retourne le lien dialog
     public function aDialog(?array $attr=null):string
     {
-        return $this->aTitle(null,Base\Attr::append($attr,['data'=>['jsBox'=>'dialogAbout']]));
+        return $this->aTitle(null,Base\Attr::append($attr,['data'=>['modal'=>'dialogAbout']]));
     }
 }
 

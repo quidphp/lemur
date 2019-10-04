@@ -69,8 +69,8 @@
 		r.x = r.left - $(window).scrollLeft();
 		r.topBottom = (r.y > ($(window).height() / 2))? 'bottom':'top';
 		r.leftRight = (r.x > ($(window).width() / 2))? 'right':'left';
-		r.corner = r.topBottom+$.ucfirst(r.leftRight);
-		
+		r.corner = r.topBottom+"-"+r.leftRight;
+        
 		return r;
 	}
 	
@@ -192,7 +192,7 @@
 		{
 			$(this).on(type, function(event) {
 				var offset = $(this).offsetCorner();
-				$(this).removeClass("topLeft topRight bottomLeft bottomRight");
+				$(this).removeClass("top-left top-right bottom-left bottom-right");
 				$(this).addClass(offset.corner);
 			});
 		}
@@ -681,5 +681,24 @@
 		
 		return this;
 	}
+    
+    // outsideClick
+    // gère les clicks hors de l'éléments
+    // si parent n'est pas spécifié utilise document
+    // utilise le namespace outside, ceci est unbind dans navigation
+    $.fn.outsideClick = function(value,parent) {
+        parent = (parent instanceof jQuery && parent.length === 1)? parent:$(document);
+        
+        if($.isStringNotEmpty(value))
+        {
+            var $this = $(this);
+            
+            parent.on('click.outside', function(event) {
+                $this.trigger(value);
+            });
+        }
+        
+        return this;
+    }
 	
 }(jQuery, document, window));

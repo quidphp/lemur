@@ -56,14 +56,14 @@
 			{
 				var ele = $(this).triggerHandler('clickOpen:getPopup').find("li[data-value='"+value+"']");
 				if($(this).triggerHandler('isChoiceIn',[value]))
-				ele.addClass('alreadyIn');
+				ele.addClass('already-in');
 				
 				else
 				{
 					if(mode === 'enum')
 					$(this).trigger('choice:empty');
 					else
-					ele.removeClass('alreadyIn');
+					ele.removeClass('already-in');
 					
 					$(this).triggerHandler('getCurrent').append(html);
 					$(this).trigger('clickOpen:close');
@@ -72,7 +72,7 @@
 		})
 		.on('choice:empty', function(event) {
 			$(this).triggerHandler('getChoice').remove();
-			$(this).triggerHandler('clickOpen:getPopup').find("li.alreadyIn").removeClass('alreadyIn');
+			$(this).triggerHandler('clickOpen:getPopup').find("li.already-in").removeClass('already-in');
 		})
 		.on('change', "input[type='checkbox']", function(event) {
 			if($(this).prop('checked') === false)
@@ -129,7 +129,7 @@
 			$(this).triggerHandler('getPopup').trigger('clickOpen:close');
 		})
 		.on('getParent', function(event) {
-			return $(this).parents(".searchEnumSet");
+			return $(this).parents(".search-enumset");
 		})
 		.on('getPopup', function(event) {
 			return $(this).triggerHandler('getParent').triggerHandler('clickOpen:getPopup');
@@ -201,7 +201,7 @@
 				return $.parseHtmlDocument(data).find("li");
 			})
 			.on('click', 'li', function(event) {
-				$(this).parents(".searchEnumSet").trigger('choice:append',[$(this).data('value'),$(this).data('html')]);
+				$(this).parents(".search-enumset").trigger('choice:append',[$(this).data('value'),$(this).data('html')]);
 				event.stopPropagation();
 			});
 			
@@ -215,7 +215,7 @@
 			
 			// button
 			$(this).find("button").on('getInput', function(event) {
-				return $(this).parents(".searchEnumSet").triggerHandler('getInput');
+				return $(this).parents(".search-enumset").triggerHandler('getInput');
 			})
 			.on('click',function(event) {
 				event.stopPropagation();

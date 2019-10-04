@@ -123,71 +123,59 @@
 	
 	// dateInput
 	// gère les comportement pour un input de date qui ouvre un calendrier
+    // utilise clickOpen
 	$.fn.dateInput = function()
 	{
-		var all = $(this);
-		
-		$(this).each(function(index) {
-			var input = $(this);
-			var popup = $(this).next(".popup");
-			var calendar = popup.find(".calendar");
-			var popups = all.next('.popup');
-			
-			$(this).timeout('keyup',600).on('focus', function(event) {
-				popup.trigger('popup:open');
-			})
-			.on('click', function(event) {
-				event.stopPropagation();
-			})
-			.on('change', function(event) {
+        $(this).clickOpen("input[type='text']",'focus').on('dateInput:getInput', function(event) {
+            return $(this).find("input[type='text']");
+        })
+        .on('dateInput:getCalendar', function(event) {
+            return $(this).triggerHandler('clickOpen:getPopup').find(".calendar");
+        })
+        .on('clickOpen:open', function(event) {
+            var input = $(this).triggerHandler('dateInput:getInput');
+            var calendar = $(this).triggerHandler('dateInput:getCalendar');
+            
+            if(!calendar.html())
+            calendar.trigger('calendar:load');
+            else
+            calendar.trigger('calendar:refresh');
+            
+            input.addClass('active');
+        })
+        .on('clickOpen:close', function(event) {
+            $(this).triggerHandler('dateInput:getInput').removeClass('active');
+        })
+        .on('dateInput:bind', function(event) {
+            var $this = $(this);
+            var input = $(this).triggerHandler('dateInput:getInput');
+            var calendar = $(this).triggerHandler('dateInput:getCalendar');
+            
+            input.timeout('keyup',600).on('click', function(event) {
+                event.stopPropagation();
+            })
+            .on('change', function(event) {
 				$(this).trigger('calendar:change');
 			})
 			.on('keyup:onTimeout', function(event) {
 				$(this).trigger('calendar:change',[true]);
 			})
-			.on('calendar:change', function(event,reload) {
-				calendar.trigger('calendar:select',[$(this).inputValue(true),reload]);
-			})
-			.on('calendar:getPopup', function(event) {
-				return popup;
-			});
-			
-			popup.on('click', function(event) {
-				event.stopPropagation();
-			})
-			.on('popup:open', function(event) {
-				popups.trigger('popup:close');
-				$(this).show();
-				if(!calendar.html())
-				calendar.trigger('calendar:load');
-				else
-				calendar.trigger('calendar:refresh');
-				input.addClass('active');
-			})
-			.on('popup:close', function(event) {
-				$(this).hide();
-				input.removeClass('active');
-			})
-			.on('click', '.calendar td', function(event) {
+            .on('calendar:change', function(event,reload) {
+                calendar.trigger('calendar:select',[$(this).inputValue(true),reload]);
+            });
+            
+            calendar.on('click', 'td', function(event) {
 				var format = $(this).data('format');
 				calendar.trigger('calendar:select',$(this).data("timestamp"));
 				input.val(format);
-				popup.trigger("popup:close");
-			});
-			
-			calendar.on('calendar:refresh', function(event) {
-				$(this).trigger('calendar:select',[$.first(input.inputValue(true)," ")]);
-			});
-		});
-		
-		$(document).on('click', function() {
-			all.each(function(index, el) {
-				var pop = $(this).triggerHandler('calendar:getPopup');
-				if(pop != null)
-				pop.trigger("popup:close")
-			});
-		});
-
+				$this.trigger("clickOpen:close");
+			})
+            .on('calendar:refresh', function(event) {
+    			$(this).trigger('calendar:select',[$.first(input.inputValue(true)," ")]);
+    		});
+            
+        }).trigger('dateInput:bind');
+        
 		return this;
 	}
 	

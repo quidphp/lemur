@@ -9,9 +9,9 @@
 // box
 // stylesheet for the various popup box route of the CMS
 
-/* JSBOX */
-@include jsBox();
-.jsBox .background .box {
+/* MODAL */
+@include modal();
+.modal .background .box {
     border-radius: 10px;
     background-color: $lighterGray;
 
@@ -30,7 +30,7 @@
 }
 
 /* DIALOG CHANGE PASSWORD */
-.jsBox.dialogAccountChangePassword .inner {
+.modal.dialogAccountChangePassword .inner {
     .info {
         font-size: 90%;
         margin-bottom: 20px;
@@ -51,7 +51,7 @@
 }
 
 /* DIALOG EXPORT */
-.jsBox.dialogGeneralExport .inner {
+.modal.dialogGeneralExport .inner {
     .count {
         margin-bottom: 20px;
     }
@@ -79,7 +79,7 @@
 }
 
 /* DIALOG ABOUT */
-.jsBox.dialogAbout .inner {
+.modal.dialogAbout .inner {
     h3 {
         margin-bottom: 20px;
     }
@@ -97,7 +97,7 @@
 
 /* PRINT */
 @media print {
-    .jsBox {
+    .modal {
         .background {
             background-color: $white !important;
         }
@@ -117,7 +117,7 @@
 
 /* RESPONSIVE */
 @media screen and (max-width: 900px), screen and (orientation: portrait) {
-    .jsBox .outer {
+    .modal .outer {
         @include wh(80% !important);
         top: 10% !important;
         left: 10% !important;

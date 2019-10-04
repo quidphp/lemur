@@ -15,7 +15,7 @@
 	$.fn.navigation = function(option) 
 	{
 		var $settings = {
-			link: "a:internal:not([target='_blank']):not(.http):not([data-js-box]):not([href^='mailto:'])",
+			link: "a:internal:not([target='_blank']):not(.http):not([data-modal]):not([href^='mailto:'])",
 			timeout: 7000,
 			classLoading: "loading",
 			classReady: "ready"
@@ -288,6 +288,9 @@
 			if($settings.classLoading)
 			$("body").removeClass($settings.classLoading);
 			
+            // unbink click sur document
+            $target.off('.outside');
+            
 			// scrollTop
 			$("html,body").stop(true,true).scrollTop(0);
 			

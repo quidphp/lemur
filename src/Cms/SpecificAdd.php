@@ -125,7 +125,7 @@ class SpecificAdd extends Core\RouteAlias
         }
 
         else
-        $r .= $this->a(null,['add','icon','solo','toSpecificAdd']);
+        $r .= $this->a(null,['add','icon','solo','specific-add']);
 
         return $r;
     }

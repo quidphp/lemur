@@ -24,7 +24,7 @@ trait _template
     public function trigger()
     {
         $r = $this->docOpen();
-        $r .= Html::div(null,'loadingIcon');
+        $r .= Html::div(null,'loading-icon');
         $r .= Html::headerCond($this->header());
 
         $html = Html::mainOp();
@@ -32,7 +32,7 @@ trait _template
         $html .= Html::mainCl();
 
         $html .= Html::footerCond($this->footer());
-        $html .= Html::divCond($this->makeJsBox(),'jsBox');
+        $html .= Html::divCond($this->makeModal(),'modal');
         $html .= $this->docClose();
 
         $com = Html::divCond($this->makeCom(),'com');
@@ -49,7 +49,7 @@ trait _template
         $r = '';
 
         $r .= Html::divOp('top');
-        $r .= Html::div(null,['burgerMenu','icon','burger','solo']);
+        $r .= Html::div(null,['burger-menu','icon','burger','solo']);
         $r .= Html::divCond($this->headerLeft(),'left');
         $r .= Html::divCond($this->headerRight(),'right');
         $r .= Html::divCl();
@@ -67,11 +67,11 @@ trait _template
         $boot = static::boot();
         $route = Home::makeOverload();
 
-        $r .= Html::divOp('bootLabel');
+        $r .= Html::divOp('boot-label');
         $r .= $route->a($boot->label());
         $r .= Html::divCl();
 
-        $r .= Html::div($boot->typeLabel(),'contextType');
+        $r .= Html::div($boot->typeLabel(),'context-type');
 
         return $r;
     }
@@ -151,7 +151,7 @@ trait _template
 
                     if(is_array($value))
                     {
-                        $class = ['sub','anchorCorner'];
+                        $class = ['sub','anchor-corner'];
                         $keys = array_keys($value);
 
                         if($this->isTableTop($keys))
@@ -318,9 +318,9 @@ trait _template
     }
 
 
-    // makeJsBox
-    // génère le html pour le jsBox
-    protected function makeJsBox():string
+    // makeModal
+    // génère le html pour le modal
+    protected function makeModal():string
     {
         $r = Html::divOp('background');
         $r .= Html::divOp('outer');

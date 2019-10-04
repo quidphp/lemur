@@ -12,27 +12,28 @@
 	
 	// clickOpen
 	// gère les comportements pour un élément clickOpen, clique sur un trigger et affiche un container
-	$.fn.clickOpen = function()
+    // possible de spécifier un trigger et son event
+	$.fn.clickOpen = function(trigger,triggerEvent)
 	{
 		var clickOpen = $(this);
-		$(this).on('clickOpen:isOpen', function(event) {
+        trigger = $.isStringNotEmpty(trigger)? trigger:"> .trigger";
+        triggerEvent = $.isStringNotEmpty(triggerEvent)? triggerEvent:"click";
+        
+		$(this).outsideClick('clickOpen:close').on('clickOpen:isOpen', function(event) {
 			return $(this).hasClass("active");
 		})
-		$(this).on('clickOpen:isInit', function(event) {
+		.on('clickOpen:isInit', function(event) {
 			return ($(this).data('clickOpen:init') === true)? true:false;
 		})
 		.on('clickOpen:getTrigger', function(event) {
-			return $(this).find("> .trigger").first();
-		})
-		.on('clickOpen:getTitle', function(event) {
-			return $(this).triggerHandler('clickOpen:getTrigger').find(".title").first();
+			return $(this).find(trigger).first();
 		})
 		.on('clickOpen:getPopup', function(event) {
 			return $(this).find(".popup").first();
 		})
 		.on('clickOpen:getParentContainer', function(event) {
 			var r = $(this).parents(".popup").first();
-			r = (!r.length)? $("body"):r;
+			r = (!r.length)? $(document):r;
 			return r;
 		})
 		.on('clickOpen:open', function(event) {
@@ -44,13 +45,13 @@
 					$(this).triggerHandler('clickOpen:firstOpen');
 					$(this).data('clickOpen:init',true);
 				}
-				$(this).addClass('active hasClickOpen');
+				$(this).addClass('active with-click-open');
 			}
 		})
 		.on('clickOpen:close', function(event) {
 			event.stopPropagation();
 			if($(this).triggerHandler('clickOpen:isOpen') === true)
-			$(this).removeClass('active hasClickOpen');
+			$(this).removeClass('active with-click-open');
 		})
 		.on('clickOpen:prepare', function(event) {
 			event.stopPropagation();
@@ -61,10 +62,10 @@
 			
 			if(trigger.length)
 			{
-				trigger.on('click', function(event) {
+				trigger.on(triggerEvent, function(event) {
 					event.stopPropagation();
 					var isOpen = $this.triggerHandler('clickOpen:isOpen');
-					parent.find(".hasClickOpen").trigger('clickOpen:close');
+					parent.find(".with-click-open").trigger('clickOpen:close');
 					if(isOpen === false)
 					$this.trigger('clickOpen:open');
 				});
@@ -76,18 +77,10 @@
 			})
 			.on('click', function(event) {
 				event.stopPropagation();
-				$(this).find(".hasClickOpen").trigger('clickOpen:close');
+				$(this).find(".with-click-open").trigger('clickOpen:close');
 			});
 		})
-		.on('clickOpen:setTitle', function(event,value) {
-			event.stopPropagation();
-			$(this).triggerHandler('clickOpen:getTitle').text(value);
-		})
 		.trigger('clickOpen:prepare');
-		
-		$(document).on('click', function(event) {
-			clickOpen.trigger('clickOpen:close');
-		});
 		
 		return this;
 	}
@@ -113,6 +106,13 @@
 		.on('fakeselect:getValue', function(event) {
 			return $(this).triggerHandler('fakeselect:getSelected').data('value');
 		})
+        .on('fakeselect:getTitle', function(event) {
+            return $(this).triggerHandler('clickOpen:getTrigger').find(".title").first();
+        })
+        .on('fakeselect:setTitle', function(event,value) {
+            event.stopPropagation();
+            $(this).triggerHandler('fakeselect:getTitle').text(value);
+        })
 		.on('getValue', function(event) {
 			return $(this).triggerHandler('fakeselect:getValue');
 		})
@@ -137,7 +137,7 @@
 			choices.removeClass('selected');
 			selected.addClass('selected');
 			input.val(value);
-			$(this).trigger('clickOpen:setTitle',selected.text());
+			$(this).trigger('fakeselect:setTitle',selected.text());
 			$(this).trigger('clickOpen:close');
 			
 			if(current !== value)
@@ -168,7 +168,7 @@
 				
 				html += "<div class='fakeselect";
 				if(anchorCorner === true)
-				html += " anchorCorner";
+				html += " anchor-corner";
 				html += "'";
 				if(required)
 				html += " data-required='1'";

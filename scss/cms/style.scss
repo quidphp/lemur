@@ -133,7 +133,7 @@ button,
 }
 
 /* COUNT INFO */
-.countInfo {
+.count-info {
     @include inbl();
     position: relative;
 
@@ -142,7 +142,7 @@ button,
         padding: 5px 5px 5px 25px;
     }
 
-    &.withPopup {
+    &.with-popup {
         &:hover {
             .count {
                 background-color: $color;

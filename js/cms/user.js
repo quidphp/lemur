@@ -6,8 +6,8 @@
  * License: https://github.com/quidphp/lemur/blob/master/LICENSE
  */
  
-// nobody
-// script of behaviours for all pages where the user is not logged in the CMS
+// user
+// script of behaviours for all pages related to user and account management
 $(document).ready(function() {
 	
 	// login
@@ -38,5 +38,12 @@ $(document).ready(function() {
 		
 		if(!$.areCookiesEnabled())
 		browscap.find(".cookie").show();
+	})
+    
+    // changePassword
+    // comportement pour le popup changer mon mot de passe
+	.on('modal:dialogAccountChangePassword', function(event,modal) {
+		var form = modal.find("form");
+		form.formValidate().find("[data-required],[data-pattern]").focusFirst();
 	});
 });

@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Quid\Lemur;
 use Quid\Core;
+use Quid\Test;
 
 // boot
 // extended abstract class for the object that bootstraps the cms
@@ -26,7 +27,7 @@ abstract class Boot extends Core\Boot
                 'option'=>[
                     'namespace'=>[
                         __NAMESPACE__=>['closure'=>true],
-                        Test::class=>['closure'=>false]]]]],
+                        Test\Lemur::class=>['closure'=>false]]]]],
         '@cms'=>[
             'service'=>[
                 'jQuery'=>Service\JQuery::class,

@@ -33,7 +33,7 @@
         }
     }
 }
-.general main .inner > .top .left .title .countInfo {
+.general main .inner > .top .left .title .count-info {
     margin-left: 10px;
 }
 .general main .inner > .top .left .search {
@@ -122,13 +122,13 @@
         margin-right: 5px;
     }
 
-    .multiDelete {
+    .multi-delete {
         @include inbl(bottom);
     }
 }
 
 /* PAGE */
-.general main .inner > .container .pageInput {
+.general main .inner > .container .page-input {
     a {
         @include inbl(bottom);
 
@@ -165,8 +165,8 @@
 .general main .inner > .container table {
     @include wh();
 
-    .bottomLeft .popup,
-    .bottomRight .popup {
+    .bottom-left .popup,
+    .bottom-right .popup {
         top: 100%;
         bottom: inherit;
     }
@@ -225,7 +225,7 @@
             display: none;
         }
 
-        &.allChecked {
+        &.all-checked {
             .check {
                 display: none;
             }
@@ -297,7 +297,7 @@
         padding-left: 25px;
     }
 }
-.general main .inner > .container table thead th.filterable .filterOuter {
+.general main .inner > .container table thead th.filterable .filter-outer {
     @include transition(background-color);
     height: 100%;
 
@@ -345,7 +345,7 @@
             background-color: $lightYellow;
         }
 
-        &.hasIcon > .replace {
+        &.has-icon > .replace {
             padding-right: 30px;
         }
 
@@ -522,7 +522,7 @@
 .general main table td .media {
     text-align: center;
 
-    .mediaPlaceholder {
+    .media-placeholder {
         @include wh(64px);
         margin: auto;
         margin-bottom: 3px;

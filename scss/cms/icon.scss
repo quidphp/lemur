@@ -10,37 +10,37 @@
 // stylesheet containing the rules related to the icons of the CMS
 
 /* LOADING */
-body .loadingIcon,
+body .loading-icon,
 body .loading .popup,
 body .loading.popup,
-.loadMore.loading,
+.load-more.loading,
 .calendar.loading,
-.jsBox.loading .inner {
+.modal.loading .inner {
     @include bgimg64($iconLoading, center);
 }
 
 /* CLOSE */
-body.responsiveMenuOpen header > .top .burgerMenu,
+body.responsive-menu-open header > .top .burger-menu,
 body .icon.close {
     @include bgimg64($iconClose);
 }
 
 /* ATTACH */
-.clickOpen.filter > .trigger > .ico,
+.click-open.filter > .trigger > .ico,
 .fakeselect > .trigger > .ico {
     @include bgimg64($iconAttach);
 }
 
 /* MEDIA */
-.specific main .element.media .right .block .info .mediaPlaceholder,
-.specific main .element.medias .right .block .info .mediaPlaceholder,
-.general main table td .media .mediaPlaceholder,
-.specific main .element.tableRelation .right .relations .clickOpen .popup .result ul li .bigIcon.storage {
+.specific main .element.media .right .block .info .media-placeholder,
+.specific main .element.medias .right .block .info .media-placeholder,
+.general main table td .media .media-placeholder,
+.specific main .element.table-relation .right .relations .click-open .popup .result ul li .big-icon.storage {
     @include bgimg64($iconMedia);
 }
 
 /* VIDEO */
-.specific main .element.tableRelation .right .relations .clickOpen .popup .result ul li .bigIcon.video {
+.specific main .element.table-relation .right .relations .click-open .popup .result ul li .big-icon.video {
     @include bgimg64($iconVideo);
 }
 
@@ -128,7 +128,7 @@ body .icon.print {
     @include bgimg64($iconPrint);
 }
 body .icon.remove,
-body .icon.multiDelete,
+body .icon.multi-delete,
 body .icon.truncate {
     @include bgimg64($iconRemove);
 }

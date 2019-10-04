@@ -22,19 +22,19 @@ $(document).ready(function() {
     // comportements utilisés pour toutes les pages du CMS
 	$(this).on('route:common', function(event) {
 		var body = $(this).find("body");
-		var jsBox = $(this).find(".jsBox");
-		var jsBoxAnchor = $(this).find("a[data-js-box]");
-		var anchorCorner = $(this).find(".anchorCorner");
+		var modal = $(this).find(".modal");
+		var modalAnchor = $(this).find("a[data-modal]");
+		var anchorCorner = $(this).find(".anchor-corner");
 		var calendar = $(this).find("main .popup .calendar");
 		var aConfirm = $(this).find("a[data-confirm]");
 		var print = $(this).find(".submit.print");
-		var burger = $(this).find("header .burgerMenu");
+		var burger = $(this).find("header .burger-menu");
 		
-		// jsBoxAjax
-		if(jsBox.length === 1)
+		// modalAjax
+		if(modal.length === 1)
 		{
-			jsBox.jsBox();
-			jsBoxAnchor.jsBoxAjax(jsBox);
+			modal.modal();
+			modalAnchor.modalAjax(modal);
 		}
 		
 		// anchorCorner
@@ -57,7 +57,7 @@ $(document).ready(function() {
 		
 		// burger
 		burger.on('click', function(event) {
-			body.toggleClass('responsiveMenuOpen');
+			body.toggleClass('responsive-menu-open');
 		});
 	})
 	
@@ -71,7 +71,7 @@ $(document).ready(function() {
 			com.trigger('com:close');
 		})
 		.on('click', '.date', function(event) {
-			com.trigger(com.hasClass('slideClose')? 'com:slideDown':'com:slideUp');
+			com.trigger(com.hasClass('slide-close')? 'com:slideDown':'com:slideUp');
 		})
 		.on('click', ".row.insert > span,.row.update > span", function(event) {
 			var parent = $(this).parent();
@@ -80,11 +80,11 @@ $(document).ready(function() {
 			com.trigger('redirect',[table,primary]);
 		})
 		.on('com:slideUp', function(event) {
-			$(this).addClass('slideClose');
+			$(this).addClass('slide-close');
 			$(this).find('.bottom').stop(true,true).slideUp('fast');
 		})
 		.on('com:slideDown', function(event) {
-			$(this).removeClass('slideClose');
+			$(this).removeClass('slide-close');
 			$(this).find('.bottom').stop(true,true).slideDown('fast');
 		})
 		.on('com:close', function(event) {

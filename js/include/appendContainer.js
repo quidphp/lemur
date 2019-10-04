@@ -60,7 +60,7 @@
 		.on('feed:bind', function(event) {
 			var parent = $(this);
 			
-			$(this).find('.loadMore').off('click').on('click', function(event) {
+			$(this).find('.load-more').off('click').on('click', function(event) {
 				event.stopPropagation();
 				
 				$(this).block('ajax:init').ajax('ajax:init').on('ajax:before', function(event) {

@@ -90,7 +90,7 @@ trait _specific
         $r .= Html::div($this->makeTitleBox(),'title');
 
         if($table->hasPermission('description'))
-        $r .= Html::divCond($table->description(),['description','subTitle']);
+        $r .= Html::divCond($table->description(),['description','sub-title']);
 
         $r .= Html::divCl();
 
@@ -187,7 +187,7 @@ trait _specific
             $lang = $this->lang();
 
             $r .= Html::divOp('popup');
-            $r .= Html::div(null,['icon','topRight','solo','info']);
+            $r .= Html::div(null,['icon','top-right','solo','info']);
             $r .= Html::ulOp();
 
             foreach ($colPopup as $v)
@@ -324,8 +324,8 @@ trait _specific
 
             $class = (array) $col->classHtml();
             $class[] = ($col->isRequired())? 'required':null;
-            $class[] = (!empty($popup) || $col->isDate() || $col->isRelation())? 'anchorCorner':null;
-            $class[] = (!empty($popup))? ['hasColPopup']:null;
+            $class[] = (!empty($popup) || $col->isDate() || $col->isRelation())? 'anchor-corner':null;
+            $class[] = (!empty($popup))? ['with-col-popup']:null;
             $class[] = ($colCell->hasFormLabelId($this->formWrapAttr($colCell),true))? 'pointer':null;
             $attr = ['element',$class,'data'=>['col'=>$col]];
 

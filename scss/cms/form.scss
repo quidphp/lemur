@@ -50,7 +50,7 @@
     position: relative;
     border: 1px solid $lightGray;
 
-    &.withAction {
+    &.with-action {
         .info,
         .actions,
         .versions {
@@ -117,7 +117,7 @@
         }
     }
 
-    .mediaPlaceholder {
+    .media-placeholder {
         @include wh(64px);
         margin: auto;
     }
@@ -188,7 +188,7 @@
 }
 
 /* SEARCH ENUMSET */
-.specific main .element .right .searchEnumSet {
+.specific main .element .right .search-enumset {
     @include enumSet();
 
     &.loading .popup .order {
@@ -247,7 +247,7 @@
                 }
             }
 
-            .loadMore {
+            .load-more {
                 @include loadMore();
             }
         }
@@ -285,10 +285,10 @@
 }
 
 /* TABLE RELATION */
-.specific main .element.tableRelation .right .relations {
+.specific main .element.table-relation .right .relations {
     text-align: center;
 
-    .clickOpen {
+    .click-open {
         margin: 3px;
 
         > .trigger {
@@ -296,7 +296,7 @@
         }
     }
 }
-.specific main .element.tableRelation .right .relations .clickOpen .popup .result ul li {
+.specific main .element.table-relation .right .relations .click-open .popup .result ul li {
     border-top: 1px solid $lightGray;
 
     &:first-child {
@@ -307,7 +307,7 @@
         padding: 5px 10px;
         cursor: pointer;
 
-        .bigIcon {
+        .big-icon {
             @include wh(64px);
             margin: auto;
             margin-bottom: 3px;
@@ -319,7 +319,7 @@
         }
     }
 }
-.specific main .element.tableRelation .right .relations .clickOpen .popup .result ul li .medias {
+.specific main .element.table-relation .right .relations .click-open .popup .result ul li .medias {
     > .legend {
         background-color: $lightGray;
         text-align: center;
@@ -352,6 +352,18 @@
     @include jsonArrayBase();
 }
 
+/* RESPONSIVE */
+@media screen and (max-width: 900px), screen and (orientation: portrait) {
+    .specific main .element.media .right .block,
+    .specific main .element.medias .right .block {
+        width: 100%;
+    }
+    
+    .specific main .element.jsonArray .right > .container > .ele {
+        @include jsonArrayResponsive();
+    }
+}
+
 /* PRINT */
 @media print {
     .specific main .element.media .right .block.empty,
@@ -360,7 +372,7 @@
     .specific main .element.medias .right .block .actions,
     .specific main .element.media .right .block .form,
     .specific main .element.medias .right .block .form,
-    .specific main .element .right .searchEnumSet .input,
+    .specific main .element .right .search-enumset .input,
     .specific main .element.sortable .move {
         display: none !important;
     }

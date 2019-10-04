@@ -34,7 +34,7 @@ body .active .popup {
     padding: 10px 15px 0;
     box-sizing: border-box;
 
-    .topRight {
+    .top-right {
         @include abs(15px, 20px);
     }
 
@@ -81,7 +81,7 @@ body .active .popup {
 }
 
 /* CLICK OPEN + FAKE SELECT */
-.clickOpen.filter,
+.click-open.filter,
 .fakeselect {
     @include clickOpen();
 
@@ -98,6 +98,13 @@ body .active .popup {
         }
     }
 }
-.clickOpen.filter .popup {
+.click-open.filter .popup {
     @include clickOpenPopup();
+}
+
+/* RESPONSIVE */
+@media screen and (max-width: 900px), screen and (orientation: portrait) {
+    .popup {
+        max-width: 95vw !important;
+    }
 }

@@ -9,10 +9,10 @@
 // component
 // stylesheet containing various reusable component mixins
 
-// jsBox
-// mixin avec les styles de base pour la box (modal)
-@mixin jsBox() {
-    .jsBox {
+// modal
+// mixin avec les styles de base pour le modal
+@mixin modal() {
+    .modal {
         @include fixed(0, '', '', 0);
         @include wh(100%);
         z-index: 999;
@@ -27,7 +27,7 @@
             background-color: rgba(0, 0, 0, 0.3);
         }
     }
-    .jsBox .outer {
+    .modal .outer {
         @include abs(20%, '', '', 20%);
         @include wh(60%);
 
@@ -50,15 +50,15 @@
 // basePopup
 // mixin avec les styles de base pour un popup
 @mixin basePopup() {
-    .topRight .popup {
+    .top-right .popup {
         left: auto;
         right: 0;
     }
-    .bottomLeft .popup {
+    .bottom-left .popup {
         top: auto;
         bottom: 100%;
     }
-    .bottomRight .popup {
+    .bottom-right .popup {
         top: auto;
         left: auto;
         right: 0;
@@ -127,8 +127,8 @@
         border-radius: 5px;
     }
 
-    &.topRight > .popup,
-    &.topLeft > .popup {
+    &.top-right > .popup,
+    &.top-left > .popup {
         border-top: 0;
     }
 }
@@ -156,7 +156,7 @@
         }
     }
 
-    .loadMore {
+    .load-more {
         text-align: center;
         padding: 5px;
         cursor: pointer;
@@ -173,7 +173,7 @@
         padding: 5px 10px;
     }
 
-    &.alreadyIn .label {
+    &.already-in .label {
         background-color: $red !important;
         color: $white;
     }
