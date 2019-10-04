@@ -29,11 +29,10 @@ body .loading-icon {
     display: none;
 }
 body.responsive-menu-open header {
-    
     > .top .burger-menu {
         position: fixed;
     }
-    
+
     nav {
         display: block;
     }
@@ -371,7 +370,7 @@ footer .left {
         > li {
             @include inbl();
             padding: 0 12px 0 0;
-            
+
             > a {
                 @include inbl();
                 color: $white;
