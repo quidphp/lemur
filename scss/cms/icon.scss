@@ -35,12 +35,32 @@ body .icon.close {
 [data-route='general'] main table td .media .media-placeholder,
 [data-group='specific'] main .element.media .right .block .info .media-placeholder,
 [data-group='specific'] main .element.medias .right .block .info .media-placeholder,
-[data-group='specific'] main .element.table-relation .right .relations .click-open .popup .result ul li .big-icon.storage {
+[data-group='specific']
+    main
+    .element.table-relation
+    .right
+    .relations
+    .click-open
+    .popup
+    .result
+    ul
+    li
+    .big-icon.storage {
     @include bgimg64($iconMedia);
 }
 
 /* VIDEO */
-[data-group='specific'] main .element.table-relation .right .relations .click-open .popup .result ul li .big-icon.video {
+[data-group='specific']
+    main
+    .element.table-relation
+    .right
+    .relations
+    .click-open
+    .popup
+    .result
+    ul
+    li
+    .big-icon.video {
     @include bgimg64($iconVideo);
 }
 

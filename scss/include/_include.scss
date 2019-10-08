@@ -183,8 +183,7 @@ $media: $uriMedia;
 
 // wrapper
 // mixin pour le css contenu dans la première div sous le body
-@mixin wrapper()
-{
+@mixin wrapper() {
     margin: auto;
     min-height: 100%;
     height: auto;

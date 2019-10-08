@@ -26,12 +26,12 @@ trait _template
         return $this->template();
     }
 
-    
+
     // template
-    protected function template():string 
+    protected function template():string
     {
         $r = $this->docOpen();
-        
+
         $r .= Html::divOp('#wrapper');
         $r .= Html::div(null,'loading-icon');
         $r .= Html::headerCond($this->header());
@@ -50,8 +50,8 @@ trait _template
 
         return $r;
     }
-    
-    
+
+
     // header
     // génère le header pour toutes les pages du cms
     protected function header():string
@@ -176,7 +176,7 @@ trait _template
                     if(!empty($table))
                     {
                         $route = static::session()->routeTableGeneral($table,true);
-                        
+
                         $option = ($route->routeRequest()->isSegmentParsedFromValue())? ['query'=>false]:null;
                         $r .= $route->aTitle(null,null,null,$option);
 

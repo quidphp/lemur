@@ -229,7 +229,7 @@ class Route extends Base\Test
         assert($g->segment('table') === $db['ormTable']);
         assert($g->segment(0) === $db['ormTable']);
         assert($g['page'] === 1);
-        assert(count($g->segment(array('page','limit'))) === 2);
+        assert(count($g->segment(['page','limit'])) === 2);
         assert(count($g) === 10);
         assert($g->hasSegment('table','page'));
         assert(!$g->hasSegment('table','pagez'));
