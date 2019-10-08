@@ -9,8 +9,8 @@
 // interface
 // stylesheet for the main interface of the CMS
 
-/* BODY */
-body.loading {
+/* WRAPPER */
+[data-status='loading'] body {
     main {
         opacity: 0.6;
     }
@@ -36,6 +36,9 @@ body.responsive-menu-open header {
     nav {
         display: block;
     }
+}
+body > #wrapper {
+    @include wrapper();
 }
 
 /* HEADER */

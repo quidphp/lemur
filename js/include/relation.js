@@ -361,7 +361,7 @@
 			
 			filters.filterGeneralFull(true,true).each(function(index, el) {
 				$(this).triggerHandler('getResult').on('click', '.insert', function(event) {
-					var parent = $(this).parents('.clickOpen');
+					var parent = $(this).parents('.click-open');
 					var html = $(this).data('html');
 					textarea.triggerHandler('textarea:insert',html);
 					parent.trigger('clickOpen:close');

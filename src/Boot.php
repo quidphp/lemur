@@ -46,8 +46,7 @@ abstract class Boot extends Core\Boot
                                 'type'=>'css/%type%.css'],
                             'js'=>[
                                 'include'=>'js/include.js',
-                                'type'=>'js/%type%.js']],
-                        'wrapper'=>['#wrapper']]],
+                                'type'=>'js/%type%.js']]]],
                 Core\Col::class=>[
                     'generalExcerptMin'=>100]],
             'compileScss'=>[

@@ -93,7 +93,7 @@ class SpecificDuplicate extends Core\RouteAlias
     // retourne la route en cas d'échec de la duplication
     public function routeFailure():Core\Route
     {
-        return static::makeParentOverload($this->segment());
+        return static::makeParentOverload($this->segments());
     }
 
 

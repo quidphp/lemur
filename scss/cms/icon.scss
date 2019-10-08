@@ -15,7 +15,7 @@ body .loading .popup,
 body .loading.popup,
 .load-more.loading,
 .calendar.loading,
-.modal.loading .inner {
+.modal[data-status='loading'] .inner {
     @include bgimg64($iconLoading, center);
 }
 
@@ -32,15 +32,15 @@ body .icon.close {
 }
 
 /* MEDIA */
-.specific main .element.media .right .block .info .media-placeholder,
-.specific main .element.medias .right .block .info .media-placeholder,
-.general main table td .media .media-placeholder,
-.specific main .element.table-relation .right .relations .click-open .popup .result ul li .big-icon.storage {
+[data-route='general'] main table td .media .media-placeholder,
+[data-group='specific'] main .element.media .right .block .info .media-placeholder,
+[data-group='specific'] main .element.medias .right .block .info .media-placeholder,
+[data-group='specific'] main .element.table-relation .right .relations .click-open .popup .result ul li .big-icon.storage {
     @include bgimg64($iconMedia);
 }
 
 /* VIDEO */
-.specific main .element.table-relation .right .relations .click-open .popup .result ul li .big-icon.video {
+[data-group='specific'] main .element.table-relation .right .relations .click-open .popup .result ul li .big-icon.video {
     @include bgimg64($iconVideo);
 }
 

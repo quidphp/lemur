@@ -16,9 +16,7 @@
 	{
 		var $settings = {
 			link: "a:internal:not([target='_blank']):not(.http):not([data-modal]):not([href^='mailto:'])",
-			timeout: 7000,
-			classLoading: "loading",
-			classReady: "ready"
+			timeout: 7000
 		};
 		
 		if(option && typeof(option) == 'object')
@@ -147,12 +145,7 @@
 			$target.data('navigation:active',true);
 			
 			// loading
-			if($settings.classLoading);
-			$("body").addClass($settings.classLoading);
-			
-			// ready
-			if($settings.classReady)
-			$("body").removeClass($settings.classReady);
+			$("html").attr('data-status','loading');
 			
 			// beforeUnload
 			$(window).off('beforeunload');
@@ -208,68 +201,49 @@
 			if($.isPlainObject(doc) && doc.body && doc.body.length)
 			{
 				r = true;
-
-				if($.isStringNotEmpty(doc.route))
-				$("html").attr("data-route",doc.route);
-				else
-				$("html").removeAttr("data-route");
-				
-				if($.isArray(doc.selected))
-				$("html").attr("data-selected",JSON.stringify(doc.selected)).data("selected",doc.selected);
-				else
-				$("html").removeAttr("data-selected").removeData("selected");
-				
-				if($.isString(doc.lang))
-				$("html").attr("lang",doc.lang);
-				else
-				$("html").removeAttr('lang');
-				
-				if($.isString(doc.classes))
-				$("html").attr("class",doc.classes);
-				else
-				$("html").removeAttr('class');
-				
-				// titre
+                
+                // html
+                var html = $("html");
+                doc.html.removeAttr('data-tag');
+                var htmlAttributes = doc.html.getAttributes();
+                html.replaceAttributes(htmlAttributes);
+                
+                // head
+                var head = html.find("head");
+                
+				// title
+                var title = head.find("meta");
 				if($.isStringNotEmpty(doc.title))
 				{
 					document.title = doc.title;
-					document.getElementsByTagName('title')[0].innerHTML = document.title.replace('<','&lt;').replace('>','&gt;').replace(' & ',' &amp; ');
+					title.html(document.title.replace('<','&lt;').replace('>','&gt;').replace(' & ',' &amp; '));
 				}
 				
-				// meta
-				if(doc.meta instanceof jQuery && doc.meta.length)
+                // meta
+                var meta = head.find("meta");
+                meta.remove();
+				if(doc.meta instanceof jQuery)
 				{
+                    doc.meta.removeAttr('data-tag');
 					doc.meta.each(function(index, el) {
-						var name;
-						var nameTag;
-						var content = $(this).attr("content");
-						
-						if($(this).attr("property"))
-						nameTag = "property";
-						
-						else if($(this).attr("name"))
-						nameTag = "name";
-						
-						if(nameTag)
-						{
-							name = $(this).attr(nameTag);
-							if(name && $("html > head > meta["+nameTag+"='"+name+"']").length === 1)
-							$("html > head > meta["+nameTag+"='"+name+"']").first().attr("content",content);
-						}
+                        var after = (head.find("meta").length)? head.find("meta").last():head.find("title");
+                        
+                        var attributes = $(this).getAttributes();
+                        $("<meta>").insertAfter(after);
+                        
+						var element = head.find("meta").last();
+                        element.replaceAttributes(attributes);
 					});
 				}
 				
-				if($.isString(doc.bodyStyle))
-				$("body").attr("style",doc.bodyStyle);
-				else
-				$("body").removeAttr("style");
-				if($.isString(doc.bodyClass))
-				$("body").attr("class",doc.bodyClass);
-				else
-				$("body").removeAttr("class");
+                // body
+                var body = html.find("body");
+                doc.body.removeAttr('data-tag');
+                var bodyAttributes = doc.body.getAttributes();
+                body.replaceAttributes(bodyAttributes);
+				body.html(doc.body.html());
 				
-				$("body").html(doc.body.html());
-				
+                // after
 				afterMakeDocument.call(this);
 			}
 			
@@ -286,7 +260,7 @@
 			
 			// loading
 			if($settings.classLoading)
-			$("body").removeClass($settings.classLoading);
+			$("html").removeClass($settings.classLoading);
 			
             // unbink click sur document
             $target.off('.outside');
@@ -441,8 +415,7 @@
 		.on('navigation:route', function(event) {
 			var route = $(this).find("html").attr("data-route");
 			
-			if($settings.classReady)
-			$("body").addClass($settings.classReady);
+			$("html").attr('data-status','ready');
 			
 			if($.isStringNotEmpty(route))
 			{
@@ -467,4 +440,52 @@
 		return this;
 	}
 	
+    
+    // hasHistoryApi
+	// retourne vrai si le navigateur courant supporte history API
+	$.hasHistoryApi = function() 
+	{
+		var r = false;
+		
+		if(window.history && window.history.pushState && window.history.replaceState)
+		{
+			if(!navigator.userAgent.match(/((iPod|iPhone|iPad).+\bOS\s+[1-4]\D|WebApps\/.+CFNetwork)/))
+			r = true;
+		}
+		
+		return r;
+	}
+	
+	
+	// makeHistoryState
+	// retourne un objet état d'historique (avec url, title et timestamp)
+	$.makeHistoryState = function(uri,title) 
+	{
+		var r = null;
+		
+		if($.isString(uri))
+		{
+			r = {
+				url: uri,
+				title: title || null,
+				timestamp: $.timestamp()
+			};
+		}
+		
+		return r;
+	}
+	
+	
+	// isHistoryState
+	// retourne vrai si la valeur est un objet compatible pour un état d'historique
+	$.isHistoryState = function(state)
+	{
+		var r = false;
+		
+		if($.isPlainObject(state) && $.isString(state.url) && $.isNumeric(state.timestamp))
+		r = true;
+		
+		return r;
+	}
+    
 }(jQuery, document, window));

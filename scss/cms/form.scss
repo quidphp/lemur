@@ -10,7 +10,7 @@
 // stylesheet for the various form inputs of the CMS
 
 /* EXCEPTION */
-.specific #wrapper main .element.exception {
+[data-group='specific'] #wrapper main .element.exception {
     background-color: $red;
     color: $white;
     text-align: center;
@@ -18,7 +18,7 @@
 }
 
 /* DATE */
-.specific main .element.date .right {
+[data-group='specific'] main .element.date .right {
     position: relative;
 
     .popup {
@@ -34,15 +34,15 @@
 }
 
 /* CHANGE PASSWORD */
-.specific main .element.userPassword .right {
+[data-group='specific'] main .element.userPassword .right {
     input[type='password']:first-child {
         margin-bottom: 10px;
     }
 }
 
 /* MEDIA */
-.specific main .element.media .right .block,
-.specific main .element.medias .right .block {
+[data-group='specific'] main .element.media .right .block,
+[data-group='specific'] main .element.medias .right .block {
     @include inbl();
     width: 480px;
     background-color: $white;
@@ -102,8 +102,8 @@
         }
     }
 }
-.specific main .element.media .right .block .info,
-.specific main .element.medias .right .block .info {
+[data-group='specific'] main .element.media .right .block .info,
+[data-group='specific'] main .element.medias .right .block .info {
     padding: 10px;
     font-size: 90%;
     text-align: left;
@@ -150,8 +150,8 @@
         }
     }
 }
-.specific main .element.media .right .block .versions,
-.specific main .element.medias .right .block .versions {
+[data-group='specific'] main .element.media .right .block .versions,
+[data-group='specific'] main .element.medias .right .block .versions {
     padding: 10px;
     background-color: $lightestGray;
     font-size: 90%;
@@ -179,7 +179,7 @@
         }
     }
 }
-.specific main .element.medias .right .block {
+[data-group='specific'] main .element.medias .right .block {
     margin: 10px 10px 0 0;
 
     &:first-child {
@@ -188,7 +188,7 @@
 }
 
 /* SEARCH ENUMSET */
-.specific main .element .right .search-enumset {
+[data-group='specific'] main .element .right .search-enumset {
     @include enumSet();
 
     &.loading .popup .order {
@@ -253,8 +253,8 @@
         }
     }
 }
-.specific main .element.enum .right,
-.specific main .element.set .right {
+[data-group='specific'] main .element.enum .right,
+[data-group='specific'] main .element.set .right {
     .thumbnail {
         margin-bottom: 3px;
 
@@ -266,7 +266,7 @@
 }
 
 /* CHECKBOX SORTABLE */
-.specific main .container .form .element.sortable .right .choice {
+[data-group='specific'] main .container .form .element.sortable .right .choice {
     .choiceInner {
         @include inbl();
 
@@ -285,7 +285,7 @@
 }
 
 /* TABLE RELATION */
-.specific main .element.table-relation .right .relations {
+[data-group='specific'] main .element.table-relation .right .relations {
     text-align: center;
 
     .click-open {
@@ -296,7 +296,7 @@
         }
     }
 }
-.specific main .element.table-relation .right .relations .click-open .popup .result ul li {
+[data-group='specific'] main .element.table-relation .right .relations .click-open .popup .result ul li {
     border-top: 1px solid $lightGray;
 
     &:first-child {
@@ -319,7 +319,7 @@
         }
     }
 }
-.specific main .element.table-relation .right .relations .click-open .popup .result ul li .medias {
+[data-group='specific'] main .element.table-relation .right .relations .click-open .popup .result ul li .medias {
     > .legend {
         background-color: $lightGray;
         text-align: center;
@@ -348,32 +348,32 @@
 }
 
 /* JSON ARRAY */
-.specific main .element.jsonArray {
+[data-group='specific'] main .element.jsonArray {
     @include jsonArrayBase();
 }
 
 /* RESPONSIVE */
 @media screen and (max-width: 900px), screen and (orientation: portrait) {
-    .specific main .element.media .right .block,
-    .specific main .element.medias .right .block {
+    [data-group='specific'] main .element.media .right .block,
+    [data-group='specific'] main .element.medias .right .block {
         width: 100%;
     }
 
-    .specific main .element.jsonArray .right > .container > .ele {
+    [data-group='specific'] main .element.jsonArray .right > .container > .ele {
         @include jsonArrayResponsive();
     }
 }
 
 /* PRINT */
 @media print {
-    .specific main .element.media .right .block.empty,
-    .specific main .element.medias .right .block.empty,
-    .specific main .element.media .right .block .actions,
-    .specific main .element.medias .right .block .actions,
-    .specific main .element.media .right .block .form,
-    .specific main .element.medias .right .block .form,
-    .specific main .element .right .search-enumset .input,
-    .specific main .element.sortable .move {
+    [data-group='specific'] main .element.media .right .block.empty,
+    [data-group='specific'] main .element.medias .right .block.empty,
+    [data-group='specific'] main .element.media .right .block .actions,
+    [data-group='specific'] main .element.medias .right .block .actions,
+    [data-group='specific'] main .element.media .right .block .form,
+    [data-group='specific'] main .element.medias .right .block .form,
+    [data-group='specific'] main .element .right .search-enumset .input,
+    [data-group='specific'] main .element.sortable .move {
         display: none !important;
     }
 }

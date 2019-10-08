@@ -14,7 +14,7 @@ $(document).ready(function() {
     // comportement pour la page d'accueil du CMS une fois connecté
 	$(this).on('route:home', function() {
 		
-		var form = $(this).find(".home form");
+		var form = $(this).find("main form");
 		var field = form.find("[data-required],[data-pattern]");
 		
 		if(form.length)

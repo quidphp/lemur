@@ -217,7 +217,7 @@ class SpecificAdd extends Core\RouteAlias
         $r .= Html::divOp('container');
         $r .= Html::divOp('form');
         $data = ['unload'=>static::langText('common/unload')];
-        $r .= SpecificAddSubmit::makeOverload($this->segment())->formOpen(['data'=>$data]);
+        $r .= SpecificAddSubmit::makeOverload($this->segments())->formOpen(['data'=>$data]);
         $r .= $this->makeFormTop();
         $r .= $this->makeFormInner();
         $r .= $this->makeFormBottom();

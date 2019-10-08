@@ -21,20 +21,20 @@ class Error extends Core\Route\Error
     // config
     public static $config = [];
 
-
+    
+    // trigger
+    // trigge la route error du cms
+    public function trigger() 
+    {
+        return ($this->showErrorHtml())? $this->template():null;
+    }
+    
+    
     // main
     // génère la page erreur dans la balise main
     protected function main():string
     {
         return $this->html();
-    }
-
-
-    // somebody
-    // génère la page erreur si l'utilisateur est somebody (connecté)
-    protected function somebody():string
-    {
-        return $this->detail(Home::makeOverload());
     }
 }
 

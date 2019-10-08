@@ -132,13 +132,6 @@ $media: $uriMedia;
 // default
 // mixin utilisé pour certaines fonctionnalités par défaut
 @mixin default() {
-    body > div:first-child {
-        margin: auto;
-        min-height: 100%;
-        height: auto;
-        position: relative;
-        min-width: 900px;
-    }
     input[name='-genuine-'] {
         display: none !important;
     }
@@ -186,6 +179,17 @@ $media: $uriMedia;
         display: table-cell;
         vertical-align: middle;
     }
+}
+
+// wrapper
+// mixin pour le css contenu dans la première div sous le body
+@mixin wrapper()
+{
+    margin: auto;
+    min-height: 100%;
+    height: auto;
+    position: relative;
+    min-width: 900px;
 }
 
 // abs

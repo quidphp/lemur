@@ -42,7 +42,7 @@ class Route extends Base\Test
         $g = new $general(new Core\Request('/fr/table/ormTable/1/20/-/-/-/-/-/-/-'));
         $g2 = new $general(['table'=>$db['ormSql'],'page'=>3,'limit'=>10]);
         $query = new $general(new Core\Request('/fr/table/ormTable/1/20/-/-/-/-/-/-/-?s=éric'));
-        assert(count(Base\Classe::parents($login,true)) === 6);
+        assert(count(Base\Classe::parents($login,true)) === 7);
 
         // session
 
@@ -159,7 +159,7 @@ class Route extends Base\Test
         assert($route::isActive());
         assert($route::isGroup('error') === true);
         assert($sitemap::isGroup('seo'));
-        assert(!$route::isGroup('none'));
+        assert(!$route::isGroup('default'));
         assert(!$route::inSitemap());
         assert(!$login::inSitemap());
         assert($contact::inSitemap());
@@ -218,16 +218,19 @@ class Route extends Base\Test
         assert($general::make()->routeSegmentRequest() instanceof Routing\RouteSegmentRequest);
         assert($g->initSegment() === $g);
         assert($g->checkValidSegment());
-        assert($g->segment(null,false) === ['table'=>'ormTable','page'=>1,'limit'=>20,'order'=>'-','direction'=>'-','cols'=>'-','filter'=>'-','in'=>'-','notIn'=>'-','highlight'=>'-']);
+        assert($g->segments(false) === ['table'=>'ormTable','page'=>1,'limit'=>20,'order'=>'-','direction'=>'-','cols'=>'-','filter'=>'-','in'=>'-','notIn'=>'-','highlight'=>'-']);
         assert($g->segment('table',false) === 'ormTable');
         assert($g->segment(0,false) === 'ormTable');
-        assert($g2->segment()['table'] instanceof Core\Table);
-        assert($g2->segment(null,true)['table'] === 'ormSql');
-        assert($g->segment(null,false)['table'] === 'ormTable');
-        assert($g->segment(null,true)['table'] === 'ormTable');
-        assert($g->segment() === ['table'=>$db['ormTable'],'page'=>1,'limit'=>20,'order'=>$db['ormTable']['id'],'direction'=>'desc','cols'=>$g->segment('cols'),'filter'=>[],'in'=>[],'notIn'=>[],'highlight'=>[]]);
+        assert($g2->segments()['table'] instanceof Core\Table);
+        assert($g2->segments(true)['table'] === 'ormSql');
+        assert($g->segments(false)['table'] === 'ormTable');
+        assert($g->segments(true)['table'] === 'ormTable');
+        assert($g->segments() === ['table'=>$db['ormTable'],'page'=>1,'limit'=>20,'order'=>$db['ormTable']['id'],'direction'=>'desc','cols'=>$g->segment('cols'),'filter'=>[],'in'=>[],'notIn'=>[],'highlight'=>[]]);
         assert($g->segment('table') === $db['ormTable']);
         assert($g->segment(0) === $db['ormTable']);
+        assert($g['page'] === 1);
+        assert(count($g->segment(array('page','limit'))) === 2);
+        assert(count($g) === 10);
         assert($g->hasSegment('table','page'));
         assert(!$g->hasSegment('table','pagez'));
         assert($g->checkSegment('table','page'));
@@ -237,7 +240,7 @@ class Route extends Base\Test
         assert($g3->request() === $g->request());
         assert($g3->uri() === '/en/table/ormTable/4/20/-/-/-/-/-/-/-');
         assert($g->uri() === '/en/table/ormTable/1/20/-/-/-/-/-/-/-');
-        assert(count($g3->segment()) === 10);
+        assert(count($g3->segments()) === 10);
         assert($g3->isValidSegment());
         assert($g->isValidSegment());
         assert($g3->checkValidSegment());
@@ -246,8 +249,8 @@ class Route extends Base\Test
         assert(($g4 = $g3->changeSegments(['table'=>123,'page'=>4])) instanceof Core\Route);
         assert(!$g4->isValidSegment());
         assert(($g5 = $g3->keepSegments('page')) instanceof Core\Route);
-        assert($g5->segment()['page'] === 4);
-        assert($g5->segment()['table'] === null);
+        assert($g5->segments()['page'] === 4);
+        assert($g5->segments()['table'] === null);
         assert(!$route::isSegmentClass());
         assert($general::isSegmentClass());
         assert($general::checkSegmentClass());
@@ -266,7 +269,7 @@ class Route extends Base\Test
         assert($query->uri() === '/en/table/ormTable/1/20/-/-/-/-/-/-/-?s=éric');
         assert(($g2 = $g->make($g)) instanceof Core\Route);
         assert($g2->uri() === '/en/table/ormTable/1/20/-/-/-/-/-/-/-');
-        assert(count($g2->segment()) === 10);
+        assert(count($g2->segments()) === 10);
 
         // root
         assert(count($obj->help()) === 9);

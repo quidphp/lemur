@@ -686,7 +686,8 @@
     // gère les clicks hors de l'éléments
     // si parent n'est pas spécifié utilise document
     // utilise le namespace outside, ceci est unbind dans navigation
-    $.fn.outsideClick = function(value,parent) {
+    $.fn.outsideClick = function(value,parent) 
+    {
         parent = (parent instanceof jQuery && parent.length === 1)? parent:$(document);
         
         if($.isStringNotEmpty(value))
@@ -701,4 +702,69 @@
         return this;
     }
 	
+    
+    // getAttributes
+    // retourne un objet contenant tous les attributs d'une balise
+    $.fn.getAttributes = function(start)
+    {
+        var r = {};
+        
+        if($(this).length === 1)
+        {   
+            $.each(this[0].attributes, function() {
+                if(start == null || $.isStringStart(start,this.name))
+                r[this.name] = this.value;
+            });
+        }
+        
+        return r;
+    }
+    
+    
+    // getDataAttributes
+    // retourne un objet contenant tous les data-attributs d'une balise
+    $.fn.getDataAttributes = function()
+    {
+        return $(this).getAttributes('data-');
+    }
+    
+    
+    // replaceAttributes
+    // remplace tous les attributs d'une balise, il faut fournir un plain object
+    // possible de retirer les attributs existants
+    $.fn.replaceAttributes = function(value,remove)
+    {
+        if(remove === true)
+        $(this).removeAttributes();
+        
+        if($.isPlainObject(value))
+        {
+            var $this = $(this);
+            
+            $(this).each(function(index, el) {
+                $.each(value, function(k,v) {
+                    $this.attr(k,v);
+                });
+            });
+        }
+        
+        return this;
+    }
+    
+    
+    // removeAttributes
+    // permet de retirer tous les attributs à une tag
+    $.fn.removeAttributes = function()
+    {
+        $(this).each(function(index, el) {
+            var $this = $(this);
+            
+            $.each(this.attributes, function(index,value) {
+                $(this).removeAttr(value.name);
+            });
+        });
+        
+        return this;
+    }
+    
 }(jQuery, document, window));

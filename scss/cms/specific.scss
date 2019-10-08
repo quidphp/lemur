@@ -10,7 +10,7 @@
 // stylesheet for the specific form page of the CMS
 
 /* TOP */
-.specific main .inner > .top .left {
+[data-group='specific'] main .inner > .top .left {
     .count-info {
         margin-left: 10px;
     }
@@ -19,7 +19,7 @@
         font-weight: normal;
     }
 }
-.specific main .inner > .top .right .nav {
+[data-group='specific'] main .inner > .top .right .nav {
     @include specificNav();
 
     > .count.with-popup:hover {
@@ -34,15 +34,15 @@
 }
 
 /* CONTAINER */
-.specific main .inner > .container {
+[data-group='specific'] main .inner > .container {
     position: relative;
 }
-.specific main .inner > .container .form form button.hidden {
+[data-group='specific'] main .inner > .container .form form button.hidden {
     visibility: hidden;
     @include abs(-100%, '', '', -100%);
 }
-.specific main .inner > .container .form > .top,
-.specific main .inner > .container .form form > .top {
+[data-group='specific'] main .inner > .container .form > .top,
+[data-group='specific'] main .inner > .container .form form > .top {
     margin-bottom: 15px;
 
     .left {
@@ -56,8 +56,8 @@
         width: 30%;
     }
 }
-.specific main .inner > .container .form > .top .left,
-.specific main .inner > .container .form form > .top .left {
+[data-group='specific'] main .inner > .container .form > .top .left,
+[data-group='specific'] main .inner > .container .form form > .top .left {
     > ul {
         list-style-type: none;
 
@@ -80,20 +80,20 @@
         font-size: 90%;
     }
 }
-.specific main .inner > .container .form > .top .right,
-.specific main .inner > .container .form form > .top .right {
+[data-group='specific'] main .inner > .container .form > .top .right,
+[data-group='specific'] main .inner > .container .form form > .top .right {
     a,
     button[type='submit'] {
         margin-left: 10px;
     }
 }
-.specific main .inner > .container .form > .inside,
-.specific main .inner > .container .form form > .inside {
+[data-group='specific'] main .inner > .container .form > .inside,
+[data-group='specific'] main .inner > .container .form form > .inside {
     margin-bottom: 20px;
 }
 
 /* ELEMENT */
-.specific main .inner > .container .form .panel .element {
+[data-group='specific'] main .inner > .container .form .panel .element {
     background-color: $lightestGray;
     border: 1px solid $lightGray;
     margin-top: 20px;
@@ -113,7 +113,7 @@
 }
 
 /* LEFT */
-.specific main .inner > .container .form .panel .element > .left {
+[data-group='specific'] main .inner > .container .form .panel .element > .left {
     @include inbl(middle, 30%);
     padding: 5px 20px 5px 0;
     position: relative;
@@ -153,14 +153,14 @@
         }
     }
 }
-.specific main .inner > .container .form .panel .element.pointer > .left label {
+[data-group='specific'] main .inner > .container .form .panel .element.pointer > .left label {
     cursor: pointer;
 
     &:hover {
         color: $darkGray;
     }
 }
-.specific main .inner > .container .form .panel .element.with-col-popup > .left {
+[data-group='specific'] main .inner > .container .form .panel .element.with-col-popup > .left {
     .label.hover {
         background-color: $color;
         border-radius: 5px;
@@ -176,7 +176,7 @@
 }
 
 /* RIGHT */
-.specific main .inner > .container .form .element > .right {
+[data-group='specific'] main .inner > .container .form .element > .right {
     @include inbl(middle, 70%);
     padding: 5px 0;
     position: relative;
@@ -228,7 +228,7 @@
         font-size: 90%;
     }
 }
-.specific main .inner > .container .form .element > .right .relation-plain {
+[data-group='specific'] main .inner > .container .form .element > .right .relation-plain {
     margin-top: 5px;
 
     a {
@@ -245,8 +245,8 @@
 }
 
 /* BOTTOM */
-.specific main .inner > .container .form > .bottom,
-.specific main .inner > .container .form > form > .bottom {
+[data-group='specific'] main .inner > .container .form > .bottom,
+[data-group='specific'] main .inner > .container .form > form > .bottom {
     margin-bottom: 20px;
     text-align: center;
 
@@ -270,10 +270,10 @@
 
 /* RESPONSIVE */
 @media screen and (max-width: 900px), screen and (orientation: portrait) {
-    .specific main .inner > .container .form > .top .left,
-    .specific main .inner > .container .form form > .top .left,
-    .specific main .inner > .container .form > .top .right,
-    .specific main .inner > .container .form form > .top .right {
+    [data-group='specific'] main .inner > .container .form > .top .left,
+    [data-group='specific'] main .inner > .container .form form > .top .left,
+    [data-group='specific'] main .inner > .container .form > .top .right,
+    [data-group='specific'] main .inner > .container .form form > .top .right {
         @include responsiveBlock();
 
         &.left {
@@ -281,7 +281,7 @@
         }
     }
 
-    .specific main .inner > .container .form .panel .element {
+    [data-group='specific'] main .inner > .container .form .panel .element {
         padding: 10px;
 
         > .left {
@@ -297,8 +297,8 @@
         }
     }
 
-    .specific main .inner > .container .form > .bottom,
-    .specific main .inner > .container .form > form > .bottom {
+    [data-group='specific'] main .inner > .container .form > .bottom,
+    [data-group='specific'] main .inner > .container .form > form > .bottom {
         margin: 0;
 
         .left,
@@ -320,16 +320,16 @@
 
 /* PRINT */
 @media print {
-    .specific main .inner > .container .top,
-    .specific main .inner > .container .bottom {
+    [data-group='specific'] main .inner > .container .top,
+    [data-group='specific'] main .inner > .container .bottom {
         display: none !important;
     }
 
-    .specific main .inner > .container .panel {
+    [data-group='specific'] main .inner > .container .panel {
         display: block !important;
     }
 
-    .specific main .inner > .container .form .element {
+    [data-group='specific'] main .inner > .container .form .element {
         background-color: $white !important;
 
         &:first-child {

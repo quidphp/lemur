@@ -61,7 +61,7 @@ class AccountChangePassword extends Core\Route\AccountChangePassword
     // retourne le lien dialog pour ouvrir la formulaire dans une box
     public function aDialog($attr=null):string
     {
-        return $this->a(static::langText('accountChangePassword/link'),Base\Attr::append($attr,['data'=>['modal'=>'dialogAccountChangePassword']]));
+        return $this->a(static::langText('accountChangePassword/link'),Base\Attr::append($attr,['data'=>['modal'=>static::name()]]));
     }
 }
 

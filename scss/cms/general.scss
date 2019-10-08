@@ -10,7 +10,7 @@
 // stylesheet for the general navigation page of the CMS
 
 /* TOP */
-.general main .inner > .top .right {
+[data-route='general'] main .inner > .top .right {
     > .operation {
         margin-bottom: 15px;
 
@@ -33,10 +33,10 @@
         }
     }
 }
-.general main .inner > .top .left .title .count-info {
+[data-route='general'] main .inner > .top .left .title .count-info {
     margin-left: 10px;
 }
-.general main .inner > .top .left .search {
+[data-route='general'] main .inner > .top .left .search {
     padding-top: 10px;
 
     > .form {
@@ -69,7 +69,7 @@
 }
 
 /* MAIN */
-.general main .inner > .container {
+[data-route='general'] main .inner > .container {
     margin-bottom: 20px;
 
     &.empty {
@@ -114,7 +114,7 @@
 }
 
 /* TOOL */
-.general main .inner > .container .tool {
+[data-route='general'] main .inner > .container .tool {
     visibility: hidden;
 
     > .icon {
@@ -128,7 +128,7 @@
 }
 
 /* PAGE */
-.general main .inner > .container .page-input {
+[data-route='general'] main .inner > .container .page-input {
     a {
         @include inbl(bottom);
 
@@ -162,7 +162,7 @@
 }
 
 /* TABLE */
-.general main .inner > .container table {
+[data-route='general'] main .inner > .container table {
     @include wh();
 
     .bottom-left .popup,
@@ -171,7 +171,7 @@
         bottom: inherit;
     }
 }
-.general main .inner > .container table thead th {
+[data-route='general'] main .inner > .container table thead th {
     vertical-align: middle;
     background-color: $color;
     min-width: 100px;
@@ -208,7 +208,7 @@
 }
 
 /* ROWS */
-.general main .inner > .container table thead .rows {
+[data-route='general'] main .inner > .container table thead .rows {
     width: 40px;
     min-width: inherit;
 
@@ -238,7 +238,7 @@
 }
 
 /* ORDER */
-.general main .inner > .container table thead th.orderable {
+[data-route='general'] main .inner > .container table thead th.orderable {
     .right {
         @include abs(0, 0);
         @include transition(background-color);
@@ -287,7 +287,7 @@
 }
 
 /* FILTER */
-.general main .inner > .container table thead th.filterable {
+[data-route='general'] main .inner > .container table thead th.filterable {
     .left {
         @include abs(0, '', '', 0);
         @include wh(30px, 100%);
@@ -297,7 +297,7 @@
         padding-left: 25px;
     }
 }
-.general main .inner > .container table thead th.filterable .filter-outer {
+[data-route='general'] main .inner > .container table thead th.filterable .filter-outer {
     @include transition(background-color);
     height: 100%;
 
@@ -333,7 +333,7 @@
         }
     }
 }
-.general main .inner > .container table thead th.filterable .popup {
+[data-route='general'] main .inner > .container table thead th.filterable .popup {
     @include clickOpenPopup();
 
     ul li {
@@ -380,7 +380,7 @@
 }
 
 /* COLS */
-.general main .inner > .container table thead .action {
+[data-route='general'] main .inner > .container table thead .action {
     width: 50px;
     min-width: inherit;
 
@@ -445,7 +445,7 @@
         }
     }
 }
-.general main .inner > .container table tbody {
+[data-route='general'] main .inner > .container table tbody {
     tr {
         &:hover {
             background-color: $lighterGray !important;
@@ -514,12 +514,12 @@
         }
     }
 }
-.general main .inner > .container table tbody td .in .relation {
+[data-route='general'] main .inner > .container table tbody td .in .relation {
     a {
         display: inline;
     }
 }
-.general main table td .media {
+[data-route='general'] main table td .media {
     text-align: center;
 
     .media-placeholder {
@@ -532,7 +532,7 @@
         max-width: 100px;
     }
 }
-.general main .inner > .container table tbody td.rows {
+[data-route='general'] main .inner > .container table tbody td.rows {
     width: 40px;
     min-width: inherit;
     text-align: center;
@@ -550,16 +550,16 @@
         text-align: center;
     }
 }
-.general main .inner > .container table tbody td.rows,
-.general main .inner > .container table tbody td.primary,
-.general main .inner > .container table tbody td.action {
+[data-route='general'] main .inner > .container table tbody td.rows,
+[data-route='general'] main .inner > .container table tbody td.primary,
+[data-route='general'] main .inner > .container table tbody td.action {
     .in {
         &:hover {
             background-color: $lightYellow;
         }
     }
 }
-.general main .inner > .container table tbody td.action {
+[data-route='general'] main .inner > .container table tbody td.action {
     width: 50px;
     min-width: inherit;
 
@@ -570,22 +570,22 @@
 
 /* IE EDGE */
 @supports (-ms-ime-align: auto) {
-    .general main .inner > .container table thead th,
-    .general main .inner > .container table tbody td {
+    [data-route='general'] main .inner > .container table thead th,
+    [data-route='general'] main .inner > .container table tbody td {
         box-sizing: border-box;
     }
 }
 
 /* RESPONSIVE */
 @media screen and (max-width: 900px), screen and (orientation: portrait) {
-    .general main .inner > .container {
+    [data-route='general'] main .inner > .container {
         margin-bottom: 0;
     }
 
-    .general main .inner > .container .above .left,
-    .general main .inner > .container .above .right,
-    .general main .inner > .container .bellow .left,
-    .general main .inner > .container .bellow .right {
+    [data-route='general'] main .inner > .container .above .left,
+    [data-route='general'] main .inner > .container .above .right,
+    [data-route='general'] main .inner > .container .bellow .left,
+    [data-route='general'] main .inner > .container .bellow .right {
         @include responsiveBlock();
         text-align: left;
         margin-top: 5px;
@@ -594,21 +594,21 @@
 
 /* PRINT */
 @media print {
-    .general main .inner > .top .left .search,
-    .general main .inner > .container .above,
-    .general main .inner > .container .bellow,
-    .general main .inner > .container table thead th.filterable .left,
-    .general main .inner > .container table thead th.orderable .right,
-    .general main .inner > .container table tr > *:first-child,
-    .general main .inner > .container table tr > *:last-child {
+    [data-route='general'] main .inner > .top .left .search,
+    [data-route='general'] main .inner > .container .above,
+    [data-route='general'] main .inner > .container .bellow,
+    [data-route='general'] main .inner > .container table thead th.filterable .left,
+    [data-route='general'] main .inner > .container table thead th.orderable .right,
+    [data-route='general'] main .inner > .container table tr > *:first-child,
+    [data-route='general'] main .inner > .container table tr > *:last-child {
         display: none !important;
     }
 
-    .general main .inner > .container table thead th.orderable.ordering .right {
+    [data-route='general'] main .inner > .container table thead th.orderable.ordering .right {
         display: block !important;
     }
 
-    .general main .inner > .container table thead th.filterable .label {
+    [data-route='general'] main .inner > .container table thead th.filterable .label {
         padding-left: 0;
     }
 }

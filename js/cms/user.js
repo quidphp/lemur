@@ -31,8 +31,8 @@ $(document).ready(function() {
     // nobodyCommon
     // comportements commun pour toutes les pages ou l'utilisateur n'est pas connecté
 	.on('route:nobodyCommon', function(event) {
-		var browscap = $(this).find(".nobody .browscap");
-		var form = $(this).find(".nobody form");
+		var browscap = $(this).find("main .browscap");
+		var form = $(this).find("main form");
 		
 		form.formValidate().find("[data-required],[data-pattern]").focusFirst();
 		
@@ -42,7 +42,7 @@ $(document).ready(function() {
     
     // changePassword
     // comportement pour le popup changer mon mot de passe
-	.on('modal:dialogAccountChangePassword', function(event,modal) {
+	.on('modal:accountChangePassword', function(event,modal) {
 		var form = modal.find("form");
 		form.formValidate().find("[data-required],[data-pattern]").focusFirst();
 	});

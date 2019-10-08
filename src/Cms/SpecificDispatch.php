@@ -65,7 +65,7 @@ class SpecificDispatch extends Core\RouteAlias
         $return = null;
         $request = $this->request();
         $post = $request->post();
-        $segment = $this->segment();
+        $segment = $this->segments();
 
         foreach (static::$config['dispatch'] as $key => $value)
         {
@@ -80,9 +80,9 @@ class SpecificDispatch extends Core\RouteAlias
     }
 
 
-    // fallbackRouteRedirect
+    // onFallback
     // si c'est un failedFileUpload, renvoie vers le referer
-    public function fallbackRouteRedirect($context=null)
+    protected function onFallback($context=null)
     {
         return ($this->request()->isFailedFileUpload())? true:null;
     }

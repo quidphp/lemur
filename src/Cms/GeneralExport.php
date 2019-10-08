@@ -68,7 +68,7 @@ class GeneralExport extends Core\RouteAlias
         if($type === 'make')
         $return = (static::isEncoding($value))? $value:static::defaultEncoding();
 
-        elseif($type === 'validate')
+        elseif($type === 'match')
         $return = (static::isEncoding($value))? $value:false;
 
         return $return;
@@ -95,7 +95,7 @@ class GeneralExport extends Core\RouteAlias
     {
         $offset = 0;
         $total = $sql->triggerRowCount();
-        $option = ['header'=>true,'latin1'=>$this->isLatin1()];
+        $option = ['header'=>true,'latin1'=>$this->isLatin1(),'bom'=>true];
         $storage = $this->session()->storage();
 
         if(!$storage instanceof Core\Row)
@@ -113,6 +113,7 @@ class GeneralExport extends Core\RouteAlias
                 if(!empty($rows) && $rows->isNotEmpty())
                 {
                     $rows->writeFile($file,$option);
+                    $option['bom'] = false;
                     $option['header'] = false;
                     $rows->unlink($not);
                 }
@@ -120,7 +121,7 @@ class GeneralExport extends Core\RouteAlias
                 $offset += $limit;
             }
         }
-
+        
         return;
     }
 

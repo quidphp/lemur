@@ -27,7 +27,7 @@ $(document).ready(function() {
 	// specificCommon
     // comportements communs pour toutes les pages spécifiques
 	.on('route:specificCommon', function(event) {
-		var formWrapper = $(".specific .container > .form");
+		var formWrapper = $("main .container > .form");
 		var panel = formWrapper.find(".panel");
 		var form = formWrapper.find("form");
 		var fields = form.find(".element input,.element textarea");
@@ -73,9 +73,9 @@ $(document).ready(function() {
 	// specificTrigger
     // comportements communs pour la préparation des différents inputs du formulaire
 	.on('route:specificTrigger', function(event) {
-		var formWrapper = $(".specific .container > .form");
+		var formWrapper = $("main .container > .form");
 		var form = formWrapper.find("form");
-		var panel = $(".specific .form .inside .panel");
+		var panel = $("main .form .inside .panel");
 		var date = form.find(".element.date .right");
 		var enumSet = form.find(".element .search-enumset");
 		var mediaAction = form.find(".element.media .block .action,.element.medias .block .action");
@@ -153,8 +153,8 @@ $(document).ready(function() {
 	// route:specificCommon:panel
     // comportements communs pour la préparation des panneaux du formulaire
 	.on('route:specificCommon:panel', function(event,form,panel) {
-		var panelNav = $(".specific .form .top .left ul li a");
-		var panelDescription = $(".specific .form .top .left .description");
+		var panelNav = $("main .form .top .left ul li a");
+		var panelDescription = $("main .form .top .left .description");
 		
 		// panel
 		panel.tabNav(panelNav).fragment().on('tab:init', function(event) {

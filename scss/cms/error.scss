@@ -10,7 +10,7 @@
 // stylesheet for the error page of the CMS
 
 /* ERROR */
-.error main .inner {
+[data-route='error'] main .inner {
     text-align: center;
 
     h1,

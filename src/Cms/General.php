@@ -366,7 +366,7 @@ class General extends Core\RouteAlias
         {
             $table = $this->table();
             $sql = $this->sql();
-            $loop = array_keys($this->segment());
+            $loop = array_keys($this->segments());
             $loop = Base\Arr::append($loop,['search','primary','engine','collation','autoIncrement','classTable','classRow','classRows','classCols','classCells','sql']);
             $r .= Html::divOp('popup');
 
@@ -495,7 +495,7 @@ class General extends Core\RouteAlias
 
         if($this->hasPermission('export') && !$sql->isTriggerCountEmpty())
         {
-            $segment = $this->segment();
+            $segment = $this->segments();
             $route = GeneralExportDialog::makeOverload($segment);
             $r .= $route->aDialog();
         }

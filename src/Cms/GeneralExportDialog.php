@@ -85,7 +85,7 @@ class GeneralExportDialog extends Core\RouteAlias
     {
         $r = '';
         $encoding = static::getEncoding();
-        $segment = $this->segment();
+        $segment = $this->segments();
         $route = GeneralExport::makeOverload($segment);
 
         foreach ($encoding as $value)
@@ -103,7 +103,7 @@ class GeneralExportDialog extends Core\RouteAlias
     // retourne le lien dialog
     public function aDialog():string
     {
-        return $this->aTitle(null,['submit','icon','padLeft','download','data'=>['modal'=>'dialogGeneralExport']]);
+        return $this->aTitle(null,['submit','icon','padLeft','download','data'=>['modal'=>static::name()]]);
     }
 
 

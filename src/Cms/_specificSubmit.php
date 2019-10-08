@@ -41,7 +41,7 @@ trait _specificSubmit
         if(empty($parent))
         static::throw();
 
-        $return = $parent::makeOverload($this->segment());
+        $return = $parent::makeOverload($this->segments());
 
         return $return;
     }

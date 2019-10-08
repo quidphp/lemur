@@ -36,20 +36,16 @@
 				$(this).trigger('modal:open');
 				return $(this).data('modal-promise')
 			})
-			.on('modal:open', function(event,className) {
-				$(this).addClass('loading');
-				if($.isStringNotEmpty(className))
-				{
-					$(this).data('modal-className',className);
-					$(this).addClass(className);
-					$(this).data('route',className);
-				}
+			.on('modal:open', function(event,route) {
+				$(this).attr('data-status','loading');
+				if($.isStringNotEmpty(route))
+				$(this).attr('data-route',route);
 				
 				var promise = $(this).fadeIn(500).delay(250).promise();
 				$(this).data('modal-promise',promise);
 			})
 			.on('modal:opened', function(event) {
-				$(this).removeClass('loading');
+				$(this).attr('data-status','ready');
 				$(this).removeData('promise');
 			})
 			.on('modal:html', function(event,data,callback) {
@@ -64,22 +60,20 @@
 			})
 			.on('modal:close', function(event) {
 				$(this).fadeOut(500, function() {
-					var className = $(this).data('modal-className');
 					$(this).triggerHandler('modal:getInner').html("");
-					$(this).removeData('route');
-					if($.isStringNotEmpty(className))
-					$(this).removeClass(className);
+                    $(this).removeAttr('data-route');
+                    $(this).attr('data-status','inactive');
 				});
 			})
-			.on('modal:openSelf', function(event,className) {
-				$(this).trigger('modal:open',[className]);
+			.on('modal:openSelf', function(event,route) {
+				$(this).trigger('modal:open',[route]);
 				$(this).trigger('modal:opened');
 			})
-			.on('modal:get', function(event,href,args,className) {
+			.on('modal:get', function(event,href,args,route) {
 				if($.isStringNotEmpty(href))
 				{
 					$(this).trigger('block');
-					$(this).trigger('modal:open',[className]);
+					$(this).trigger('modal:open',[route]);
 					$.ajax(href,{
 						data: args,
 						method: 'get',
@@ -153,14 +147,14 @@
 	
 	// externalModal
 	// permet de gérer l'ouverture du modal lors du clique sur un lien externe
-	$.fn.externalModal = function(modal,href,className)
+	$.fn.externalModal = function(modal,href,route)
 	{
 		if($.isStringNotEmpty(href))
 		{
 			$(this).find("a:external:not(.external)").off('click').on('click', function(event) {
 				event.preventDefault();
 				var uri = $(this).attr('href');
-				modal.trigger('modal:get',[href,{v: uri},className]);
+				modal.trigger('modal:get',[href,{v: uri},route]);
 			});
 		}
 		
@@ -170,14 +164,14 @@
 	
 	// mailtoModal
 	// permet de gérer l'ouverture du modal lors du clique sur un lien mailto
-	$.fn.mailtoModal = function(modal,href,className)
+	$.fn.mailtoModal = function(modal,href,route)
 	{
 		if($.isStringNotEmpty(href))
 		{
 			$(this).find("a[href^='mailto:']:not(.mailto)").off('click').on('click', function(event) {
 				event.preventDefault();
 				var email = $.mailto($(this).attr('href'));
-				modal.trigger('modal:get',[href,{v: email},className])
+				modal.trigger('modal:get',[href,{v: email},route])
 			});
 		}
 		

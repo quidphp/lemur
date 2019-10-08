@@ -59,7 +59,7 @@ class SpecificAddSubmit extends Core\RouteAlias
 
     // fallbackRouteRedirect
     // si c'est un failedFileUpload, renvoie vers le referer
-    public function fallbackRouteRedirect($context=null)
+    protected function fallbackRouteRedirect($context=null)
     {
         return ($this->request()->isFailedFileUpload())? true:null;
     }

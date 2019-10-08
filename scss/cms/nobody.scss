@@ -10,7 +10,7 @@
 // stylesheet for the routes where the user is not logged in the CMS
 
 /* NOBODY */
-.nobody {
+[data-group='nobody'] {
     @include cover();
     background-attachment: fixed;
 
@@ -44,7 +44,7 @@
         }
     }
 }
-.nobody main .box {
+[data-group='nobody'] main .box {
     background-color: $color;
     width: 525px;
     padding: 25px 0 15px;
@@ -76,7 +76,7 @@
         }
     }
 }
-.nobody main .box .browscap {
+[data-group='nobody'] main .box .browscap {
     padding: 0 25px;
 
     > noscript,
@@ -95,19 +95,19 @@
         display: none;
     }
 }
-.nobody main .box .form {
+[data-group='nobody'] main .box .form {
     @include tableForm($white, $gray);
     padding: 10px 25px;
     margin-bottom: 10px;
 }
-.nobody main .box .form .top {
+[data-group='nobody'] main .box .form .top {
     margin-bottom: 10px;
 }
-.nobody main .box .form .bottom {
+[data-group='nobody'] main .box .form .bottom {
     padding-top: 10px;
     text-align: right;
 }
-.nobody main .box .buttons {
+[data-group='nobody'] main .box .buttons {
     padding: 10px 25px 0;
     border-top: 1px solid $darkerColor;
 
@@ -149,7 +149,7 @@
 }
 
 /* LOGIN */
-.login main .box form {
+[data-route='login'] main .box form {
     .bottom {
         .left {
             @include inbl();
@@ -173,7 +173,7 @@
 }
 
 /* RESET PASSWORD */
-.resetPassword main .box form {
+[data-route='resetPassword'] main .box form {
     .info {
         color: $lightGray;
         font-size: 90%;
@@ -181,7 +181,7 @@
 }
 
 /* REGISTER */
-.register main .box form {
+[data-route='register'] main .box form {
     .part {
         padding-top: 5px;
         margin-top: 5px;
@@ -197,7 +197,7 @@
 
 /* RESPONSIVE */
 @media screen and (max-width: 900px), screen and (orientation: portrait) {
-    .nobody header {
+    [data-group='nobody'] header {
         position: static;
         padding: 10px 20px;
         text-align: center;
@@ -207,7 +207,7 @@
         }
     }
 
-    .nobody main {
+    [data-group='nobody'] main {
         display: block;
 
         .inner {

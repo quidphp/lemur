@@ -19,7 +19,7 @@ trait _module
             'role'=>'admin'],
         'response'=>[
             'timeLimit'=>30],
-        'group'=>'cms/module',
+        'group'=>'module',
         'sitemap'=>false,
         'navigation'=>false,
         'ignore'=>false

@@ -46,10 +46,10 @@ class Login extends Core\Route\Login
     }
 
 
-    // fallbackRouteRedirect
+    // onFallback
     // retourne la route login pour la redirection
     // seulement si l'url n'est pas celle de la requête courante
-    public function fallbackRouteRedirect($context=null)
+    public function onFallback($context=null)
     {
         $return = null;
         $request = $this->request();

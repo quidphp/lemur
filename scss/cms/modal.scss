@@ -29,8 +29,8 @@
     }
 }
 
-/* DIALOG CHANGE PASSWORD */
-.modal.dialogAccountChangePassword .inner {
+/* CHANGE PASSWORD */
+.modal[data-route='accountChangePassword'] .inner {
     .info {
         font-size: 90%;
         margin-bottom: 20px;
@@ -50,8 +50,8 @@
     }
 }
 
-/* DIALOG EXPORT */
-.modal.dialogGeneralExport .inner {
+/* GENERAL EXPORT */
+.modal[data-route='generalExportDialog'] .inner {
     .count {
         margin-bottom: 20px;
     }
@@ -78,8 +78,8 @@
     }
 }
 
-/* DIALOG ABOUT */
-.modal.dialogAbout .inner {
+/* ABOUT */
+.modal[data-route='about'] .inner {
     h3 {
         margin-bottom: 20px;
     }

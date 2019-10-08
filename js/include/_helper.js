@@ -460,43 +460,25 @@
 			doc: $.parseHtmlDocument(html),
 			html: null,
 			head: null,
-			body: null,
-			route: null,
-			lang: null,
-			classes: null,
-			selected: null,
-			title: '?',
+            title: '?',
 			meta: null,
-			bodyStyle: null,
-			bodyClass: null
+			body: null
 		};
 		
 		r.head = r.doc.find("[data-tag='head']").first();
 		r.body = r.doc.find("[data-tag='body']").first();
-		r.route = r.doc.attr("data-route") || null;
-		r.selected = r.doc.attr("data-selected") || null;
-		r.lang = r.doc.attr("lang") || null;
-		r.classes = r.doc.attr('class') || null;
-		
-		if($.isStringNotEmpty(r.selected))
-		r.selected = JSON.parse(r.selected);
-		
-		if(!r.body.length)
-		{
-			var newBody = "<div data-tag='body'>"+r.doc.outerHtml(true)+"</div>";
-			r.body = $($.parseHTML(newBody));
-		}
-		
-		if(r.head.length)
+		r.html = r.doc.removeAttr('data-tag');
+        
+        if(r.head.length)
 		{
 			r.title = r.head.find("[data-tag='title']").first().text() || null;
 			r.meta = r.head.find("[data-tag='meta']");
 		}
-		
-		if(r.body.length)
+        
+		if(!r.body.length)
 		{
-			r.bodyStyle = r.body.attr("style") || null;
-			r.bodyClass = r.body.attr("class") || null;
+			var newBody = "<div data-tag='body'>"+r.doc.outerHtml(true)+"</div>";
+			r.body = $($.parseHTML(newBody));
 		}
 		
 		return r;
@@ -529,54 +511,6 @@
 	$.isTouch = function() 
 	{
 		return ($(document).data('isTouch') === true)? true:false;
-	}
-	
-	
-	// hasHistoryApi
-	// retourne vrai si le navigateur courant supporte history API
-	$.hasHistoryApi = function() 
-	{
-		var r = false;
-		
-		if(window.history && window.history.pushState && window.history.replaceState)
-		{
-			if(!navigator.userAgent.match(/((iPod|iPhone|iPad).+\bOS\s+[1-4]\D|WebApps\/.+CFNetwork)/))
-			r = true;
-		}
-		
-		return r;
-	}
-	
-	
-	// makeHistoryState
-	// retourne un objet état d'historique (avec url, title et timestamp)
-	$.makeHistoryState = function(uri,title) 
-	{
-		var r = null;
-		
-		if($.isString(uri))
-		{
-			r = {
-				url: uri,
-				title: title || null,
-				timestamp: $.timestamp()
-			};
-		}
-		
-		return r;
-	}
-	
-	
-	// isHistoryState
-	// retourne vrai si la valeur est un objet compatible pour un état d'historique
-	$.isHistoryState = function(state)
-	{
-		var r = false;
-		
-		if($.isPlainObject(state) && $.isString(state.url) && $.isNumeric(state.timestamp))
-		r = true;
-		
-		return r;
 	}
 	
 	

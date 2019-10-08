@@ -70,9 +70,9 @@ $(document).ready(function() {
 	$.fn.generalRows = function()
 	{
 		var rowsCheckboxes = $(this);
-		var rowsToggleAll = $(document).find(".general table th.rows .toggleAll");
-		var rowsTool = $(document).find(".general .tool");
-		var rowsInNotIn = $(document).find(".general .tool .in,.general .tool .notIn");
+		var rowsToggleAll = $(document).find("main table th.rows .toggleAll");
+		var rowsTool = $(document).find("main .tool");
+		var rowsInNotIn = $(document).find("main .tool .in,main .tool .notIn");
 
 		// rowsToggleAll
 		rowsToggleAll.on('click', function() {
@@ -151,14 +151,14 @@ $(document).ready(function() {
     // comportement pour la page de navigation
 	$(this).on('route:general', function() {
 		
-		var search = $(this).find(".general .left > .search");
-		var pageLimit = $(this).find(".general input[name='limit'],input[name='page']");
-		var colsPopup = $(this).find(".general th.action .popup");
-		var rowsCheckboxes = $(this).find(".general table td.rows input[type='checkbox']");
-		var formTruncate = $(this).find(".general .truncate form");
-		var multiDelete = $(this).find(".general .tool .multi-delete form");
+		var search = $(this).find("main .left > .search");
+		var pageLimit = $(this).find("main input[name='limit'],input[name='page']");
+		var colsPopup = $(this).find("main th.action .popup");
+		var rowsCheckboxes = $(this).find("main table td.rows input[type='checkbox']");
+		var formTruncate = $(this).find("main .truncate form");
+		var multiDelete = $(this).find("main .tool .multi-delete form");
 		var multiDeletePrimaries = multiDelete.find("input[name='primaries']");
-		var filter = $(this).find(".general th.filterable .filter-outer");
+		var filter = $(this).find("main th.filterable .filter-outer");
 		
 		// search
 		if(search.length)
