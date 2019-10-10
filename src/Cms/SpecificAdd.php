@@ -48,7 +48,7 @@ class SpecificAdd extends Core\RouteAlias
     {
         $return = false;
         $table = $this->segment('table');
-        
+
         if($table instanceof Core\Table && $table->hasPermission('view','add','insert'))
         {
             $flash = $this->session()->flash();

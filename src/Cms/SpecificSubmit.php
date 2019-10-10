@@ -82,7 +82,7 @@ class SpecificSubmit extends Core\RouteAlias
 
         else
         $this->successComplete();
-        
+
         return $return;
     }
 }
