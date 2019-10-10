@@ -48,12 +48,12 @@ class SpecificAdd extends Core\RouteAlias
     {
         $return = false;
         $table = $this->segment('table');
-
+        
         if($table instanceof Core\Table && $table->hasPermission('view','add','insert'))
         {
             $flash = $this->session()->flash();
-            $key = [SpecificAddSubmit::class,$this->table()];
-            $this->flash = $flash->get($key);
+            $route = SpecificAddSubmit::make($this->table());
+            $this->flash = $flash->get($route);
             $return = $this;
         }
 

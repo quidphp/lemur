@@ -9,9 +9,10 @@ declare(strict_types=1);
 
 namespace Quid\Lemur\Cms;
 use Quid\Core;
+use Quid\Main;
 
 // specificCalendar
-// class for the calendar widget route of the CMS
+// class for the calendar route of the CMS
 class SpecificCalendar extends Core\RouteAlias
 {
     // trait
@@ -33,14 +34,13 @@ class SpecificCalendar extends Core\RouteAlias
             'selected'=>'structureSegmentSelected'],
         'match'=>[
             'ajax'=>null,
-            'role'=>['>='=>20]],
-        'widget'=>Core\Widget\Calendar::class
+            'role'=>['>='=>20]]
     ];
 
 
     // setCallback
     // change les callback pour le calendrier de specific
-    public function setCallback(Core\Widget\Calendar $return):Core\Widget\Calendar
+    public function setCallback(Main\Calendar $return):Main\Calendar
     {
         $return->setCallback('prev',function(int $value) {
             $route = $this->changeSegments(['timestamp'=>$value]);

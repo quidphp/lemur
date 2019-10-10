@@ -53,7 +53,7 @@ class HomeSearch extends Core\RouteAlias
         return $return;
     }
 
-
+    
     // isSearchValueValid
     // retourne vrai si le terme de recherche est valide
     protected function isSearchValueValid(string $value):bool

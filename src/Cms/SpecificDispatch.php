@@ -30,8 +30,7 @@ class SpecificDispatch extends Core\RouteAlias
             'primary'=>'structureSegmentPrimary'],
         'match'=>[
             'method'=>'post',
-            'role'=>['>='=>20]],
-        'verify'=>[
+            'role'=>['>='=>20],
             'csrf'=>false,
             'genuine'=>true,
             'post'=>['id'=>['='=>'[primary]'],'-table-'=>['='=>'[table]']]],
@@ -51,7 +50,7 @@ class SpecificDispatch extends Core\RouteAlias
     protected function onBefore()
     {
         $route = $this->getRouteLaunch();
-        $route->launch();
+        $route->start();
         static::routeException(null,'specificDispatchFailed');
 
         return;
@@ -84,7 +83,7 @@ class SpecificDispatch extends Core\RouteAlias
     // si c'est un failedFileUpload, renvoie vers le referer
     protected function onFallback($context=null)
     {
-        return ($this->request()->isFailedFileUpload())? true:null;
+        return ($context === 'failedFileUpload')? true:null;
     }
 }
 

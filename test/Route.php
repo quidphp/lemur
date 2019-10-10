@@ -105,7 +105,6 @@ class Route extends Base\Test
         assert($obj::getTimeoutObject() instanceof Main\Timeout);
         assert($obj->routeRequest() instanceof Routing\RouteRequest);
         assert($obj->request() instanceof Core\Request);
-        assert($obj->getFallbackContext() === null);
         assert($obj->init() === $obj);
         assert($obj->isValid());
         assert($obj->checkValid() === $obj);
@@ -332,18 +331,12 @@ class Route extends Base\Test
         // checkValidMatch
         assert($match3->checkValidMatch());
 
-        // isValidVerify
-        assert($match3->isValidVerify($session));
-
-        // checkValidVerify
-        assert($match3->checkValidVerify());
-
-        // isRequestInst
+         // isRequestInst
         assert(!$match->isRequestInst());
         assert($rr->isRequestInst());
 
         // valid
-        assert($match3->valid() === ['match'=>true,'verify'=>true]);
+        assert($match3->valid() === ['match'=>true]);
         assert($match3->valid('match') === true);
         assert($match3->valid('matchz') === false);
 
@@ -364,9 +357,6 @@ class Route extends Base\Test
 
         // validateMatch
         assert($match3->validateMatch($session) === true);
-
-        // validateVerify
-        assert($match3->validateVerify($session) === true);
 
         // validateArray
 
@@ -612,10 +602,8 @@ class Route extends Base\Test
         assert(!$rr4->validateSegment($session));
         assert(!$rr5->validateSegment($session));
         assert(!$rr9->validateMatch($session));
-        assert($rr9->validateVerify($session));
         assert($rr9->validateSegment($session,true));
         assert(!$rr6->validateMatch($session));
-        assert($rr6->validateVerify($session));
         assert($rr6->validateSegment($session,true));
 
         // validateArray

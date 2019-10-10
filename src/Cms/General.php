@@ -72,7 +72,7 @@ class General extends Core\RouteAlias
 
     // fallback
     // sur fallback, efface la version de la route dans nav/session
-    protected function fallback($context=null)
+    protected function fallback($context=null):bool
     {
         if($this->hasTable())
         {

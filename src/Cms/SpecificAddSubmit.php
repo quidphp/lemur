@@ -31,15 +31,15 @@ class SpecificAddSubmit extends Core\RouteAlias
             'table'=>'structureSegmentTable'],
         'match'=>[
             'method'=>'post',
-            'role'=>['>='=>20]],
-        'verify'=>[
+            'role'=>['>='=>20],
             'csrf'=>false,
             'genuine'=>true,
             'post'=>['-table-'=>['='=>'[table]']]],
         'response'=>[
             'timeLimit'=>60],
         'parent'=>SpecificAdd::class,
-        'group'=>'submit'
+        'group'=>'submit',
+        'flashPost'=>true
     ];
 
 
@@ -61,7 +61,7 @@ class SpecificAddSubmit extends Core\RouteAlias
     // si c'est un failedFileUpload, renvoie vers le referer
     protected function fallbackRouteRedirect($context=null)
     {
-        return ($this->request()->isFailedFileUpload())? true:null;
+        return ($context === 'failedFileUpload')? true:null;
     }
 
 
@@ -90,19 +90,6 @@ class SpecificAddSubmit extends Core\RouteAlias
         $this->successComplete();
 
         return $return;
-    }
-
-
-    // setFlash
-    // enregistre les données dans l'objet flash
-    protected function setFlash():void
-    {
-        $post = $this->post();
-        $flash = $this->session()->flash();
-        $key = [$this->classFqcn(),$this->table()];
-        $flash->set($key,$post);
-
-        return;
     }
 }
 

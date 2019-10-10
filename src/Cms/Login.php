@@ -52,11 +52,15 @@ class Login extends Core\Route\Login
     public function onFallback($context=null)
     {
         $return = null;
-        $request = $this->request();
-        $route = static::make();
+        
+        if($context === 'onBefore')
+        {
+            $request = $this->request();
+            $route = static::make();
 
-        if($route->uriRelative() !== $request->relative())
-        $return = $route;
+            if($route->uriRelative() !== $request->relative())
+            $return = $route;
+        }
 
         return $return;
     }

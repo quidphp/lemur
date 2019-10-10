@@ -350,7 +350,7 @@ class En extends Core\Lang\En
 
                     // logCron
                     'logCron'=>[
-                        'type'=>'Type of cron',
+                        'key'=>'Key of cron',
                         'json'=>'CRON script data - for administrator'
                     ],
 

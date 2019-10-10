@@ -350,7 +350,7 @@ class Fr extends Core\Lang\Fr
 
                     // logCron
                     'logCron'=>[
-                        'type'=>'Type du cron',
+                        'key'=>'Clé du cron',
                         'json'=>'Données du script CRON  - pour administrateur'
                     ],
 

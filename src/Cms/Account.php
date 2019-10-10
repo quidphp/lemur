@@ -38,10 +38,9 @@ class Account extends Core\Route\Account
     }
 
 
-    // afterRouteRedirect
+    // onAfter
     // après trigger renvoie vers la page specifique du user
-    // un code 301 sera utilisé
-    public function afterRouteRedirect():?Core\Route
+    protected function onAfter():?Core\Route
     {
         return static::sessionUser()->route();
     }
