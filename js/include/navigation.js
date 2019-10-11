@@ -16,7 +16,7 @@
 	{
 		var $settings = {
 			link: "a:internal:not([target='_blank']):not(.http):not([data-modal]):not([href^='mailto:'])",
-			timeout: 7000
+			timeout: 10000
 		};
 		
 		if(option && typeof(option) == 'object')

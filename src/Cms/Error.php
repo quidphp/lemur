@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Quid\Lemur\Cms;
 use Quid\Core;
+use Quid\Base;
 
 // error
 // class for the error route of the CMS
@@ -26,7 +27,7 @@ class Error extends Core\Route\Error
     // trigge la route error du cms
     public function trigger()
     {
-        return ($this->showErrorOutput())? $this->template():null;
+        return $this->output('template');
     }
 
 
@@ -34,7 +35,7 @@ class Error extends Core\Route\Error
     // génère la page erreur dans la balise main
     protected function main():string
     {
-        return $this->output();
+        return $this->outputHtml();
     }
 }
 

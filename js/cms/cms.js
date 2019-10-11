@@ -65,7 +65,7 @@ $(document).ready(function() {
     // comportements utilisés pour l'outil de communication disponible sur toutes les pages
 	.on('route:commonCom', function(event) {
 		
-		var com = $(this).find("body #wrapper > .com .box");
+		var com = $(this).find("#wrapper .com .box");
 		
 		com.block('click').on('click', '.close', function() {
 			com.trigger('com:close');

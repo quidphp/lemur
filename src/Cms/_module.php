@@ -13,6 +13,10 @@ namespace Quid\Lemur\Cms;
 // trait that provides some initial configuration for a CMS module route
 trait _module
 {
+    // trait
+    use _template;
+    
+    
     // config
     public static $configModule = [
         'match'=>[
