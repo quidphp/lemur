@@ -15,8 +15,8 @@ trait _module
 {
     // trait
     use _template;
-    
-    
+
+
     // config
     public static $configModule = [
         'match'=>[

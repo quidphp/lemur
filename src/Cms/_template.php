@@ -31,30 +31,30 @@ trait _template
     protected function template():string
     {
         $r = '';
-        
+
         $flush = $this->docOpen();
         $flush .= Html::divOp('#wrapper');
         $flush .= Html::div(null,'loading-icon');
         $flush .= Html::headerCond($this->header());
         $flush .= Html::mainOp();
         $flush .= Html::divOp('inner');
-        
+
         if($this->flushBeforeMain())
         Base\Buffer::flushEcho($flush);
         else
         $r .= $flush;
-        
+
         $main = $this->main();
         $main .= Html::divCl();
         $main .= Html::mainCl();
-        
+
         $close = Html::footerCond($this->footer());
         $close .= Html::divCl();
         $close .= Html::divCond($this->makeModal(),'modal');
         $close .= $this->docClose();
 
         $com = Html::divCond($this->makeCom(),'com');
-        
+
         $r .= $main.$com.$close;
 
         return $r;
@@ -216,15 +216,15 @@ trait _template
         return $r;
     }
 
-    
+
     // flushBeforeMain
     // active ou désactive le flush du contenu avant main
     protected function flushBeforeMain():bool
     {
         return false;
     }
-    
-    
+
+
     // main
     // méthode main à étendre dans chaque route du template
     abstract protected function main();

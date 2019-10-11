@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Quid\Lemur\Cms;
 use Quid\Core;
-use Quid\Base;
 
 // error
 // class for the error route of the CMS
