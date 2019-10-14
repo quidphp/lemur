@@ -248,10 +248,10 @@ main .inner > .top {
 
         h1 {
             @include inbl;
-            
+
             > a {
                 display: block;
-                
+
                 &:hover {
                     color: $darkGray;
                 }

@@ -344,7 +344,7 @@ class Route extends Base\Test
         assert($rr->route() === Lemur\Cms\Login::class);
 
         // setRoute
-        
+
         // routePath
         assert($matchError->routePath() === false);
         assert($matchError->routePath(null,true) === null);
@@ -505,7 +505,7 @@ class Route extends Base\Test
 
         // pathFromRoute
         assert($match::pathFromRoute($match4->route(),'fr') === 'connexion/soumettre');
-        
+
         /* ROUTE SEGMENT REQUEST */
 
         // construct

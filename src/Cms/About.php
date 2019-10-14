@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Quid\Lemur\Cms;
 use Quid\Base;
-use Quid\Base\Html;
 use Quid\Base\Cli;
+use Quid\Base\Html;
 use Quid\Core;
 
 // about
@@ -38,36 +38,36 @@ class About extends Core\RouteAlias
     public function trigger()
     {
         $r = '';
-        
+
         if(Base\Server::isCli())
         $r .= $this->outputCli();
-        
+
         else
         $r .= $this->outputHtml();
-        
+
         return $r;
     }
 
-    
+
     // getContentReplaceArray
     // retourne le tableau de remplacement
     protected function getContentReplaceArray():array
     {
-        $return = array();
+        $return = [];
         $boot = static::boot();
 
         $return['bootLabel'] = $boot->label();
         $return['version'] = $boot->version(true);
         $return['author'] = $this->authorLink();
         $return['supportEmail'] = $this->authorEmail();
-        
+
         return $return;
     }
-    
-    
+
+
     // outputHtml
     // génère le output html pour le popup about
-    protected function outputHtml():string 
+    protected function outputHtml():string
     {
         $r = '';
         $boot = static::boot();
@@ -79,31 +79,31 @@ class About extends Core\RouteAlias
         $r .= Html::h3($boot->typeLabel());
         $r .= Html::divCond(static::langText('about/content',$replace),'content');
         $r .= Html::divtableClose();
-        
+
         return $r;
     }
-    
-    
+
+
     // outputCli
     // génère le output du cli
-    protected function outputCli():string 
+    protected function outputCli():string
     {
         $r = '';
         $boot = static::boot();
         $replace = $this->getContentReplaceArray();
-        
+
         $r .= static::cliArt();
         $r .= Cli::pos(static::label());
         $r .= Cli::pos($boot->label());
         $r .= Cli::pos($boot->typeLabel());
         $r .= Cli::neutral(static::langText('about/content',$replace));
-        
+
         return $r;
     }
-    
-    
+
+
     // cliArt
-    public static function cliArt():string 
+    public static function cliArt():string
     {
 return '
  .d88888b.           d8b      888 8888888b.  888    888 8888888b.  
@@ -117,8 +117,8 @@ Y88b.Y8b88P Y88b 888 888 Y88b 888 888        888    888 888
        Y8b                                                                                                                
 ';
     }
-    
-    
+
+
     // aDialog
     // retourne le lien dialog
     public function aDialog(?array $attr=null):string

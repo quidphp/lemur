@@ -264,7 +264,7 @@ class General extends Core\RouteAlias
         return $r;
     }
 
-    
+
     // makeSearchNote
     // génère les notes pour le champ recherche
     protected function makeSearchNote():string

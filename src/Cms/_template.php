@@ -228,15 +228,15 @@ trait _template
     // méthode main à étendre dans chaque route du template
     abstract protected function main();
 
-    
+
     // makeH1
     // génère le tag h1 de la page, il y a dans le h1 un lien qui renvoie vers la même page
-    protected function makeH1(string $title):string 
+    protected function makeH1(string $title):string
     {
         return Html::h1($this->a($title));
     }
-    
-    
+
+
     // footer
     // génère le footer pour toutes les pages du cms
     protected function footer():string

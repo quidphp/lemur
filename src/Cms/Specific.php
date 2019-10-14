@@ -46,7 +46,7 @@ class Specific extends Core\RouteAlias
     {
         $return = false;
         $table = $this->segment('table');
-        
+
         if($table instanceof Core\Table && $table->hasPermission('view','specific'))
         $return = true;
 
@@ -201,7 +201,7 @@ class Specific extends Core\RouteAlias
         {
             $row = $this->row();
             $relationChilds = $row->relationChilds();
-            
+
             if(is_array($relationChilds) && !empty($relationChilds))
             {
                 $count = Base\Arrs::countLevel(2,$relationChilds);
@@ -227,7 +227,7 @@ class Specific extends Core\RouteAlias
         $row = $this->row();
         $primary = $row->primary();
         $no = 0;
-        
+
         foreach ($value as $table => $array)
         {
             if(is_string($table) && $db->hasTable($table) && is_array($array) && !empty($array))
@@ -241,7 +241,7 @@ class Specific extends Core\RouteAlias
                     {
                         $col = $table->col($colName);
                         $c = count($primaries);
-                        
+
                         if($table->hasPermission('view'))
                         {
                             $segment = ['table'=>$table,'filter'=>[$colName=>$primary]];
@@ -250,21 +250,21 @@ class Specific extends Core\RouteAlias
                             $html = $route->a($text);
                             $r .= Html::liCond($html);
                         }
-                        
+
                         else
                         $no += $c;
                     }
                 }
             }
         }
-        
+
         if($no > 0)
         {
             $text = Html::span(static::langText('specific/relationChildsNoAccess'),'not-accessible');
             $text .= "($no)";
             $r .= Html::li($text);
         }
-        
+
         return $r;
     }
 
@@ -446,12 +446,12 @@ class Specific extends Core\RouteAlias
 
         if($key === null)
         $key = static::boot()->typePrimary();
-        
+
         if($table->hasPermission('viewApp') && $session->canViewRow($row))
         {
             $row = $this->row();
             $route = $row->routeSafe($key);
-            
+
             if(!empty($route) && $route::hasPath() && $route::allowed())
             $r .= $route->a(static::langText('common/view'),['submit','icon','view','padLeft','target'=>false]);
         }
