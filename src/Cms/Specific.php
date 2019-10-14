@@ -46,7 +46,7 @@ class Specific extends Core\RouteAlias
     {
         $return = false;
         $table = $this->segment('table');
-
+        
         if($table instanceof Core\Table && $table->hasPermission('view','specific'))
         $return = true;
 
@@ -175,7 +175,7 @@ class Specific extends Core\RouteAlias
     // génère le titre pour la page specific
     protected function makeTitleBox():string
     {
-        $r = Html::h1($this->makeTitle());
+        $r = $this->makeH1($this->makeTitle());
         $r .= Html::divCond($this->makeRelationChilds(),['relation-childs','count-info','with-popup','anchor-corner']);
 
         return $r;
@@ -201,7 +201,7 @@ class Specific extends Core\RouteAlias
         {
             $row = $this->row();
             $relationChilds = $row->relationChilds();
-
+            
             if(is_array($relationChilds) && !empty($relationChilds))
             {
                 $count = Base\Arrs::countLevel(2,$relationChilds);
@@ -226,7 +226,8 @@ class Specific extends Core\RouteAlias
         $db = $this->db();
         $row = $this->row();
         $primary = $row->primary();
-
+        $no = 0;
+        
         foreach ($value as $table => $array)
         {
             if(is_string($table) && $db->hasTable($table) && is_array($array) && !empty($array))
@@ -240,24 +241,30 @@ class Specific extends Core\RouteAlias
                     {
                         $col = $table->col($colName);
                         $c = count($primaries);
-                        $text = $table->label().' / '.$col->label()." ($c)";
-                        $segment = ['table'=>$table,'filter'=>[$colName=>$primary]];
-
+                        
                         if($table->hasPermission('view'))
                         {
+                            $segment = ['table'=>$table,'filter'=>[$colName=>$primary]];
                             $route = $routeClass::makeOverload($segment);
+                            $text = $table->label().' / '.$col->label()." ($c)";
                             $html = $route->a($text);
+                            $r .= Html::liCond($html);
                         }
-
+                        
                         else
-                        $html = Html::span($text);
-
-                        $r .= Html::liCond($html);
+                        $no += $c;
                     }
                 }
             }
         }
-
+        
+        if($no > 0)
+        {
+            $text = Html::span(static::langText('specific/relationChildsNoAccess'),'not-accessible');
+            $text .= "($no)";
+            $r .= Html::li($text);
+        }
+        
         return $r;
     }
 
@@ -439,12 +446,12 @@ class Specific extends Core\RouteAlias
 
         if($key === null)
         $key = static::boot()->typePrimary();
-
+        
         if($table->hasPermission('viewApp') && $session->canViewRow($row))
         {
             $row = $this->row();
             $route = $row->routeSafe($key);
-
+            
             if(!empty($route) && $route::hasPath() && $route::allowed())
             $r .= $route->a(static::langText('common/view'),['submit','icon','view','padLeft','target'=>false]);
         }

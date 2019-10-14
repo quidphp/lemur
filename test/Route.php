@@ -102,6 +102,9 @@ class Route extends Base\Test
         assert($route::allowed());
         assert(!$login::allowed());
         assert($sitemap::allowed());
+        assert(!$route::hasPath());
+        assert($login::hasPath());
+        assert($sitemap::hasPath());
         assert($obj::getTimeoutObject() instanceof Main\Timeout);
         assert($obj->routeRequest() instanceof Routing\RouteRequest);
         assert($obj->request() instanceof Core\Request);
@@ -172,16 +175,7 @@ class Route extends Base\Test
         assert($route::priority() === 999);
         assert($route::parent() === null);
         assert($loginSubmit::parent() === Lemur\Cms\Login::class);
-        assert($loginSubmit::hasPath('fr'));
-        assert($loginSubmit::hasPath());
         assert($loginSubmit::paths() === ['en'=>'login/submit','fr'=>'connexion/soumettre']);
-        assert($route::path() === false);
-        assert($route::path(null,true) === null);
-        assert($login::path('fr') === '');
-        assert($login::path('fr',true) === '');
-        assert($loginSubmit::path() === false);
-        assert($loginSubmit::path('ge',true) === false);
-        assert($loginSubmit::path('fr') === 'connexion/soumettre');
         assert($loginSubmit::isSsl() === null);
         assert($route::isSsl() === null);
         assert($loginSubmit::isAjax() === null);
@@ -314,6 +308,7 @@ class Route extends Base\Test
         $match4 = new Routing\RouteRequest(Lemur\Cms\LoginSubmit::class,$request2);
         $match5 = new Routing\RouteRequest(Lemur\Cms\LoginSubmit::class,'https://google.com/asdsa?ok=2');
         $match6 = new Routing\RouteRequest(Lemur\Cms\LoginSubmit::class,['host'=>'james.com']);
+        $matchError = new Routing\RouteRequest(Lemur\Cms\Error::class);
         assert($match5->request()->absolute() === 'https://google.com/asdsa?ok=2');
         assert($match6->request()->absolute() === Base\Request::scheme().'://james.com');
 
@@ -349,6 +344,15 @@ class Route extends Base\Test
         assert($rr->route() === Lemur\Cms\Login::class);
 
         // setRoute
+        
+        // routePath
+        assert($matchError->routePath() === false);
+        assert($matchError->routePath(null,true) === null);
+        assert($match->routePath('fr') === '');
+        assert($match->routePath('fr',true) === '');
+        assert($match4->routePath() === false);
+        assert($match4->routePath('ge',true) === false);
+        assert($match4->routePath('fr') === 'connexion/soumettre');
 
         // request
         assert($rr->request() instanceof Core\Request);
@@ -499,7 +503,9 @@ class Route extends Base\Test
         // allowed
         assert($match3::allowed(80,$session->role()));
 
-
+        // pathFromRoute
+        assert($match::pathFromRoute($match4->route(),'fr') === 'connexion/soumettre');
+        
         /* ROUTE SEGMENT REQUEST */
 
         // construct

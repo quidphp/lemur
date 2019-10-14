@@ -125,14 +125,12 @@ class General extends Core\RouteAlias
     // retourne l'objet table
     public function table():Core\Table
     {
-        return $this->cache(__METHOD__,function() {
-            $return = $this->segment('table');
+        $return = $this->segment('table');
 
-            if(is_string($return))
-            $return = static::db()->table($return);
+        if(is_string($return))
+        $return = static::db()->table($return);
 
-            return $return;
-        });
+        return $return;
     }
 
 
@@ -241,7 +239,7 @@ class General extends Core\RouteAlias
         $r .= Html::divOp('left');
 
         $r .= Html::divOp('title');
-        $r .= Html::h1($table->label());
+        $r .= $this->makeH1($this->table()->label());
         $r .= $this->makeInfo();
         $r .= Html::divCl();
 
@@ -266,7 +264,7 @@ class General extends Core\RouteAlias
         return $r;
     }
 
-
+    
     // makeSearchNote
     // génère les notes pour le champ recherche
     protected function makeSearchNote():string

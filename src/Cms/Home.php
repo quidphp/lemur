@@ -55,19 +55,12 @@ class Home extends Core\Route\Home
     protected function mainTopLeft():string
     {
         $r = '';
-        $r .= Html::h1($this->makeTopTitle());
+        $r .= $this->makeH1(static::boot()->typeLabel());
 
         if(static::sessionUser()->can('home/info'))
         $r .= $this->makeInfo();
 
         return $r;
-    }
-
-
-    // makeTopTitle
-    protected function makeTopTitle():string
-    {
-        return static::boot()->typeLabel();
     }
 
 
@@ -80,6 +73,7 @@ class Home extends Core\Route\Home
         $total = $tables->filter(['hasPermission'=>true],'view')->total(true,true);
         $popup = $this->makeInfoPopup();
         $attr = ['count-info',(!empty($popup))? ['with-popup','anchor-corner']:null];
+        
         $r .= Html::divOp($attr);
         $r .= Html::divOp(['count','icon','info','padLeft']);
         $r .= Html::span($total['table'].' '.static::langPlural($total['table'],'lcf|common/table'));

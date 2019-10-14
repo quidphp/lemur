@@ -14,7 +14,11 @@
     .count-info {
         margin-left: 10px;
     }
-
+    
+    .relation-childs .not-accessible {
+        font-style: italic;
+    }
+    
     .popup span {
         font-weight: normal;
     }
@@ -97,7 +101,7 @@
     background-color: $lightestGray;
     border: 1px solid $lightGray;
     margin-top: 20px;
-    padding: 5px 15px;
+    padding: 0px 15px;
     border-radius: 5px;
     box-shadow: 0px 0px 6px -2px $gray;
 
@@ -115,20 +119,20 @@
 /* LEFT */
 [data-group='specific'] main .inner > .container .form .panel .element > .left {
     @include inbl(middle, 30%);
-    padding: 5px 20px 5px 0;
+    padding: 10px 20px 10px 0;
     position: relative;
 
     .label {
         @include inbl();
         position: relative;
         margin-bottom: 3px;
-        padding: 0 5px;
 
         label {
             @include inbl();
             font-weight: bold;
             cursor: default;
-
+            padding: 0 5px;
+            
             &:hover {
                 color: inherit;
             }
@@ -178,7 +182,7 @@
 /* RIGHT */
 [data-group='specific'] main .inner > .container .form .element > .right {
     @include inbl(middle, 70%);
-    padding: 5px 0;
+    padding: 10px 0;
     position: relative;
 
     > div.nothing {

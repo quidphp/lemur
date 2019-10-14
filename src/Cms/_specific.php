@@ -324,10 +324,9 @@ trait _specific
 
             $class = (array) $col->classHtml();
             $class[] = ($col->isRequired())? 'required':null;
-            $class[] = (!empty($popup) || $col->isDate() || $col->isRelation())? 'anchor-corner':null;
             $class[] = (!empty($popup))? ['with-col-popup']:null;
             $class[] = ($colCell->hasFormLabelId($this->formWrapAttr($colCell),true))? 'pointer':null;
-            $attr = ['element',$class,'data'=>['col'=>$col]];
+            $attr = ['element','anchor-corner',$class,'data'=>['col'=>$col]];
 
             $detailsHtml = Html::liMany(...$details);
             $detailsHtml = Html::ulCond($detailsHtml);

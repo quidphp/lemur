@@ -59,9 +59,16 @@ class SpecificDelete extends Core\RouteAlias
 
     // routeSuccess
     // retourne la route en cas de succès ou échec de la suppression
+    // renvoie à la même pas ou l'élément se trouvait, sauf si c'était le dernier (renvoie à la première page)
     public function routeSuccess():Core\Route
     {
-        return $this->general();
+        $return = $this->general();
+        $rows = $return->rows();
+
+        if($rows->isEmpty())
+        $return = $return->changeSegment('page',1);
+
+        return $return;
     }
 
 

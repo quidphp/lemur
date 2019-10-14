@@ -61,12 +61,15 @@
 	
 	
 	// offsetCorner
-	// retourne l'objet offset du premier élément avec les propriétés y, x, topBottom, leftRight et corner en plus
+	// retourne l'objet offset du premier élément avec les propriétés d'autres propriétés en plus
 	$.fn.offsetCorner = function()
 	{
 		var r = $(this).offset();
-		r.y = r.top - $(window).scrollTop();
-		r.x = r.left - $(window).scrollLeft();
+        r.topMiddle = (r.top + ($(this).height() / 2));
+        r.leftMiddle = (r.left + ($(this).width() / 2));
+		r.y = r.topMiddle - $(window).scrollTop();
+		r.x = r.leftMiddle - $(window).scrollLeft();
+        
 		r.topBottom = (r.y > ($(window).height() / 2))? 'bottom':'top';
 		r.leftRight = (r.x > ($(window).width() / 2))? 'right':'left';
 		r.corner = r.topBottom+"-"+r.leftRight;

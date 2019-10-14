@@ -107,7 +107,7 @@ class SpecificAdd extends Core\RouteAlias
     // génère le titre pour la page specificAdd
     protected function makeTitleBox():string
     {
-        return Html::h1($this->title());
+        return $this->makeH1($this->makeTitle());
     }
 
 

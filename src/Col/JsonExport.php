@@ -23,7 +23,7 @@ class JsonExport extends Core\Col\JsonExport
     public function onGet($return,array $option)
     {
         $return = parent::onGet($return,$option);
-
+        
         if(is_array($return) && !empty($option['context']) && $option['context'] === 'cms:specific')
         $return = static::varExport($return);
 

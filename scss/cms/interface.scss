@@ -220,6 +220,61 @@ header nav {
     }
 }
 
+/* MAIN */
+main {
+    @include transitions(opacity 0.3s);
+    opacity: 1;
+    padding: 20px 0 50px 0;
+
+    .inner {
+        padding: 0 20px;
+        position: relative;
+    }
+}
+main .inner > .top {
+    margin-bottom: 20px;
+
+    .title {
+        margin-bottom: 3px;
+    }
+
+    .sub-title {
+        font-size: 90%;
+    }
+
+    .left {
+        @include inbl(top);
+        width: 55%;
+
+        h1 {
+            @include inbl;
+            
+            > a {
+                display: block;
+                
+                &:hover {
+                    color: $darkGray;
+                }
+            }
+        }
+    }
+
+    .right {
+        @include inbl(top);
+        width: 45%;
+        text-align: right;
+
+        .submit {
+            @include inbl();
+            margin-right: 10px;
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+}
+
 /* COM */
 .com {
     .box {
@@ -305,53 +360,6 @@ header nav {
         }
         .neg {
             color: $red;
-        }
-    }
-}
-
-/* MAIN */
-main {
-    @include transitions(opacity 0.3s);
-    opacity: 1;
-    padding: 20px 0 50px 0;
-
-    .inner {
-        padding: 0 20px;
-        position: relative;
-    }
-}
-main .inner > .top {
-    margin-bottom: 20px;
-
-    .title {
-        margin-bottom: 3px;
-    }
-
-    .sub-title {
-        font-size: 90%;
-    }
-
-    .left {
-        @include inbl(top);
-        width: 55%;
-
-        h1 {
-            @include inbl;
-        }
-    }
-
-    .right {
-        @include inbl(top);
-        width: 45%;
-        text-align: right;
-
-        .submit {
-            @include inbl();
-            margin-right: 10px;
-
-            &:last-child {
-                margin-right: 0;
-            }
         }
     }
 }
