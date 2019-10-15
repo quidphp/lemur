@@ -18,7 +18,7 @@
         z-index: 999;
         display: none;
 
-        &.loading .inner {
+        &[data-status='loading'] .inner {
             background-position: center;
         }
 

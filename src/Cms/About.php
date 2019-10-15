@@ -92,7 +92,7 @@ class About extends Core\RouteAlias
         $boot = static::boot();
         $replace = $this->getContentReplaceArray();
 
-        $r .= static::cliArt();
+        $r .= static::asciiArt();
         $r .= Cli::pos(static::label());
         $r .= Cli::pos($boot->label());
         $r .= Cli::pos($boot->typeLabel());
@@ -102,19 +102,20 @@ class About extends Core\RouteAlias
     }
 
 
-    // cliArt
-    public static function cliArt():string
+    // asciiArt
+    // retourne le ascii art pour le cli
+    public static function asciiArt():string
     {
 return '
- .d88888b.           d8b      888 8888888b.  888    888 8888888b.  
-d88P" "Y88b          Y8P      888 888   Y88b 888    888 888   Y88b 
-888     888                   888 888    888 888    888 888    888 
-888     888 888  888 888  .d88888 888   d88P 8888888888 888   d88P 
-888     888 888  888 888 d88" 888 8888888P"  888    888 8888888P"  
-888 Y8b 888 888  888 888 888  888 888        888    888 888        
-Y88b.Y8b88P Y88b 888 888 Y88b 888 888        888    888 888        
- "Y888888"   "Y88888 888  "Y88888 888        888    888 888        
-       Y8b                                                                                                                
+888                                              
+888                                              
+888                                              
+888       .d88b.  88888b.d88b.  888  888 888d888 
+888      d8P  Y8b 888 "888 "88b 888  888 888P"   
+888      88888888 888  888  888 888  888 888     
+888      Y8b.     888  888  888 Y88b 888 888     
+88888888  "Y8888  888  888  888  "Y88888 888                                                      
+
 ';
     }
 

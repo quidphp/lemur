@@ -39,7 +39,7 @@ class User extends Core\Row\User
 
                 if(!empty($route))
                 {
-                    $route = $route::makeOverload($row)->initSegment();
+                    $route = $route::makeOverload($row);
                     $data = ['confirm'=>static::langText('common/confirm')];
                     $attr = ['name'=>'--userWelcome--','value'=>1,'submit','icon','padLeft','email','data'=>$data];
                     $r .= $route->submitTitle(null,$attr);

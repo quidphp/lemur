@@ -209,15 +209,10 @@ class Route extends Base\Test
 
         // _segment
         assert($general::make()->routeSegmentRequest() instanceof Routing\RouteSegmentRequest);
-        assert($g->initSegment() === $g);
-        assert($g->checkValidSegment());
-        assert($g->segments(false) === ['table'=>'ormTable','page'=>1,'limit'=>20,'order'=>'-','direction'=>'-','cols'=>'-','filter'=>'-','in'=>'-','notIn'=>'-','highlight'=>'-']);
-        assert($g->segment('table',false) === 'ormTable');
-        assert($g->segment(0,false) === 'ormTable');
+        assert($g->checkValidSegment() === $g);
+        assert($g->routeRequest()->makeRequestSegment() === ['table'=>'ormTable','page'=>'1','limit'=>'20','order'=>'-','direction'=>'-','cols'=>'-','filter'=>'-','in'=>'-','notIn'=>'-','highlight'=>'-']);
+        assert($g->routeRequest()->makeRequestSegment()['table'] === 'ormTable');
         assert($g2->segments()['table'] instanceof Core\Table);
-        assert($g2->segments(true)['table'] === 'ormSql');
-        assert($g->segments(false)['table'] === 'ormTable');
-        assert($g->segments(true)['table'] === 'ormTable');
         assert($g->segments() === ['table'=>$db['ormTable'],'page'=>1,'limit'=>20,'order'=>$db['ormTable']['id'],'direction'=>'desc','cols'=>$g->segment('cols'),'filter'=>[],'in'=>[],'notIn'=>[],'highlight'=>[]]);
         assert($g->segment('table') === $db['ormTable']);
         assert($g->segment(0) === $db['ormTable']);
@@ -243,7 +238,7 @@ class Route extends Base\Test
         assert(!$g4->isValidSegment());
         assert(($g5 = $g3->keepSegments('page')) instanceof Core\Route);
         assert($g5->segments()['page'] === 4);
-        assert($g5->segments()['table'] === null);
+        assert($g5->segments()['table'] === false);
         assert(!$route::isSegmentClass());
         assert($general::isSegmentClass());
         assert($general::checkSegmentClass());
