@@ -30,8 +30,11 @@ abstract class Relation extends Core\Col\Relation
     // affichage spéciale si le contexte est cms:general
     public function onGet($return,array $option)
     {
-        if($return instanceof Core\Cell\Relation && !empty($option['context']) && is_string($option['context']) && strpos($option['context'],':general') !== false)
-        $return = Html::divCond($return->generalOutput($option),'relation');
+        if($return instanceof Core\Cell\Relation && !$return->isNull() && !empty($option['context']) && is_string($option['context']) && strpos($option['context'],':general') !== false)
+        {
+            $output = $return->generalOutput($option);
+            $return = Html::divCond($output,'relation');
+        }
 
         else
         $return = parent::onGet($return,$option);

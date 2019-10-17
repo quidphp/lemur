@@ -31,7 +31,6 @@ $(document).ready(function() {
 		var panel = formWrapper.find(".panel");
 		var form = formWrapper.find("form");
 		var fields = form.find(".element input,.element textarea");
-		var labels = form.find(".element.with-col-popup > .left .label");
 		
 		// submitConfirm
 		var submitConfirm = form.find("button[type='submit'][data-confirm]");
@@ -49,9 +48,6 @@ $(document).ready(function() {
 		
 		// fields
 		fields.fieldValidateFull();
-		
-		// labels
-		labels.hoverClass('hover');
 		
 		// preparable
 		formWrapper.on('form:getPreparable', function(event) {

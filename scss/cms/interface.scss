@@ -43,7 +43,7 @@ body > #wrapper {
 
 /* HEADER */
 header > .top {
-    padding: 10px 20px;
+    padding: 10px 20px 5px;
     background-color: $color;
 
     .burger-menu {
@@ -85,7 +85,6 @@ header > .top {
         text-align: right;
 
         .top {
-            margin-bottom: 5px;
 
             > a {
                 margin: 0 0 5px 10px;
@@ -95,16 +94,11 @@ header > .top {
                 }
             }
         }
-        .info {
-            color: $lightGray;
-            font-size: 90%;
-
-            > div {
-                @include inbl();
-            }
-
-            > .separator {
-                margin: 0 5px;
+        .popup-trigger {
+            
+            > .popup-title {
+                color: $lightGray;
+                font-size: 90%;
             }
         }
     }
@@ -371,11 +365,12 @@ footer {
     width: 100%;
     padding: 5px 20px;
     background-color: $darkColor;
+    font-size: 90%;
 }
 footer .left {
     @include inbl();
     width: 70%;
-    font-size: 90%;
+
 
     > nav > ul {
         > li {
@@ -398,25 +393,37 @@ footer .right {
     @include inbl();
     width: 30%;
     text-align: right;
-    color: $gray;
-    font-size: 80%;
+    color: $lightGray;
+    
+    > span {
+        @include inbl();
+        
+        &.separator {
+            margin: 0 5px;
+        }
+        
+        a {
+            color: $lightGray;
 
-    a {
-        color: $gray;
-
-        &:hover {
-            text-decoration: underline;
+            &:hover {
+                text-decoration: underline;
+            }
         }
     }
-
-    > .separator {
-        margin: 0 5px;
+    
+    .popup-trigger.with-popup {
+        &.active,
+        &:hover {
+            .popup-title {
+                background-color: $color;
+            }
+        }
     }
 }
 
 /* RESPONSIVE */
 @media screen and (max-width: 900px), screen and (orientation: portrait) {
-    #wrapper {
+    body > #wrapper {
         min-width: inherit;
     }
 

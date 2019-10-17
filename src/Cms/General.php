@@ -47,7 +47,10 @@ class General extends Core\RouteAlias
             'highlight'=>'structureSegmentPrimaries'],
         'match'=>[
             'role'=>['>='=>20]],
-        'sitemap'=>true
+        'sitemap'=>true,
+        'popup'=>array(
+            'search','primary','priority','engine','collation','autoIncrement','updateTime',
+            'classFqcn','classRow','classRows','classCols','classCells','sql')
     ];
 
 
@@ -278,13 +281,18 @@ class General extends Core\RouteAlias
 
             if($cols->isNotEmpty())
             {
+                $minLength = $table->searchMinLength();
+                $lang = static::lang();
+                $replace = array('count'=>$minLength);
+                $note = $lang->plural($minLength,'general/searchNote',$replace);
+                
                 $r .= Html::divOp('in');
                 $r .= Html::divOp('first');
-                $r .= Html::span(static::langText('general/note').':');
-                $r .= Html::span(static::langText('general/searchNote'),'note');
+                $r .= Html::span($lang->text('general/note').':');
+                $r .= Html::span($note,'note');
                 $r .= Html::divCl();
                 $r .= Html::divOp('second');
-                $r .= Html::span(static::langText('general/searchIn').':');
+                $r .= Html::span($lang->text('general/searchIn').':');
                 $r .= Html::span(implode(', ',$cols->pair('label')),'labels');
                 $r .= Html::divCl();
                 $r .= Html::divCl();
@@ -340,91 +348,64 @@ class General extends Core\RouteAlias
 
         if($this->hasPermission('info'))
         {
-            $popup = $this->makeInfoPopup();
-            $attr = ['count-info',(!empty($popup))? ['with-popup','anchor-corner']:null];
+            $popup = $this->generalInfoPopup();
+            $attr = ['popup-trigger',(!empty($popup))? ['with-popup','with-icon','anchor-corner']:null];
 
             $r .= Html::divOp($attr);
-            $r .= Html::div($this->makeCount(),['count','icon','info','padLeft']);
+            $r .= Html::div($this->makeCount(),['popup-title']);
             $r .= $popup;
             $r .= Html::divCl();
         }
 
         return $r;
     }
-
-
-    // makeInfoPopup
-    // génère le popup d'informations
-    // la méthode est public car utilisé dans specific
-    public function makeInfoPopup(bool $icon=false):string
+    
+    
+    // generalInfoPopup
+    // génère le popup de la page général
+    // méthode publiquer car utilisé dans specific
+    public function generalInfoPopup(bool $icon=true):?string
     {
-        $r = '';
-
+        $return = null;
+        
         if($this->hasPermission('infoPopup'))
         {
+            $values = $this->infoPopupValues();
+            $closure = $this->infoPopupClosure();
+            $return = static::makeInfoPopup($values,$closure,false);
+        }
+        
+        return $return;
+    }
+    
+    
+    // infoPopupValues
+    // retourne un tableau avec les valeurs pour le popup d'informations
+    protected function infoPopupValues():array 
+    {
+        $return = array_keys($this->segments());
+        $return = Base\Arr::append($return,static::$config['popup']);
+        
+        return $return;
+    }
+    
+    
+    // infoPopupClosure
+    // callback pour le popup d'informations de la page générale
+    protected function infoPopupClosure():\Closure 
+    {
+        return function(string $key) {
+            $return = array(static::langText(array('popup','general',$key)));
+            $value = null;
             $table = $this->table();
-            $sql = $this->sql();
-            $loop = array_keys($this->segments());
-            $loop = Base\Arr::append($loop,['search','primary','engine','collation','autoIncrement','classTable','classRow','classRows','classCols','classCells','sql']);
-            $r .= Html::divOp('popup');
-
-            if($icon === true)
-            $r .= Html::div(null,['icon','top-right','solo','info']);
-
-            $r .= Html::ulOp();
-
-            foreach ($loop as $key)
+            
+            if($this->hasSegment($key))
             {
-                $label = null;
-                $value = ($this->hasSegment($key))? $this->segment($key):null;
-                $lang = $this->lang();
-
-                if($key === 'table')
-                $value = $table->name();
-
-                elseif($key === 'order' && $value instanceof Core\Col)
-                $value = $value->name();
-
-                elseif($key === 'direction' && is_string($value))
-                $value = static::langText('direction/'.strtolower($value));
-
-                elseif($key === 'cols' && $value instanceof Core\Cols)
-                {
-                    $value = $value->names();
-                    $label = static::langPlural($value,'general/'.$key);
-                    $value = implode(', ',$value);
-                }
-
-                elseif(in_array($key,['in','notIn','highlight'],true) && is_array($value))
-                $value = implode(', ',$value);
-
-                elseif($key === 'search')
-                $value = $this->getSearchValue();
-
-                elseif($key === 'sql')
-                $value = $sql->emulate();
-
-                elseif(in_array($key,['engine','primary','collation'],true))
-                $value = $table->$key();
-
-                elseif($key === 'autoIncrement')
-                $value = $table->autoIncrement(true);
-
-                elseif($key === 'classTable')
-                $value = $table->classFqcn();
-
-                elseif($key === 'classRow')
-                $value = $table->classe()->row();
-
-                elseif($key === 'classRows')
-                $value = $table->classe()->rows();
-
-                elseif($key === 'classCols')
-                $value = $table->classe()->cols();
-
-                elseif($key === 'classCells')
-                $value = $table->classe()->cells();
-
+                $value = $this->segment($key);
+                
+                if($key === 'direction')
+                $value = (is_string($value))? static::langText('direction/'.strtolower($value)):null;
+                
                 elseif($key === 'filter')
                 {
                     if(is_array($value) && !empty($value))
@@ -436,40 +417,53 @@ class General extends Core\RouteAlias
                         {
                             $col = $table->col($k);
                             $rel = $col->relation()->getStr($v,', ');
-                            $value[] = $col->label().': '.$rel;
+                            $label = $col->label();
+                            $value[$label] = $rel;
                         }
                     }
                 }
-
-                if(!empty($value))
-                {
-                    if(empty($label))
-                    $label = $lang->alt('general/'.$key,'common/'.$key);
-
-                    $r .= Html::liOp();
-                    $r .= Html::span($label.':');
-
-                    if(is_array($value))
-                    {
-                        $lis = Html::liMany(...$value);
-                        $r .= Html::ulCond($lis);
-                    }
-
-                    else
-                    $r .= Html::span($value);
-
-                    $r .= Html::liCl();
-                }
+                
+                elseif(in_array($key,array('in','notIn','highlight'),true) && is_array($value) && !empty($value))
+                $value = implode(', ',$value);
             }
+            
+            elseif($key === 'priority')
+            $value = $table->priority();
+            
+            elseif($key === 'search')
+            $value = $this->getSearchValue();
 
-            $r .= Html::ulCl();
-            $r .= Html::divCl();
-        }
+            elseif($key === 'sql')
+            $value = $this->sql()->emulate();
 
-        return $r;
+            elseif($key === 'autoIncrement')
+            $value = $table->autoIncrement(true);
+            
+            elseif($key === 'updateTime')
+            $value = $table->updateTime(1);
+            
+            elseif($key === 'classRow')
+            $value = $table->classe()->row();
+
+            elseif($key === 'classRows')
+            $value = $table->classe()->rows();
+
+            elseif($key === 'classCols')
+            $value = $table->classe()->cols();
+
+            elseif($key === 'classCells')
+            $value = $table->classe()->cells();
+
+            else
+            $value = $table->$key();
+            
+            $return[] = $value;
+            
+            return $return;
+        };
     }
-
-
+    
+    
     // makeAdd
     // génère le lien pour ajouter une nouvelle ligne
     protected function makeAdd():string
@@ -478,7 +472,7 @@ class General extends Core\RouteAlias
         $table = $this->table();
 
         if($this->hasPermission('insert','add'))
-        $r .= SpecificAdd::makeOverload($table)->a(static::langText('common/add'),['submit','icon','padLeft','add']);
+        $r .= SpecificAdd::makeOverload($table)->a(static::langText('general/add'),['submit','icon','padLeft','add']);
 
         return $r;
     }
@@ -596,7 +590,7 @@ class General extends Core\RouteAlias
         $table = $this->table();
         $cols = $table->cols();
         $currentCols = $this->getCurrentCols();
-        $inAttr = ['in'];
+        $inAttr = ['in','toggler'];
 
         if($this->hasPermission('view','cols') && $cols->isNotEmpty() && $currentCols->isNotEmpty())
         {
@@ -840,24 +834,30 @@ class General extends Core\RouteAlias
 
     // makeTableBodyCell
     // génère le contenu à afficher dans une cellule de table
+    // le placeholder - ou NULL peut être utilisé si la valeur est vide
     protected function makeTableBodyCell(Core\Cell $cell,?array $option=null):array
     {
         $r = [];
         $option = Base\Arr::plus(['specific'=>null,'modify'=>false,'excerptMin'=>$cell->generalExcerptMin()],$option);
         $context = $this->context();
         $attr = null;
-
         $v = $cell->get($context);
-
+        
         if($cell->isPrimary() && is_string($option['specific']))
         {
             $specific = $option['specific'];
             $v = Html::a($specific,$v,'in');
             $attr = 'primary';
         }
-
+        
         else
-        $v = Html::div($v,'in',$option);
+        {
+            $placeholder = $cell->col()->emptyPlaceholder($v);
+            if(is_string($placeholder))
+            $v = Html::span($placeholder,'empty-placeholder');
+            
+            $v = Html::div($v,'in',$option);
+        }
 
         $r = [$v,$attr];
 

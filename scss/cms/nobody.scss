@@ -10,7 +10,7 @@
 // stylesheet for the routes where the user is not logged in the CMS
 
 /* NOBODY */
-[data-group='nobody'] {
+[data-group='nobody'] body {
     @include cover();
     background-attachment: fixed;
 

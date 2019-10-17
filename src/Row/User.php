@@ -18,6 +18,12 @@ class User extends Core\Row\User
     // config
     public static $config = [
         '@cms'=>[
+            'permission'=>[
+                '*'=>['userWelcome'=>false],
+                'admin'=>array('export'=>true,'userWelcome'=>true),
+                'subAdmin'=>array('export'=>true,'userWelcome'=>true),
+                'editor'=>array('insert'=>false),
+                'contributor'=>array('insert'=>false)],
             'route'=>[
                 'userWelcome'=>Lemur\Cms\SpecificUserWelcome::class],
             'specificOperation'=>[self::class,'specificOperation']],

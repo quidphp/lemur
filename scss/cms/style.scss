@@ -132,57 +132,18 @@ button,
     }
 }
 
-/* COUNT INFO */
-.count-info {
-    @include inbl();
-    position: relative;
-
-    .count {
-        font-size: 1.3rem;
-        padding: 5px 5px 5px 25px;
-    }
-
-    &.with-popup {
-        &:hover {
-            .count {
-                background-color: $color;
-                color: $white;
-                border-radius: 5px;
-            }
-
-            .popup {
-                display: block;
-            }
-        }
-    }
-}
-
 /* ICON */
 body .icon {
-    background-position: 50% 50%;
-    background-repeat: no-repeat;
-    background-size: 16px 16px;
-
     &.solo {
-        @include inbl();
-        @include transitions(opacity 0.3s);
-        @include wh(16px);
-        cursor: pointer;
-
-        &:hover {
-            opacity: 0.8;
-        }
+        @include iconSolo();
     }
 
     &.padLeft {
-        background-position: 5px 50%;
-        padding-left: 25px;
+        @include iconLeft();
     }
 
     &.center {
-        @include abs(50%, '', '', 50%);
-        margin-left: -8px;
-        margin-top: -8px;
+        @include iconCenter();
     }
 }
 

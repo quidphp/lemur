@@ -39,6 +39,122 @@ class En extends Core\Lang\En
 
         // cms
         '@cms'=>[
+            
+            // popup
+            'popup'=>array(
+                
+                // user
+                'user'=>array(
+                    'permission'=>'Permission',
+                    'classSession'=>'Class Session',
+                    'classFqcn'=>'Class User',
+                    'classRole'=>'Class Role',
+                    'fullName'=>'Name',
+                    'requestCount'=>'Request count',
+                    'ip'=>'Ip',
+                    'lang'=>'Language',
+                    'name'=>'Cookie name',
+                    'getLoginLifetime'=>'Login lifetime',
+                    'getLifetime'=>'Cookie lifetime',
+                    'expire'=>'Cookie expire',
+                    'getCookieParams'=>'Cookie paramters',
+                    'getGarbageCollect'=>'Session garbage collect',
+                    'userAgent'=>'User agent'
+                ),
+                
+                // boot
+                'boot'=>array(
+                    'phpVersion'=>'PHP version',
+                    'quidVersion'=>'QuidPHP version',
+                    'envLabel'=>'Environment',
+                    'typeLabel'=>'Type',
+                    'httpProtocol'=>'HTTP protocol',
+                    'hostname'=>"Hostname",
+                    'ip'=>'Ip',
+                    'os'=>'OS',
+                    'isCaseSensitive'=>'Case sensitive',
+                    'serverType'=>'Server type',
+                    'sapi'=>'Sapi',
+                    'user'=>'User',
+                    'group'=>'Group',
+                    'processId'=>'Process ID',
+                    'classFqcn'=>'Class Boot',
+                    'paths'=>'Paths',
+                    'schemeHosts'=>'Domains',
+                    'memory'=>'Memory',
+                    'diskSpace'=>'Disk space',
+                    'phpImportantExtension'=>'Important PHP extensions',
+                    'phpImportantIni'=>'Important PHP ini'
+                ),
+                
+                // home
+                'home'=>array(
+                    'dbName'=>'Database',
+                    'driver'=>'Driver',
+                    'serverVersion'=>'Driver version',
+                    'host'=>'Host',
+                    'username'=>'Username',
+                    'charset'=>'Charset',
+                    'collation'=>'Collation',
+                    'connectionStatus'=>'Connection status',
+                    'classFqcn'=>'Class DB',
+                    'classTables'=>'Class Tables',
+                    'importantVariables'=>'Important variables'
+                ),
+                
+                // general
+                'general'=>array(
+                    'table'=>'Table',
+                    'order'=>'Order',
+                    'direction'=>'Direction',
+                    'page'=>'Page',
+                    'limit'=>'Per page',
+                    'filter'=>'Filter',
+                    'search'=>'Search',
+                    'cols'=>'Column',
+                    'in'=>'In',
+                    'notIn'=>'Not in',
+                    'highlight'=>'Highlight',
+                    'engine'=>'Engine',
+                    'collation'=>'Collation',
+                    'autoIncrement'=>'Auto increment',
+                    'updateTime'=>'Last update',
+                    'priority'=>'Priority',
+                    'sql'=>'Sql query',
+                    'primary'=>'Primary key',
+                    'classFqcn'=>'Class Table',
+                    'classRow'=>'Class Row',
+                    'classRows'=>'Class Rows',
+                    'classCols'=>'Class Columns',
+                    'classCells'=>'Class Cells'
+                ),
+                
+                // col
+                'col'=>array(
+                    'name'=>'Name',
+                    'isRequired'=>'Required',
+                    'shouldBeUnique'=>'Unique',
+                    'isEditable'=>'Editable',
+                    'pattern'=>'Pattern',
+                    'preValidate'=>'Pre-validate',
+                    'validate'=>'Validate',
+                    'compare'=>'Compare',
+                    'type'=>'Type',
+                    'length'=>'Length',
+                    'unsigned'=>'Unsigned',
+                    'default'=>'Default',
+                    'acceptsNull'=>'Accepts NULL',
+                    'collation'=>'Collation',
+                    'priority'=>'Priority',
+                    'isOrderable'=>'Orderable',
+                    'isFilterable'=>'Filterable',
+                    'isSearchable'=>'Searchable',
+                    'isExportable'=>'Exportable',
+                    'isRelation'=>'Relation',
+                    'classFqcn'=>'Class Column',
+                    'classCell'=>'Class Cell'
+                )
+            ),
 
             // resetPassword
             'resetPassword'=>[
@@ -54,14 +170,14 @@ class En extends Core\Lang\En
 
             // author
             'author'=>[
-                'name'=>'Quid',
+                'name'=>'QuidPHP',
                 'uri'=>'https://quidphp.com',
                 'email'=>'emondpph@gmail.com'
             ],
 
             // about
             'about'=>[
-                'content'=>'This open-source Content Management System is based on the QuidPHP framework. The current version is: [version].'
+                'content'=>'The Lemur open-source Content Management System is based on the QuidPHP framework. The current version is: [version].'
             ],
 
             // footer
@@ -75,44 +191,18 @@ class En extends Core\Lang\En
                 'searchIn'=>'Search in',
                 'note'=>'Note',
                 'notFound'=>'Nothing',
-                'searchNote'=>'Search insensitive to case and accents.',
-                'dbName'=>'Database',
-                'driver'=>'Driver',
-                'serverVersion'=>'Driver version',
-                'host'=>'Host',
-                'username'=>'Username',
-                'charset'=>'Charset',
-                'collation'=>'Collation',
-                'connectionStatus'=>'Connection status',
-                'classDb'=>'Class DB',
-                'classTables'=>'Class Tables'
+                'searchNote'=>'Search insensitive to case and accents, [count] character%s% minimum.'
             ],
 
             // general
             'general'=>[
-                'notFound'=>'Nothing',
-                'table'=>'Table',
-                'order'=>'Order',
-                'direction'=>'Direction',
                 'search'=>'Search',
-                'cols'=>'Column',
-                'in'=>'In',
-                'notIn'=>'Not in',
-                'highlight'=>'Highlight',
-                'engine'=>'Engine',
-                'collation'=>'Collation',
-                'autoIncrement'=>'Auto increment',
-                'sql'=>'Sql query',
+                'notFound'=>'Nothing',
                 'searchIn'=>'Search in',
                 'reset'=>'Reset',
                 'note'=>'Note',
-                'searchNote'=>'Search insensitive to case and accents.',
-                'primary'=>'Primary key',
-                'classTable'=>'Class Table',
-                'classRow'=>'Class Row',
-                'classRows'=>'Class Rows',
-                'classCols'=>'Class Columns',
-                'classCells'=>'Class Cells'
+                'searchNote'=>'Search insensitive to case and accents, [count] character%s% minimum.',
+                'add'=>'Add'
             ],
 
             // export
@@ -127,26 +217,9 @@ class En extends Core\Lang\En
             // specific
             'specific'=>[
                 'add'=>'Add',
-                'name'=>'Name',
-                'required'=>'Required',
-                'unique'=>'Unique',
-                'editable'=>'Editable',
-                'pattern'=>'Pattern',
-                'preValidate'=>'Pre-validate',
-                'validate'=>'Validate',
-                'compare'=>'Compare',
-                'type'=>'Type',
-                'length'=>'Length',
-                'unsigned'=>'Unsigned',
-                'default'=>'Default',
-                'acceptsNull'=>'Accepts NULL',
-                'collation'=>'Collation',
-                'priority'=>'Priority',
-                'orderable'=>'Orderable',
-                'filterable'=>'Filterable',
-                'searchable'=>'Searchable',
-                'classCol'=>'Class Column',
-                'classCell'=>'Class Cell',
+                'back'=>'Back',
+                'view'=>'View',
+                'remove'=>'Remove',
                 'mediaRegenerate'=>'This media will be regenerated on next modification.',
                 'mediaDelete'=>'This media will be deleted on next modification.',
                 'relationChilds'=>'[count] direct child%s%',

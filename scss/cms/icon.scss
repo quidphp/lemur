@@ -64,6 +64,13 @@ body .icon.close {
     @include bgimg64($iconVideo);
 }
 
+/* INFO */
+body .icon.info,
+body .popup-trigger.with-icon .popup-title,
+body .popup-trigger.with-icon-solo .popup-title {
+    @include bgimg64($iconInfo);
+}
+
 /* ICON */
 body .icon.account {
     @include bgimg64($iconAccount);
@@ -103,9 +110,6 @@ body .icon.help {
 }
 body .icon.in {
     @include bgimg64($iconIn);
-}
-body .icon.info {
-    @include bgimg64($iconInfo);
 }
 body .icon.login,
 body .icon.logout {

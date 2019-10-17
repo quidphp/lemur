@@ -14,10 +14,13 @@ $(document).ready(function() {
 	// function pour gérer la gestion des colonnes à afficher
 	$.fn.generalCols = function()
 	{
-		var colsPopup = $(this);
+		var colsPopup = $(this).find(".popup");
 		var colsCheckboxes = colsPopup.find("input[type='checkbox']");
 		var colsButton = colsPopup.find("button[name='cols']");
 		
+        // clickOpen
+        $(this).clickOpen(".toggler");
+        
 		// colsPopup
 		colsPopup.on('invalid', function() {
 			$(this).trigger('reset').addClass('invalid');
@@ -153,7 +156,7 @@ $(document).ready(function() {
 		
 		var search = $(this).find("main .left > .search");
 		var pageLimit = $(this).find("main input[name='limit'],input[name='page']");
-		var colsPopup = $(this).find("main th.action .popup");
+		var generalCols = $(this).find("main th.action");
 		var rowsCheckboxes = $(this).find("main table td.rows input[type='checkbox']");
 		var formTruncate = $(this).find("main .truncate form");
 		var multiDelete = $(this).find("main .tool .multi-delete form");
@@ -174,8 +177,8 @@ $(document).ready(function() {
 		pageLimit.numericGeneralInput();
 		
 		// cols
-		if(colsPopup.length)
-		colsPopup.generalCols();
+		if(generalCols.length)
+		generalCols.generalCols();
 		
 		// rows
 		if(rowsCheckboxes.length)

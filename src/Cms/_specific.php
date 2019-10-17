@@ -19,7 +19,11 @@ trait _specific
 {
     //  configSpecific
     public static $configSpecific = [
-        'formWrap'=>"<div class='left'><div class='label'>%label%%popup%</div>%description%%details%</div><div class='right'>%form%</div>"
+        'formWrap'=>"<div class='left'><div class='label'>%label%</div>%description%%details%</div><div class='right'>%form%</div>%popup%",
+        'popup'=>array(
+            'name','isRequired','shouldBeUnique','isEditable','priority','pattern','preValidate','validate','compare','type','length','unsigned',
+            'default','acceptsNull','collation','isRelation','isOrderable','isFilterable','isSearchable','isExportable','classFqcn','classCell'
+        )
     ];
 
 
@@ -173,105 +177,66 @@ trait _specific
         return $r;
     }
 
-
-    // makeFormPopup
+    
+    // makeColPopup
     // génère le popup d'informations pour une colonne
-    protected function makeFormPopup(Core\Col $col):string
+    protected function makeColPopup(Core\Col $col):?string
     {
-        $r = '';
+        $return = null;
         $table = $this->table();
-        $colPopup = $table->permission('colPopup');
-
-        if(is_array($colPopup) && !empty($colPopup))
+        
+        if($table->hasPermission('infoPopup'))
         {
-            $lang = $this->lang();
+            $values = static::$config['popup'];
+            $closure = $this->colInfoPopupClosure($col);
+            $return = static::makeInfoPopup($values,$closure,false);
+        }
+        
+        return $return;
+    }
+    
+    
+    // colInfoPopupClosure
+    // callback pour le popup d'informations de la page d'accueil
+    protected function colInfoPopupClosure(Core\Col $col):\Closure 
+    {
+        return function(string $key) use($col) {
+            $return = array(static::langText(array('popup','col',$key)));
+            $value = null;
+            
+            if($key === 'pattern')
+            $value = $col->rulePattern(true);
 
-            $r .= Html::divOp('popup');
-            $r .= Html::div(null,['icon','top-right','solo','info']);
-            $r .= Html::ulOp();
+            elseif($key === 'preValidate')
+            $value = $col->rulePreValidate(true);
 
-            foreach ($colPopup as $v)
+            elseif($key === 'validate')
+            $value = $col->ruleValidate(true);
+
+            elseif($key === 'compare')
+            $value = $col->ruleCompare(true);
+
+            elseif($key === 'classCell')
+            $value = $col->table()->classe()->cell($col);
+
+            elseif($key === 'default')
             {
-                $label = static::langText('specific/'.$v);
-
-                if($v === 'required')
-                $value = $col->isRequired();
-
-                elseif($v === 'unique')
-                $value = $col->shouldBeUnique();
-
-                elseif($v === 'editable')
-                $value = $col->isEditable();
-
-                elseif($v === 'pattern')
-                $value = $col->rulePattern(true);
-
-                elseif($v === 'preValidate')
-                $value = $col->rulePreValidate(true);
-
-                elseif($v === 'validate')
-                $value = $col->ruleValidate(true);
-
-                elseif($v === 'compare')
-                $value = $col->ruleCompare(true);
-
-                elseif($v === 'classCol')
-                $value = $col->classFqcn();
-
-                elseif($v === 'classCell')
-                $value = $col->table()->classe()->cell($col);
-
-                elseif($v === 'default')
-                {
-                    $value = $col->default();
-                    if($value === null && $col->hasNullDefault())
-                    $value = 'NULL';
-                }
-
-                elseif($v === 'orderable')
-                $value = $col->isOrderable();
-
-                elseif($v === 'filterable')
-                $value = $col->isFilterable();
-
-                elseif($v === 'searchable')
-                $value = $col->isSearchable();
-
-                else
-                $value = $col->$v();
-
-                if(is_bool($value))
-                $value = $lang->bool($value);
-
-                if(is_array($value))
-                $value = Base\Arr::clean($value);
-
-                if(!Base\Validate::isReallyEmpty($value))
-                {
-                    $r .= Html::liOp();
-                    $r .= Html::span($label.':');
-
-                    if(is_array($value))
-                    {
-                        $lis = Html::liMany(...$value);
-                        $r .= Html::ulCond($lis);
-                    }
-
-                    else
-                    $r .= Html::span($value);
-
-                    $r .= Html::liCl();
-                }
+                $value = $col->default();
+                
+                if($value === null && $col->hasNullDefault())
+                $value = 'NULL';
             }
 
-            $r .= Html::ulCl();
-            $r .= Html::divCl();
-        }
-
-        return $r;
+            else
+            $value = $col->$key();
+            
+            $return[] = $value;
+            
+            return $return;
+        };
     }
-
-
+    
+    
     // makeFormInner
     // génère l'intérieur d'un panneau avec tous les champs inclus
     protected function makeFormInner():string
@@ -319,23 +284,30 @@ trait _specific
         {
             $description = $colCell->description();
             $details = $colCell->details();
-            $popup = $this->makeFormPopup($col);
             $formWrap = '';
 
             $class = (array) $col->classHtml();
             $class[] = ($col->isRequired())? 'required':null;
-            $class[] = (!empty($popup))? ['with-col-popup']:null;
             $class[] = ($colCell->hasFormLabelId($this->formWrapAttr($colCell),true))? 'pointer':null;
             $attr = ['element','anchor-corner',$class,'data'=>['col'=>$col]];
 
             $detailsHtml = Html::liMany(...$details);
             $detailsHtml = Html::ulCond($detailsHtml);
-
+            
+            $colPopup = $this->makeColPopup($col);
+            if(!empty($colPopup))
+            {
+                $popup = Html::divOp(['popup-trigger','with-popup','with-icon-solo','anchor-corner']);
+                $popup .= Html::div(null,'popup-title');
+                $popup .= $colPopup;
+                $popup .= Html::divCl();
+            }
+            
             $replace = [];
             $replace['description'] = (!empty($description))? Html::div($description,'description'):'';
-            $replace['popup'] = $popup;
             $replace['details'] = (!empty($details))? Html::divCond($detailsHtml,'details'):'';
-
+            $replace['popup'] = (!empty($popup))? $popup:'';
+            
             try
             {
                 $formWrap = $this->makeFormWrap($colCell,$replace);

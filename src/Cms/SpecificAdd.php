@@ -200,7 +200,7 @@ class SpecificAdd extends Core\RouteAlias
             $general = $this->general();
 
             $r .= Html::divOp('nav');
-            $r .= $general->a(static::langText('common/back'));
+            $r .= $general->a(static::langText('specific/back'));
             $r .= Html::divCl();
         }
 
@@ -304,7 +304,7 @@ class SpecificAdd extends Core\RouteAlias
     // génère le submit pour le formulaire d'ajout
     protected function makeFormSubmit(string $type):string
     {
-        return Html::submit(static::langText('common/add'),['icon','add','padLeft']);
+        return Html::submit(static::langText('specific/add'),['icon','add','padLeft']);
     }
 }
 

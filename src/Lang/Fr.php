@@ -39,7 +39,123 @@ class Fr extends Core\Lang\Fr
 
         // cms
         '@cms'=>[
-
+            
+            // popup
+            'popup'=>array(
+                
+                // user
+                'user'=>array(
+                    'rolePermission'=>'Rôle',
+                    'classSession'=>'Classe Session',
+                    'classFqcn'=>'Classe Utilisateur',
+                    'classRole'=>'Classe Rôle',
+                    'fullName'=>'Nom',
+                    'requestCount'=>'Nombre de requête',
+                    'ip'=>'Ip',
+                    'lang'=>'Langue',
+                    'name'=>'Nom du cookie',
+                    'getLoginLifetime'=>'Durée de la connexion',
+                    'getLifetime'=>'Durée de vie du cookie',
+                    'expire'=>'Expiration du cookie',
+                    'getCookieParams'=>'Paramètres du cookie',
+                    'getGarbageCollect'=>'Nettoyage des sessions',
+                    'userAgent'=>'Agent utilisateur'
+                ),
+                
+                // boot
+                'boot'=>array(
+                    'phpVersion'=>'Version PHP',
+                    'quidVersion'=>'Version QuidPHP',
+                    'envLabel'=>'Environnement',
+                    'typeLabel'=>'Type',
+                    'httpProtocol'=>'Protocole HTTP',
+                    'hostname'=>"Nom d'hôte",
+                    'ip'=>'Ip',
+                    'os'=>'OS',
+                    'isCaseSensitive'=>'Sensible à la case',
+                    'serverType'=>'Type de serveur',
+                    'sapi'=>'Sapi',
+                    'user'=>'Utilisateur',
+                    'group'=>'Groupe',
+                    'processId'=>'Identifiant de processus',
+                    'classFqcn'=>'Classe Boot',
+                    'paths'=>'Chemins',
+                    'schemeHosts'=>'Domaines',
+                    'memory'=>'Mémoire vive',
+                    'diskSpace'=>'Espace disque',
+                    'phpImportantExtension'=>'Extensions PHP importantes',
+                    'phpImportantIni'=>'Ini PHP importantes'
+                ),
+                
+                // home
+                'home'=>array(
+                    'dbName'=>'Base de données',
+                    'driver'=>'Connecteur',
+                    'serverVersion'=>'Version du connecteur',
+                    'host'=>'Hôte',
+                    'username'=>"Nom d'utilisateur",
+                    'charset'=>'Encodage',
+                    'collation'=>'Collation',
+                    'connectionStatus'=>'Connexion',
+                    'classFqcn'=>'Classe DB',
+                    'classTables'=>'Classe Tables',
+                    'importantVariables'=>'Variables importantes'
+                ),
+                
+                // general
+                'general'=>array(
+                    'primary'=>'Clé primaire',
+                    'table'=>'Table',
+                    'order'=>'Ordre',
+                    'direction'=>'Direction',
+                    'page'=>'Page',
+                    'limit'=>'Par page',
+                    'filter'=>'Filtre',
+                    'search'=>'Recherche',
+                    'cols'=>'Colonne',
+                    'in'=>'Dans',
+                    'notIn'=>'Pas dans',
+                    'highlight'=>'Surligné',
+                    'engine'=>'Engin',
+                    'collation'=>'Collation',
+                    'autoIncrement'=>'Auto incrément',
+                    'updateTime'=>'Dernière modification',
+                    'priority'=>'Priorité',
+                    'sql'=>'Requête Sql',
+                    'classFqcn'=>'Classe Table',
+                    'classRow'=>'Classe Ligne',
+                    'classRows'=>'Classe Lignes',
+                    'classCols'=>'Classe Colonnes',
+                    'classCells'=>'Classe Cellules'
+                ),
+                
+                // col
+                'col'=>array(
+                    'name'=>'Nom',
+                    'isRequired'=>'Requis',
+                    'shouldBeUnique'=>'Unique',
+                    'isEditable'=>'Modifiable',
+                    'pattern'=>'Modèle',
+                    'preValidate'=>'Pré-validation',
+                    'validate'=>'Validation',
+                    'compare'=>'Comparaison',
+                    'type'=>'Type',
+                    'length'=>'Longueur',
+                    'unsigned'=>'Non signé',
+                    'default'=>'Défaut',
+                    'acceptsNull'=>'Accepte NULL',
+                    'collation'=>'Collation',
+                    'priority'=>'Priorité',
+                    'isOrderable'=>'Ordonnable',
+                    'isFilterable'=>'Filtrable',
+                    'isSearchable'=>'Cherchable',
+                    'isExportable'=>'Exportable',
+                    'isRelation'=>'Relation',
+                    'classFqcn'=>'Classe Colonne',
+                    'classCell'=>'Classe Cellule'
+                )
+            ),
+            
             // resetPassword
             'resetPassword'=>[
                 'info'=>'Entrer votre courriel pour obtenir un message indiquant la marche à suivre pour regénérer le mot de passe.'
@@ -54,14 +170,14 @@ class Fr extends Core\Lang\Fr
 
             // author
             'author'=>[
-                'name'=>'Quid',
+                'name'=>'QuidPHP',
                 'uri'=>'https://quidphp.com',
                 'email'=>'emondpph@gmail.com'
             ],
 
             // about
             'about'=>[
-                'content'=>'Ce gestionnaire de contenu open-source est développé sur le framework QuidPHP. La version actuelle est [version].'
+                'content'=>'Le gestionnaire de contenu open-source Lemur est développé sur le framework QuidPHP. La version actuelle est [version].'
             ],
 
             // footer
@@ -75,44 +191,18 @@ class Fr extends Core\Lang\Fr
                 'searchIn'=>'Recherche dans',
                 'note'=>'Note',
                 'notFound'=>'Rien à afficher',
-                'searchNote'=>'Recherche insensible à la case et aux accents.',
-                'dbName'=>'Base de données',
-                'driver'=>'Connecteur',
-                'serverVersion'=>'Version du connecteur',
-                'host'=>'Hôte',
-                'username'=>"Nom d'utilisateur",
-                'charset'=>'Encodage',
-                'collation'=>'Collation',
-                'connectionStatus'=>'Connexion',
-                'classDb'=>'Classe DB',
-                'classTables'=>'Classe Tables'
+                'searchNote'=>'Recherche insensible à la case et aux accents, [count] caractère%s% minimum.'
             ],
 
             // general
             'general'=>[
-                'notFound'=>'Rien à afficher',
-                'table'=>'Table',
-                'order'=>'Ordre',
-                'direction'=>'Direction',
                 'search'=>'Recherche',
-                'cols'=>'Colonne',
-                'in'=>'Dans',
-                'notIn'=>'Pas dans',
-                'highlight'=>'Surligné',
-                'engine'=>'Engin',
-                'collation'=>'Collation',
-                'autoIncrement'=>'Auto incrément',
-                'sql'=>'Requête Sql',
+                'notFound'=>'Rien à afficher',
                 'searchIn'=>'Recherche dans',
                 'reset'=>'Réinitialiser',
                 'note'=>'Note',
-                'searchNote'=>'Recherche insensible à la case et aux accents.',
-                'primary'=>'Clé primaire',
-                'classTable'=>'Classe Table',
-                'classRow'=>'Classe Ligne',
-                'classRows'=>'Classe Lignes',
-                'classCols'=>'Classe Colonnes',
-                'classCells'=>'Classe Cellules'
+                'searchNote'=>'Recherche insensible à la case et aux accents, [count] caractère%s% minimum.',
+                'add'=>'Ajouter'
             ],
 
             // export
@@ -127,26 +217,9 @@ class Fr extends Core\Lang\Fr
             // specific
             'specific'=>[
                 'add'=>'Ajout',
-                'name'=>'Nom',
-                'required'=>'Requis',
-                'unique'=>'Unique',
-                'editable'=>'Modifiable',
-                'pattern'=>'Modèle',
-                'preValidate'=>'Pré-validation',
-                'validate'=>'Validation',
-                'compare'=>'Comparaison',
-                'type'=>'Type',
-                'length'=>'Longueur',
-                'unsigned'=>'Non signé',
-                'default'=>'Défaut',
-                'acceptsNull'=>'Accepte NULL',
-                'collation'=>'Collation',
-                'priority'=>'Priorité',
-                'orderable'=>'Ordonnable',
-                'filterable'=>'Filtrable',
-                'searchable'=>'Cherchable',
-                'classCol'=>'Classe Colonne',
-                'classCell'=>'Classe Cellule',
+                'back'=>'Retour',
+                'view'=>'Voir',
+                'remove'=>'Supprimer',
                 'mediaRegenerate'=>'Ce média sera regénéré lors de la prochaine modification.',
                 'mediaDelete'=>'Ce média sera effacé lors de la prochaine modification.',
                 'relationChilds'=>'[count] enfant%s% direct%s%',

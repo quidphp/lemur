@@ -176,7 +176,7 @@ class Specific extends Core\RouteAlias
     protected function makeTitleBox():string
     {
         $r = $this->makeH1($this->makeTitle());
-        $r .= Html::divCond($this->makeRelationChilds(),['relation-childs','count-info','with-popup','anchor-corner']);
+        $r .= Html::divCond($this->makeRelationChilds(),['relation-childs','popup-trigger','with-icon','with-popup','anchor-corner']);
 
         return $r;
     }
@@ -206,7 +206,7 @@ class Specific extends Core\RouteAlias
             {
                 $count = Base\Arrs::countLevel(2,$relationChilds);
                 $text = static::langPlural($count,'specific/relationChilds',['count'=>$count]);
-                $r .= Html::div($text,['count','icon','info','padLeft']);
+                $r .= Html::div($text,['popup-title']);
                 $r .= Html::divOp('popup');
                 $r .= Html::ul($this->makeRelationChildsInner($relationChilds));
                 $r .= Html::divCl();
@@ -294,11 +294,11 @@ class Specific extends Core\RouteAlias
 
                 if(!empty($specific['count']))
                 {
-                    $popup = $general->makeInfoPopup(true);
-                    $attr = ['count',(!empty($popup))? ['with-popup','anchor-corner']:null];
+                    $popup = $general->generalInfoPopup(true);
+                    $attr = ['popup-trigger',(!empty($popup))? ['with-popup','with-text-solo','anchor-corner']:null];
 
                     $r .= Html::divOp($attr);
-                    $r .= $specific['count'];
+                    $r .= Html::div($specific['count'],'popup-title');
                     $r .= $popup;
                     $r .= Html::divCl();
                 }
@@ -310,7 +310,7 @@ class Specific extends Core\RouteAlias
                 $r .= $specific['last'];
 
                 if($table->hasPermission('insert','add'))
-                $r .= SpecificAdd::makeOverload($table)->a(static::langText('common/add'));
+                $r .= SpecificAdd::makeOverload($table)->a(static::langText('specific/add'));
 
                 if($table->hasPermission('back') && !empty($specific['back']))
                 $r .= $specific['back'];
@@ -453,7 +453,7 @@ class Specific extends Core\RouteAlias
             $route = $row->routeSafe($key);
 
             if(!empty($route) && $route::hasPath() && $route::allowed())
-            $r .= $route->a(static::langText('common/view'),['submit','icon','view','padLeft','target'=>false]);
+            $r .= $route->a(static::langText('specific/view'),['submit','icon','view','padLeft','target'=>false]);
         }
 
         return $r;
@@ -527,7 +527,7 @@ class Specific extends Core\RouteAlias
         {
             $data = ['confirm'=>static::langText('common/confirm')];
             $attr = ['name'=>'--delete--','value'=>1,'icon','remove','padLeft','data'=>$data];
-            $r .= Html::submit(static::langText('common/remove'),$attr);
+            $r .= Html::submit(static::langText('specific/remove'),$attr);
         }
 
         return $r;

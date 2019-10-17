@@ -22,18 +22,20 @@ body .active .popup {
     z-index: 1;
     box-shadow: 0px 0px 6px -2px $gray;
     font-size: 1.3rem;
-    width: 350px;
-    max-width: 350px;
+    width: 450px;
+    max-width: 450px;
     background: $lighterGray;
     border: 1px solid $lightGray;
     color: $black;
     text-align: left;
     min-height: 20px;
-    max-height: 250px;
+    max-height: 300px;
     overflow-y: auto;
     padding: 10px 15px 0;
     box-sizing: border-box;
-
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    
     .top-right {
         @include abs(15px, 20px);
     }
@@ -71,10 +73,61 @@ body .active .popup {
                 font-weight: bold;
                 margin-right: 5px;
             }
-
+            
+            .key {
+                text-decoration: underline;
+            }
+            
+            .value-empty {
+                font-style: italic;
+            }
+            
             > ul {
                 @include ulOlMargin();
                 padding-top: 5px;
+                word-break: break-all;
+            }
+        }
+    }
+}
+
+/* POPUP TRIGGER */
+.popup-trigger {
+    @include inbl();
+    position: relative;
+
+    .popup-title {
+        padding: 5px;
+        cursor: pointer;
+    }
+    
+    &.with-icon {
+        .popup-title {
+            @include iconLeft();
+            padding-left: 25px;
+        }
+    }
+    
+    &.with-icon-solo {
+        .popup-title {
+            @include iconSolo(false);
+            @include wh(24px);
+        }
+    }
+    
+    &.with-popup {
+        &.active,
+        &:hover {
+            .popup-title {
+                background-color: $darkColor;
+                color: $white;
+                border-radius: 5px;
+            }
+        }
+        
+        &.active {
+            .popup {
+                display: block;
             }
         }
     }

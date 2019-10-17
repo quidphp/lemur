@@ -23,6 +23,7 @@ $(document).ready(function() {
 	$(this).on('route:common', function(event) {
 		var body = $(this).find("body");
 		var modal = $(this).find(".modal");
+        var popupTrigger = $(this).find(".popup-trigger");
 		var modalAnchor = $(this).find("a[data-modal]");
 		var anchorCorner = $(this).find(".anchor-corner");
 		var calendar = $(this).find("main .popup .calendar");
@@ -59,6 +60,9 @@ $(document).ready(function() {
 		burger.on('click', function(event) {
 			body.toggleClass('responsive-menu-open');
 		});
+        
+        // popupTrigger
+        popupTrigger.clickOpen(".popup-title");
 	})
 	
 	// route:common:com

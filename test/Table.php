@@ -29,8 +29,9 @@ class Table extends Base\Test
         assert($tb->routeAttr() === [Lemur\Cms\Specific::class,'general'=>Lemur\Cms\General::class,'cms'=>Lemur\Cms\Specific::class]);
         assert($tb->routeAttr(0) === Lemur\Cms\Specific::class);
         assert($tb->routeAttr('general') === Lemur\Cms\General::class);
-        assert(is_array($tb->permission('colPopup')));
-
+        assert($tb->hasPermission('modify'));
+        assert(!$tb->hasPermission('insert','update','duplicate'));
+        
         // col
         $table = 'ormCol';
         assert($db->truncate($table) instanceof \PDOStatement);
@@ -48,7 +49,7 @@ class Table extends Base\Test
         $tb = $db[$table];
         $cols = $tb->cols();
         assert(strlen($cols->formComplex()['date']) === 260);
-        assert($cols->formComplexWrap('table')['userAdd'] === "<table><tr><td><label>Added by</label></td><td><div class='nothing'>Nothing</div></td></tr></table>");
+        assert($cols->formComplexWrap('table')['userAdd'] === "<table><tr><td><label>Added by</label></td><td><div class='empty-placeholder'>NULL</div></td></tr></table>");
 
         // cell
         $table = 'ormCell';

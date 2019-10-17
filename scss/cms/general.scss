@@ -33,7 +33,7 @@
         }
     }
 }
-[data-route='general'] main .inner > .top .left .title .count-info {
+[data-route='general'] main .inner > .top .left .title .popup-trigger {
     margin-left: 10px;
 }
 [data-route='general'] main .inner > .top .left .search {
@@ -383,39 +383,21 @@
 [data-route='general'] main .inner > .container table thead .action {
     width: 50px;
     min-width: inherit;
-
-    .in {
-        padding: 0px 10px;
-
-        &:hover {
+    
+    &:hover,
+    &.active {
+        .in {
             background-color: $lightYellow;
             border-right: 1px solid $lightYellow;
-
-            .popup {
-                display: block;
-
-                button {
-                    display: none;
-                }
-            }
         }
-
+    }
+    
+    .in {
+        padding: 0px 10px;
+        cursor: pointer;
+        
         .popup {
             width: 300px;
-            overflow: hidden;
-            padding: 0;
-
-            .inside {
-                height: 250px;
-                padding: 10px 20px 0;
-                overflow-y: scroll;
-
-                &:after {
-                    content: '';
-                    height: 10px;
-                    display: block;
-                }
-            }
 
             &.valid {
                 button {
@@ -478,7 +460,12 @@
             color: $black;
             display: block;
             position: relative;
-
+            
+            > .empty-placeholder {
+                font-style: italic;
+                color: $gray;
+            }
+            
             a {
                 display: block;
                 color: $black;
