@@ -48,9 +48,9 @@ class General extends Core\RouteAlias
         'match'=>[
             'role'=>['>='=>20]],
         'sitemap'=>true,
-        'popup'=>array(
+        'popup'=>[
             'search','primary','priority','engine','collation','autoIncrement','updateTime',
-            'classFqcn','classRow','classRows','classCols','classCells','sql')
+            'classFqcn','classRow','classRows','classCols','classCells','sql']
     ];
 
 
@@ -283,9 +283,9 @@ class General extends Core\RouteAlias
             {
                 $minLength = $table->searchMinLength();
                 $lang = static::lang();
-                $replace = array('count'=>$minLength);
+                $replace = ['count'=>$minLength];
                 $note = $lang->plural($minLength,'general/searchNote',$replace);
-                
+
                 $r .= Html::divOp('in');
                 $r .= Html::divOp('first');
                 $r .= Html::span($lang->text('general/note').':');
@@ -359,53 +359,53 @@ class General extends Core\RouteAlias
 
         return $r;
     }
-    
-    
+
+
     // generalInfoPopup
     // génère le popup de la page général
     // méthode publiquer car utilisé dans specific
     public function generalInfoPopup(bool $icon=true):?string
     {
         $return = null;
-        
+
         if($this->hasPermission('infoPopup'))
         {
             $values = $this->infoPopupValues();
             $closure = $this->infoPopupClosure();
             $return = static::makeInfoPopup($values,$closure,false);
         }
-        
+
         return $return;
     }
-    
-    
+
+
     // infoPopupValues
     // retourne un tableau avec les valeurs pour le popup d'informations
-    protected function infoPopupValues():array 
+    protected function infoPopupValues():array
     {
         $return = array_keys($this->segments());
         $return = Base\Arr::append($return,static::$config['popup']);
-        
+
         return $return;
     }
-    
-    
+
+
     // infoPopupClosure
     // callback pour le popup d'informations de la page générale
-    protected function infoPopupClosure():\Closure 
+    protected function infoPopupClosure():\Closure
     {
         return function(string $key) {
-            $return = array(static::langText(array('popup','general',$key)));
+            $return = [static::langText(['popup','general',$key])];
             $value = null;
             $table = $this->table();
-            
+
             if($this->hasSegment($key))
             {
                 $value = $this->segment($key);
-                
+
                 if($key === 'direction')
                 $value = (is_string($value))? static::langText('direction/'.strtolower($value)):null;
-                
+
                 elseif($key === 'filter')
                 {
                     if(is_array($value) && !empty($value))
@@ -422,14 +422,14 @@ class General extends Core\RouteAlias
                         }
                     }
                 }
-                
-                elseif(in_array($key,array('in','notIn','highlight'),true) && is_array($value) && !empty($value))
+
+                elseif(in_array($key,['in','notIn','highlight'],true) && is_array($value) && !empty($value))
                 $value = implode(', ',$value);
             }
-            
+
             elseif($key === 'priority')
             $value = $table->priority();
-            
+
             elseif($key === 'search')
             $value = $this->getSearchValue();
 
@@ -438,10 +438,10 @@ class General extends Core\RouteAlias
 
             elseif($key === 'autoIncrement')
             $value = $table->autoIncrement(true);
-            
+
             elseif($key === 'updateTime')
             $value = $table->updateTime(1);
-            
+
             elseif($key === 'classRow')
             $value = $table->classe()->row();
 
@@ -456,14 +456,14 @@ class General extends Core\RouteAlias
 
             else
             $value = $table->$key();
-            
+
             $return[] = $value;
-            
+
             return $return;
         };
     }
-    
-    
+
+
     // makeAdd
     // génère le lien pour ajouter une nouvelle ligne
     protected function makeAdd():string
@@ -842,20 +842,20 @@ class General extends Core\RouteAlias
         $context = $this->context();
         $attr = null;
         $v = $cell->get($context);
-        
+
         if($cell->isPrimary() && is_string($option['specific']))
         {
             $specific = $option['specific'];
             $v = Html::a($specific,$v,'in');
             $attr = 'primary';
         }
-        
+
         else
         {
             $placeholder = $cell->col()->emptyPlaceholder($v);
             if(is_string($placeholder))
             $v = Html::span($placeholder,'empty-placeholder');
-            
+
             $v = Html::div($v,'in',$option);
         }
 

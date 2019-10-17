@@ -85,7 +85,6 @@ header > .top {
         text-align: right;
 
         .top {
-
             > a {
                 margin: 0 0 5px 10px;
 
@@ -95,7 +94,6 @@ header > .top {
             }
         }
         .popup-trigger {
-            
             > .popup-title {
                 color: $lightGray;
                 font-size: 90%;
@@ -371,7 +369,6 @@ footer .left {
     @include inbl();
     width: 70%;
 
-
     > nav > ul {
         > li {
             @include inbl();
@@ -394,14 +391,14 @@ footer .right {
     width: 30%;
     text-align: right;
     color: $lightGray;
-    
+
     > span {
         @include inbl();
-        
+
         &.separator {
             margin: 0 5px;
         }
-        
+
         a {
             color: $lightGray;
 
@@ -410,7 +407,7 @@ footer .right {
             }
         }
     }
-    
+
     .popup-trigger.with-popup {
         &.active,
         &:hover {

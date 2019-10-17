@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace Quid\Lemur\Cms;
 use Quid\Base\Html;
 use Quid\Core;
-use Quid\Base;
 
 // home
 // class for the home route of the CMS
@@ -24,10 +23,10 @@ class Home extends Core\Route\Home
     public static $config = [
         'match'=>[
             'role'=>['>='=>20]],
-        'popup'=>array(
+        'popup'=>[
             'dbName','driver','serverVersion','connectionStatus','host','username',
             'charset','collation','classFqcn','classTables','importantVariables'
-        )
+        ]
     ];
 
 
@@ -78,7 +77,7 @@ class Home extends Core\Route\Home
         $total = $tables->filter(['hasPermission'=>true],'view')->total(true,true);
         $popup = $this->makeHomePopup();
         $attr = ['popup-trigger',(!empty($popup))? ['with-popup','with-icon','anchor-corner']:null];
-        
+
         $r .= Html::divOp($attr);
         $r .= Html::divOp('popup-title');
         $r .= Html::span($total['table'].' '.static::langPlural($total['table'],'lcf|common/table'));
@@ -93,46 +92,46 @@ class Home extends Core\Route\Home
         return $r;
     }
 
-    
+
     // makeHomePopup
     // génère le popup d'informations pour home
-    protected function makeHomePopup():?string 
+    protected function makeHomePopup():?string
     {
         $return = null;
-        
+
         if(static::sessionUser()->can('home/infoPopup'))
         {
             $values = static::$config['popup'];
             $closure = $this->infoPopupClosure();
             $return = static::makeInfoPopup($values,$closure,false);
         }
-        
+
         return $return;
     }
-    
-    
+
+
     // infoPopupClosure
     // callback pour le popup d'informations de la page d'accueil
-    protected function infoPopupClosure():\Closure 
+    protected function infoPopupClosure():\Closure
     {
         return function(string $key) {
-            $return = array(static::langText(array('popup','home',$key)));
+            $return = [static::langText(['popup','home',$key])];
             $value = null;
             $db = $this->db();
-            
+
             if($key === 'classTables')
             $value = $db->tables()->classFqcn();
-            
+
             else
             $value = $db->$key();
-            
+
             $return[] = $value;
-            
+
             return $return;
         };
     }
-    
-    
+
+
     // mainTopRight
     // génère le html pour la partie en haut à droite de la page d'accueil
     protected function mainTopRight():string
@@ -207,15 +206,15 @@ class Home extends Core\Route\Home
             $tables = $this->db()->tables();
             $searchable = $route->searchable(false);
             $lang = static::lang();
-            
+
             if($searchable->isNotEmpty())
             {
                 $minLength = $tables->searchMinLength();
                 $data = ['query'=>'s','required'=>true,'keyupDelay'=>800,'pattern'=>['minLength'=>$minLength]];
-                
-                $replace = array('count'=>$minLength);
+
+                $replace = ['count'=>$minLength];
                 $note = $lang->plural($minLength,'home/searchNote',$replace);
-                
+
                 $r .= $route->formOpen();
                 $r .= Html::inputText(null,['name'=>true,'placeholder'=>static::langText('home/searchSubmit'),'data'=>$data]);
                 $r .= Html::submit(true,['button','solo','icon','search']);

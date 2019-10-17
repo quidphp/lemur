@@ -39,12 +39,12 @@ class Fr extends Core\Lang\Fr
 
         // cms
         '@cms'=>[
-            
+
             // popup
-            'popup'=>array(
-                
+            'popup'=>[
+
                 // user
-                'user'=>array(
+                'user'=>[
                     'rolePermission'=>'Rôle',
                     'classSession'=>'Classe Session',
                     'classFqcn'=>'Classe Utilisateur',
@@ -60,10 +60,10 @@ class Fr extends Core\Lang\Fr
                     'getCookieParams'=>'Paramètres du cookie',
                     'getGarbageCollect'=>'Nettoyage des sessions',
                     'userAgent'=>'Agent utilisateur'
-                ),
-                
+                ],
+
                 // boot
-                'boot'=>array(
+                'boot'=>[
                     'phpVersion'=>'Version PHP',
                     'quidVersion'=>'Version QuidPHP',
                     'envLabel'=>'Environnement',
@@ -85,10 +85,10 @@ class Fr extends Core\Lang\Fr
                     'diskSpace'=>'Espace disque',
                     'phpImportantExtension'=>'Extensions PHP importantes',
                     'phpImportantIni'=>'Ini PHP importantes'
-                ),
-                
+                ],
+
                 // home
-                'home'=>array(
+                'home'=>[
                     'dbName'=>'Base de données',
                     'driver'=>'Connecteur',
                     'serverVersion'=>'Version du connecteur',
@@ -100,10 +100,10 @@ class Fr extends Core\Lang\Fr
                     'classFqcn'=>'Classe DB',
                     'classTables'=>'Classe Tables',
                     'importantVariables'=>'Variables importantes'
-                ),
-                
+                ],
+
                 // general
-                'general'=>array(
+                'general'=>[
                     'primary'=>'Clé primaire',
                     'table'=>'Table',
                     'order'=>'Ordre',
@@ -127,10 +127,10 @@ class Fr extends Core\Lang\Fr
                     'classRows'=>'Classe Lignes',
                     'classCols'=>'Classe Colonnes',
                     'classCells'=>'Classe Cellules'
-                ),
-                
+                ],
+
                 // col
-                'col'=>array(
+                'col'=>[
                     'name'=>'Nom',
                     'isRequired'=>'Requis',
                     'shouldBeUnique'=>'Unique',
@@ -153,9 +153,9 @@ class Fr extends Core\Lang\Fr
                     'isRelation'=>'Relation',
                     'classFqcn'=>'Classe Colonne',
                     'classCell'=>'Classe Cellule'
-                )
-            ),
-            
+                ]
+            ],
+
             // resetPassword
             'resetPassword'=>[
                 'info'=>'Entrer votre courriel pour obtenir un message indiquant la marche à suivre pour regénérer le mot de passe.'

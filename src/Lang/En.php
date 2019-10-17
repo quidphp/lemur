@@ -39,12 +39,12 @@ class En extends Core\Lang\En
 
         // cms
         '@cms'=>[
-            
+
             // popup
-            'popup'=>array(
-                
+            'popup'=>[
+
                 // user
-                'user'=>array(
+                'user'=>[
                     'permission'=>'Permission',
                     'classSession'=>'Class Session',
                     'classFqcn'=>'Class User',
@@ -60,16 +60,16 @@ class En extends Core\Lang\En
                     'getCookieParams'=>'Cookie paramters',
                     'getGarbageCollect'=>'Session garbage collect',
                     'userAgent'=>'User agent'
-                ),
-                
+                ],
+
                 // boot
-                'boot'=>array(
+                'boot'=>[
                     'phpVersion'=>'PHP version',
                     'quidVersion'=>'QuidPHP version',
                     'envLabel'=>'Environment',
                     'typeLabel'=>'Type',
                     'httpProtocol'=>'HTTP protocol',
-                    'hostname'=>"Hostname",
+                    'hostname'=>'Hostname',
                     'ip'=>'Ip',
                     'os'=>'OS',
                     'isCaseSensitive'=>'Case sensitive',
@@ -85,10 +85,10 @@ class En extends Core\Lang\En
                     'diskSpace'=>'Disk space',
                     'phpImportantExtension'=>'Important PHP extensions',
                     'phpImportantIni'=>'Important PHP ini'
-                ),
-                
+                ],
+
                 // home
-                'home'=>array(
+                'home'=>[
                     'dbName'=>'Database',
                     'driver'=>'Driver',
                     'serverVersion'=>'Driver version',
@@ -100,10 +100,10 @@ class En extends Core\Lang\En
                     'classFqcn'=>'Class DB',
                     'classTables'=>'Class Tables',
                     'importantVariables'=>'Important variables'
-                ),
-                
+                ],
+
                 // general
-                'general'=>array(
+                'general'=>[
                     'table'=>'Table',
                     'order'=>'Order',
                     'direction'=>'Direction',
@@ -127,10 +127,10 @@ class En extends Core\Lang\En
                     'classRows'=>'Class Rows',
                     'classCols'=>'Class Columns',
                     'classCells'=>'Class Cells'
-                ),
-                
+                ],
+
                 // col
-                'col'=>array(
+                'col'=>[
                     'name'=>'Name',
                     'isRequired'=>'Required',
                     'shouldBeUnique'=>'Unique',
@@ -153,8 +153,8 @@ class En extends Core\Lang\En
                     'isRelation'=>'Relation',
                     'classFqcn'=>'Class Column',
                     'classCell'=>'Class Cell'
-                )
-            ),
+                ]
+            ],
 
             // resetPassword
             'resetPassword'=>[

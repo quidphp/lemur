@@ -20,10 +20,10 @@ class User extends Core\Row\User
         '@cms'=>[
             'permission'=>[
                 '*'=>['userWelcome'=>false],
-                'admin'=>array('export'=>true,'userWelcome'=>true),
-                'subAdmin'=>array('export'=>true,'userWelcome'=>true),
-                'editor'=>array('insert'=>false),
-                'contributor'=>array('insert'=>false)],
+                'admin'=>['export'=>true,'userWelcome'=>true],
+                'subAdmin'=>['export'=>true,'userWelcome'=>true],
+                'editor'=>['insert'=>false],
+                'contributor'=>['insert'=>false]],
             'route'=>[
                 'userWelcome'=>Lemur\Cms\SpecificUserWelcome::class],
             'specificOperation'=>[self::class,'specificOperation']],

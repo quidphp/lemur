@@ -16,8 +16,8 @@ class Table extends Core\Table
 {
     // config
     public static $config = [
-        'permission'=>array(
-            'subAdmin'=>array(
+        'permission'=>[
+            'subAdmin'=>[
                 'insert'=>true,
                 'update'=>true,
                 'delete'=>true,
@@ -25,7 +25,7 @@ class Table extends Core\Table
                 'alter'=>true,
                 'truncate'=>true,
                 'drop'=>true,
-                'nullPlaceholder'=>true)),
+                'nullPlaceholder'=>true]],
         '@cms'=>[
             'homeTask'=>null, // pour cms, ajouter un lien vers la page d'ajout dans task
             'specificAddNavLink'=>null, // pour le cms, permet de diviser le lien add et view en deux
@@ -37,7 +37,7 @@ class Table extends Core\Table
                 0=>Cms\Specific::class,
                 'general'=>Cms\General::class,
                 'cms'=>Cms\Specific::class],
-            'permission'=>array(
+            'permission'=>[
                 '*'=>[ // le cms a beaucoup plus de paramètres pour chaque table
                     'view'=>true, // pouvoir voir la table dans le CMS
                     'limit'=>true, // accès à l'outil limite par page
@@ -81,33 +81,33 @@ class Table extends Core\Table
                     'relation'=>true, // relatif aux relations, ne pas changer
                     'generalRelation'=>true, // relatif aux relations, ne pas changer
                     'specificRelation'=>true, // relatif aux relations, ne pas changer
-                    'tableRelation'=>true]), // relatif aux relations, ne pas changer
-                'nobody'=>array(
-                    'view'=>false),
-                'contributor'=>array(
+                    'tableRelation'=>true]], // relatif aux relations, ne pas changer
+                'nobody'=>[
+                    'view'=>false],
+                'contributor'=>[
                     'insert'=>true,
                     'update'=>true,
                     'delete'=>true,
                     'rows'=>false,
                     'in'=>false,
-                    'notIn'=>false),
-                'editor'=>array(
+                    'notIn'=>false],
+                'editor'=>[
                     'insert'=>true,
                     'update'=>true,
                     'delete'=>true,
                     'rows'=>false,
                     'in'=>false,
-                    'notIn'=>false),
-                'subAdmin'=>array(
+                    'notIn'=>false],
+                'subAdmin'=>[
                     'truncate'=>false,
                     'infoPopup'=>true,
                     'mediaRegenerate'=>true,
-                    'nullPlaceholder'=>true),
-                'admin'=>array(
+                    'nullPlaceholder'=>true],
+                'admin'=>[
                     'truncate'=>false,
                     'infoPopup'=>true,
                     'mediaRegenerate'=>true,
-                    'nullPlaceholder'=>true)
+                    'nullPlaceholder'=>true]
             ]
     ];
 }

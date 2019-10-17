@@ -8,8 +8,8 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Cms;
-use Quid\Base\Html;
 use Quid\Base;
+use Quid\Base\Html;
 
 // _common
 // trait that provides commonly used methods for the CMS
@@ -72,61 +72,61 @@ trait _common
     {
         return Html::a(static::langText('author/email'),true);
     }
-    
-    
+
+
     // makeInfoPopup
     // génère un popup d'informations
-    public static function makeInfoPopup(array $values,\Closure $closure,bool $icon):string 
+    public static function makeInfoPopup(array $values,\Closure $closure,bool $icon):string
     {
         $r = '';
         $lang = static::lang();
-        
-        foreach ($values as $key) 
+
+        foreach ($values as $key)
         {
             [$label,$value] = $closure($key);
-            
+
             if($value !== null)
             {
                 $html = '';
-                
+
                 if(is_array($value))
                 {
                     $html2 = '';
-                    foreach ($value as $k => $v) 
+                    foreach ($value as $k => $v)
                     {
                         $str = '';
-                        
+
                         if(is_string($k))
                         {
                             $str .= Html::span($k,'key');
-                            $str .= ": ";
+                            $str .= ': ';
                         }
-                        
+
                         if(is_bool($v))
                         $v = $lang->bool($v);
-                        
+
                         elseif($v === '' || $v === null)
                         $v = Html::span('NULL','value-empty');
-                        
+
                         $str .= $v;
                         $html2 .= Html::li($str);
                     }
-                    
+
                     $html .= Html::ulCond($html2);
                 }
-                
+
                 else
                 {
                     if(is_bool($value))
                     $value = $lang->bool($value);
-                    
+
                     if(is_object($value))
                     $value = Base\Obj::cast($value);
-                    
+
                     if($value !== null)
                     $html .= Html::span($value);
                 }
-                
+
                 if(strlen($html))
                 {
                     $r .= Html::liOp();
@@ -136,17 +136,17 @@ trait _common
                 }
             }
         }
-        
+
         if(strlen($r))
         {
             $r = Html::ul($r);
-            
+
             if($icon === true)
             $r = Html::div(null,['icon','top-right','solo','info']).$r;
-            
+
             $r = Html::div($r,'popup');
         }
-        
+
         return $r;
     }
 }

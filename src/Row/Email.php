@@ -4,7 +4,7 @@ declare(strict_types=1);
 /*
  * This file is part of the QuidPHP package.
  * Website: https://quidphp.com
- * License: https://github.com/quidphp/core/blob/master/LICENSE
+ * License: https://github.com/quidphp/lemur/blob/master/LICENSE
  */
 
 namespace Quid\Lemur\Row;
@@ -16,10 +16,10 @@ class Email extends Core\Row\Email
 {
     // config
     public static $config = [
-        '@cms'=>array(
-            'permission'=>array(
-                'contributor'=>array('view'=>false),
-                'editor'=>array('view'=>false)))
+        '@cms'=>[
+            'permission'=>[
+                'contributor'=>['view'=>false],
+                'editor'=>['view'=>false]]]
     ];
 }
 

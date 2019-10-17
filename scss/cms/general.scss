@@ -383,7 +383,7 @@
 [data-route='general'] main .inner > .container table thead .action {
     width: 50px;
     min-width: inherit;
-    
+
     &:hover,
     &.active {
         .in {
@@ -391,11 +391,11 @@
             border-right: 1px solid $lightYellow;
         }
     }
-    
+
     .in {
         padding: 0px 10px;
         cursor: pointer;
-        
+
         .popup {
             width: 300px;
 
@@ -460,12 +460,12 @@
             color: $black;
             display: block;
             position: relative;
-            
+
             > .empty-placeholder {
                 font-style: italic;
                 color: $gray;
             }
-            
+
             a {
                 display: block;
                 color: $black;

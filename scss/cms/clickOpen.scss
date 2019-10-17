@@ -35,7 +35,7 @@ body .active .popup {
     box-sizing: border-box;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
-    
+
     .top-right {
         @include abs(15px, 20px);
     }
@@ -73,15 +73,15 @@ body .active .popup {
                 font-weight: bold;
                 margin-right: 5px;
             }
-            
+
             .key {
                 text-decoration: underline;
             }
-            
+
             .value-empty {
                 font-style: italic;
             }
-            
+
             > ul {
                 @include ulOlMargin();
                 padding-top: 5px;
@@ -100,21 +100,21 @@ body .active .popup {
         padding: 5px;
         cursor: pointer;
     }
-    
+
     &.with-icon {
         .popup-title {
             @include iconLeft();
             padding-left: 25px;
         }
     }
-    
+
     &.with-icon-solo {
         .popup-title {
             @include iconSolo(false);
             @include wh(24px);
         }
     }
-    
+
     &.with-popup {
         &.active,
         &:hover {
@@ -124,7 +124,7 @@ body .active .popup {
                 border-radius: 5px;
             }
         }
-        
+
         &.active {
             .popup {
                 display: block;

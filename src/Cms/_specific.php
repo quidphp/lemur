@@ -8,7 +8,6 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Cms;
-use Quid\Base;
 use Quid\Base\Html;
 use Quid\Core;
 use Quid\Main;
@@ -20,10 +19,10 @@ trait _specific
     //  configSpecific
     public static $configSpecific = [
         'formWrap'=>"<div class='left'><div class='label'>%label%</div>%description%%details%</div><div class='right'>%form%</div>%popup%",
-        'popup'=>array(
+        'popup'=>[
             'name','isRequired','shouldBeUnique','isEditable','priority','pattern','preValidate','validate','compare','type','length','unsigned',
             'default','acceptsNull','collation','isRelation','isOrderable','isFilterable','isSearchable','isExportable','classFqcn','classCell'
-        )
+        ]
     ];
 
 
@@ -177,33 +176,33 @@ trait _specific
         return $r;
     }
 
-    
+
     // makeColPopup
     // génère le popup d'informations pour une colonne
     protected function makeColPopup(Core\Col $col):?string
     {
         $return = null;
         $table = $this->table();
-        
+
         if($table->hasPermission('infoPopup'))
         {
             $values = static::$config['popup'];
             $closure = $this->colInfoPopupClosure($col);
             $return = static::makeInfoPopup($values,$closure,false);
         }
-        
+
         return $return;
     }
-    
-    
+
+
     // colInfoPopupClosure
     // callback pour le popup d'informations de la page d'accueil
-    protected function colInfoPopupClosure(Core\Col $col):\Closure 
+    protected function colInfoPopupClosure(Core\Col $col):\Closure
     {
         return function(string $key) use($col) {
-            $return = array(static::langText(array('popup','col',$key)));
+            $return = [static::langText(['popup','col',$key])];
             $value = null;
-            
+
             if($key === 'pattern')
             $value = $col->rulePattern(true);
 
@@ -222,21 +221,21 @@ trait _specific
             elseif($key === 'default')
             {
                 $value = $col->default();
-                
+
                 if($value === null && $col->hasNullDefault())
                 $value = 'NULL';
             }
 
             else
             $value = $col->$key();
-            
+
             $return[] = $value;
-            
+
             return $return;
         };
     }
-    
-    
+
+
     // makeFormInner
     // génère l'intérieur d'un panneau avec tous les champs inclus
     protected function makeFormInner():string
@@ -293,7 +292,7 @@ trait _specific
 
             $detailsHtml = Html::liMany(...$details);
             $detailsHtml = Html::ulCond($detailsHtml);
-            
+
             $colPopup = $this->makeColPopup($col);
             if(!empty($colPopup))
             {
@@ -302,12 +301,12 @@ trait _specific
                 $popup .= $colPopup;
                 $popup .= Html::divCl();
             }
-            
+
             $replace = [];
             $replace['description'] = (!empty($description))? Html::div($description,'description'):'';
             $replace['details'] = (!empty($details))? Html::divCond($detailsHtml,'details'):'';
             $replace['popup'] = (!empty($popup))? $popup:'';
-            
+
             try
             {
                 $formWrap = $this->makeFormWrap($colCell,$replace);

@@ -371,7 +371,7 @@ $red: #8d1e2d;
     @include transitions(opacity 0.3s);
     @include wh(16px);
     cursor: pointer;
-    
+
     @if ($hover != false) {
         opacity: 0.8;
     }

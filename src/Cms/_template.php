@@ -18,20 +18,20 @@ trait _template
     // trait
     use _common;
 
-    
+
     // config
-    public static $configTemplate = array(
-        'userPopup'=>array(
+    public static $configTemplate = [
+        'userPopup'=>[
             'id','username','email','fullName','rolePermission','timezone','dateLogin','dateAdd',
             'requestCount','ip','lang','name','getLoginLifetime','getLifetime','expire','getCookieParams','getGarbageCollect',
-            'classSession','classFqcn','classRole','userAgent'),
-        'bootPopup'=>array(
+            'classSession','classFqcn','classRole','userAgent'],
+        'bootPopup'=>[
             'phpVersion','quidVersion','envLabel','typeLabel','hostname','httpProtocol','ip','os','isCaseSensitive','processId','user','group',
             'serverType','sapi','classFqcn','paths','schemeHosts','memory','diskSpace','phpImportantExtension','phpImportantIni'
-        )
-    );
-    
-    
+        ]
+    ];
+
+
     // trigger
     // trigger pour toutes les pages html du cms
     public function trigger()
@@ -133,7 +133,7 @@ trait _template
             $r .= Logout::makeOverload()->aTitle(null,['submit','icon','padLeft','logout']);
 
             $r .= Html::divCl();
-            
+
             $popup = $this->makeUserPopup();
             $attr = ['popup-trigger',(!empty($popup))? ['with-popup','with-icon','anchor-corner']:null];
             $r .= Html::divOp($attr);
@@ -147,87 +147,87 @@ trait _template
         return $r;
     }
 
-    
+
     // makeUserPopup
     // génère le popup d'informations pour l'utilisateur
-    protected function makeUserPopup():?string 
+    protected function makeUserPopup():?string
     {
         $return = null;
-        
+
         if(static::sessionUser()->can('userPopup'))
         {
             $values = static::$config['userPopup'];
             $closure = $this->userInfoPopupClosure();
             $return = static::makeInfoPopup($values,$closure,false);
         }
-        
+
         return $return;
     }
-    
-    
+
+
     // userInfoPopupClosure
     // callback pour le popup d'informations de l'utilisateur
-    protected function userInfoPopupClosure():\Closure 
+    protected function userInfoPopupClosure():\Closure
     {
         return function(string $key):array {
-            $return = array();
+            $return = [];
             $label = null;
             $value = null;
             $session = static::session();
             $user = $session->user();
-            $sessionKeys = array('requestCount','ip','lang','userAgent','name','getLifetime','expire','getCookieParams','getLoginLifetime','getGarbageCollect');
-            
+            $sessionKeys = ['requestCount','ip','lang','userAgent','name','getLifetime','expire','getCookieParams','getLoginLifetime','getGarbageCollect'];
+
             if($user->hasCell($key))
             {
                 $value = $user->cell($key);
                 $label = $value->label();
-                
+
                 if($value->isRelation())
                 $value = $value->pair(true);
-                
+
                 elseif($value->isDate())
                 $value = $value->format(1);
             }
-            
+
             elseif($key === 'classSession')
             $value = $session::classFqcn();
-            
+
             elseif($key === 'classRole')
             $value = $session->role()::classFqcn();
-            
+
             elseif($key === 'rolePermission')
             $value = $session->role()::labelPermission();
-            
+
             elseif(in_array($key,$sessionKeys,true))
             {
                 $value = $session->$key();
-                
+
                 if($key === 'lang')
                 $value = static::lang()->langLabel($value);
-                
+
                 elseif(is_int($value))
                 {
                     if($key === 'expire')
                     $value = Base\Date::format(1,$value);
-                    
-                    elseif(in_array($key,array('getLifetime','getLoginLifetime'),true))
+
+                    elseif(in_array($key,['getLifetime','getLoginLifetime'],true))
                     $value = Base\Date::amountStr(1,$value);
                 }
             }
-            
+
             else
             $value = $user->$key();
-            
+
             if($label === null)
-            $label = static::langText(array('popup','user',$key));
-            
-            $return = array($label,$value);
-            
+            $label = static::langText(['popup','user',$key]);
+
+            $return = [$label,$value];
+
             return $return;
         };
     }
-    
-    
+
+
     // nav
     // génère la navigation principale pour toutes les pages du cms
     protected function nav():string
@@ -445,10 +445,10 @@ trait _template
 
         $author = $this->authorLink();
         $copyright = static::langText('footer/copyright',['version'=>$version]);
-        
+
         $r .= Html::span($author,'author');
         $r .= Html::span('|','separator');
-        
+
         $popup = $this->makeBootPopup();
         $attr = ['popup-trigger',(!empty($popup))? ['with-popup','with-icon','anchor-corner']:null];
         $r .= Html::divOp($attr);
@@ -457,63 +457,63 @@ trait _template
         $r .= Html::divCl();
         $r .= $popup;
         $r .= Html::divCl();
-        
+
         return $r;
     }
 
-    
+
     // makeBootPopup
     // génère le popup d'informations pour boot dans le footer
-    protected function makeBootPopup():?string 
+    protected function makeBootPopup():?string
     {
         $return = null;
-        
+
         if(static::sessionUser()->can('bootPopup'))
         {
             $values = static::$config['bootPopup'];
             $closure = $this->bootInfoPopupClosure();
             $return = static::makeInfoPopup($values,$closure,false);
         }
-        
+
         return $return;
     }
-    
-    
+
+
     // bootInfoPopupClosure
     // callback pour le popup d'informations de boot
-    protected function bootInfoPopupClosure():\Closure 
+    protected function bootInfoPopupClosure():\Closure
     {
         return function(string $key):array {
-            $return = array();
+            $return = [];
             $label = null;
             $value = null;
             $boot = static::boot();
 
-            if(in_array($key,array('envLabel','typeLabel','paths','schemeHosts','classFqcn'),true))
+            if(in_array($key,['envLabel','typeLabel','paths','schemeHosts','classFqcn'],true))
             $value = $boot->$key();
-            
+
             elseif($key === 'user')
             $value = Base\Server::$key(true,true);
-            
+
             elseif($key === 'os')
             $value = Base\Server::os(true,true);
-            
+
             elseif($key === 'ip')
             $value = Base\Server::ip(true);
-            
+
             else
             $value = Base\Server::$key();
-            
+
             if($label === null)
-            $label = static::langText(array('popup','boot',$key));
-            
-            $return = array($label,$value);
-            
+            $label = static::langText(['popup','boot',$key]);
+
+            $return = [$label,$value];
+
             return $return;
         };
     }
-    
-    
+
+
     // makeModal
     // génère le html pour le modal
     protected function makeModal():string

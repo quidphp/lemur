@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Quid\Lemur\Row;
 use Quid\Core;
-use Quid\Lemur;
 
 // session
 // extended class for a row of the session table, with cms logic
@@ -19,8 +18,8 @@ class Session extends Core\Row\Session
     public static $config = [
         '@cms'=>[
             'permission'=>[
-                'contributor'=>array('view'=>false),
-                'editor'=>array('view'=>false),
+                'contributor'=>['view'=>false],
+                'editor'=>['view'=>false],
                 'subAdmin'=>['add'=>false,'remove'=>false,'modify'=>false],
                 'admin'=>['add'=>false,'empty'=>true,'remove'=>false,'modify'=>false]]],
     ];

@@ -4,7 +4,7 @@ declare(strict_types=1);
 /*
  * This file is part of the QuidPHP package.
  * Website: https://quidphp.com
- * License: https://github.com/quidphp/core/blob/master/LICENSE
+ * License: https://github.com/quidphp/lemur/blob/master/LICENSE
  */
 
 namespace Quid\Lemur\Row;
@@ -16,12 +16,12 @@ class LogError extends Core\Row\LogError
 {
     // config
     public static $config = [
-        '@cms'=>array(
-            'permission'=>array(
-                'contributor'=>array('view'=>false),
-                'editor'=>array('view'=>false),
-                'subAdmin'=>array('add'=>false),
-                'admin'=>array('add'=>false,'empty'=>true)))
+        '@cms'=>[
+            'permission'=>[
+                'contributor'=>['view'=>false],
+                'editor'=>['view'=>false],
+                'subAdmin'=>['add'=>false],
+                'admin'=>['add'=>false,'empty'=>true]]]
     ];
 }
 

@@ -31,7 +31,7 @@ class Table extends Base\Test
         assert($tb->routeAttr('general') === Lemur\Cms\General::class);
         assert($tb->hasPermission('modify'));
         assert(!$tb->hasPermission('insert','update','duplicate'));
-        
+
         // col
         $table = 'ormCol';
         assert($db->truncate($table) instanceof \PDOStatement);
