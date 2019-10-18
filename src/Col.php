@@ -16,8 +16,8 @@ class Col extends Core\Col
 {
     // config
     public static $config = [
-        '@cms'=>array(
-            'generalExcerptMin'=>100)
+        '@cms'=>[
+            'generalExcerptMin'=>100]
     ];
 }
 

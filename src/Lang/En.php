@@ -36,7 +36,7 @@ class En extends Core\Lang\En
                 'cms'=>'Content management system'
             ]
         ],
-        
+
         // route
         'route'=>[
 
@@ -56,7 +56,7 @@ class En extends Core\Lang\En
                 'resetPasswordSubmit'=>'Reset password - Submit'
             ]
         ],
-        
+
         // cms
         '@cms'=>[
 

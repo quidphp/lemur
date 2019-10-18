@@ -491,10 +491,10 @@ trait _template
 
             if(in_array($key,['envLabel','typeLabel','paths','schemeHosts','classFqcn'],true))
             $value = $boot->$key();
-            
+
             elseif($key === 'classRoute')
             $value = $this::classFqcn();
-            
+
             elseif($key === 'user')
             $value = Base\Server::$key(true,true);
 

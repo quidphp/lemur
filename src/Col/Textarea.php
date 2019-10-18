@@ -8,9 +8,9 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Col;
+use Quid\Base\Html;
 use Quid\Core;
 use Quid\Lemur;
-use Quid\Base\Html;
 
 // textarea
 // extended class for a column which is editable through a textarea input
@@ -21,8 +21,8 @@ class Textarea extends Core\Col\Textarea
         '@cms'=>[
             'route'=>['tableRelation'=>Lemur\Cms\SpecificTableRelation::class]]
     ];
-    
-    
+
+
     // hasTableRelation
     // retourne vrai si le textarea a des table relation
     public function hasTableRelation():bool

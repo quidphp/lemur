@@ -36,7 +36,7 @@ class Fr extends Core\Lang\Fr
                 'cms'=>'Gestionnaire de contenu'
             ]
         ],
-        
+
         // route
         'route'=>[
 
@@ -56,7 +56,7 @@ class Fr extends Core\Lang\Fr
                 'resetPasswordSubmit'=>'Régénérer un nouveau mot de passe - Soumettre'
             ]
         ],
-        
+
         // cms
         '@cms'=>[
 

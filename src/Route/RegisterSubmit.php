@@ -4,14 +4,14 @@ declare(strict_types=1);
 /*
  * This file is part of the QuidPHP package.
  * Website: https://quidphp.com
- * License: https://github.com/quidphp/core/blob/master/LICENSE
+ * License: https://github.com/quidphp/lemur/blob/master/LICENSE
  */
 
 namespace Quid\Lemur\Route;
 use Quid\Base;
 use Quid\Core;
-use Quid\Main;
 use Quid\Lemur;
+use Quid\Main;
 
 // registerSubmit
 // abstract class for a register submit route

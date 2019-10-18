@@ -16,7 +16,7 @@ abstract class Route extends Core\Route
 {
     // config
     public static $config = [
-        '@cms'=>array(
+        '@cms'=>[
             'metaTitle'=>['typeLabel'=>true],
             'jsInit'=>'$(document).ready(function() { $(this).navigation(); });',
             'docOpen'=>[
@@ -26,8 +26,8 @@ abstract class Route extends Core\Route
                     'js'=>[
                         'include'=>'js/include.js',
                         'type'=>'js/%type%.js']]],
-            'permission'=>array(
-                '*'=>array(
+            'permission'=>[
+                '*'=>[
                     'popup'=>false,
                     'account'=>true,
                     'accountChangePassword'=>true,
@@ -40,10 +40,10 @@ abstract class Route extends Core\Route
                     'about'=>true,
                     'homeInfo'=>true,
                     'homeInfoPopup'=>true,
-                    'homeSearch'=>true),
-                'subAdmin'=>array('popup'=>true),
-                'admin'=>array('popup'=>true)
-            ))
+                    'homeSearch'=>true],
+                'subAdmin'=>['popup'=>true],
+                'admin'=>['popup'=>true]
+            ]]
     ];
 }
 

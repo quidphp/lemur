@@ -431,7 +431,7 @@ class Specific extends Core\RouteAlias
         $r .= $this->makeViewRoute();
         $r .= $this->makeDuplicate();
         $r .= $this->makeFormSubmit('top');
-        
+
         return $r;
     }
 

@@ -319,7 +319,7 @@ class General extends Core\RouteAlias
         $r .= $this->makeTruncate();
         $r .= $this->makeExport();
         $r .= $this->makeAdd();
-        
+
         return $r;
     }
 
@@ -368,7 +368,7 @@ class General extends Core\RouteAlias
     public function generalInfoPopup(bool $icon=true):?string
     {
         $return = null;
-        
+
         if($this->hasPermission('popup') && $this->hasTablePermission('generalInfoPopup'))
         {
             $values = $this->infoPopupValues();
@@ -815,13 +815,13 @@ class General extends Core\RouteAlias
                 if($actionPermission === true)
                 {
                     $html = '';
-                    
+
                     if($specificPermission === true)
                     {
                         $action = ($modify === true && $row->isUpdateable())? 'modify':'view';
                         $html = Html::a($specific,Html::div(null,['icon','solo',$action,'center']),'in');
                     }
-                    
+
                     $array[] = [$html,'action'];
                 }
 
