@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Quid\Lemur\Cms;
 use Quid\Core;
+use Quid\Lemur;
 
 // specificUserWelcome
 // class for the specific user welcome route which can send a welcome email to the user
@@ -16,9 +17,9 @@ class SpecificUserWelcome extends Core\RouteAlias
 {
     // trait
     use _common;
-    use Core\Route\_specificPrimary;
-    use Core\Route\_formSubmit;
-    use Core\Segment\_primary;
+    use Lemur\Route\_specificPrimary;
+    use Lemur\Route\_formSubmit;
+    use Lemur\Segment\_primary;
 
 
     // config

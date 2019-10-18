@@ -184,7 +184,7 @@ trait _specific
         $return = null;
         $table = $this->table();
 
-        if($table->hasPermission('infoPopup'))
+        if($this->hasPermission('popup') && $table->hasPermission('colInfoPopup'))
         {
             $values = static::$config['popup'];
             $closure = $this->colInfoPopupClosure($col);

@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace Quid\Lemur\Cms;
 use Quid\Base\Html;
-use Quid\Core;
+use Quid\Lemur;
 
 // login
 // class for the login route of the CMS
-class Login extends Core\Route\Login
+class Login extends Lemur\Route\Login
 {
     // trait
     use _nobody;
@@ -79,7 +79,7 @@ class Login extends Core\Route\Login
 
     // submitRoute
     // route pour soumettre le formulaire
-    public function submitRoute():Core\Route\LoginSubmit
+    public function submitRoute():Lemur\Route\LoginSubmit
     {
         return LoginSubmit::makeOverload();
     }

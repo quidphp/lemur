@@ -8,11 +8,11 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Cms;
-use Quid\Core;
+use Quid\Lemur;
 
 // logout
 // class for the logout route of the CMS
-class Logout extends Core\Route\Logout
+class Logout extends Lemur\Route\Logout
 {
     // trait
     use _common;

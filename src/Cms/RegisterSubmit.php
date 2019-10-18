@@ -8,11 +8,11 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Cms;
-use Quid\Core;
+use Quid\Lemur;
 
 // registerSubmit
 // class for the register submit route of the CMS
-class RegisterSubmit extends Core\Route\RegisterSubmit
+class RegisterSubmit extends Lemur\Route\RegisterSubmit
 {
     //  config
     public static $config = [

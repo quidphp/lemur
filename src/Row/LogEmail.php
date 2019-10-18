@@ -20,8 +20,8 @@ class LogEmail extends Core\Row\LogEmail
             'permission'=>[
                 'contributor'=>['view'=>false],
                 'editor'=>['view'=>false],
-                'subAdmin'=>['add'=>false],
-                'admin'=>['add'=>false,'empty'=>true]]]
+                'subAdmin'=>['lemurInsert'=>false],
+                'admin'=>['lemurInsert'=>false,'lemurTruncate'=>true]]]
     ];
 }
 

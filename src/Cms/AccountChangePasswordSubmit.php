@@ -8,11 +8,11 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Cms;
-use Quid\Core;
+use Quid\Lemur;
 
 // accountChangePasswordSubmit
 // class for the submit change password route in the CMS
-class AccountChangePasswordSubmit extends Core\Route\AccountChangePasswordSubmit
+class AccountChangePasswordSubmit extends Lemur\Route\AccountChangePasswordSubmit
 {
     // config
     public static $config = [
@@ -22,7 +22,7 @@ class AccountChangePasswordSubmit extends Core\Route\AccountChangePasswordSubmit
 
     // routeSuccess
     // route utilisé pour rediriger après le formulaire
-    public function routeSuccess():Core\Route
+    public function routeSuccess():Lemur\Route
     {
         return Home::makeOverload();
     }

@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Quid\Lemur\Cms;
 use Quid\Core;
+use Quid\Lemur;
 
 // specificDuplicate
 // class for the specific duplicate route, to process a row duplication in the CMS
@@ -17,10 +18,10 @@ class SpecificDuplicate extends Core\RouteAlias
     // trait
     use _common;
     use _general;
-    use Core\Route\_specificPrimary;
-    use Core\Route\_formSubmit;
-    use Core\Segment\_table;
-    use Core\Segment\_primary;
+    use Lemur\Route\_specificPrimary;
+    use Lemur\Route\_formSubmit;
+    use Lemur\Segment\_table;
+    use Lemur\Segment\_primary;
 
 
     // config
@@ -54,7 +55,7 @@ class SpecificDuplicate extends Core\RouteAlias
         $table = $this->table();
         $row = $this->segment('primary');
 
-        if(!empty($table) && $table->hasPermission('view','insert','add','duplicate') && !empty($row))
+        if(!empty($table) && $table->hasPermission('view','insert','lemurInsert','duplicate') && !empty($row))
         $return = true;
 
         return $return;

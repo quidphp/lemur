@@ -8,16 +8,16 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Cms;
-use Quid\Core;
+use Quid\Lemur;
 
 // activatePassword
 // class for activating the password in the CMS
-class ActivatePassword extends Core\Route\ActivatePassword
+class ActivatePassword extends Lemur\Route\ActivatePassword
 {
     // config
     public static $config = [
         'parent'=>Login::class,
-        'row'=>Core\Row\User::class
+        'row'=>Lemur\Row\User::class
     ];
 }
 

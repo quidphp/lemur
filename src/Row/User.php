@@ -17,6 +17,12 @@ class User extends Core\Row\User
 {
     // config
     public static $config = [
+        'permission'=>[
+            '*'=>['cmsLogin'=>false],
+            'admin'=>['cmsLogin'=>true],
+            'subAdmin'=>['cmsLogin'=>true],
+            'editor'=>['cmsLogin'=>true],
+            'contributor'=>['cmsLogin'=>true]],
         '@cms'=>[
             'permission'=>[
                 '*'=>['userWelcome'=>false],
@@ -29,7 +35,15 @@ class User extends Core\Row\User
             'specificOperation'=>[self::class,'specificOperation']],
     ];
 
-
+    
+    // activatePasswordRoute
+    // retourne la route a utilisé pour l'activation d'un mot de passe
+	public function activatePasswordRoute():string
+	{
+		return Lemur\Route\ActivatePassword::class;
+	}
+    
+    
     // specificOperation
     // utilisé dans le cms, permet d'envoyer un courriel de bienvenue à l'utilisateur
     public static function specificOperation(self $row):string

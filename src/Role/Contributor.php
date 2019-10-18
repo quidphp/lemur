@@ -17,9 +17,7 @@ class Contributor extends Core\RoleAlias
     // config
     public static $config = [
         'ignore'=>true,
-        'permission'=>50,
-        'can'=>[
-            'login'=>['cms'=>true]]
+        'permission'=>50
     ];
 }
 

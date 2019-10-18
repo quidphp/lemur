@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Lemur\Cms;
 use Quid\Core;
 use Quid\Main;
+use Quid\Lemur;
 
 // specificCalendar
 // class for the calendar route of the CMS
@@ -17,10 +18,10 @@ class SpecificCalendar extends Core\RouteAlias
 {
     // trait
     use _common;
-    use Core\Route\_calendar;
-    use Core\Segment\_timestampMonth;
-    use Core\Segment\_str;
-    use Core\Segment\_selected;
+    use Lemur\Route\_calendar;
+    use Lemur\Segment\_timestampMonth;
+    use Lemur\Segment\_str;
+    use Lemur\Segment\_selected;
 
 
     // config

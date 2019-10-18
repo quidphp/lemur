@@ -26,9 +26,8 @@ trait _template
             'requestCount','ip','lang','name','getLoginLifetime','getLifetime','expire','getCookieParams','getGarbageCollect',
             'classSession','classFqcn','classRole','userAgent'],
         'bootPopup'=>[
-            'phpVersion','quidVersion','envLabel','typeLabel','hostname','httpProtocol','ip','os','isCaseSensitive','processId','user','group',
-            'serverType','sapi','classFqcn','paths','schemeHosts','memory','diskSpace','phpImportantExtension','phpImportantIni'
-        ]
+            'phpVersion','quidVersion','envLabel','typeLabel','classFqcn','classRoute','hostname','httpProtocol','ip','os','isCaseSensitive','processId','user','group',
+            'serverType','sapi','paths','schemeHosts','memory','diskSpace','phpImportantExtension','phpImportantIni']
     ];
 
 
@@ -114,22 +113,23 @@ trait _template
     protected function headerRight():string
     {
         $r = '';
-        $user = static::sessionUser();
+        $session = static::session();
 
-        if($user->isSomebody())
+        if($session->isSomebody())
         {
+            $user = $session->user();
             $username = $user->username();
             $dateLogin = $user->dateLogin();
 
             $r .= Html::divOp('top');
 
-            if($user->can('account'))
+            if($this->hasPermission('account'))
             $r .= Account::makeOverload()->aTitle(null,['submit','icon','padLeft','account']);
 
-            if($user->can('accountChangePassword'))
+            if($this->hasPermission('accountChangePassword'))
             $r .= AccountChangePassword::makeOverload()->aDialog(['submit','icon','padLeft','password']);
 
-            if($user->can('logout'))
+            if($this->hasPermission('logout'))
             $r .= Logout::makeOverload()->aTitle(null,['submit','icon','padLeft','logout']);
 
             $r .= Html::divCl();
@@ -154,7 +154,7 @@ trait _template
     {
         $return = null;
 
-        if(static::sessionUser()->can('userPopup'))
+        if($this->hasPermission('popup','userPopup'))
         {
             $values = static::$config['userPopup'];
             $closure = $this->userInfoPopupClosure();
@@ -284,7 +284,7 @@ trait _template
                         $option = ($route->routeRequest()->isSegmentParsedFromValue())? ['query'=>false]:null;
                         $r .= $route->aTitle(null,null,null,$option);
 
-                        if($i > 0 && !empty($specificAdd) && $table->hasPermission('navAdd','add','insert'))
+                        if($i > 0 && !empty($specificAdd) && $table->hasPermission('insert','lemurInsert','mainNavAdd'))
                         {
                             $route = $specificAdd::makeOverload($table);
                             $r .= $route->makeNavLink();
@@ -374,12 +374,12 @@ trait _template
     protected function footerLinks():array
     {
         $return = [];
-        $user = static::sessionUser();
+        $session = static::session();
 
-        if($user->can('footerTypes'))
+        if($this->hasPermission('footerTypes'))
         $return = Base\Arr::append($return,$this->footerTypes());
 
-        if($user->can('footerModules'))
+        if($this->hasPermission('footerModules'))
         $return = Base\Arr::append($return,$this->footerModules());
 
         return $return;
@@ -392,7 +392,7 @@ trait _template
     protected function footerTypes():array
     {
         $return = [];
-        $user = static::sessionUser();
+        $session = static::session();
         $boot = static::boot();
         $type = $boot->type();
         $schemeHosts = $boot->schemeHostTypes();
@@ -400,7 +400,7 @@ trait _template
 
         foreach ($schemeHosts as $key => $uri)
         {
-            if($key === 'cms' && !$user->can('footerTypesCms'))
+            if($key === 'cms' && !$this->hasPermission('footerTypesCms'))
             continue;
 
             if($key !== $type)
@@ -468,7 +468,7 @@ trait _template
     {
         $return = null;
 
-        if(static::sessionUser()->can('bootPopup'))
+        if($this->hasPermission('popup','bootPopup'))
         {
             $values = static::$config['bootPopup'];
             $closure = $this->bootInfoPopupClosure();
@@ -491,7 +491,10 @@ trait _template
 
             if(in_array($key,['envLabel','typeLabel','paths','schemeHosts','classFqcn'],true))
             $value = $boot->$key();
-
+            
+            elseif($key === 'classRoute')
+            $value = $this::classFqcn();
+            
             elseif($key === 'user')
             $value = Base\Server::$key(true,true);
 

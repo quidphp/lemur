@@ -98,7 +98,6 @@ body .active .popup {
 
     .popup-title {
         padding: 5px;
-        cursor: pointer;
     }
 
     &.with-icon {
@@ -116,6 +115,10 @@ body .active .popup {
     }
 
     &.with-popup {
+        .popup-title {
+            cursor: pointer;
+        }
+        
         &.active,
         &:hover {
             .popup-title {

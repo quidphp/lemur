@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Lemur\Cms;
 use Quid\Base;
 use Quid\Core;
+use Quid\Lemur;
 
 // generalDelete
 // class for the route which allows deleting rows from the general navigation page of the CMS
@@ -18,8 +19,8 @@ class GeneralDelete extends Core\RouteAlias
     // trait
     use _common;
     use _general;
-    use Core\Route\_formSubmit;
-    use Core\Segment\_table;
+    use Lemur\Route\_formSubmit;
+    use Lemur\Segment\_table;
 
 
     // config
@@ -52,7 +53,7 @@ class GeneralDelete extends Core\RouteAlias
         $return = false;
         $table = $this->table();
 
-        if(!empty($table) && $table->hasPermission('view','delete','remove','multiDelete'))
+        if(!empty($table) && $table->hasPermission('view','delete','lemurDelete','multiDelete'))
         {
             $request = $this->request();
             $ids = $request->get('primaries');

@@ -42,7 +42,7 @@ class Route extends Base\Test
         $g = new $general(new Core\Request('/fr/table/ormTable/1/20/-/-/-/-/-/-/-'));
         $g2 = new $general(['table'=>$db['ormSql'],'page'=>3,'limit'=>10]);
         $query = new $general(new Core\Request('/fr/table/ormTable/1/20/-/-/-/-/-/-/-?s=éric'));
-        assert(count(Base\Classe::parents($login,true)) === 7);
+        assert(count(Base\Classe::parents($login,true)) === 9);
 
         // session
 
@@ -151,7 +151,7 @@ class Route extends Base\Test
         assert($loginMake->submitTitle('% ok') === "<button type='submit'>Login ok</button>");
         assert($loginSubmit::make() instanceof $loginSubmit);
         assert($loginSubmit::makeOverload() instanceof $loginSubmit);
-        assert(Core\Route\ActivatePassword::makeOverload() instanceof Suite\Assert\ActivatePassword);
+        assert(Lemur\Route\ActivatePassword::makeOverload() instanceof Suite\Assert\ActivatePassword);
         assert($loginSubmit::getOverloadClass() === Lemur\Cms\LoginSubmit::class);
         assert($loginSubmit::makeParent() instanceof Lemur\Cms\Login);
 

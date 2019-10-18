@@ -11,6 +11,7 @@ namespace Quid\Lemur\Cms;
 use Quid\Base;
 use Quid\Base\Html;
 use Quid\Core;
+use Quid\Lemur;
 
 // specificAdd
 // class for the specific add route of the CMS, generates the insert form for a row
@@ -20,7 +21,7 @@ class SpecificAdd extends Core\RouteAlias
     use _templateAlias;
     use _general;
     use _specific;
-    use Core\Segment\_table;
+    use Lemur\Segment\_table;
 
 
     // config
@@ -49,7 +50,7 @@ class SpecificAdd extends Core\RouteAlias
         $return = false;
         $table = $this->segment('table');
 
-        if($table instanceof Core\Table && $table->hasPermission('view','add','insert'))
+        if($table instanceof Core\Table && $table->hasPermission('view','insert','lemurInsert'))
         {
             $flash = $this->session()->flash();
             $route = SpecificAddSubmit::make($this->table());
@@ -195,7 +196,7 @@ class SpecificAdd extends Core\RouteAlias
         $r = '';
         $table = $this->table();
 
-        if($table->hasPermission('nav','back'))
+        if($table->hasPermission('nav','navBack'))
         {
             $general = $this->general();
 

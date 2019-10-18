@@ -106,7 +106,7 @@ trait _nobody
         $r = '';
         $session = static::session();
 
-        if($session->can('about'))
+        if($this->hasPermission('about'))
         {
             $route = About::makeOverload();
             $r .= $route->aDialog();

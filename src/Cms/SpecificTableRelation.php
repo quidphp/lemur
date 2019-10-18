@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Quid\Lemur\Cms;
 use Quid\Core;
+use Quid\Lemur;
 
 // SpecificTableRelation
 // class for the route which manages table relation, used by some inputs in the CMS
@@ -16,10 +17,10 @@ class SpecificTableRelation extends Core\RouteAlias
 {
     // trait
     use _common;
-    use Core\Route\_tableRelation;
-    use Core\Segment\_table;
-    use Core\Segment\_orderTableRelation;
-    use Core\Segment\_page;
+    use Lemur\Route\_tableRelation;
+    use Lemur\Segment\_table;
+    use Lemur\Segment\_orderTableRelation;
+    use Lemur\Segment\_page;
 
 
     // config

@@ -17,16 +17,7 @@ class SubAdmin extends Core\RoleAlias
     // config
     public static $config = [
         'ignore'=>true,
-        'permission'=>70,
-        'can'=>[
-            'login'=>['cms'=>true]],
-        '@cms'=>[
-            'can'=>[
-                'userPopup'=>true,
-                'bootPopup'=>true,
-                'home'=>[
-                    'infoPopup'=>true]]
-        ]
+        'permission'=>70
     ];
 }
 

@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Quid\Lemur\Cms;
 use Quid\Core;
+use Quid\Lemur;
 
 // generalTruncate
 // class for the route which allows truncating a table from the general page of the CMS
@@ -17,8 +18,8 @@ class GeneralTruncate extends Core\RouteAlias
     // trait
     use _common;
     use _general;
-    use Core\Route\_formSubmit;
-    use Core\Segment\_table;
+    use Lemur\Route\_formSubmit;
+    use Lemur\Segment\_table;
 
 
     // config
@@ -46,7 +47,7 @@ class GeneralTruncate extends Core\RouteAlias
         $return = false;
         $table = $this->table();
 
-        if(!empty($table) && $table->hasPermission('view','empty','truncate'))
+        if(!empty($table) && $table->hasPermission('view','truncate','lemurTruncate'))
         $return = true;
 
         return $return;

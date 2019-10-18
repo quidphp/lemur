@@ -13,9 +13,9 @@ use Quid\Core;
 use Quid\Lemur;
 use Quid\Suite;
 
-// table
-// class for testing table
-class Table extends Base\Test
+// db
+// class for testing db
+class Db extends Base\Test
 {
     // trigger
     public static function trigger(array $data):bool
@@ -29,7 +29,7 @@ class Table extends Base\Test
         assert($tb->routeAttr() === [Lemur\Cms\Specific::class,'general'=>Lemur\Cms\General::class,'cms'=>Lemur\Cms\Specific::class]);
         assert($tb->routeAttr(0) === Lemur\Cms\Specific::class);
         assert($tb->routeAttr('general') === Lemur\Cms\General::class);
-        assert($tb->hasPermission('modify'));
+        assert($tb->hasPermission('lemurUpdate'));
         assert(!$tb->hasPermission('insert','update','duplicate'));
 
         // col

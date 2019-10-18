@@ -20,8 +20,8 @@ class Session extends Core\Row\Session
             'permission'=>[
                 'contributor'=>['view'=>false],
                 'editor'=>['view'=>false],
-                'subAdmin'=>['add'=>false,'remove'=>false,'modify'=>false],
-                'admin'=>['add'=>false,'empty'=>true,'remove'=>false,'modify'=>false]]],
+                'subAdmin'=>['lemurInsert'=>false,'lemurUpdate'=>false,'lemurDelete'=>false],
+                'admin'=>['lemurInsert'=>false,'lemurUpdate'=>false,'lemurDelete'=>false,'lemurTruncate'=>true]]],
     ];
 }
 

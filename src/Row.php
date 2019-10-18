@@ -10,9 +10,9 @@ declare(strict_types=1);
 namespace Quid\Lemur;
 use Quid\Core;
 
-// table
-// extended class to represent an existing table within a database, adds cms config
-class Table extends Core\Table
+// row
+// extended class to represent a row within a table, adds cms config
+class Row extends Core\Row
 {
     // config
     public static $config = [
@@ -39,49 +39,46 @@ class Table extends Core\Table
                 'cms'=>Cms\Specific::class],
             'permission'=>[
                 '*'=>[ // le cms a beaucoup plus de paramètres pour chaque table
-                    'view'=>true, // pouvoir voir la table dans le CMS
+                    'lemurInsert'=>true, // pouvoir ajouter
+                    'lemurUpdate'=>true, // pouvoir modifier
+                    'lemurDelete'=>true, // pouvoir effacer
+                    'lemurTruncate'=>false, // afficher le bouton pour vider la table
+                    'mainNavAdd'=>true, // ajouter le lien + dans le menu de navigation
                     'limit'=>true, // accès à l'outil limite par page
                     'perPage'=>true, // accès à l'outil limite par page
-                    'search'=>true, // accès à l'outil recherche
-                    'searchNote'=>true, // afficher la note sous la recherche
-                    'cols'=>true, // pouvoir changer les colonnes qui s'affichent dans le tableau
-                    'filter'=>true, // pouvoir filtrer le tableau
+                    'page'=>true, // accès à l'outil pour changer de page
                     'order'=>true, // pouvoir ordonner le tableau
                     'direction'=>true, // pouvoir changer la direction du tri dans le tableau
                     'where'=>true, // ne pas changer
-                    'page'=>true, // accès à l'outil pour changer de page
+                    'filter'=>true, // pouvoir filtrer le tableau
+                    'search'=>true, // accès à l'outil recherche
                     'rows'=>true, // accès aux checkboxes dans le tableau
+                    'cols'=>true, // pouvoir changer les colonnes qui s'affichent dans le tableau
                     'action'=>true, // avoir accès à la colonne action à droite du tableau
                     'in'=>true, // accès à l'outil filterIn avec les checkboxes
                     'notIn'=>true, // accès à l'outil filterOut avec les checkboxes
-                    'info'=>true, // popup d'informations
-                    'infoPopup'=>false, // popup d'informations
                     'highlight'=>true, // ligne avec couleur bleu lors du retour
-                    'panelDescription'=>true, // accès aux descriptions de panneaux
-                    'add'=>true, // pouvoir ajouter
-                    'modify'=>true, // pouvoir modifier
-                    'remove'=>true, // pouvoir effacer
-                    'multiDelete'=>true, // permettre d'effacer plusieurs lignes à la fois
                     'reset'=>true, // bouton pour la réinitialisation
-                    'nav'=>true, // afficher la boîte de navigation...
-                    'back'=>true, // ... avec le bouton retour
-                    'truncate'=>true, // pouvoir vider la table
-                    'empty'=>false, // afficher le bouton pour vider la table
-                    'navAdd'=>true, // ajouter le lien + dans le menu de navigation
-                    'download'=>true, // pouvoir télécharger les images
+                    'multiDelete'=>true, // permettre d'effacer plusieurs lignes à la fois
                     'export'=>false, // pouvoir exporter les données en CSV
-                    'viewApp'=>true, // permettre le lien vers l'application si possible
-                    'relationChilds'=>true, // affiche le bloc enfants direct
-                    'specific'=>true, // accès à la page du formulaire
-                    'specificOperation'=>true, // accès au module opération dans la page du formulaire (comme pour courriel de bienvenue)
-                    'duplicate'=>false, // permettre la duplication
-                    'description'=>true, // affiche la description de la table
-                    'mediaDelete'=>true, // permettre d'effacer un media
-                    'mediaRegenerate'=>false, // permettre de regénérer un media
                     'relation'=>true, // relatif aux relations, ne pas changer
+                    'generalOperation'=>true, // accès au module opération dans la page générale
                     'generalRelation'=>true, // relatif aux relations, ne pas changer
+                    'description'=>true, // affiche la description de la table
+                    'searchNote'=>true, // afficher la note sous la recherche
+                    'generalCount'=>true, // count pour la page générale
+                    'generalInfoPopup'=>false, // popup d'informations pour la page générale
+                    'specific'=>true, // accès à la page du formulaire
+                    'specificOperation'=>true, // accès au module opération dans la page du formulaire
+                    'relationChilds'=>true, // affiche le bloc enfants direct
+                    'nav'=>true, // afficher la boîte de navigation...
+                    'navBack'=>true, // ... avec le bouton retour
+                    'viewApp'=>true, // permettre le lien vers l'application si possible
+                    'duplicate'=>false, // permettre la duplication
+                    'panelDescription'=>true, // accès aux descriptions de panneaux
+                    'colInfoPopup'=>false, // popup d'informations pour la colonne
                     'specificRelation'=>true, // relatif aux relations, ne pas changer
-                    'tableRelation'=>true]], // relatif aux relations, ne pas changer
+                    'tableRelation'=>true], // relatif aux relations, ne pas changer
                 'nobody'=>[
                     'view'=>false],
                 'contributor'=>[
@@ -99,19 +96,19 @@ class Table extends Core\Table
                     'in'=>false,
                     'notIn'=>false],
                 'subAdmin'=>[
-                    'truncate'=>false,
-                    'infoPopup'=>true,
+                    'lemurTruncate'=>false,
+                    'generalInfoPopup'=>true,
+                    'colInfoPopup'=>true,
                     'mediaRegenerate'=>true,
                     'nullPlaceholder'=>true],
                 'admin'=>[
-                    'truncate'=>false,
-                    'infoPopup'=>true,
-                    'mediaRegenerate'=>true,
-                    'nullPlaceholder'=>true]
+                    'lemurTruncate'=>false,
+                    'generalInfoPopup'=>true,
+                    'colInfoPopup'=>true]]
             ]
     ];
 }
 
 // init
-Table::__init();
+Row::__init();
 ?>

@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Quid\Lemur\Cms;
 use Quid\Core;
+use Quid\Lemur;
 
 // generalRelation
 // class for the route which manages the filters for the general navigation page of the CMS
@@ -17,12 +18,12 @@ class GeneralRelation extends Core\RouteAlias
     // trait
     use _common;
     use _general;
-    use Core\Route\_generalRelation;
-    use Core\Segment\_table;
-    use Core\Segment\_colRelation;
-    use Core\Segment\_selected;
-    use Core\Segment\_orderColRelation;
-    use Core\Segment\_page;
+    use Lemur\Route\_generalRelation;
+    use Lemur\Segment\_table;
+    use Lemur\Segment\_colRelation;
+    use Lemur\Segment\_selected;
+    use Lemur\Segment\_orderColRelation;
+    use Lemur\Segment\_page;
 
 
     // config

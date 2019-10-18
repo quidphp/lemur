@@ -16,9 +16,7 @@ class Editor extends Core\RoleAlias
 {
     // config
     public static $config = [
-        'permission'=>60,
-        'can'=>[
-            'login'=>['cms'=>true]]
+        'permission'=>60
     ];
 }
 

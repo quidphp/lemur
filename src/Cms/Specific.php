@@ -11,6 +11,7 @@ namespace Quid\Lemur\Cms;
 use Quid\Base;
 use Quid\Base\Html;
 use Quid\Core;
+use Quid\Lemur;
 
 // specific
 // class for the specific route of the CMS, generates the update form for a row
@@ -20,10 +21,10 @@ class Specific extends Core\RouteAlias
     use _templateAlias;
     use _general;
     use _specific;
-    use Core\Route\_specificNav;
-    use Core\Route\_specificPrimary;
-    use Core\Segment\_table;
-    use Core\Segment\_primary;
+    use Lemur\Route\_specificNav;
+    use Lemur\Route\_specificPrimary;
+    use Lemur\Segment\_table;
+    use Lemur\Segment\_primary;
 
 
     // config
@@ -109,7 +110,7 @@ class Specific extends Core\RouteAlias
         $table = $this->table();
         $row = $this->row();
 
-        if($table->hasPermission('modify','update') && $row->isUpdateable())
+        if($table->hasPermission('update','lemurUpdate') && $row->isUpdateable())
         $return = true;
 
         return $return;
@@ -124,7 +125,7 @@ class Specific extends Core\RouteAlias
         $table = $this->table();
         $row = $this->row();
 
-        if($table->hasPermission('delete','remove') && $row->isDeleteable())
+        if($table->hasPermission('delete','lemurDelete') && $row->isDeleteable())
         $return = true;
 
         return $return;
@@ -309,10 +310,10 @@ class Specific extends Core\RouteAlias
                 if(!empty($specific['last']))
                 $r .= $specific['last'];
 
-                if($table->hasPermission('insert','add'))
+                if($table->hasPermission('insert','lemurInsert'))
                 $r .= SpecificAdd::makeOverload($table)->a(static::langText('specific/add'));
 
-                if($table->hasPermission('back') && !empty($specific['back']))
+                if($table->hasPermission('navBack') && !empty($specific['back']))
                 $r .= $specific['back'];
             }
 
@@ -420,17 +421,17 @@ class Specific extends Core\RouteAlias
     protected function makeOperation():string
     {
         $r = '';
-
         $row = $this->row();
+        $table = $row->table();
         $callback = $row->table()->attr('specificOperation');
 
-        if(static::classIsCallable($callback))
+        if(static::classIsCallable($callback) && $table->hasPermission('specificOperation'))
         $r .= $callback($row);
 
         $r .= $this->makeViewRoute();
         $r .= $this->makeDuplicate();
         $r .= $this->makeFormSubmit('top');
-
+        
         return $r;
     }
 

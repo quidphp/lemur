@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Quid\Lemur\Cms;
 use Quid\Core;
+use Quid\Lemur;
 
 // specificRelation
 // class for the route which manages specific relation - enumSet inputs in the specific form
@@ -16,12 +17,12 @@ class SpecificRelation extends Core\RouteAlias
 {
     // trait
     use _common;
-    use Core\Route\_specificRelation;
-    use Core\Segment\_table;
-    use Core\Segment\_colRelation;
-    use Core\Segment\_selected;
-    use Core\Segment\_orderColRelation;
-    use Core\Segment\_page;
+    use Lemur\Route\_specificRelation;
+    use Lemur\Segment\_table;
+    use Lemur\Segment\_colRelation;
+    use Lemur\Segment\_selected;
+    use Lemur\Segment\_orderColRelation;
+    use Lemur\Segment\_page;
 
 
     // config

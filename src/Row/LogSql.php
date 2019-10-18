@@ -20,8 +20,8 @@ class LogSql extends Core\Row\LogSql
             'permission'=>[
                 'contributor'=>['view'=>false],
                 'editor'=>['view'=>false],
-                'subAdmin'=>['add'=>false],
-                'admin'=>['add'=>false,'empty'=>true]]]
+                'subAdmin'=>['lemurInsert'=>false],
+                'admin'=>['lemurInsert'=>false,'lemurTruncate'=>true]]]
     ];
 }
 

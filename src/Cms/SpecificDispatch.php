@@ -9,15 +9,16 @@ declare(strict_types=1);
 
 namespace Quid\Lemur\Cms;
 use Quid\Core;
+use Quid\Lemur;
 
 // specificDispatch
 // class for the specific dispatch route, directs to the proper dispatch route of the CMS
 class SpecificDispatch extends Core\RouteAlias
 {
     // trait
-    use Core\Route\_specificPrimary;
-    use Core\Segment\_table;
-    use Core\Segment\_primary;
+    use Lemur\Route\_specificPrimary;
+    use Lemur\Segment\_table;
+    use Lemur\Segment\_primary;
 
 
     // config

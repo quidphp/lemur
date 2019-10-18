@@ -61,7 +61,7 @@ class Home extends Core\Route\Home
         $r = '';
         $r .= $this->makeH1(static::boot()->typeLabel());
 
-        if(static::sessionUser()->can('home/info'))
+        if($this->hasPermission('homeInfo'))
         $r .= $this->makeInfo();
 
         return $r;
@@ -99,7 +99,7 @@ class Home extends Core\Route\Home
     {
         $return = null;
 
-        if(static::sessionUser()->can('home/infoPopup'))
+        if($this->hasPermission('popup','homeInfoPopup'))
         {
             $values = static::$config['popup'];
             $closure = $this->infoPopupClosure();
@@ -150,7 +150,7 @@ class Home extends Core\Route\Home
         $r = '';
         $session = static::session();
 
-        if($session->can('about'))
+        if($this->hasPermission('about'))
         {
             $route = About::makeOverload();
             $r .= $route->aDialog(['submit','help','icon','padLeft']);
@@ -186,7 +186,7 @@ class Home extends Core\Route\Home
 
         foreach ($tables->filter(['attrNotEmpty'=>true],'homeTask') as $table)
         {
-            if($table->hasPermission('view','insert','add'))
+            if($table->hasPermission('view','insert','lemurInsert'))
             $r .= SpecificAdd::makeOverload($table)->aTitle();
         }
 
@@ -200,7 +200,7 @@ class Home extends Core\Route\Home
     {
         $r = '';
 
-        if(static::sessionUser()->can('home/search'))
+        if($this->hasPermission('homeSearch'))
         {
             $route = HomeSearch::makeOverload();
             $tables = $this->db()->tables();

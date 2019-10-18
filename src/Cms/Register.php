@@ -8,11 +8,11 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Cms;
-use Quid\Core;
+use Quid\Lemur;
 
 // register
 // class for the register route of the CMS
-class Register extends Core\Route\Register
+class Register extends Lemur\Route\Register
 {
     // trait
     use _nobody;
@@ -21,7 +21,7 @@ class Register extends Core\Route\Register
     // config
     public static $config = [
         'parent'=>Login::class,
-        'row'=>Core\Row\User::class
+        'row'=>Lemur\Row\User::class
     ];
 
 

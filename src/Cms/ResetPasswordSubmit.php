@@ -8,11 +8,11 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Cms;
-use Quid\Core;
+use Quid\Lemur;
 
 // resetPasswordSubmit
 // class for the submit reset password route of the CMS
-class ResetPasswordSubmit extends Core\Route\ResetPasswordSubmit
+class ResetPasswordSubmit extends Lemur\Route\ResetPasswordSubmit
 {
     // config
     public static $config = [

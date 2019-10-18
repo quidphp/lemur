@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Quid\Lemur\Cms;
 use Quid\Core;
+use Quid\Lemur;
 
 // specificSubmit
 // class for the submit specific route, to process the update of a row in the CMS
@@ -18,10 +19,10 @@ class SpecificSubmit extends Core\RouteAlias
     use _common;
     use _general;
     use _specificSubmit;
-    use Core\Route\_specificPrimary;
-    use Core\Route\_formSubmit;
-    use Core\Segment\_table;
-    use Core\Segment\_primary;
+    use Lemur\Route\_specificPrimary;
+    use Lemur\Route\_formSubmit;
+    use Lemur\Segment\_table;
+    use Lemur\Segment\_primary;
 
 
     // config
@@ -53,7 +54,7 @@ class SpecificSubmit extends Core\RouteAlias
         $table = $this->table();
         $row = $this->segment('primary');
 
-        if(!empty($table) && $table->hasPermission('view','modify','update') && !empty($row) && $row->isUpdateable())
+        if(!empty($table) && $table->hasPermission('view','update','lemurUpdate') && !empty($row) && $row->isUpdateable())
         $return = true;
 
         return $return;

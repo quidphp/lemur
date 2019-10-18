@@ -8,11 +8,11 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Cms;
-use Quid\Core;
+use Quid\Lemur;
 
 // account
 // class for the account route of the CMS, by default redirects to the user's specific route
-class Account extends Core\Route\Account
+class Account extends Lemur\Route\Account
 {
     // trait
     use _common;
@@ -26,7 +26,7 @@ class Account extends Core\Route\Account
     // au lancement de la route, vérifie si le user peut aller voir son compte
     protected function onBefore()
     {
-        return (static::sessionUser()->can('account'))? true:false;
+        return ($this->hasPermission('account'))? true:false;
     }
 
 
@@ -40,7 +40,7 @@ class Account extends Core\Route\Account
 
     // onAfter
     // après trigger renvoie vers la page specifique du user
-    protected function onAfter():?Core\Route
+    protected function onAfter()
     {
         return static::sessionUser()->route();
     }

@@ -36,7 +36,27 @@ class En extends Core\Lang\En
                 'cms'=>'Content management system'
             ]
         ],
+        
+        // route
+        'route'=>[
 
+            // label
+            'label'=>[
+                'account'=>'My account',
+                'accountSubmit'=>'My account - Submit',
+                'accountChangePassword'=>'Change my password',
+                'accountChangePasswordSubmit'=>'Change my password - Submit',
+                'activatePassword'=>'Activate password',
+                'login'=>'Login',
+                'loginSubmit'=>'Login - Submit',
+                'logout'=>'Logout',
+                'register'=>'Register',
+                'registerSubmit'=>'Register - Submit',
+                'resetPassword'=>'Reset password',
+                'resetPasswordSubmit'=>'Reset password - Submit'
+            ]
+        ],
+        
         // cms
         '@cms'=>[
 
@@ -79,6 +99,7 @@ class En extends Core\Lang\En
                     'group'=>'Group',
                     'processId'=>'Process ID',
                     'classFqcn'=>'Class Boot',
+                    'classRoute'=>'Class Route',
                     'paths'=>'Paths',
                     'schemeHosts'=>'Domains',
                     'memory'=>'Memory',

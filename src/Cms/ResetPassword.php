@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace Quid\Lemur\Cms;
 use Quid\Base\Html;
-use Quid\Core;
+use Quid\Lemur;
 
 // resetPassword
 // class for the reset password route of the CMS
-class ResetPassword extends Core\Route\ResetPassword
+class ResetPassword extends Lemur\Route\ResetPassword
 {
     // trait
     use _nobody;
@@ -27,7 +27,7 @@ class ResetPassword extends Core\Route\ResetPassword
 
     // submitRoute
     // route pour soumettre le formulaire
-    public function submitRoute():Core\Route\ResetPasswordSubmit
+    public function submitRoute():Lemur\Route\ResetPasswordSubmit
     {
         return ResetPasswordSubmit::makeOverload();
     }

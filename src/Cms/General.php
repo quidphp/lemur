@@ -11,6 +11,7 @@ namespace Quid\Lemur\Cms;
 use Quid\Base;
 use Quid\Base\Html;
 use Quid\Core;
+use Quid\Lemur;
 
 // general
 // class for the general navigation route of the CMS
@@ -18,15 +19,15 @@ class General extends Core\RouteAlias
 {
     // trait
     use _templateAlias;
-    use Core\Route\_general;
-    use Core\Segment\_table;
-    use Core\Segment\_page;
-    use Core\Segment\_limit;
-    use Core\Segment\_order;
-    use Core\Segment\_direction;
-    use Core\Segment\_cols;
-    use Core\Segment\_filter;
-    use Core\Segment\_primaries;
+    use Lemur\Route\_general;
+    use Lemur\Segment\_table;
+    use Lemur\Segment\_page;
+    use Lemur\Segment\_limit;
+    use Lemur\Segment\_order;
+    use Lemur\Segment\_direction;
+    use Lemur\Segment\_cols;
+    use Lemur\Segment\_filter;
+    use Lemur\Segment\_primaries;
 
 
     // config
@@ -60,7 +61,7 @@ class General extends Core\RouteAlias
     {
         $return = false;
 
-        if($this->hasPermission('view'))
+        if($this->hasTablePermission('view'))
         {
             $table = $this->table();
             $sql = $this->sql();
@@ -246,7 +247,7 @@ class General extends Core\RouteAlias
         $r .= $this->makeInfo();
         $r .= Html::divCl();
 
-        if($this->hasPermission('description'))
+        if($this->hasTablePermission('description'))
         $r .= Html::divCond($table->description(),['description','sub-title']);
 
         $placeholder = static::langText('general/search');
@@ -275,7 +276,7 @@ class General extends Core\RouteAlias
         $r = '';
         $table = $this->table();
 
-        if($table->isSearchable() && $this->hasPermission('searchNote'))
+        if($table->isSearchable() && $this->hasTablePermission('searchNote'))
         {
             $cols = $table->cols()->searchable();
 
@@ -311,14 +312,14 @@ class General extends Core\RouteAlias
         $table = $this->table();
         $callback = $table->attr('generalOperation');
 
-        if(static::classIsCallable($callback))
+        if(static::classIsCallable($callback) && $table->hasPermission('generalOperation'))
         $r .= $callback($table);
 
         $r .= $this->makeReset();
         $r .= $this->makeTruncate();
         $r .= $this->makeExport();
         $r .= $this->makeAdd();
-
+        
         return $r;
     }
 
@@ -329,7 +330,7 @@ class General extends Core\RouteAlias
     {
         $r = '';
 
-        if($this->hasPermission('reset') && $this->canReset($this->getSearchValue(),'table'))
+        if($this->hasTablePermission('reset') && $this->canReset($this->getSearchValue(),'table'))
         {
             $option = ['query'=>false];
             $route = $this->keepSegments('table');
@@ -346,7 +347,7 @@ class General extends Core\RouteAlias
     {
         $r = '';
 
-        if($this->hasPermission('info'))
+        if($this->hasTablePermission('generalCount'))
         {
             $popup = $this->generalInfoPopup();
             $attr = ['popup-trigger',(!empty($popup))? ['with-popup','with-icon','anchor-corner']:null];
@@ -367,8 +368,8 @@ class General extends Core\RouteAlias
     public function generalInfoPopup(bool $icon=true):?string
     {
         $return = null;
-
-        if($this->hasPermission('infoPopup'))
+        
+        if($this->hasPermission('popup') && $this->hasTablePermission('generalInfoPopup'))
         {
             $values = $this->infoPopupValues();
             $closure = $this->infoPopupClosure();
@@ -471,7 +472,7 @@ class General extends Core\RouteAlias
         $r = '';
         $table = $this->table();
 
-        if($this->hasPermission('insert','add'))
+        if($this->hasTablePermission('insert','lemurInsert'))
         $r .= SpecificAdd::makeOverload($table)->a(static::langText('general/add'),['submit','icon','padLeft','add']);
 
         return $r;
@@ -485,7 +486,7 @@ class General extends Core\RouteAlias
         $r = '';
         $sql = $this->sql();
 
-        if($this->hasPermission('export') && !$sql->isTriggerCountEmpty())
+        if($this->hasTablePermission('export') && !$sql->isTriggerCountEmpty())
         {
             $segment = $this->segments();
             $route = GeneralExportDialog::makeOverload($segment);
@@ -503,7 +504,7 @@ class General extends Core\RouteAlias
         $r = '';
         $table = $this->table();
 
-        if($this->hasPermission('truncate','empty') && !empty($table->rowsCount(true,true)))
+        if($this->hasTablePermission('truncate','lemurTruncate') && !empty($table->rowsCount(true,true)))
         {
             $data = ['confirm'=>static::langText('common/confirm')];
             $route = GeneralTruncate::makeOverload($table);
@@ -526,20 +527,20 @@ class General extends Core\RouteAlias
     {
         $r = '';
 
-        if($this->hasPermission('rows'))
+        if($this->hasTablePermission('rows'))
         {
             $r .= Html::divOp('tool');
             $char = static::getReplaceSegment();
             $defaultSegment = static::getDefaultSegment();
 
-            if($this->hasPermission('in'))
+            if($this->hasTablePermission('in'))
             {
                 $route = $this->changeSegments(['page'=>1,'in'=>true]);
                 $data = ['href'=>$route,'char'=>$char,'separator'=>$defaultSegment];
                 $r .= Html::div(null,['icon','solo','in','data'=>$data]);
             }
 
-            if($this->hasPermission('notIn'))
+            if($this->hasTablePermission('notIn'))
             {
                 $notIn = $this->segment('notIn');
                 $notIn[] = $char;
@@ -562,7 +563,7 @@ class General extends Core\RouteAlias
     {
         $r = '';
 
-        if($this->hasPermission('remove','delete','multiDelete'))
+        if($this->hasTablePermission('delete','lemurDelete','multiDelete'))
         {
             $table = $this->table();
             $route = GeneralDelete::makeOverload(['table'=>$table,'primaries'=>true]);
@@ -592,7 +593,7 @@ class General extends Core\RouteAlias
         $currentCols = $this->getCurrentCols();
         $inAttr = ['in','toggler'];
 
-        if($this->hasPermission('view','cols') && $cols->isNotEmpty() && $currentCols->isNotEmpty())
+        if($this->hasTablePermission('view','cols') && $cols->isNotEmpty() && $currentCols->isNotEmpty())
         {
             $defaultSegment = static::getDefaultSegment();
             $route = $this->changeSegment('cols',true);
@@ -637,7 +638,7 @@ class General extends Core\RouteAlias
     {
         $r = '';
 
-        if($this->hasPermission('view'))
+        if($this->hasTablePermission('view'))
         {
             $table = $this->table();
             $cols = $this->getCurrentCols();
@@ -701,11 +702,11 @@ class General extends Core\RouteAlias
         if($cols->isNotEmpty())
         {
             $ths = [];
-            $permission['filter'] = $this->hasPermission('filter');
-            $permission['order'] = $this->hasPermission('order','direction');
+            $permission['filter'] = $this->hasTablePermission('filter');
+            $permission['order'] = $this->hasTablePermission('order','direction');
             $count = $cols->count();
 
-            if($this->hasPermission('rows'))
+            if($this->hasTablePermission('rows'))
             {
                 $html = Html::div(null,['icon','solo','check','center']);
                 $html .= Html::div(null,['icon','solo','uncheck','center']);
@@ -741,7 +742,7 @@ class General extends Core\RouteAlias
                 $ths[] = $array;
             }
 
-            if($this->hasPermission('action'))
+            if($this->hasTablePermission('action'))
             {
                 $html = $this->makeCols();
                 $ths[] = [$html,'action'];
@@ -786,10 +787,10 @@ class General extends Core\RouteAlias
         {
             $table = $this->table();
             $trs = [];
-            $rowsPermission = $this->hasPermission('rows');
-            $actionPermission = $this->hasPermission('action');
-            $modify = $this->hasPermission('modify','update');
-            $specificPermission = $this->hasPermission('specific');
+            $rowsPermission = $this->hasTablePermission('rows');
+            $actionPermission = $this->hasTablePermission('action');
+            $specificPermission = $this->hasTablePermission('specific');
+            $modify = $this->hasTablePermission('update','lemurUpdate');
 
             foreach ($rows as $row)
             {
@@ -814,11 +815,13 @@ class General extends Core\RouteAlias
                 if($actionPermission === true)
                 {
                     $html = '';
-                    $action = ($modify === true && $row->isUpdateable())? 'modify':'view';
-
-                    if($this->hasPermission($action) && $specificPermission === true)
-                    $html = Html::a($specific,Html::div(null,['icon','solo',$action,'center']),'in');
-
+                    
+                    if($specificPermission === true)
+                    {
+                        $action = ($modify === true && $row->isUpdateable())? 'modify':'view';
+                        $html = Html::a($specific,Html::div(null,['icon','solo',$action,'center']),'in');
+                    }
+                    
                     $array[] = [$html,'action'];
                 }
 

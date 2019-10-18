@@ -10,25 +10,25 @@ declare(strict_types=1);
 namespace Quid\Lemur\Cms;
 use Quid\Base;
 use Quid\Base\Html;
-use Quid\Core;
+use Quid\Lemur;
 
 // accountChangePassword
 // class for the change password route in the CMS
-class AccountChangePassword extends Core\Route\AccountChangePassword
+class AccountChangePassword extends Lemur\Route\AccountChangePassword
 {
     // config
     public static $config = [
         'match'=>[
             'role'=>['>='=>20],
             'ajax'=>true],
-        'row'=>Core\Row\User::class,
+        'row'=>Lemur\Row\User::class,
         'parent'=>Account::class
     ];
 
 
     // submitRoute
     // route à utiliser pour submit
-    public function submitRoute():Core\Route\AccountChangePasswordSubmit
+    public function submitRoute():Lemur\Route\AccountChangePasswordSubmit
     {
         return AccountChangePasswordSubmit::makeOverload();
     }

@@ -36,19 +36,6 @@ abstract class Boot extends Core\Boot
                 'versionQuid'=>true,
                 'background'=>null,
                 'logo'=>null],
-            'config'=>[
-                Core\Route::class=>[
-                    'metaTitle'=>['typeLabel'=>true],
-                    'jsInit'=>'$(document).ready(function() { $(this).navigation(); });',
-                    'docOpen'=>[
-                        'head'=>[
-                            'css'=>[
-                                'type'=>'css/%type%.css'],
-                            'js'=>[
-                                'include'=>'js/include.js',
-                                'type'=>'js/%type%.js']]]],
-                Core\Col::class=>[
-                    'generalExcerptMin'=>100]],
             'compileScss'=>[
                 '[publicCss]/cms.css'=>[
                     0=>'[vendorLemur]/scss/include/_include.scss',

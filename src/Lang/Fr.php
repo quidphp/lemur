@@ -36,7 +36,27 @@ class Fr extends Core\Lang\Fr
                 'cms'=>'Gestionnaire de contenu'
             ]
         ],
+        
+        // route
+        'route'=>[
 
+            // label
+            'label'=>[
+                'account'=>'Mon compte',
+                'accountSubmit'=>'Mon compte - Soumettre',
+                'accountChangePassword'=>'Changer mon mot de passe',
+                'accountChangePasswordSubmit'=>'Changer mon mot de passe - Soumettre',
+                'activatePassword'=>'Activer le mot de passe',
+                'login'=>'Connexion',
+                'loginSubmit'=>'Connexion - Soumettre',
+                'logout'=>'Déconnexion',
+                'register'=>'Enregistrement',
+                'registerSubmit'=>'Enregistrement - Soumettre',
+                'resetPassword'=>'Régénérer un nouveau mot de passe',
+                'resetPasswordSubmit'=>'Régénérer un nouveau mot de passe - Soumettre'
+            ]
+        ],
+        
         // cms
         '@cms'=>[
 
@@ -79,6 +99,7 @@ class Fr extends Core\Lang\Fr
                     'group'=>'Groupe',
                     'processId'=>'Identifiant de processus',
                     'classFqcn'=>'Classe Boot',
+                    'classRoute'=>'Classe Route',
                     'paths'=>'Chemins',
                     'schemeHosts'=>'Domaines',
                     'memory'=>'Mémoire vive',

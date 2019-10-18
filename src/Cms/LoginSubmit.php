@@ -8,11 +8,11 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Cms;
-use Quid\Core;
+use Quid\Lemur;
 
 // loginSubmit
 // class for the login submit route of the CMS
-class LoginSubmit extends Core\Route\LoginSubmit
+class LoginSubmit extends Lemur\Route\LoginSubmit
 {
     // trait
     use _common;
@@ -26,7 +26,7 @@ class LoginSubmit extends Core\Route\LoginSubmit
 
     // routeSuccess
     // retourne la route vers laquelle redirigé en cas de succès par défaut, si rien dans la mémoire
-    public function routeSuccessDefault():Core\Route
+    public function routeSuccessDefault():Lemur\Route
     {
         return Home::makeOverload();
     }

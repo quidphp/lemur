@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Quid\Lemur\Cms;
 use Quid\Core;
+use Quid\Lemur;
 
 // specificDownload
 // class for the file download route of the CMS
@@ -16,11 +17,11 @@ class SpecificDownload extends Core\RouteAlias
 {
     // trait
     use _common;
-    use Core\Route\_download;
-    use Core\Segment\_table;
-    use Core\Segment\_primary;
-    use Core\Segment\_col;
-    use Core\Segment\_int;
+    use Lemur\Route\_download;
+    use Lemur\Segment\_table;
+    use Lemur\Segment\_primary;
+    use Lemur\Segment\_col;
+    use Lemur\Segment\_int;
 
 
     // config
@@ -45,7 +46,7 @@ class SpecificDownload extends Core\RouteAlias
         $return = false;
         $table = $this->segment('table');
 
-        if($table instanceof Core\Table && $table->hasPermission('download'))
+        if($table instanceof Core\Table && $table->hasPermission('mediaDownload'))
         {
             $col = $this->segment('col');
             if(!empty($col) && $col->isMedia())

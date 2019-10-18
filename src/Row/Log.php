@@ -20,8 +20,8 @@ class Log extends Core\Row\Log
             'permission'=>[
                 'contributor'=>['view'=>false],
                 'editor'=>['view'=>false],
-                'subAdmin'=>['add'=>false],
-                'admin'=>['add'=>false,'empty'=>true]]]
+                'subAdmin'=>['lemurInsert'=>false],
+                'admin'=>['lemurInsert'=>false,'lemurTruncate'=>true]]]
     ];
 }
 

@@ -11,6 +11,7 @@ namespace Quid\Lemur\Cms;
 use Quid\Base;
 use Quid\Base\Html;
 use Quid\Core;
+use Quid\Lemur;
 
 // homeSearch
 // class for the global search route accessible from the homepage of the CMS
@@ -18,7 +19,7 @@ class HomeSearch extends Core\RouteAlias
 {
     // trait
     use _common;
-    use Core\Route\_search;
+    use Lemur\Route\_search;
 
 
     // config
@@ -42,7 +43,7 @@ class HomeSearch extends Core\RouteAlias
     {
         $return = false;
 
-        if(static::sessionUser()->can('home/search'))
+        if($this->hasPermission('home/search'))
         {
             $search = $this->getSearchValue();
 

@@ -11,6 +11,7 @@ namespace Quid\Lemur\Cms;
 use Quid\Base;
 use Quid\Core;
 use Quid\Orm;
+use Quid\Lemur;
 
 // generalExport
 // class for the route which generates the CSV export for the CMS
@@ -19,12 +20,12 @@ class GeneralExport extends Core\RouteAlias
     // trait
     use _common;
     use _export;
-    use Core\Route\_generalSegment;
-    use Core\Segment\_table;
-    use Core\Segment\_order;
-    use Core\Segment\_direction;
-    use Core\Segment\_filter;
-    use Core\Segment\_primaries;
+    use Lemur\Route\_generalSegment;
+    use Lemur\Segment\_table;
+    use Lemur\Segment\_order;
+    use Lemur\Segment\_direction;
+    use Lemur\Segment\_filter;
+    use Lemur\Segment\_primaries;
 
 
     // config
