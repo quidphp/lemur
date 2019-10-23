@@ -37,7 +37,7 @@ class Db extends Base\Test
         $array = ['test'=>Base\Str::loremIpsum(3000)];
         $tooLong = Lemur\Row\LogSql::log('insert',$array);
         assert($tooLong['json']->isInvalidValue());
-        
+
         // col
         $table = 'ormCol';
         assert($db->truncate($table) instanceof \PDOStatement);

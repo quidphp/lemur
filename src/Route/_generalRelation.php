@@ -19,14 +19,14 @@ trait _generalRelation
     // trait
     use _colRelation;
 
-    
+
     // config
-    public static $configGeneralRelation = array(
+    public static $configGeneralRelation = [
         'showCount'=>false, // affiche le total pour chaque filtre
         'showEmptyNotEmpty'=>false, // offre le choix de filtrer par vide/pas vide
-    );
-    
-    
+    ];
+
+
     // getRoute
     // retourne la route à utiliser
     abstract protected function getRoute():Core\Route;
@@ -47,7 +47,7 @@ trait _generalRelation
         $r = '';
         $grab = $this->relationGrab();
         $emptyNotEmpty = $this->showEmptyNotEmpty();
-        
+
         if(!empty($grab))
         {
             ['result'=>$results,'count'=>$count] = $grab;
@@ -58,21 +58,21 @@ trait _generalRelation
                 $selected = $this->prepareSelected($selected,$emptyNotEmpty);
                 $r .= $this->makeResults($selected,'selected-list');
             }
-            
+
             if(is_array($results) && !empty($results))
             {
                 if($emptyNotEmpty === true && $this->isFirstPage() && !$this->hasSearchValue())
                 $results = $this->addEmptyNotEmpty($results,$selected);
-                
+
                 $r .= $this->makeResults($results,'list',$count);
             }
         }
-        
+
         $r = Html::divCond($r,'relationWrap');
-        
+
         if(empty($r))
         $r .= Base\Html::h3(static::langText('common/nothing'));
-        
+
         return $r;
     }
 
@@ -87,61 +87,61 @@ trait _generalRelation
 
     // prepareSelected
     // prépare les éléments sélectionnés, ajoute les empty not empty au besoin
-    protected function prepareSelected(array $value,bool $emptyNotEmpty):array 
+    protected function prepareSelected(array $value,bool $emptyNotEmpty):array
     {
-        $return = array();
-        
+        $return = [];
+
         if($emptyNotEmpty === true)
         {
             $emptyNotEmptyArray = $this->getEmptyNotEmptyKeyValue();
-            
-            foreach ($value as $v) 
+
+            foreach ($value as $v)
             {
                 if(is_string($v) && array_key_exists($v,$emptyNotEmptyArray))
                 $return[$v] = $emptyNotEmptyArray[$v];
             }
         }
-        
+
         $return = Base\Arr::append($return,$this->relationKeyValue($value));
-        
+
         return $return;
     }
-    
-    
+
+
     // addEmptyNotEmpty
     // ajoute les empty not empty non sélectionnés dans le tableau de résultat
-    protected function addEmptyNotEmpty(array $array,array $selected):array 
+    protected function addEmptyNotEmpty(array $array,array $selected):array
     {
-        $return = array();
+        $return = [];
         $not = array_keys($selected);
         $emptyNotEmpty = $this->getEmptyNotEmptyKeyValue($not);
         $return = Base\Arr::append($emptyNotEmpty,$array);
-        
+
         return $return;
     }
-    
-    
+
+
     // getEmptyNotEmptyKeyValue
     // retourn le tableau key value des empty not empty
     // possible de retirer un élément sélectionné
-    protected function getEmptyNotEmptyKeyValue(?array $not=null):array 
+    protected function getEmptyNotEmptyKeyValue(?array $not=null):array
     {
-        $return = array();
-        
-        foreach (array('00'=>'isEmpty','01'=>'isNotEmpty') as $key => $label) 
+        $return = [];
+
+        foreach (['00'=>'isEmpty','01'=>'isNotEmpty'] as $key => $label)
         {
             if($not === null || !in_array($key,$not,true))
             {
-                $label = static::langText(array('common',$label));
+                $label = static::langText(['common',$label]);
                 $label = "-- $label --";
                 $return[$key] = $label;
             }
         }
-        
+
         return $return;
     }
-    
-    
+
+
     // makeRoutes
     // retourne un tableau avec toutes les routes de filtre à afficher
     protected function makeRoutes(array $array):array
@@ -163,13 +163,13 @@ trait _generalRelation
         return $return;
     }
 
-    
+
     // makeOneRoute
     // méthode utilisé pour générer le tableau d'une route
-    protected function makeOneRoute($key,string $label):array 
+    protected function makeOneRoute($key,string $label):array
     {
-        $return = array();
-        
+        $return = [];
+
         if(Base\Arr::isKey($key))
         {
             $col = $this->segment('col');
@@ -180,7 +180,7 @@ trait _generalRelation
             $current = (is_array($current))? $current:[];
             $currentName = (array_key_exists($name,$current))? $current[$name]:null;
             $label = $col->valueExcerpt($label);
-            
+
             $label = Html::div($label,'label-content');
             $active = (in_array($key,$selected,true))? true:false;
             $filter = $current;
@@ -209,24 +209,24 @@ trait _generalRelation
                     $plus = $route->changeSegments(['filter'=>$filter,'page'=>1]);
                 }
             }
-            
+
             if(static::showCount() === true)
             $label .= $this->makeShowCount($route);
-            
+
             $return['label'] = $label;
             $return['active'] = $active;
             $return['route'] = $route;
             $return['plus'] = $plus;
             $return['minus'] = $minus;
         }
-        
+
         else
         static::throw();
-        
+
         return $return;
     }
-    
-    
+
+
     // makeResults
     // génère les résultats d'affichage de la relation
     protected function makeResults(array $array,$attr=null,?int $loadMore=null):string
@@ -234,7 +234,7 @@ trait _generalRelation
         $r = '';
         $routes = $this->makeRoutes($array);
         $col = $this->segment('col');
-        
+
         if(!empty($routes))
         {
             foreach ($routes as $key => $value)
@@ -246,29 +246,29 @@ trait _generalRelation
                     $route = $value['route'] ?? null;
                     $plus = $value['plus'] ?? null;
                     $minus = $value['minus'] ?? null;
-                    
+
                     if(is_string($label) && strlen($label) && $route instanceof Core\Route && is_bool($selected))
                     {
-                        $liAttr = array();
+                        $liAttr = [];
                         $class = ($selected === true)? 'selected':null;
                         $value = $route->a($label,[$class,'replace']);
                         if(!empty($plus) || !empty($minus))
                         $liAttr[] = 'has-icon';
-                        
+
                         if(!empty($plus))
                         $value .= $plus->a(null,['icon','plus']);
 
                         elseif(!empty($minus))
                         $value .= $minus->a(null,['icon','minus']);
-                        
+
                         $r .= Html::li($value,$liAttr);
                     }
-                    
+
                     else
                     static::throw('invalid',$key);
                 }
             }
-            
+
             if(!empty($r) && is_int($loadMore))
             $r .= $this->loadMore($loadMore);
 
@@ -278,20 +278,20 @@ trait _generalRelation
         return $r;
     }
 
-    
+
     // makeShowCount
     // fait le html pour le count
-    protected function makeShowCount(Core\Route $route):string 
+    protected function makeShowCount(Core\Route $route):string
     {
         $r = '';
         $sql = $route->sql();
         $count = $sql->triggerWhatCount();
         $r .= Html::div($count,'label-count');
-        
+
         return $r;
     }
-    
-    
+
+
     // makeFilter
     // construit un input filter
     public static function makeFilter(Core\Col $col,Core\Route $currentRoute,$filter,$class=null,$closeAttr=null,?string $label=null):string
@@ -305,7 +305,7 @@ trait _generalRelation
         $active = false;
         $selected = null;
         $after = null;
-        
+
         if(is_array($filter) && array_key_exists($name,$filter))
         {
             $active = true;
@@ -353,19 +353,19 @@ trait _generalRelation
 
         return $r;
     }
-    
-    
+
+
     // showEmptyNotEmpty
     // retourne vrai s'il faut afficher le empty not empty
-    public function showEmptyNotEmpty():bool 
+    public function showEmptyNotEmpty():bool
     {
         return (static::$config['showEmptyNotEmpty'] === true && $this->segment('col')->isFilterEmptyNotEmpty())? true:false;
     }
-    
-    
+
+
     // showCount
     // retourne vrai s'il faut afficher le count
-    public static function showCount():bool 
+    public static function showCount():bool
     {
         return static::$config['showCount'] ?? false;
     }

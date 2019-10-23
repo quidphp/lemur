@@ -18,31 +18,31 @@ trait _specificRelation
     // trait
     use _colRelation;
 
-    
+
     // config
-    public static $configSpecificRelation = array(
+    public static $configSpecificRelation = [
         'showCount'=>false // affiche le total pour chaque élément
-    );
-    
-    
+    ];
+
+
     // trigger
     // lance la route specificRelation
     public function trigger():string
     {
         $r = '';
         $grab = $this->relationGrab();
-        
+
         if(!empty($grab))
         {
             ['result'=>$results,'count'=>$count] = $grab;
-            
+
             if(is_array($results) && !empty($results))
             $r .= $this->makeResults($results,$count);
         }
-        
+
         if(empty($r))
         $r = Html::h3(static::langText('common/nothing'));
-        
+
         return $r;
     }
 
@@ -62,7 +62,7 @@ trait _specificRelation
         $r = '';
         $col = $this->col();
         $selected = $this->segment('selected');
-        
+
         if(!empty($array))
         {
             foreach ($array as $key => $value)
@@ -72,13 +72,13 @@ trait _specificRelation
                 $data = ['value'=>$key,'html'=>$html];
                 $value = $col->valueExcerpt($value);
                 $value = Html::div($value,'label-content');
-                
+
                 if(static::showCount())
                 {
                     $count = $this->getCount($key);
                     $value .= Html::divCond($count,'label-count');
                 }
-                
+
                 $value = Html::div($value,'ele');
                 $r .= Html::li($value,[$class,'data'=>$data]);
             }
@@ -91,19 +91,19 @@ trait _specificRelation
 
         return $r;
     }
-    
-    
+
+
     // getCount
     // retounrne le nombre de lignes dans la table qui ont la valeur donnée en argument pour cette colonne
-    protected function getCount(int $value):?int 
+    protected function getCount(int $value):?int
     {
         return $this->col()->countPrimaries($value);
     }
-    
-    
+
+
     // showCount
     // retourne vrai s'il faut afficher le count
-    public static function showCount():bool 
+    public static function showCount():bool
     {
         return static::$config['showCount'] ?? false;
     }

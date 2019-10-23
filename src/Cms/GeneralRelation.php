@@ -67,7 +67,7 @@ class GeneralRelation extends Core\RouteAlias
             else
             $return = true;
         }
-        
+
         return $return;
     }
 

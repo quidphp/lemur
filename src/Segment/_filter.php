@@ -97,7 +97,7 @@ trait _filter
     protected static function matchSegmentFilter($value,Core\Table $table)
     {
         $return = false;
-        
+
         if(!empty($value))
         {
             if(is_string($value))
@@ -105,11 +105,11 @@ trait _filter
                 $return = [];
                 $delimiters = static::getFilterDelimiters();
                 $array = Base\Str::explodes([$delimiters[0],$delimiters[1]],$value,null,true,true);
-                
+
                 if(!empty($array))
                 {
-                    $value = array();
-                    
+                    $value = [];
+
                     foreach ($array as $val)
                     {
                         if(is_array($val) && count($val) === 2)
@@ -122,7 +122,7 @@ trait _filter
                     }
                 }
             }
-            
+
             if(is_array($value))
             $return = static::matchSegmentFilterArray($value,$table);
         }
@@ -130,44 +130,44 @@ trait _filter
         return $return;
     }
 
-    
+
     // matchSegmentFilterArray
     // gère le segment filter lors d'une validation et que la valeur est un array
     protected static function matchSegmentFilterArray(array $value,Core\Table $table)
     {
-        $return = array();
-        
-        foreach ($value as $k => $v) 
+        $return = [];
+
+        foreach ($value as $k => $v)
         {
             $val = false;
-            
+
             if(is_string($k) && $table->hasCol($k) && $v !== null)
             {
                 $col = $table->col($k);
-                
+
                 if($col->isFilterable())
                 $val = static::prepareSegmentFilter($v,$col);
             }
-            
+
             if($val === false)
             {
                 $return = false;
                 break;
             }
-            
+
             else
             $return = Base\Arr::append($return,$val);
         }
-        
+
         return $return;
     }
-    
-    
+
+
     // prepareSegmentFilter
     // permet de préparer les valeurs pour une relation
     protected static function prepareSegmentFilter(array $value,Core\Col $col)
     {
-        $return = array();
+        $return = [];
         $name = $col->name();
         $rel = $col->relation();
 
@@ -175,10 +175,10 @@ trait _filter
         {
             if($col->isFilterEmptyNotEmpty() && $col::isFilterEmptyNotEmptyValue($v))
             $return[$name][] = $v;
-            
+
             elseif($rel->exists($v))
             $return[$name][] = $v;
-            
+
             else
             {
                 $return = false;
@@ -188,8 +188,8 @@ trait _filter
 
         return $return;
     }
-    
-    
+
+
     // getFilterDelimiters
     // retourne les délimiteurs à utiliser pour les filtres
     public static function getFilterDelimiters():array

@@ -8,7 +8,6 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Route;
-use Quid\Base;
 use Quid\Orm;
 
 // _colRelation
@@ -26,15 +25,15 @@ trait _colRelation
         return $this->segment('col')->relation();
     }
 
-    
+
     // relationSearchRequired
     // retourne vrai si la recherche est requise
-    public function relationSearchRequired():bool 
+    public function relationSearchRequired():bool
     {
         return $this->segment('col')->isRelationSearchRequired();
     }
-    
-    
+
+
     // isSearchValueValid
     // retourne vrai si la valeur de recherche est valide
     protected function isSearchValueValid(string $value):bool

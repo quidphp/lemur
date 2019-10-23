@@ -4,15 +4,15 @@ declare(strict_types=1);
 /*
  * This file is part of the QuidPHP package.
  * Website: https://quidphp.com
- * License: https://github.com/quidphp/core/blob/master/LICENSE
+ * License: https://github.com/quidphp/lemur/blob/master/LICENSE
  */
 
 namespace Quid\Lemur\Col;
 use Quid\Base;
 use Quid\Base\Html;
 use Quid\Core;
-use Quid\Orm;
 use Quid\Lemur;
+use Quid\Orm;
 
 // jsonArray
 // class for a column which offers a special input for json values

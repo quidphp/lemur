@@ -285,10 +285,10 @@ trait _specific
             $details = $colCell->details();
             $formWrap = '';
 
-            $class = array();
+            $class = [];
             $class[] = ($col->isRequired())? 'required':null;
             $class[] = ($colCell->hasFormLabelId($this->formWrapAttr($colCell),true))? 'cursor-pointer':null;
-            $data = array('name'=>$col,'group'=>$col->group(),'col'=>$col::className(true),'tag'=>$col->complexTag());
+            $data = ['name'=>$col,'group'=>$col->group(),'col'=>$col::className(true),'tag'=>$col->complexTag()];
             $data = $col->getDataAttr($data);
             $attr = ['element','anchor-corner',$class,'data'=>$data];
 

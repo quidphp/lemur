@@ -4,14 +4,14 @@ declare(strict_types=1);
 /*
  * This file is part of the QuidPHP package.
  * Website: https://quidphp.com
- * License: https://github.com/quidphp/core/blob/master/LICENSE
+ * License: https://github.com/quidphp/lemur/blob/master/LICENSE
  */
 
 namespace Quid\Lemur\Col;
 use Quid\Base;
 use Quid\Core;
-use Quid\Orm;
 use Quid\Lemur;
+use Quid\Orm;
 
 // jsonExport
 // class for a column that contains json which should be exported (similar to var_export)
@@ -45,8 +45,8 @@ class JsonExport extends Core\Col\JsonAlias
 
         return $return;
     }
-    
-    
+
+
     // onSet
     // gère la logique onSet pour jsonExport
     // si la valeur est trop longue, n'envoie pas d'erreur mais retourne un tableau avec la clé incomplete à true

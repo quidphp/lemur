@@ -8,9 +8,9 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Route;
-use Quid\Core;
 use Quid\Base;
 use Quid\Base\Html;
+use Quid\Core;
 
 // _specific
 // trait that provides most methods used for a specific route

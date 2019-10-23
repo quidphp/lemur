@@ -95,16 +95,16 @@ trait _common
                     foreach ($value as $k => $v)
                     {
                         $str = '';
-                        
+
                         if(is_bool($v))
                         $v = $lang->bool($v);
 
                         elseif($v === '' || $v === null)
                         $v = Html::span('NULL','value-empty');
-                        
+
                         elseif(is_array($v))
                         $v = implode(', ',Base\Arr::cleanNull($v));
-                        
+
                         if(is_string($v) && strlen($v))
                         {
                             if(is_string($k))
@@ -112,7 +112,7 @@ trait _common
                                 $str .= Html::span($k,'key');
                                 $str .= ': ';
                             }
-                            
+
                             $str .= $v;
                             $html2 .= Html::liCond($str);
                         }

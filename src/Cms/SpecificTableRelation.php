@@ -8,9 +8,9 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Cms;
+use Quid\Base\Html;
 use Quid\Core;
 use Quid\Lemur;
-use Quid\Base\Html;
 use Quid\Orm;
 
 // SpecificTableRelation
@@ -54,8 +54,8 @@ class SpecificTableRelation extends Core\RouteAlias
 
         return $return;
     }
-    
-    
+
+
     // relation
     // retourne l'objet relation de la table
     public function relation():Orm\Relation
@@ -63,27 +63,27 @@ class SpecificTableRelation extends Core\RouteAlias
         return $this->segment('table')->relation();
     }
 
-    
+
     // trigger
     // lance la route tableRelation
     public function trigger():string
     {
         $r = '';
         $grab = $this->relationGrab();
-        
+
         if(!empty($grab))
         {
             ['result'=>$results,'count'=>$count] = $grab;
-            
+
             if(is_array($results) && !empty($results))
             $r .= $this->makeResults($results,'list',true);
         }
-        
+
         if(empty($r))
         $r .= Html::h3(static::langText('common/nothing'));
-        
+
         $r = Html::div($r,'relationWrap');
-        
+
         return $r;
     }
 

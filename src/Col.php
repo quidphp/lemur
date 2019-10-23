@@ -21,11 +21,11 @@ class Col extends Core\Col
             'filterEmptyNotEmpty'=>true,
             'generalExcerptMin'=>100]
     ];
-    
-    
+
+
     // getDataAttr
     // retourne les dates attr pour la colonne
-    public function getDataAttr(array $return):array 
+    public function getDataAttr(array $return):array
     {
         return $return;
     }

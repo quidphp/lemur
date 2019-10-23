@@ -300,8 +300,8 @@ trait _general
 
         return [$html,$thAttr];
     }
-    
-    
+
+
     // makeGeneralPager
     // construit un block de navigation à partir d'un tableau general
     protected function makeGeneralPager(array $general,bool $firstLast=true,bool $prevNext=true,bool $str=false)

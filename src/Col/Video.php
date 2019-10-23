@@ -4,16 +4,16 @@ declare(strict_types=1);
 /*
  * This file is part of the QuidPHP package.
  * Website: https://quidphp.com
- * License: https://github.com/quidphp/core/blob/master/LICENSE
+ * License: https://github.com/quidphp/lemur/blob/master/LICENSE
  */
 
 namespace Quid\Lemur\Col;
 use Quid\Base;
 use Quid\Base\Html;
 use Quid\Core;
+use Quid\Lemur;
 use Quid\Main;
 use Quid\Orm;
-use Quid\Lemur;
 
 // video
 // extended abstract class for a column containing a video from a third-party service
@@ -62,14 +62,14 @@ abstract class Video extends Core\ColAlias
                 $return = $service::makeVideo($return);
             }
         }
-        
+
         if(!empty($return) && !empty($option['context']) && $option['context'] === 'cms:general' && $return instanceof Main\Video)
         $return = Html::a($return->absolute(),true);
-        
+
         return $return;
     }
 
-    
+
     // onSet
     // gère la logique onSet pour la vidéo
     public function onSet($return,array $row,?Orm\Cell $cell=null,array $option)

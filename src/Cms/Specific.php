@@ -41,7 +41,7 @@ class Specific extends Core\RouteAlias
         'sitemap'=>true
     ];
 
-    
+
     // onBefore
     // validation avant le lancement de la route
     protected function onBefore()

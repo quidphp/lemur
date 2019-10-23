@@ -110,7 +110,7 @@
         overflow-y: visible;
         overflow-x: auto;
         min-height: 400px;
-        
+
         &[data-status='grabbing'] {
             @include disableSelection();
             cursor: grabbing !important;
@@ -221,11 +221,11 @@
         @include abs(-8px, -8px);
         z-index: 1;
     }
-    
+
     .in {
         cursor: pointer;
         padding: 0 10px;
-        
+
         &.selected,
         &:hover {
             background-color: $lightYellow;
@@ -288,7 +288,6 @@
         }
 
         .right {
-
             .arrow {
                 opacity: 1;
             }
@@ -353,22 +352,22 @@
             background-color: $lightYellow;
             border-right: 1px solid $lightYellow;
         }
-        
+
         &.selected .close {
-            @include abs(-8px,0px);
+            @include abs(-8px, 0px);
         }
-        
+
         .popup {
             width: 350px;
             overflow-y: hidden;
             padding: 0;
-            
+
             > .inside {
                 max-height: 300px;
                 padding: 10px 15px;
                 overflow-y: auto;
             }
-            
+
             &.valid {
                 button {
                     display: block;
@@ -381,15 +380,15 @@
                     color: $red;
                 }
             }
-            
+
             .choice {
                 @include inputChoice(4px 10px);
-                
+
                 .move {
                     margin-right: 5px;
                 }
             }
-            
+
             button {
                 display: none;
             }

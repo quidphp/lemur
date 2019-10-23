@@ -59,12 +59,12 @@ class En extends Core\Lang\En
 
         // cms
         '@cms'=>[
-            
+
             // common
-            'common'=>array(
+            'common'=>[
                 'loadMore'=>'Load [from] to [to] on [total]'
-            ),
-            
+            ],
+
             // popup
             'popup'=>[
 

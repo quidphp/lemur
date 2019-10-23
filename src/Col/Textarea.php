@@ -8,11 +8,11 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Col;
+use Quid\Base;
 use Quid\Base\Html;
 use Quid\Core;
-use Quid\Orm;
-use Quid\Base;
 use Quid\Lemur;
+use Quid\Orm;
 
 // textarea
 // class for a column which is editable through a textarea input
@@ -28,7 +28,7 @@ class Textarea extends Core\ColAlias
             'route'=>['tableRelation'=>Lemur\Cms\SpecificTableRelation::class]]
     ];
 
-    
+
     // onSet
     // gère la logique onSet pour textarea
     // la seule chose géré est le remplacement des liens absoluts pour leur version relatives
@@ -70,8 +70,8 @@ class Textarea extends Core\ColAlias
 
         return $return;
     }
-    
-    
+
+
     // hasTableRelation
     // retourne vrai si le textarea a des table relation
     public function hasTableRelation():bool

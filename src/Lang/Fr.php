@@ -59,12 +59,12 @@ class Fr extends Core\Lang\Fr
 
         // cms
         '@cms'=>[
-            
+
             // common
-            'common'=>array(
+            'common'=>[
                 'loadMore'=>'Charger de [from] à [to] sur [total]'
-            ),
-            
+            ],
+
             // popup
             'popup'=>[
 

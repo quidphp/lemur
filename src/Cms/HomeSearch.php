@@ -11,8 +11,8 @@ namespace Quid\Lemur\Cms;
 use Quid\Base;
 use Quid\Base\Html;
 use Quid\Core;
-use Quid\Orm;
 use Quid\Lemur;
+use Quid\Orm;
 
 // homeSearch
 // class for the global search route accessible from the homepage of the CMS

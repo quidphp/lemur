@@ -17,8 +17,8 @@ class LogSql extends Core\Row\LogSql
 {
     // config
     public static $config = [
-        'cols'=>array(
-            'json'=>array('class'=>Lemur\Col\JsonExport::class)),
+        'cols'=>[
+            'json'=>['class'=>Lemur\Col\JsonExport::class]],
         '@cms'=>[
             'permission'=>[
                 'contributor'=>['view'=>false],

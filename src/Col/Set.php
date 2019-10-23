@@ -4,14 +4,13 @@ declare(strict_types=1);
 /*
  * This file is part of the QuidPHP package.
  * Website: https://quidphp.com
- * License: https://github.com/quidphp/core/blob/master/LICENSE
+ * License: https://github.com/quidphp/lemur/blob/master/LICENSE
  */
 
 namespace Quid\Lemur\Col;
 use Quid\Base;
 use Quid\Base\Html;
 use Quid\Core;
-use Quid\Lemur;
 
 // set
 // class for a column containing a set relation (many)
@@ -19,12 +18,12 @@ class Set extends Core\Col\Set
 {
     // config
     public static $config = [
-        '@cms'=>array(
+        '@cms'=>[
             'sortable'=>true,
-            'relationHtmlSortable'=>"<div class='choice'><div class='choice-in'><div class='icon solo move'></div>%</div></div>")
+            'relationHtmlSortable'=>"<div class='choice'><div class='choice-in'><div class='icon solo move'></div>%</div></div>"]
     ];
-    
-    
+
+
     // isSortable
     // retourne vrai si la relation est sortable
     public function isSortable():bool
@@ -42,8 +41,8 @@ class Set extends Core\Col\Set
 
         return $return;
     }
-    
-    
+
+
     // getDataAttr
     // retourne les datas attr pour la colonne
     public function getDataAttr(array $return):array
@@ -53,8 +52,8 @@ class Set extends Core\Col\Set
 
         return $return;
     }
-    
-    
+
+
     // onGet
     // logique onGet pour un champ relation
     // affichage spéciale si le contexte est cms:general
@@ -65,14 +64,14 @@ class Set extends Core\Col\Set
             $output = $return->generalOutput($option);
             $return = Html::divCond($output,'relation');
         }
-        
+
         else
         $return = parent::onGet($return,$option);
-        
+
         return $return;
     }
-    
-    
+
+
     // prepareStandardRelation
     // retourne la relation pour un input avec choice
     // si sortable, met les éléments cochés en ordre au début de la liste

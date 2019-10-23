@@ -18,11 +18,11 @@ form [data-group='date'] .right {
         padding: 0;
         border: 0;
         overflow: hidden;
-        
+
         .calendar {
             @include calendar();
         }
-        
+
         &:after {
             display: none;
         }
@@ -37,7 +37,7 @@ form [data-col='userPassword'] .right {
 }
 
 /* MEDIA */
-form [data-group='media'] .right .block  {
+form [data-group='media'] .right .block {
     @include inbl();
     width: 480px;
     background-color: $white;

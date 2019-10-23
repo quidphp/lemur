@@ -17,9 +17,9 @@ class Email extends Core\Row\Email
 {
     // config
     public static $config = [
-        'cols'=>array(
-            'content_fr'=>array('class'=>Lemur\Col\Textarea::class),
-            'content_en'=>array('class'=>Lemur\Col\Textarea::class)),
+        'cols'=>[
+            'content_fr'=>['class'=>Lemur\Col\Textarea::class],
+            'content_en'=>['class'=>Lemur\Col\Textarea::class]],
         '@cms'=>[
             'permission'=>[
                 'contributor'=>['view'=>false],

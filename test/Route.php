@@ -234,7 +234,7 @@ class Route extends Base\Test
         assert($g3->checkValidSegment());
         assert($g3->isValid());
         assert($g3->checkValid());
-        assert(($g4 = $g3->changeSegments(['table'=>123,'page'=>4,'filter'=>array('user'=>2)])) instanceof Core\Route);
+        assert(($g4 = $g3->changeSegments(['table'=>123,'page'=>4,'filter'=>['user'=>2]])) instanceof Core\Route);
         assert(!$g4->isValidSegment());
         assert(($g5 = $g3->keepSegments('page')) instanceof Core\Route);
         assert($g5->segments()['page'] === 4);

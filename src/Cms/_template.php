@@ -262,7 +262,7 @@ trait _template
                 if(is_string($key) && !empty($key))
                 {
                     $table = $tables->get($key);
-                    
+
                     if(is_array($value))
                     {
                         $class = ['sub','anchor-corner'];
@@ -283,7 +283,7 @@ trait _template
 
                         $option = ($route->routeRequest()->isSegmentParsedFromValue())? ['query'=>false]:null;
                         $r .= $route->aTitle(null,null,null,$option);
-                        
+
                         if($i > 0 && !empty($specificAdd) && $table->hasPermission('insert','lemurInsert','mainNavAdd'))
                         {
                             $route = $specificAdd::makeOverload($table);

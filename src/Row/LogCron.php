@@ -17,8 +17,8 @@ class LogCron extends Core\Row\LogCron
 {
     // config
     public static $config = [
-        'cols'=>array(
-            'json'=>array('class'=>Lemur\Col\JsonExport::class)),
+        'cols'=>[
+            'json'=>['class'=>Lemur\Col\JsonExport::class]],
         '@cms'=>[
             'permission'=>[
                 'contributor'=>['view'=>false],

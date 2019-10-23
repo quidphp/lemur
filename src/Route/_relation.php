@@ -32,15 +32,15 @@ trait _relation
     // retourne l'objet relation
     abstract public function relation():Orm\Relation;
 
-    
+
     // relationSearchRequired
     // retourne vrai si la recherche est requise
-    public function relationSearchRequired():bool 
+    public function relationSearchRequired():bool
     {
         return false;
     }
-    
-    
+
+
     // limit
     // retourne la limite à utiliser
     // public car utilisé via d'autres routes
@@ -57,15 +57,15 @@ trait _relation
         return ($this->hasSegment('page'))? true:false;
     }
 
-    
+
     // isFirstPage
     // retourne vrai si c'est la première page
-    public function isFirstPage():bool 
+    public function isFirstPage():bool
     {
         return ($this->hasPage() && $this->segment('page') === 1)? true:false;
     }
-    
-    
+
+
     // pageNext
     // retourne la prochaine page si existante
     public function pageNext():?int
@@ -78,9 +78,9 @@ trait _relation
             $limit = $this->limit();
             $limit = [$page=>$limit];
             $option = ['limit'=>$limit];
-            
+
             $relation = $this->relationGrab($option);
-            
+
             if(!empty($relation['result']))
             $return = $page;
         }
@@ -103,7 +103,7 @@ trait _relation
     {
         $r = '';
         $pageNext = $this->pageNext();
-        
+
         if(is_int($pageNext))
         {
             $page = $this->segment('page');
@@ -112,12 +112,12 @@ trait _relation
             $from = (($page * $limit) + 1);
             $to = ($pageNext * $limit);
             $to = ($to > $total)? $total:$to;
-            
-            $replace = array('from'=>$from,'to'=>$to,'total'=>$total);
+
+            $replace = ['from'=>$from,'to'=>$to,'total'=>$total];
             $route = $this->changeSegment('page',$pageNext);
             $data = ['href'=>$route];
             $text = static::langText('common/loadMore',$replace);
-            
+
             $r .= Html::liOp(['load-more','data'=>$data]);
             $r .= Html::div($text,'text');
             $r .= Html::liCl();
@@ -133,7 +133,7 @@ trait _relation
     {
         $return = false;
         $relation = $this->relation();
-        
+
         if($this->hasSegment('order') && static::$config['order'] === true && $relation->size() > 1)
         $return = true;
 
@@ -167,7 +167,7 @@ trait _relation
         $order = $this->currentOrder();
         $relation = $this->relation();
         $orders = static::validOrders($relation);
-        
+
         if(is_int($order) && is_array($orders) && !empty($orders))
         {
             $select = Html::select($orders,['name'=>true],['selected'=>$order]);
@@ -191,7 +191,7 @@ trait _relation
 
         if(!empty($allowed['value']))
         $return = Base\Arr::append($return,$lang->take('relationOrder/value'));
-        
+
         return $return;
     }
 
@@ -208,8 +208,8 @@ trait _relation
 
         return $return;
     }
-    
-    
+
+
     // relationGrab
     // lance la recherche de relation ou retourne all si pas de recherche
     protected function relationGrab(?array $option=null):?array
@@ -233,8 +233,8 @@ trait _relation
         {
             $array = null;
             $count = 0;
-            $optionCount = Base\Arr::plus($option,array('limit'=>null));
-            
+            $optionCount = Base\Arr::plus($option,['limit'=>null]);
+
             if(is_string($search))
             {
                 $count = $relation->searchCount($search,$optionCount);
@@ -246,9 +246,9 @@ trait _relation
                 $array = $relation->all(false,$option);
                 $count = $relation->size(true,$optionCount);
             }
-            
+
             if(is_array($array))
-            $return = array('count'=>$count,'result'=>$array);
+            $return = ['count'=>$count,'result'=>$array];
         }
 
         return $return;

@@ -117,7 +117,7 @@
 }
 
 /* LEFT */
-[data-group='specific'] form .element > .left{
+[data-group='specific'] form .element > .left {
     @include inbl(middle, 30%);
     padding: 10px 20px 10px 0;
     position: relative;
@@ -169,7 +169,7 @@
 [data-group='specific'] form .element > .right {
     @include inbl(middle, 70%);
     padding: 0px 30px 0px 0;
-    
+
     > div.nothing {
         @include nothing();
     }
@@ -197,17 +197,16 @@
 
     .choice {
         @include inputChoice();
-        
+
         &:hover .choice-in > span {
             @include inbl();
         }
-        
+
         .choice-in {
-            
             > span {
                 display: none;
                 margin-left: 10px;
-                
+
                 a {
                     @include inbl();
                     @include wh(12px);

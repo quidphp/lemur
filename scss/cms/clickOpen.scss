@@ -17,7 +17,7 @@ body .active .popup {
 body [data-status='loading'].popup,
 body [data-status='loading'] .popup {
     height: 40px;
-    
+
     > * {
         display: none !important;
     }
@@ -40,7 +40,7 @@ body [data-status='loading'] .popup {
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
     cursor: default;
-    
+
     .top-right {
         @include abs(15px, 20px);
     }
