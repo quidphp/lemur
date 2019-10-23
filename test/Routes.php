@@ -11,6 +11,7 @@ namespace Quid\Test\Lemur;
 use Quid\Base;
 use Quid\Core;
 use Quid\Lemur;
+use Quid\Routing;
 use Quid\Suite;
 
 // routes
@@ -27,7 +28,7 @@ class Routes extends Base\Test
         $request = Core\Request::live();
         $login = Lemur\Cms\Login::class;
         $loginSubmit = Lemur\Cms\LoginSubmit::class;
-        $routes = new Core\Routes([Lemur\Cms::class,Suite\Cms::class]);
+        $routes = new Routing\Routes([Lemur\Cms::class,Suite\Cms::class]);
         $routes->init('cms');
 
         // routing

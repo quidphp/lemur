@@ -18,32 +18,38 @@ trait _specificRelation
     // trait
     use _colRelation;
 
-
+    
+    // config
+    public static $configSpecificRelation = array(
+        'showCount'=>false // affiche le total pour chaque élément
+    );
+    
+    
     // trigger
     // lance la route specificRelation
     public function trigger():string
     {
         $r = '';
-        $results = $this->relationSearch();
-
-        if(is_array($results) && !empty($results))
+        $grab = $this->relationGrab();
+        
+        if(!empty($grab))
         {
-            $col = $this->segment('col');
-            $selected = $this->segment('selected');
-            $loadMore = $this->loadMore();
-            $r .= static::makeResults($results,$col,$selected,$loadMore);
+            ['result'=>$results,'count'=>$count] = $grab;
+            
+            if(is_array($results) && !empty($results))
+            $r .= $this->makeResults($results,$count);
         }
-
+        
         if(empty($r))
         $r = Html::h3(static::langText('common/nothing'));
-
+        
         return $r;
     }
 
 
     // col
     // retourne l'objet colonne
-    public function col():Core\Col
+    protected function col():Core\Col
     {
         return $this->segment('col');
     }
@@ -51,31 +57,55 @@ trait _specificRelation
 
     // makeResults
     // génère les résultats d'affichage pour les relations
-    public static function makeResults(array $array,Core\Col $col,array $selected=[],?string $loadMore=null):string
+    protected function makeResults(array $array,?int $loadMore=null):string
     {
         $r = '';
-
+        $col = $this->col();
+        $selected = $this->segment('selected');
+        
         if(!empty($array))
         {
-            $r .= Html::ulOp();
-            $rel = $col->relation();
-
             foreach ($array as $key => $value)
             {
                 $html = $col->formComplexSearchChoices($key);
                 $class = (in_array($key,$selected,true))? 'selected':null;
-                $data = ['data-value'=>$key,'data-html'=>$html];
-                $value = Html::div($value,'label');
+                $data = ['value'=>$key,'html'=>$html];
+                $value = $col->valueExcerpt($value);
+                $value = Html::div($value,'label-content');
+                
+                if(static::showCount())
+                {
+                    $count = $this->getCount($key);
+                    $value .= Html::divCond($count,'label-count');
+                }
+                
+                $value = Html::div($value,'ele');
                 $r .= Html::li($value,[$class,'data'=>$data]);
             }
 
-            if(!empty($r) && is_string($loadMore))
-            $r .= $loadMore;
+            if(!empty($r) && is_int($loadMore))
+            $r .= $this->loadMore($loadMore);
 
-            $r .= Html::ulCl();
+            $r = Html::ulCond($r);
         }
 
         return $r;
+    }
+    
+    
+    // getCount
+    // retounrne le nombre de lignes dans la table qui ont la valeur donnée en argument pour cette colonne
+    protected function getCount(int $value):?int 
+    {
+        return $this->col()->countPrimaries($value);
+    }
+    
+    
+    // showCount
+    // retourne vrai s'il faut afficher le count
+    public static function showCount():bool 
+    {
+        return static::$config['showCount'] ?? false;
     }
 }
 ?>

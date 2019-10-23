@@ -121,7 +121,7 @@ trait _formSubmit
 
     // isSuccess
     // retourne vrai si le formulaire est un succès
-    public function isSuccess()
+    protected function isSuccess()
     {
         return ($this->success === true)? true:false;
     }
@@ -129,7 +129,7 @@ trait _formSubmit
 
     // setSuccess
     // permet d'attribuer une valeur à la propriété success
-    public function setSuccess(bool $value=true):self
+    protected function setSuccess(bool $value=true):self
     {
         $this->success = $value;
 

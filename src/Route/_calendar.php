@@ -23,7 +23,7 @@ trait _calendar
 
     // getTimestamp
     // retourne le timestamp
-    public function getTimestamp():int
+    protected function getTimestamp():int
     {
         $return = null;
         $value = $this->segment('timestamp');
@@ -48,7 +48,7 @@ trait _calendar
 
     // calendar
     // génère l'objet calendrier
-    public function calendar():Main\Calendar
+    protected function calendar():Main\Calendar
     {
         $class = static::$config['calendar'];
 
@@ -81,7 +81,7 @@ trait _calendar
 
     // setCallback
     // méthode abstraite pour ajouter des callback à l'objet calendrier
-    abstract public function setCallback(Main\Calendar $value):Main\Calendar;
+    abstract protected function setCallback(Main\Calendar $value):Main\Calendar;
 
 
     // html

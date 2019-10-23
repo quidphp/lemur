@@ -41,11 +41,11 @@
 			}
 		})
 		.on('feed:error', function(event,jqXHR,textStatus) {
-			$(this).addClass('error');
+			$(this).attr('data-status','error');
             $(this).triggerHandler('feed:target').html($.parseError(jqXHR,textStatus));
 		})
 		.on('ajax:before', function(event) {
-			$(this).addClass('loading');
+			$(this).attr('data-status','loading');
 			$(this).block();
 		})
 		.on('ajax:success', function(event,data,textStatus,jqXHR) {
@@ -55,7 +55,7 @@
 			$(this).trigger('feed:error',[jqXHR,textStatus]);
 		})
 		.on('ajax:complete', function(event) {
-			$(this).removeClass('loading');
+			$(this).removeAttr('data-status');
 		})
 		.on('feed:bind', function(event) {
 			var parent = $(this);
@@ -64,7 +64,7 @@
 				event.stopPropagation();
 				
 				$(this).block('ajax:init').ajax('ajax:init').on('ajax:before', function(event) {
-					$(this).addClass('loading');
+					$(this).attr('data-status','loading');
 					$(this).block();
 				})
 				.on('ajax:success', function(event,data,textStatus,jqXHR) {

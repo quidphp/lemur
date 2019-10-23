@@ -36,13 +36,22 @@ h3 {
 }
 
 /* FORM */
+input,
+textarea,
+select,
+button {
+    font-family: $font;
+    font-weight: 300;
+    font-size: 1.4rem;
+}
 input[type='text'],
 input[type='password'],
 input[type='email'],
 textarea {
-    border-radius: 3px;
+    padding: 8px 10px;
+    border-radius: 5px;
     border: 1px solid $lightGray;
-
+    
     &.active,
     &:hover,
     &:focus {
@@ -67,12 +76,36 @@ input:-ms-input-placeholder,
 textarea:-ms-input-placeholder {
     color: $gray !important;
 }
+input[type='radio'],
+input[type='checkbox'] {
+    display: none;
+}
+input[type='radio'] + label:before,
+input[type='checkbox'] + label:before {
+    @include wh(16px);
+    background-size: contain;
+    @include inbl();
+    margin-right: 5px;
+    content: "";
+}
+input[type='radio'] + label:before {
+    @include bgimg64($iconRadioInactive);
+}
+input[type='checkbox'] + label:before {
+    @include bgimg64($iconCheckboxInactive);
+}
+input[type='radio']:checked + label:before {
+    @include bgimg64($iconRadioActive);
+}
+input[type='checkbox']:checked + label:before {
+    @include bgimg64($iconCheckboxActive);
+}
 select {
     border-radius: 3px;
     border: 1px solid $lightGray;
     padding: 3px;
     font-size: 1.3rem;
-
+    
     &:hover {
         background-color: $lightYellow;
     }
@@ -102,9 +135,15 @@ body .submit {
     &.selected,
     &:hover {
         background-color: $darkerColor;
-        opacity: 0.8;
+        border: 1px solid $black;
+        opacity: 1;
     }
-
+    
+    &:active {
+        background-color: $color;
+        border: 1px solid $darkColor;
+    }
+    
     &.solo {
         background-color: transparent;
         border: transparent;

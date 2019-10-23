@@ -15,38 +15,49 @@ $(document).ready(function() {
 	$.fn.generalCols = function()
 	{
 		var colsPopup = $(this).find(".popup");
-		var colsCheckboxes = colsPopup.find("input[type='checkbox']");
 		var colsButton = colsPopup.find("button[name='cols']");
 		
         // clickOpen
         $(this).clickOpen(".toggler");
         
-		// colsPopup
-		colsPopup.on('invalid', function() {
-			$(this).trigger('reset').addClass('invalid');
+        // colsPopup
+        colsPopup.verticalSorting(".choice",'.choice-in')
+        .on('verticalSorting:stop', function(event) {
+            $(this).trigger('cols:validate');
+        })
+        .on('cols:getCheckboxes', function(event) {
+            return $(this).find("input[type='checkbox']");
+        })
+        .on('cols:validate', function(event) {
+            $(this).triggerHandler('cols:getCheckboxes').trigger('change');
+        })
+        .on('cols:isValid', function(event) {
+            return $(this).triggerHandler('cols:getCheckboxes').triggerHandlerFalse('isValid');
+        })
+        .on('cols:invalid', function() {
+			$(this).removeClass("valid invalid").addClass('invalid');
 		})
-		.on('valid', function() {
-			$(this).trigger('reset');
+		.on('cols:valid', function() {
+			$(this).removeClass("valid invalid");
 			
 			if(!colsButton.triggerHandler('isCurrent'))
 			$(this).addClass('valid');
-		})
-		.on('reset', function() {
-			$(this).removeClass("valid invalid");
 		});
 		
 		// colsCheckboxes
-		colsCheckboxes.fieldValidate().on('invalid', function() {
-			colsPopup.trigger('invalid');
+		colsPopup.triggerHandler('cols:getCheckboxes').fieldValidate()
+        .on('invalid', function() {
+			colsPopup.trigger('cols:invalid');
 		})
 		.on('valid', function() {
-			colsPopup.trigger('valid');
+			colsPopup.trigger('cols:valid');
 		});
 		
 		// colsButton
 		colsButton.block('click').on('getCheckboxSet',function() {
-			if(colsCheckboxes.triggerHandlerFalse('isValid'))
-			return colsCheckboxes.filter(":checked").valSet(colsButton.data("separator"),true);
+            var checkboxes = colsPopup.triggerHandler('cols:getCheckboxes');
+			if(colsPopup.triggerHandler('cols:isValid'))
+			return checkboxes.filter(":checked").valSet(colsButton.data("separator"),true);
 		})
 		.on('isCurrent',function() {
 			return (colsButton.triggerHandler('getCheckboxSet') === colsButton.data('current'))? true:false;
@@ -70,12 +81,12 @@ $(document).ready(function() {
 	
 	// generalRows
 	// function pour gérer les actions reliés aux checkboxes de rows
-	$.fn.generalRows = function()
+	$.fn.generalRows = function(parent)
 	{
 		var rowsCheckboxes = $(this);
-		var rowsToggleAll = $(document).find("main table th.rows .toggleAll");
-		var rowsTool = $(document).find("main .tool");
-		var rowsInNotIn = $(document).find("main .tool .in,main .tool .notIn");
+		var rowsToggleAll = parent.find("table th.rows .toggleAll");
+		var rowsTool = parent.find(".tool");
+		var rowsInNotIn = parent.find(".tool .in, .tool .notIn");
 
 		// rowsToggleAll
 		rowsToggleAll.on('click', function() {
@@ -117,7 +128,7 @@ $(document).ready(function() {
 		.on('redirect', function() {
 			var href = $(this).dataHrefReplaceChar($(this).triggerHandler('getCheckboxSet'));
 			
-			if($.isStringNotEmpty(href) && href !== $.currentRelativeUri())
+			if($.isStringNotEmpty(href))
 			{
 				$(this).trigger('block');
 				$(document).trigger('navigation:push',[href]);
@@ -154,22 +165,27 @@ $(document).ready(function() {
     // comportement pour la page de navigation
 	$(this).on('route:general', function() {
 		
-		var search = $(this).find("main .left > .search");
-		var pageLimit = $(this).find("main input[name='limit'],input[name='page']");
-		var generalCols = $(this).find("main th.action");
-		var rowsCheckboxes = $(this).find("main table td.rows input[type='checkbox']");
-		var formTruncate = $(this).find("main .truncate form");
-		var multiDelete = $(this).find("main .tool .multi-delete form");
+        var main = $(this).find("main");
+        var scroller = main.find("scroller");
+		var search = main.find(".left > .search");
+        var formTruncate = main.find(".truncate form");
+		var pageLimit = main.find("input[name='limit'],input[name='page']");
+        var filter = main.find("table th.filterable .filter-outer");
+		var generalCols = main.find("table th.action");
+		var rowsCheckboxes = main.find("table td.rows input[type='checkbox']");
+		var multiDelete = main.find(".tool .multi-delete form");
 		var multiDeletePrimaries = multiDelete.find("input[name='primaries']");
-		var filter = $(this).find("main th.filterable .filter-outer");
 		
+        // dragScroll
+        scroller.dragScroll();
+        
 		// search
 		if(search.length)
 		{
 			var searchInput = search.find(".form input[type='text']");
 			var searchButton = search.find(".form button");
 			var searchSlide = search.find(".in");
-			searchInput.searchGeneralInput(searchButton).searchSlide(searchSlide);
+			searchInput.searchGeneralInput(searchButton).focusSlide(searchSlide);
 		}
 		
 		// page + limit
@@ -182,7 +198,7 @@ $(document).ready(function() {
 		
 		// rows
 		if(rowsCheckboxes.length)
-		rowsCheckboxes.generalRows();
+		rowsCheckboxes.generalRows(main);
 		
 		// formTruncate
 		if(formTruncate.length)

@@ -41,7 +41,7 @@ trait _generalSegment
             $return = null;
             $table = $this->table();
             $array = $this->generalSegments();
-
+            
             if(!array_key_exists('where',$array))
             {
                 $where = $table->where();

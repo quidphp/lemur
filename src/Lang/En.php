@@ -59,7 +59,12 @@ class En extends Core\Lang\En
 
         // cms
         '@cms'=>[
-
+            
+            // common
+            'common'=>array(
+                'loadMore'=>'Load [from] to [to] on [total]'
+            ),
+            
             // popup
             'popup'=>[
 
@@ -511,8 +516,8 @@ class En extends Core\Lang\En
                     'about'=>'About',
                     'general'=>'General',
                     'generalDelete'=>'General - Delete',
-                    'generalExportDialog'=>'Export',
                     'generalExport'=>'General - Export',
+                    'generalExportDialog'=>'Export',
                     'generalRelation'=>'General - Relation',
                     'generalTruncate'=>'Empty the table',
                     'homeSearch'=>'Home - Search',

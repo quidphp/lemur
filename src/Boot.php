@@ -39,10 +39,9 @@ abstract class Boot extends Core\Boot
             'compileScss'=>[
                 '[publicCss]/cms.css'=>[
                     0=>'[vendorLemur]/scss/include/_include.scss',
-                    1=>'[vendorLemur]/scss/include/_component.scss',
-                    2=>'[vendorLemur]/scss/cms/_include.scss',
-                    3=>'[scss]/cms/_include.scss',
-                    4=>'[vendorLemur]/scss/vendor/normalize/normalize.css',
+                    1=>'[vendorLemur]/scss/cms/_include.scss',
+                    2=>'[scss]/cms/_include.scss',
+                    3=>'[vendorLemur]/scss/vendor/normalize/normalize.css',
                     10=>'[vendorLemur]/scss/cms/cms.scss',
                     30=>'[scss]/cms/cms.scss']],
             'concatenateJs'=>[

@@ -16,7 +16,6 @@
 	{
 		var func = function() {
 			className = ($.isStringNotEmpty(className))? className:".slide";
-			$(this).removeClass('loading');
 			var tab = $(this);
 			var prev = $(this).find(".prev");
 			var next = $(this).find(".next");
@@ -92,7 +91,6 @@
 		};
 		
 		$(this).each(function(index, el) {
-			$(this).addClass("loading");
 			func.call(this);
 		});
 		

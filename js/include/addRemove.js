@@ -79,7 +79,7 @@
 			$(this).trigger('addRemove:bind');
 			
 			if($(this).find(".move").length)
-			$(this).triggerHandler('addRemove:getContainer').verticalSorting(".ele");
+			$(this).triggerHandler('addRemove:getContainer').verticalSorting(".ele",'.move');
 		})
 		.trigger('addRemove:prepare');
 		

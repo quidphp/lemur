@@ -51,7 +51,15 @@ trait _search
         return $return;
     }
 
-
+    
+    // hasSearchValue
+    // retourne vrai s'il y a une valeur de recherche
+    protected function hasSearchValue():bool 
+    {
+        return ($this->getSearchValue() !== null)? true:false;
+    }
+    
+    
     // getSearchDecodeType
     // retourne le type de décodage à utiliser pour la query de recherche
     // par défaut 0, il faut utiliser 1 si la recherche est faite via GET sans javascript

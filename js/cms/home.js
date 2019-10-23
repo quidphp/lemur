@@ -18,6 +18,6 @@ $(document).ready(function() {
 		var field = form.find("[data-required],[data-pattern]");
 		
 		if(form.length)
-		form.formAjaxPopup(field);
+		form.formClickOpen(field);
 	});
 });

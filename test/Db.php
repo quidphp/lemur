@@ -31,7 +31,13 @@ class Db extends Base\Test
         assert($tb->routeAttr('general') === Lemur\Cms\General::class);
         assert($tb->hasPermission('lemurUpdate'));
         assert(!$tb->hasPermission('insert','update','duplicate'));
-
+        $array = ['test'=>Base\Str::loremIpsum(30)];
+        $sql = Lemur\Row\LogSql::log('insert',$array);
+        assert(!$sql['json']->isInvalidValue());
+        $array = ['test'=>Base\Str::loremIpsum(3000)];
+        $tooLong = Lemur\Row\LogSql::log('insert',$array);
+        assert($tooLong['json']->isInvalidValue());
+        
         // col
         $table = 'ormCol';
         assert($db->truncate($table) instanceof \PDOStatement);
@@ -39,10 +45,34 @@ class Db extends Base\Test
         $tb = $db[$table];
         $date = $tb['date'];
         $email = $tb['email'];
+        $slug = $tb['slug_fr'];
+        $jsonArray = $tb['json'];
+        $phone = $tb['phone'];
         assert(strlen($date->formComplex()) === 260);
         assert(strlen($date->formComplex('08-08-1984')) === 278);
         assert(strlen($date->formComplex(mktime(0,0,0,8,8,1984))) === 278);
         assert($email->generalExcerptMin() === null);
+        assert($jsonArray instanceof Lemur\Col\JsonArray);
+        assert($jsonArray->required(null) === 'required');
+        assert($jsonArray->required([]) === 'required');
+        assert($jsonArray->required('') === 'required');
+        assert($jsonArray->completeValidation(null) === ['required']);
+        assert(count($jsonArray->completeValidation([])) === 3);
+        assert($jsonArray->completeValidation('') === ['required']);
+        assert($jsonArray->completeValidation(Base\Json::encode(['test'])) === true);
+        assert($phone instanceof Lemur\Col\Phone);
+        assert($phone->onGet(5144839999,[]) === '(514) 483-9999');
+        assert($slug instanceof Lemur\Col\Slug);
+        assert($slug->onSet('dasasd dsaasd asddas',[],null,[]) === 'dasasd dsaasd asddas');
+        assert($slug->onSet(null,['name_en'=>'OK'],null,[]) === null);
+        assert(is_array($slug->slugAttr()));
+        assert($slug->slugDateConvert('date','12-05-2018') === '2018-12-05');
+        assert($slug->slugDo('lol') === false);
+        assert($slug->slugUnique('blabla'));
+        assert($slug->slugKeyFromArr(['name'=>'james']) === 'james');
+        assert($slug->slugKeyFromArr(['name_fr'=>'jamesFr','name_en'=>'jamesEn']) === 'jamesFr');
+        assert($slug->slugAddNow('blabla') !== 'blabla');
+        assert($slug->slugDateFirst() === 'ymd');
 
         // cols
         $table = 'ormCols';
@@ -75,8 +105,8 @@ class Db extends Base\Test
         $cells = $row->cells();
         assert($cells->description()['id'] === 'Primary and unique key. Required');
         assert($cells->description('%:')['id'] === 'Primary and unique key. Required:');
-        assert(strlen($cells->formComplex()['active']) === 175);
-        assert(strlen($cells->formComplexWrap()['active']) === 196);
+        assert(strlen($cells->formComplex()['active']) === 204);
+        assert(strlen($cells->formComplexWrap()['active']) === 225);
         assert($row->unlink());
         assert($db->truncate($table) instanceof \PDOStatement);
 

@@ -770,4 +770,21 @@
         return this;
     }
     
+    // focusSlide
+	// permet de slideDown/up une target lors du focus sur un input
+	$.fn.focusSlide = function(target) 
+	{
+		if($(this).length === 1 && target instanceof jQuery)
+		{
+			$(this).on('focus', function() {
+				target.slideDown("fast");
+			})
+			.on('focusout', function() {
+				target.slideUp("fast");
+			});
+		}
+		
+		return this;
+	}
+    
 }(jQuery, document, window));

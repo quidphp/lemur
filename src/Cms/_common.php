@@ -95,21 +95,27 @@ trait _common
                     foreach ($value as $k => $v)
                     {
                         $str = '';
-
-                        if(is_string($k))
-                        {
-                            $str .= Html::span($k,'key');
-                            $str .= ': ';
-                        }
-
+                        
                         if(is_bool($v))
                         $v = $lang->bool($v);
 
                         elseif($v === '' || $v === null)
                         $v = Html::span('NULL','value-empty');
-
-                        $str .= $v;
-                        $html2 .= Html::li($str);
+                        
+                        elseif(is_array($v))
+                        $v = implode(', ',Base\Arr::cleanNull($v));
+                        
+                        if(is_string($v) && strlen($v))
+                        {
+                            if(is_string($k))
+                            {
+                                $str .= Html::span($k,'key');
+                                $str .= ': ';
+                            }
+                            
+                            $str .= $v;
+                            $html2 .= Html::liCond($str);
+                        }
                     }
 
                     $html .= Html::ulCond($html2);

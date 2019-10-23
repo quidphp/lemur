@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Quid\Lemur\Row;
 use Quid\Core;
+use Quid\Lemur;
 
 // lang
 // class to work with a row of the lang table, with cms logic
@@ -16,6 +17,9 @@ class Lang extends Core\Row\Lang
 {
     // config
     public static $config = [
+        'cols'=>array(
+            'content_fr'=>array('class'=>Lemur\Col\Textarea::class),
+            'content_en'=>array('class'=>Lemur\Col\Textarea::class)),
         '@cms'=>[
             'permission'=>[
                 'contributor'=>['view'=>false],

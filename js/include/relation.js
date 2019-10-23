@@ -42,11 +42,11 @@
 			return (($.isScalar(value)) && $(this).triggerHandler('getCurrent').find("input[type='checkbox'][value='"+value+"']").length)? true:false;
 		})
 		.on('clickOpen:open', function(event) {
-			$(this).addClass('loading');
+			$(this).attr('data-status','loading');
 			$(this).triggerHandler('getResult').html('');
 		})
 		.on('clickOpen:close', function(event) {
-			$(this).removeClass('loading');
+			$(this).removeAttr('data-status');
 			$(this).triggerHandler('getResult').html('');
 		})
 		.on('choice:append', function(event,value,html) {
@@ -74,6 +74,10 @@
 			$(this).triggerHandler('getChoice').remove();
 			$(this).triggerHandler('clickOpen:getPopup').find("li.already-in").removeClass('already-in');
 		})
+        .on('click', "input[type='radio']", function(event) {
+            $(this).prop('checked',false);
+            $(this).parents(".choice").remove();
+        })
 		.on('change', "input[type='checkbox']", function(event) {
 			if($(this).prop('checked') === false)
 			$(this).parents(".choice").remove();
@@ -169,7 +173,7 @@
 			$(this).triggerHandler('getResult').html($.parseError(jqXHR,textStatus));
 		})
 		.on('ajax:complete', function() {
-			$(this).triggerHandler('getParent').removeClass('loading');
+			$(this).triggerHandler('getParent').removeAttr('data-status');
 			$(this).trigger('unblock');
 		})
 		
@@ -235,7 +239,7 @@
 	{
 		$(this).block('ajax:init').ajax('ajax:init')
 		.on('getResult', function(event) {
-			return $(this).find(".result");
+			return $(this).find(".results");
 		})
 		.on('getInput', function(event) {
 			return $(this).find("input[type='text']");
@@ -274,7 +278,7 @@
 		})
 		.on('ajax:before', function() {
 			$(this).trigger('block');
-			$(this).addClass('loading');
+			$(this).attr('data-status','loading');
 			$(this).triggerHandler('getResult').html("");
 		})
 		.on('ajax:success', function(event,data,textStatus,jqXHR) {
@@ -285,7 +289,7 @@
 		})
 		.on('ajax:complete', function() {
 			$(this).trigger('unblock');
-			$(this).removeClass('loading');
+			$(this).removeAttr('data-status');
 			$(this).triggerHandler('getInput').focus();
 		}).trigger('filter:prepare');
 		

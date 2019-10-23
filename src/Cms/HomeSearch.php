@@ -11,6 +11,7 @@ namespace Quid\Lemur\Cms;
 use Quid\Base;
 use Quid\Base\Html;
 use Quid\Core;
+use Quid\Orm;
 use Quid\Lemur;
 
 // homeSearch
@@ -43,7 +44,7 @@ class HomeSearch extends Core\RouteAlias
     {
         $return = false;
 
-        if($this->hasPermission('home/search'))
+        if($this->hasPermission('homeSearch'))
         {
             $search = $this->getSearchValue();
 
@@ -125,9 +126,9 @@ class HomeSearch extends Core\RouteAlias
     // searchable
     // retourne les tables cherchables et ayant les permission
     // est public car utilisé dans home
-    public function searchable(bool $cols=true):Core\Tables
+    public function searchable():Orm\Tables
     {
-        return $this->db()->tables()->searchable($cols)->hasPermission('search','view');
+        return $this->db()->tables()->searchable()->hasPermission('search','view');
     }
 }
 

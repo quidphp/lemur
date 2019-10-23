@@ -10,23 +10,61 @@
 // script with a function to activate vertical sorting (using jquery-ui)
 (function ($, document, window) {
 	
+    // dragScroll
+    // permet de faire un scroll dans un élément au clic (dragging)
+    $.fn.dragScroll = function()
+    {
+        $(this).each(function(index, el) {
+            var $this = $(this);
+            var curDown = false;
+            var curYPos = 0;
+            var curXPos = 0;
+            
+            $(this).on('mousemove', function(event) {
+                if(curDown === true)
+                {
+                    $this.scrollTop($this.scrollTop() + (curYPos - event.pageY)); 
+                    $this.scrollLeft($this.scrollLeft() + (curXPos - event.pageX));
+                }
+            });
+
+            $(this).on('mousedown', function(event) {
+                curDown = true;
+                curYPos = event.pageY;
+                curXPos = event.pageX;
+                $this.attr('data-status','grabbing');
+            });
+
+            $(this).on('mouseup', function() {
+                curDown = false;
+                $this.removeAttr('data-status');
+            });
+        });
+
+        return this;
+    }
+    
+    
 	// verticalSorting
 	// active le verticalSorting sur un élément
 	// nécessite jqueryUi
-	$.fn.verticalSorting = function(items,containment)
+	$.fn.verticalSorting = function(items,handle,containment)
 	{
-		if($.isStringNotEmpty(items))
+        containment = (containment != null)? containment:'parent';
+		if($.isStringNotEmpty(items) && $.isStringNotEmpty(handle))
 		{
 			$(this).each(function() {
-				var sortContainment = containment || $(this);
 				$(this).sortable({
 					axis: "y",
-					handle: '.move',
+					handle: handle,
 					items: items,
 					cursor: "move",
 					tolerance: 'pointer',
 					opacity: 0.5,
-					containment: sortContainment
+					containment: containment,
+                    stop: function() {
+                        $(this).trigger('verticalSorting:stop')
+                    }
 				});
 			});
 		}

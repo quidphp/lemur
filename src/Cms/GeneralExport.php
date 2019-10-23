@@ -12,6 +12,7 @@ use Quid\Base;
 use Quid\Core;
 use Quid\Lemur;
 use Quid\Orm;
+use Quid\Main;
 
 // generalExport
 // class for the route which generates the CSV export for the CMS
@@ -78,12 +79,12 @@ class GeneralExport extends Core\RouteAlias
 
     // file
     // retourne l'objet fichier
-    protected function file():Core\File
+    protected function file():Main\File
     {
         $return = null;
         $table = $this->table();
         $basename = $table->name().'_'.Base\Date::format(0);
-        $return = Core\File\Csv::new(true,['basename'=>$basename]);
+        $return = Main\File\Csv::new(true,['basename'=>$basename]);
 
         return $return;
     }
@@ -92,7 +93,7 @@ class GeneralExport extends Core\RouteAlias
     // insertRows
     // insère les lignes dans l'objet
     // fait le par chunk car c'est trop long s'il y a plusieurs lignes
-    protected function insertRows(Core\File $file,Orm\Sql $sql,int $limit=100):void
+    protected function insertRows(Main\File $file,Orm\Sql $sql,int $limit=100):void
     {
         $offset = 0;
         $total = $sql->triggerRowCount();
@@ -102,7 +103,7 @@ class GeneralExport extends Core\RouteAlias
         if(!$storage instanceof Core\Row)
         static::throw('sessionStorageNeedsToBeRow');
 
-        $not = Core\RowsIndex::newOverload($storage,static::sessionUser());
+        $not = Orm\RowsIndex::newOverload($storage,static::sessionUser());
 
         if(is_int($total) && $total > 0)
         {

@@ -10,19 +10,68 @@ declare(strict_types=1);
 namespace Quid\Lemur\Col;
 use Quid\Base\Html;
 use Quid\Core;
+use Quid\Orm;
+use Quid\Base;
 use Quid\Lemur;
 
 // textarea
-// extended class for a column which is editable through a textarea input
-class Textarea extends Core\Col\Textarea
+// class for a column which is editable through a textarea input
+class Textarea extends Core\ColAlias
 {
     // config
     public static $config = [
+        'tag'=>'textarea',
+        'search'=>true,
+        'check'=>['kind'=>'text'],
+        'relative'=>null, // custom, type pour absoluteReplace, utilise ceci pour ramener les liens absoluts dans leur version relative
         '@cms'=>[
             'route'=>['tableRelation'=>Lemur\Cms\SpecificTableRelation::class]]
     ];
 
+    
+    // onSet
+    // gère la logique onSet pour textarea
+    // la seule chose géré est le remplacement des liens absoluts pour leur version relatives
+    public function onSet($return,array $row,?Orm\Cell $cell=null,array $option)
+    {
+        $return = parent::onSet($return,$row,$cell,$option);
 
+        if(is_string($return))
+        $return = $this->absoluteReplace($return);
+
+        return $return;
+    }
+
+
+    // absoluteReplace
+    // remplacement des liens absoluts vers relatifs dans le bloc texte
+    protected function absoluteReplace(string $return):string
+    {
+        $relative = $this->attr('relative');
+
+        if(!empty($relative))
+        {
+            $relative = (array) $relative;
+            $boot = static::boot();
+            $replace = [];
+
+            foreach ($relative as $type)
+            {
+                foreach ($boot->schemeHostEnvs($type) as $schemeHost)
+                {
+                    $schemeHost .= '/';
+                    $replace[$schemeHost] = '/';
+                }
+            }
+
+            if(!empty($replace))
+            $return = Base\Str::replace($replace,$return);
+        }
+
+        return $return;
+    }
+    
+    
     // hasTableRelation
     // retourne vrai si le textarea a des table relation
     public function hasTableRelation():bool
@@ -38,14 +87,12 @@ class Textarea extends Core\Col\Textarea
     }
 
 
-    // classHtml
-    // retourne la classe additionnelle à utiliser
-    public function classHtml():array
+    // getDataAttr
+    // retourne les datas attr pour la colonne
+    public function getDataAttr(array $return):array
     {
-        $return = [parent::classHtml()];
-
         if($this->hasTableRelation())
-        $return[] = 'table-relation';
+        $return['table-relation'] = true;
 
         return $return;
     }
@@ -74,7 +121,7 @@ class Textarea extends Core\Col\Textarea
 
     // relationBox
     // génère la box relation pour le champ wysiwyg
-    public function relationBox(Core\Tables $tables):string
+    public function relationBox(Orm\Tables $tables):string
     {
         $r = '';
 

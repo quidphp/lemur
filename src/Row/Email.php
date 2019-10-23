@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Quid\Lemur\Row;
 use Quid\Core;
+use Quid\Lemur;
 
 // email
 // class to deal with a row of the email table, with cms logic
@@ -16,6 +17,9 @@ class Email extends Core\Row\Email
 {
     // config
     public static $config = [
+        'cols'=>array(
+            'content_fr'=>array('class'=>Lemur\Col\Textarea::class),
+            'content_en'=>array('class'=>Lemur\Col\Textarea::class)),
         '@cms'=>[
             'permission'=>[
                 'contributor'=>['view'=>false],

@@ -37,6 +37,7 @@ class SpecificRelation extends Core\RouteAlias
             'order'=>'structureSegmentOrderColRelation',
             'page'=>'structureSegmentPage'],
         'order'=>true,
+        'showCount'=>true,
         'match'=>[
             'ajax'=>true,
             'role'=>['>='=>20]],

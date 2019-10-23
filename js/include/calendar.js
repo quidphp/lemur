@@ -52,11 +52,11 @@
 		.on('ajax:before', function() {
 			$(this).find("> *").hide();
 			$(this).trigger('block');
-			$(this).addClass('loading');
+			$(this).trigger('calendar:loading');
 		})
 		.on('ajax:success', function(event,data,textStatus,jqXHR) {
 			$(this).html(data);
-			$(this).removeClass('loading');
+			$(this).trigger('calendar:loaded');
 			$(this).trigger('unblock');
 			$(this).trigger('calendar:bind');
 			$(this).trigger('calendar:refresh');
@@ -64,7 +64,7 @@
 		.on('ajax:error', function(event,jqXHR,textStatus,errorThrown) {
 			$(this).html($.parseError(jqXHR,textStatus));
 			$(this).trigger('calendar:removeSelected');
-			$(this).removeClass('loading');
+			$(this).trigger('calendar:loaded');
 			$(this).trigger('unblock');
 		})
 		.on('calendar:getCells',  function(event) {
@@ -149,6 +149,7 @@
         .on('dateInput:bind', function(event) {
             var $this = $(this);
             var input = $(this).triggerHandler('dateInput:getInput');
+            var popup = $(this).triggerHandler('clickOpen:getPopup');
             var calendar = $(this).triggerHandler('dateInput:getCalendar');
             
             input.timeout('keyup',600).on('click', function(event) {
@@ -164,7 +165,7 @@
                 calendar.trigger('calendar:select',[$(this).inputValue(true),reload]);
             });
             
-            calendar.on('click', 'td', function(event) {
+            calendar.calendar().on('click', 'td', function(event) {
 				var format = $(this).data('format');
 				calendar.trigger('calendar:select',$(this).data("timestamp"));
 				input.val(format);
@@ -172,7 +173,13 @@
 			})
             .on('calendar:refresh', function(event) {
     			$(this).trigger('calendar:select',[$.first(input.inputValue(true)," ")]);
-    		});
+    		})
+            .on('calendar:loading', function(event) {
+                popup.attr('data-status','loading');
+            })
+            .on('calendar:loaded', function(event) {
+                popup.removeAttr('data-status');
+            });
             
         }).trigger('dateInput:bind');
         

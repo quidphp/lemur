@@ -164,7 +164,41 @@ class General extends Core\RouteAlias
         return $return;
     }
 
-
+    
+    // hasSpecificCols
+    // retourne vrai si des colonnes spécifiques ont été sélectionnés
+    protected function hasSpecificCols():bool 
+    {
+        $return = false;
+        
+        if($this->hasSegment('cols'))
+        {
+            $cols = $this->table()->cols()->general()->filter(['isVisibleGeneral'=>true]);
+            
+            if($this->segment('cols')->names() !== $cols->names())
+            $return = true;
+        }
+        
+        return $return;
+    }
+    
+    
+    // hasInNotIn
+    // retourne vrai s'il y a des lignes in ou not in
+    protected function hasInNotIn():bool 
+    {
+        $return = false;
+        
+        if($this->hasSegment('in') && !empty($this->segment('in')))
+        $return = true;
+        
+        elseif($this->hasSegment('notIn') && !empty($this->segment('notIn')))
+        $return = true;
+        
+        return $return;
+    }
+    
+    
     // getHighlight
     // retourne les lignes highlight
     protected function getHighlight():?array
@@ -416,8 +450,16 @@ class General extends Core\RouteAlias
 
                         foreach ($filter as $k => $v)
                         {
+                            $rel = array();
                             $col = $table->col($k);
-                            $rel = $col->relation()->getStr($v,', ');
+                            
+                            if(!is_array($v))
+                            $v = array($v);
+                            
+                            if($col->isFilterEmptyNotEmpty())
+                            ['array'=>$rel,'value'=>$v] = $this->infoPopupFilterEmptyNotEmpty($v,$col,$rel);
+                            
+                            $rel = Base\Arr::append($rel,$col->relation()->get($v));
                             $label = $col->label();
                             $value[$label] = $rel;
                         }
@@ -464,7 +506,28 @@ class General extends Core\RouteAlias
         };
     }
 
-
+    
+    // infoPopupFilterEmptyNotEmpty
+    // gère les valeurs filtres empty/not empty pour le popup
+    protected function infoPopupFilterEmptyNotEmpty(array $value,Core\Col $col,array $array):array 
+    {
+        $return = array('array'=>$array,'value'=>$value);
+        
+        foreach ($value as $k => $v) 
+        {
+            if($col::isFilterEmptyNotEmptyValue($v))
+            {
+                unset($return['value'][$k]);
+                $key = ((int) $v === 0)? 'isEmpty':'isNotEmpty';
+                $label = static::langText(array('common',$key));
+                $return['array'][] = $label;
+            }
+        }
+        
+        return $return;
+    }
+    
+    
     // makeAdd
     // génère le lien pour ajouter une nouvelle ligne
     protected function makeAdd():string
@@ -582,19 +645,44 @@ class General extends Core\RouteAlias
         return $r;
     }
 
-
+    
+    // makeRows
+    // génère l'outil pour sélectionner une ou plusieurs lignes dans la table
+    protected function makeRows():string 
+    {
+        $r = '';
+        $hasInNotIn = $this->hasInNotIn();
+        
+        $r .= Html::div(null,['icon','solo','check','center']);
+        $r .= Html::div(null,['icon','solo','uncheck','center']);
+        $r = Html::div($r,['in','toggleAll',($hasInNotIn === true)? 'selected':null]);
+        if($hasInNotIn === true)
+        {
+            $route = $this->changeSegments(array('in'=>null,'notIn'=>null));
+            $r .= $route->a(null,['icon','solo','close']);
+        }
+        
+        return $r;
+    }
+    
+    
     // makeCols
-    // génère le popup pour choisir les colonnes à afficher dans la table
+    // génère l'outil pour choisir les colonnes à afficher dans la table
     protected function makeCols():string
     {
         $r = '';
         $table = $this->table();
         $cols = $table->cols();
         $currentCols = $this->getCurrentCols();
-        $inAttr = ['in','toggler'];
-
+        $hasSpecificCols = $this->hasSpecificCols();
+        $inAttr = ['in','toggler',($hasSpecificCols === true)? 'selected':null];
+        
         if($this->hasTablePermission('view','cols') && $cols->isNotEmpty() && $currentCols->isNotEmpty())
         {
+            $loopCols = $currentCols->clone();
+            $notIn = $cols->not($currentCols);
+            $loopCols->add($notIn);
+            
             $defaultSegment = static::getDefaultSegment();
             $route = $this->changeSegment('cols',true);
             $current = implode($defaultSegment,$currentCols->names());
@@ -603,13 +691,19 @@ class General extends Core\RouteAlias
             $session = static::session();
 
             $checkbox = [];
+            $htmlWrap = Html::divOp('choice');
+            $htmlWrap .= Html::divOp('choice-in');
+            $htmlWrap .= Html::div(null,['icon','solo','move']);
+            $htmlWrap .= "%";
+            $htmlWrap .= Html::divCl();
+            $htmlWrap .= Html::divCl();
             $attr = ['name'=>'col','data-required'=>true];
-            $option = ['value'=>[],'html'=>['div','col']];
-            foreach ($cols as $key => $value)
+            $option = ['value'=>[],'html'=>$htmlWrap];
+            foreach ($loopCols as $key => $value)
             {
                 if($value->isVisibleGeneral(null,null,$session))
                 {
-                    $checkbox[$key] = $value->label();
+                    $checkbox[$key] = Base\Str::excerpt(40,$value->label());
 
                     if($currentCols->exists($key))
                     $option['value'][] = $key;
@@ -617,12 +711,18 @@ class General extends Core\RouteAlias
             }
 
             $r .= Html::div(null,['icon','solo','cols','center']);
-
+            
+            if($hasSpecificCols === true)
+            {
+                $reset = $this->changeSegment('cols',null);
+                $r .= $reset->a(null,['icon','solo','close']);
+            }
+            
             $r .= Html::divOp('popup');
             $r .= Html::divOp('inside');
             $r .= Html::checkbox($checkbox,$attr,$option);
-            $r .= Html::button(null,['name'=>'cols','icon','check','solo','top-right','data'=>$data]);
             $r .= Html::divCl();
+            $r .= Html::button(null,['name'=>'cols','icon','check','solo','top-right','data'=>$data]);
             $r .= Html::divCl();
         }
 
@@ -708,9 +808,7 @@ class General extends Core\RouteAlias
 
             if($this->hasTablePermission('rows'))
             {
-                $html = Html::div(null,['icon','solo','check','center']);
-                $html .= Html::div(null,['icon','solo','uncheck','center']);
-                $html = Html::div($html,['in','toggleAll']);
+                $html = $this->makeRows();
                 $ths[] = [$html,'rows'];
             }
 
@@ -735,7 +833,7 @@ class General extends Core\RouteAlias
                     $in = Html::div($in,'in');
                     $array = [$in,$thAttr];
                 }
-
+                
                 if($permission['filter'] === true && $col->isFilterable() && $col->relation()->size() > 0)
                 $array = $this->makeTableHeaderFilter($col,$array);
 
@@ -762,12 +860,16 @@ class General extends Core\RouteAlias
         $html = $array[0];
         $thAttr = $array[1];
         $thAttr[] = ['filterable'];
-
+        $filter = $this->segment('filter');
+        
         $html .= Html::divOp('left');
         $class = ['filter-outer','click-open','anchor-corner'];
         $close = ['icon','solo','close'];
         $label = Html::div(null,['filter','icon','solo']);
-        $html .= $this->makeFilter($col,GeneralRelation::class,$class,$close,$label);
+        
+        $route = GeneralRelation::getOverloadClass();
+        $html .= $route::makeFilter($col,$this,$filter,$class,$close,$label);
+
         $html .= Html::divCl();
 
         return [$html,$thAttr];

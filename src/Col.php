@@ -17,8 +17,18 @@ class Col extends Core\Col
     // config
     public static $config = [
         '@cms'=>[
+            'filter'=>true,
+            'filterEmptyNotEmpty'=>true,
             'generalExcerptMin'=>100]
     ];
+    
+    
+    // getDataAttr
+    // retourne les dates attr pour la colonne
+    public function getDataAttr(array $return):array 
+    {
+        return $return;
+    }
 }
 
 // init

@@ -26,7 +26,6 @@ $(document).ready(function() {
         var popupTrigger = $(this).find(".popup-trigger");
 		var modalAnchor = $(this).find("a[data-modal]");
 		var anchorCorner = $(this).find(".anchor-corner");
-		var calendar = $(this).find("main .popup .calendar");
 		var aConfirm = $(this).find("a[data-confirm]");
 		var print = $(this).find(".submit.print");
 		var burger = $(this).find("header .burger-menu");
@@ -41,9 +40,6 @@ $(document).ready(function() {
 		// anchorCorner
 		if(anchorCorner.length)
 		anchorCorner.anchorCorner('mouseover');
-		
-		// calendar
-		calendar.calendar();
 		
 		// aConfirm
 		aConfirm.confirm('click');

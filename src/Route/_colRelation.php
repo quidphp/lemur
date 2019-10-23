@@ -26,20 +26,20 @@ trait _colRelation
         return $this->segment('col')->relation();
     }
 
-
+    
+    // relationSearchRequired
+    // retourne vrai si la recherche est requise
+    public function relationSearchRequired():bool 
+    {
+        return $this->segment('col')->isRelationSearchRequired();
+    }
+    
+    
     // isSearchValueValid
     // retourne vrai si la valeur de recherche est valide
     protected function isSearchValueValid(string $value):bool
     {
-        $return = false;
-        $col = $this->segment('col');
-        $relation = $col->relation();
-        $table = $relation->relationTable() ?? $this->segment('table');
-
-        if($table->isSearchTermValid($value))
-        $return = true;
-
-        return $return;
+        return ($this->segment('col')->isSearchTermValid($value))? true:false;
     }
 
 
@@ -52,42 +52,6 @@ trait _colRelation
 
         if($col->canRelation())
         $return = $col->relation()->keyValue($values,true,false);
-
-        return $return;
-    }
-
-
-    // relationSearch
-    // lance la recherche de relation
-    protected function relationSearch(?array $option=null):?array
-    {
-        $return = null;
-        $col = $this->segment('col');
-        $method = static::$config['method'] ?? null;
-        $base = ['limit'=>$this->limit(),'not'=>$this->relationSearchNot(),'method'=>$method,'order'=>$this->currentOrder()];
-        $base = Base\Arr::clean($base);
-        $option = Base\Arr::plus($base,$option);
-
-        $relation = $col->relation();
-        $search = $this->getSearchValue();
-        $required = $col->attr('relationSearchRequired') ?? false;
-
-        if($this->hasPage() && is_int($option['limit']))
-        {
-            $page = $this->segment('page');
-            $option['limit'] = [$page=>$option['limit']];
-        }
-
-        if($required === false || $search !== null)
-        {
-            $return = [];
-
-            if(is_string($search))
-            $return = $relation->search($search,$option);
-
-            elseif($search === null)
-            $return = $relation->all(false,$option);
-        }
 
         return $return;
     }

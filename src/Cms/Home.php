@@ -32,7 +32,7 @@ class Home extends Core\Route\Home
 
     // main
     // génère main pour home
-    public function main():string
+    protected function main():string
     {
         $r = Html::divCond($this->mainTop(),'top');
         $r .= Html::divCond($this->mainBottom(),'bottom');
@@ -196,7 +196,7 @@ class Home extends Core\Route\Home
 
     // makeSearch
     // génère le champ de recherche globale
-    public function makeSearch():string
+    protected function makeSearch():string
     {
         $r = '';
 
@@ -204,7 +204,7 @@ class Home extends Core\Route\Home
         {
             $route = HomeSearch::makeOverload();
             $tables = $this->db()->tables();
-            $searchable = $route->searchable(false);
+            $searchable = $route->searchable();
             $lang = static::lang();
 
             if($searchable->isNotEmpty())

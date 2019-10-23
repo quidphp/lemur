@@ -17,7 +17,7 @@ use Quid\Main;
 trait _specific
 {
     //  configSpecific
-    public static $configSpecific = [
+    public static $configCmsSpecific = [
         'formWrap'=>"<div class='left'><div class='label'>%label%</div>%description%%details%</div><div class='right'>%form%</div>%popup%",
         'popup'=>[
             'name','isRequired','shouldBeUnique','isEditable','priority','pattern','preValidate','validate','compare','type','length','unsigned',
@@ -285,10 +285,12 @@ trait _specific
             $details = $colCell->details();
             $formWrap = '';
 
-            $class = (array) $col->classHtml();
+            $class = array();
             $class[] = ($col->isRequired())? 'required':null;
-            $class[] = ($colCell->hasFormLabelId($this->formWrapAttr($colCell),true))? 'pointer':null;
-            $attr = ['element','anchor-corner',$class,'data'=>['col'=>$col]];
+            $class[] = ($colCell->hasFormLabelId($this->formWrapAttr($colCell),true))? 'cursor-pointer':null;
+            $data = array('name'=>$col,'group'=>$col->group(),'col'=>$col::className(true),'tag'=>$col->complexTag());
+            $data = $col->getDataAttr($data);
+            $attr = ['element','anchor-corner',$class,'data'=>$data];
 
             $detailsHtml = Html::liMany(...$details);
             $detailsHtml = Html::ulCond($detailsHtml);

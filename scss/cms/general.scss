@@ -110,6 +110,11 @@
         overflow-y: visible;
         overflow-x: auto;
         min-height: 400px;
+        
+        &[data-status='grabbing'] {
+            @include disableSelection();
+            cursor: grabbing !important;
+        }
     }
 }
 
@@ -212,10 +217,16 @@
     width: 40px;
     min-width: inherit;
 
+    .close {
+        @include abs(-8px, -8px);
+        z-index: 1;
+    }
+    
     .in {
         cursor: pointer;
         padding: 0 10px;
-
+        
+        &.selected,
         &:hover {
             background-color: $lightYellow;
             border-left: 1px solid $lightYellow;
@@ -251,7 +262,7 @@
             background-size: inherit;
             background-position: 0px 0px;
             display: block;
-            opacity: 0.3;
+            opacity: 0.1;
         }
     }
 
@@ -277,7 +288,6 @@
         }
 
         .right {
-            background-color: $darkerColor;
 
             .arrow {
                 opacity: 1;
@@ -323,60 +333,9 @@
             display: block;
         }
     }
-
-    &.loading .popup {
-        min-height: 30px;
-
-        .top,
-        .result {
-            display: none;
-        }
-    }
 }
 [data-route='general'] main .inner > .container table thead th.filterable .popup {
-    @include clickOpenPopup();
-
-    ul li {
-        &:first-child > .replace {
-            border-top: 0;
-        }
-
-        &:hover > .replace {
-            background-color: $lightYellow;
-        }
-
-        &.has-icon > .replace {
-            padding-right: 30px;
-        }
-
-        > .replace {
-            display: block;
-            border-top: 1px solid $lightGray;
-            padding: 5px 10px;
-            cursor: pointer;
-
-            &.selected {
-                color: $black;
-                background-color: $lightYellow;
-            }
-
-            .thumbnail {
-                margin-bottom: 3px;
-                text-align: center;
-
-                img {
-                    @include inbl();
-                    max-width: 100px;
-                }
-            }
-
-            .legend {
-                text-align: center;
-                font-size: 80%;
-                word-break: break-all;
-            }
-        }
-    }
+    @include filterPopup();
 }
 
 /* COLS */
@@ -384,21 +343,32 @@
     width: 50px;
     min-width: inherit;
 
-    &:hover,
-    &.active {
-        .in {
-            background-color: $lightYellow;
-            border-right: 1px solid $lightYellow;
-        }
-    }
-
     .in {
         padding: 0px 10px;
         cursor: pointer;
 
+        &:hover,
+        &.active,
+        &.selected {
+            background-color: $lightYellow;
+            border-right: 1px solid $lightYellow;
+        }
+        
+        &.selected .close {
+            @include abs(-8px,0px);
+        }
+        
         .popup {
-            width: 300px;
-
+            width: 350px;
+            overflow-y: hidden;
+            padding: 0;
+            
+            > .inside {
+                max-height: 300px;
+                padding: 10px 15px;
+                overflow-y: auto;
+            }
+            
             &.valid {
                 button {
                     display: block;
@@ -411,18 +381,17 @@
                     color: $red;
                 }
             }
-
-            .col {
-                padding: 2px 0;
-
-                input[type='checkbox'] {
-                    @include inbl();
-                    margin-right: 10px;
+            
+            .choice {
+                @include inputChoice(4px 10px);
+                
+                .move {
+                    margin-right: 5px;
                 }
-
-                label {
-                    @include inbl();
-                }
+            }
+            
+            button {
+                display: none;
             }
         }
     }

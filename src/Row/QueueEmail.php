@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Quid\Lemur\Row;
 use Quid\Core;
+use Quid\Lemur;
 
 // queueEmail
 // class to deal with a row of the queueEmail table, with cms logic
@@ -16,6 +17,8 @@ class QueueEmail extends Core\Row\QueueEmail
 {
     // config
     public static $config = [
+        'cols'=>array(
+            'json'=>array('class'=>Lemur\Col\JsonExport::class)),
         '@cms'=>[
             'permission'=>[
                 'contributor'=>['view'=>false],

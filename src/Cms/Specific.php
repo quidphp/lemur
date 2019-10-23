@@ -21,7 +21,7 @@ class Specific extends Core\RouteAlias
     use _templateAlias;
     use _general;
     use _specific;
-    use Lemur\Route\_specificNav;
+    use Lemur\Route\_specific;
     use Lemur\Route\_specificPrimary;
     use Lemur\Segment\_table;
     use Lemur\Segment\_primary;
@@ -35,12 +35,13 @@ class Specific extends Core\RouteAlias
         'segment'=>[
             'table'=>'structureSegmentTable',
             'primary'=>'structureSegmentPrimary'],
+        'group'=>'specific',
         'match'=>[
             'role'=>['>='=>20]],
         'sitemap'=>true
     ];
 
-
+    
     // onBefore
     // validation avant le lancement de la route
     protected function onBefore()

@@ -10,11 +10,12 @@
 // stylesheet that imports other stylesheets for the CMS
 
 // import
+@import '_component.scss';
+@import '_relation.scss';
 @import 'icon64';
 @import 'icon';
 @import 'style';
 @import 'modal';
-@import 'calendar';
 @import 'clickOpen';
 @import 'form';
 @import 'interface';

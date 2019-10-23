@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Quid\Lemur\Row;
 use Quid\Core;
+use Quid\Lemur;
 
 // logEmail
 // class to represent a row of the logEmail table, with cms logic
@@ -16,6 +17,8 @@ class LogEmail extends Core\Row\LogEmail
 {
     // config
     public static $config = [
+        'cols'=>array(
+            'json'=>array('class'=>Lemur\Col\JsonExport::class)),
         '@cms'=>[
             'permission'=>[
                 'contributor'=>['view'=>false],

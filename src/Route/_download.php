@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Quid\Lemur\Route;
 use Quid\Core;
+use Quid\Main;
 
 // _download
 // trait that provides most methods necessary to make a download route
@@ -45,7 +46,7 @@ trait _download
 
     // getFile
     // retourne l'objet fichier à downloader ou null
-    public function getFile():?Core\File
+    public function getFile():?Main\File
     {
         $return = null;
         $cell = $this->cell();

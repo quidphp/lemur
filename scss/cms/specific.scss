@@ -91,9 +91,9 @@
     background-color: $lightestGray;
     border: 1px solid $lightGray;
     margin-top: 20px;
-    padding: 0px 15px;
+    padding: 10px 15px;
     border-radius: 5px;
-    box-shadow: 0px 0px 6px -2px $gray;
+    box-shadow: 2px 2px 6px -4px $gray;
     position: relative;
 
     &:first-child {
@@ -106,12 +106,18 @@
         }
     }
 }
+[data-group='specific'] #wrapper main .element.exception {
+    background-color: $red;
+    color: $white;
+    text-align: center;
+    font-weight: bold;
+}
 [data-group='specific'] main .inner > .container .form .element .popup-trigger {
     @include abs(5px, 10px);
 }
 
 /* LEFT */
-[data-group='specific'] main .inner > .container .form .panel .element > .left {
+[data-group='specific'] form .element > .left{
     @include inbl(middle, 30%);
     padding: 10px 20px 10px 0;
     position: relative;
@@ -151,7 +157,7 @@
         }
     }
 }
-[data-group='specific'] main .inner > .container .form .panel .element.pointer > .left label {
+[data-group='specific'] main .inner > .container .form .panel .element.cursor-pointer > .left label {
     cursor: pointer;
 
     &:hover {
@@ -160,11 +166,10 @@
 }
 
 /* RIGHT */
-[data-group='specific'] main .inner > .container .form .element > .right {
+[data-group='specific'] form .element > .right {
     @include inbl(middle, 70%);
-    padding: 10px 30px 10px 0;
-    position: relative;
-
+    padding: 0px 30px 0px 0;
+    
     > div.nothing {
         @include nothing();
     }
@@ -192,10 +197,23 @@
 
     .choice {
         @include inputChoice();
-        padding: 5px 0;
-
-        label:hover {
-            background-color: $lightYellow;
+        
+        &:hover .choice-in > span {
+            @include inbl();
+        }
+        
+        .choice-in {
+            
+            > span {
+                display: none;
+                margin-left: 10px;
+                
+                a {
+                    @include inbl();
+                    @include wh(12px);
+                    background-size: 12px 12px;
+                }
+            }
         }
     }
 

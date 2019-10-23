@@ -84,7 +84,7 @@ trait _filter
                 $return = implode($delimiters[0],$array);
             }
 
-            elseif(is_string($value) && strlen($value))
+            elseif(is_string($value))
             $return = $value;
         }
 
@@ -97,59 +97,99 @@ trait _filter
     protected static function matchSegmentFilter($value,Core\Table $table)
     {
         $return = false;
-
-        if(is_string($value))
+        
+        if(!empty($value))
         {
-            $return = [];
-            $delimiters = static::getFilterDelimiters();
-            $array = Base\Str::explodes([$delimiters[0],$delimiters[1]],$value,null,true,true);
-
-            if(!empty($array))
+            if(is_string($value))
             {
-                foreach ($array as $val)
+                $return = [];
+                $delimiters = static::getFilterDelimiters();
+                $array = Base\Str::explodes([$delimiters[0],$delimiters[1]],$value,null,true,true);
+                
+                if(!empty($array))
                 {
-                    if(is_array($val) && count($val) === 2)
+                    $value = array();
+                    
+                    foreach ($array as $val)
                     {
-                        $k = $val[0];
-                        $v = Base\Str::explode($delimiters[2],$val[1],null,true,true);
-
-                        if(is_string($k) && $table->hasCol($k) && !empty($v))
+                        if(is_array($val) && count($val) === 2)
                         {
-                            $col = $table->col($k);
+                            $k = $val[0];
+                            $v = Base\Str::explode($delimiters[2],$val[1],null,true,true);
                             $v = Base\Arr::cast($v);
-
-                            if($col->isFilterable())
-                            {
-                                $rel = $col->relation();
-
-                                foreach ($v as $vv)
-                                {
-                                    if($rel->exists($vv))
-                                    $return[$k][] = $vv;
-
-                                    else
-                                    {
-                                        $return = false;
-                                        break 2;
-                                    }
-                                }
-                            }
-
-                            else
-                            {
-                                $return = false;
-                                break;
-                            }
+                            $value[$k] = $v;
                         }
                     }
                 }
             }
+            
+            if(is_array($value))
+            $return = static::matchSegmentFilterArray($value,$table);
         }
 
         return $return;
     }
 
+    
+    // matchSegmentFilterArray
+    // gère le segment filter lors d'une validation et que la valeur est un array
+    protected static function matchSegmentFilterArray(array $value,Core\Table $table)
+    {
+        $return = array();
+        
+        foreach ($value as $k => $v) 
+        {
+            $val = false;
+            
+            if(is_string($k) && $table->hasCol($k) && $v !== null)
+            {
+                $col = $table->col($k);
+                
+                if($col->isFilterable())
+                $val = static::prepareSegmentFilter($v,$col);
+            }
+            
+            if($val === false)
+            {
+                $return = false;
+                break;
+            }
+            
+            else
+            $return = Base\Arr::append($return,$val);
+        }
+        
+        return $return;
+    }
+    
+    
+    // prepareSegmentFilter
+    // permet de préparer les valeurs pour une relation
+    protected static function prepareSegmentFilter(array $value,Core\Col $col)
+    {
+        $return = array();
+        $name = $col->name();
+        $rel = $col->relation();
 
+        foreach ($value as $v)
+        {
+            if($col->isFilterEmptyNotEmpty() && $col::isFilterEmptyNotEmptyValue($v))
+            $return[$name][] = $v;
+            
+            elseif($rel->exists($v))
+            $return[$name][] = $v;
+            
+            else
+            {
+                $return = false;
+                break;
+            }
+        }
+
+        return $return;
+    }
+    
+    
     // getFilterDelimiters
     // retourne les délimiteurs à utiliser pour les filtres
     public static function getFilterDelimiters():array

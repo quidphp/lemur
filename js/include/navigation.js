@@ -258,10 +258,6 @@
 			var state = $target.triggerHandler('navigation:getCurrentState');
 			var relativeUri = $.relativeUri(state.url);
 			
-			// loading
-			if($settings.classLoading)
-			$("html").removeClass($settings.classLoading);
-			
             // unbink click sur document
             $target.off('.outside');
             

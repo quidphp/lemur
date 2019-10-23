@@ -59,7 +59,12 @@ class Fr extends Core\Lang\Fr
 
         // cms
         '@cms'=>[
-
+            
+            // common
+            'common'=>array(
+                'loadMore'=>'Charger de [from] à [to] sur [total]'
+            ),
+            
             // popup
             'popup'=>[
 
@@ -511,8 +516,8 @@ class Fr extends Core\Lang\Fr
                     'about'=>'À propos',
                     'general'=>'Général',
                     'generalDelete'=>'Général - Suppression',
-                    'generalExportDialog'=>'Exportation',
                     'generalExport'=>'Général - Exportation',
+                    'generalExportDialog'=>'Exportation',
                     'generalRelation'=>'Général - Relation',
                     'generalTruncate'=>'Vider la table',
                     'homeSearch'=>'Accueil - Recherche',

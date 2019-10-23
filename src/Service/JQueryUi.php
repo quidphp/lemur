@@ -8,11 +8,11 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Service;
-use Quid\Core;
+use Quid\Main;
 
 // jQueryUi
 // class to integrate jquery-ui library
-class JQueryUi extends Core\ServiceAlias
+class JQueryUi extends Main\Service
 {
     // config
     public static $config = [];

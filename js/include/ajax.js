@@ -141,15 +141,15 @@
 			$(this).block(type).ajax(type)
 			.on('ajax:before', function(event) {
 				$(this).removeClass('error');
-				$(this).addClass('loading');
+				$(this).attr('data-status','loading');
 				$(this).trigger('block');
 			})
 			.on('ajax:error', function(event,jqXHR,textStatus,errorThrown) {
-				$(this).addClass("error");
+				$(this).attr("data-status",'error');
 			})
 			.on('ajax:complete', function(event) {
 				$(this).trigger('unblock');
-				$(this).removeClass('loading');
+				$(this).removeAttr('data-status');
 			});
 		}
 		

@@ -72,14 +72,14 @@ $(document).ready(function() {
 		var formWrapper = $("main .container > .form");
 		var form = formWrapper.find("form");
 		var panel = $("main .form .inside .panel");
-		var date = form.find(".element.date .right");
-		var enumSet = form.find(".element .search-enumset");
-		var mediaAction = form.find(".element.media .block .action,.element.medias .block .action");
-		var mediaCancelAction = form.find(".element.media .block .message .close,.element.medias .block .message .close");
-		var addRemove = form.find(".element.add-remove");
-		var checkboxSortable = form.find(".element.sortable");
-		var tableRelation = $(this).find(".element.table-relation");
-		
+		var date = form.find("[data-group='date'] .right");
+		var mediaAction = form.find("[data-group='media'] .block .action");
+		var mediaCancelAction = form.find("[data-group='media'] .block .message .close");
+		var addRemove = form.find("[data-tag='add-remove']");
+		var tableRelation = $(this).find("[data-table-relation='1']");
+        var enumSet = form.find("[data-tag='search'] .search-enumset");
+		var checkboxSortable = form.find("[data-group='relation'][data-sortable='1']");
+        
 		// avec panel
 		if(panel.length > 1)
 		$(this).trigger('route:specificCommon:panel',[formWrapper,panel])
@@ -143,7 +143,7 @@ $(document).ready(function() {
 		
 		// checkboxSortable
 		if(checkboxSortable.length)
-		checkboxSortable.verticalSorting(".choice",'parent');
+		checkboxSortable.verticalSorting(".choice",'.choice-in');
 	})
 	
 	// route:specificCommon:panel

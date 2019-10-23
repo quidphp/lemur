@@ -39,6 +39,8 @@ class GeneralRelation extends Core\RouteAlias
             'order'=>'structureSegmentOrderColRelation',
             'page'=>'structureSegmentPage'],
         'order'=>true,
+        'showCount'=>true,
+        'showEmptyNotEmpty'=>true,
         'match'=>[
             'ajax'=>true,
             'role'=>['>='=>20]],
@@ -65,7 +67,7 @@ class GeneralRelation extends Core\RouteAlias
             else
             $return = true;
         }
-
+        
         return $return;
     }
 

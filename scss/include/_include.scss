@@ -433,3 +433,14 @@ $media: $uriMedia;
         margin: 0;
     }
 }
+
+// disableSelection
+// désactive la possibilité de sélectionner du contenu
+@mixin disableSelection() {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
