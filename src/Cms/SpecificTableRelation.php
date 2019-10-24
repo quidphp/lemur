@@ -78,9 +78,9 @@ class SpecificTableRelation extends Core\RouteAlias
             if(is_array($results) && !empty($results))
             $r .= $this->makeResults($results,null,$count);
         }
-        
+
         $r = Html::divCond($r,'relationWrap');
-        
+
         if(empty($r))
         $r .= Html::h3(static::langText('common/nothing'));
 

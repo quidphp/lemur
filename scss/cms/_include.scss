@@ -85,11 +85,11 @@ $red: #8d1e2d;
 // style utilisé pour faire un choix parmis plusieurs input radio ou checkbox
 @mixin inputChoice($paddingtb: 8px) {
     padding: 5px 0;
-    
+
     .choice-in {
         @include inbl();
         line-height: 1;
-        
+
         input[type='radio'] + label,
         input[type='checkbox'] + label,
         input[type='radio']:checked + label,
@@ -297,7 +297,7 @@ $red: #8d1e2d;
     color: $white;
     background-color: $color;
     border: 1px solid $darkColor;
-    
+
     &.selected,
     &:hover {
         background-color: $darkColor;

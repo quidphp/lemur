@@ -31,7 +31,7 @@
         @include abs(100%, '', '', 0px);
         display: none;
     }
-    
+
     body .active .popup {
         display: block;
     }
@@ -144,16 +144,16 @@
         &.with-popup {
             .popup-title {
                 cursor: pointer;
-                
+
                 &:hover {
                     background-color: $darkColor;
                 }
-                
+
                 &:active {
                     background-color: $darkerColor;
                 }
             }
-            
+
             &.active,
             &:hover {
                 .popup-title {
@@ -161,7 +161,7 @@
                     border-radius: 5px;
                 }
             }
-            
+
             &.active {
                 .popup-title {
                     background-color: $darkerColor;

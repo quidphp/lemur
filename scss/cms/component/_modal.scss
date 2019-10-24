@@ -47,12 +47,11 @@
     }
 }
 
-
 // modal
 // mixin pour générer les styles de base du modal avec quelques ajustements pour le CMS
 @mixin modal() {
     @include modalBase();
-    
+
     .modal .background .box {
         border-radius: 10px;
         background-color: $lighterGray;

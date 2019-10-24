@@ -74,66 +74,64 @@
 // mixin pour le trigger d'un fakeselect
 @mixin fakeselectTrigger() {
     @include inbl();
-	position: relative;
-	min-width: 150px;
-	
-	&.invalid {
-		
-		> .trigger {
-			background-color: $red;
-			color: $white;
-			border: 1px solid $red;
-		}
-	}
-	
-	> .trigger {
-		@include transitions(background-color 0.3s,color 0.3s);
-		position: relative;
-		padding: 5px 40px 5px 12px;
-		cursor: pointer;
-		background-color: $white;
-		border: 1px solid $gray;
-		border-radius: 5px;
-		
-		> .title {
-			text-align: left;
-			font-size: 90%;
-		}
-		
-		> .ico {
-			@include abs(50%,10px);
-			@include wh(12px,true,"",true);
-			background-size: contain;
-		}
-	}
-	
-	&.active > .trigger,
-	> .trigger:hover {
-		color: $black !important;
-		background-color: $lightYellow !important;
-	}
-}
+    position: relative;
+    min-width: 150px;
 
+    &.invalid {
+        > .trigger {
+            background-color: $red;
+            color: $white;
+            border: 1px solid $red;
+        }
+    }
+
+    > .trigger {
+        @include transitions(background-color 0.3s, color 0.3s);
+        position: relative;
+        padding: 5px 40px 5px 12px;
+        cursor: pointer;
+        background-color: $white;
+        border: 1px solid $gray;
+        border-radius: 5px;
+
+        > .title {
+            text-align: left;
+            font-size: 90%;
+        }
+
+        > .ico {
+            @include abs(50%, 10px);
+            @include wh(12px, true, '', true);
+            background-size: contain;
+        }
+    }
+
+    &.active > .trigger,
+    > .trigger:hover {
+        color: $black !important;
+        background-color: $lightYellow !important;
+    }
+}
 
 // fakeselectPopup
 // mixin pour le popup d'un fakeselect
 @mixin fakeselectPopup() {
     &.active > .popup {
-		display: block;
-	}
-    
+        display: block;
+    }
+
     > .popup {
-		width: 100%;
-		display: none;
-		text-align: left;
-		max-height: 250px;
-		overflow-y: auto;
-		z-index: 100;
-		border-radius: 5px;
-	}
-	
-	&.topRight > .popup,
-	&.topLeft > .popup {
-		border-top: 0;
-	}
+        width: 100%;
+        display: none;
+        text-align: left;
+        max-height: 250px;
+        overflow-y: auto;
+        z-index: 100;
+        border-radius: 5px;
+    }
+
+    &.topRight > .popup,
+    &.topLeft > .popup {
+        border-top: 0;
+    }
 }

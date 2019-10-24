@@ -121,17 +121,17 @@ trait _template
             $r .= Logout::makeOverload()->aTitle(null,['submit','icon','padLeft','logout']);
 
             $r .= Html::divCl();
-            
+
             $route = PopupSession::makeOverload();
             $popup = ($route::allowed())? true:false;
             $attr = ['popup-trigger',(!empty($popup))? ['with-ajax','with-popup','with-icon','anchor-corner']:null];
             $r .= Html::divOp($attr);
-            
+
             if($popup === true)
             $r .= $route->a($username,'popup-title');
             else
             $r .= Html::span($username,'popup-title');
-            
+
             $r .= Html::div(null,'popup');
             $r .= Html::divCl();
         }
@@ -360,20 +360,20 @@ trait _template
 
         $r .= Html::span($author,'author');
         $r .= Html::span('|','separator');
-        
+
         $route = PopupBoot::makeOverload($this);
         $popup = ($route::allowed() && $route->isValidSegment())? true:false;
         $attr = ['popup-trigger',(!empty($popup))? ['with-ajax','with-popup','with-icon','anchor-corner']:null];
         $r .= Html::divOp($attr);
-        
+
         if($popup === true)
         $r .= $route->a($copyright,'popup-title');
         else
         $r .= Html::span($copyright,'popup-title');
-        
+
         $r .= Html::div($popup,'popup');
         $r .= Html::divCl();
-        
+
         return $r;
     }
 

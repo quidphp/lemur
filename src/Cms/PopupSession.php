@@ -8,17 +8,17 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Cms;
-use Quid\Core;
 use Quid\Base;
+use Quid\Core;
 
 // popupSession
-// class for the popup route with the session information 
+// class for the popup route with the session information
 class PopupSession extends Core\RouteAlias
 {
     // trait
     use _common;
-    
-    
+
+
     // config
     public static $config = [
         'path'=>[
@@ -32,24 +32,24 @@ class PopupSession extends Core\RouteAlias
             'requestCount','ip','lang','name','getLoginLifetime','getLifetime','expire','getCookieParams','getGarbageCollect',
             'classSession','classFqcn','classRole','userAgent'],
     ];
-    
-    
+
+
     // onBefore
     // vérifie que la permission est la
-    protected function onBefore() 
+    protected function onBefore()
     {
         return ($this->hasPermission('popup','sessionPopup'))? true:false;
     }
-    
-    
+
+
     // triger
     // lance la route
-    public function trigger():string 
+    public function trigger():string
     {
         return $this->popup();
     }
-    
-    
+
+
     // popup
     // génère le popup d'informations pour la session
     protected function popup():?string

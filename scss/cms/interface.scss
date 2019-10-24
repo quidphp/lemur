@@ -66,7 +66,7 @@ header > .top {
 
             > a {
                 color: $white;
-                
+
                 &:hover {
                     color: $gray;
                 }
@@ -93,7 +93,7 @@ header > .top {
                     margin-left: 0;
                     border-right: 0;
                 }
-                
+
                 &:last-child {
                     border-left: 0;
                 }
@@ -397,24 +397,24 @@ footer .right {
     width: 30%;
     text-align: right;
     color: $lightGray;
-    
+
     > span {
         @include inbl();
         color: $lightGray;
-        
+
         &.separator {
             margin: 0 5px;
         }
     }
-    
+
     > span a {
         color: $lightGray;
-        
+
         &:hover {
             text-decoration: underline;
         }
     }
-    
+
     .popup-title {
         color: $lightGray;
     }

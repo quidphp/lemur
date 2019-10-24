@@ -71,11 +71,11 @@
 // mixin avec des styles pour le popup d'un filtre
 @mixin filterPopup() {
     @include filterPopupBase();
-    
+
     .top {
         @include filterPopupTop();
     }
-    
+
     .results ul {
         &.selected-list {
             border-bottom: 4px solid $lightGray;
@@ -100,11 +100,11 @@
 
             > a.replace {
                 @include filterElementBase();
-                
+
                 &:hover {
                     color: $black;
                 }
-                
+
                 &.selected {
                     background-color: $lightYellow;
                 }

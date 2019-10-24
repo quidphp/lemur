@@ -199,11 +199,11 @@ form [data-tag='search'] .right {
 form [data-table-relation='1'] .right .relations {
     text-align: center;
     padding-top: 3px;
-    
+
     .table-relation {
         @include fakeselectTrigger();
         margin: 3px;
-        
+
         .popup {
             @include tableRelationPopup();
         }

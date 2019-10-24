@@ -62,7 +62,7 @@ trait _specificRelation
         $r = '';
         $col = $this->col();
         $selected = $this->segment('selected');
-        
+
         if(!empty($array))
         {
             foreach ($array as $key => $value)
