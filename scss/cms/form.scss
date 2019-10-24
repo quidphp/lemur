@@ -198,62 +198,14 @@ form [data-tag='search'] .right {
 /* TABLE RELATION */
 form [data-table-relation='1'] .right .relations {
     text-align: center;
-
-    .click-open {
+    padding-top: 3px;
+    
+    .table-relation {
+        @include fakeselectTrigger();
         margin: 3px;
-
-        > .trigger {
-            border: 1px solid $gray;
-        }
-    }
-}
-form [data-table-relation='1'] .right .relations .click-open .popup .result ul li {
-    border-top: 1px solid $lightGray;
-
-    &:first-child {
-        border-top: 0;
-    }
-
-    .insert {
-        padding: 5px 10px;
-        cursor: pointer;
-
-        .big-icon {
-            @include wh(64px);
-            margin: auto;
-            margin-bottom: 3px;
-            background-size: contain;
-        }
-
-        &:hover {
-            background-color: $lightYellow;
-        }
-    }
-}
-form [data-table-relation='1'] .right .relations .click-open .popup .result ul li .medias {
-    > .legend {
-        background-color: $lightGray;
-        text-align: center;
-        font-size: 90%;
-        font-weight: bold;
-        padding: 5px 0;
-        border-top: 1px solid $gray;
-        border-bottom: 1px solid $gray;
-    }
-
-    .insert {
-        margin-bottom: 10px;
-        text-align: center;
-
-        img {
-            margin-bottom: 3px;
-            @include inbl();
-            max-width: 100px;
-        }
-
-        .legend {
-            font-style: italic;
-            font-size: 80%;
+        
+        .popup {
+            @include tableRelationPopup();
         }
     }
 }

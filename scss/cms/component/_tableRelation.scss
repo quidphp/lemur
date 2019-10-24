@@ -1,0 +1,67 @@
+// compileOnSave: false
+
+/*
+ * This file is part of the QuidPHP package.
+ * Website: https://quidphp.com
+ * License: https://github.com/quidphp/lemur/blob/master/LICENSE
+ */
+
+// tableRelation
+// stylesheet for the tableRelation component
+
+// tableRelationPopup
+// mixin pour le popup de table relation
+@mixin tableRelationPopup() {
+    @include filterPopupBase();
+    
+    .top {
+        @include filterPopupTop();
+    }
+    
+    .results ul li {
+        border-top: 1px solid $lightGray;
+
+        &:first-child {
+            border-top: 0;
+        }
+
+        .insert {
+            @include transitions(background-color 0.3s);
+            padding: 5px 10px;
+            cursor: pointer;
+            text-align: center;
+            
+            .big-icon {
+                @include wh(64px);
+                margin: auto;
+                margin-bottom: 3px;
+                background-size: contain;
+            }
+            
+            img {
+                margin-bottom: 3px;
+                @include inbl();
+                max-width: 100px;
+            }
+
+            .legend {
+                font-style: italic;
+                font-size: 80%;
+            }
+            
+            &:hover {
+                background-color: $lightYellow;
+            }
+        }
+        
+        > .medias > .legend {
+            background-color: $lightGray;
+            text-align: center;
+            font-size: 90%;
+            font-weight: bold;
+            padding: 5px 0;
+            border-top: 1px solid $gray;
+            border-bottom: 1px solid $gray;
+        }
+    }
+}

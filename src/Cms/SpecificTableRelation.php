@@ -76,13 +76,13 @@ class SpecificTableRelation extends Core\RouteAlias
             ['result'=>$results,'count'=>$count] = $grab;
 
             if(is_array($results) && !empty($results))
-            $r .= $this->makeResults($results,'list',true);
+            $r .= $this->makeResults($results,null,$count);
         }
-
+        
+        $r = Html::divCond($r,'relationWrap');
+        
         if(empty($r))
         $r .= Html::h3(static::langText('common/nothing'));
-
-        $r = Html::div($r,'relationWrap');
 
         return $r;
     }
@@ -110,7 +110,7 @@ class SpecificTableRelation extends Core\RouteAlias
 
     // makeResults
     // génère les résultats d'affichage de la relation
-    protected function makeResults(array $array,$attr=null,bool $loadMore=false):string
+    protected function makeResults(array $array,$attr=null,?int $loadMore=nul):string
     {
         $r = '';
 
@@ -121,8 +121,8 @@ class SpecificTableRelation extends Core\RouteAlias
                 $r .= Html::li($value);
             }
 
-            if(!empty($r) && $loadMore === true)
-            $r .= $this->loadMore();
+            if(!empty($r) && is_int($loadMore))
+            $r .= $this->loadMore($loadMore);
 
             $r = Html::ulCond($r,$attr);
         }
@@ -167,7 +167,7 @@ class SpecificTableRelation extends Core\RouteAlias
             $html .= Html::divCl();
         }
 
-        $html .= Html::div(null,'result');
+        $html .= Html::div(null,'results');
         $r .= Html::clickOpen($html,$label,$after,[$class,'data'=>$data]);
 
         return $r;

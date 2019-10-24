@@ -388,7 +388,7 @@ class General extends Core\RouteAlias
 
             $r .= Html::divOp($attr);
             $r .= Html::div($this->makeCount(),['popup-title']);
-            $r .= $popup;
+            $r .= Html::div($popup,'popup');
             $r .= Html::divCl();
         }
 

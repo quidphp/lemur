@@ -1,0 +1,91 @@
+// compileOnSave: false
+
+/*
+ * This file is part of the QuidPHP package.
+ * Website: https://quidphp.com
+ * License: https://github.com/quidphp/lemur/blob/master/LICENSE
+ */
+
+// addRemove
+// stylesheet for the addRemove component
+
+// addRemove
+// contient les styles de base pour la composante jsonArray
+// un champ complexe où l'on peut ajouté, déplacer ou supprimer des lignes
+@mixin addRemove() {
+    .right .container {
+        position: relative;
+
+        > .ele {
+            position: relative;
+            margin-bottom: 10px;
+
+            > .current {
+                @include inbl();
+                width: 85%;
+            }
+
+            > .utils {
+                @include inbl();
+                width: 15%;
+                padding-left: 10px;
+                text-align: right;
+
+                > .outer {
+                    @include inbl();
+                    background-color: $lightGray;
+                    padding: 5px 10px;
+                    border-radius: 3px;
+                    text-align: center;
+
+                    > .icon {
+                        margin-left: 10px;
+
+                        &:first-child {
+                            margin-left: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .right .insert {
+        @include transitions(background-color 0.3s);
+        padding: 5px;
+        text-align: center;
+        background-color: $lightGray;
+        cursor: pointer;
+        border-radius: 3px;
+
+        > span {
+            @include inbl();
+            font-weight: bold;
+
+            &.icon {
+                margin-left: 10px;
+            }
+        }
+
+        &:hover {
+            background-color: $gray;
+        }
+    }
+}
+
+// addRemoveResponsive
+// règle pour les champs addRemove pour response
+@mixin addRemoveResponsive() {
+    .container > .ele {
+        .current {
+            width: auto;
+            display: block;
+        }
+
+        .utils {
+            padding-top: 5px;
+            width: auto;
+            display: block;
+        }
+    }
+}

@@ -18,7 +18,7 @@ $(document).ready(function() {
 		var colsButton = colsPopup.find("button[name='cols']");
 		
         // clickOpen
-        $(this).clickOpen(".toggler");
+        $(this).clickOpenWithTrigger(".toggler");
         
         // colsPopup
         colsPopup.verticalSorting(".choice",'.choice-in')
@@ -32,7 +32,7 @@ $(document).ready(function() {
             $(this).triggerHandler('cols:getCheckboxes').trigger('change');
         })
         .on('cols:isValid', function(event) {
-            return $(this).triggerHandler('cols:getCheckboxes').triggerHandlerFalse('isValid');
+            return $(this).triggerHandler('cols:getCheckboxes').triggerHandlerFalse('validate:isValid');
         })
         .on('cols:invalid', function() {
 			$(this).removeClass("valid invalid").addClass('invalid');
@@ -46,10 +46,10 @@ $(document).ready(function() {
 		
 		// colsCheckboxes
 		colsPopup.triggerHandler('cols:getCheckboxes').fieldValidate()
-        .on('invalid', function() {
+        .on('validate:invalid', function() {
 			colsPopup.trigger('cols:invalid');
 		})
-		.on('valid', function() {
+		.on('validate:valid', function() {
 			colsPopup.trigger('cols:valid');
 		});
 		
@@ -185,12 +185,12 @@ $(document).ready(function() {
 			var searchInput = search.find(".form input[type='text']");
 			var searchButton = search.find(".form button");
 			var searchSlide = search.find(".in");
-			searchInput.searchGeneralInput(searchButton).focusSlide(searchSlide);
+			searchInput.inputSearch(searchButton).focusSlide(searchSlide);
 		}
 		
 		// page + limit
 		if(pageLimit.length)
-		pageLimit.numericGeneralInput();
+		pageLimit.inputNumeric();
 		
 		// cols
 		if(generalCols.length)
@@ -227,6 +227,6 @@ $(document).ready(function() {
 		
 		// filter
 		if(filter.length)
-		filter.filterGeneralFull(true,true)
+		filter.filterGeneralFull();
 	});
 });

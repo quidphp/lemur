@@ -128,7 +128,7 @@ class Textarea extends Core\ColAlias
         foreach ($tables as $table)
         {
             $route = $this->route('tableRelation',['table'=>$table]);
-            $r .= $route::makeClickOpen($table,$route,['click-open','filter','anchor-corner']);
+            $r .= $route::makeClickOpen($table,$route,['table-relation','anchor-corner']);
         }
 
         return $r;

@@ -301,7 +301,7 @@ class Specific extends Core\RouteAlias
 
                     $r .= Html::divOp($attr);
                     $r .= Html::div($specific['count'],'popup-title');
-                    $r .= $popup;
+                    $r .= Html::div($popup,'popup');
                     $r .= Html::divCl();
                 }
 

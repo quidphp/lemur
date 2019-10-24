@@ -35,9 +35,9 @@ class Routes extends Base\Test
         assert($app->count() === 5);
         assert($routes->type() === 'cms');
         assert($routes->keyParent()[Lemur\Cms\LoginSubmit::class] === Lemur\Cms\Login::class);
-        assert(count($routes->hierarchy()) === 10);
+        assert(count($routes->hierarchy()) === 12);
         assert(count($routes->childsRecursive($login)) === 5);
-        assert($routes->tops()->isCount(10));
+        assert($routes->tops()->isCount(12));
         assert($routes->tops() !== $routes);
         assert($routes->top($loginSubmit) === $login);
         assert($routes->parents($loginSubmit)->isCount(1));
@@ -71,15 +71,15 @@ class Routes extends Base\Test
         assert($routes->sortDefault() === $routes);
 
         // map
-        assert($routes->isCount(36));
+        assert($routes->isCount(38));
         assert($routes->get('Sitemap') === Lemur\Cms\Sitemap::class);
         assert($routes->get(Lemur\Cms\Sitemap::class) === Lemur\Cms\Sitemap::class);
         assert(!$routes->in('Sitemap'));
         assert($routes->in(Lemur\Cms\Sitemap::class));
         assert($routes->exists('Sitemap'));
         assert($routes->exists(Lemur\Cms\Sitemap::class));
-        assert($routes->unset('Sitemap')->isCount(35));
-        assert($routes->add(Lemur\Cms\Sitemap::class)->isCount(36));
+        assert($routes->unset('Sitemap')->isCount(37));
+        assert($routes->add(Lemur\Cms\Sitemap::class)->isCount(38));
 
         return true;
     }

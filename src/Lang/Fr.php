@@ -532,7 +532,9 @@ class Fr extends Core\Lang\Fr
                     'specificRelation'=>'Spécifique - Relation',
                     'specificSubmit'=>'Spécifique - Soumettre',
                     'specificTableRelation'=>'Spécifique - Relation de table',
-                    'specificUserWelcome'=>'Bienvenue'
+                    'specificUserWelcome'=>'Bienvenue',
+                    'popupBoot'=>'Popup - Boot',
+                    'popupSession'=>'Popup - Session'
                 ],
 
                 // description

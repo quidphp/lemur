@@ -1,0 +1,82 @@
+// compileOnSave: false
+
+/*
+ * This file is part of the QuidPHP package.
+ * Website: https://quidphp.com
+ * License: https://github.com/quidphp/lemur/blob/master/LICENSE
+ */
+
+// clickOpen
+// stylesheet for the calendar component
+
+// calendar
+// règle de style pour le calendrier
+@mixin calendar() {
+    .head {
+        padding: 5px;
+        background-color: $darkColor;
+        position: relative;
+
+        .prev,
+        .next {
+            @include wh(16px, true, '', true);
+
+            &.prev {
+                @include abs(50%, '', '', 5px);
+            }
+
+            &.next {
+                @include abs(50%, 5px);
+            }
+        }
+
+        .current {
+            text-align: center;
+            font-size: 110%;
+            color: $white;
+        }
+    }
+    .body {
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background-color: $color;
+
+            th {
+                padding: 3px;
+                color: $white;
+                text-align: center;
+                font-weight: bold;
+            }
+        }
+
+        tbody {
+            td {
+                padding: 3px;
+                text-align: center;
+                color: $black;
+                border: 1px solid $lightGray;
+                cursor: pointer;
+
+                &.out {
+                    color: $lightGray;
+                }
+
+                &.today {
+                    background-color: $lightGray;
+                }
+
+                &:hover {
+                    background-color: $lightYellow;
+                }
+
+                &.selected {
+                    background-color: $lightYellow !important;
+                }
+            }
+        }
+    }
+}

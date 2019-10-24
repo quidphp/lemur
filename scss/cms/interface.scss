@@ -66,7 +66,7 @@ header > .top {
 
             > a {
                 color: $white;
-
+                
                 &:hover {
                     color: $gray;
                 }
@@ -86,10 +86,16 @@ header > .top {
 
         .top {
             > a {
-                margin: 0 0 5px 10px;
+                margin: 0 0 5px 0px;
+                border-radius: 0;
 
                 &:first-child {
                     margin-left: 0;
+                    border-right: 0;
+                }
+                
+                &:last-child {
+                    border-left: 0;
                 }
             }
         }
@@ -362,7 +368,7 @@ footer {
     z-index: 1;
     width: 100%;
     padding: 5px 20px;
-    background-color: $darkColor;
+    background-color: $color;
     font-size: 90%;
 }
 footer .left {
@@ -391,30 +397,26 @@ footer .right {
     width: 30%;
     text-align: right;
     color: $lightGray;
-
+    
     > span {
         @include inbl();
-
+        color: $lightGray;
+        
         &.separator {
             margin: 0 5px;
         }
-
-        a {
-            color: $lightGray;
-
-            &:hover {
-                text-decoration: underline;
-            }
+    }
+    
+    > span a {
+        color: $lightGray;
+        
+        &:hover {
+            text-decoration: underline;
         }
     }
-
-    .popup-trigger.with-popup {
-        &.active,
-        &:hover {
-            .popup-title {
-                background-color: $color;
-            }
-        }
+    
+    .popup-title {
+        color: $lightGray;
     }
 }
 

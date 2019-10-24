@@ -63,9 +63,18 @@ $(document).ready(function() {
 		});
 		
 		// prepare
-		$(this).trigger('route:specificPrepare');
+        var preparable = formWrapper.triggerHandler('form:getPreparable');
+		$(this).trigger('route:specificPrepare',[preparable]);
 	})
 	
+    // specificPrepare
+    // permet de faire des binding sur ouverture d'un preparable de form (un panel)
+    .on('route:specificPrepare', function(event,preparable) {
+		preparable.on('specificForm:prepare', function(event) {
+            $(this).find("[data-group='tinymce']").tinymceWithTableRelation();
+        });
+    })
+    
 	// specificTrigger
     // comportements communs pour la préparation des différents inputs du formulaire
 	.on('route:specificTrigger', function(event) {
@@ -89,7 +98,7 @@ $(document).ready(function() {
 		
 		// date
 		if(date.length)
-		date.dateInput();
+		date.calendarInput();
 		
 		// enumSet
 		if(enumSet.length)
@@ -135,7 +144,7 @@ $(document).ready(function() {
 		
 		// tableRelation
 		if(tableRelation.length)
-		tableRelation.tableRelationToTextarea();
+		tableRelation.tableRelation();
 		
 		// addRemove
 		if(addRemove.length)

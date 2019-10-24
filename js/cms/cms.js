@@ -23,7 +23,8 @@ $(document).ready(function() {
 	$(this).on('route:common', function(event) {
 		var body = $(this).find("body");
 		var modal = $(this).find(".modal");
-        var popupTrigger = $(this).find(".popup-trigger");
+        var popupTrigger = $(this).find(".popup-trigger.with-popup:not(.with-ajax)");
+        var popupTriggerAjax = $(this).find(".popup-trigger.with-popup.with-ajax");
 		var modalAnchor = $(this).find("a[data-modal]");
 		var anchorCorner = $(this).find(".anchor-corner");
 		var aConfirm = $(this).find("a[data-confirm]");
@@ -58,7 +59,10 @@ $(document).ready(function() {
 		});
         
         // popupTrigger
-        popupTrigger.clickOpen(".popup-title");
+        popupTrigger.clickOpenWithTrigger(".popup-title");
+        
+        // popupTriggerAjax
+        popupTriggerAjax.clickOpenAnchorAjax(".popup-title");
 	})
 	
 	// route:common:com

@@ -86,7 +86,7 @@ class Home extends Core\Route\Home
         $r .= Html::span('&nbsp;'.static::langText('lcf|common/and').'&nbsp;');
         $r .= Html::span($total['col'].' '.static::langPlural($total['col'],'lcf|common/col'));
         $r .= Html::divCl();
-        $r .= $popup;
+        $r .= Html::div($popup,'popup');
         $r .= Html::divCl();
 
         return $r;
@@ -99,7 +99,7 @@ class Home extends Core\Route\Home
     {
         $return = null;
 
-        if($this->hasPermission('popup','homeInfoPopup'))
+        if($this->hasPermission('popup','homePopup'))
         {
             $values = static::$config['popup'];
             $closure = $this->infoPopupClosure();

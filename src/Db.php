@@ -18,9 +18,9 @@ class Db extends Core\Db
     public static $config = [
         'option'=>[
             'cols'=>[ // paramètre par défaut pour les colonnes
-                'content_en'=>['class'=>Col\Textarea::class],
-                'content_fr'=>['class'=>Col\Textarea::class],
-                'content'=>['class'=>Col\Textarea::class],
+                'content_en'=>['class'=>Col\TinyMce::class],
+                'content_fr'=>['class'=>Col\TinyMce::class],
+                'content'=>['class'=>Col\TinyMce::class],
                 'excerpt_en'=>['class'=>Col\Excerpt::class],
                 'excerpt_fr'=>['class'=>Col\Excerpt::class],
                 'metaSearch_fr'=>['class'=>Col\Auto::class],

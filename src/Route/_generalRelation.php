@@ -64,7 +64,7 @@ trait _generalRelation
                 if($emptyNotEmpty === true && $this->isFirstPage() && !$this->hasSearchValue())
                 $results = $this->addEmptyNotEmpty($results,$selected);
 
-                $r .= $this->makeResults($results,'list',$count);
+                $r .= $this->makeResults($results,null,$count);
             }
         }
 

@@ -300,7 +300,7 @@ trait _specific
             {
                 $popup = Html::divOp(['popup-trigger','with-popup','with-icon-solo','anchor-corner']);
                 $popup .= Html::div(null,'popup-title');
-                $popup .= $colPopup;
+                $popup .= Html::div($colPopup,'popup');
                 $popup .= Html::divCl();
             }
 

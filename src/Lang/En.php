@@ -532,7 +532,9 @@ class En extends Core\Lang\En
                     'specificRelation'=>'Specific - Relation',
                     'specificSubmit'=>'Specific - Submit',
                     'specificTableRelation'=>'Specific - Table Relation',
-                    'specificUserWelcome'=>'Welcome'
+                    'specificUserWelcome'=>'Welcome',
+                    'popupBoot'=>'Popup - Boot',
+                    'popupSession'=>'Popup - Session'
                 ],
 
                 // description

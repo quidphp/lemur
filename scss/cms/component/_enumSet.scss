@@ -1,0 +1,64 @@
+// compileOnSave: false
+
+/*
+ * This file is part of the QuidPHP package.
+ * Website: https://quidphp.com
+ * License: https://github.com/quidphp/lemur/blob/master/LICENSE
+ */
+
+// enumSet
+// stylesheet for the enumSet component
+
+// enumSet
+// mixin avec des styles de base pour un champ enumSet (recherche dans relation)
+@mixin enumSet() {
+    .nothing {
+        font-weight: bold;
+        font-size: 90%;
+    }
+
+    .input {
+        position: relative;
+        margin: 5px 0;
+
+        input[type='text'] {
+            max-width: 300px !important;
+            margin-right: 10px;
+        }
+    }
+
+    .input .popup {
+        @include enumSetPopup();
+    }
+}
+
+// enumSetPopup
+// mixin avec des styles pour le popup d'un enum set
+@mixin enumSetPopup() {
+    @include filterPopupBase();
+
+    .order {
+        text-align: center;
+        padding: 5px 0;
+    }
+
+    .results ul li {
+        &:first-child > .ele {
+            border-top: 0;
+        }
+
+        &.already-in > .ele {
+            background-color: $red !important;
+            color: $white;
+        }
+
+        &.selected > .ele,
+        &:hover > .ele {
+            background-color: $lightYellow;
+        }
+
+        > .ele {
+            @include filterElementBase();
+        }
+    }
+}

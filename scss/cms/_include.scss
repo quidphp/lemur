@@ -47,3 +47,273 @@ $red: #8d1e2d;
         touch-action: none;
     }
 }
+
+// specificNav
+// styles utilisés pour la navigation de la page spécifique
+@mixin specificNav() {
+    @include inbl();
+    background-color: $lightestGray;
+    border: 1px solid $lightGray;
+    padding: 5px 10px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 6px -4px $gray;
+
+    > a {
+        @include inbl();
+        color: $black;
+        font-weight: bold;
+        margin: 0 8px;
+        font-size: 90%;
+
+        &:hover {
+            color: $darkGray;
+        }
+    }
+
+    > .count {
+        @include inbl();
+        position: relative;
+        padding: 0px 8px;
+
+        > span.count {
+            font-size: 90%;
+        }
+    }
+}
+
+// inputChoice
+// style utilisé pour faire un choix parmis plusieurs input radio ou checkbox
+@mixin inputChoice($paddingtb: 8px) {
+    padding: 5px 0;
+    
+    .choice-in {
+        @include inbl();
+        line-height: 1;
+        
+        input[type='radio'] + label,
+        input[type='checkbox'] + label,
+        input[type='radio']:checked + label,
+        input[type='checkbox']:checked + label {
+            @include transitions(box-shadow 0.3s, background-color 0.3s, border 0.3s);
+            @include inbl();
+            padding: $paddingtb 10px $paddingtb 30px;
+            background-position: 10px 50%;
+            cursor: pointer;
+            background-color: $lighterGray;
+            border: 1px solid $lightGray;
+            border-radius: 5px;
+            box-shadow: 2px 2px 6px -4px $lightGray;
+
+            &:hover {
+                color: $black;
+                border: 1px solid $gray;
+                background-color: $lightYellow;
+                box-shadow: 2px 2px 6px -4px $gray;
+            }
+
+            &:active {
+                border: 1px solid $darkColor;
+            }
+        }
+
+        input[type='radio']:checked + label,
+        input[type='checkbox']:checked + label {
+            background-color: $white;
+            box-shadow: 2px 2px 6px -4px $black;
+        }
+    }
+}
+
+// tableForm
+// mixin avec les styles pour un formulaire dans une table, comme la page de connexion
+@mixin tableForm($color, $labelHover) {
+    label {
+        color: $color;
+
+        &[for]:hover {
+            color: $labelHover;
+        }
+    }
+
+    .required label:before {
+        content: '* ';
+    }
+
+    textarea,
+    select,
+    input[type='text'],
+    input[type='email'],
+    input[type='password'] {
+        display: block;
+        width: 100%;
+    }
+
+    textarea {
+        height: 100px;
+    }
+
+    .choice {
+        @include inputChoice();
+    }
+
+    .table {
+        width: 100%;
+
+        .table-cell {
+            padding: 10px 0 5px;
+
+            &.label-cell {
+                padding-right: 10px;
+            }
+        }
+
+        .table-cell:first-child {
+            width: 40%;
+        }
+    }
+}
+
+// icon
+// mixin pour gérer un icon
+@mixin icon() {
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: 16px 16px;
+}
+
+// iconSolo
+// mixin pour générer un icon seul, possible d'activer hover
+@mixin iconSolo($hover: true) {
+    @include icon();
+    @include inbl();
+    @include transitions(opacity 0.3s);
+    @include wh(16px);
+    cursor: pointer;
+
+    @if ($hover != false) {
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+}
+
+// iconLeft
+// mixin pour générer un icon à gauche, par exemple du texte d'un bouton
+@mixin iconLeft() {
+    @include icon();
+    background-position: 5px 50%;
+    padding-left: 25px;
+}
+
+// iconCenter
+// mixin pour générer un icon centré
+@mixin iconCenter() {
+    @include icon();
+    @include abs(50%, '', '', 50%);
+    margin-left: -8px;
+    margin-top: -8px;
+}
+
+// emptyPlaceholder
+// mixin pour le style de empty placeholder
+@mixin emptyPlaceholder() {
+    font-style: italic;
+    color: $darkGray;
+}
+
+// wysiwyg
+// mixin avec quelques styles pour un bloc de style article
+// peut être utilisé pour afficher du contenu provenant d'un éditeur WYSIWYG
+@mixin wysiwyg() {
+    ul {
+        @include ulOlMargin();
+
+        > li {
+            padding: 2px 0;
+        }
+    }
+
+    a {
+        color: $color;
+
+        &:hover {
+            color: $darkGray;
+        }
+    }
+}
+
+// nothing
+// style pour le texte Rien à afficher
+@mixin nothing($center: '') {
+    display: block;
+    font-weight: bold;
+
+    @if ($center != '') {
+        text-align: center;
+    }
+}
+
+// ulOlMargin
+// margin utilisé pour les ul/ol
+@mixin ulOlMargin() {
+    margin-left: 1.7rem;
+}
+
+// panelButton
+// mixin pour les styles des boutons de panneaux
+@mixin panelButton() {
+    @include inbl();
+    padding: 5px 15px;
+    margin: 0 5px 5px 0;
+    background-color: $gray;
+    border: 1px solid $lightGray;
+    border-radius: 5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    @include transitions(color 0.3s, background-color 0.3s, border 0.3s);
+
+    &:hover,
+    &.selected {
+        background-color: $color;
+        border: 1px solid $darkColor;
+        color: $white;
+    }
+
+    &:active {
+        background-color: $black;
+        border: 1px solid $color;
+    }
+}
+
+// button
+// mixin pour le bouton
+@mixin button() {
+    @include inbl();
+    @include transitions(background-color 0.3s, opacity 0.3s);
+    cursor: pointer;
+    line-height: inherit;
+    padding: 5px 10px;
+    border-radius: 6px;
+    color: $white;
+    background-color: $color;
+    border: 1px solid $darkColor;
+    
+    &.selected,
+    &:hover {
+        background-color: $darkColor;
+        border: 1px solid $darkerColor;
+        opacity: 1;
+    }
+
+    &:active {
+        background-color: $darkerColor;
+        border: 1px solid $black;
+    }
+
+    &.solo {
+        background-color: transparent;
+        border: transparent;
+        padding: 0;
+        border-radius: 0;
+    }
+}

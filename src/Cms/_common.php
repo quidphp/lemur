@@ -149,8 +149,6 @@ trait _common
 
             if($icon === true)
             $r = Html::div(null,['icon','top-right','solo','info']).$r;
-
-            $r = Html::div($r,'popup');
         }
 
         return $r;

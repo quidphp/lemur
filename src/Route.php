@@ -24,14 +24,15 @@ abstract class Route extends Core\Route
                     'css'=>[
                         'type'=>'css/%type%.css'],
                     'js'=>[
-                        'include'=>'js/include.js',
+                        'utils'=>'js/utils.js',
+                        'component'=>'js/component.js',
                         'type'=>'js/%type%.js']]],
             'permission'=>[
                 '*'=>[
                     'popup'=>false,
                     'account'=>true,
                     'accountChangePassword'=>true,
-                    'userPopup'=>true,
+                    'sessionPopup'=>true,
                     'logout'=>true,
                     'footerTypes'=>true,
                     'footerTypesCms'=>false,
@@ -39,7 +40,7 @@ abstract class Route extends Core\Route
                     'bootPopup'=>true,
                     'about'=>true,
                     'homeInfo'=>true,
-                    'homeInfoPopup'=>true,
+                    'homePopup'=>true,
                     'homeSearch'=>true],
                 'subAdmin'=>['popup'=>true],
                 'admin'=>['popup'=>true]

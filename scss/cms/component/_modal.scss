@@ -1,0 +1,102 @@
+// compileOnSave: false
+
+/*
+ * This file is part of the QuidPHP package.
+ * Website: https://quidphp.com
+ * License: https://github.com/quidphp/lemur/blob/master/LICENSE
+ */
+
+// modal
+// stylesheet for the modal component
+
+// modalBase
+// mixin avec les styles de base pour le modal
+@mixin modalBase() {
+    .modal {
+        @include fixed(0, '', '', 0);
+        @include wh(100%);
+        z-index: 999;
+        display: none;
+
+        &[data-status='loading'] .inner {
+            background-position: center;
+        }
+
+        > .background {
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+    }
+    .modal .outer {
+        @include abs(20%, '', '', 20%);
+        @include wh(60%);
+
+        > .box {
+            height: 100%;
+            background-color: $white;
+            position: relative;
+
+            > .close {
+                z-index: 10;
+            }
+
+            > .inner {
+                height: 100%;
+            }
+        }
+    }
+}
+
+
+// modal
+// mixin pour générer les styles de base du modal avec quelques ajustements pour le CMS
+@mixin modal() {
+    @include modalBase();
+    
+    .modal .background .box {
+        border-radius: 10px;
+        background-color: $lighterGray;
+
+        > .close {
+            @include abs(-8px, -8px);
+        }
+        > .inner {
+            padding: 20px;
+            text-align: center;
+            overflow-y: auto;
+        }
+
+        h1 {
+            color: $darkColor;
+        }
+    }
+
+    /* PRINT */
+    @media print {
+        .modal {
+            .background {
+                background-color: $white !important;
+            }
+
+            .outer {
+                left: 0;
+                top: 0;
+                @include wh(100%);
+
+                > .box {
+                    background-color: $white;
+                    border-radius: 0;
+                }
+            }
+        }
+    }
+
+    /* RESPONSIVE */
+    @media screen and (max-width: 900px), screen and (orientation: portrait) {
+        .modal .outer {
+            @include wh(80% !important);
+            top: 10% !important;
+            left: 10% !important;
+        }
+    }
+}

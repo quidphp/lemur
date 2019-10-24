@@ -1,0 +1,35 @@
+// compileOnSave: false
+
+/*
+ * This file is part of the QuidPHP package.
+ * Website: https://quidphp.com
+ * License: https://github.com/quidphp/lemur/blob/master/LICENSE
+ */
+
+// tinymce
+// stylesheet providing default styling for the tinymce wysiwyg editor
+
+// defaultClasses
+@include defaultClasses();
+
+// html
+body {
+    background-color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.5;
+    font-size: 14px;
+}
+td,
+th {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+}
+img {
+    max-width: 100%;
+    max-height: 280px;
+}
+iframe {
+    max-width: 100%;
+    display: block;
+    max-height: 280px;
+}

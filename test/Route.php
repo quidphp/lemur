@@ -255,7 +255,7 @@ class Route extends Base\Test
         assert($query->aTitle() === "<a href='/en/table/ormTable/1/20/-/-/-/-/-/-/-?s=%C3%A9ric' hreflang='en'>Super Orm En</a>");
         assert($g->aOpenTitle() === "<a href='/en/table/ormTable/1/20/-/-/-/-/-/-/-' hreflang='en'>Super Orm En");
         assert($query->uri() === '/en/table/ormTable/1/20/-/-/-/-/-/-/-?s=éric');
-        assert(($g2 = $g->make($g)) instanceof Core\Route);
+        $g2 = $g->clone();
         assert($g2->uri() === '/en/table/ormTable/1/20/-/-/-/-/-/-/-');
         assert(count($g2->segments()) === 10);
 

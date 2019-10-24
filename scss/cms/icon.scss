@@ -25,20 +25,19 @@ body .icon.close {
 }
 
 /* ATTACH */
-.click-open.filter > .trigger > .ico,
-.fakeselect > .trigger > .ico {
+form [data-table-relation='1'] .right .table-relation .ico {
     @include bgimg64($iconAttach);
 }
 
 /* MEDIA */
 [data-route='general'] main table td .media .media-placeholder,
 form [data-group='media'] .right .block .info .media-placeholder,
-form [data-table-relation='1'] .right .relations .click-open .popup .big-icon.storage {
+form [data-table-relation='1'] .right .table-relation .popup .big-icon.storage {
     @include bgimg64($iconMedia);
 }
 
 /* VIDEO */
-form [data-table-relation='1'] .right .relations .click-open .popup .result .big-icon.video {
+form [data-table-relation='1'] .right .table-relation .popup .big-icon.video {
     @include bgimg64($iconVideo);
 }
 
@@ -53,6 +52,21 @@ body .popup-trigger.with-icon-solo .popup-title {
 html body .icon.move {
     @include bgimg64($iconMove);
     cursor: move;
+}
+
+/* CLASSE */
+body .icon {
+    &.solo {
+        @include iconSolo();
+    }
+
+    &.padLeft {
+        @include iconLeft();
+    }
+
+    &.center {
+        @include iconCenter();
+    }
 }
 
 /* ICON */
