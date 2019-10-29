@@ -68,14 +68,14 @@
         background: $lightGray;
         border: 1px solid $gray;
     }
-    
+
     /* RESPONSIVE */
     @media screen and (max-width: 900px), screen and (orientation: portrait) {
         .popup {
             max-width: 95vw !important;
         }
     }
-    
+
     /* PRINT */
     @media print {
         .popup {
@@ -83,7 +83,6 @@
         }
     }
 }
-
 
 // popup
 // mixin avec les styles pour le popup-trigger
@@ -137,10 +136,10 @@
             }
         }
     }
-    
+
     .popup {
         @include popupList();
-        
+
         .top-right {
             @include abs(15px, 20px);
         }
@@ -158,16 +157,15 @@
 
 // popupList
 // mixin avec style pour un popup contenant une liste (ul li)
-@mixin popupList()
-{
+@mixin popupList() {
     padding: 10px 15px 0;
-    
+
     &:after {
         content: '';
         height: 10px;
         display: block;
     }
-    
+
     a {
         color: $black;
 
@@ -175,7 +173,7 @@
             color: gray;
         }
     }
-    
+
     > ul {
         @include ulOlMargin();
 

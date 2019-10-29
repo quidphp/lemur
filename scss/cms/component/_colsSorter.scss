@@ -12,11 +12,10 @@
 // colsSorter
 // mixin avec les styles pour la boîte d'ordonnage des colonnes
 @mixin colsSorter() {
-    
     width: 50px;
     min-width: inherit;
     font-weight: normal;
-    
+
     .in {
         padding: 0px 10px;
         cursor: pointer;

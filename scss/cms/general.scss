@@ -253,23 +253,23 @@
         .label {
             color: $gray;
         }
-        
+
         .triangle {
             opacity: 1;
         }
     }
 
     &[data-direction='asc'] .right .triangle {
-        @include triangle('top',$white,12px,6px);
+        @include triangle('top', $white, 12px, 6px);
     }
     &[data-direction='desc'] .right .triangle {
-        @include triangle('bottom',$white,12px,6px);
+        @include triangle('bottom', $white, 12px, 6px);
     }
     &[data-direction='asc'].ordering .right .triangle {
-        @include triangle('top',$lightYellow,12px,6px);
+        @include triangle('top', $lightYellow, 12px, 6px);
     }
     &[data-direction='desc'].ordering .right .triangle {
-        @include triangle('bottom',$lightYellow,12px,6px);
+        @include triangle('bottom', $lightYellow, 12px, 6px);
     }
 }
 

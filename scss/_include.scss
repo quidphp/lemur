@@ -601,30 +601,29 @@ $media: $uriMedia;
 
 // triangle
 // mixin pour faire un triangle
-@mixin triangle($side,$color:$black,$dimension:16px,$transparent:"") {
-    
+@mixin triangle($side, $color: $black, $dimension: 16px, $transparent: '') {
     @if ($transparent == '') {
         $transparent: ($dimension/2);
     }
-    
+
     @if ($side == 'top') {
         border-left: $transparent solid transparent;
         border-right: $transparent solid transparent;
         border-bottom: $dimension solid $color;
     }
-    
+
     @if ($side == 'bottom') {
         border-left: $transparent solid transparent;
         border-right: $transparent solid transparent;
         border-top: $dimension solid $color;
     }
-    
+
     @if ($side == 'left') {
         border-top: $transparent solid transparent;
         border-bottom: $transparent solid transparent;
         border-right: $dimension solid $color;
     }
-    
+
     @if ($side == 'right') {
         border-top: $transparent solid transparent;
         border-bottom: $transparent solid transparent;

@@ -9,9 +9,7 @@ declare(strict_types=1);
 
 namespace Quid\Test\Lemur;
 use Quid\Base;
-use Quid\Core;
 use Quid\Lemur;
-use Quid\Suite;
 
 // db
 // class for testing Quid\Lemur\Db

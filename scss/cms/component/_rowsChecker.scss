@@ -12,15 +12,14 @@
 // rowsChecker
 // gère les styles pour les checkboxes à gauche des lignes d'une table
 @mixin rowsChecker() {
-    
     width: 40px;
     min-width: inherit;
     text-align: center;
-    
+
     .in {
         padding: 0 10px;
         cursor: pointer;
-        
+
         &:hover {
             background-color: $lightYellow;
         }
@@ -35,7 +34,6 @@
         text-align: center;
     }
 }
-
 
 // rowsCheckerTools
 // mixin pour les styles de l'espace outil lorsqu'une row est checked

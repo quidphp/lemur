@@ -769,7 +769,7 @@ class General extends Core\RouteAlias
                 }
 
                 $r .= Html::divOp('scroller');
-                $attr = array('data'=>array('name'=>$table->name(),'table'=>$table::className(true)));
+                $attr = ['data'=>['name'=>$table->name(),'table'=>$table::className(true)]];
                 $r .= Html::tableOpen(null,null,null,$attr);
                 $r .= $this->makeTableHeader();
                 $r .= $this->makeTableBody();
@@ -814,7 +814,7 @@ class General extends Core\RouteAlias
 
             foreach ($cols as $col)
             {
-                $data = array('name'=>$col->name(),'col'=>$col::className(true),'group'=>$col->group());
+                $data = ['name'=>$col->name(),'col'=>$col::className(true),'group'=>$col->group()];
                 $data = $col->getDataAttr($data);
                 $thAttr = ['data'=>$data];
 
@@ -898,8 +898,8 @@ class General extends Core\RouteAlias
                 $array = [];
                 $specific = Specific::makeOverload($row)->uri();
                 $cells = $row->cells($cols);
-                
-                $rowAttr = array('data'=>array('id'=>$row->primary(),'row'=>$row::className(true)));
+
+                $rowAttr = ['data'=>['id'=>$row->primary(),'row'=>$row::className(true)]];
                 if(!empty($highlight) && in_array($row->primary(),$highlight,true))
                 $rowAttr[] = 'highlight';
 
@@ -947,9 +947,9 @@ class General extends Core\RouteAlias
         $r = [];
         $option = Base\Arr::plus(['specific'=>null,'modify'=>false,'excerptMin'=>$cell->generalExcerptMin()],$option);
         $context = $this->context();
-        $data = array('name'=>$cell->name(),'cell'=>$cell::className(true),'group'=>$cell->group());
+        $data = ['name'=>$cell->name(),'cell'=>$cell::className(true),'group'=>$cell->group()];
         $data = $cell->getDataAttr($data);
-        $attr = array('data'=>$data);
+        $attr = ['data'=>$data];
         $v = $cell->get($context);
 
         if($cell->isPrimary() && is_string($option['specific']))

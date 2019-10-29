@@ -31,14 +31,14 @@ trait _template
     protected function template():string
     {
         $r = '';
-        
+
         $flush = $this->docOpen();
-        
+
         $flush .= Html::divOp('loading-fixed');
         $flush .= Html::div(null,'loading-icon');
         $flush .= Html::div(null,'loading-progress');
         $flush .= Html::divCl();
-        
+
         $flush .= Html::divOp('#wrapper');
         $flush .= Html::headerCond($this->header());
         $flush .= Html::mainOp();

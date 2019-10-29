@@ -30,12 +30,12 @@ class Boot extends Base\Test
         assert(!empty($lang->tableDescription('user')));
         assert(!empty($lang->colDescription('metaKeywords_en')));
         assert(!empty($lang->panelDescription('default')));
-        
+
         // service
-        assert(Lemur\Service\React::monami('what',array('test'=>2),array('id'=>false)) === "<div data-component='Monami' data-namespace='quid.react' data-content='what' data-props='{&quot;test&quot;:2}' class='react-component'></div>");
-        assert(strlen(Lemur\Service\React::monami(false,array('test'=>false))) === 158);
-        assert(strlen(Lemur\Service\React::monAmi(null,array('test'=>null),array('id'=>false))) === 124);
-        
+        assert(Lemur\Service\React::monami('what',['test'=>2],['id'=>false]) === "<div data-component='Monami' data-namespace='quid.react' data-content='what' data-props='{&quot;test&quot;:2}' class='react-component'></div>");
+        assert(strlen(Lemur\Service\React::monami(false,['test'=>false])) === 158);
+        assert(strlen(Lemur\Service\React::monAmi(null,['test'=>null],['id'=>false])) === 124);
+
         return true;
     }
 }

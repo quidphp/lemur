@@ -16,8 +16,8 @@ class Relation extends Core\Cell\Relation
 {
     // config
     public static $config = [];
-    
-    
+
+
     // generalOutput
     // génère le output pour général
     public function generalOutput(?array $option=null):?string

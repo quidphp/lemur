@@ -8,7 +8,6 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Cms;
-use Quid\Base;
 use Quid\Core;
 use Quid\Lemur;
 
@@ -18,18 +17,18 @@ trait _specificSubmit
 {
     // trait
     use Lemur\Route\_formSubmit;
-    
-    
+
+
     // onAfterSuccessOrFailure
     protected function onAfterSuccessOrFailure():void
     {
         $panel = $this->currentPanel();
         static::session()->flash()->set('currentPanel',$panel);
-        
+
         return;
     }
-    
-    
+
+
     // routeSuccess
     // retourne la route en cas de succès ou échec de l'ajout
     public function routeSuccess():Lemur\Route

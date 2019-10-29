@@ -632,7 +632,7 @@ class Route extends Base\Test
         assert($rr->uriAbsolute('fr') === Base\Request::schemeHost().'/fr/table/ormTable/1/20/-/-/-/-/-/-/-');
         assert($rr->uriRelative('fr') === '/fr/table/ormTable/1/20/-/-/-/-/-/-/-');
         assert($rr6->uriAbsolute('en') === Base\Request::schemeHost().'/en/table/user/1');
-        
+
         /* ROUTES */
         $boot = $data['boot'];
         $type = $boot->type();
@@ -692,7 +692,7 @@ class Route extends Base\Test
         assert($routes->exists(Lemur\Cms\Sitemap::class));
         assert($routes->unset('Sitemap')->isCount(37));
         assert($routes->add(Lemur\Cms\Sitemap::class)->isCount(38));
-        
+
         return true;
     }
 }

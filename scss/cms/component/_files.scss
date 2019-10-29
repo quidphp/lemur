@@ -19,11 +19,11 @@
     border-radius: 5px;
     position: relative;
     border: 1px solid $lightGray;
-    
+
     &:first-child {
         margin-top: 0;
     }
-    
+
     &.with-action {
         .info,
         .actions,
@@ -123,7 +123,7 @@
             }
         }
     }
-    
+
     .versions {
         padding: 10px;
         background-color: $lightestGray;
@@ -157,19 +157,16 @@
     @media screen and (max-width: 900px), screen and (orientation: portrait) {
         width: 100%;
     }
-    
-    
+
     /* PRINT */
     @media print {
         display: none !important;
     }
 }
 
-
 // filesGeneral
 // mixin pour l'affichage d'un champ media/medias dans general
-@mixin filesGeneral()
-{
+@mixin filesGeneral() {
     text-align: center;
 
     .media-placeholder {
@@ -181,28 +178,28 @@
     img {
         max-width: 100px;
     }
-    
+
     .slider {
         position: relative;
         padding: 0 20px;
-        
+
         .prev,
         .next {
             @include trianglePrevNext();
             margin-top: -8px;
         }
-        
+
         .prev {
-            @include abs(50%,'','',0);
+            @include abs(50%, '', '', 0);
         }
-        
+
         .next {
-            @include abs(50%,0);
+            @include abs(50%, 0);
         }
-        
+
         .slider-element {
             display: none;
-            
+
             &.active {
                 display: block;
             }

@@ -41,7 +41,7 @@ class SpecificAddSubmit extends Core\RouteAlias
         'group'=>'submit',
         'flashPost'=>true,
         'form'=>[
-            'attr'=>array('data-validation'=>false)]
+            'attr'=>['data-validation'=>false]]
     ];
 
 

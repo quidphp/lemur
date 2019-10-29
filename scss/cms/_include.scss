@@ -322,30 +322,30 @@ $red: #8d1e2d;
 // mixin pour génèrer un triangle de couleur du cms
 @mixin trianglePrevNext() {
     cursor: pointer;
-    
+
     &.prev {
-        @include triangle("left",$color,10px,6px);
+        @include triangle('left', $color, 10px, 6px);
         margin-right: 8px;
-        
+
         &:hover {
-            @include triangle("left",$darkColor,10px,6px);
+            @include triangle('left', $darkColor, 10px, 6px);
         }
-        
+
         &:active {
-            @include triangle("left",$darkerColor,10px,6px);
+            @include triangle('left', $darkerColor, 10px, 6px);
         }
     }
 
     &.next {
-        @include triangle("right",$color,10px,6px);
+        @include triangle('right', $color, 10px, 6px);
         margin-left: 8px;
-        
+
         &:hover {
-            @include triangle("right",$darkColor,10px,6px);
+            @include triangle('right', $darkColor, 10px, 6px);
         }
-        
+
         &:active {
-            @include triangle("right",$darkerColor,10px,6px);
+            @include triangle('right', $darkerColor, 10px, 6px);
         }
     }
 }

@@ -14,7 +14,7 @@
 @mixin fakeselect() {
     font-size: 1.4rem;
     @include fakeselectTrigger();
-    
+
     > .popup {
         @include fakeselectPopup();
     }
@@ -51,7 +51,7 @@
 
         > .ico {
             @include abs(50%, 10px);
-            @include triangle('bottom',$color,9px,6px);
+            @include triangle('bottom', $color, 9px, 6px);
             background-size: contain;
             margin-top: -4px;
         }
@@ -74,10 +74,10 @@
     overflow-y: auto;
     z-index: 100;
     border-radius: 5px;
-    
+
     > ul {
         list-style-type: none;
-        
+
         > li {
             @include transitions(background-color 0.3s);
             padding: 5px 10px;

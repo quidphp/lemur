@@ -23,26 +23,26 @@
     overflow-y: auto;
     max-height: 50vh;
     text-align: left;
-    
+
     .close {
         @include abs(8px, 8px);
         z-index: 3;
     }
     .top {
         position: relative;
-        
+
         .triangle {
-            @include abs(50%,'','',0px);
-            @include triangle('bottom',$darkColor,10px,6px);
+            @include abs(50%, '', '', 0px);
+            @include triangle('bottom', $darkColor, 10px, 6px);
             margin-top: -4px;
         }
-        
+
         .date {
             @include inbl();
             cursor: pointer;
             font-size: 90%;
             padding-left: 16px;
-            
+
             &:hover {
                 color: $darkGray;
             }
@@ -50,7 +50,7 @@
     }
 
     &.slide-close .top .triangle {
-        @include triangle('right',$darkColor,10px,6px);
+        @include triangle('right', $darkColor, 10px, 6px);
     }
 
     .spacer {
@@ -98,7 +98,7 @@
     .neg {
         color: $red;
     }
-    
+
     @media screen and (max-width: 900px), screen and (orientation: portrait) {
         padding: 0px 20px 20px;
         max-height: inherit;
@@ -109,7 +109,7 @@
         bottom: 0;
         padding: 5px;
     }
-    
+
     @media print {
         display: none !important;
     }

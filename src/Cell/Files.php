@@ -8,10 +8,10 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Cell;
-use Quid\Core;
 use Quid\Base;
-use Quid\Main;
 use Quid\Base\Html;
+use Quid\Core;
+use Quid\Main;
 
 // files
 // abstract class extended by the media and medias cells
@@ -19,8 +19,8 @@ abstract class Files extends Core\Cell\Files
 {
     // config
     public static $config = [];
-    
-    
+
+
     // commonGeneralOutput
     // génère le output pour général
     // retourne seulement la première image de la cellule
@@ -31,7 +31,7 @@ abstract class Files extends Core\Cell\Files
         $table = $this->table();
         $download = $table->hasPermission('mediaDownload');
         $file = $original = $this->commonFile($index);
-        
+
         if(!empty($file))
         {
             $hasVersion = $this->hasVersion();

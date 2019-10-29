@@ -9,9 +9,7 @@ declare(strict_types=1);
 
 namespace Quid\Test\Lemur;
 use Quid\Base;
-use Quid\Core;
 use Quid\Lemur;
-use Quid\Suite;
 
 // cell
 // class for testing Quid\Lemur\Cell
@@ -35,10 +33,10 @@ class Cell extends Base\Test
         assert($db->truncate($table) instanceof \PDOStatement);
         assert($cell->description() === 'Name to represent the element');
         assert($cell->description('%:') === 'Name to represent the element:');
-        assert($cell->getDataAttr(array()) === array());
+        assert($cell->getDataAttr([]) === []);
         assert($row->unlink());
         assert($db->truncate($table) instanceof \PDOStatement);
-        
+
         // cells
         $table = 'ormCells';
         assert($db->truncate($table) instanceof \PDOStatement);

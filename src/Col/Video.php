@@ -38,14 +38,14 @@ abstract class Video extends Core\ColAlias
     {
         $return = null;
         $service = $this->attr('service');
-        
+
         if(!empty($service))
         {
             $key = static::className(true);
             $return = new $service($key);
         }
-        
-        return $return; 
+
+        return $return;
     }
 
 

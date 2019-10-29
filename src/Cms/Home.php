@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace Quid\Lemur\Cms;
 use Quid\Base\Html;
 use Quid\Core;
-use Quid\Lemur\Service\React;
 
 // home
 // class for the home route of the CMS
@@ -213,7 +212,7 @@ class Home extends Core\Route\Home
                 $minLength = $tables->searchMinLength();
                 $data = ['keyupDelay'=>800,'required'=>true,'pattern'=>['minLength'=>$minLength]];
                 $name = $route::getSearchName();
-                
+
                 $replace = ['count'=>$minLength];
                 $note = $lang->plural($minLength,'home/searchNote',$replace);
 

@@ -278,7 +278,7 @@ trait _general
         {
             $thAttr[] = 'orderable';
             $active = ($col === $this->segment('order'));
-            
+
             if($active === true)
             {
                 $dataDirection = $this->segment('direction');
@@ -288,9 +288,9 @@ trait _general
 
             else
             $direction = $dataDirection = $col->direction(true);
-            
+
             $thAttr['data']['direction'] = $dataDirection;
-            
+
             $route = $this->changeSegments(['order'=>$col,'direction'=>$direction]);
             $uri = $route->uri();
             $html .= Html::divOp('right');

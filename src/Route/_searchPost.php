@@ -8,7 +8,6 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Route;
-use Quid\Base;
 
 // _searchPost
 // trait that grants methods for search route via POST

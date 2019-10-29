@@ -43,7 +43,7 @@ class SpecificDispatch extends Core\RouteAlias
         'parent'=>Specific::class,
         'group'=>'submit',
         'form'=>[
-            'attr'=>array('data-validation'=>false)],
+            'attr'=>['data-validation'=>false]],
     ];
 
 

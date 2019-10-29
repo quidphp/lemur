@@ -147,13 +147,13 @@ trait _specific
             $table = $this->table();
             $lang = $this->lang();
             $panel = $this->panel();
-            
+
             foreach ($panel as $key => $cols)
             {
                 if($cols->isNotEmpty())
                 {
                     $data = [];
-                    
+
                     if($table->hasPermission('panelDescription'))
                     $data['description'] = $lang->panelDescription($key);
 
@@ -248,21 +248,21 @@ trait _specific
         {
             $r .= Html::divOp('inside');
             $firstKey = key($panel);
-            
+
             foreach ($panel as $key => $cols)
             {
                 if($cols->isNotEmpty())
                 {
-                    $data = array();
-                    
+                    $data = [];
+
                     if($hasPanel === true)
                     {
                         if($key === $currentPanel)
                         $data['current-panel'] = true;
-                        
+
                         $data['fragment'] = $key;
                     }
-                    
+
                     $r .= Html::divOp(['panel','data'=>$data]);
 
                     foreach ($cols as $col)

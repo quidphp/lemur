@@ -45,11 +45,11 @@ class HomeSearch extends Core\RouteAlias
     protected function onBefore()
     {
         $return = false;
-        
+
         if($this->hasPermission('homeSearch'))
         {
             $search = $this->getSearchValue();
-            
+
             if($search !== null)
             $return = true;
         }

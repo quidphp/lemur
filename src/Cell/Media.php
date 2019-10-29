@@ -16,8 +16,8 @@ class Media extends Core\Cell\Media
 {
     // config
     public static $config = [];
-    
-    
+
+
     // generalOutput
     // génère le output pour général
     public function generalOutput(?array $option=null):string
