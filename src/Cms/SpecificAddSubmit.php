@@ -19,7 +19,6 @@ class SpecificAddSubmit extends Core\RouteAlias
     use _common;
     use _general;
     use _specificSubmit;
-    use Lemur\Route\_formSubmit;
     use Lemur\Segment\_table;
 
 
@@ -40,7 +39,9 @@ class SpecificAddSubmit extends Core\RouteAlias
             'timeLimit'=>60],
         'parent'=>SpecificAdd::class,
         'group'=>'submit',
-        'flashPost'=>true
+        'flashPost'=>true,
+        'form'=>[
+            'attr'=>array('data-validation'=>false)]
     ];
 
 

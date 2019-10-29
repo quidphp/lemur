@@ -38,146 +38,7 @@ form [data-col='userPassword'] .right {
 
 /* MEDIA */
 form [data-group='media'] .right .block {
-    @include inbl();
-    width: 480px;
-    background-color: $white;
-    border-radius: 5px;
-    position: relative;
-    border: 1px solid $lightGray;
-
-    &.with-action {
-        .info,
-        .actions,
-        .versions {
-            display: none;
-        }
-
-        .form .message {
-            display: block;
-        }
-    }
-
-    .count {
-        @include abs(8px, 7px);
-        @include wh(24px);
-        background-color: $white;
-        text-align: center;
-        font-weight: bold;
-        border-radius: 50%;
-        border: 1px solid $lightestGray;
-    }
-
-    .actions {
-        @include abs(-12px, -8px);
-
-        > .action {
-            @include inbl();
-            margin-left: 4px;
-        }
-    }
-
-    .form {
-        background-color: $lightGray;
-        padding: 10px;
-
-        .message {
-            display: none;
-            text-align: center;
-            font-size: 90%;
-            font-weight: bold;
-
-            .actionText {
-                @include inbl(top);
-            }
-
-            .close {
-                margin-left: 4px;
-                @include inbl(top);
-            }
-        }
-    }
-}
-form [data-group='media'] .right .block .info {
-    padding: 10px;
-    font-size: 90%;
-    text-align: left;
-    text-align: center;
-
-    > a {
-        @include inbl();
-
-        &:hover {
-            opacity: 0.8;
-        }
-    }
-
-    .media-placeholder {
-        @include wh(64px);
-        margin: auto;
-    }
-
-    img {
-        max-width: 100px;
-        min-width: 50px;
-        display: block;
-        margin: auto;
-        margin-bottom: 10px;
-    }
-
-    .line {
-        .notFound {
-            @include nothing();
-            margin-bottom: 3px;
-        }
-
-        .filename {
-            @include inbl();
-        }
-        a.filename {
-            text-decoration: underline;
-        }
-
-        .filesize {
-            @include inbl();
-            margin-left: 10px;
-            font-weight: bold;
-        }
-    }
-}
-form [data-group='media'] .right .block .versions {
-    padding: 10px;
-    background-color: $lightestGray;
-    font-size: 90%;
-
-    > ul {
-        @include ulOlMargin();
-
-        > li {
-            padding-top: 5px;
-
-            &:first-child {
-                padding-top: 0;
-            }
-
-            > span.notFound,
-            > span.filesize {
-                margin-left: 5px;
-                font-weight: bold;
-            }
-
-            > a {
-                text-decoration: underline;
-                margin-left: 5px;
-            }
-        }
-    }
-}
-form [data-col='medias'] .right .block {
-    margin: 10px 10px 0 0;
-
-    &:first-child {
-        margin-top: 0;
-    }
+    @include files();
 }
 
 /* SEARCH ENUMSET */
@@ -225,17 +86,10 @@ form [data-group='relation'][data-sortable='1'] .right .choice .choice-in .move 
     form [data-group='media'] .right .block {
         width: 100%;
     }
-
-    form [data-tag='add-remove'] .right {
-        @include addRemoveResponsive();
-    }
 }
 
 /* PRINT */
 @media print {
-    form [data-group='media'] .right .block.empty,
-    form [data-group='media'] .right .block.actions,
-    form [data-group='media'] .right .block .form,
     form [data-tag='search'] .right .search-enumset .input,
     form [data-group='relation'][data-sortable='1'] .right .move {
         display: none !important;

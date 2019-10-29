@@ -71,21 +71,19 @@
             background-color: $gray;
         }
     }
-}
+    
+    @media screen and (max-width: 900px), screen and (orientation: portrait) {
+        .right .container > .ele {
+            .current {
+                width: auto;
+                display: block;
+            }
 
-// addRemoveResponsive
-// règle pour les champs addRemove pour response
-@mixin addRemoveResponsive() {
-    .container > .ele {
-        .current {
-            width: auto;
-            display: block;
-        }
-
-        .utils {
-            padding-top: 5px;
-            width: auto;
-            display: block;
+            .utils {
+                padding-top: 5px;
+                width: auto;
+                display: block;
+            }
         }
     }
 }

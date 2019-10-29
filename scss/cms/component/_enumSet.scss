@@ -27,7 +27,7 @@
         }
     }
 
-    .input .popup {
+    .input > .popup {
         @include enumSetPopup();
     }
 }

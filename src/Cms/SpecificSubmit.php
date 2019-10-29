@@ -20,7 +20,6 @@ class SpecificSubmit extends Core\RouteAlias
     use _general;
     use _specificSubmit;
     use Lemur\Route\_specificPrimary;
-    use Lemur\Route\_formSubmit;
     use Lemur\Segment\_table;
     use Lemur\Segment\_primary;
 

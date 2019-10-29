@@ -32,7 +32,9 @@
         display: none;
     }
 
-    body .active .popup {
+    body .active.popup,
+    body .active > .popup,
+    body .active > * > .popup {
         display: block;
     }
     body [data-status='loading'].popup,
@@ -56,28 +58,91 @@
         min-height: 20px;
         max-height: 300px;
         overflow-y: auto;
-        padding: 10px 15px 0;
+        padding: 0;
         box-sizing: border-box;
         border-top-left-radius: 5px;
         border-bottom-left-radius: 5px;
         cursor: default;
-
-        .top-right {
-            @include abs(15px, 20px);
+    }
+    .popup .popup {
+        background: $lightGray;
+        border: 1px solid $gray;
+    }
+    
+    /* RESPONSIVE */
+    @media screen and (max-width: 900px), screen and (orientation: portrait) {
+        .popup {
+            max-width: 95vw !important;
         }
-
-        &:after {
-            content: '';
-            height: 10px;
-            display: block;
+    }
+    
+    /* PRINT */
+    @media print {
+        .popup {
+            display: none !important;
         }
+    }
+}
 
-        a {
-            color: $black;
+
+// popup
+// mixin avec les styles pour le popup-trigger
+@mixin popupTrigger() {
+    @include inbl();
+    position: relative;
+
+    .popup-title {
+        @include inbl();
+        padding: 5px;
+    }
+
+    &.with-icon {
+        .popup-title {
+            @include iconLeft();
+            padding-left: 25px;
+        }
+    }
+
+    &.with-icon-solo {
+        .popup-title {
+            @include iconSolo(false);
+            @include wh(24px);
+        }
+    }
+
+    &.with-popup {
+        .popup-title {
+            cursor: pointer;
 
             &:hover {
-                color: gray;
+                background-color: $darkColor;
             }
+
+            &:active {
+                background-color: $darkerColor;
+            }
+        }
+
+        &.active,
+        &:hover {
+            .popup-title {
+                color: $white;
+                border-radius: 5px;
+            }
+        }
+
+        &.active {
+            .popup-title {
+                background-color: $darkerColor;
+            }
+        }
+    }
+    
+    .popup {
+        @include popupList();
+        
+        .top-right {
+            @include abs(15px, 20px);
         }
 
         .icon.info {
@@ -88,92 +153,53 @@
                 opacity: 1;
             }
         }
+    }
+}
 
-        > ul {
-            @include ulOlMargin();
+// popupList
+// mixin avec style pour un popup contenant une liste (ul li)
+@mixin popupList()
+{
+    padding: 10px 15px 0;
+    
+    &:after {
+        content: '';
+        height: 10px;
+        display: block;
+    }
+    
+    a {
+        color: $black;
 
-            > li {
-                padding: 4px 0;
-
-                > span:first-child {
-                    font-weight: bold;
-                    margin-right: 5px;
-                }
-
-                .key {
-                    text-decoration: underline;
-                }
-
-                .value-empty {
-                    font-style: italic;
-                }
-
-                > ul {
-                    @include ulOlMargin();
-                    padding-top: 5px;
-                    word-break: break-all;
-                }
-            }
+        &:hover {
+            color: gray;
         }
     }
+    
+    > ul {
+        @include ulOlMargin();
 
-    /* POPUP TRIGGER */
-    .popup-trigger {
-        @include inbl();
-        position: relative;
+        > li {
+            padding: 4px 0;
 
-        .popup-title {
-            @include inbl();
-            padding: 5px;
-        }
-
-        &.with-icon {
-            .popup-title {
-                @include iconLeft();
-                padding-left: 25px;
-            }
-        }
-
-        &.with-icon-solo {
-            .popup-title {
-                @include iconSolo(false);
-                @include wh(24px);
-            }
-        }
-
-        &.with-popup {
-            .popup-title {
-                cursor: pointer;
-
-                &:hover {
-                    background-color: $darkColor;
-                }
-
-                &:active {
-                    background-color: $darkerColor;
-                }
+            > span:first-child {
+                font-weight: bold;
+                margin-right: 5px;
             }
 
-            &.active,
-            &:hover {
-                .popup-title {
-                    color: $white;
-                    border-radius: 5px;
-                }
+            .key {
+                text-decoration: underline;
             }
 
-            &.active {
-                .popup-title {
-                    background-color: $darkerColor;
-                }
+            .value-empty {
+                font-style: italic;
             }
-        }
-    }
 
-    /* RESPONSIVE */
-    @media screen and (max-width: 900px), screen and (orientation: portrait) {
-        .popup {
-            max-width: 95vw !important;
+            > ul {
+                @include ulOlMargin();
+                padding-top: 5px;
+                word-break: break-all;
+            }
         }
     }
 }

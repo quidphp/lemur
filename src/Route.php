@@ -18,14 +18,13 @@ abstract class Route extends Core\Route
     public static $config = [
         '@cms'=>[
             'metaTitle'=>['typeLabel'=>true],
-            'jsInit'=>'$(document).ready(function() { $(this).navigation(); });',
+            'jsInit'=>'$(document).ready(function() { quid.core.document.call(this); });',
             'docOpen'=>[
                 'head'=>[
                     'css'=>[
                         'type'=>'css/%type%.css'],
                     'js'=>[
-                        'utils'=>'js/utils.js',
-                        'component'=>'js/component.js',
+                        'include'=>'js/include.js',
                         'type'=>'js/%type%.js']]],
             'permission'=>[
                 '*'=>[

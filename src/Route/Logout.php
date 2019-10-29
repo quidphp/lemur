@@ -24,8 +24,7 @@ abstract class Logout extends Core\RouteAlias
         'parent'=>Login::class,
         'sitemap'=>false,
         'redirectable'=>false,
-        'com'=>true,
-        'navigation'=>false
+        'com'=>true
     ];
 
 

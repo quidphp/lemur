@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Lemur\Cms;
 use Quid\Base\Html;
 use Quid\Core;
+use Quid\Lemur\Service\React;
 
 // home
 // class for the home route of the CMS
@@ -210,13 +211,14 @@ class Home extends Core\Route\Home
             if($searchable->isNotEmpty())
             {
                 $minLength = $tables->searchMinLength();
-                $data = ['query'=>'s','required'=>true,'keyupDelay'=>800,'pattern'=>['minLength'=>$minLength]];
-
+                $data = ['keyupDelay'=>800,'required'=>true,'pattern'=>['minLength'=>$minLength]];
+                $name = $route::getSearchName();
+                
                 $replace = ['count'=>$minLength];
                 $note = $lang->plural($minLength,'home/searchNote',$replace);
 
                 $r .= $route->formOpen();
-                $r .= Html::inputText(null,['name'=>true,'placeholder'=>static::langText('home/searchSubmit'),'data'=>$data]);
+                $r .= Html::inputText(null,['name'=>$name,'placeholder'=>static::langText('home/searchSubmit'),'data'=>$data]);
                 $r .= Html::submit(true,['button','solo','icon','search']);
                 $r .= Html::div(null,'popup');
                 $r .= Html::formClose();

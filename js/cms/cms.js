@@ -18,91 +18,120 @@ $(document).ready(function() {
 	    window.location.href = window.location.href;
 	});
 	
-	// route:common
+    
+	// document mount
     // comportements utilisés pour toutes les pages du CMS
-	$(this).on('route:common', function(event) {
+	$(this).on('document:mount', function(event) {
 		var body = $(this).find("body");
 		var modal = $(this).find(".modal");
-        var popupTrigger = $(this).find(".popup-trigger.with-popup:not(.with-ajax)");
-        var popupTriggerAjax = $(this).find(".popup-trigger.with-popup.with-ajax");
-		var modalAnchor = $(this).find("a[data-modal]");
-		var anchorCorner = $(this).find(".anchor-corner");
-		var aConfirm = $(this).find("a[data-confirm]");
-		var print = $(this).find(".submit.print");
 		var burger = $(this).find("header .burger-menu");
-		
+		var com = $(this).find("#wrapper .com");
+        
 		// modalAjax
 		if(modal.length === 1)
-		{
-			modal.modal();
-			modalAnchor.modalAjax(modal);
-		}
+		modal.modal();
 		
+        // com
+		com.com();
+        
+        // burger
+		burger.on('click', function(event) {
+			body.toggleClass('responsive-menu-open');
+		});
+	})
+    
+    // document ajax progress
+    .on('document:ajaxProgress', function(event,percent,progressEvent) {
+        var body = $(this).find("body");
+        var progress = body.find(".loading-progress");
+        var html = (percent >= 0 && percent < 100)? "<div class='percent'>"+percent+"%"+"</div>":"";
+        progress.html(html);
+    })
+    
+    // document:commonBindings
+    // événement appelé pour faire les bindings globaux
+    // après le chargement d'une page ou d'un modal
+    .on('document:commonBindings', function(event,parent) {
+        var modal = $(this).find(".modal");
+        var popupTrigger = parent.find(".popup-trigger.with-popup:not(.with-ajax)");
+        var popupTriggerAjax = parent.find(".popup-trigger.with-popup.with-ajax");
+		var modalAnchor = parent.find("a[data-modal]");
+		var anchorCorner = parent.find(".anchor-corner");
+		var aConfirm = parent.find("a[data-confirm]");
+		var print = parent.find(".submit.print");
+        var select = parent.find("select");
+
+        // modalAnchor
+        modalAnchor.callThis(quid.core.modalAjax,modal);
+        
 		// anchorCorner
-		if(anchorCorner.length)
-		anchorCorner.anchorCorner('mouseover');
+		anchorCorner.callThis(quid.main.anchorCorner);
 		
 		// aConfirm
-		aConfirm.confirm('click');
-		
-		// com
-		$(this).trigger('route:commonCom');
+		aConfirm.callThis(quid.main.confirm,'click');
 		
 		// print
 		print.on('click', function(event) {
 			window.print();
 		});
-		
-		// burger
-		burger.on('click', function(event) {
-			body.toggleClass('responsive-menu-open');
-		});
         
         // popupTrigger
-        popupTrigger.clickOpenWithTrigger(".popup-title");
+        popupTrigger.callThis(quid.core.clickOpenWithTrigger,".popup-title");
         
         // popupTriggerAjax
-        popupTriggerAjax.clickOpenAnchorAjax(".popup-title");
+        popupTriggerAjax.callThis(quid.core.clickOpenAnchorAjax,".popup-title");
+        
+        // fakeselect
+        select.callThis(quid.core.selectToFake);
+	})
+    
+    // login
+    // comportement pour la page login
+	.on('route:login', function() {
+		$(this).trigger('route:nobodyCommon');
 	})
 	
-	// route:common:com
-    // comportements utilisés pour l'outil de communication disponible sur toutes les pages
-	.on('route:commonCom', function(event) {
+	// resetPassword
+    // comportement pour la page regénérer mon mot de passe
+	.on('route:resetPassword', function(event) {
+		$(this).trigger('route:nobodyCommon');
+	})
+	
+	// register
+    // comportement pour la page enregistrement
+	.on('route:register', function(event) {
+		$(this).trigger('route:nobodyCommon');
+	})
+	
+    // nobodyCommon
+    // comportements commun pour toutes les pages ou l'utilisateur n'est pas connecté
+	.on('route:nobodyCommon', function(event) {
+		var browscap = $(this).find("main .browscap");
+		var form = $(this).find("main form");
 		
-		var com = $(this).find("#wrapper .com .box");
+		form.triggerHandler("form:getValidateFields").focusFirst();
 		
-		com.block('click').on('click', '.close', function() {
-			com.trigger('com:close');
-		})
-		.on('click', '.date', function(event) {
-			com.trigger(com.hasClass('slide-close')? 'com:slideDown':'com:slideUp');
-		})
-		.on('click', ".row.insert > span,.row.update > span", function(event) {
-			var parent = $(this).parent();
-			var table = parent.data('table');
-			var primary = parent.data('primary');
-			com.trigger('redirect',[table,primary]);
-		})
-		.on('com:slideUp', function(event) {
-			$(this).addClass('slide-close');
-			$(this).find('.bottom').stop(true,true).slideUp('fast');
-		})
-		.on('com:slideDown', function(event) {
-			$(this).removeClass('slide-close');
-			$(this).find('.bottom').stop(true,true).slideDown('fast');
-		})
-		.on('com:close', function(event) {
-			$(this).parent(".com").stop(true,true).fadeOut("slow");
-		})
-		.on('redirect', function(event,table,primary) {
-			var href = $(this).dataHrefReplaceChar(table);
-			
-			if($.isStringNotEmpty(href))
-			{
-				$(this).trigger('block');
-				href = href.replace($(this).data('char'),primary);
-				$(document).trigger('navigation:push',[href]);
-			}
-		});
-	});
+		if(!quid.base.areCookiesEnabled())
+		browscap.find(".cookie").show();
+	})
+    
+    // changePassword
+    // comportement pour le popup changer mon mot de passe
+	.on('modal:accountChangePassword', function(event,modal) {
+		var form = modal.find("form");
+		form.triggerHandler("form:getValidateFields").focusFirst();
+	})
+    
+    // home
+    // comportement pour la page d'accueil du CMS une fois connecté
+	.on('route:home', function() {
+		
+		var form = $(this).find("main form");
+		var field = form.find("[data-required],[data-pattern]");
+		
+		if(form.length)
+		form.clickOpenInputFormAjax(field);
+	})
+    
+    .react();
 });

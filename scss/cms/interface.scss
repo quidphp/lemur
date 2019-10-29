@@ -11,22 +11,46 @@
 
 /* WRAPPER */
 [data-status='loading'] body {
+    
+    * {
+        cursor: wait !important;
+    }
+    
     main {
         opacity: 0.6;
     }
 
-    .loading-icon {
+    .loading-fixed {
         display: block;
     }
 }
-body .loading-icon {
+body .loading-fixed {
     @include fixed(0, '', '', 0);
-    @include wh(20px);
     z-index: 9;
-    background-position: center;
-    background-color: $white;
-    border-bottom-right-radius: 50%;
     display: none;
+    
+    > .loading-icon {
+        @include inbl(top);
+        @include wh(20px);
+        background-position: center;
+        background-color: $white;
+        border-bottom-right-radius: 50%;
+    }
+    
+    > .loading-progress {
+        @include inbl(top);
+        
+        > .percent {
+            @include wh(40px,16px);
+            font-size: 80%;
+            text-align: center;
+            line-height: 16px;
+            color: $white;
+            background-color: $darkColor;
+            border-bottom-left-radius: 3px;
+            border-bottom-right-radius: 3px;
+        }
+    }
 }
 body.responsive-menu-open header {
     > .top .burger-menu {
@@ -145,19 +169,18 @@ header nav {
             }
 
             &.sub {
-                padding-left: 25px;
+                padding-left: 20px;
 
-                .arrow {
-                    @include abs(30%, '', '', 5px);
-                    @include wh(15px);
-                    margin-right: 10px;
-                    background-position: 0px -40px;
+                .triangle {
+                    @include triangle("right",$white,9px,6px);
+                    @include abs(50%,false,false,2px);
+                    margin-top: -6px;
                 }
 
                 &:hover {
-                    .arrow {
-                        background-position: 0px -82px;
-                        top: 30%;
+                    .triangle {
+                        @include triangle("bottom",$gray,9px,6px);
+                        margin-top: -5px;
                     }
 
                     > ul {
@@ -275,91 +298,7 @@ main .inner > .top {
 
 /* COM */
 .com {
-    .box {
-        @include fixed('', 20px, 10px);
-        background-color: rgba(249, 253, 216, 0.95);
-        width: 35%;
-        z-index: 2;
-        border: 2px solid $black;
-        padding: 10px;
-        border-radius: 5px;
-        overflow-x: hidden;
-        overflow-y: auto;
-        max-height: 50vh;
-
-        .close {
-            @include abs(8px, 8px);
-            z-index: 3;
-        }
-        .top {
-            .arrow {
-                @include inbl();
-                @include wh(14px);
-                background-size: 14px auto;
-                background-position: 0% 100%;
-            }
-            .date {
-                @include inbl();
-                cursor: pointer;
-                font-size: 90%;
-                padding-left: 5px;
-
-                &:hover {
-                    color: $darkGray;
-                }
-            }
-        }
-
-        &.slide-close .top .arrow {
-            background-position: 0% 50%;
-        }
-
-        .spacer {
-            padding-bottom: 3px;
-            border-bottom: 1px solid $gray;
-        }
-
-        .bottom {
-            .table > span,
-            .row > span {
-                font-weight: bold;
-            }
-
-            .row.insert,
-            .row.update {
-                > span {
-                    cursor: pointer;
-
-                    &:hover {
-                        color: $darkGray;
-                    }
-                }
-            }
-
-            ul {
-                @include ulOlMargin();
-
-                li {
-                    padding-top: 3px;
-                }
-            }
-
-            > ul {
-                font-size: 90%;
-                margin-left: 2rem;
-
-                > li {
-                    padding-top: 8px;
-                }
-            }
-        }
-        .pos {
-            color: $green;
-        }
-        .neg {
-            color: $red;
-        }
-    }
+    @include com();
 }
 
 /* FOOTER */
@@ -515,20 +454,6 @@ footer .right {
         }
     }
 
-    .com {
-        padding: 20px 20px 0;
-
-        .box {
-            max-height: inherit;
-            display: block;
-            width: 100%;
-            position: relative;
-            right: 0;
-            bottom: 0;
-            padding: 5px;
-        }
-    }
-
     main {
         height: auto;
         padding: 20px 0 40px 0;
@@ -561,6 +486,11 @@ footer .right {
 
 /* PRINT */
 @media print {
+    
+    * {
+        page-break-after: avoid;
+    }
+
     body {
         background-image: none !important;
     }
@@ -569,7 +499,7 @@ footer .right {
     footer,
     main .inner > .top .right,
     .submit,
-    .com {
+    .close {
         display: none !important;
     }
 

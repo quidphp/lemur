@@ -10,16 +10,31 @@ declare(strict_types=1);
 namespace Quid\Lemur\Cms;
 use Quid\Base;
 use Quid\Core;
+use Quid\Lemur;
 
 // _specificSubmit
 // trait that provides commonly used methods for the specific submit routes of the CMS
 trait _specificSubmit
 {
+    // trait
+    use Lemur\Route\_formSubmit;
+    
+    
+    // onAfterSuccessOrFailure
+    protected function onAfterSuccessOrFailure():void
+    {
+        $panel = $this->currentPanel();
+        static::session()->flash()->set('currentPanel',$panel);
+        
+        return;
+    }
+    
+    
     // routeSuccess
     // retourne la route en cas de succès ou échec de l'ajout
-    public function routeSuccess():string
+    public function routeSuccess():Lemur\Route
     {
-        return $this->specificWithFragment();
+        return $this->specific();
     }
 
 
@@ -35,29 +50,7 @@ trait _specificSubmit
     // retourne la route parent, peut retourner specific ou specificAdd
     public function specific():Core\Route
     {
-        $return = null;
-        $parent = static::parent();
-
-        if(empty($parent))
-        static::throw();
-
-        $return = $parent::makeOverload($this->segments());
-
-        return $return;
-    }
-
-
-    // specificWithFragment
-    // retourne la route specific mais ajoute le fragment du panel
-    public function specificWithFragment():string
-    {
-        $return = $this->specific()->uri();
-
-        $fragment = $this->currentPanel();
-        if(!empty($fragment))
-        $return = Base\Uri::changeFragment($fragment,$return);
-
-        return $return;
+        return static::makeParentOverload($this->segments());
     }
 }
 ?>

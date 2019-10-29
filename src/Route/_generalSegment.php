@@ -16,7 +16,7 @@ use Quid\Orm;
 trait _generalSegment
 {
     // trait
-    use _search;
+    use _searchGet;
 
 
     // hasTablePermission

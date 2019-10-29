@@ -9,64 +9,14 @@
 // fakeselect
 // stylesheet for the fakeselect component
 
-// fakeselectTodo
-@mixin fakeselectOld() {
-    @include inbl();
-    position: relative;
-    min-width: 150px;
-
-    &.invalid {
-        > .trigger {
-            background-color: $red;
-            color: $white;
-            border: 1px solid $red;
-        }
-    }
-
-    > .trigger {
-        @include transitions(background-color 0.3s, color 0.3s);
-        position: relative;
-        padding: 5px 40px 5px 12px;
-        cursor: pointer;
-        background-color: $white;
-        border: 1px solid $lightestGray;
-        border-radius: 5px;
-
-        > .title {
-            text-align: left;
-            font-size: 90%;
-        }
-
-        > .ico {
-            @include abs(50%, 10px);
-            @include wh(12px, true, '', true);
-            background-size: contain;
-        }
-    }
-
-    &.active > .trigger,
-    > .trigger:hover {
-        color: $black !important;
-        background-color: $lightYellow !important;
-    }
-
-    &.active > .popup {
-        display: block;
-    }
-
+// fakeselect
+// mixin pour styliser un faux menu de sélection
+@mixin fakeselect() {
+    font-size: 1.4rem;
+    @include fakeselectTrigger();
+    
     > .popup {
-        width: 100%;
-        display: none;
-        text-align: left;
-        max-height: 250px;
-        overflow-y: auto;
-        z-index: 100;
-        border-radius: 5px;
-    }
-
-    &.top-right > .popup,
-    &.top-left > .popup {
-        border-top: 0;
+        @include fakeselectPopup();
     }
 }
 
@@ -101,8 +51,9 @@
 
         > .ico {
             @include abs(50%, 10px);
-            @include wh(12px, true, '', true);
+            @include triangle('bottom',$color,9px,6px);
             background-size: contain;
+            margin-top: -4px;
         }
     }
 
@@ -116,22 +67,30 @@
 // fakeselectPopup
 // mixin pour le popup d'un fakeselect
 @mixin fakeselectPopup() {
-    &.active > .popup {
-        display: block;
-    }
+    width: 100%;
+    display: none;
+    text-align: left;
+    max-height: 250px;
+    overflow-y: auto;
+    z-index: 100;
+    border-radius: 5px;
+    
+    > ul {
+        list-style-type: none;
+        
+        > li {
+            @include transitions(background-color 0.3s);
+            padding: 5px 10px;
+            border-top: 1px solid $lighterGray;
+            cursor: pointer;
 
-    > .popup {
-        width: 100%;
-        display: none;
-        text-align: left;
-        max-height: 250px;
-        overflow-y: auto;
-        z-index: 100;
-        border-radius: 5px;
-    }
+            &:hover {
+                background-color: $lightYellow;
+            }
 
-    &.topRight > .popup,
-    &.topLeft > .popup {
-        border-top: 0;
+            &.selected {
+                background-color: $lightYellow;
+            }
+        }
     }
 }

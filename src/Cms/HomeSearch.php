@@ -20,7 +20,7 @@ class HomeSearch extends Core\RouteAlias
 {
     // trait
     use _common;
-    use Lemur\Route\_search;
+    use Lemur\Route\_searchPost;
 
 
     // config
@@ -29,10 +29,12 @@ class HomeSearch extends Core\RouteAlias
             'en'=>'home/search',
             'fr'=>'accueil/recherche'],
         'match'=>[
-            'ajax'=>true,
             'role'=>['>='=>20],
-            'query'=>['s'=>true]],
-        'search'=>['query'=>'s'],
+            'method'=>'post',
+            'ajax'=>true,
+            'csrf'=>false,
+            'genuine'=>true,
+            'post'=>['search'=>true]],
         'parent'=>Home::class,
         'group'=>'submit'
     ];
@@ -43,11 +45,11 @@ class HomeSearch extends Core\RouteAlias
     protected function onBefore()
     {
         $return = false;
-
+        
         if($this->hasPermission('homeSearch'))
         {
             $search = $this->getSearchValue();
-
+            
             if($search !== null)
             $return = true;
         }

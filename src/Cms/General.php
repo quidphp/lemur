@@ -760,7 +760,7 @@ class General extends Core\RouteAlias
             {
                 if($isEmpty === false)
                 {
-                    $page = Html::divCond($this->makePageInput(['icon','solo','black']),'page-input');
+                    $page = Html::divCond($this->makePageInput(['triangle']),'page-input');
 
                     $r .= Html::divOp('above');
                     $r .= Html::div($this->makeTool(),'left');
@@ -769,7 +769,8 @@ class General extends Core\RouteAlias
                 }
 
                 $r .= Html::divOp('scroller');
-                $r .= Html::tableOpen();
+                $attr = array('data'=>array('name'=>$table->name(),'table'=>$table::className(true)));
+                $r .= Html::tableOpen(null,null,null,$attr);
                 $r .= $this->makeTableHeader();
                 $r .= $this->makeTableBody();
                 $r .= Html::tableCl();
@@ -813,17 +814,16 @@ class General extends Core\RouteAlias
 
             foreach ($cols as $col)
             {
-                $thAttr = [];
-
-                if($col->isPrimary())
-                $thAttr[] = 'primary';
+                $data = array('name'=>$col->name(),'col'=>$col::className(true),'group'=>$col->group());
+                $data = $col->getDataAttr($data);
+                $thAttr = ['data'=>$data];
 
                 $label = Html::span($col->label(),'label');
                 $in = Html::divtable($label);
 
                 if($permission['order'] === true && $col->isOrderable())
                 {
-                    $icon = ['icon','solo','arrow','white'];
+                    $icon = ['triangle'];
                     $array = $this->makeTableHeaderOrder($col,[$in,$thAttr],'in',$icon);
                 }
 
@@ -898,7 +898,10 @@ class General extends Core\RouteAlias
                 $array = [];
                 $specific = Specific::makeOverload($row)->uri();
                 $cells = $row->cells($cols);
-                $rowClass = (!empty($highlight) && in_array($row->primary(),$highlight,true))? 'highlight':null;
+                
+                $rowAttr = array('data'=>array('id'=>$row->primary(),'row'=>$row::className(true)));
+                if(!empty($highlight) && in_array($row->primary(),$highlight,true))
+                $rowAttr[] = 'highlight';
 
                 if($rowsPermission === true)
                 {
@@ -926,7 +929,7 @@ class General extends Core\RouteAlias
                     $array[] = [$html,'action'];
                 }
 
-                $trs[] = [$array,$rowClass];
+                $trs[] = [$array,$rowAttr];
             }
 
             $r .= Html::tbody(...$trs);
@@ -944,14 +947,16 @@ class General extends Core\RouteAlias
         $r = [];
         $option = Base\Arr::plus(['specific'=>null,'modify'=>false,'excerptMin'=>$cell->generalExcerptMin()],$option);
         $context = $this->context();
-        $attr = null;
+        $data = array('name'=>$cell->name(),'cell'=>$cell::className(true),'group'=>$cell->group());
+        $data = $cell->getDataAttr($data);
+        $attr = array('data'=>$data);
         $v = $cell->get($context);
 
         if($cell->isPrimary() && is_string($option['specific']))
         {
             $specific = $option['specific'];
             $v = Html::a($specific,$v,'in');
-            $attr = 'primary';
+            $attr[] = 'primary';
         }
 
         else

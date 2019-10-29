@@ -1,0 +1,211 @@
+// compileOnSave: false
+
+/*
+ * This file is part of the QuidPHP package.
+ * Website: https://quidphp.com
+ * License: https://github.com/quidphp/lemur/blob/master/LICENSE
+ */
+
+// files
+// stylesheet for the files upload component
+
+// files
+// mixin avec les styles pour le champ de chargement de fichiers
+@mixin files() {
+    @include inbl();
+    width: 480px;
+    margin: 10px 10px 0 0;
+    background-color: $white;
+    border-radius: 5px;
+    position: relative;
+    border: 1px solid $lightGray;
+    
+    &:first-child {
+        margin-top: 0;
+    }
+    
+    &.with-action {
+        .info,
+        .actions,
+        .versions {
+            display: none;
+        }
+
+        .form .message {
+            display: block;
+        }
+    }
+
+    .count {
+        @include abs(8px, 7px);
+        @include wh(24px);
+        background-color: $white;
+        text-align: center;
+        font-weight: bold;
+        border-radius: 50%;
+        border: 1px solid $lightestGray;
+    }
+
+    .actions {
+        @include abs(-12px, -8px);
+
+        > .action {
+            @include inbl();
+            margin-left: 4px;
+        }
+    }
+
+    .form {
+        background-color: $lightGray;
+        padding: 10px;
+
+        .message {
+            display: none;
+            text-align: center;
+            font-size: 90%;
+            font-weight: bold;
+
+            .actionText {
+                @include inbl(top);
+            }
+
+            .close {
+                margin-left: 4px;
+                @include inbl(top);
+            }
+        }
+    }
+
+    .info {
+        padding: 10px;
+        font-size: 90%;
+        text-align: left;
+        text-align: center;
+
+        > a {
+            @include inbl();
+
+            &:hover {
+                opacity: 0.8;
+            }
+        }
+
+        .media-placeholder {
+            @include wh(64px);
+            margin: auto;
+        }
+
+        img {
+            max-width: 100px;
+            min-width: 50px;
+            display: block;
+            margin: auto;
+            margin-bottom: 10px;
+        }
+
+        .line {
+            .notFound {
+                @include nothing();
+                margin-bottom: 3px;
+            }
+
+            .filename {
+                @include inbl();
+            }
+            a.filename {
+                text-decoration: underline;
+            }
+
+            .filesize {
+                @include inbl();
+                margin-left: 10px;
+                font-weight: bold;
+            }
+        }
+    }
+    
+    .versions {
+        padding: 10px;
+        background-color: $lightestGray;
+        font-size: 90%;
+
+        > ul {
+            @include ulOlMargin();
+
+            > li {
+                padding-top: 5px;
+
+                &:first-child {
+                    padding-top: 0;
+                }
+
+                > span.notFound,
+                > span.filesize {
+                    margin-left: 5px;
+                    font-weight: bold;
+                }
+
+                > a {
+                    text-decoration: underline;
+                    margin-left: 5px;
+                }
+            }
+        }
+    }
+
+    /* RESPONSIVE */
+    @media screen and (max-width: 900px), screen and (orientation: portrait) {
+        width: 100%;
+    }
+    
+    
+    /* PRINT */
+    @media print {
+        display: none !important;
+    }
+}
+
+
+// filesGeneral
+// mixin pour l'affichage d'un champ media/medias dans general
+@mixin filesGeneral()
+{
+    text-align: center;
+
+    .media-placeholder {
+        @include wh(64px);
+        margin: auto;
+        margin-bottom: 3px;
+    }
+
+    img {
+        max-width: 100px;
+    }
+    
+    .slider {
+        position: relative;
+        padding: 0 20px;
+        
+        .prev,
+        .next {
+            @include trianglePrevNext();
+            margin-top: -8px;
+        }
+        
+        .prev {
+            @include abs(50%,'','',0);
+        }
+        
+        .next {
+            @include abs(50%,0);
+        }
+        
+        .slider-element {
+            display: none;
+            
+            &.active {
+                display: block;
+            }
+        }
+    }
+}

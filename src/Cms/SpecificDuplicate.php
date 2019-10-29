@@ -38,8 +38,7 @@ class SpecificDuplicate extends Core\RouteAlias
             'genuine'=>true,
             'role'=>['>='=>20]],
         'parent'=>Specific::class,
-        'group'=>'specific',
-        'navigation'=>false
+        'group'=>'specific'
     ];
 
 

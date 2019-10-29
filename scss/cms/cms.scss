@@ -10,22 +10,24 @@
 // stylesheet that imports other stylesheets for the CMS
 
 // icon and component
-@import '_icon64';
 @import 'component/_addRemove';
 @import 'component/_calendar';
 @import 'component/_clickOpen';
+@import 'component/_colsSorter';
+@import 'component/_com';
 @import 'component/_enumSet';
 @import 'component/_fakeselect';
+@import 'component/_files';
 @import 'component/_filter';
 @import 'component/_modal';
+@import 'component/_rowsChecker';
 @import 'component/_tableRelation';
 
 // import
+@import '_icon';
 @import 'style';
-@import 'icon';
 @import 'form';
 @import 'interface';
-@import 'user';
-@import 'home';
+@import 'page';
 @import 'general';
 @import 'specific';

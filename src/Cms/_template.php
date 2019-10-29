@@ -31,10 +31,15 @@ trait _template
     protected function template():string
     {
         $r = '';
-
+        
         $flush = $this->docOpen();
-        $flush .= Html::divOp('#wrapper');
+        
+        $flush .= Html::divOp('loading-fixed');
         $flush .= Html::div(null,'loading-icon');
+        $flush .= Html::div(null,'loading-progress');
+        $flush .= Html::divCl();
+        
+        $flush .= Html::divOp('#wrapper');
         $flush .= Html::headerCond($this->header());
         $flush .= Html::mainOp();
         $flush .= Html::divOp('inner');
@@ -53,9 +58,8 @@ trait _template
         $close .= Html::divCond($this->makeModal(),'modal');
         $close .= $this->docClose();
 
-        $com = Html::divCond($this->makeCom(),'com');
-
-        $r .= $main.$com.$close;
+        $com = $this->makeCom();
+        $r .= $com.$main.$close;
 
         return $r;
     }
@@ -211,7 +215,7 @@ trait _template
 
                     if(is_array($value))
                     {
-                        $r .= Html::div(null,['arrow','white']);
+                        $r .= Html::div(null,['triangle']);
                         $r .= Html::ulCond($this->navMenu($value,$ii));
                     }
 
@@ -409,10 +413,10 @@ trait _template
             $route = Specific::makeOverload(true);
             $data = ['href'=>$route,'char'=>$route::getReplaceSegment()];
 
-            $r .= Html::divOp(['box','data'=>$data]);
+            $r .= Html::divOp(['com','data'=>$data]);
             $r .= Html::div(null,['icon','solo','close']);
             $r .= Html::divOp('top');
-            $r .= Html::div(null,['arrow','black']);
+            $r .= Html::div(null,'triangle');
             $r .= Html::div(Base\Date::format(4),'date');
             $r .= Html::divCl();
             $r .= Html::div(null,'spacer');

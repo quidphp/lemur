@@ -147,15 +147,13 @@ trait _specific
             $table = $this->table();
             $lang = $this->lang();
             $panel = $this->panel();
-
-            $r .= Html::ulOp();
-
+            
             foreach ($panel as $key => $cols)
             {
                 if($cols->isNotEmpty())
                 {
                     $data = [];
-
+                    
                     if($table->hasPermission('panelDescription'))
                     $data['description'] = $lang->panelDescription($key);
 
@@ -167,7 +165,7 @@ trait _specific
                 }
             }
 
-            $r .= Html::ulCl();
+            $r = Html::ulCond($r);
 
             if($table->hasPermission('panelDescription'))
             $r .= Html::div(true,'description');
@@ -244,16 +242,27 @@ trait _specific
         $hasPanel = $this->hasPanel();
         $panel = $this->panel();
         $lang = $this->lang();
+        $currentPanel = static::session()->flash()->get('currentPanel');
 
         if(!empty($panel))
         {
             $r .= Html::divOp('inside');
-
+            $firstKey = key($panel);
+            
             foreach ($panel as $key => $cols)
             {
                 if($cols->isNotEmpty())
                 {
-                    $data = ($hasPanel === true)? ['fragment'=>$key]:null;
+                    $data = array();
+                    
+                    if($hasPanel === true)
+                    {
+                        if($key === $currentPanel)
+                        $data['current-panel'] = true;
+                        
+                        $data['fragment'] = $key;
+                    }
+                    
                     $r .= Html::divOp(['panel','data'=>$data]);
 
                     foreach ($cols as $col)

@@ -1,0 +1,72 @@
+// compileOnSave: false
+
+/*
+ * This file is part of the QuidPHP package.
+ * Website: https://quidphp.com
+ * License: https://github.com/quidphp/lemur/blob/master/LICENSE
+ */
+
+// colsSorter
+// stylesheet for the colsSorter component
+
+// colsSorter
+// mixin avec les styles pour la boîte d'ordonnage des colonnes
+@mixin colsSorter() {
+    
+    width: 50px;
+    min-width: inherit;
+    font-weight: normal;
+    
+    .in {
+        padding: 0px 10px;
+        cursor: pointer;
+
+        &:hover,
+        &.active,
+        &.selected {
+            background-color: $lightYellow;
+            border-right: 1px solid $lightYellow;
+        }
+
+        &.selected .close {
+            @include abs(-8px, 0px);
+        }
+
+        .popup {
+            width: 350px;
+            overflow-y: hidden;
+            padding: 0;
+
+            > .inside {
+                max-height: 300px;
+                padding: 10px 15px;
+                overflow-y: auto;
+            }
+
+            &.valid {
+                button {
+                    display: block;
+                    cursor: pointer;
+                }
+            }
+
+            &.invalid {
+                label {
+                    color: $red;
+                }
+            }
+
+            .choice {
+                @include inputChoice(4px);
+
+                .move {
+                    margin-right: 5px;
+                }
+            }
+
+            button {
+                display: none;
+            }
+        }
+    }
+}

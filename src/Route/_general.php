@@ -278,18 +278,19 @@ trait _general
         {
             $thAttr[] = 'orderable';
             $active = ($col === $this->segment('order'));
-            $defaultDirection = strtolower(Orm\Syntax::invertOrderDirection($this->segment('direction')));
-
+            
             if($active === true)
             {
-                $direction = $defaultDirection;
-                $thAttr[] = $direction;
+                $dataDirection = $this->segment('direction');
+                $direction = Orm\Syntax::invertOrderDirection($dataDirection);
                 $thAttr[] = 'ordering';
             }
 
             else
-            $direction = $col->direction();
-
+            $direction = $dataDirection = $col->direction(true);
+            
+            $thAttr['data']['direction'] = $dataDirection;
+            
             $route = $this->changeSegments(['order'=>$col,'direction'=>$direction]);
             $uri = $route->uri();
             $html .= Html::divOp('right');

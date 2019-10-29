@@ -28,7 +28,7 @@ abstract class Video extends Core\ColAlias
         'preValidate'=>['uriAbsolute'],
         'check'=>['kind'=>'text'],
         'descriptionExcerpt'=>500, // custom, longueur maximale de la description
-        'service'=>null // clé du service utilisé, à spécifier
+        'service'=>null // classe du service utilisé, à spécifier
     ];
 
 
@@ -36,7 +36,16 @@ abstract class Video extends Core\ColAlias
     // retourne le service à utiliser
     public function getService():Main\Service
     {
-        return $this->service(static::$config['service']);
+        $return = null;
+        $service = $this->attr('service');
+        
+        if(!empty($service))
+        {
+            $key = static::className(true);
+            $return = new $service($key);
+        }
+        
+        return $return; 
     }
 
 

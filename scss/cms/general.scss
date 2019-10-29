@@ -120,34 +120,14 @@
 
 /* TOOL */
 [data-route='general'] main .inner > .container .tool {
-    visibility: hidden;
-
-    > .icon {
-        @include inbl(bottom);
-        margin-right: 5px;
-    }
-
-    .multi-delete {
-        @include inbl(bottom);
-    }
+    @include rowsCheckerTools();
 }
 
 /* PAGE */
 [data-route='general'] main .inner > .container .page-input {
     a {
-        @include inbl(bottom);
-
-        &.prev {
-            margin-right: 5px;
-        }
-
-        &.next {
-            margin-left: 5px;
-        }
-
-        &:hover {
-            opacity: 0.8;
-        }
+        @include inbl();
+        @include trianglePrevNext();
     }
     .center {
         @include inbl(bottom);
@@ -255,13 +235,11 @@
         @include abs(0, 0);
         @include transition(background-color);
 
-        .arrow {
+        .triangle {
             @include abs(50%, '', '', 50%);
             @include transition(opacity);
             margin-top: -7px;
-            margin-left: -8px;
-            background-size: inherit;
-            background-position: 0px 0px;
+            margin-left: -5px;
             display: block;
             opacity: 0.1;
         }
@@ -270,29 +248,28 @@
     .label {
         padding-right: 25px;
     }
-
-    &.asc {
-        .arrow {
-            background-position: 0px -82px;
-        }
-    }
-    &.desc {
-        .arrow {
-            background-position: 0px 0px;
-        }
-    }
-
     &:hover,
     &.ordering {
         .label {
             color: $gray;
         }
-
-        .right {
-            .arrow {
-                opacity: 1;
-            }
+        
+        .triangle {
+            opacity: 1;
         }
+    }
+
+    &[data-direction='asc'] .right .triangle {
+        @include triangle('top',$white,12px,6px);
+    }
+    &[data-direction='desc'] .right .triangle {
+        @include triangle('bottom',$white,12px,6px);
+    }
+    &[data-direction='asc'].ordering .right .triangle {
+        @include triangle('top',$lightYellow,12px,6px);
+    }
+    &[data-direction='desc'].ordering .right .triangle {
+        @include triangle('bottom',$lightYellow,12px,6px);
     }
 }
 
@@ -334,67 +311,13 @@
         }
     }
 }
-[data-route='general'] main .inner > .container table thead th.filterable .popup {
+[data-route='general'] main .inner > .container table thead th.filterable .filter-outer > .popup {
     @include filterPopup();
 }
 
 /* COLS */
 [data-route='general'] main .inner > .container table thead .action {
-    width: 50px;
-    min-width: inherit;
-
-    .in {
-        padding: 0px 10px;
-        cursor: pointer;
-
-        &:hover,
-        &.active,
-        &.selected {
-            background-color: $lightYellow;
-            border-right: 1px solid $lightYellow;
-        }
-
-        &.selected .close {
-            @include abs(-8px, 0px);
-        }
-
-        .popup {
-            width: 350px;
-            overflow-y: hidden;
-            padding: 0;
-
-            > .inside {
-                max-height: 300px;
-                padding: 10px 15px;
-                overflow-y: auto;
-            }
-
-            &.valid {
-                button {
-                    display: block;
-                    cursor: pointer;
-                }
-            }
-
-            &.invalid {
-                label {
-                    color: $red;
-                }
-            }
-
-            .choice {
-                @include inputChoice(4px);
-
-                .move {
-                    margin-right: 5px;
-                }
-            }
-
-            button {
-                display: none;
-            }
-        }
-    }
+    @include colsSorter();
 }
 [data-route='general'] main .inner > .container table tbody {
     tr {
@@ -470,49 +393,19 @@
         }
     }
 }
-[data-route='general'] main .inner > .container table tbody td .in .relation {
-    a {
-        display: inline;
-    }
+[data-route='general'] main .inner > .container table tbody td .in .relation a {
+    display: inline;
 }
-[data-route='general'] main table td .media {
-    text-align: center;
-
-    .media-placeholder {
-        @include wh(64px);
-        margin: auto;
-        margin-bottom: 3px;
-    }
-
-    img {
-        max-width: 100px;
-    }
+[data-route='general'] main table td[data-group='media'] {
+    @include filesGeneral();
 }
 [data-route='general'] main .inner > .container table tbody td.rows {
-    width: 40px;
-    min-width: inherit;
-    text-align: center;
-
-    .in {
-        padding: 0 10px;
-    }
-
-    input[type='checkbox'] {
-        @include inbl();
-        @include abs(50%, '', '', 50%);
-        @include wh(12px);
-        margin-top: -6px;
-        margin-left: -6px;
-        text-align: center;
-    }
+    @include rowsChecker();
 }
-[data-route='general'] main .inner > .container table tbody td.rows,
 [data-route='general'] main .inner > .container table tbody td.primary,
 [data-route='general'] main .inner > .container table tbody td.action {
-    .in {
-        &:hover {
-            background-color: $lightYellow;
-        }
+    .in:hover {
+        background-color: $lightYellow;
     }
 }
 [data-route='general'] main .inner > .container table tbody td.action {

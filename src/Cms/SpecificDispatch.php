@@ -41,7 +41,9 @@ class SpecificDispatch extends Core\RouteAlias
             '--delete--'=>SpecificDelete::class,
             '--userWelcome--'=>SpecificUserWelcome::class],
         'parent'=>Specific::class,
-        'group'=>'submit'
+        'group'=>'submit',
+        'form'=>[
+            'attr'=>array('data-validation'=>false)],
     ];
 
 

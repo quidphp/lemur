@@ -17,7 +17,7 @@ use Quid\Orm;
 trait _relation
 {
     // trait
-    use _search;
+    use _searchGet;
 
 
     // config

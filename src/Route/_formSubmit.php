@@ -52,17 +52,26 @@ trait _formSubmit
     protected function onAfter()
     {
         $return = null;
-
+        $this->onAfterSuccessOrFailure();
+        
         if($this->isSuccess())
         $return = $this->routeSuccess();
 
         else
         $return = $this->routeFailure();
-
+        
         return $return;
     }
 
-
+    
+    // onAfterSuccessOrFailure
+    // méthode appelé dans onAfter peut importe si c'est un succès ou failure
+    protected function onAfterSuccessOrFailure():void
+    {
+        return;
+    }
+    
+    
     // onSuccess
     // callback appelé lors d'un succès
     protected function onSuccess():void
