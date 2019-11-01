@@ -97,7 +97,7 @@ abstract class AccountChangePasswordSubmit extends Core\RouteAlias
     // retourne le nom des champs pour le formulaire
     public function getFields():array
     {
-        return $this->getAttr(array('match','post')) ?? array();
+        return $this->getAttr(['match','post']) ?? [];
     }
 }
 

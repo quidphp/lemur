@@ -27,15 +27,15 @@ abstract class Relation extends Core\Col\Relation
                 'specificRelation'=>Lemur\Cms\SpecificRelation::class]]
     ];
 
-    
+
     // isSortable
     // retourne vrai si la relation est sortable
     public function isSortable():bool
     {
         return false;
     }
-    
-    
+
+
     // prepareRelationRadioCheckbox
     // méthode utilisé lors de la préparation d'une valeur relation radio ou checkbox, incluant search
     protected function prepareRelationRadioCheckbox(array $return):array

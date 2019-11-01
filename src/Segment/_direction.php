@@ -8,7 +8,6 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Segment;
-use Quid\Orm;
 
 // _direction
 // trait to deal with a route segment which must contain a sorting direction
@@ -26,7 +25,7 @@ trait _direction
         elseif($type === 'match')
         {
             $table = static::tableSegment($keyValue);
-            
+
             if(!empty($table))
             {
                 if($value === null)

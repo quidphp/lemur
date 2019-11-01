@@ -41,22 +41,22 @@ class PopupSession extends Core\RouteAlias
         return $this->canTrigger();
     }
 
-    
+
     // canTrigger
     // retourne vrai si la route peut être trigger
     public function canTrigger():bool
     {
         $return = false;
         $realRoles = static::session()->roles();
-        
-        foreach (array('popup','sessionPopup') as $value) 
+
+        foreach (['popup','sessionPopup'] as $value)
         {
             $return = $this->rolesHasPermission($value,$realRoles);
-            
+
             if($return === false)
             break;
         }
-        
+
         return $return;
     }
 
@@ -114,14 +114,14 @@ class PopupSession extends Core\RouteAlias
 
             elseif($key === 'roles')
             $value = $session->roles()->pair('labelPermission');
-            
+
             elseif($key === 'fakeRoles')
             {
                 $fakeRoles = $session->getFakeRoles();
                 if(!empty($fakeRoles))
                 $value = $fakeRoles->pair('labelPermission');
             }
-            
+
             elseif(in_array($key,$sessionKeys,true))
             {
                 $value = $session->$key();

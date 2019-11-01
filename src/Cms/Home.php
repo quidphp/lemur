@@ -121,10 +121,10 @@ class Home extends Core\Route\Home
 
             if($key === 'classTables')
             $value = $db->tables()->classFqcn();
-            
+
             elseif($key === 'classSyntax')
             $value = $db->getSyntax();
-            
+
             else
             $value = $db->$key();
 

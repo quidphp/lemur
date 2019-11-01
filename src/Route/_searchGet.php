@@ -65,7 +65,7 @@ trait _searchGet
     // par défaut 0, il faut utiliser 1 si la recherche est faite via GET sans javascript
     public function getSearchDecodeType():int
     {
-        return $this->getAttr(array('search','decode'));
+        return $this->getAttr(['search','decode']);
     }
 
 
@@ -73,7 +73,7 @@ trait _searchGet
     // retourne la query à utiliser, envoie une exception si non existant
     public function getSearchQuery():string
     {
-        return $this->getAttr(array('search','query'));
+        return $this->getAttr(['search','query']);
     }
 }
 ?>

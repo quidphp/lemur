@@ -119,8 +119,7 @@
             }
         }
     }
-    
-    
+
     // responsive
     @media screen and (max-width: 900px), screen and (orientation: portrait) {
         @include fixed(0, '', '', 0);

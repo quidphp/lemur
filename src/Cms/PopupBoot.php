@@ -43,15 +43,15 @@ class PopupBoot extends Core\RouteAlias
         return $this->canTrigger();
     }
 
-    
+
     // canTrigger
     // retourne vrai si la route peut être trigger
     public function canTrigger():bool
     {
         return ($this->hasPermission('popup','bootPopup'))? true:false;
     }
-    
-    
+
+
     // triger
     // lance la route
     public function trigger():string
