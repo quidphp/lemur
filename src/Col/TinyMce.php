@@ -64,11 +64,11 @@ class TinyMce extends TextareaAlias
     // retourne les données de tinymce
     public function tinymceData():array
     {
-        $return = (array) $this->attr('tinymce');
+        $return = (array) $this->getAttr('tinymce');
         $boot = static::boot();
         $lang = $boot->lang();
         $currentLang = $lang->currentLang();
-        $languages = $this->attr('language');
+        $languages = $this->getAttr('language');
 
         if(is_array($languages) && array_key_exists($currentLang,$languages))
         $return['language'] = $languages[$currentLang];

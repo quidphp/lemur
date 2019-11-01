@@ -31,6 +31,8 @@ abstract class Boot extends Core\Boot
         'concatenateJs'=>[
             '[publicJs]/include.js'=>[
                 0=>'[vendorLemur]/js/include']],
+        'roles'=>array(
+            'editor'=>array(60)),
         '@cms'=>[
             'service'=>[
                 'polyfill'=>Service\Polyfill::class,

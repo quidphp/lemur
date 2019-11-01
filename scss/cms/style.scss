@@ -154,7 +154,7 @@ form [data-table-relation='1'] .right .table-relation .ico {
 }
 
 /* MEDIA */
-[data-route='general'] main table td .media .media-placeholder,
+[data-route='general'] main table td[data-group='media'] .media-placeholder,
 form [data-group='media'] .right .block .info .media-placeholder,
 form [data-table-relation='1'] .right .table-relation .popup .big-icon.storage {
     @include bgimg64($iconMedia);

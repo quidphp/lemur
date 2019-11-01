@@ -50,7 +50,7 @@ trait _calendar
     // génère l'objet calendrier
     protected function calendar():Main\Calendar
     {
-        $class = static::$config['calendar'];
+        $class = $this->getAttr('calendar');
 
         if(empty($class))
         static::throw('noCalendarClassProvided');

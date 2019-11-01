@@ -43,7 +43,7 @@ class SpecificDispatch extends Core\RouteAlias
         'parent'=>Specific::class,
         'group'=>'submit',
         'form'=>[
-            'attr'=>['data-validation'=>false]],
+            'attr'=>['data-validation'=>false]]
     ];
 
 
@@ -69,7 +69,7 @@ class SpecificDispatch extends Core\RouteAlias
         $post = $request->post();
         $segment = $this->segments();
 
-        foreach (static::$config['dispatch'] as $key => $value)
+        foreach ($this->getAttr('dispatch') as $key => $value)
         {
             if(array_key_exists($key,$post) && $post[$key] === 1)
             $return = $value::makeOverload($segment);

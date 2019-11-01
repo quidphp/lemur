@@ -28,7 +28,7 @@ class Relation extends Core\Cell\Relation
         if(!empty($relation))
         {
             $col = $this->col();
-            $max = $col->attr('generalMax');
+            $max = $col->getAttr('generalMax');
             $total = count($relation);
             $separator = ', ';
             $array = $col->prepareRelationPlainGeneral($relation);

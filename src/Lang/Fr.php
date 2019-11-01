@@ -22,9 +22,7 @@ class Fr extends Core\Lang\Fr
 
             // label
             'label'=>[
-                50=>'Contributeur',
-                60=>'Éditeur',
-                70=>'Sous-administrateur'
+                60=>'Éditeur'
             ]
         ],
 
@@ -84,7 +82,9 @@ class Fr extends Core\Lang\Fr
                     'expire'=>'Expiration du cookie',
                     'getCookieParams'=>'Paramètres du cookie',
                     'getGarbageCollect'=>'Nettoyage des sessions',
-                    'userAgent'=>'Agent utilisateur'
+                    'userAgent'=>'Agent utilisateur',
+                    'roles'=>'Rôles',
+                    'fakeRoles'=>'Faux rôles'
                 ],
 
                 // boot
@@ -124,6 +124,7 @@ class Fr extends Core\Lang\Fr
                     'collation'=>'Collation',
                     'connectionStatus'=>'Connexion',
                     'classFqcn'=>'Classe DB',
+                    'classSyntax'=>'Classe Syntaxe',
                     'classTables'=>'Classe Tables',
                     'importantVariables'=>'Variables importantes'
                 ],

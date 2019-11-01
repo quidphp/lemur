@@ -96,7 +96,6 @@ class HomeSearch extends Core\RouteAlias
         $r = '';
         $tables = $this->db()->tables();
         $search = $this->getSearchValue();
-        $searchQuery = General::getSearchQuery();
 
         if(!empty($array))
         {
@@ -109,6 +108,7 @@ class HomeSearch extends Core\RouteAlias
                     $table = $tables->get($key);
                     $count = count($value);
                     $route = General::makeOverload(['table'=>$table]);
+                    $searchQuery = $route->getSearchQuery();
                     $uri = Base\Uri::changeQuery([$searchQuery=>$search],$route->uri());
                     $title = $route->title("% ($count)");
 

@@ -117,7 +117,7 @@
 }
 
 /* LEFT */
-[data-group='specific'] form .element > .left {
+[data-group='specific'] .form .element > .left {
     @include inbl(middle, 30%);
     padding: 10px 20px 10px 0;
     position: relative;
@@ -166,7 +166,7 @@
 }
 
 /* RIGHT */
-[data-group='specific'] form .element > .right {
+[data-group='specific'] .form .element > .right {
     @include inbl(middle, 70%);
     padding: 0px 30px 0px 0;
 

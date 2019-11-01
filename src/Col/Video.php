@@ -37,7 +37,7 @@ abstract class Video extends Core\ColAlias
     public function getService():Main\Service
     {
         $return = null;
-        $service = $this->attr('service');
+        $service = $this->getAttr('service');
 
         if(!empty($service))
         {
@@ -134,7 +134,7 @@ abstract class Video extends Core\ColAlias
     public function html(Main\Video $value):?string
     {
         $return = '';
-        $excerpt = $this->attr('descriptionExcerpt');
+        $excerpt = $this->getAttr('descriptionExcerpt');
         $date = $value->date(0);
         $excerpt = $value->description($excerpt);
         $html = $value->html();

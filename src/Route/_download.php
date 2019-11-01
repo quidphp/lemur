@@ -40,7 +40,7 @@ trait _download
     // retourne la méthode à utiliser pour le download
     public function getMethod():string
     {
-        return (static::$config['toScreen'] === true)? 'toScreen':'download';
+        return ($this->getAttr('toScreen') === true)? 'toScreen':'download';
     }
 
 

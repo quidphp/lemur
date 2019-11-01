@@ -194,7 +194,7 @@ trait _general
         {
             $route = $this->changeSegments(['limit'=>true,'page'=>1]);
             $limit = $sql->getLimit();
-            $maxPerPage = static::$config['maxPerPage'];
+            $maxPerPage = $this->getAttr('maxPerPage');
 
             $data = ['href'=>$route,'char'=>static::getReplaceSegment(),'current'=>$limit,'keyupDelay'=>800,'pattern'=>'numberWholeNotEmpty','max'=>$maxPerPage];
             $r .= Html::divOp('limit');
@@ -282,7 +282,7 @@ trait _general
             if($active === true)
             {
                 $dataDirection = $this->segment('direction');
-                $direction = Orm\Syntax::invertOrderDirection($dataDirection);
+                $direction = $col->db()->syntaxCall('invertOrderDirection',$dataDirection);
                 $thAttr[] = 'ordering';
             }
 

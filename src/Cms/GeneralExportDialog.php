@@ -57,7 +57,7 @@ class GeneralExportDialog extends Core\RouteAlias
         $table = $this->table();
         $sql = $this->sql();
         $total = $sql->triggerRowCount();
-        $longExport = static::longExport();
+        $longExport = $this->longExport();
         $count = $total.' '.static::langPlural($total,'lc|common/row');
 
         $r .= Html::divtableOpen();
@@ -110,9 +110,9 @@ class GeneralExportDialog extends Core\RouteAlias
 
     // longExport
     // retourne le nombre de ligne pour considérer que c'est une longue exportation
-    public static function longExport():int
+    public function longExport():int
     {
-        return static::$config['longExport'];
+        return $this->getAttr('longExport');
     }
 }
 

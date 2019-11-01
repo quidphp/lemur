@@ -25,7 +25,7 @@ class Home extends Core\Route\Home
             'role'=>['>='=>20]],
         'popup'=>[
             'dbName','driver','serverVersion','connectionStatus','host','username',
-            'charset','collation','classFqcn','classTables','importantVariables'
+            'charset','collation','classFqcn','classSyntax','classTables','importantVariables'
         ]
     ];
 
@@ -101,7 +101,7 @@ class Home extends Core\Route\Home
 
         if($this->hasPermission('popup','homePopup'))
         {
-            $values = static::$config['popup'];
+            $values = $this->getAttr('popup');
             $closure = $this->infoPopupClosure();
             $return = static::makeInfoPopup($values,$closure,false);
         }
@@ -121,7 +121,10 @@ class Home extends Core\Route\Home
 
             if($key === 'classTables')
             $value = $db->tables()->classFqcn();
-
+            
+            elseif($key === 'classSyntax')
+            $value = $db->getSyntax();
+            
             else
             $value = $db->$key();
 
@@ -184,7 +187,7 @@ class Home extends Core\Route\Home
         $r = '';
         $tables = $this->db()->tables();
 
-        foreach ($tables->filter(['attrNotEmpty'=>true],'homeTask') as $table)
+        foreach ($tables->filter(['isAttrNotEmpty'=>true],'homeTask') as $table)
         {
             if($table->hasPermission('view','insert','lemurInsert'))
             $r .= SpecificAdd::makeOverload($table)->aTitle();
@@ -211,7 +214,7 @@ class Home extends Core\Route\Home
             {
                 $minLength = $tables->searchMinLength();
                 $data = ['keyupDelay'=>800,'required'=>true,'pattern'=>['minLength'=>$minLength]];
-                $name = $route::getSearchName();
+                $name = $route->getSearchName();
 
                 $replace = ['count'=>$minLength];
                 $note = $lang->plural($minLength,'home/searchNote',$replace);

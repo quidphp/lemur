@@ -103,7 +103,7 @@ abstract class Register extends Core\RouteAlias
     {
         $r = '';
         $table = static::tableFromRowClass();
-        $fields = static::getBaseFields();
+        $fields = $this->getBaseFields();
         $flash = $this->flash();
 
         foreach ($fields as $value)
@@ -123,7 +123,7 @@ abstract class Register extends Core\RouteAlias
     protected function makeFormPassword():string
     {
         $r = '';
-        $fields = static::getPasswordFields();
+        $fields = $this->getPasswordFields();
         $table = static::tableFromRowClass();
         $col = $table->col($fields['password']);
         $label = static::langText('register/confirmPassword');
@@ -146,17 +146,17 @@ abstract class Register extends Core\RouteAlias
 
     // getBaseFields
     // retourne les champs de base
-    public static function getBaseFields():array
+    public function getBaseFields():array
     {
-        return static::submitClass()::getBaseFields();
+        return $this->submitRoute()->getBaseFields();
     }
 
 
     // getPasswordFields
     // retourne les champs de mot de passe
-    public static function getPasswordFields():array
+    public function getPasswordFields():array
     {
-        return static::submitClass()::getPasswordFields();
+        return $this->submitRoute()->getPasswordFields();
     }
 }
 

@@ -11,7 +11,7 @@ namespace Quid\Test\Lemur;
 use Quid\Base;
 use Quid\Core;
 use Quid\Lemur;
-use Quid\Suite;
+use Quid\Test\Suite;
 
 // row
 // class for testing Quid\Lemur\Row

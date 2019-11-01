@@ -49,8 +49,8 @@ abstract class AccountChangePassword extends Core\RouteAlias
         $r = '';
         $route = $this->submitRoute();
         $submit = static::langText('accountChangePassword/submit');
-        $fields = $route::getFields();
-        $colPassword = static::$config['colPassword'];
+        $fields = $route->getFields();
+        $colPassword = $this->getAttr('colPassword');
         $table = static::tableFromRowClass();
         $col = $table->col($colPassword);
 

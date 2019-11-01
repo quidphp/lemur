@@ -139,19 +139,6 @@
 
     .popup {
         @include popupList();
-
-        .top-right {
-            @include abs(15px, 20px);
-        }
-
-        .icon.info {
-            cursor: default;
-            opacity: 1;
-
-            &:hover {
-                opacity: 1;
-            }
-        }
     }
 }
 

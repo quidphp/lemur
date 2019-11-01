@@ -143,7 +143,7 @@ class SpecificTableRelation extends Core\RouteAlias
         $after = null;
 
         $limit = $route->limit();
-        $query = $route::getSearchQuery();
+        $query = $route->getSearchQuery();
         $data = ['query'=>$query,'separator'=>static::getDefaultSegment(),'char'=>static::getReplaceSegment()];
         if($route->hasOrder())
         $route = $route->changeSegment('order',true);

@@ -83,7 +83,7 @@ abstract class AccountChangePasswordSubmit extends Core\RouteAlias
         $return = [];
         $request = $this->request();
 
-        foreach (static::getFields() as $value)
+        foreach ($this->getFields() as $value)
         {
             if(is_string($value))
             $return[$value] = (string) $request->get($value);
@@ -95,9 +95,9 @@ abstract class AccountChangePasswordSubmit extends Core\RouteAlias
 
     // getFields
     // retourne le nom des champs pour le formulaire
-    public static function getFields():array
+    public function getFields():array
     {
-        return static::$config['match']['post'] ?? [];
+        return $this->getAttr(array('match','post')) ?? array();
     }
 }
 

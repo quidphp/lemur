@@ -20,20 +20,29 @@ abstract class Relation extends Core\Col\Relation
     public static $config = [
         'specificLink'=>false,
         '@cms'=>[
+            'sortable'=>null,
             'specificLink'=>true, // fait un lien vers spécifique dans cms
             'route'=>[
                 'specific'=>Lemur\Cms\Specific::class,
                 'specificRelation'=>Lemur\Cms\SpecificRelation::class]]
     ];
 
-
+    
+    // isSortable
+    // retourne vrai si la relation est sortable
+    public function isSortable():bool
+    {
+        return false;
+    }
+    
+    
     // prepareRelationRadioCheckbox
     // méthode utilisé lors de la préparation d'une valeur relation radio ou checkbox, incluant search
     protected function prepareRelationRadioCheckbox(array $return):array
     {
         $rel = $this->relation();
 
-        if($this->attr('specificLink') && $rel->isRelationTable())
+        if($this->getAttr('specificLink') && $rel->isRelationTable())
         {
             $relationTable = $rel->relationTable();
 

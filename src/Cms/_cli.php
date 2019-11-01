@@ -63,7 +63,7 @@ trait _cli
     public function logCron(array $data):?Core\Row
     {
         $return = null;
-        $class = static::$config['logCron'];
+        $class = $this->getAttr('logCron');
 
         if(!empty($class))
         $return = $class::log($this,$data);

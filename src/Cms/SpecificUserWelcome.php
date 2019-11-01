@@ -61,21 +61,21 @@ class SpecificUserWelcome extends Core\RouteAlias
 
     // onSuccess
     // communication lors du succès
-    protected function onSuccess():self
+    protected function onSuccess()
     {
         static::sessionCom()->pos('user/welcome/success');
 
-        return $this;
+        return;
     }
 
 
     // onFailure
     // communication lors d'un échec
-    protected function onFailure():self
+    protected function onFailure()
     {
         static::sessionCom()->neg('user/welcome/failure');
 
-        return $this;
+        return;
     }
 
 

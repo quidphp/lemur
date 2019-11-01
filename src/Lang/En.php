@@ -22,9 +22,7 @@ class En extends Core\Lang\En
 
             // label
             'label'=>[
-                50=>'Contributor',
-                60=>'Editor',
-                70=>'Sub-Admin'
+                60=>'Editor'
             ]
         ],
 
@@ -84,7 +82,9 @@ class En extends Core\Lang\En
                     'expire'=>'Cookie expire',
                     'getCookieParams'=>'Cookie paramters',
                     'getGarbageCollect'=>'Session garbage collect',
-                    'userAgent'=>'User agent'
+                    'userAgent'=>'User agent',
+                    'roles'=>'Roles',
+                    'fakeRoles'=>'Fake roles'
                 ],
 
                 // boot
@@ -124,6 +124,7 @@ class En extends Core\Lang\En
                     'collation'=>'Collation',
                     'connectionStatus'=>'Connection status',
                     'classFqcn'=>'Class DB',
+                    'classSyntax'=>'Class Syntax',
                     'classTables'=>'Class Tables',
                     'importantVariables'=>'Important variables'
                 ],

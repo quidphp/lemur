@@ -22,6 +22,7 @@ class Textarea extends Core\ColAlias
     public static $config = [
         'tag'=>'textarea',
         'search'=>true,
+        'filter'=>false,
         'check'=>['kind'=>'text'],
         'relative'=>null, // custom, type pour absoluteReplace, utilise ceci pour ramener les liens absoluts dans leur version relative
         '@cms'=>[
@@ -47,7 +48,7 @@ class Textarea extends Core\ColAlias
     // remplacement des liens absoluts vers relatifs dans le bloc texte
     protected function absoluteReplace(string $return):string
     {
-        $relative = $this->attr('relative');
+        $relative = $this->getAttr('relative');
 
         if(!empty($relative))
         {
@@ -78,7 +79,7 @@ class Textarea extends Core\ColAlias
     {
         $return = false;
         $table = $this->table();
-        $relations = $this->attr('tableRelation');
+        $relations = $this->getAttr('tableRelation');
 
         if(is_array($relations) && !empty($relations) && $table->hasPermission('relation','tableRelation'))
         $return = true;
@@ -107,7 +108,7 @@ class Textarea extends Core\ColAlias
 
         if($this->hasTableRelation() && Html::isFormTag($tag,true))
         {
-            $relations = $this->attr('tableRelation');
+            $relations = $this->getAttr('tableRelation');
             $tables = $this->db()->tables();
             $tables = $tables->gets(...array_values($relations));
 

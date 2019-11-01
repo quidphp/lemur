@@ -121,7 +121,7 @@ class Slug extends Core\ColAlias
         $old = $cell->value();
         if(is_string($old) && $return !== $old)
         {
-            $onChange = $this->attr('onSlugChange');
+            $onChange = $this->getAttr('onSlugChange');
             if(!empty($onChange))
             $replaced = $onChange($return,$old,$cell,$option);
 
@@ -144,14 +144,14 @@ class Slug extends Core\ColAlias
     protected function slugOnChangeReplace(string $to,string $from,Core\Cell $cell,array $option):int
     {
         $return = 0;
-        $tablesCols = $this->attr('slugChangeTablesCols');
-        $uri = $this->attr('slugChangeUri');
+        $tablesCols = $this->getAttr('slugChangeTablesCols');
+        $uri = $this->getAttr('slugChangeUri');
         $langCode = $this->langCode();
 
         if(is_array($tablesCols) && !empty($tablesCols) && is_string($uri) && !empty($uri) && is_string($langCode))
         {
             $db = static::boot()->db();
-            $tablesCols = $this->attr('slugChangeTablesCols');
+            $tablesCols = $this->getAttr('slugChangeTablesCols');
             $from = $this->slugOnChangeMake($from,$uri,$langCode);
             $to = $this->slugOnChangeMake($to,$uri,$langCode);
 
@@ -226,7 +226,7 @@ class Slug extends Core\ColAlias
     // retourne les attributs pour slug
     public function slugAttr(bool $array=false)
     {
-        $return = $this->attr('slug');
+        $return = $this->getAttr('slug');
 
         if($array === true && !is_array($return))
         $return = self::$config['slug'];
@@ -274,7 +274,7 @@ class Slug extends Core\ColAlias
     {
         $return = null;
         $lang = $this->langCode();
-        $key = $this->attr('slugKey');
+        $key = $this->getAttr('slugKey');
 
         if(is_string($key))
         {
@@ -297,7 +297,7 @@ class Slug extends Core\ColAlias
         $return = null;
         $keep = $value;
         $unique = false;
-        $dates = $this->attr('slugDate');
+        $dates = $this->getAttr('slugDate');
 
         if(!is_string($value))
         $value = static::slugMake($value,$option);
@@ -336,7 +336,7 @@ class Slug extends Core\ColAlias
     public function slugDateFirst():string
     {
         $return = null;
-        $dates = $this->attr('slugDate');
+        $dates = $this->getAttr('slugDate');
 
         if(is_array($dates) && !empty($dates))
         $return = current($dates);

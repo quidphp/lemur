@@ -109,7 +109,7 @@ class JsonArray extends Core\Col\JsonAlias
 
         $return .= Html::divOp('outer');
 
-        if($this->attr('sortable'))
+        if($this->getAttr('sortable'))
         $return .= Html::div(null,['icon','solo','move']);
 
         $data = ['confirm'=>$lang->text('common/confirm')];

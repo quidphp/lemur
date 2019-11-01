@@ -30,7 +30,7 @@ class Set extends Core\Col\Set
     {
         $return = false;
 
-        if($this->attr('sortable') === true)
+        if($this->getAttr('sortable') === true)
         {
             $tag = $this->complexTag();
             $relation = $this->relation();
@@ -112,7 +112,7 @@ class Set extends Core\Col\Set
         $return = parent::prepareChoiceOption($return,$autoHidden);
 
         if($this->isSortable())
-        $return['html'] = $this->attr('relationHtmlSortable');
+        $return['html'] = $this->getAttr('relationHtmlSortable');
 
         return $return;
     }

@@ -73,7 +73,7 @@ trait _specificRelation
                 $value = $col->valueExcerpt($value);
                 $value = Html::div($value,'label-content');
 
-                if(static::showCount())
+                if($this->showCount())
                 {
                     $count = $this->getCount($key);
                     $value .= Html::divCond($count,'label-count');
@@ -103,9 +103,9 @@ trait _specificRelation
 
     // showCount
     // retourne vrai s'il faut afficher le count
-    public static function showCount():bool
+    protected function showCount():bool
     {
-        return static::$config['showCount'] ?? false;
+        return $this->getAttr('showCount') ?? false;
     }
 }
 ?>

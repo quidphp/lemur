@@ -11,7 +11,6 @@ namespace Quid\Lemur\Route;
 use Quid\Base;
 use Quid\Core;
 use Quid\Lemur;
-use Quid\Main;
 
 // registerSubmit
 // abstract class for a register submit route
@@ -93,10 +92,10 @@ abstract class RegisterSubmit extends Core\RouteAlias
         $return = [];
         $request = $this->request();
         $post = $request->post(true,true);
-        $password = static::getPasswordFields();
-        $default = static::getDataDefault($post);
+        $password = $this->getPasswordFields();
+        $default = $this->getDataDefault($post);
         $passwordConfirm = $password['passwordConfirm'];
-        $keep = static::getBaseFields();
+        $keep = $this->getBaseFields();
         $keep[] = $password['password'];
 
         $return['data'] = Base\Arr::gets($keep,$post);
@@ -110,7 +109,7 @@ abstract class RegisterSubmit extends Core\RouteAlias
     // proceed
     // lance le processus pour register
     // retourne null ou un objet user
-    protected function proceed():?Main\Contract\User
+    protected function proceed():?Lemur\Row\User
     {
         $return = null;
         $session = static::session();
@@ -143,9 +142,9 @@ abstract class RegisterSubmit extends Core\RouteAlias
     // getDataDefault
     // retourne les valeurs data par défaut, écrase ce qu'il y a dans post
     // possible de lier une callable à une clé
-    public static function getDataDefault(array $data):array
+    public function getDataDefault(array $data):array
     {
-        $return = static::$config['dataDefault'] ?? [];
+        $return = $this->getAttr('dataDefault') ?? [];
 
         foreach ($return as $key => $value)
         {
@@ -159,17 +158,17 @@ abstract class RegisterSubmit extends Core\RouteAlias
 
     // getBaseFields
     // retourne les champs de base
-    public static function getBaseFields():array
+    public function getBaseFields():array
     {
-        return static::$config['baseFields'] ?? [];
+        return $this->getAttr('baseFields') ?? [];
     }
 
 
     // getPasswordFields
     // retourne les champs de mot de passe
-    public static function getPasswordFields():array
+    public function getPasswordFields():array
     {
-        return static::$config['passwordFields'] ?? [];
+        return $this->getAttr('passwordFields') ?? [];
     }
 }
 

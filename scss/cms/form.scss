@@ -37,7 +37,7 @@ form [data-col='userPassword'] .right {
 }
 
 /* MEDIA */
-form [data-group='media'] .right .block {
+.form [data-group='media'] .right .block {
     @include files();
 }
 

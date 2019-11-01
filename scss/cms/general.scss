@@ -359,31 +359,13 @@
             }
 
             a {
-                display: block;
+                @include inbl();
                 color: $black;
-
-                .thumbnail {
-                    margin-bottom: 3px;
-                    text-align: center;
-
-                    img {
-                        max-width: 100px;
-                    }
-                }
 
                 &:hover {
                     color: $darkGray;
                     text-decoration: underline;
-
-                    .thumbnail {
-                        opacity: 0.8;
-                    }
                 }
-            }
-
-            .legend {
-                font-size: 80%;
-                text-align: center;
             }
         }
 
@@ -395,6 +377,9 @@
 }
 [data-route='general'] main .inner > .container table tbody td .in .relation a {
     display: inline;
+}
+[data-route='general'] main table td[data-group='relation'] {
+    @include enumSetGeneral();
 }
 [data-route='general'] main table td[data-group='media'] {
     @include filesGeneral();

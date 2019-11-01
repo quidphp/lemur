@@ -167,18 +167,9 @@
 // filesGeneral
 // mixin pour l'affichage d'un champ media/medias dans general
 @mixin filesGeneral() {
+    @include filesGeneralThumbnail();
     text-align: center;
-
-    .media-placeholder {
-        @include wh(64px);
-        margin: auto;
-        margin-bottom: 3px;
-    }
-
-    img {
-        max-width: 100px;
-    }
-
+    
     .slider {
         position: relative;
         padding: 0 20px;
@@ -204,5 +195,34 @@
                 display: block;
             }
         }
+    }
+}
+
+// filesGeneralThumbnail
+// mixin pour afficher une image dans une cellule du tableau general
+@mixin filesGeneralThumbnail()
+{
+    a .thumbnail {
+        @include transitions(opacity 0.3s);
+        text-align: center;
+        
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+
+    .legend {
+        font-size: 80%;
+        text-align: center;
+    }
+    
+    .media-placeholder {
+        @include wh(64px);
+        margin: auto;
+        margin-bottom: 3px;
+    }
+
+    img {
+        max-width: 100px;
     }
 }

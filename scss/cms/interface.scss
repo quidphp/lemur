@@ -15,8 +15,8 @@
         cursor: wait !important;
     }
 
-    main {
-        opacity: 0.6;
+    #wrapper {
+        opacity: 0.9;
     }
 
     .loading-fixed {
@@ -62,6 +62,8 @@ body.responsive-menu-open header {
 }
 body > #wrapper {
     @include wrapper();
+    @include transitions(opacity 0.3s);
+    opacity: 1;
 }
 
 /* HEADER */
@@ -131,119 +133,11 @@ header > .top {
     }
 }
 header nav {
-    background-color: $darkColor;
-    padding: 0px 20px;
-
-    > ul {
-        text-align: left;
-
-        > li {
-            @include inbl();
-            position: relative;
-
-            > span,
-            > a {
-                @include inbl();
-                padding: 10px 18px 10px 0;
-                color: $white;
-
-                &.selected {
-                    color: $gray;
-                    text-decoration: underline;
-                }
-            }
-
-            &:hover {
-                > span,
-                > a {
-                    color: $gray;
-                }
-            }
-
-            &.top {
-                > span,
-                > a {
-                    text-decoration: underline;
-                }
-            }
-
-            &.sub {
-                padding-left: 20px;
-
-                .triangle {
-                    @include triangle('right', $white, 9px, 6px);
-                    @include abs(50%, false, false, 2px);
-                    margin-top: -6px;
-                }
-
-                &:hover {
-                    .triangle {
-                        @include triangle('bottom', $gray, 9px, 6px);
-                        margin-top: -5px;
-                    }
-
-                    > ul {
-                        display: block;
-                    }
-                }
-
-                &.top-left > ul {
-                    left: 0;
-                }
-
-                &.top-right > ul {
-                    left: inherit;
-                    right: 0;
-                }
-
-                > ul {
-                    @include abs(100%, '', '', 0);
-                    background-color: rgba(0, 0, 0, 0.9);
-                    border-bottom-right-radius: 10px;
-                    display: none;
-                    min-width: 200px;
-                    max-height: 400px;
-                    overflow-y: auto;
-                    z-index: 2;
-                    font-size: 90%;
-
-                    > li {
-                        position: relative;
-                        list-style-type: none;
-
-                        > a:first-child {
-                            display: block;
-                            color: $white;
-                            border-top: 0;
-                            padding: 10px 35px 10px 20px;
-
-                            &:hover,
-                            &.selected {
-                                background-color: $darkerColor;
-                                color: $gray;
-                            }
-
-                            &.selected {
-                                text-decoration: underline;
-                            }
-                        }
-
-                        > a.specific-add {
-                            @include abs(50%, 10px);
-                            margin-top: -8px;
-                            z-index: 3;
-                        }
-                    }
-                }
-            }
-        }
-    }
+    @include mainNav();
 }
 
 /* MAIN */
 main {
-    @include transitions(opacity 0.3s);
-    opacity: 1;
     padding: 20px 0 50px 0;
 
     .inner {
@@ -379,77 +273,6 @@ footer .right {
 
         .burger-menu {
             display: block;
-        }
-    }
-
-    header nav {
-        @include fixed(0, '', '', 0);
-        @include wh(100%);
-        display: none;
-        padding: 20px 80px;
-        z-index: 8;
-        overflow-y: auto;
-
-        > ul > li {
-            display: block;
-            text-align: center;
-            margin-top: 20px;
-
-            &:first-child {
-                margin-top: 0;
-            }
-
-            &:hover > span {
-                color: $white;
-            }
-
-            > span,
-            > a {
-                @include inbl();
-                padding: 0px;
-                font-size: 120%;
-            }
-
-            &.sub {
-                padding: 0;
-
-                .arrow {
-                    display: none !important;
-                }
-
-                > ul {
-                    @include wh(auto);
-                    display: block;
-                    position: static;
-                    background: transparent !important;
-                    min-width: inherit;
-                    max-height: inherit;
-                    border-radius: 0;
-                    padding: 0;
-
-                    > li {
-                        display: block;
-                        text-align: center;
-                        padding: 3px 0;
-
-                        > a:first-child {
-                            @include inbl();
-                            text-align: center;
-                            padding: 0;
-
-                            &.selected,
-                            &:hover {
-                                background-color: inherit;
-                                text-decoration: underline;
-                            }
-                        }
-
-                        > a.specific-add {
-                            display: none;
-                        }
-                    }
-                }
-            }
         }
     }
 

@@ -84,7 +84,7 @@ class SpecificAdd extends Core\RouteAlias
     // retourne vrai si la route doit apparaître sur sa propre ligne dans le menu
     public function hasSpecificAddNavLink():bool
     {
-        return ($this->table()->attr('specificAddNavLink') === true)? true:false;
+        return ($this->table()->getAttr('specificAddNavLink') === true)? true:false;
     }
 
 
@@ -287,7 +287,7 @@ class SpecificAdd extends Core\RouteAlias
         if(!empty($this->flash))
         $value = $this->flash($col);
 
-        $return .= $col->formComplexWrap(static::getFormWrap(),'%:',$value,null,$replace,$context);
+        $return .= $col->formComplexWrap($this->getFormWrap(),'%:',$value,null,$replace,$context);
 
         return $return;
     }

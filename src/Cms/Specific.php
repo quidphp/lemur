@@ -398,7 +398,7 @@ class Specific extends Core\RouteAlias
     // génère un wrap label -> field pour le formulaire
     protected function makeFormWrap(Core\Cell $cell,array $replace):string
     {
-        return $cell->formComplexWrap(static::getFormWrap(),'%:',$this->formWrapAttr($cell),$replace,static::context());
+        return $cell->formComplexWrap($this->getFormWrap(),'%:',$this->formWrapAttr($cell),$replace,static::context());
     }
 
 
@@ -424,7 +424,7 @@ class Specific extends Core\RouteAlias
         $r = '';
         $row = $this->row();
         $table = $row->table();
-        $callback = $row->table()->attr('specificOperation');
+        $callback = $row->table()->getAttr('specificOperation');
 
         if(static::classIsCallable($callback) && $table->hasPermission('specificOperation'))
         $r .= $callback($row);

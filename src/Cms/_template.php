@@ -127,7 +127,8 @@ trait _template
             $r .= Html::divCl();
 
             $route = PopupSession::makeOverload();
-            $popup = ($route::allowed())? true:false;
+            $popup = ($route->canTrigger())? true:false;
+
             $attr = ['popup-trigger',(!empty($popup))? ['with-ajax','with-popup','with-icon','anchor-corner']:null];
             $r .= Html::divOp($attr);
 
@@ -366,7 +367,7 @@ trait _template
         $r .= Html::span('|','separator');
 
         $route = PopupBoot::makeOverload($this);
-        $popup = ($route::allowed() && $route->isValidSegment())? true:false;
+        $popup = ($route->canTrigger() && $route->isValidSegment())? true:false;
         $attr = ['popup-trigger',(!empty($popup))? ['with-ajax','with-popup','with-icon','anchor-corner']:null];
         $r .= Html::divOp($attr);
 

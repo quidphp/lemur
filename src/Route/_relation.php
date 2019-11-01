@@ -46,7 +46,7 @@ trait _relation
     // public car utilisé via d'autres routes
     public function limit():int
     {
-        return static::$config['limit'];
+        return $this->getAttr('limit');
     }
 
 
@@ -134,7 +134,7 @@ trait _relation
         $return = false;
         $relation = $this->relation();
 
-        if($this->hasSegment('order') && static::$config['order'] === true && $relation->size() > 1)
+        if($this->hasSegment('order') && $this->getAttr('order') === true && $relation->size() > 1)
         $return = true;
 
         return $return;
@@ -215,7 +215,7 @@ trait _relation
     protected function relationGrab(?array $option=null):?array
     {
         $return = null;
-        $method = static::$config['method'] ?? null;
+        $method = $this->getAttr('method');
         $base = ['limit'=>$this->limit(),'not'=>$this->relationSearchNot(),'method'=>$method,'order'=>$this->currentOrder(),'searchTermValid'=>false];
         $base = Base\Arr::clean($base);
         $option = Base\Arr::plus($base,$option);

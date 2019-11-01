@@ -64,6 +64,7 @@
             }
 
             button {
+                @include abs(15px, 20px);
                 display: none;
             }
         }

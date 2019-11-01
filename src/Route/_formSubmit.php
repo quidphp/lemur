@@ -138,11 +138,11 @@ trait _formSubmit
 
     // setSuccess
     // permet d'attribuer une valeur à la propriété success
-    protected function setSuccess(bool $value=true):self
+    protected function setSuccess(bool $value=true):void
     {
         $this->success = $value;
 
-        return $this;
+        return;
     }
 
 
@@ -151,7 +151,7 @@ trait _formSubmit
     // ceci peut être désactiver via config
     protected function setFlash():void
     {
-        if(static::$config['flashPost'] === true)
+        if($this->getAttr('flashPost') === true)
         $this->session()->flashPost($this);
 
         return;

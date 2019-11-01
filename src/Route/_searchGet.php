@@ -42,7 +42,7 @@ trait _searchGet
         if(is_scalar($search))
         {
             $search = (string) $search;
-            $decode = static::getSearchDecodeType();
+            $decode = $this->getSearchDecodeType();
 
             if(strlen($search) && $this->isSearchValueValid($search))
             $return = Base\Uri::decode($search,$decode);
@@ -63,17 +63,17 @@ trait _searchGet
     // getSearchDecodeType
     // retourne le type de décodage à utiliser pour la query de recherche
     // par défaut 0, il faut utiliser 1 si la recherche est faite via GET sans javascript
-    public static function getSearchDecodeType():int
+    public function getSearchDecodeType():int
     {
-        return static::$config['search']['decode'];
+        return $this->getAttr(array('search','decode'));
     }
 
 
     // getSearchQuery
     // retourne la query à utiliser, envoie une exception si non existant
-    public static function getSearchQuery():string
+    public function getSearchQuery():string
     {
-        return static::$config['search']['query'];
+        return $this->getAttr(array('search','query'));
     }
 }
 ?>

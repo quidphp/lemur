@@ -74,9 +74,9 @@ class General extends Core\RouteAlias
     }
 
 
-    // fallback
+    // onFallback
     // sur fallback, efface la version de la route dans nav/session
-    protected function fallback($context=null):bool
+    protected function onFallback($context=null)
     {
         if($this->hasTable())
         {
@@ -85,7 +85,7 @@ class General extends Core\RouteAlias
             $nav->unset([static::class,$table]);
         }
 
-        return parent::fallback($context);
+        return;
     }
 
 
@@ -344,7 +344,7 @@ class General extends Core\RouteAlias
     {
         $r = '';
         $table = $this->table();
-        $callback = $table->attr('generalOperation');
+        $callback = $table->getAttr('generalOperation');
 
         if(static::classIsCallable($callback) && $table->hasPermission('generalOperation'))
         $r .= $callback($table);
@@ -419,7 +419,7 @@ class General extends Core\RouteAlias
     protected function infoPopupValues():array
     {
         $return = array_keys($this->segments());
-        $return = Base\Arr::append($return,static::$config['popup']);
+        $return = Base\Arr::append($return,$this->getAttr('popup'));
 
         return $return;
     }

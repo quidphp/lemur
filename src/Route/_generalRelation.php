@@ -210,7 +210,7 @@ trait _generalRelation
                 }
             }
 
-            if(static::showCount() === true)
+            if($this->showCount() === true)
             $label .= $this->makeShowCount($route);
 
             $return['label'] = $label;
@@ -318,7 +318,7 @@ trait _generalRelation
 
         $route = static::make(['table'=>$table,'col'=>$col,'selected'=>$selected]);
         $limit = $route->limit();
-        $query = static::getSearchQuery();
+        $query = $route->getSearchQuery();
         $data = ['query'=>$query,'separator'=>static::getDefaultSegment(),'char'=>static::getReplaceSegment()];
         if($route->hasOrder())
         $route = $route->changeSegment('order',true);
@@ -357,17 +357,17 @@ trait _generalRelation
 
     // showEmptyNotEmpty
     // retourne vrai s'il faut afficher le empty not empty
-    public function showEmptyNotEmpty():bool
+    protected function showEmptyNotEmpty():bool
     {
-        return (static::$config['showEmptyNotEmpty'] === true && $this->segment('col')->isFilterEmptyNotEmpty())? true:false;
+        return ($this->getAttr('showEmptyNotEmpty') === true && $this->segment('col')->isFilterEmptyNotEmpty())? true:false;
     }
 
 
     // showCount
     // retourne vrai s'il faut afficher le count
-    public static function showCount():bool
+    protected function showCount():bool
     {
-        return static::$config['showCount'] ?? false;
+        return $this->getAttr('showCount') ?? false;
     }
 }
 ?>

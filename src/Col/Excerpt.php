@@ -37,7 +37,7 @@ class Excerpt extends Core\ColAlias
 
         if(empty($return))
         {
-            $attr = $this->attr('makeExcerpt');
+            $attr = $this->getAttr('makeExcerpt');
 
             if(is_array($attr) && Base\Arr::keysExists(['method','length','col'],$attr))
             {
@@ -66,7 +66,7 @@ class Excerpt extends Core\ColAlias
     // retourne la longueur du résumé désiré
     public function excerptLength():?int
     {
-        return $this->attr('excerpt/length');
+        return $this->getAttr('excerpt/length');
     }
 }
 

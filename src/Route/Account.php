@@ -51,9 +51,9 @@ abstract class Account extends Core\RouteAlias
 
     // getBaseFields
     // retourne les champs du formulaire
-    public static function getBaseFields():array
+    public function getBaseFields():array
     {
-        return static::submitClass()::getBaseFields();
+        return $this->submitRoute()->getBaseFields();
     }
 
 

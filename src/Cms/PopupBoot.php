@@ -40,10 +40,18 @@ class PopupBoot extends Core\RouteAlias
     // vérifie que la permission est la
     protected function onBefore()
     {
-        return ($this->hasPermission('popup','bootPopup'))? true:false;
+        return $this->canTrigger();
     }
 
-
+    
+    // canTrigger
+    // retourne vrai si la route peut être trigger
+    public function canTrigger():bool
+    {
+        return ($this->hasPermission('popup','bootPopup'))? true:false;
+    }
+    
+    
     // triger
     // lance la route
     public function trigger():string
@@ -57,7 +65,7 @@ class PopupBoot extends Core\RouteAlias
     protected function popup():?string
     {
         $return = null;
-        $values = static::$config['popup'];
+        $values = $this->getAttr('popup');
         $closure = $this->popupClosure();
         $return = static::makeInfoPopup($values,$closure,false);
 

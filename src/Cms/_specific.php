@@ -184,7 +184,7 @@ trait _specific
 
         if($this->hasPermission('popup') && $table->hasPermission('colInfoPopup'))
         {
-            $values = static::$config['popup'];
+            $values = $this->getAttr('popup');
             $closure = $this->colInfoPopupClosure($col);
             $return = static::makeInfoPopup($values,$closure,false);
         }
@@ -342,9 +342,9 @@ trait _specific
 
     // getFormWrap
     // retourne la string formWrap a utilisé pour chaque champ
-    public static function getFormWrap():string
+    protected function getFormWrap():string
     {
-        return static::$config['formWrap'];
+        return $this->getAttr('formWrap');
     }
 }
 ?>

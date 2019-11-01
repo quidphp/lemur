@@ -62,3 +62,10 @@
         }
     }
 }
+
+
+// enumSetGeneral
+// mixin pour une cellule de relation dans le tableau general
+@mixin enumSetGeneral() {
+    @include filesGeneralThumbnail();
+}

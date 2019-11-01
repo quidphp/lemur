@@ -25,16 +25,16 @@ trait _direction
 
         elseif($type === 'match')
         {
-            if($value === null)
+            $table = static::tableSegment($keyValue);
+            
+            if(!empty($table))
             {
-                $table = static::tableSegment($keyValue);
-
-                if(!empty($table))
+                if($value === null)
                 $return = $table->order('direction');
-            }
 
-            else
-            $return = (Orm\Syntax::isOrderDirection($value))? strtolower($value):false;
+                else
+                $return = ($table->db()->syntaxCall('isOrderDirection',$value))? strtolower($value):false;
+            }
         }
 
         return $return;

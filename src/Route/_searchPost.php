@@ -58,9 +58,9 @@ trait _searchPost
 
     // getSearchName
     // retourne la nom du champ search, envoie une exception si non existant
-    public static function getSearchName():string
+    public function getSearchName():string
     {
-        return static::$config['searchName'];
+        return $this->getAttr('searchName');
     }
 }
 ?>

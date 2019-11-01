@@ -13,7 +13,7 @@ use Quid\Core;
 use Quid\Lemur;
 use Quid\Main;
 use Quid\Routing;
-use Quid\Suite;
+use Quid\Test\Suite;
 
 // route
 // class for testing Quid\Lemur\Route
@@ -154,6 +154,8 @@ class Route extends Base\Test
         assert(Lemur\Route\ActivatePassword::makeOverload() instanceof Suite\Assert\ActivatePassword);
         assert($loginSubmit::getOverloadClass() === Lemur\Cms\LoginSubmit::class);
         assert($loginSubmit::makeParent() instanceof Lemur\Cms\Login);
+        assert(count($loginMake->tagAttr('a',['class','#id'])) === 2);
+        assert($loginMake->tagOption('form') === null);
 
         // _static
         assert(!$route::isIgnored());
@@ -204,11 +206,9 @@ class Route extends Base\Test
         assert($loginSubmit::timeoutReset('trigger')->getCount($key) === 0);
         assert($loginSubmit::isTimedOut('trigger') === false);
         assert($loginSubmit::timeoutStamp('trigger') instanceof Main\Timeout);
-        assert(count($loginSubmit::tagAttr('a',['class','#id'])) === 2);
-        assert($loginSubmit::tagOption('form') === null);
 
         // _segment
-        assert($general::make()->routeSegmentRequest() instanceof Routing\RouteSegmentRequest);
+        assert($general::make()->routeRequest() instanceof Routing\RouteSegmentRequest);
         assert($g->checkValidSegment() === $g);
         assert($g->routeRequest()->makeRequestSegment() === ['table'=>'ormTable','page'=>'1','limit'=>'20','order'=>'-','direction'=>'-','cols'=>'-','filter'=>'-','in'=>'-','notIn'=>'-','highlight'=>'-']);
         assert($g->routeRequest()->makeRequestSegment()['table'] === 'ormTable');
@@ -241,11 +241,7 @@ class Route extends Base\Test
         assert($g5->segments()['table'] === false);
         assert(!$route::isSegmentClass());
         assert($general::isSegmentClass());
-        assert($general::checkSegmentClass());
         assert(is_string($loginSubmit::routeRequestClass()));
-        assert($loginSubmit::makeRouteRequest() instanceof Routing\RouteRequest);
-        assert($general::makeRouteRequest(['table'=>'ormTable']) instanceof Routing\RouteSegmentRequest);
-        assert($general::makeRouteRequest('asdasdss') instanceof Routing\RouteSegmentRequest);
         assert($general::getDefaultSegment() === '-');
         assert($general::getReplaceSegment() === '%%%');
         assert($g->title() === 'Super Orm En');
@@ -296,14 +292,18 @@ class Route extends Base\Test
         $session['test2'] = 'BLA';
 
         // construct
-        $rr = new Routing\RouteRequest(Lemur\Cms\Login::class);
-        $match = new Routing\RouteRequest(Lemur\Cms\Login::class,$request);
-        $match2 = new Routing\RouteRequest(Lemur\Cms\Login::class,$request2);
-        $match3 = new Routing\RouteRequest(Lemur\Cms\Home::class,$request3);
-        $match4 = new Routing\RouteRequest(Lemur\Cms\LoginSubmit::class,$request2);
-        $match5 = new Routing\RouteRequest(Lemur\Cms\LoginSubmit::class,'https://google.com/asdsa?ok=2');
-        $match6 = new Routing\RouteRequest(Lemur\Cms\LoginSubmit::class,['host'=>'james.com']);
-        $matchError = new Routing\RouteRequest(Lemur\Cms\Error::class);
+        $loginMake = Lemur\Cms\Login::make();
+        $homeMake = Lemur\Cms\Home::make();
+        $loginSubmitMake = Lemur\Cms\LoginSubmit::make();
+        $errorMake = Lemur\Cms\Error::make();
+        $rr = new Routing\RouteRequest($loginMake);
+        $match = new Routing\RouteRequest($loginMake,$request);
+        $match2 = new Routing\RouteRequest($loginMake,$request2);
+        $match3 = new Routing\RouteRequest($homeMake,$request3);
+        $match4 = new Routing\RouteRequest($loginSubmitMake,$request2);
+        $match5 = new Routing\RouteRequest($loginSubmitMake,'https://google.com/asdsa?ok=2');
+        $match6 = new Routing\RouteRequest($loginSubmitMake,['host'=>'james.com']);
+        $matchError = new Routing\RouteRequest($errorMake);
         assert($match5->request()->absolute() === 'https://google.com/asdsa?ok=2');
         assert($match6->request()->absolute() === Base\Request::scheme().'://james.com');
 
@@ -504,17 +504,19 @@ class Route extends Base\Test
         /* ROUTE SEGMENT REQUEST */
 
         // construct
-        $rr = new Routing\RouteSegmentRequest($general,new Core\Request('/fr/table/ormTable/1/20/-/-/-/-/-/-/-'),$lang);
-        $rr2 = new Routing\RouteSegmentRequest($general,new Core\Request('/fr/table/ormTablezz/1/20/-/-/-/-/-/-/-'),$lang);
-        $rr3 = new Routing\RouteSegmentRequest($specific,new Core\Request('/fr/table/user/1'),$lang);
-        $rr4 = new Routing\RouteSegmentRequest($specific,new Core\Request('/fr/table/user/20'),$lang);
-        $rr5 = new Routing\RouteSegmentRequest($general,'ormTable',$lang);
-        $rr6 = new Routing\RouteSegmentRequest($specific,$db['user'][1],$lang);
-        $rr7 = new Routing\RouteSegmentRequest($general,$db['user'],$lang);
-        $rr8 = new Routing\RouteSegmentRequest($general,['table'=>$db['user']],$lang);
-        $rr9 = new Routing\RouteSegmentRequest($general,['table'=>'user','limit'=>20,'page'=>1],$lang);
-        $rr10 = new Routing\RouteSegmentRequest($specific,['user',2],$lang);
-        $rr11 = new Routing\RouteSegmentRequest($general,['table'=>'user'],$lang);
+        $generalMake = new $general();
+        $specificMake = new $specific();
+        $rr = new Routing\RouteSegmentRequest($generalMake,new Core\Request('/fr/table/ormTable/1/20/-/-/-/-/-/-/-'),$lang);
+        $rr2 = new Routing\RouteSegmentRequest($generalMake,new Core\Request('/fr/table/ormTablezz/1/20/-/-/-/-/-/-/-'),$lang);
+        $rr3 = new Routing\RouteSegmentRequest($specificMake,new Core\Request('/fr/table/user/1'),$lang);
+        $rr4 = new Routing\RouteSegmentRequest($specificMake,new Core\Request('/fr/table/user/20'),$lang);
+        $rr5 = new Routing\RouteSegmentRequest($generalMake,'ormTable',$lang);
+        $rr6 = new Routing\RouteSegmentRequest($specificMake,$db['user'][1],$lang);
+        $rr7 = new Routing\RouteSegmentRequest($generalMake,$db['user'],$lang);
+        $rr8 = new Routing\RouteSegmentRequest($generalMake,['table'=>$db['user']],$lang);
+        $rr9 = new Routing\RouteSegmentRequest($generalMake,['table'=>'user','limit'=>20,'page'=>1],$lang);
+        $rr10 = new Routing\RouteSegmentRequest($specificMake,['user',2],$lang);
+        $rr11 = new Routing\RouteSegmentRequest($generalMake,['table'=>'user'],$lang);
 
         // reset
 

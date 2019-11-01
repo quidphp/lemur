@@ -76,14 +76,14 @@ quid.main.tagName = $.fn.tagName = function()
 
 
 // outerHtml
-// retourne le outerHtml d'un élément jQuery
+// retourne le outerHtml d'un ou plusieurs éléments jQuery
 // si pas de outerHtml, peut aussi retourner le html ou le texte
 quid.main.outerHtml = $.fn.outerHtml = function(htmlOrText)
 {
-    var r = $(this).prop('outerHTML');
-    
-    if(htmlOrText === true && r == null)
-    r = $(this).html() || $(this).text();
+    var r = '';
+    $(this).each(function(index, el) {
+        r += $(this).prop('outerHTML') || $(this).html() || $(this).text();
+    });
     
     return r;
 }

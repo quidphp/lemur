@@ -72,7 +72,7 @@ class JsonArrayRelation extends Core\CellAlias
     public function fromCell():?string
     {
         $return = null;
-        $relationCols = $this->attr('relationCols');
+        $relationCols = $this->getAttr('relationCols');
 
         if(is_array($relationCols) && count($relationCols) === 2)
         $return = $relationCols[0];
@@ -86,7 +86,7 @@ class JsonArrayRelation extends Core\CellAlias
     public function toCell():?string
     {
         $return = null;
-        $relationCols = $this->attr('relationCols');
+        $relationCols = $this->getAttr('relationCols');
 
         if(is_array($relationCols) && count($relationCols) === 2)
         $return = $relationCols[1];

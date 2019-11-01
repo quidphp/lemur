@@ -28,7 +28,7 @@ class PopupSession extends Core\RouteAlias
             'ajax'=>true,
             'role'=>['>='=>20]],
         'popup'=>[
-            'id','username','email','fullName','rolePermission','timezone','dateLogin','dateAdd',
+            'id','username','email','fullName','roles','fakeRoles','timezone','dateLogin','dateAdd',
             'requestCount','ip','lang','name','getLoginLifetime','getLifetime','expire','getCookieParams','getGarbageCollect',
             'classSession','classFqcn','classRole','userAgent'],
     ];
@@ -38,7 +38,26 @@ class PopupSession extends Core\RouteAlias
     // vérifie que la permission est la
     protected function onBefore()
     {
-        return ($this->hasPermission('popup','sessionPopup'))? true:false;
+        return $this->canTrigger();
+    }
+
+    
+    // canTrigger
+    // retourne vrai si la route peut être trigger
+    public function canTrigger():bool
+    {
+        $return = false;
+        $realRoles = static::session()->roles();
+        
+        foreach (array('popup','sessionPopup') as $value) 
+        {
+            $return = $this->rolesHasPermission($value,$realRoles);
+            
+            if($return === false)
+            break;
+        }
+        
+        return $return;
     }
 
 
@@ -55,7 +74,7 @@ class PopupSession extends Core\RouteAlias
     protected function popup():?string
     {
         $return = null;
-        $values = static::$config['popup'];
+        $values = $this->getAttr('popup');
         $closure = $this->popupClosure();
         $return = static::makeInfoPopup($values,$closure,false);
 
@@ -93,9 +112,16 @@ class PopupSession extends Core\RouteAlias
             elseif($key === 'classRole')
             $value = $session->role()::classFqcn();
 
-            elseif($key === 'rolePermission')
-            $value = $session->role()::labelPermission();
-
+            elseif($key === 'roles')
+            $value = $session->roles()->pair('labelPermission');
+            
+            elseif($key === 'fakeRoles')
+            {
+                $fakeRoles = $session->getFakeRoles();
+                if(!empty($fakeRoles))
+                $value = $fakeRoles->pair('labelPermission');
+            }
+            
             elseif(in_array($key,$sessionKeys,true))
             {
                 $value = $session->$key();

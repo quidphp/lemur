@@ -122,7 +122,7 @@ class Auto extends Core\ColAlias
     public function autoAttr():array
     {
         $return = null;
-        $attr = $this->attr('auto');
+        $attr = $this->getAttr('auto');
 
         if(is_array($attr) && !empty($attr['separator']) && is_string($attr['separator']) && !empty($attr['pair']) && !empty($attr['cols']))
         {

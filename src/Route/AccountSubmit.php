@@ -85,7 +85,7 @@ abstract class AccountSubmit extends Core\RouteAlias
         $return = [];
         $request = $this->request();
         $post = $request->post(true,true);
-        $keep = static::getBaseFields();
+        $keep = $this->getBaseFields();
         $return['data'] = Base\Arr::gets($keep,$post);
 
         return $return;
@@ -126,9 +126,9 @@ abstract class AccountSubmit extends Core\RouteAlias
 
     // getBaseFields
     // retourne les champs de base
-    public static function getBaseFields():array
+    public function getBaseFields():array
     {
-        return static::$config['baseFields'] ?? [];
+        return $this->getAttr('baseFields') ?? [];
     }
 }
 
