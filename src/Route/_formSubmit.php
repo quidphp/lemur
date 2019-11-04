@@ -57,11 +57,11 @@ trait _formSubmit
     final protected function onAfter()
     {
         $return = null;
-        
+
         $log = $this->getAttr('log');
         if(!empty($log) && $this->shoudLogForm())
         $this->logForm();
-        
+
         $this->onAfterSuccessOrFailure();
 
         if($this->isSuccess())
@@ -69,52 +69,52 @@ trait _formSubmit
 
         else
         $return = $this->routeFailure();
-        
+
         return $return;
     }
 
-    
+
     // shoudLogForm
     // retourne vrai si le formulaire doit être loggé
-    protected function shoudLogForm():bool 
+    protected function shoudLogForm():bool
     {
         return true;
     }
-    
-    
+
+
     // logFormData
     // retourne le tableua de donnés à logger
     protected function logFormData():array
     {
-        $return = array();
+        $return = [];
         $return['route'] = static::class;
         $return['success'] = $this->isSuccess();
-        
+
         return $return;
     }
-    
-    
+
+
     // logFormType
     // retourne le type de log à utiliser
     protected function logFormType():string
     {
         return $this->getAttr('logType') ?? 'form';
     }
-    
-    
+
+
     // logForm
     // log le formulaire
-    final protected function logForm():void 
+    final protected function logForm():void
     {
         $log = $this->getAttr('log');
         $type = $this->logFormType();
         $data = $this->logFormData();
         $log::logOnCloseDown($type,$data);
-        
+
         return;
     }
-    
-    
+
+
     // onAfterSuccessOrFailure
     // méthode appelé dans onAfter peut importe si c'est un succès ou failure
     protected function onAfterSuccessOrFailure():void

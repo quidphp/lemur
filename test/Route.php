@@ -252,13 +252,13 @@ class Route extends Base\Test
         $g2 = $g->clone();
         assert($g2->uri() === '/en/table/ormTable/1/20/-/-/-/-/-/-/-');
         assert(count($g2->segments()) === 10);
-        
+
         // request
         assert(count(Routing\Request::fromRoute($obj2)) === 4);
         assert(count(Routing\Request::fromRoute($obj2)['post']) === 5);
         assert(Routing\Request::fromRoute($obj2)['post']['-genuine-'] === '');
         assert(Routing\Request::fromRoute($obj2)['post']['-genuine-2-'] === 1);
-        
+
         // root
         assert(count($obj->help()) === 9);
         assert(count($obj->help(true)) === 11);

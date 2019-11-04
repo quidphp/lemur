@@ -95,7 +95,7 @@ class General extends Core\RouteAlias
     {
         $return['title'] = $this->title();
         $return['metaDescription'] = $this->table()->description();
-        
+
         return $return;
     }
 
@@ -571,7 +571,7 @@ class General extends Core\RouteAlias
             $data = ['confirm'=>static::langText('common/confirm')];
             $route = GeneralTruncate::makeOverload($table);
 
-            $r .= Html::divOp(array('truncate','operation-element'));
+            $r .= Html::divOp(['truncate','operation-element']);
             $r .= $route->formOpen(['data'=>$data]);
             $r .= $this->tableHiddenInput();
             $r .= Html::submit($route->label(),['icon','truncate','padLeft']);

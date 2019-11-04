@@ -19,12 +19,12 @@ class LogHttp extends Core\Row\LogHttp
     public static $config = [
         'cols'=>[
             'json'=>['class'=>Lemur\Col\JsonExport::class]],
-        'permission'=>array(
+        'permission'=>[
             'shared'=>['insert'=>true],
             'user'=>['insert'=>true],
             'contributor'=>['insert'=>true,'update'=>false,'delete'=>false],
             'editor'=>['insert'=>true,'update'=>false,'delete'=>false],
-            'subAdmin'=>['update'=>false]),
+            'subAdmin'=>['update'=>false]],
         '@cms'=>[
             'permission'=>[
                 'contributor'=>['view'=>false],

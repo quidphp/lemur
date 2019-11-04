@@ -125,7 +125,7 @@ trait _template
             $r .= Logout::makeOverload()->aTitle(null,['submit','icon','padLeft','logout']);
 
             $r .= Html::divCl();
-            
+
             if($this->hasPermission('sessionInfo'))
             {
                 $route = PopupSession::makeOverload();

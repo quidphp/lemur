@@ -42,9 +42,9 @@ abstract class Route extends Core\Route
                     'homeInfo'=>true,
                     'homePopup'=>true,
                     'homeSearch'=>true],
-                'nobody'=>array('access'=>false),
-                'shared'=>array('access'=>false),
-                'user'=>array('access'=>false),
+                'nobody'=>['access'=>false],
+                'shared'=>['access'=>false],
+                'user'=>['access'=>false],
                 'subAdmin'=>['popup'=>true],
                 'admin'=>['popup'=>true]
             ]]

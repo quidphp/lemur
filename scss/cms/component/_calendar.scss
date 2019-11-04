@@ -19,9 +19,9 @@
 
         .prev,
         .next {
-            @include trianglePrevNext($white,$lightGray,$gray);
+            @include trianglePrevNext($white, $lightGray, $gray);
             margin-top: -6px;
-            
+
             &.prev {
                 @include abs(50%, '', '', 10px);
             }
