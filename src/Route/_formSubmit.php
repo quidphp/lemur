@@ -8,6 +8,7 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Route;
+use Quid\Lemur;
 
 // _formSubmit
 // trait that provides methods and logic necessary to make a form submit route
@@ -15,6 +16,8 @@ trait _formSubmit
 {
     // config
     public static $configFormSubmit = [
+        'log'=>Lemur\Row\Log::class, // la classe ou logger le formulaire
+        'logType'=>'form', // clé à utiliser pour le type de log
         'flashPost'=>false // si on flash post automatiquement lors d'une failure ou fallback
     ];
 
@@ -49,9 +52,16 @@ trait _formSubmit
 
     // onAfter
     // retourne la route vers laquelle il faut rediriger, différent si c'est succès ou non
-    protected function onAfter()
+    // gère le log
+    // ne pas étendre cette méthode
+    final protected function onAfter()
     {
         $return = null;
+        
+        $log = $this->getAttr('log');
+        if(!empty($log) && $this->shoudLogForm())
+        $this->logForm();
+        
         $this->onAfterSuccessOrFailure();
 
         if($this->isSuccess())
@@ -59,11 +69,52 @@ trait _formSubmit
 
         else
         $return = $this->routeFailure();
-
+        
         return $return;
     }
 
-
+    
+    // shoudLogForm
+    // retourne vrai si le formulaire doit être loggé
+    protected function shoudLogForm():bool 
+    {
+        return true;
+    }
+    
+    
+    // logFormData
+    // retourne le tableua de donnés à logger
+    protected function logFormData():array
+    {
+        $return = array();
+        $return['route'] = static::class;
+        $return['success'] = $this->isSuccess();
+        
+        return $return;
+    }
+    
+    
+    // logFormType
+    // retourne le type de log à utiliser
+    protected function logFormType():string
+    {
+        return $this->getAttr('logType') ?? 'form';
+    }
+    
+    
+    // logForm
+    // log le formulaire
+    final protected function logForm():void 
+    {
+        $log = $this->getAttr('log');
+        $type = $this->logFormType();
+        $data = $this->logFormData();
+        $log::logOnCloseDown($type,$data);
+        
+        return;
+    }
+    
+    
     // onAfterSuccessOrFailure
     // méthode appelé dans onAfter peut importe si c'est un succès ou failure
     protected function onAfterSuccessOrFailure():void

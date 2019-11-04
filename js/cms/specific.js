@@ -81,7 +81,7 @@ $(document).ready(function() {
 		var form = formWrapper.find("form");
 		var panel = $("main .form .inside .panel");
 		var date = form.find("[data-group='date'] .right");
-		var addRemove = form.find("[data-tag='add-remove']").addRemove();
+		var addRemove = form.find("[data-tag='add-remove']");
 		var tableRelation = $(this).find("[data-table-relation='1']");
         var enumSet = form.find("[data-tag='search'] .search-enumset");
 		var checkboxSortable = form.find("[data-group='relation'][data-sortable='1']");

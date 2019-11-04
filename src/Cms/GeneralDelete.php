@@ -35,7 +35,7 @@ class GeneralDelete extends Core\RouteAlias
             'csrf'=>true,
             'genuine'=>true,
             'post'=>['-table-'=>['='=>'[table]']],
-            'role'=>['>='=>20]],
+            'role'=>['>'=>'user']],
         'parent'=>General::class,
         'group'=>'submit'
     ];

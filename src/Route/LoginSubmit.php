@@ -34,7 +34,8 @@ abstract class LoginSubmit extends Core\RouteAlias
         'timeout'=>[
             'trigger'=>['max'=>8,'timeout'=>600]],
         'parent'=>Login::class,
-        'group'=>'submit'
+        'group'=>'submit',
+        'log'=>null
     ];
 
 

@@ -68,7 +68,7 @@ body > #wrapper {
 
 /* HEADER */
 header > .top {
-    padding: 10px 20px 5px;
+    padding: 8px 20px;
     background-color: $color;
 
     .burger-menu {
@@ -111,7 +111,6 @@ header > .top {
 
         .top {
             > a {
-                margin: 0 0 5px 0px;
                 border-radius: 0;
 
                 &:first-child {
@@ -125,6 +124,8 @@ header > .top {
             }
         }
         .popup-trigger {
+            margin-top: 3px;
+            
             > .popup-title {
                 color: $lightGray;
                 font-size: 90%;
@@ -177,15 +178,6 @@ main .inner > .top {
         @include inbl(top);
         width: 45%;
         text-align: right;
-
-        .submit {
-            @include inbl();
-            margin-right: 10px;
-
-            &:last-child {
-                margin-right: 0;
-            }
-        }
     }
 }
 

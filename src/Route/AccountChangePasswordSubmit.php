@@ -26,12 +26,13 @@ abstract class AccountChangePasswordSubmit extends Core\RouteAlias
             'en'=>'my-account/change-password/submit'],
         'match'=>[
             'method'=>'post',
-            'role'=>['>='=>20],
+            'role'=>['>='=>'user'],
             'post'=>['oldPassword','newPassword','newPasswordConfirm'],
             'genuine'=>true,
             'csrf'=>true],
         'parent'=>AccountChangePassword::class,
-        'group'=>'submit'
+        'group'=>'submit',
+        'log'=>null
     ];
 
 

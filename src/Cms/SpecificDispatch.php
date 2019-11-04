@@ -31,7 +31,7 @@ class SpecificDispatch extends Core\RouteAlias
             'primary'=>'structureSegmentPrimary'],
         'match'=>[
             'method'=>'post',
-            'role'=>['>='=>20],
+            'role'=>['>'=>'user'],
             'csrf'=>false,
             'genuine'=>true,
             'post'=>['id'=>['='=>'[primary]'],'-table-'=>['='=>'[table]']]],

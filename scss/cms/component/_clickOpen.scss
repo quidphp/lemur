@@ -51,7 +51,7 @@
         font-size: 1.3rem;
         width: 450px;
         max-width: 450px;
-        background: $lighterGray;
+        background-color: rgba(238,238,238,0.95);
         border: 1px solid $lightGray;
         color: $black;
         text-align: left;
@@ -104,13 +104,14 @@
 
     &.with-icon-solo {
         .popup-title {
-            @include iconSolo(false);
+            @include iconSolo();
             @include wh(24px);
         }
     }
 
     &.with-popup {
         .popup-title {
+            @include transitions(background-color 0.3s, border-radius 0.3s);
             cursor: pointer;
 
             &:hover {

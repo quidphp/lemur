@@ -41,7 +41,7 @@ class GeneralExportDialog extends Core\RouteAlias
             'notIn'=>'structureSegmentPrimaries'],
         'match'=>[
             'ajax'=>true,
-            'role'=>['>='=>20]],
+            'role'=>['>'=>'user']],
         'longExport'=>1500,
         'query'=>['s'],
         'parent'=>General::class,
@@ -104,7 +104,7 @@ class GeneralExportDialog extends Core\RouteAlias
     // retourne le lien dialog
     public function aDialog():string
     {
-        return $this->aTitle(null,['submit','icon','padLeft','download','data'=>['modal'=>static::name()]]);
+        return $this->aTitle(null,['operation-element','submit','icon','padLeft','download','data'=>['modal'=>static::name()]]);
     }
 
 

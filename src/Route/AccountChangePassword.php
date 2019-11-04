@@ -21,7 +21,7 @@ abstract class AccountChangePassword extends Core\RouteAlias
             'fr'=>'mon-compte/mot-de-passe',
             'en'=>'my-account/change-password'],
         'match'=>[
-            'role'=>['>='=>20]],
+            'role'=>['>='=>'user']],
         'group'=>'submit',
         'parent'=>Account::class,
         'colPassword'=>'password',

@@ -36,7 +36,8 @@ abstract class ResetPasswordSubmit extends Core\RouteAlias
             'failure'=>['max'=>8,'timeout'=>600],
             'success'=>['max'=>2,'timeout'=>600]],
         'parent'=>ResetPassword::class,
-        'group'=>'submit'
+        'group'=>'submit',
+        'log'=>null
     ];
 
 

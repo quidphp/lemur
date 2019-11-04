@@ -21,7 +21,7 @@ class Logout extends Lemur\Route\Logout
     // config
     public static $config = [
         'match'=>[
-            'role'=>['>='=>20]],
+            'role'=>['>'=>'user']],
         'parent'=>Login::class
     ];
 }

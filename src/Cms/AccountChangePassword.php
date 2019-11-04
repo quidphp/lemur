@@ -19,7 +19,7 @@ class AccountChangePassword extends Lemur\Route\AccountChangePassword
     // config
     public static $config = [
         'match'=>[
-            'role'=>['>='=>20],
+            'role'=>['>'=>'user'],
             'ajax'=>true],
         'row'=>Lemur\Row\User::class,
         'parent'=>Account::class

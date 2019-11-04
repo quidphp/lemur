@@ -144,8 +144,8 @@ class Route extends Base\Test
         assert($obj2->aOpenTitle(3) === "<a href='/en/login/submit' hreflang='en'>Log");
         assert($obj2->aOpenTitle('%:','#id class2') === "<a href='/en/login/submit' id='id' class='class2' hreflang='en'>Login - Submit:");
         $loginMake = $login::make();
-        assert(strlen($obj2->formOpen()) === 214);
-        assert(strlen($loginMake->formOpen(['method'=>'post'])) === 199);
+        assert(strlen($obj2->formOpen()) === 245);
+        assert(strlen($loginMake->formOpen(['method'=>'post'])) === 230);
         assert($loginMake->formSubmit(null,'nameOK') === "<form action='/' method='get'><button name='nameOK' type='submit'></button></form>");
         assert($loginMake::submitLabel('% ok') === "<button type='submit'>Login ok</button>");
         assert($loginMake->submitTitle('% ok') === "<button type='submit'>Login ok</button>");
@@ -178,8 +178,6 @@ class Route extends Base\Test
         assert($route::parent() === null);
         assert($loginSubmit::parent() === Lemur\Cms\Login::class);
         assert($loginSubmit::paths() === ['en'=>'login/submit','fr'=>'connexion/soumettre']);
-        assert($loginSubmit::isSsl() === null);
-        assert($route::isSsl() === null);
         assert($loginSubmit::isAjax() === null);
         assert($route::isAjax() === null);
         assert($loginSubmit::isMethod('post'));
@@ -190,7 +188,7 @@ class Route extends Base\Test
         assert(!$sitemap::isRedirectable());
         assert($contact::shouldKeepInHistory());
         assert($loginSubmit::shouldKeepInHistory());
-        assert(!$route::hasCheck('captcha'));
+        assert(!$route::hasMatch('captcha'));
         assert($route::timeout() === []);
         assert(is_array($loginSubmit::timeout()['trigger']));
         $max = $loginSubmit::timeout()['trigger']['max'];
@@ -254,7 +252,13 @@ class Route extends Base\Test
         $g2 = $g->clone();
         assert($g2->uri() === '/en/table/ormTable/1/20/-/-/-/-/-/-/-');
         assert(count($g2->segments()) === 10);
-
+        
+        // request
+        assert(count(Routing\Request::fromRoute($obj2)) === 4);
+        assert(count(Routing\Request::fromRoute($obj2)['post']) === 5);
+        assert(Routing\Request::fromRoute($obj2)['post']['-genuine-'] === '');
+        assert(Routing\Request::fromRoute($obj2)['post']['-genuine-2-'] === 1);
+        
         // root
         assert(count($obj->help()) === 9);
         assert(count($obj->help(true)) === 11);
@@ -284,7 +288,7 @@ class Route extends Base\Test
         $request = new Core\Request($param);
         $param2 = ['ssl'=>true,'ajax'=>false,'path'=>'/table/routeMatch','host'=>'google.com','method'=>'get','ip'=>'127.0.0.1','userAgent'=>$userAgent];
         $request2 = new Core\Request($param2);
-        $param3 = ['ssl'=>true,'ajax'=>false,'path'=>'/','query'=>'abc=123&ok=true&james=lavié','post'=>['-captcha-'=>$session->captcha(true),'-csrf-'=>$session->csrf(),'-genuine-'=>'','abc'=>'111','ok'=>'true','james'=>'lavié'],'host'=>'google.com','method'=>'get','ip'=>'127.0.0.1','userAgent'=>$userAgent];
+        $param3 = ['ssl'=>true,'ajax'=>false,'path'=>'/','query'=>'abc=123&ok=true&james=lavié','post'=>['-captcha-'=>$session->captcha(true),'-csrf-'=>$session->csrf(),'-genuine-'=>'','-genuine-2-'=>1,'abc'=>'111','ok'=>'true','james'=>'lavié'],'host'=>'google.com','method'=>'get','ip'=>'127.0.0.1','userAgent'=>$userAgent];
         $request3 = new Core\Request($param3);
         assert($request3['abc'] === 111);
         assert($request3['ok'] === 'true');

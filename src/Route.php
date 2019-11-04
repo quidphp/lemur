@@ -31,6 +31,7 @@ abstract class Route extends Core\Route
                     'popup'=>false,
                     'account'=>true,
                     'accountChangePassword'=>true,
+                    'sessionInfo'=>true,
                     'sessionPopup'=>true,
                     'logout'=>true,
                     'footerTypes'=>true,
@@ -41,6 +42,9 @@ abstract class Route extends Core\Route
                     'homeInfo'=>true,
                     'homePopup'=>true,
                     'homeSearch'=>true],
+                'nobody'=>array('access'=>false),
+                'shared'=>array('access'=>false),
+                'user'=>array('access'=>false),
                 'subAdmin'=>['popup'=>true],
                 'admin'=>['popup'=>true]
             ]]

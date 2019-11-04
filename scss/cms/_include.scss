@@ -182,19 +182,13 @@ $red: #8d1e2d;
 }
 
 // iconSolo
-// mixin pour générer un icon seul, possible d'activer hover
-@mixin iconSolo($hover: true) {
+// mixin pour générer un icon seul
+@mixin iconSolo() {
     @include icon();
     @include inbl();
     @include transitions(opacity 0.3s);
     @include wh(16px);
     cursor: pointer;
-
-    @if ($hover != false) {
-        &:hover {
-            opacity: 0.8;
-        }
-    }
 }
 
 // iconLeft
@@ -320,32 +314,32 @@ $red: #8d1e2d;
 
 // trianglePrevNext
 // mixin pour génèrer un triangle de couleur du cms
-@mixin trianglePrevNext() {
+@mixin trianglePrevNext($color1:$color,$color2:$darkColor,$color3:$darkerColor) {
     cursor: pointer;
 
     &.prev {
-        @include triangle('left', $color, 10px, 6px);
+        @include triangle('left', $color1, 10px, 6px);
         margin-right: 8px;
 
         &:hover {
-            @include triangle('left', $darkColor, 10px, 6px);
+            @include triangle('left', $color2, 10px, 6px);
         }
 
         &:active {
-            @include triangle('left', $darkerColor, 10px, 6px);
+            @include triangle('left', $color3, 10px, 6px);
         }
     }
 
     &.next {
-        @include triangle('right', $color, 10px, 6px);
+        @include triangle('right', $color1, 10px, 6px);
         margin-left: 8px;
 
         &:hover {
-            @include triangle('right', $darkColor, 10px, 6px);
+            @include triangle('right', $color2, 10px, 6px);
         }
 
         &:active {
-            @include triangle('right', $darkerColor, 10px, 6px);
+            @include triangle('right', $color3, 10px, 6px);
         }
     }
 }

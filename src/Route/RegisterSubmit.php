@@ -43,7 +43,8 @@ abstract class RegisterSubmit extends Core\RouteAlias
             'password'=>'password',
             'passwordConfirm'=>'passwordConfirm'],
         'group'=>'submit',
-        'flashPost'=>true
+        'flashPost'=>true,
+        'log'=>null
     ];
 
 

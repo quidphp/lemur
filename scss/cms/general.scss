@@ -13,9 +13,10 @@
 [data-route='general'] main .inner > .top .right {
     > .operation {
         margin-bottom: 15px;
-
-        > .truncate {
+        
+        > .operation-element {
             @include inbl();
+            margin-left: 10px;
         }
     }
 

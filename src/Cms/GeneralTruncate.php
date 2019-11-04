@@ -34,7 +34,7 @@ class GeneralTruncate extends Core\RouteAlias
             'genuine'=>true,
             'method'=>'post',
             'post'=>['-table-'=>['='=>'[table]']],
-            'role'=>['>='=>20]],
+            'role'=>['>'=>'user']],
         'parent'=>General::class,
         'group'=>'submit'
     ];

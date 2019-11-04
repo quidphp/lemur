@@ -43,7 +43,7 @@ class GeneralExport extends Core\RouteAlias
             'in'=>'structureSegmentPrimaries',
             'notIn'=>'structureSegmentPrimaries'],
         'match'=>[
-            'role'=>['>='=>20]],
+            'role'=>['>'=>'user']],
         'response'=>[
             'timeLimit'=>300],
         'query'=>['s'],

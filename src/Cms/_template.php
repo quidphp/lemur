@@ -125,20 +125,23 @@ trait _template
             $r .= Logout::makeOverload()->aTitle(null,['submit','icon','padLeft','logout']);
 
             $r .= Html::divCl();
+            
+            if($this->hasPermission('sessionInfo'))
+            {
+                $route = PopupSession::makeOverload();
+                $popup = ($route->canTrigger())? true:false;
 
-            $route = PopupSession::makeOverload();
-            $popup = ($route->canTrigger())? true:false;
+                $attr = ['popup-trigger',(!empty($popup))? ['with-ajax','with-popup','with-icon','anchor-corner']:null];
+                $r .= Html::divOp($attr);
 
-            $attr = ['popup-trigger',(!empty($popup))? ['with-ajax','with-popup','with-icon','anchor-corner']:null];
-            $r .= Html::divOp($attr);
+                if($popup === true)
+                $r .= $route->a($username,'popup-title');
+                else
+                $r .= Html::span($username,'popup-title');
 
-            if($popup === true)
-            $r .= $route->a($username,'popup-title');
-            else
-            $r .= Html::span($username,'popup-title');
-
-            $r .= Html::div(null,'popup');
-            $r .= Html::divCl();
+                $r .= Html::div(null,'popup');
+                $r .= Html::divCl();
+            }
         }
 
         return $r;

@@ -35,7 +35,7 @@ class SpecificCalendar extends Core\RouteAlias
             'selected'=>'structureSegmentSelected'],
         'match'=>[
             'ajax'=>null,
-            'role'=>['>='=>20]]
+            'role'=>['>'=>'user']]
     ];
 
 
@@ -45,11 +45,11 @@ class SpecificCalendar extends Core\RouteAlias
     {
         $return->setCallback('prev',function(int $value) {
             $route = $this->changeSegments(['timestamp'=>$value]);
-            return $route->a(null,['ajax','prev','white','icon','solo']);
+            return $route->a(null,['ajax','prev']);
         });
         $return->setCallback('next',function(int $value) {
             $route = $this->changeSegments(['timestamp'=>$value]);
-            return $route->a(null,['ajax','next','white','icon','solo']);
+            return $route->a(null,['ajax','next']);
         });
 
         return $return;

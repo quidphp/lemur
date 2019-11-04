@@ -37,7 +37,7 @@ class Specific extends Core\RouteAlias
             'primary'=>'structureSegmentPrimary'],
         'group'=>'specific',
         'match'=>[
-            'role'=>['>='=>20]],
+            'role'=>['>'=>'user']],
         'sitemap'=>true
     ];
 
@@ -473,7 +473,7 @@ class Specific extends Core\RouteAlias
         {
             $route = SpecificDuplicate::class;
             $data = ['confirm'=>static::langText('common/confirm')];
-            $attr = ['icon','duplicate','padLeft','name'=>'--duplicate--','value'=>1,'data'=>$data];
+            $attr = ['icon','copy','padLeft','name'=>'--duplicate--','value'=>1,'data'=>$data];
             $r .= $route::make()->submitLabel(null,$attr);
         }
 

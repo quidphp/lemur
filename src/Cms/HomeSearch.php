@@ -29,7 +29,7 @@ class HomeSearch extends Core\RouteAlias
             'en'=>'home/search',
             'fr'=>'accueil/recherche'],
         'match'=>[
-            'role'=>['>='=>20],
+            'role'=>['>'=>'user'],
             'method'=>'post',
             'ajax'=>true,
             'csrf'=>false,

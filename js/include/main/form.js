@@ -22,6 +22,9 @@ quid.main.form = $.fn.form = function(validate)
         .on('form:getValidateFields', function(event) {
             return $(this).find("[data-required],[data-pattern]");
         })
+        .on('form:getSystemFields', function(event) {
+			return $(this).triggerHandler('form:getFields').filter("[name^='-']");
+		})
         .on('form:getTargetFields', function(event) {
 			return $(this).triggerHandler('form:getFields').not("[name^='-']");
 		})
@@ -34,6 +37,12 @@ quid.main.form = $.fn.form = function(validate)
         .on('form:getClickedSubmit', function(event) {
             return $(this).triggerHandler('form:getSubmits').filter("[data-submit-click]").first();
         })
+        .on('form:getCsrfField', function(event) {
+            return $(this).triggerHandler('form:getSystemFields').filter("[data-csrf='1']").first();
+        })
+        .on('form:getGenuineField', function(event) {
+            return $(this).triggerHandler('form:getSystemFields').filter("[data-genuine='1']").first();
+        })
         .on('form:hasChanged', function(event) {
             var r = false;
             var target = $(this).triggerHandler('form:getTargetFields') || $(this);
@@ -45,12 +54,23 @@ quid.main.form = $.fn.form = function(validate)
             
             return r;
         })
+        .on('form:prepareGenuine', function(event) {
+            var genuine = $(this).triggerHandler('form:getGenuineField');
+            if(genuine.length === 1)
+            {
+                var name = genuine.prop('name');
+                var newName = name+"2-";
+                var newValue = 1;
+                var genuine2 = "<input type='hidden' name='"+newName+"' value='"+newValue+"' />";
+                $(this).prepend(genuine2);
+            }
+        })
         .on('form:preparehasChanged', function(event) {
             var target = $(this).triggerHandler('form:getTargetFields') || $(this);
             var serialize = target.serialize();
             $(this).data('form:serialize',serialize);
         })
-        .trigger('form:preparehasChanged');
+        .trigger('form:prepareGenuine').trigger('form:preparehasChanged');
         
         // click sur submit, met un attribut data-clicked
         var submits = $(this).triggerHandler('form:getSubmits');

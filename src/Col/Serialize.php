@@ -16,7 +16,9 @@ use Quid\Core;
 class Serialize extends Core\Col\Serialize
 {
     // config
-    public static $config = [];
+    public static $config = [
+        'complex'=>'div'
+    ];
 
 
     // onGet
@@ -24,7 +26,7 @@ class Serialize extends Core\Col\Serialize
     public function onGet($return,array $option)
     {
         $return = parent::onGet($return,$option);
-
+        
         if(is_array($return) && !empty($option['context']) && $option['context'] === 'cms:specific')
         $return = Base\Debug::export($return);
 

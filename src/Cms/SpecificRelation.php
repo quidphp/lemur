@@ -40,7 +40,7 @@ class SpecificRelation extends Core\RouteAlias
         'showCount'=>true,
         'match'=>[
             'ajax'=>true,
-            'role'=>['>='=>20]],
+            'role'=>['>'=>'user']],
     ];
 
 

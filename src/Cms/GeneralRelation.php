@@ -43,7 +43,7 @@ class GeneralRelation extends Core\RouteAlias
         'showEmptyNotEmpty'=>true,
         'match'=>[
             'ajax'=>true,
-            'role'=>['>='=>20]],
+            'role'=>['>'=>'user']],
     ];
 
 

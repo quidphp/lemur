@@ -37,7 +37,7 @@ class SpecificDelete extends Core\RouteAlias
             'genuine'=>true,
             'method'=>'post',
             'post'=>['id'=>['='=>'[primary]'],'-table-'=>['='=>'[table]']],
-            'role'=>['>='=>20]],
+            'role'=>['>'=>'user']],
         'parent'=>Specific::class,
         'group'=>'submit'
     ];

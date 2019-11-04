@@ -26,7 +26,7 @@ class PopupSession extends Core\RouteAlias
             'fr'=>'popup/session'],
         'match'=>[
             'ajax'=>true,
-            'role'=>['>='=>20]],
+            'role'=>['>'=>'user']],
         'popup'=>[
             'id','username','email','fullName','roles','fakeRoles','timezone','dateLogin','dateAdd',
             'requestCount','ip','lang','name','getLoginLifetime','getLifetime','expire','getCookieParams','getGarbageCollect',

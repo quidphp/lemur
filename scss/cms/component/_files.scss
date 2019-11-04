@@ -52,6 +52,10 @@
         > .action {
             @include inbl();
             margin-left: 4px;
+            
+            &:hover {
+                opacity: 0.6;
+            }
         }
     }
 
@@ -201,7 +205,8 @@
 // filesGeneralThumbnail
 // mixin pour afficher une image dans une cellule du tableau general
 @mixin filesGeneralThumbnail() {
-    a .thumbnail {
+    a .thumbnail,
+    a .media-placeholder {
         @include transitions(opacity 0.3s);
         text-align: center;
 
@@ -209,7 +214,7 @@
             opacity: 0.8;
         }
     }
-
+    
     .legend {
         font-size: 80%;
         text-align: center;

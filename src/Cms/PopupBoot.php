@@ -28,7 +28,7 @@ class PopupBoot extends Core\RouteAlias
             'route'=>'structureSegmentRoute'],
         'match'=>[
             'ajax'=>true,
-            'role'=>['>='=>20]],
+            'role'=>['>'=>'user']],
         'popup'=>[
             'phpVersion','quidVersion','envLabel','typeLabel','classFqcn','classRoute','hostname','httpProtocol','ip',
             'os','isCaseSensitive','processId','user','group','serverType','sapi','paths','schemeHosts','memory',

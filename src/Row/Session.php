@@ -16,6 +16,11 @@ class Session extends Core\Row\Session
 {
     // config
     public static $config = [
+        'permission'=>[
+            'shared'=>['update'=>true,'delete'=>true],
+            'user'=>['update'=>true,'delete'=>true],
+            'contributor'=>['update'=>true,'delete'=>true],
+            'editor'=>['update'=>true,'delete'=>true]],
         '@cms'=>[
             'permission'=>[
                 'contributor'=>['view'=>false],

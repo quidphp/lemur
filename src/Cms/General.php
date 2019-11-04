@@ -47,7 +47,7 @@ class General extends Core\RouteAlias
             'notIn'=>'structureSegmentPrimaries',
             'highlight'=>'structureSegmentPrimaries'],
         'match'=>[
-            'role'=>['>='=>20]],
+            'role'=>['>'=>'user']],
         'sitemap'=>true,
         'popup'=>[
             'search','primary','priority','engine','collation','autoIncrement','updateTime',
@@ -95,7 +95,7 @@ class General extends Core\RouteAlias
     {
         $return['title'] = $this->title();
         $return['metaDescription'] = $this->table()->description();
-
+        
         return $return;
     }
 
@@ -368,7 +368,7 @@ class General extends Core\RouteAlias
         {
             $option = ['query'=>false];
             $route = $this->keepSegments('table');
-            $r .= $route->a(static::langText('general/reset'),['submit','reset','icon','padLeft'],null,$option);
+            $r .= $route->a(static::langText('general/reset'),['submit','reset','icon','padLeft','operation-element'],null,$option);
         }
 
         return $r;
@@ -535,7 +535,7 @@ class General extends Core\RouteAlias
         $table = $this->table();
 
         if($this->hasTablePermission('insert','lemurInsert'))
-        $r .= SpecificAdd::makeOverload($table)->a(static::langText('general/add'),['submit','icon','padLeft','add']);
+        $r .= SpecificAdd::makeOverload($table)->a(static::langText('general/add'),['submit','icon','padLeft','add','operation-element']);
 
         return $r;
     }
@@ -571,7 +571,7 @@ class General extends Core\RouteAlias
             $data = ['confirm'=>static::langText('common/confirm')];
             $route = GeneralTruncate::makeOverload($table);
 
-            $r .= Html::divOp('truncate');
+            $r .= Html::divOp(array('truncate','operation-element'));
             $r .= $route->formOpen(['data'=>$data]);
             $r .= $this->tableHiddenInput();
             $r .= Html::submit($route->label(),['icon','truncate','padLeft']);
@@ -599,7 +599,7 @@ class General extends Core\RouteAlias
             {
                 $route = $this->changeSegments(['page'=>1,'in'=>true]);
                 $data = ['href'=>$route,'char'=>$char,'separator'=>$defaultSegment];
-                $r .= Html::div(null,['icon','solo','in','data'=>$data]);
+                $r .= Html::div(null,['icon','solo','plus','data'=>$data]);
             }
 
             if($this->hasTablePermission('notIn'))
@@ -608,7 +608,7 @@ class General extends Core\RouteAlias
                 $notIn[] = $char;
                 $route = $this->changeSegments(['page'=>1,'notIn'=>$notIn]);
                 $data = ['href'=>$route,'char'=>$char,'separator'=>$defaultSegment];
-                $r .= Html::div(null,['icon','solo','notIn','data'=>$data]);
+                $r .= Html::div(null,['icon','solo','minus','data'=>$data]);
             }
 
             $r .= $this->makeGeneralDelete();
