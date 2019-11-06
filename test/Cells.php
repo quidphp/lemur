@@ -26,11 +26,11 @@ class Cells extends Base\Test
         $tb = $db[$table];
         $row = $tb[1];
         $cells = $row->cells();
-        
+
         // formComplex
 
         // formComplexWrap
-        
+
         // cells
         assert($cells->description()['id'] === 'Primary and unique key. Required');
         assert($cells->description('%:')['id'] === 'Primary and unique key. Required:');

@@ -34,7 +34,7 @@ class En extends Core\Lang\En
                 'cms'=>'Content management system'
             ]
         ],
-        
+
         // route
         'route'=>[
 
@@ -64,26 +64,26 @@ class En extends Core\Lang\En
             ],
 
             // com
-            'com'=>array(
-                
+            'com'=>[
+
                 // pos
-                'pos'=>array(
-                    
+                'pos'=>[
+
                     // sessionRole
-                    'sessionRole'=>array(
+                    'sessionRole'=>[
                         'submit'=>'Temporary roles have been assigned.',
                         'reset'=>'Temporary roles have been removed.'
-                    )
-                ),
-                
+                    ]
+                ],
+
                 // neg
-                'neg'=>array(
-                    
+                'neg'=>[
+
                     // sessionRole
-                    'sessionRole'=>array(
-                        'failure'=>"Error assigning temporary roles."
-                    ),
-                    
+                    'sessionRole'=>[
+                        'failure'=>'Error assigning temporary roles.'
+                    ],
+
                     // user
                     'user'=>[
 
@@ -97,9 +97,9 @@ class En extends Core\Lang\En
                     'duplicate'=>[
                         'failure'=>'Duplicate has failed'
                     ]
-                )
-            ),
-            
+                ]
+            ],
+
             // popup
             'popup'=>[
 
@@ -228,7 +228,7 @@ class En extends Core\Lang\En
             'resetPassword'=>[
                 'info'=>'Enter your email to get a message explaining how to regenerate the password.'
             ],
-            
+
             // sessionRole
             'sessionRole'=>[
                 'title'=>'Temporary roles',
@@ -236,7 +236,7 @@ class En extends Core\Lang\En
                 'submit'=>'Submit',
                 'reset'=>'Reset'
             ],
-            
+
             // accountChangePassword
             'accountChangePassword'=>[
                 'link'=>'My password',

@@ -71,8 +71,8 @@ class User extends Core\Row\User
 
         return $r;
     }
-    
-    
+
+
     // userExport
     // méthode utilisé pour exporter les colonnes et cellules d'un utilisateur en plusieurs
     public static function userExport(array $value,string $type,Core\Cell $cell,array $option):array

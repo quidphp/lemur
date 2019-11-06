@@ -152,27 +152,27 @@ class General extends Core\RouteAlias
     {
         $return = null;
         $table = $this->table();
-        
+
         if($this->hasSegment('cols'))
         $return = $this->segment('cols');
 
         else
         $return = $table->cols()->general()->filter(['isVisibleGeneral'=>true]);
-        
+
         if(!empty($return) && $this->hasSegment('filter'))
         {
             $filter = $this->segment('filter');
             if(is_array($filter) && !empty($filter))
             {
                 $return = $return->clone();
-                foreach ($table->cols(...array_keys($filter)) as $col) 
+                foreach ($table->cols(...array_keys($filter)) as $col)
                 {
                     if(!$return->in($col))
                     $return->add($col);
                 }
             }
         }
-        
+
         return $return;
     }
 
@@ -186,7 +186,7 @@ class General extends Core\RouteAlias
         if($this->hasSegment('cols'))
         {
             $cols = $this->table()->cols()->general()->filter(['isVisibleGeneral'=>true]);
-            
+
             if($this->segment('cols')->names() !== $cols->names())
             $return = true;
         }
@@ -823,13 +823,13 @@ class General extends Core\RouteAlias
                 $html = $this->makeRows();
                 $ths[] = [$html,'rows'];
             }
-            
+
             if($this->hasTablePermission('action'))
             {
                 $html = $this->makeCols();
                 $ths[] = [$html,'action'];
             }
-            
+
             foreach ($cols as $col)
             {
                 $data = ['name'=>$col->name(),'col'=>$col::className(true),'group'=>$col->group()];
@@ -860,7 +860,7 @@ class General extends Core\RouteAlias
         return $r;
     }
 
-    
+
     // makeTableHeaderOrder
     // génère un lien pour ordonner dans un header de table
     protected function makeTableHeaderOrder(Core\Col $col,array $array,$icon=null):array
@@ -892,8 +892,8 @@ class General extends Core\RouteAlias
 
         return [$html,$thAttr];
     }
-    
-    
+
+
     // makeTableHeaderFilter
     // génère un filtre dans un header de table
     protected function makeTableHeaderFilter(Core\Col $col,array $array):array
@@ -951,7 +951,7 @@ class General extends Core\RouteAlias
                     $label = Html::label($checkbox,['in']);
                     $array[] = [$label,'rows'];
                 }
-                
+
                 if($actionPermission === true)
                 {
                     $html = '';
@@ -964,7 +964,7 @@ class General extends Core\RouteAlias
 
                     $array[] = [$html,'action'];
                 }
-                
+
                 foreach ($cells as $cell)
                 {
                     $option = ['specific'=>$specific];

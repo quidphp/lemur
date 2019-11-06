@@ -194,7 +194,7 @@
 /* CHANGE PASSWORD */
 .modal[data-route='accountChangePassword'] .inner {
     @include modalForm();
-    
+
     .form .field input {
         width: 100%;
     }

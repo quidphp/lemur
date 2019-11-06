@@ -18,10 +18,10 @@
     > ul {
         text-align: left;
         padding: 0;
-        
+
         > li {
             @include inbl();
-            
+
             > a,
             > .trigger {
                 @include inbl();
@@ -33,27 +33,27 @@
                     text-decoration: underline;
                 }
             }
-            
+
             &:hover > a,
             &:hover > .trigger {
                 color: $gray;
             }
-            
+
             &.top > a,
             &.top > .trigger {
                 text-decoration: underline;
             }
         }
     }
-    
+
     > ul > li.with-submenu {
         position: relative;
-        
+
         .trigger {
             position: relative;
             padding-left: 20px;
             cursor: pointer;
-            
+
             .triangle {
                 @include triangle('right', $white, 9px, 6px);
                 @include abs(50%, false, false, 2px);
@@ -64,31 +64,31 @@
                 @include triangle('right', $gray, 9px, 6px);
             }
         }
-        
+
         &.active .trigger {
             color: $gray;
-            
+
             .triangle {
                 @include triangle('bottom', $gray, 9px, 6px);
                 margin-top: -5px;
             }
         }
-        
+
         > .popup {
             @include mainNavPopup();
-            
+
             > ul > li > a.specific-add {
                 @include abs(50%, 15px);
                 margin-top: -8px;
                 z-index: 3;
-                
+
                 &:hover {
                     opacity: 0.6;
                 }
             }
         }
     }
-    
+
     // responsive
     @media screen and (max-width: 900px), screen and (orientation: portrait) {
         @include fixed(0, '', '', 0);
@@ -106,7 +106,7 @@
             &:first-child {
                 margin-top: 0;
             }
-            
+
             .trigger {
                 cursor: default !important;
             }
@@ -119,14 +119,14 @@
                 font-size: 120%;
             }
         }
-        
+
         > ul > li.with-submenu {
             padding: 0;
 
             .triangle {
                 display: none !important;
             }
-            
+
             > .popup {
                 @include wh(auto);
                 max-width: none;
@@ -138,7 +138,7 @@
                 border-radius: 0;
                 padding: 0;
                 box-shadow: none;
-                
+
                 > ul > li {
                     display: block;
                     text-align: center;
@@ -165,16 +165,14 @@
     }
 }
 
-
 // mainNavPopup
 // mixin pour le popup de la navigation générale
-@mixin mainNavPopup()
-{
+@mixin mainNavPopup() {
     background-color: $darkColor;
     max-width: 250px;
     border: 0;
     box-shadow: 2px 8px 6px -4px $color;
-    
+
     > ul > li {
         position: relative;
         list-style-type: none;

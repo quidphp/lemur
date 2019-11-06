@@ -8,8 +8,8 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Col;
-use Quid\Core;
 use Quid\Base\Html;
+use Quid\Core;
 
 // userPassword
 // class for the column which manages the active field for the user row
@@ -17,8 +17,8 @@ class UserPassword extends Core\Col\UserPassword
 {
     // config
     public static $config = [];
-    
-    
+
+
     // formComplex
     // génère le formulaire complex pour password
     public function formComplex($value=true,?array $attr=null,?array $option=null):string

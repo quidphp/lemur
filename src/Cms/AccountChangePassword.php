@@ -18,8 +18,8 @@ class AccountChangePassword extends Lemur\Route\AccountChangePassword
 {
     // trait
     use _modal;
-    
-    
+
+
     // config
     public static $config = [
         'match'=>[

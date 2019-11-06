@@ -32,13 +32,13 @@ class Cell extends Base\Test
 
         // complexTag
         assert($dateAdd->formComplex() === '<div>February 9, 2009 22:10:34</div>');
-        
+
         // formComplex
-        
+
         // formComplexWrap
-        
+
         // getDataAttr
-        
+
         // cell
         assert(count($cell->attr()) === 64);
         assert(strlen($date->formComplex()) === 279);

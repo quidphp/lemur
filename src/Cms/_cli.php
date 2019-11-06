@@ -26,7 +26,7 @@ trait _cli
             'cli'=>null]
     ];
 
-    
+
     // trigger
     // génère le cli ou le template
     public function trigger()

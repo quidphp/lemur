@@ -16,8 +16,8 @@ class CliSessionGc extends Core\Route\CliSessionGc
 {
     // trait
     use _cli;
-    
-    
+
+
     // config
     public static $config = [];
 }

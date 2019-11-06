@@ -25,9 +25,9 @@ class Cols extends Base\Test
         $cols = $tb->cols();
 
         // formComplex
-        
+
         // formComplexWrap
-        
+
         // cols
         assert(strlen($cols->formComplex()['date']) === 260);
         assert($cols->formComplexWrap('table')['userAdd'] === "<table><tr><td><label>Added by</label></td><td><div class='empty-placeholder'>NULL</div></td></tr></table>");

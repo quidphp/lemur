@@ -8,8 +8,8 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur;
-use Quid\Core;
 use Quid\Base;
+use Quid\Core;
 
 // col
 // extended class to represent an existing column within a table, adds cms config
@@ -25,7 +25,7 @@ class Col extends Core\Col
             'generalExcerptMin'=>100]
     ];
 
-    
+
     // onComplex
     // permet de formater une valeur simple vers un type plus complexe
     // utilisé lors de la génération d'un élément de formulaire, si onComplex est true renvoie à onGet
@@ -41,8 +41,8 @@ class Col extends Core\Col
 
         return $return;
     }
-    
-    
+
+
     // valueComplex
     // génère une valeur en vue de l'affichage dans un élément de formulaire complexe
     public function valueComplex($return=true,?array $option=null)
@@ -57,24 +57,24 @@ class Col extends Core\Col
 
         return $return;
     }
-    
-    
+
+
     // complexTag
     // retourne la tag complex en lien avec la colonne
     public function complexTag(?array $attr=null):string
     {
         return $this->tag($attr,true);
     }
-    
-    
+
+
     // formComplexAttr
     // retourne les attributs de formulaires complexes avec un tableau d'attributs en argument facultatif
     public function formComplexAttr(?array $attr=null):array
     {
         return $this->formAttr($attr,true);
     }
-    
-    
+
+
     // formComplex
     // méthode pouvant être étendu, pour les formComplex
     // par défaut renvoie vers form
@@ -122,16 +122,16 @@ class Col extends Core\Col
     {
         return Base\Html::divCond($this->emptyPlaceholder($value),'empty-placeholder');
     }
-    
-    
+
+
     // formComplexWrap
     // fait un wrap à partir de formComplex plutôt que form
     public function formComplexWrap(?string $wrap=null,$pattern=null,$value=true,?array $attr=null,?array $replace=null,?array $option=null):string
     {
         return $this->makeFormWrap('formComplex',$wrap,$pattern,$value,$attr,$replace,$option);
     }
-    
-    
+
+
     // getDataAttr
     // retourne les dates attr pour la colonne
     public function getDataAttr(array $return):array

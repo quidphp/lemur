@@ -66,24 +66,23 @@ body > #wrapper {
     opacity: 1;
 }
 body > .background {
-    @include fixed(0,"","",0);
+    @include fixed(0, '', '', 0);
     @include transitions(opacity 1.5s);
     @include wh(100%);
     z-index: 1;
     background-color: rgba(0, 0, 0, 0.3);
     display: none;
-    
+
     &[data-from='modal'],
     &[data-from='clickOpen'] {
         display: block;
         @include fadeIn(0.3s);
     }
-    
+
     &[data-from='clickOpen'] {
         background-color: rgba(0, 0, 0, 0.2);
     }
 }
-
 
 /* HEADER */
 header > .top {
@@ -98,7 +97,7 @@ header > .top {
         border: 2px solid $darkerColor;
         display: none;
         z-index: 9;
-        
+
         &:hover {
             opacity: 0.8;
         }
@@ -107,7 +106,7 @@ header > .top {
     .left {
         @include inbl();
         width: 50%;
-        
+
         .boot-label {
             font-size: 2.4rem;
             font-weight: 600;
@@ -130,17 +129,17 @@ header > .top {
         > a {
             border: 0;
             margin-left: 5px;
-            
+
             &:first-child {
                 margin: 0;
             }
-            
+
             &.active {
                 background-color: $darkColor;
                 text-decoration: underline;
             }
         }
-        
+
         .popup-trigger {
             margin-top: 3px;
 
@@ -221,23 +220,23 @@ footer .left {
         @include inbl();
         margin-left: 5px;
         position: relative;
-        
+
         &:first-child {
             margin-left: 0;
         }
-        
+
         > .trigger {
             border: 0;
         }
-        
+
         &.active .trigger {
             background-color: $darkColor;
         }
-        
+
         &.top .trigger {
             text-decoration: underline;
         }
-        
+
         > .popup {
             @include mainNavPopup();
         }
@@ -318,7 +317,7 @@ footer .right {
             @include responsiveBlock();
             text-align: center;
         }
-        
+
         .left {
             margin-bottom: 5px;
         }

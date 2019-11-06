@@ -16,8 +16,8 @@ class Cells extends Core\Cells
 {
     // config
     public static $config = [];
-    
-    
+
+
     // formComplex
     // génère les éléments formulaires complexes pour toutes les cellules
     public function formComplex(bool $str=false)
@@ -25,8 +25,8 @@ class Cells extends Core\Cells
         $return = $this->pair('formComplex');
         return ($str === true)? implode($return):$return;
     }
-    
-    
+
+
     // formComplexWrap
     // génère les éléments formComplexWrap pour toutes les cellules
     public function formComplexWrap(?string $wrap=null,$pattern=null,bool $str=false)

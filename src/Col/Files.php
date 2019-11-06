@@ -8,10 +8,10 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Col;
+use Quid\Base;
+use Quid\Base\Html;
 use Quid\Core;
 use Quid\Lemur;
-use Quid\Base\Html;
-use Quid\Base;
 use Quid\Main;
 
 // files
@@ -39,8 +39,8 @@ abstract class Files extends Core\Col\Files
 
         return $return;
     }
-    
-    
+
+
     // formComplex
     // génère un élément de formulaire complexe pour les medias
     public function formComplex($value=true,?array $attr=null,?array $option=null):string
@@ -94,8 +94,8 @@ abstract class Files extends Core\Col\Files
 
         return $return;
     }
-    
-    
+
+
     // commonFormComplexUpdate
     // génère l'élément de formulaire complexe média lors d'une mise à jour
     protected function commonFormComplexUpdate(?int $index=null,Core\Cell $value,array $attr,array $option):string

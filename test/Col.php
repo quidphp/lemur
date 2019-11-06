@@ -38,9 +38,9 @@ class Col extends Base\Test
         $multi = $tb['multi'];
         $check = $tb['check'];
         $array = $tb['myRelation'];
-        
+
         // onComplex
-        
+
         // valueComplex
         assert($dateAdd->valueComplex(123445677) === 'November 29, 1973 13:27:57');
 
@@ -67,7 +67,7 @@ class Col extends Base\Test
         // formComplexAttr
         assert(count($dateAdd->formAttr()) === 2);
         assert(count($dateAdd->formComplexAttr()) === 0);
-        
+
         // formComplex
         assert($dateAdd->formComplex() === "<div class='empty-placeholder'>NULL</div>");
 
@@ -79,13 +79,13 @@ class Col extends Base\Test
         // formComplexEmptyPlaceholder
         assert($dateAdd->formComplexEmptyPlaceholder(null) === "<div class='empty-placeholder'>NULL</div>");
         assert($dateAdd->formComplexEmptyPlaceholder(true) === '');
-        
+
         // formComplexWrap
         assert($password->formComplexWrap() !== $password->formWrap());
         assert(strlen($password->formComplexWrap('br',3)) === 357);
-        
+
         // getDataAttr
-        
+
         // col
         assert(count($col->attr()) === 63);
         assert(strlen($date->formComplex()) === 260);

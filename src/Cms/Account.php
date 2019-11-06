@@ -16,7 +16,7 @@ class Account extends Lemur\Route\Account
 {
     // trait
     use _common;
-    
+
 
     // config
     public static $config = [

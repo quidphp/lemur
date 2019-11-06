@@ -8,9 +8,9 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Col;
+use Quid\Base;
 use Quid\Core;
 use Quid\Lemur;
-use Quid\Base;
 
 // date
 // extended class for a date column, supports many date formats
@@ -22,8 +22,8 @@ class Date extends Core\Col\Date
             'onComplex'=>true,
             'route'=>['calendar'=>Lemur\Cms\SpecificCalendar::class]]
     ];
-    
-    
+
+
     // formComplex
     // génère le formulaire complex pour date
     // un petit calendrier apparaît en popup

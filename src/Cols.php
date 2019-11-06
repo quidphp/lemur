@@ -16,8 +16,8 @@ class Cols extends Core\Cols
 {
     // config
     public static $config = [];
-    
-    
+
+
     // formComplex
     // génère les éléments formulaires complexes pour toutes les colonnes
     public function formComplex(bool $str=false)
@@ -26,7 +26,7 @@ class Cols extends Core\Cols
         return ($str === true)? implode($return):$return;
     }
 
-    
+
     // formComplexWrap
     // génère les éléments formComplexWrap pour toutes les colonnes
     public function formComplexWrap(?string $wrap=null,$pattern=null,bool $str=false)

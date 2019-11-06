@@ -19,7 +19,7 @@ class About extends Core\RouteAlias
     // trait
     use _common;
     use _modal;
-    
+
 
     // config
     public static $config = [

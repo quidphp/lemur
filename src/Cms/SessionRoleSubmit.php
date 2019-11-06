@@ -8,9 +8,9 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Cms;
+use Quid\Base;
 use Quid\Core;
 use Quid\Lemur;
-use Quid\Base;
 
 // sessionRoleSubmit
 // class for the route with the popup to apply a fake role to the current session
@@ -18,13 +18,13 @@ class SessionRoleSubmit extends Core\RouteAlias
 {
     // trait
     use Lemur\Route\_formSubmit;
-    
-    
+
+
     // config
     public static $config = [
-        'path'=>array(
+        'path'=>[
             'en'=>'session/exploration/submit',
-            'fr'=>'session/exploration/soumettre'),
+            'fr'=>'session/exploration/soumettre'],
         'match'=>[
             'method'=>'post',
             'post'=>['role'],
@@ -33,16 +33,16 @@ class SessionRoleSubmit extends Core\RouteAlias
         'row'=>Lemur\Row\User::class,
         'group'=>'submit'
     ];
-    
-    
+
+
     // onBefore
     // avant le trigger, vérifie que l'utilisateur peut accéder à lar oute
-    protected function onBefore() 
+    protected function onBefore()
     {
         return $this->canTrigger();
     }
-    
-    
+
+
     // onFailure
     // callback appelé lors d'une erreur dans l'attribution
     protected function onFailure():void
@@ -52,24 +52,24 @@ class SessionRoleSubmit extends Core\RouteAlias
 
         return;
     }
-    
-    
+
+
     // canTrigger
     // retourne vrai si la route peut être trigger
-    public function canTrigger():bool 
+    public function canTrigger():bool
     {
         return static::makeParent()->canTrigger();
     }
-    
-    
+
+
     // routeSuccess
     // route sur succès
     protected function routeSuccess():Lemur\Route
     {
         return static::session()->historyPreviousRoute(Home::makeOverload());
     }
-    
-    
+
+
     // proceed
     // procède au changement de mot de passe
     public function proceed():bool
@@ -85,13 +85,13 @@ class SessionRoleSubmit extends Core\RouteAlias
         {
             $roles = $post['role'] ?? null;
             $return = true;
-            
+
             if($action === 'reset' || empty($roles))
             {
                 $session->fakeRolesEmpty();
                 $com->pos('sessionRole/reset');
             }
-            
+
             else
             {
                 $session->setFakeRoles($roles);
@@ -108,15 +108,15 @@ class SessionRoleSubmit extends Core\RouteAlias
         return $return;
     }
 
-    
+
     // action
     // retourne l'action du formulaire
-    protected function action():string 
+    protected function action():string
     {
         return ($this->request()->exists('reset'))? 'reset':'submit';
     }
-    
-    
+
+
     // post
     // retourne les données post avec les rôles pour l'exploration
     protected function post():array
@@ -124,17 +124,17 @@ class SessionRoleSubmit extends Core\RouteAlias
         $return = [];
         $request = $this->request();
         $value = $this->getAttr(['match','post',0]);
-        
+
         if(!empty($value))
         {
             $v = $request->get($value);
-            
+
             if(!is_array($v))
-            $v = array($v);
-            
+            $v = [$v];
+
             $v = Base\Arr::clean($v);
             $v = Base\Arr::cast($v);
-            
+
             $return[$value] = $v;
         }
 

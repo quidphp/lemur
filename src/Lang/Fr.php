@@ -34,7 +34,7 @@ class Fr extends Core\Lang\Fr
                 'cms'=>'Gestionnaire de contenu'
             ]
         ],
-        
+
         // route
         'route'=>[
 
@@ -64,26 +64,26 @@ class Fr extends Core\Lang\Fr
             ],
 
             // com
-            'com'=>array(
-                
+            'com'=>[
+
                 // pos
-                'pos'=>array(
-                    
+                'pos'=>[
+
                     // sessionRole
-                    'sessionRole'=>array(
+                    'sessionRole'=>[
                         'submit'=>'Les rôles temporaires ont été attribués.',
                         'reset'=>'Les rôles temporaires ont été retirés.'
-                    )
-                ),
-                
+                    ]
+                ],
+
                 // neg
-                'neg'=>array(
-                    
+                'neg'=>[
+
                     // sessionRole
-                    'sessionRole'=>array(
+                    'sessionRole'=>[
                         'failure'=>"Erreur lors de l'attribution des rôles temporaires."
-                    ),
-                    
+                    ],
+
                     // user
                     'user'=>[
 
@@ -92,14 +92,14 @@ class Fr extends Core\Lang\Fr
                             'failure'=>"Le courriel de bienvenue n'a pas pu être envoyé."
                         ]
                     ],
-                    
+
                     // duplicate
                     'duplicate'=>[
                         'failure'=>'La duplication a échouée'
                     ]
-                )
-            ),
-            
+                ]
+            ],
+
             // popup
             'popup'=>[
 
@@ -236,7 +236,7 @@ class Fr extends Core\Lang\Fr
                 'submit'=>'Soumettre',
                 'reset'=>'Réinitialiser'
             ],
-            
+
             // accountChangePassword
             'accountChangePassword'=>[
                 'link'=>'Mot de passe',

@@ -8,8 +8,8 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Col;
-use Quid\Base\Html;
 use Quid\Base;
+use Quid\Base\Html;
 use Quid\Core;
 use Quid\Lemur;
 
@@ -115,8 +115,8 @@ abstract class Relation extends Core\Col\Relation
 
         return $return;
     }
-    
-    
+
+
     // formComplex
     // génère un élément de formulaire pour les relations
     public function formComplex($value=true,?array $attr=null,?array $option=null):string
@@ -260,8 +260,8 @@ abstract class Relation extends Core\Col\Relation
 
         return $return;
     }
-    
-    
+
+
     // formComplexPlain
     // génère un élément de formulaire plain, c'est à dire sans balise de formulaire (comme une div)
     public function formComplexPlain($value,?array $attr=null,?array $option=null):string
@@ -305,8 +305,8 @@ abstract class Relation extends Core\Col\Relation
 
         return $return;
     }
-    
-    
+
+
     // prepareStandardRelation
     // retourne la relation pour un input avec choice
     // désactive la cache

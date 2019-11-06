@@ -13,20 +13,20 @@
 // mixin avec les styles pour la boîte d'ordonnage des colonnes
 @mixin colsSorter() {
     font-weight: normal;
-    
+
     &.active .in,
     .in:hover,
     .in.selected {
         background-color: $lightYellow;
         border: 1px solid $lightYellow;
     }
-    
+
     .in {
         padding: 0px 10px;
         cursor: pointer;
 
         &.selected .close {
-            @include abs(-8px,-8px);
+            @include abs(-8px, -8px);
             z-index: 9;
         }
 

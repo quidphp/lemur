@@ -8,8 +8,8 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Col;
-use Quid\Core;
 use Quid\Base;
+use Quid\Core;
 
 // userActive
 // class for the column which manages the active field for the user row
@@ -17,8 +17,8 @@ class UserActive extends Core\Col\UserActive
 {
     // config
     public static $config = [];
-    
-    
+
+
     // formComplex
     // génère le formComplex pour userActive
     // retourne un input plain si c'est l'utilisateur courant

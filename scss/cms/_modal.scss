@@ -94,11 +94,9 @@
     }
 }
 
-
 // modalForm
 // mixin pour un formulaire de base dans le modal
-@mixin modalForm() 
-{
+@mixin modalForm() {
     .info {
         font-size: 90%;
         margin-bottom: 20px;
@@ -107,15 +105,15 @@
     .form {
         max-width: 500px;
         margin: auto;
-        
+
         .fields {
             padding-bottom: 10px;
-            
+
             .field {
                 margin-bottom: 20px;
             }
         }
-        
+
         .action {
             button {
                 margin: 0 5px;

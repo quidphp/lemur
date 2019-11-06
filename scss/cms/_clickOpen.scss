@@ -159,11 +159,11 @@
             color: gray;
         }
     }
-    
+
     ul {
         @include ulOlMargin();
     }
-    
+
     > ul > li {
         padding: 4px 0;
 

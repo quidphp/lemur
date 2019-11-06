@@ -35,10 +35,10 @@ class Login extends Lemur\Route\Login
         $return = false;
         $session = static::session();
         $roles = $session->roles(false);
-        
+
         if($roles->isNobody())
         $return = true;
-        
+
         if(!$this->request()->isPathMatchEmpty())
         {
             $flash = $session->flash();
