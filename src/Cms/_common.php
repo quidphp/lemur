@@ -73,14 +73,13 @@ trait _common
         return Html::a(static::langText('author/email'),true);
     }
 
-
+    
     // makeInfoPopup
     // génère un popup d'informations
     public static function makeInfoPopup(array $values,\Closure $closure,bool $icon):string
     {
         $r = '';
-        $lang = static::lang();
-
+        
         foreach ($values as $key)
         {
             [$label,$value] = $closure($key);
@@ -91,40 +90,14 @@ trait _common
 
                 if(is_array($value))
                 {
-                    $html2 = '';
-                    foreach ($value as $k => $v)
-                    {
-                        $str = '';
-
-                        if(is_bool($v))
-                        $v = $lang->bool($v);
-
-                        elseif($v === '' || $v === null)
-                        $v = Html::span('NULL','value-empty');
-
-                        elseif(is_array($v))
-                        $v = implode(', ',Base\Arr::cleanNull($v));
-
-                        if(is_string($v) && strlen($v))
-                        {
-                            if(is_string($k))
-                            {
-                                $str .= Html::span($k,'key');
-                                $str .= ': ';
-                            }
-
-                            $str .= $v;
-                            $html2 .= Html::liCond($str);
-                        }
-                    }
-
+                    $html2 = static::infoPopupArray($value);
                     $html .= Html::ulCond($html2);
                 }
 
                 else
                 {
                     if(is_bool($value))
-                    $value = $lang->bool($value);
+                    $value = static::lang()->bool($value);
 
                     if(is_object($value))
                     $value = Base\Obj::cast($value);
@@ -152,6 +125,47 @@ trait _common
         }
 
         return $r;
+    }
+    
+    
+    // infoPopopArray
+    // méthode utilisé par makeInfoPopup
+    protected static function infoPopupArray(array $value):string
+    {
+        $return = '';
+        foreach ($value as $k => $v)
+        {
+            $str = '';
+            
+            if(is_numeric($v))
+            $v = (string) $v;
+            
+            elseif(is_bool($v))
+            $v = static::lang()->bool($v);
+
+            elseif($v === '' || $v === null)
+            $v = Html::span('NULL','value-empty');
+            
+            elseif(!Base\Arrs::is($v) && Base\Arr::isIndexed($v))
+            $v = implode(', ',Base\Arr::cleanNull($v));
+            
+            elseif(is_array($v))
+            $v = Html::ulCond(static::infoPopupArray($v));
+            
+            if(is_string($v) && strlen($v))
+            {
+                if(is_string($k))
+                {
+                    $str .= Html::span($k,'key');
+                    $str .= ': ';
+                }
+
+                $str .= $v;
+                $return .= Html::liCond($str);
+            }
+        }
+        
+        return $return;
     }
 }
 ?>

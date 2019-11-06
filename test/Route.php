@@ -653,9 +653,9 @@ class Route extends Base\Test
         assert($app->count() === 5);
         assert($routes->type() === 'cms');
         assert($routes->keyParent()[Lemur\Cms\LoginSubmit::class] === Lemur\Cms\Login::class);
-        assert(count($routes->hierarchy()) === 12);
+        assert(count($routes->hierarchy()) === 16);
         assert(count($routes->childsRecursive($login)) === 5);
-        assert($routes->tops()->isCount(12));
+        assert($routes->tops()->isCount(16));
         assert($routes->tops() !== $routes);
         assert($routes->top($loginSubmit) === $login);
         assert($routes->parents($loginSubmit)->isCount(1));
@@ -682,22 +682,22 @@ class Route extends Base\Test
         assert($routes->first(['group'=>'home']) === Lemur\Cms\Home::class);
         assert($routes->filter(['group'=>'error','priority'=>992])->isEmpty());
         assert($routes->filter(['group'=>'error','priority'=>999])->isCount(1));
-        assert(count($routes->group('group')) === 9);
+        assert(count($routes->group('group')) === 13);
         assert($routes->sortBy('name',false)->index(1) === Lemur\Cms\SpecificUserWelcome::class);
         assert($routes->sortBy('name',false) !== $routes);
         assert($routes->sortDefault()->index(0) === Lemur\Cms\Home::class);
         assert($routes->sortDefault() === $routes);
 
         // map
-        assert($routes->isCount(38));
+        assert($routes->isCount(43));
         assert($routes->get('Sitemap') === Lemur\Cms\Sitemap::class);
         assert($routes->get(Lemur\Cms\Sitemap::class) === Lemur\Cms\Sitemap::class);
         assert(!$routes->in('Sitemap'));
         assert($routes->in(Lemur\Cms\Sitemap::class));
         assert($routes->exists('Sitemap'));
         assert($routes->exists(Lemur\Cms\Sitemap::class));
-        assert($routes->unset('Sitemap')->isCount(37));
-        assert($routes->add(Lemur\Cms\Sitemap::class)->isCount(38));
+        assert($routes->unset('Sitemap')->isCount(42));
+        assert($routes->add(Lemur\Cms\Sitemap::class)->isCount(43));
 
         return true;
     }

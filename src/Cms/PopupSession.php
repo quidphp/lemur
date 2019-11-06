@@ -27,6 +27,7 @@ class PopupSession extends Core\RouteAlias
         'match'=>[
             'ajax'=>true,
             'role'=>['>'=>'user']],
+        'group'=>'popup',
         'popup'=>[
             'id','username','email','fullName','roles','fakeRoles','timezone','dateLogin','dateAdd',
             'requestCount','ip','lang','name','getLoginLifetime','getLifetime','expire','getCookieParams','getGarbageCollect',
@@ -113,7 +114,7 @@ class PopupSession extends Core\RouteAlias
             $value = $session->role()::classFqcn();
 
             elseif($key === 'roles')
-            $value = $session->roles()->pair('labelPermission');
+            $value = $session->roles(false)->pair('labelPermission');
 
             elseif($key === 'fakeRoles')
             {

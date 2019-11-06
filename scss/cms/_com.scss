@@ -1,0 +1,116 @@
+// compileOnSave: false
+
+/*
+ * This file is part of the QuidPHP package.
+ * Website: https://quidphp.com
+ * License: https://github.com/quidphp/lemur/blob/master/LICENSE
+ */
+
+// com
+// stylesheet for the communication component
+
+// com
+// mixin avec les styles pour l'encadré de communication
+@mixin com() {
+    @include fixed('', 20px, 10px);
+    background-color: rgba(249, 253, 216, 0.95);
+    width: 35%;
+    z-index: 3;
+    border: 2px solid $black;
+    padding: 10px;
+    border-radius: 5px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 50vh;
+    text-align: left;
+
+    .close {
+        @include abs(8px, 8px);
+        z-index: 3;
+    }
+    .top {
+        position: relative;
+
+        .triangle {
+            @include abs(50%, '', '', 0px);
+            @include triangle('bottom', $darkColor, 10px, 6px);
+            margin-top: -4px;
+        }
+
+        .date {
+            @include inbl();
+            cursor: pointer;
+            font-size: 90%;
+            padding-left: 16px;
+
+            &:hover {
+                color: $darkGray;
+            }
+        }
+    }
+
+    &.slide-close .top .triangle {
+        @include triangle('right', $darkColor, 10px, 6px);
+    }
+
+    .spacer {
+        padding-bottom: 3px;
+        border-bottom: 1px solid $gray;
+    }
+
+    .bottom {
+        .table > span,
+        .row > span {
+            font-weight: bold;
+        }
+
+        .row.insert,
+        .row.update {
+            > span {
+                cursor: pointer;
+
+                &:hover {
+                    color: $darkGray;
+                }
+            }
+        }
+
+        ul {
+            @include ulOlMargin();
+
+            li {
+                padding-top: 3px;
+            }
+        }
+
+        > ul {
+            font-size: 90%;
+            margin-left: 2rem;
+
+            > li {
+                padding-top: 8px;
+            }
+        }
+    }
+    .pos {
+        color: $green;
+    }
+    .neg {
+        color: $red;
+    }
+
+    @media screen and (max-width: 900px), screen and (orientation: portrait) {
+        padding: 0px 20px 20px;
+        max-height: inherit;
+        display: block;
+        width: 100%;
+        position: relative;
+        right: 0;
+        bottom: 0;
+        padding: 5px;
+    }
+
+    @media print {
+        display: none !important;
+    }
+}

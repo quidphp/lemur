@@ -148,6 +148,8 @@ $(document).ready(function() {
 			
 			$("a.hashFollow").hrefChangeHash(fragment);
 			form.triggerHandler('tab:getInput').val((quid.base.isStringNotEmpty(fragment))? fragment:'');
+            
+            $(document).trigger('document:outsideClick');
 		})
 		.on('tab:close', function() {
 			panelNav.trigger('unselected');

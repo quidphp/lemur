@@ -30,8 +30,8 @@ class User extends Core\Row\User
                 '*'=>['userWelcome'=>false],
                 'contributor'=>['insert'=>false],
                 'editor'=>['insert'=>false],
-                'subAdmin'=>['export'=>true,'userWelcome'=>true],
-                'admin'=>['export'=>true,'userWelcome'=>true,'fakeRoles'=>true]],
+                'subAdmin'=>['userWelcome'=>true],
+                'admin'=>['userWelcome'=>true,'fakeRoles'=>true]],
             'route'=>[
                 'userWelcome'=>Lemur\Cms\SpecificUserWelcome::class],
             'specificOperation'=>[self::class,'specificOperation']],
@@ -70,6 +70,31 @@ class User extends Core\Row\User
         }
 
         return $r;
+    }
+    
+    
+    // userExport
+    // méthode utilisé pour exporter les colonnes et cellules d'un utilisateur en plusieurs
+    public static function userExport(array $value,string $type,Core\Cell $cell,array $option):array
+    {
+        $return = [];
+        $col = $cell->col();
+        $relation = $col->relation();
+        $table = $relation->relationTable();
+        $cols = $table->cols()->filter(['isAttrNotEmpty'=>true],'relationExport');
+        $cols = $cols->sortBy('getAttr',true,'relationExport');
+
+        if($type === 'col')
+        $return = $cols->label();
+
+        else
+        {
+            $row = $cell->relationRow();
+            $cells = $row->cells($cols);
+            $return = $cells->pair('exportOne',$option);
+        }
+
+        return $return;
     }
 }
 

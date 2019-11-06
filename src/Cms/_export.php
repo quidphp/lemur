@@ -45,27 +45,27 @@ trait _export
     }
 
 
-    // isEncoding
-    // retourne vrai si la valeur est un encodage valide
-    public static function isEncoding($value):bool
+    // isType
+    // retourne vrai si la valeur est un type valide
+    public static function isType($value):bool
     {
-        return (is_string($value) && in_array($value,static::getEncoding(),true))? true:false;
+        return (is_string($value) && in_array($value,static::getTypes(),true))? true:false;
     }
 
 
-    // getEncoding
-    // retourne les encodages permis
-    public static function getEncoding():array
+    // getTypes
+    // retourne les types permis
+    public static function getTypes():array
     {
-        return ['utf8','latin1'];
+        return ['format','raw'];
     }
 
 
-    // defaultEncoding
-    // retourne l'encodage par défaut à utiliser
-    public static function defaultEncoding():string
+    // defaultType
+    // retourne le type par défaut à utiliser
+    public static function defaultType():string
     {
-        return current(static::getEncoding());
+        return current(static::getTypes());
     }
 }
 ?>

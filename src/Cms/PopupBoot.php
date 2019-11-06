@@ -29,9 +29,10 @@ class PopupBoot extends Core\RouteAlias
         'match'=>[
             'ajax'=>true,
             'role'=>['>'=>'user']],
+        'group'=>'popup',
         'popup'=>[
             'phpVersion','quidVersion','envLabel','typeLabel','classFqcn','classRoute','hostname','httpProtocol','ip',
-            'os','isCaseSensitive','processId','user','group','serverType','sapi','paths','schemeHosts','memory',
+            'os','isCaseSensitive','processId','user','group','serverType','sapi','paths','phpOverview','jsOverview','cssOverview','schemeHosts','memory',
             'diskSpace','phpImportantExtension','phpImportantIni']
     ];
 
@@ -82,13 +83,22 @@ class PopupBoot extends Core\RouteAlias
             $label = null;
             $value = null;
             $boot = static::boot();
-
+            
             if(in_array($key,['envLabel','typeLabel','paths','schemeHosts','classFqcn'],true))
             $value = $boot->$key();
-
+            
             elseif($key === 'classRoute')
             $value = $this['route'];
-
+            
+            elseif($key === 'phpOverview')
+            $value = $boot->pathOverview('src','php');
+            
+            elseif($key === 'jsOverview')
+            $value = $boot->pathOverview('js',array('js','jsx'));
+            
+            elseif($key === 'cssOverview')
+            $value = $boot->pathOverview('scss',array('css','scss'));
+            
             elseif($key === 'user')
             $value = Base\Server::$key(true,true);
 

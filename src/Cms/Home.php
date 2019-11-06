@@ -25,7 +25,7 @@ class Home extends Core\Route\Home
             'role'=>['>'=>'user']],
         'popup'=>[
             'dbName','driver','serverVersion','connectionStatus','host','username',
-            'charset','collation','classFqcn','classSyntax','classTables','importantVariables'
+            'charset','collation','classFqcn','classSyntax','classSchema','classTables','importantVariables'
         ]
     ];
 
@@ -120,11 +120,14 @@ class Home extends Core\Route\Home
             $db = $this->db();
 
             if($key === 'classTables')
-            $value = $db->tables()->classFqcn();
+            $value = $db->tables()::classFqcn();
 
             elseif($key === 'classSyntax')
             $value = $db->getSyntax();
-
+            
+            elseif($key === 'classSchema')
+            $value = $db->schema()::classFqcn();
+            
             else
             $value = $db->$key();
 
@@ -168,30 +171,12 @@ class Home extends Core\Route\Home
     protected function mainBottom():string
     {
         $r = '';
-        $r .= Html::divCond($this->makeTask(),'task');
 
         $r .= Html::divOp('search');
         $r .= Html::divtableOpen();
         $r .= $this->makeSearch();
         $r .= Html::divtableClose();
         $r .= Html::divCl();
-
-        return $r;
-    }
-
-
-    // makeTask
-    // génère les tâches, simples liens qui apparaissent en haut de la page home
-    protected function makeTask():string
-    {
-        $r = '';
-        $tables = $this->db()->tables();
-
-        foreach ($tables->filter(['isAttrNotEmpty'=>true],'homeTask') as $table)
-        {
-            if($table->hasPermission('view','insert','lemurInsert'))
-            $r .= SpecificAdd::makeOverload($table)->aTitle();
-        }
 
         return $r;
     }

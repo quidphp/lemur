@@ -34,7 +34,7 @@ class Fr extends Core\Lang\Fr
                 'cms'=>'Gestionnaire de contenu'
             ]
         ],
-
+        
         // route
         'route'=>[
 
@@ -63,6 +63,43 @@ class Fr extends Core\Lang\Fr
                 'loadMore'=>'Charger de [from] à [to] sur [total]'
             ],
 
+            // com
+            'com'=>array(
+                
+                // pos
+                'pos'=>array(
+                    
+                    // sessionRole
+                    'sessionRole'=>array(
+                        'submit'=>'Les rôles temporaires ont été attribués.',
+                        'reset'=>'Les rôles temporaires ont été retirés.'
+                    )
+                ),
+                
+                // neg
+                'neg'=>array(
+                    
+                    // sessionRole
+                    'sessionRole'=>array(
+                        'failure'=>"Erreur lors de l'attribution des rôles temporaires."
+                    ),
+                    
+                    // user
+                    'user'=>[
+
+                        // welcome
+                        'welcome'=>[
+                            'failure'=>"Le courriel de bienvenue n'a pas pu être envoyé."
+                        ]
+                    ],
+                    
+                    // duplicate
+                    'duplicate'=>[
+                        'failure'=>'La duplication a échouée'
+                    ]
+                )
+            ),
+            
             // popup
             'popup'=>[
 
@@ -84,7 +121,7 @@ class Fr extends Core\Lang\Fr
                     'getGarbageCollect'=>'Nettoyage des sessions',
                     'userAgent'=>'Agent utilisateur',
                     'roles'=>'Rôles',
-                    'fakeRoles'=>'Faux rôles'
+                    'fakeRoles'=>'Rôles temporaires'
                 ],
 
                 // boot
@@ -110,7 +147,10 @@ class Fr extends Core\Lang\Fr
                     'memory'=>'Mémoire vive',
                     'diskSpace'=>'Espace disque',
                     'phpImportantExtension'=>'Extensions PHP importantes',
-                    'phpImportantIni'=>'Ini PHP importantes'
+                    'phpImportantIni'=>'Ini PHP importantes',
+                    'phpOverview'=>'Code PHP (src)',
+                    'jsOverview'=>'Code JS (src)',
+                    'cssOverview'=>'Code CSS (src)',
                 ],
 
                 // home
@@ -125,6 +165,7 @@ class Fr extends Core\Lang\Fr
                     'connectionStatus'=>'Connexion',
                     'classFqcn'=>'Classe DB',
                     'classSyntax'=>'Classe Syntaxe',
+                    'classSchema'=>'Classe Schéma',
                     'classTables'=>'Classe Tables',
                     'importantVariables'=>'Variables importantes'
                 ],
@@ -188,6 +229,14 @@ class Fr extends Core\Lang\Fr
                 'info'=>'Entrer votre courriel pour obtenir un message indiquant la marche à suivre pour regénérer le mot de passe.'
             ],
 
+            // sessionRole
+            'sessionRole'=>[
+                'title'=>'Rôles temporaires',
+                'info'=>'Utilisez ce formulaire pour attribuer de façon temporaire à la session courante un ou plusieurs rôles.',
+                'submit'=>'Soumettre',
+                'reset'=>'Réinitialiser'
+            ],
+            
             // accountChangePassword
             'accountChangePassword'=>[
                 'link'=>'Mot de passe',
@@ -209,6 +258,10 @@ class Fr extends Core\Lang\Fr
 
             // footer
             'footer'=>[
+                'link'=>'Lien',
+                'lang'=>'Langue',
+                'module'=>'Module',
+                'cli'=>'Cli',
                 'copyright'=>'Version [version]'
             ],
 
@@ -235,10 +288,9 @@ class Fr extends Core\Lang\Fr
             // export
             'export'=>[
                 'long'=>"Cette exportation peut prendre plus d'une minute.",
-                'encoding'=>'Choisir un encodage pour le CSV',
-                'utf8'=>'UTF-8',
-                'latin1'=>'Latin-1',
-                'office'=>'Utilisez Latin-1 pour utilisation dans Microsoft Office sur Windows'
+                'choice'=>"Choisir un type d'exportation",
+                'raw'=>'Données brutes',
+                'format'=>'Données formatées'
             ],
 
             // specific
@@ -430,13 +482,6 @@ class Fr extends Core\Lang\Fr
                         'type'=>"Content-Type utilisé lors de l'envoie. Pour administrateur"
                     ],
 
-                    // option
-                    'option'=>[
-                        'type'=>"Type d'option",
-                        'key'=>"Clé de l'option, utilisez /",
-                        'content'=>"Contenu de l'option, peut être du json"
-                    ],
-
                     // log
                     'log'=>[
                         'type'=>'Type du log',
@@ -515,13 +560,16 @@ class Fr extends Core\Lang\Fr
                 // label
                 'label'=>[
                     'about'=>'À propos',
+                    'cliClearCache'=>'Vider les caches',
                     'general'=>'Général',
                     'generalDelete'=>'Général - Suppression',
-                    'generalExport'=>'Général - Exportation',
-                    'generalExportDialog'=>'Exportation',
+                    'generalExport'=>'Exportation',
+                    'generalExportDownload'=>'Général - Exportation - Téléchargement',
                     'generalRelation'=>'Général - Relation',
                     'generalTruncate'=>'Vider la table',
                     'homeSearch'=>'Accueil - Recherche',
+                    'sessionRole'=>'Rôle',
+                    'sessionRoleSubmit'=>'Rôle - Soumettre',
                     'specific'=>'Spécifique',
                     'specificAdd'=>'Spécifique - Ajout',
                     'specificAddSubmit'=>'Spécifique - Ajout - Soumettre',

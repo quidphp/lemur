@@ -33,10 +33,14 @@ abstract class Route extends Core\Route
                     'accountChangePassword'=>true,
                     'sessionInfo'=>true,
                     'sessionPopup'=>true,
+                    'sessionFakeRole'=>false,
                     'logout'=>true,
-                    'footerTypes'=>true,
-                    'footerTypesCms'=>false,
-                    'footerModules'=>true,
+                    'footerLink'=>true,
+                    'footerLinkType'=>true,
+                    'footerLinkTypeCms'=>false,
+                    'footerLang'=>true,
+                    'footerModule'=>true,
+                    'footerCli'=>true,
                     'bootPopup'=>true,
                     'about'=>true,
                     'homeInfo'=>true,
@@ -46,7 +50,7 @@ abstract class Route extends Core\Route
                 'shared'=>['access'=>false],
                 'user'=>['access'=>false],
                 'subAdmin'=>['popup'=>true],
-                'admin'=>['popup'=>true]
+                'admin'=>['popup'=>true,'sessionFakeRole'=>true]
             ]]
     ];
 }

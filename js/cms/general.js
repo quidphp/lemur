@@ -15,7 +15,7 @@ $(document).ready(function() {
 	$(this).on('route:general', function() {
 		
         var main = $(this).find("main");
-        var scroller = main.find("scroller");
+        var scroller = main.find(".scroller");
 		var search = main.find(".left > .search");
         var formTruncate = main.find(".truncate form");
 		var pageLimit = main.find("input[name='limit'],input[name='page']");

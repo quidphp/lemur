@@ -16,7 +16,7 @@ trait _module
     // config
     public static $configModule = [
         'match'=>[
-            'role'=>'admin'],
+            'role'=>['>='=>'admin']],
         'response'=>[
             'timeLimit'=>30],
         'group'=>'module',

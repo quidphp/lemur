@@ -151,16 +151,28 @@ class General extends Core\RouteAlias
     protected function getCurrentCols():Core\Cols
     {
         $return = null;
-
+        $table = $this->table();
+        
         if($this->hasSegment('cols'))
         $return = $this->segment('cols');
 
         else
+        $return = $table->cols()->general()->filter(['isVisibleGeneral'=>true]);
+        
+        if(!empty($return) && $this->hasSegment('filter'))
         {
-            $table = $this->table();
-            $return = $table->cols()->general()->filter(['isVisibleGeneral'=>true]);
+            $filter = $this->segment('filter');
+            if(is_array($filter) && !empty($filter))
+            {
+                $return = $return->clone();
+                foreach ($table->cols(...array_keys($filter)) as $col) 
+                {
+                    if(!$return->in($col))
+                    $return->add($col);
+                }
+            }
         }
-
+        
         return $return;
     }
 
@@ -174,7 +186,7 @@ class General extends Core\RouteAlias
         if($this->hasSegment('cols'))
         {
             $cols = $this->table()->cols()->general()->filter(['isVisibleGeneral'=>true]);
-
+            
             if($this->segment('cols')->names() !== $cols->names())
             $return = true;
         }
@@ -551,7 +563,7 @@ class General extends Core\RouteAlias
         if($this->hasTablePermission('export') && !$sql->isTriggerCountEmpty())
         {
             $segment = $this->segments();
-            $route = GeneralExportDialog::makeOverload($segment);
+            $route = GeneralExport::makeOverload($segment);
             $r .= $route->aDialog();
         }
 
@@ -654,7 +666,7 @@ class General extends Core\RouteAlias
 
         $r .= Html::div(null,['icon','solo','check','center']);
         $r .= Html::div(null,['icon','solo','uncheck','center']);
-        $r = Html::div($r,['in','toggleAll',($hasInNotIn === true)? 'selected':null]);
+        $r = Html::div($r,['in','toggle-all',($hasInNotIn === true)? 'selected':null]);
         if($hasInNotIn === true)
         {
             $route = $this->changeSegments(['in'=>null,'notIn'=>null]);
@@ -811,7 +823,13 @@ class General extends Core\RouteAlias
                 $html = $this->makeRows();
                 $ths[] = [$html,'rows'];
             }
-
+            
+            if($this->hasTablePermission('action'))
+            {
+                $html = $this->makeCols();
+                $ths[] = [$html,'action'];
+            }
+            
             foreach ($cols as $col)
             {
                 $data = ['name'=>$col->name(),'col'=>$col::className(true),'group'=>$col->group()];
@@ -824,25 +842,16 @@ class General extends Core\RouteAlias
                 if($permission['order'] === true && $col->isOrderable())
                 {
                     $icon = ['triangle'];
-                    $array = $this->makeTableHeaderOrder($col,[$in,$thAttr],'in',$icon);
+                    [$in,$thAttr] = $this->makeTableHeaderOrder($col,[$in,$thAttr],$icon);
                 }
 
-                else
-                {
-                    $in = Html::div($in,'in');
-                    $array = [$in,$thAttr];
-                }
+                $in = Html::div($in,'in');
+                $array = [$in,$thAttr];
 
                 if($permission['filter'] === true && $col->isFilterable() && $col->relation()->size() > 0)
                 $array = $this->makeTableHeaderFilter($col,$array);
 
                 $ths[] = $array;
-            }
-
-            if($this->hasTablePermission('action'))
-            {
-                $html = $this->makeCols();
-                $ths[] = [$html,'action'];
             }
 
             $r = Html::thead($ths);
@@ -851,7 +860,40 @@ class General extends Core\RouteAlias
         return $r;
     }
 
+    
+    // makeTableHeaderOrder
+    // génère un lien pour ordonner dans un header de table
+    protected function makeTableHeaderOrder(Core\Col $col,array $array,$icon=null):array
+    {
+        [$html,$thAttr] = $array;
 
+        if($this->hasTablePermission('order'))
+        {
+            $thAttr[] = 'orderable';
+            $active = ($col === $this->segment('order'));
+
+            if($active === true)
+            {
+                $dataDirection = $this->segment('direction');
+                $direction = $col->db()->syntaxCall('invertOrderDirection',$dataDirection);
+                $thAttr[] = 'ordering';
+            }
+
+            else
+            $direction = $dataDirection = $col->direction(true);
+
+            $thAttr['data']['direction'] = $dataDirection;
+
+            $route = $this->changeSegments(['order'=>$col,'direction'=>$direction]);
+            $uri = $route->uri();
+            $span = Html::span(null,$icon);
+            $html .= Html::a($uri,$span,'right');
+        }
+
+        return [$html,$thAttr];
+    }
+    
+    
     // makeTableHeaderFilter
     // génère un filtre dans un header de table
     protected function makeTableHeaderFilter(Core\Col $col,array $array):array
@@ -909,13 +951,7 @@ class General extends Core\RouteAlias
                     $label = Html::label($checkbox,['in']);
                     $array[] = [$label,'rows'];
                 }
-
-                foreach ($cells as $cell)
-                {
-                    $option = ['specific'=>$specific];
-                    $array[] = $this->makeTableBodyCell($cell,$option);
-                }
-
+                
                 if($actionPermission === true)
                 {
                     $html = '';
@@ -927,6 +963,12 @@ class General extends Core\RouteAlias
                     }
 
                     $array[] = [$html,'action'];
+                }
+                
+                foreach ($cells as $cell)
+                {
+                    $option = ['specific'=>$specific];
+                    $array[] = $this->makeTableBodyCell($cell,$option);
                 }
 
                 $trs[] = [$array,$rowAttr];
@@ -963,7 +1005,7 @@ class General extends Core\RouteAlias
         {
             $placeholder = $cell->col()->emptyPlaceholder($v);
             if(is_string($placeholder))
-            $v = Html::span($placeholder,'empty-placeholder');
+            $v = Html::div($placeholder,'empty-placeholder');
 
             $v = Html::div($v,'in',$option);
         }

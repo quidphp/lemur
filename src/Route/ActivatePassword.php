@@ -32,6 +32,7 @@ abstract class ActivatePassword extends Core\RouteAlias
             'role'=>'nobody'],
         'parent'=>Login::class,
         'sitemap'=>false,
+        'group'=>'nobody',
         'row'=>null // à spécifier dans la classe qui étend
     ];
 

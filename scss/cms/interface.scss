@@ -65,10 +65,29 @@ body > #wrapper {
     @include transitions(opacity 0.3s);
     opacity: 1;
 }
+body > .background {
+    @include fixed(0,"","",0);
+    @include transitions(opacity 1.5s);
+    @include wh(100%);
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: none;
+    
+    &[data-from='modal'],
+    &[data-from='clickOpen'] {
+        display: block;
+        @include fadeIn(0.3s);
+    }
+    
+    &[data-from='clickOpen'] {
+        background-color: rgba(0, 0, 0, 0.2);
+    }
+}
+
 
 /* HEADER */
 header > .top {
-    padding: 8px 20px;
+    padding: 6px 20px;
     background-color: $color;
 
     .burger-menu {
@@ -79,14 +98,18 @@ header > .top {
         border: 2px solid $darkerColor;
         display: none;
         z-index: 9;
+        
+        &:hover {
+            opacity: 0.8;
+        }
     }
 
     .left {
-        @include inbl(top);
-        width: 60%;
-
+        @include inbl();
+        width: 50%;
+        
         .boot-label {
-            font-size: 2.5rem;
+            font-size: 2.4rem;
             font-weight: 600;
 
             > a {
@@ -97,32 +120,27 @@ header > .top {
                 }
             }
         }
-
-        .context-type {
-            color: $lightGray;
-            font-size: 90%;
-        }
     }
 
     .right {
-        @include inbl(bottom);
-        width: 40%;
+        @include inbl();
+        width: 50%;
         text-align: right;
 
-        .top {
-            > a {
-                border-radius: 0;
-
-                &:first-child {
-                    margin-left: 0;
-                    border-right: 0;
-                }
-
-                &:last-child {
-                    border-left: 0;
-                }
+        > a {
+            border: 0;
+            margin-left: 5px;
+            
+            &:first-child {
+                margin: 0;
+            }
+            
+            &.active {
+                background-color: $darkColor;
+                text-decoration: underline;
             }
         }
+        
         .popup-trigger {
             margin-top: 3px;
 
@@ -189,7 +207,7 @@ main .inner > .top {
 /* FOOTER */
 footer {
     @include abs('', '', 0, 0);
-    z-index: 1;
+    z-index: 2;
     width: 100%;
     padding: 5px 20px;
     background-color: $color;
@@ -199,20 +217,29 @@ footer .left {
     @include inbl();
     width: 70%;
 
-    > nav > ul {
-        > li {
-            @include inbl();
-            padding: 0 12px 0 0;
-
-            > a {
-                @include inbl();
-                color: $white;
-
-                &.selected,
-                &:hover {
-                    color: $gray;
-                }
-            }
+    .with-submenu {
+        @include inbl();
+        margin-left: 5px;
+        position: relative;
+        
+        &:first-child {
+            margin-left: 0;
+        }
+        
+        > .trigger {
+            border: 0;
+        }
+        
+        &.active .trigger {
+            background-color: $darkColor;
+        }
+        
+        &.top .trigger {
+            text-decoration: underline;
+        }
+        
+        > .popup {
+            @include mainNavPopup();
         }
     }
 }
@@ -259,7 +286,7 @@ footer .right {
             text-align: center;
 
             &.left {
-                margin-bottom: 20px;
+                margin-bottom: 5px;
             }
         }
 
@@ -291,9 +318,9 @@ footer .right {
             @include responsiveBlock();
             text-align: center;
         }
-
-        .left > nav > ul > li > a {
-            padding: 0 5px;
+        
+        .left {
+            margin-bottom: 5px;
         }
     }
 }

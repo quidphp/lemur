@@ -30,7 +30,10 @@ abstract class Boot extends Core\Boot
                         Test\Lemur::class=>['closure'=>false]]]]],
         'concatenateJs'=>[
             '[publicJs]/include.js'=>[
-                0=>'[vendorLemur]/js/include']],
+                0=>'[vendorLemur]/js/base',
+                1=>'[vendorLemur]/js/main',
+                2=>'[vendorLemur]/js/core',
+                10=>'[js]/include']],
         'roles'=>[
             'editor'=>[60]],
         '@cms'=>[

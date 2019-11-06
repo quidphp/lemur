@@ -22,7 +22,6 @@ class Textarea extends Core\ColAlias
     public static $config = [
         'tag'=>'textarea',
         'search'=>true,
-        'filter'=>false,
         'check'=>['kind'=>'text'],
         'relative'=>null, // custom, type pour absoluteReplace, utilise ceci pour ramener les liens absoluts dans leur version relative
         '@cms'=>[

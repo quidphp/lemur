@@ -17,28 +17,21 @@ trait _cli
 {
     // trait
     use _template;
+    use Core\Route\_cli;
 
 
     // config
-    public static $configModule = [
+    public static $configCliCms = [
         'match'=>[
-            'cli'=>null,
-            'role'=>['>='=>'admin']],
-        'response'=>[
-            'timeLimit'=>0],
-        'group'=>'cli',
-        'sitemap'=>false,
-        'navigation'=>false,
-        'cliHtmlOverload'=>true, // si ce n'est pas cli, les méthodes cli génèrent du html
-        'logCron'=>Core\Row\LogCron::class // classe pour le logCron
+            'cli'=>null]
     ];
 
-
+    
     // trigger
     // génère le cli ou le template
     public function trigger()
     {
-        return ($isCli = Base\Server::isCli())? $this->cli($isCli):$this->template();
+        return (Base\Server::isCli())? $this->cliWrap():$this->template();
     }
 
 
@@ -51,24 +44,10 @@ trait _cli
 
 
     // main
-    // si c'est main, renvoie à cli
+    // si c'est main, renvoie à cliWrap
     protected function main()
     {
-        return $this->cli(Base\Server::isCli());
-    }
-
-
-    // logCron
-    // permet de logger des données dans la table log cron
-    public function logCron(array $data):?Core\Row
-    {
-        $return = null;
-        $class = $this->getAttr('logCron');
-
-        if(!empty($class))
-        $return = $class::log($this,$data);
-
-        return $return;
+        return $this->cliWrap();
     }
 }
 ?>

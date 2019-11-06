@@ -1,0 +1,69 @@
+<?php
+declare(strict_types=1);
+
+/*
+ * This file is part of the QuidPHP package.
+ * Website: https://quidphp.com
+ * License: https://github.com/quidphp/lemur/blob/master/LICENSE
+ */
+
+namespace Quid\Lemur\Cms;
+use Quid\Core;
+use Quid\Base;
+use Quid\Base\Cli;
+
+// cliClearCache
+// class for the cli route to remove all cached data
+class CliClearCache extends Core\RouteAlias
+{
+    // trait
+    use _cli;
+    
+    
+    // config
+    public static $config = [
+        'path'=>array('-clearcache'),
+        'folders'=>array('[storageCache]')
+    ];
+    
+    
+    // cli
+    // méthode pour vider les caches
+    protected function cli(bool $cli)
+    {
+        Cli::neutral(static::label());
+        $return = $this->clearCache();
+        
+        return $return;
+    }
+    
+    
+    // clearCache
+    // vide le dossier de cache
+    protected function clearCache():array 
+    {
+        $return = array();
+        
+        foreach ($this->getAttr('folders') as $path) 
+        {
+            $path = Base\Finder::shortcut($path);
+            $method = 'neg';
+            $value = "! $path";
+            
+            if((Base\Symlink::is($path) && Base\Symlink::unset($path)) || (Base\Dir::is($path) && Base\Dir::emptyAndUnlink($path)))
+            {
+                $method = 'pos';
+                $value = "- $path";
+            }
+            
+            Cli::$method($value);
+            $return[] = array($method=>$value);
+        }
+        
+        return $return;
+    }
+}
+
+// init
+CliClearCache::__init();
+?>

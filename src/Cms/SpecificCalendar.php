@@ -35,7 +35,8 @@ class SpecificCalendar extends Core\RouteAlias
             'selected'=>'structureSegmentSelected'],
         'match'=>[
             'ajax'=>null,
-            'role'=>['>'=>'user']]
+            'role'=>['>'=>'user']],
+        'group'=>'specific'
     ];
 
 

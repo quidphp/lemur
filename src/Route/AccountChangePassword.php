@@ -54,7 +54,7 @@ abstract class AccountChangePassword extends Core\RouteAlias
         $table = static::tableFromRowClass();
         $col = $table->col($colPassword);
 
-        $r .= $route->formOpen('validate');
+        $r .= $route->formOpen();
         $r .= Html::divOp('fields');
 
         foreach ($fields as $name)

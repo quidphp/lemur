@@ -193,23 +193,16 @@
 
 /* CHANGE PASSWORD */
 .modal[data-route='accountChangePassword'] .inner {
-    .info {
-        font-size: 90%;
-        margin-bottom: 20px;
+    @include modalForm();
+    
+    .form .field input {
+        width: 100%;
     }
+}
 
-    .form {
-        max-width: 500px;
-        margin: auto;
-
-        .field {
-            margin-bottom: 20px;
-
-            input {
-                width: 100%;
-            }
-        }
-    }
+/* SESSION ROLE */
+.modal[data-route='sessionRole'] .inner {
+    @include modalForm();
 }
 
 /* ABOUT */
@@ -250,13 +243,6 @@
 /* HOME */
 [data-route='home'] main .inner > .top .left h1 {
     margin-right: 10px;
-}
-[data-route='home'] main .inner > .bottom > .task {
-    > a {
-        @include panelButton();
-        font-size: 90%;
-        font-weight: bold;
-    }
 }
 [data-route='home'] main .inner > .bottom > .search {
     @include wh(60%, 50vh);

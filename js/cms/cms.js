@@ -26,9 +26,13 @@ $(document).ready(function() {
 		var modal = $(this).find(".modal");
 		var burger = $(this).find("header .burger-menu");
 		var com = $(this).find("#wrapper .com");
+        var subMenu = $(this).find("header nav .with-submenu, footer .left .with-submenu");
         
-		// modalAjax
-		if(modal.length === 1)
+        subMenu.callThis(quid.core.clickOpenWithTrigger,".trigger").on('clickOpen:getBackgroundFrom', function(event) {
+            return false;
+        });;
+        
+		// modal
 		modal.modal();
 		
         // com
@@ -65,10 +69,10 @@ $(document).ready(function() {
         modalAnchor.callThis(quid.core.modalAjax,modal);
         
 		// anchorCorner
-		anchorCorner.callThis(quid.main.anchorCorner);
+		anchorCorner.callThis(quid.core.anchorCorner);
 		
 		// aConfirm
-		aConfirm.callThis(quid.main.confirm,'click');
+		aConfirm.callThis(quid.core.confirm,'click');
 		
 		// print
 		print.on('click', function(event) {

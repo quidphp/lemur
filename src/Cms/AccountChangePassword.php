@@ -16,6 +16,10 @@ use Quid\Lemur;
 // class for the change password route in the CMS
 class AccountChangePassword extends Lemur\Route\AccountChangePassword
 {
+    // trait
+    use _modal;
+    
+    
     // config
     public static $config = [
         'match'=>[
@@ -48,7 +52,7 @@ class AccountChangePassword extends Lemur\Route\AccountChangePassword
     {
         $r = '';
         $r .= Html::divtableOpen();
-        $r .= Html::h1($this->label());
+        $r .= Html::h1(static::label());
         $r .= Html::divCond(static::langText('accountChangePassword/info'),'info');
         $r .= Html::divCond($this->makeForm(),'form');
         $r .= Html::divtableClose();

@@ -160,19 +160,13 @@
 [data-route='general'] main .inner > .container table thead th {
     vertical-align: middle;
     background-color: $color;
-    min-width: 100px;
+    min-width: 150px;
     position: relative;
     height: 100%;
     font-weight: bold;
 
     &:first-child .in {
         border-left: 1px solid $darkColor;
-    }
-
-    .left,
-    .right {
-        @include wh(25px, 100%);
-        cursor: pointer;
     }
 
     .in {
@@ -194,10 +188,14 @@
     }
 }
 
+/* PRIMARY */
+[data-route='general'] main .inner > .container table thead th[data-col='primary'] {
+    min-width: 80px;
+}
+
 /* ROWS */
 [data-route='general'] main .inner > .container table thead .rows {
-    width: 40px;
-    min-width: inherit;
+    min-width: 40px;
 
     .close {
         @include abs(-8px, -8px);
@@ -211,7 +209,7 @@
         &.selected,
         &:hover {
             background-color: $lightYellow;
-            border-left: 1px solid $lightYellow;
+            border: 1px solid $lightYellow;
         }
 
         .uncheck {
@@ -230,27 +228,41 @@
     }
 }
 
+/* COLS */
+[data-route='general'] main .inner > .container table thead .action {
+    @include colsSorter();
+    min-width: 40px;
+}
+[data-route='general'] main .inner > .container table tbody td.action .in:hover {
+    background-color: $lightYellow;
+}
+
 /* ORDER */
 [data-route='general'] main .inner > .container table thead th.orderable {
+    .label {
+        padding-right: 30px;
+    }
+
     .right {
-        @include abs(0, 0);
+        @include abs(0, -1px);
+        @include wh(30px, 100%);
+        cursor: pointer;
         @include transition(background-color);
 
         .triangle {
             @include abs(50%, '', '', 50%);
             @include transition(opacity);
-            margin-top: -7px;
+            margin-top: -5px;
             margin-left: -5px;
             display: block;
             opacity: 0.1;
         }
     }
 
-    .label {
-        padding-right: 25px;
-    }
-    &:hover,
-    &.ordering {
+    .right:hover,
+    &.ordering .right {
+        background-color: $lightYellow;
+        
         .label {
             color: $gray;
         }
@@ -266,11 +278,13 @@
     &[data-direction='desc'] .right .triangle {
         @include triangle('bottom', $white, 12px, 6px);
     }
+    &[data-direction='asc'] .right:hover .triangle,
     &[data-direction='asc'].ordering .right .triangle {
-        @include triangle('top', $lightYellow, 12px, 6px);
+        @include triangle('top', $color, 12px, 6px);
     }
+    &[data-direction='desc'] .right:hover .triangle,
     &[data-direction='desc'].ordering .right .triangle {
-        @include triangle('bottom', $lightYellow, 12px, 6px);
+        @include triangle('bottom', $color, 12px, 6px);
     }
 }
 
@@ -279,10 +293,11 @@
     .left {
         @include abs(0, '', '', 0);
         @include wh(30px, 100%);
+        cursor: pointer;
     }
 
     .label {
-        padding-left: 25px;
+        padding-left: 30px;
     }
 }
 [data-route='general'] main .inner > .container table thead th.filterable .filter-outer {
@@ -316,10 +331,7 @@
     @include filterPopup();
 }
 
-/* COLS */
-[data-route='general'] main .inner > .container table thead .action {
-    @include colsSorter();
-}
+/* TBODY */
 [data-route='general'] main .inner > .container table tbody {
     tr {
         &:hover {
@@ -356,7 +368,8 @@
 
             > .empty-placeholder {
                 font-style: italic;
-                color: $gray;
+                color: $darkGray;
+                text-align: left;
             }
 
             a {
@@ -388,23 +401,12 @@
 [data-route='general'] main .inner > .container table tbody td.rows {
     @include rowsChecker();
 }
-[data-route='general'] main .inner > .container table tbody td.primary,
-[data-route='general'] main .inner > .container table tbody td.action {
-    .in:hover {
-        background-color: $lightYellow;
-    }
-}
-[data-route='general'] main .inner > .container table tbody td.action {
-    width: 50px;
-    min-width: inherit;
-
-    .in {
-        padding: 0 10px;
-    }
+[data-route='general'] main .inner > .container table tbody td.primary .in:hover {
+    background-color: $lightYellow;
 }
 
 /* GENERAL EXPORT */
-.modal[data-route='generalExportDialog'] .inner {
+.modal[data-route='generalExport'] .inner {
     .count {
         margin-bottom: 20px;
     }

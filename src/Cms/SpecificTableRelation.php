@@ -39,6 +39,7 @@ class SpecificTableRelation extends Core\RouteAlias
         'match'=>[
             'ajax'=>true,
             'role'=>['>'=>'user']],
+        'group'=>'relation'
     ];
 
 

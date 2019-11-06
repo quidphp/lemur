@@ -23,9 +23,7 @@ class Lang extends Core\Row\Lang
         '@cms'=>[
             'permission'=>[
                 'contributor'=>['view'=>false],
-                'editor'=>['view'=>false],
-                'subAdmin'=>['export'=>true],
-                'admin'=>['export'=>true]]]
+                'editor'=>['view'=>false]]]
     ];
 }
 

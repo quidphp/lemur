@@ -29,19 +29,16 @@ class Email extends Core\Col\Email
         $return = $this->value($return);
         $option['context'] = (empty($option['context']))? null:$option['context'];
 
-        if(is_string($return) && !empty($return))
+        if(is_string($return) && !empty($return) && $option['context'] !== 'noHtml')
         {
-            if(!in_array($option['context'],['cms:generalExport','noHtml'],true))
-            {
-                if($option['context'] === 'cms:general' && empty($option['excerpt']))
-                $option['excerpt'] = 30;
+            if($option['context'] === 'cms:general' && empty($option['excerpt']))
+            $option['excerpt'] = 30;
 
-                $title = true;
-                if(!empty($option['excerpt']))
-                $title = Base\Str::excerpt($option['excerpt'],$return);
+            $title = true;
+            if(!empty($option['excerpt']))
+            $title = Base\Str::excerpt($option['excerpt'],$return);
 
-                $return = Base\Html::a($return,$title);
-            }
+            $return = Base\Html::a($return,$title);
         }
 
         return $return;

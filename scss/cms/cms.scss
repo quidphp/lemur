@@ -9,23 +9,23 @@
 // cms
 // stylesheet that imports other stylesheets for the CMS
 
-// icon and component
-@import 'component/_addRemove';
-@import 'component/_calendar';
-@import 'component/_clickOpen';
-@import 'component/_colsSorter';
-@import 'component/_com';
-@import 'component/_enumSet';
-@import 'component/_fakeselect';
-@import 'component/_files';
-@import 'component/_filter';
-@import 'component/_mainNav';
-@import 'component/_modal';
-@import 'component/_rowsChecker';
-@import 'component/_tableRelation';
+// component
+@import '_addRemove';
+@import '_calendar';
+@import '_clickOpen';
+@import '_colsSorter';
+@import '_com';
+@import '_enumSet';
+@import '_fakeselect';
+@import '_files';
+@import '_filter';
+@import '_icon';
+@import '_mainNav';
+@import '_modal';
+@import '_rowsChecker';
+@import '_tableRelation';
 
 // import
-@import '_icon';
 @import 'style';
 @import 'form';
 @import 'interface';

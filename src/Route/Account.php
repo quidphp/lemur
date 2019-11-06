@@ -21,7 +21,8 @@ abstract class Account extends Core\RouteAlias
             'en'=>'my-account'],
         'match'=>[
             'role'=>['>='=>'user']],
-        'sitemap'=>false
+        'sitemap'=>false,
+        'group'=>'account'
     ];
 
 

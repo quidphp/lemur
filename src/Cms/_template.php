@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Lemur\Cms;
 use Quid\Base;
 use Quid\Base\Html;
+use Quid\Lemur;
 
 // _template
 // trait that grants the methods to generate the CMS HTML template
@@ -38,7 +39,9 @@ trait _template
         $flush .= Html::div(null,'loading-icon');
         $flush .= Html::div(null,'loading-progress');
         $flush .= Html::divCl();
-
+        
+        $flush .= Html::div(null,'background');
+        
         $flush .= Html::divOp('#wrapper');
         $flush .= Html::headerCond($this->header());
         $flush .= Html::mainOp();
@@ -94,8 +97,6 @@ trait _template
         $r .= $route->a($boot->label());
         $r .= Html::divCl();
 
-        $r .= Html::div($boot->typeLabel(),'context-type');
-
         return $r;
     }
 
@@ -106,25 +107,13 @@ trait _template
     {
         $r = '';
         $session = static::session();
-
-        if($session->isSomebody())
+        $roles = $session->roles(false);
+        
+        if($roles->isSomebody())
         {
             $user = $session->user();
-            $username = $user->username();
+            $username = $user->username()->pair(15);
             $dateLogin = $user->dateLogin();
-
-            $r .= Html::divOp('top');
-
-            if($this->hasPermission('account'))
-            $r .= Account::makeOverload()->aTitle(null,['submit','icon','padLeft','account']);
-
-            if($this->hasPermission('accountChangePassword'))
-            $r .= AccountChangePassword::makeOverload()->aDialog(['submit','icon','padLeft','password']);
-
-            if($this->hasPermission('logout'))
-            $r .= Logout::makeOverload()->aTitle(null,['submit','icon','padLeft','logout']);
-
-            $r .= Html::divCl();
 
             if($this->hasPermission('sessionInfo'))
             {
@@ -133,7 +122,7 @@ trait _template
 
                 $attr = ['popup-trigger',(!empty($popup))? ['with-ajax','with-popup','with-icon','anchor-corner']:null];
                 $r .= Html::divOp($attr);
-
+                
                 if($popup === true)
                 $r .= $route->a($username,'popup-title');
                 else
@@ -142,6 +131,22 @@ trait _template
                 $r .= Html::div(null,'popup');
                 $r .= Html::divCl();
             }
+            
+            if($this->hasPermission('account'))
+            $r .= Account::makeOverload()->aTitle(null,['submit','icon','padLeft','account']);
+
+            if($this->hasPermission('accountChangePassword'))
+            $r .= AccountChangePassword::makeOverload()->aDialog(['submit','icon','padLeft','password']);
+            
+            $route = SessionRole::makeOverload();
+            if($route->canTrigger())
+            {
+                $active = ($session->hasFakeRoles())? 'active':null;
+                $r .= SessionRole::makeOverload()->aDialog(['submit','icon','padLeft','mask',$active]);
+            }
+            
+            if($this->hasPermission('logout'))
+            $r .= Logout::makeOverload()->aTitle(null,['submit','icon','padLeft','logout']);
         }
 
         return $r;
@@ -157,7 +162,7 @@ trait _template
         $tables = $tables->hasPermission('view');
         $hierarchy = $tables->hierarchy(false);
 
-        $r .= Html::ulCond($this->navMenu($hierarchy,0));
+        $r .= Html::ulCond($this->navMenu($hierarchy));
 
         return $r;
     }
@@ -165,14 +170,17 @@ trait _template
 
     // navMenu
     // génère un niveau de menu pour la navigation principale
-    protected function navMenu(array $array,int $i):string
+    protected function navMenu(array $array,int $i=0):string
     {
         $r = '';
         $session = $this->session();
         $tables = $this->db()->tables();
         $lang = $this->lang();
         $specificAdd = SpecificAdd::getOverloadClass();
-
+        
+        if($i >= 2)
+        static::throw('tooDeep',$array);
+        
         if(!empty($array))
         {
             $ii = $i + 1;
@@ -181,49 +189,55 @@ trait _template
             {
                 if(is_string($key) && !empty($key))
                 {
+                    $html = '';
+                    $routeHtml = '';
                     $table = $tables->get($key);
+                    $class = [];
+                    
+                    if(!empty($table))
+                    {
+                        $route = static::session()->routeTableGeneral($table,true);
+                        $option = ($route->routeRequest()->isSegmentParsedFromValue())? ['query'=>false]:null;
+                        $routeHtml .= $route->aTitle(null,null,null,$option);
 
+                        if($i > 0 && $table->hasPermission('insert','lemurInsert','mainNavAdd'))
+                        {
+                            $route = $specificAdd::makeOverload($table);
+                            $routeHtml .= $route->makeNavLink();
+                        }
+                    }
+                    
                     if(is_array($value))
                     {
-                        $class = ['sub','anchor-corner'];
+                        $class[] = 'with-submenu';
+                        $class[] = 'anchor-corner';
                         $keys = array_keys($value);
 
                         if($this->isTableTop($keys))
                         $class[] = 'top';
-                    }
-
-                    else
-                    $class = [];
-
-                    $r .= Html::liOp($class);
-
-                    if(!empty($table))
-                    {
-                        $route = static::session()->routeTableGeneral($table,true);
-
-                        $option = ($route->routeRequest()->isSegmentParsedFromValue())? ['query'=>false]:null;
-                        $r .= $route->aTitle(null,null,null,$option);
-
-                        if($i > 0 && !empty($specificAdd) && $table->hasPermission('insert','lemurInsert','mainNavAdd'))
+                        
+                        $label = $lang->tableLabel($key);
+                        $subNav = $this->navMenu($value,$ii);
+                        
+                        if(!empty($subNav))
                         {
-                            $route = $specificAdd::makeOverload($table);
-                            $r .= $route->makeNavLink();
+                            $html .= Html::divOp('trigger');
+                            $html .= Html::div(null,['triangle']);
+                            $html .= Html::span($label);
+                            $html .= Html::divCl();
+                            $html .= Html::divOp('popup');
+                            $html .= Html::ulOp();
+                            $html .= $routeHtml;
+                            $html .= $subNav;
+                            $html .= Html::ulCl();
+                            $html .= Html::divCl();
                         }
                     }
-
+                    
                     else
-                    {
-                        $label = $lang->tableLabel($key);
-                        $r .= Html::span($label);
-                    }
-
-                    if(is_array($value))
-                    {
-                        $r .= Html::div(null,['triangle']);
-                        $r .= Html::ulCond($this->navMenu($value,$ii));
-                    }
-
-                    $r .= Html::liClose();
+                    $html = $routeHtml;
+                    
+                    $r .= Html::liCond($html,$class);
                 }
             }
         }
@@ -271,45 +285,74 @@ trait _template
     protected function footerLeft():string
     {
         $r = '';
-        $links = $this->footerLinks();
-
-        if(!empty($links))
-        {
-            foreach ($links as $link)
-            {
-                if(is_string($link))
-                $r .= Html::liCond($link);
-            }
-
-            $r = Html::ulCond($r);
-            $r = Html::navCond($r);
-        }
-
+        
+        if($this->hasPermission('footerLink'))
+        $r .= $this->footerLeftElement('link',$this->footerLink());
+        
+        if($this->hasPermission('footerLang'))
+        $r .= $this->footerLeftElement('lang',$this->footerLang());
+        
+        if($this->hasPermission('footerModule'))
+        $r .= $this->footerLeftElement('module',$this->footerModule());
+        
+        if($this->hasPermission('footerCli'))
+        $r .= $this->footerLeftElement('cli',$this->footerCli());
+        
         return $r;
     }
 
-
-    // footerLinks
-    // retourne un tableau avec tous les liens à mettre dans la partie gauche du footer
-    protected function footerLinks():array
+    
+    // footerLeftElement
+    // génère un clickOpen pour la partie gauche du footer
+    protected function footerLeftElement(string $type,array $array):string 
     {
-        $return = [];
-        $session = static::session();
-
-        if($this->hasPermission('footerTypes'))
-        $return = Base\Arr::append($return,$this->footerTypes());
-
-        if($this->hasPermission('footerModules'))
-        $return = Base\Arr::append($return,$this->footerModules());
-
+        $r = '';
+        $popup = '';
+        $top = null;
+        foreach ($array as $value) {
+            if($value instanceof Lemur\Route)
+            {
+                $top = ($value::classFqcn() === static::class)? 'top':$top;
+                $value = $value->aTitle();
+            }
+            
+            $popup .= Html::li($value);
+        }
+        $popup = Html::ulCond($popup);
+        $label = static::langText(array('footer',$type));
+        
+        if(!empty($popup))
+        {
+            $attr = array($top,'anchor-corner','with-submenu');
+            $r .= Html::divOp($attr);
+            $r .= Html::span($label,array('submit','icon','padLeft','trigger',$type));
+            $r .= Html::div($popup,'popup');
+            $r .= Html::divCl();
+        }
+        
+        return $r;
+    }
+    
+    
+    // footerLink
+    // retourne un tableau avec les routes liens
+    protected function footerLink():array
+    {
+        $return = array();
+        
+        if($this->hasPermission('footerLinkType'))
+        $return = $this->footerLinkType();
+        
+        $return = Base\Arr::append($return,$this->footerRouteGroup('link'));
+        
         return $return;
     }
-
-
-    // footerTypes
+    
+    
+    // footerLinkType
     // retourne un tableau avec les liens vers les différents types
-    // n'inclut pas un lien vers le type courant ou le type du cms
-    protected function footerTypes():array
+    // n'inclut pas un lien vers le type courant
+    protected function footerLinkType():array
     {
         $return = [];
         $session = static::session();
@@ -320,7 +363,7 @@ trait _template
 
         foreach ($schemeHosts as $key => $uri)
         {
-            if($key === 'cms' && !$this->hasPermission('footerTypesCms'))
+            if($key === 'cms' && !$this->hasPermission('footerLinkTypeCms'))
             continue;
 
             if($key !== $type)
@@ -332,28 +375,63 @@ trait _template
 
         return $return;
     }
+    
+    
+    // footerLang
+    // retourne un tableau avec les routes lang
+    protected function footerLang():array 
+    {
+        $return = array();
+        $lang = static::lang();
+        
+        foreach ($lang->allLang() as $value) 
+        {
+            $label = $lang->langLabel($value);
+            $route = ($this::isRedirectable())? $this:Home::makeOverload();
 
+            $return[] = $route->a($label,null,$value);
+        }
+        
+        return $return;
+    }
+    
+    
+    // footerModule
+    // retourne un tableau avec les routes modules
+    protected function footerModule():array
+    {
+        return $this->footerRouteGroup('module');
+    }
+    
+    
+    // footerCli
+    // retourne un tableau avec les routes cli
+    protected function footerCli():array
+    {
+        return $this->footerRouteGroup('cli');
+    }
 
-    // footerModules
-    // retourne un tableau avec les liens pour les modules
-    protected function footerModules():array
+    
+    // footerRouteGroup
+    // méthode utilisé par link, module et cli pour obtenir un tableau avec les liens de route
+    protected function footerRouteGroup(string $group):array
     {
         $return = [];
         $routes = static::boot()->routesActive();
-        $modules = $routes->filter(['group'=>'module']);
+        $routes = $routes->filter(['group'=>$group]);
 
-        if($modules->isNotEmpty())
+        if($routes->isNotEmpty())
         {
-            foreach ($modules as $module)
+            foreach ($routes as $route)
             {
-                $return[] = $module::makeOverload()->aTitle();
+                $return[] = $route::makeOverload();
             }
         }
 
         return $return;
     }
-
-
+    
+    
     // footerRight
     // génère la partie droite du footer pour toutes les pages du cms
     protected function footerRight():string
@@ -390,12 +468,10 @@ trait _template
     // génère le html pour le modal
     protected function makeModal():string
     {
-        $r = Html::divOp('background');
-        $r .= Html::divOp('outer');
+        $r = Html::divOp('outer');
         $r .= Html::divOp('box');
         $r .= Html::div(null,['icon','solo','close']);
         $r .= Html::divOp('inner');
-        $r .= Html::divCl();
         $r .= Html::divCl();
         $r .= Html::divCl();
         $r .= Html::divCl();

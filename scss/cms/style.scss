@@ -150,7 +150,6 @@ body .icon.close {
 }
 
 /* OPACITY */
-body.responsive-menu-open header > .top .burger-menu,
 body .icon.close,
 body .icon.search,
 html body .icon.move {
@@ -212,6 +211,9 @@ body .icon.burger {
 body .icon.check {
     @include bgimg64($iconCheck);
 }
+body .icon.cli {
+    @include bgimg64($iconCli);
+}
 body .icon.cols {
     @include bgimg64($iconCols);
 }
@@ -230,15 +232,27 @@ body .icon.filter {
 body .icon.help {
     @include bgimg64($iconHelp);
 }
+body .icon.lang {
+    @include bgimg64($iconLang);
+}
+body .icon.link {
+    @include bgimg64($iconLink);
+}
 body .icon.login,
 body .icon.logout {
     @include bgimg64($iconLogin);
+}
+body .icon.mask {
+    @include bgimg64($iconMask);
 }
 body .icon.minus {
     @include bgimg64($iconMinus);
 }
 body .icon.modify {
     @include bgimg64($iconModify);
+}
+body .icon.module {
+    @include bgimg64($iconModule);
 }
 body .icon.password {
     @include bgimg64($iconPassword);

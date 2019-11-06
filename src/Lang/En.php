@@ -34,7 +34,7 @@ class En extends Core\Lang\En
                 'cms'=>'Content management system'
             ]
         ],
-
+        
         // route
         'route'=>[
 
@@ -63,6 +63,43 @@ class En extends Core\Lang\En
                 'loadMore'=>'Load [from] to [to] on [total]'
             ],
 
+            // com
+            'com'=>array(
+                
+                // pos
+                'pos'=>array(
+                    
+                    // sessionRole
+                    'sessionRole'=>array(
+                        'submit'=>'Temporary roles have been assigned.',
+                        'reset'=>'Temporary roles have been removed.'
+                    )
+                ),
+                
+                // neg
+                'neg'=>array(
+                    
+                    // sessionRole
+                    'sessionRole'=>array(
+                        'failure'=>"Error assigning temporary roles."
+                    ),
+                    
+                    // user
+                    'user'=>[
+
+                        // welcome
+                        'welcome'=>[
+                            'failure'=>'The welcome email was not sent.'
+                        ]
+                    ],
+
+                    // duplicate
+                    'duplicate'=>[
+                        'failure'=>'Duplicate has failed'
+                    ]
+                )
+            ),
+            
             // popup
             'popup'=>[
 
@@ -84,7 +121,7 @@ class En extends Core\Lang\En
                     'getGarbageCollect'=>'Session garbage collect',
                     'userAgent'=>'User agent',
                     'roles'=>'Roles',
-                    'fakeRoles'=>'Fake roles'
+                    'fakeRoles'=>'Temporary roles'
                 ],
 
                 // boot
@@ -110,7 +147,10 @@ class En extends Core\Lang\En
                     'memory'=>'Memory',
                     'diskSpace'=>'Disk space',
                     'phpImportantExtension'=>'Important PHP extensions',
-                    'phpImportantIni'=>'Important PHP ini'
+                    'phpImportantIni'=>'Important PHP ini',
+                    'phpOverview'=>'PHP code (src)',
+                    'jsOverview'=>'JS code (src)',
+                    'cssOverview'=>'CSS code (src)',
                 ],
 
                 // home
@@ -125,6 +165,7 @@ class En extends Core\Lang\En
                     'connectionStatus'=>'Connection status',
                     'classFqcn'=>'Class DB',
                     'classSyntax'=>'Class Syntax',
+                    'classSchema'=>'Classe Schema',
                     'classTables'=>'Class Tables',
                     'importantVariables'=>'Important variables'
                 ],
@@ -187,7 +228,15 @@ class En extends Core\Lang\En
             'resetPassword'=>[
                 'info'=>'Enter your email to get a message explaining how to regenerate the password.'
             ],
-
+            
+            // sessionRole
+            'sessionRole'=>[
+                'title'=>'Temporary roles',
+                'info'=>'Use this form to temporarily assign one or more roles to the current session.',
+                'submit'=>'Submit',
+                'reset'=>'Reset'
+            ],
+            
             // accountChangePassword
             'accountChangePassword'=>[
                 'link'=>'My password',
@@ -209,6 +258,10 @@ class En extends Core\Lang\En
 
             // footer
             'footer'=>[
+                'link'=>'Link',
+                'lang'=>'Language',
+                'module'=>'Module',
+                'cli'=>'Cli',
                 'copyright'=>'Version [version]'
             ],
 
@@ -235,10 +288,9 @@ class En extends Core\Lang\En
             // export
             'export'=>[
                 'long'=>'This export may take more than one minute.',
-                'encoding'=>'Choose an encoding for the CSV',
-                'utf8'=>'UTF-8',
-                'latin1'=>'Latin-1',
-                'office'=>'Use Latin-1 for use in Microsoft Office on Windows'
+                'choice'=>'Choose an exportation type',
+                'raw'=>'Raw data',
+                'format'=>'Formatted data'
             ],
 
             // specific
@@ -430,13 +482,6 @@ class En extends Core\Lang\En
                         'type'=>'Content-Type to be used, for administrator'
                     ],
 
-                    // option
-                    'option'=>[
-                        'type'=>'Option type',
-                        'key'=>'Option key, use /',
-                        'content'=>'Content of the option, can be json'
-                    ],
-
                     // log
                     'log'=>[
                         'type'=>'Log type',
@@ -515,13 +560,16 @@ class En extends Core\Lang\En
                 // label
                 'label'=>[
                     'about'=>'About',
+                    'cliClearCache'=>'Empty caches',
                     'general'=>'General',
                     'generalDelete'=>'General - Delete',
-                    'generalExport'=>'General - Export',
-                    'generalExportDialog'=>'Export',
+                    'generalExport'=>'Export',
+                    'generalExportDownload'=>'General - Export - Download',
                     'generalRelation'=>'General - Relation',
                     'generalTruncate'=>'Empty the table',
                     'homeSearch'=>'Home - Search',
+                    'sessionRole'=>'Role',
+                    'sessionRoleSubmit'=>'Role - Submit',
                     'specific'=>'Specific',
                     'specificAdd'=>'Specific - Add',
                     'specificAddSubmit'=>'Specific - Add - Submit',

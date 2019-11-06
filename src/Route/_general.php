@@ -266,42 +266,6 @@ trait _general
     }
 
 
-    // makeTableHeaderOrder
-    // génère un lien pour ordonner dans un header de table
-    protected function makeTableHeaderOrder(Core\Col $col,array $array,$attr=null,$icon=null):array
-    {
-        $html = $array[0];
-        $thAttr = $array[1];
-
-        if($this->hasTablePermission('order'))
-        {
-            $thAttr[] = 'orderable';
-            $active = ($col === $this->segment('order'));
-
-            if($active === true)
-            {
-                $dataDirection = $this->segment('direction');
-                $direction = $col->db()->syntaxCall('invertOrderDirection',$dataDirection);
-                $thAttr[] = 'ordering';
-            }
-
-            else
-            $direction = $dataDirection = $col->direction(true);
-
-            $thAttr['data']['direction'] = $dataDirection;
-
-            $route = $this->changeSegments(['order'=>$col,'direction'=>$direction]);
-            $uri = $route->uri();
-            $html .= Html::divOp('right');
-            $html .= Html::span(null,$icon);
-            $html .= Html::divCl();
-            $html = Html::a($uri,$html,$attr);
-        }
-
-        return [$html,$thAttr];
-    }
-
-
     // makeGeneralPager
     // construit un block de navigation à partir d'un tableau general
     protected function makeGeneralPager(array $general,bool $firstLast=true,bool $prevNext=true,bool $str=false)

@@ -27,7 +27,6 @@ class Row extends Core\Row
                 'drop'=>true,
                 'nullPlaceholder'=>true]],
         '@cms'=>[
-            'homeTask'=>null, // pour cms, ajouter un lien vers la page d'ajout dans task
             'specificAddNavLink'=>null, // pour le cms, permet de diviser le lien add et view en deux
             'generalOperation'=>null, // pour le cms, méthode pour ajouter un bouton en haut à droite dans general
             'specificOperation'=>null, // pour le cms, méthode pour ajouter un bouton en haut à droite dans specific
@@ -109,12 +108,14 @@ class Row extends Core\Row
                     'in'=>false,
                     'notIn'=>false],
                 'subAdmin'=>[
+                    'export'=>true,
                     'lemurTruncate'=>false,
                     'generalInfoPopup'=>true,
                     'colInfoPopup'=>true,
                     'mediaRegenerate'=>true,
                     'nullPlaceholder'=>true],
                 'admin'=>[
+                    'export'=>true,
                     'lemurTruncate'=>false,
                     'generalInfoPopup'=>true,
                     'colInfoPopup'=>true]]

@@ -44,6 +44,7 @@ class GeneralRelation extends Core\RouteAlias
         'match'=>[
             'ajax'=>true,
             'role'=>['>'=>'user']],
+        'group'=>'relation'
     ];
 
 

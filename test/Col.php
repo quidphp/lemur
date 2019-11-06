@@ -24,13 +24,70 @@ class Col extends Base\Test
         assert($db->truncate($table) instanceof \PDOStatement);
         assert($db->inserts($table,['id','active','name','password','email','dateAdd','userAdd','dateModify','userModify'],[1,1,'james','james','james@gmail.com',10,11,12,13],[2,2,'james2','james2','james2@gmail.com',20,21,22,23]) === [1,2]);
         $tb = $db[$table];
+        $col = $tb['name'];
         $date = $tb['date'];
         $email = $tb['email'];
         $slug = $tb['slug_fr'];
         $jsonArray = $tb['json'];
         $phone = $tb['phone'];
+        $lang = $tb['relationLang'];
+        $dateAdd = $tb->cols()->get('dateAdd');
+        $password = $tb->cols()->get('password');
+        $active = $tb->cols()->get('active');
+        $media = $tb['media'];
+        $multi = $tb['multi'];
+        $check = $tb['check'];
+        $array = $tb['myRelation'];
+        
+        // onComplex
+        
+        // valueComplex
+        assert($dateAdd->valueComplex(123445677) === 'November 29, 1973 13:27:57');
 
+        // complexTag
+        assert($lang->complexTag() === 'radio');
+        assert($dateAdd->complexTag() === 'div');
+        assert($active->complexTag() === 'checkbox');
+        assert(strlen($active->formComplex()) === 204);
+        assert($lang->complexTag() === 'radio');
+        assert(strlen($lang->formComplex()) === 642);
+        assert(strlen($lang->formComplex(3)) === 660);
+        assert($media->formComplex() === "<div class='block empty'><div class='form'><input name='media' type='file'/></div></div>");
+        assert($multi->complexTag() === 'multiselect');
+        assert($check->complexTag() === 'search');
+        assert(strlen($array->formComplex(null,['data-required'=>null])) === 177);
+        assert(strlen($array->formComplex()) === 195);
+        assert(strlen($multi->formComplex(2)) === 165);
+        assert(strlen($multi->formComplex([2,5])) === 185);
+        assert(strlen($password->formComplex()) === 285);
+        assert($date->valueComplex('08-08-1984') === '08-08-1984');
+        assert($date->valueComplex(true) === null);
+        assert($date->valueComplex(mktime(0,0,0,8,8,1984)) === '08-08-1984');
+
+        // formComplexAttr
+        assert(count($dateAdd->formAttr()) === 2);
+        assert(count($dateAdd->formComplexAttr()) === 0);
+        
+        // formComplex
+        assert($dateAdd->formComplex() === "<div class='empty-placeholder'>NULL</div>");
+
+        // formComplexOutput
+
+        // formComplexNothing
+        assert($dateAdd->formComplexNothing() === "<div class='nothing'>Nothing</div>");
+
+        // formComplexEmptyPlaceholder
+        assert($dateAdd->formComplexEmptyPlaceholder(null) === "<div class='empty-placeholder'>NULL</div>");
+        assert($dateAdd->formComplexEmptyPlaceholder(true) === '');
+        
+        // formComplexWrap
+        assert($password->formComplexWrap() !== $password->formWrap());
+        assert(strlen($password->formComplexWrap('br',3)) === 357);
+        
+        // getDataAttr
+        
         // col
+        assert(count($col->attr()) === 63);
         assert(strlen($date->formComplex()) === 260);
         assert(strlen($date->formComplex('08-08-1984')) === 278);
         assert(strlen($date->formComplex(mktime(0,0,0,8,8,1984))) === 278);
@@ -56,13 +113,6 @@ class Col extends Base\Test
         assert($slug->slugKeyFromArr(['name_fr'=>'jamesFr','name_en'=>'jamesEn']) === 'jamesFr');
         assert($slug->slugAddNow('blabla') !== 'blabla');
         assert($slug->slugDateFirst() === 'ymd');
-
-        // cols
-        $table = 'ormCols';
-        $tb = $db[$table];
-        $cols = $tb->cols();
-        assert(strlen($cols->formComplex()['date']) === 260);
-        assert($cols->formComplexWrap('table')['userAdd'] === "<table><tr><td><label>Added by</label></td><td><div class='empty-placeholder'>NULL</div></td></tr></table>");
 
         return true;
     }

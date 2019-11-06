@@ -32,11 +32,16 @@ class Login extends Lemur\Route\Login
     // enregistre l'uri demandé si path n'est pas empty
     protected function onBefore()
     {
+        $return = false;
+        $session = static::session();
+        $roles = $session->roles(false);
+        
+        if($roles->isNobody())
         $return = true;
-
+        
         if(!$this->request()->isPathMatchEmpty())
         {
-            $flash = $this->session()->flash();
+            $flash = $session->flash();
             $redirect = $this->request()->absolute();
             $flash->set('login/redirect',$redirect);
             $return = false;

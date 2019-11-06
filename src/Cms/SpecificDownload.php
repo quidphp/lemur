@@ -35,7 +35,8 @@ class SpecificDownload extends Core\RouteAlias
             'col'=>'structureSegmentCol',
             'index'=>'structureSegmentInt'],
         'match'=>[
-            'role'=>['>'=>'user']]
+            'role'=>['>'=>'user']],
+        'group'=>'specific'
     ];
 
 
