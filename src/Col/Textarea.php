@@ -32,7 +32,7 @@ class Textarea extends Core\ColAlias
     // onSet
     // gère la logique onSet pour textarea
     // la seule chose géré est le remplacement des liens absoluts pour leur version relatives
-    public function onSet($return,array $row,?Orm\Cell $cell=null,array $option)
+    final protected function onSet($return,array $row,?Orm\Cell $cell=null,array $option)
     {
         $return = parent::onSet($return,$row,$cell,$option);
 
@@ -45,7 +45,7 @@ class Textarea extends Core\ColAlias
 
     // absoluteReplace
     // remplacement des liens absoluts vers relatifs dans le bloc texte
-    protected function absoluteReplace(string $return):string
+    final protected function absoluteReplace(string $return):string
     {
         $relative = $this->getAttr('relative');
 
@@ -74,7 +74,7 @@ class Textarea extends Core\ColAlias
 
     // hasTableRelation
     // retourne vrai si le textarea a des table relation
-    public function hasTableRelation():bool
+    final public function hasTableRelation():bool
     {
         $return = false;
         $table = $this->table();
@@ -89,7 +89,7 @@ class Textarea extends Core\ColAlias
 
     // getDataAttr
     // retourne les datas attr pour la colonne
-    public function getDataAttr(array $return):array
+    final public function getDataAttr(array $return):array
     {
         if($this->hasTableRelation())
         $return['table-relation'] = true;
@@ -121,7 +121,7 @@ class Textarea extends Core\ColAlias
 
     // relationBox
     // génère la box relation pour le champ wysiwyg
-    public function relationBox(Orm\Tables $tables):string
+    final public function relationBox(Orm\Tables $tables):string
     {
         $r = '';
 

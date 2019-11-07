@@ -28,7 +28,7 @@ trait _specific
 
     // onReplace
     // tableau onReplace pour la route
-    protected function onReplace(array $return):array
+    final protected function onReplace(array $return):array
     {
         $return['title'] = $this->title();
         $return['metaDescription'] = $this->table()->description();
@@ -39,7 +39,7 @@ trait _specific
 
     // panel
     // retourne le tableau des panneaux
-    protected function panel():array
+    final protected function panel():array
     {
         return $this->cache(__METHOD__,function() {
             $return = [];
@@ -68,7 +68,7 @@ trait _specific
 
     // hasPanel
     // retourne vrai si la route a des panneaux
-    protected function hasPanel():bool
+    final protected function hasPanel():bool
     {
         $return = false;
         $panel = $this->panel();
@@ -82,7 +82,7 @@ trait _specific
 
     // makeTop
     // génère la partie supérieure de la page specifique
-    protected function makeTop():string
+    final protected function makeTop():string
     {
         $r = '';
         $table = $this->table();
@@ -106,7 +106,7 @@ trait _specific
 
     // makeFormTop
     // génère la partie supérieure du formulaire spécifique
-    protected function makeFormTop():string
+    final protected function makeFormTop():string
     {
         $r = '';
         $r .= $this->makeFormHidden();
@@ -125,7 +125,7 @@ trait _specific
 
     // makeFormHidden
     // génère les input hiddens du formulaire
-    protected function makeFormHidden():string
+    final protected function makeFormHidden():string
     {
         $r = $this->tableHiddenInput();
 
@@ -138,7 +138,7 @@ trait _specific
 
     // makeFormPanel
     // crée le conteneur des panneaux
-    protected function makeFormPanel():string
+    final protected function makeFormPanel():string
     {
         $r = '';
 
@@ -177,7 +177,7 @@ trait _specific
 
     // makeColPopup
     // génère le popup d'informations pour une colonne
-    protected function makeColPopup(Core\Col $col):?string
+    final protected function makeColPopup(Core\Col $col):?string
     {
         $return = null;
         $table = $this->table();
@@ -195,7 +195,7 @@ trait _specific
 
     // colInfoPopupClosure
     // callback pour le popup d'informations de la page d'accueil
-    protected function colInfoPopupClosure(Core\Col $col):\Closure
+    final protected function colInfoPopupClosure(Core\Col $col):\Closure
     {
         return function(string $key) use($col) {
             $return = [static::langText(['popup','col',$key])];
@@ -236,7 +236,7 @@ trait _specific
 
     // makeFormInner
     // génère l'intérieur d'un panneau avec tous les champs inclus
-    protected function makeFormInner():string
+    final protected function makeFormInner():string
     {
         $r = '';
         $hasPanel = $this->hasPanel();
@@ -283,7 +283,7 @@ trait _specific
 
     // makeFormOne
     // génère un champ du formulaire
-    protected function makeFormOne(Core\Col $col):string
+    final protected function makeFormOne(Core\Col $col):string
     {
         $r = '';
         $colCell = $this->colCellVisible($col);
@@ -297,8 +297,7 @@ trait _specific
             $class = [];
             $class[] = ($col->isRequired())? 'required':null;
             $class[] = ($colCell->hasFormLabelId($this->formWrapAttr($colCell),true))? 'cursor-pointer':null;
-            $data = ['name'=>$col,'group'=>$col->group(),'col'=>$col::className(true),'tag'=>$col->complexTag()];
-            $data = $col->getDataAttr($data);
+            $data = $col->getComplexDataAttr();
             $attr = ['element','anchor-corner',$class,'data'=>$data];
 
             $detailsHtml = Html::liMany(...$details);
@@ -327,7 +326,7 @@ trait _specific
             {
                 $attr[] = 'exception';
                 $formWrap = Html::div($colCell->label(),'label');
-                $e->onCatched();
+                $e->catched();
             }
 
             finally
@@ -342,7 +341,7 @@ trait _specific
 
     // getFormWrap
     // retourne la string formWrap a utilisé pour chaque champ
-    protected function getFormWrap():string
+    final protected function getFormWrap():string
     {
         return $this->getAttr('formWrap');
     }

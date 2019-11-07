@@ -25,7 +25,7 @@ trait _page
 
     // main
     // génère la division main pour la page du cms
-    protected function main():string
+    final protected function main():string
     {
         $r = '';
 
@@ -42,7 +42,7 @@ trait _page
 
     // mainTopLeft
     // génère la division en haut à gauche pour la page du cms
-    protected function mainTopLeft():string
+    final protected function mainTopLeft():string
     {
         $r = '';
         $r .= Html::divOp('title');
@@ -56,7 +56,7 @@ trait _page
 
     // mainTopRight
     // génère la division en haut à droite pour la page du cms
-    protected function mainTopRight():string
+    final protected function mainTopRight():string
     {
         return '';
     }
@@ -64,7 +64,7 @@ trait _page
 
     // getTitle
     // retourne le titre à afficher pour la page, par défaut le label
-    public function getTitle()
+    final public function getTitle()
     {
         return static::label();
     }
@@ -72,7 +72,7 @@ trait _page
 
     // getSubTitle
     // retourne le sous=titre à afficher pour la page, par défaut passe par lang text
-    public function getSubTitle():?string
+    final public function getSubTitle():?string
     {
         $return = null;
         $className = static::className(true);

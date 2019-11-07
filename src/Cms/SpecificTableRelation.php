@@ -18,7 +18,7 @@ use Quid\Orm;
 class SpecificTableRelation extends Core\RouteAlias
 {
     // trait
-    use _common;
+    use _relation;
     use Lemur\Route\_relation;
     use Lemur\Segment\_table;
     use Lemur\Segment\_orderTableRelation;
@@ -34,18 +34,13 @@ class SpecificTableRelation extends Core\RouteAlias
             'table'=>'structureSegmentTable',
             'order'=>'structureSegmentOrderTableRelation',
             'page'=>'structureSegmentPage'],
-        'method'=>'tableRelationOutput',
-        'order'=>true,
-        'match'=>[
-            'ajax'=>true,
-            'role'=>['>'=>'user']],
-        'group'=>'relation'
+        'method'=>'tableRelationOutput'
     ];
 
 
     // onBefore
     // validation avant le lancement de la route
-    protected function onBefore()
+    final protected function onBefore()
     {
         $return = false;
         $table = $this->segment('table');
@@ -59,7 +54,7 @@ class SpecificTableRelation extends Core\RouteAlias
 
     // relation
     // retourne l'objet relation de la table
-    public function relation():Orm\Relation
+    final public function relation():Orm\Relation
     {
         return $this->segment('table')->relation();
     }
@@ -67,7 +62,7 @@ class SpecificTableRelation extends Core\RouteAlias
 
     // trigger
     // lance la route tableRelation
-    public function trigger():string
+    final public function trigger():string
     {
         $r = '';
         $grab = $this->relationGrab();
@@ -91,7 +86,7 @@ class SpecificTableRelation extends Core\RouteAlias
 
     // isSearchValueValid
     // retourne vrai si la valeur de recherche est valide
-    protected function isSearchValueValid(string $value):bool
+    final protected function isSearchValueValid(string $value):bool
     {
         return ($this->segment('table')->isSearchTermValid($value))? true:false;
     }
@@ -99,7 +94,7 @@ class SpecificTableRelation extends Core\RouteAlias
 
     // relationKeyValue
     // retourne les keyValue à partir de valeur de relation
-    protected function relationKeyValue(array $values):?array
+    final protected function relationKeyValue(array $values):?array
     {
         $return = null;
         $table = $this->segment('table');
@@ -111,7 +106,7 @@ class SpecificTableRelation extends Core\RouteAlias
 
     // makeResults
     // génère les résultats d'affichage de la relation
-    protected function makeResults(array $array,$attr=null,?int $loadMore=nul):string
+    final protected function makeResults(array $array,$attr=null,?int $loadMore=nul):string
     {
         $r = '';
 
@@ -134,7 +129,7 @@ class SpecificTableRelation extends Core\RouteAlias
 
     // makeClickOpen
     // génère le html pour le clickOpen
-    public static function makeClickOpen(Core\Table $table,Core\Route $route,$class=null):string
+    final public static function makeClickOpen(Core\Table $table,Core\Route $route,$class=null):string
     {
         $r = '';
         $html = '';

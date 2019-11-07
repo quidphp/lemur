@@ -22,7 +22,7 @@ class UserActive extends Core\Col\UserActive
     // formComplex
     // génère le formComplex pour userActive
     // retourne un input plain si c'est l'utilisateur courant
-    public function formComplex($value=true,?array $attr=null,?array $option=null):string
+    final public function formComplex($value=true,?array $attr=null,?array $option=null):string
     {
         $return = null;
         $session = static::boot()->session();

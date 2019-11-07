@@ -21,7 +21,7 @@ class Medias extends Core\Cell\Medias
 
     // generalOutput
     // génère le output pour général, retourne seulement la première image de la cellule
-    public function generalOutput(?array $option=null):string
+    final public function generalOutput(?array $option=null):string
     {
         $return = '';
         $slider = [];
@@ -50,7 +50,7 @@ class Medias extends Core\Cell\Medias
 
     // makeGeneralSlider
     // génère le slider pour les images
-    protected function makeGeneralSlider(array $slider):string
+    final protected function makeGeneralSlider(array $slider):string
     {
         $r = '';
 

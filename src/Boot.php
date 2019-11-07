@@ -31,7 +31,6 @@ abstract class Boot extends Core\Boot
         'concatenateJs'=>[
             '[publicJs]/include.js'=>[
                 0=>'[vendorLemur]/js/base',
-                1=>'[vendorLemur]/js/main',
                 2=>'[vendorLemur]/js/core',
                 10=>'[js]/include']],
         'roles'=>[
@@ -68,7 +67,7 @@ abstract class Boot extends Core\Boot
 
     // isCms
     // retourne vrai si la clé de l'application roulant présentement est cms
-    public function isCms():bool
+    final public function isCms():bool
     {
         return ($this->type() === 'cms')? true:false;
     }

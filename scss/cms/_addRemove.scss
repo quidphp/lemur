@@ -8,10 +8,6 @@
 
 // addRemove
 // stylesheet for the addRemove component
-
-// addRemove
-// contient les styles de base pour la composante jsonArray
-// un champ complexe où l'on peut ajouté, déplacer ou supprimer des lignes
 @mixin addRemove() {
     .right .container {
         position: relative;

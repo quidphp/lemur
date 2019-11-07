@@ -16,7 +16,7 @@ use Quid\Lemur;
 class SpecificRelation extends Core\RouteAlias
 {
     // trait
-    use _common;
+    use _relation;
     use Lemur\Route\_specificRelation;
     use Lemur\Segment\_table;
     use Lemur\Segment\_colRelation;
@@ -36,18 +36,13 @@ class SpecificRelation extends Core\RouteAlias
             'selected'=>'structureSegmentSelected',
             'order'=>'structureSegmentOrderColRelation',
             'page'=>'structureSegmentPage'],
-        'order'=>true,
-        'showCount'=>true,
-        'match'=>[
-            'ajax'=>true,
-            'role'=>['>'=>'user']],
-        'group'=>'relation'
+        'showCount'=>true
     ];
 
 
     // onBefore
     // validation avant le lancement de la route
-    protected function onBefore()
+    final protected function onBefore()
     {
         $return = false;
         $table = $this->segment('table');

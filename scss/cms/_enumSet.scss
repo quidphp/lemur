@@ -67,4 +67,8 @@
 // mixin pour une cellule de relation dans le tableau general
 @mixin enumSetGeneral() {
     @include filesGeneralThumbnail();
+    
+    .relation a {
+        display: inline;
+    }
 }

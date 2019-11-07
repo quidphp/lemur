@@ -34,12 +34,14 @@ class SpecificDispatch extends Core\RouteAlias
             'role'=>['>'=>'user'],
             'csrf'=>false,
             'genuine'=>true,
-            'post'=>['id'=>['='=>'[primary]'],'-table-'=>['='=>'[table]']]],
+            'post'=>['-primary-'=>['='=>'[primary]'],'-table-'=>['='=>'[table]']]],
         'dispatch'=>[
             '--modify--'=>SpecificSubmit::class,
             '--duplicate--'=>SpecificDuplicate::class,
             '--delete--'=>SpecificDelete::class,
             '--userWelcome--'=>SpecificUserWelcome::class],
+        'response'=>[
+            'timeLimit'=>60],
         'parent'=>Specific::class,
         'group'=>'submit',
         'form'=>[
@@ -50,7 +52,7 @@ class SpecificDispatch extends Core\RouteAlias
     // onBefore
     // lance la route
     // comme les routes redirigent toujours, on ne devrait jamais se rendre à routeException
-    protected function onBefore()
+    final protected function onBefore()
     {
         $route = $this->getRouteLaunch();
         $route->start();
@@ -62,7 +64,7 @@ class SpecificDispatch extends Core\RouteAlias
 
     // getRouteLaunch
     // retourne la route a lancé
-    protected function getRouteLaunch():Core\Route
+    final protected function getRouteLaunch():Core\Route
     {
         $return = null;
         $request = $this->request();
@@ -84,7 +86,7 @@ class SpecificDispatch extends Core\RouteAlias
 
     // onFallback
     // si c'est un failedFileUpload, renvoie vers le referer
-    protected function onFallback($context=null)
+    final protected function onFallback($context=null)
     {
         return ($context === 'failedFileUpload')? true:null;
     }

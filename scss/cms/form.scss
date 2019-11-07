@@ -10,7 +10,7 @@
 // stylesheet for the various form inputs of the CMS
 
 /* DATE */
-form [data-group='date'] .right {
+form [data-group='date'] .bind {
     position: relative;
 
     .popup {
@@ -30,22 +30,21 @@ form [data-group='date'] .right {
 }
 
 /* CHANGE PASSWORD */
-form [data-col='userPassword'] .right {
+form [data-col='userPassword'] {
     input[type='password']:first-child {
         margin-bottom: 10px;
     }
 }
 
 /* MEDIA */
-.form [data-group='media'] .right .block {
+form [data-group='media'] .bind {
     @include files();
 }
 
 /* SEARCH ENUMSET */
-form [data-tag='search'] .right .search-enumset {
+form [data-tag='search'] .bind {
     @include enumSet();
-}
-form [data-tag='search'] .right {
+    
     .thumbnail {
         margin-bottom: 3px;
 

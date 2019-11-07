@@ -21,15 +21,24 @@ class Col extends Core\Col
         '@cms'=>[
             'filter'=>true,
             'filterEmptyNotEmpty'=>true,
+            'quickEdit'=>true,
             'relationExport'=>null, // si la colonne doit être incluses comme exporation de relation (par exemple user s'exporte en plusieurs champs dans le CSV)
             'generalExcerptMin'=>100]
     ];
 
-
+    
+    // isQuickEditable
+    // retourne vrai si la colonne est éditable rapidement via le cms
+    final public function isQuickEditable():bool 
+    {
+        return ($this->getAttr('quickEdit') === true && $this->isEditable() && $this->isFormTag(null,true));
+    }
+    
+    
     // onComplex
     // permet de formater une valeur simple vers un type plus complexe
     // utilisé lors de la génération d'un élément de formulaire, si onComplex est true renvoie à onGet
-    public function onComplex($return,array $option)
+    final protected function onComplex($return,array $option)
     {
         $onComplex = $this->getAttr('onComplex');
 
@@ -45,7 +54,7 @@ class Col extends Core\Col
 
     // valueComplex
     // génère une valeur en vue de l'affichage dans un élément de formulaire complexe
-    public function valueComplex($return=true,?array $option=null)
+    final public function valueComplex($return=true,?array $option=null)
     {
         $option = (array) $option;
 
@@ -61,7 +70,7 @@ class Col extends Core\Col
 
     // complexTag
     // retourne la tag complex en lien avec la colonne
-    public function complexTag(?array $attr=null):string
+    final public function complexTag(?array $attr=null):string
     {
         return $this->tag($attr,true);
     }
@@ -69,7 +78,7 @@ class Col extends Core\Col
 
     // formComplexAttr
     // retourne les attributs de formulaires complexes avec un tableau d'attributs en argument facultatif
-    public function formComplexAttr(?array $attr=null):array
+    final public function formComplexAttr(?array $attr=null):array
     {
         return $this->formAttr($attr,true);
     }
@@ -86,7 +95,7 @@ class Col extends Core\Col
 
     // formComplexOutput
     // génère un élément de formulaire complexe mais sans passer value dans valueComplex
-    public function formComplexOutput($value,?array $attr=null,?array $option=null):string
+    final public function formComplexOutput($value,?array $attr=null,?array $option=null):string
     {
         $return = '';
         $tag = $this->complexTag($attr);
@@ -110,7 +119,7 @@ class Col extends Core\Col
 
     // formComplexNothing
     // le html si rien à afficher
-    public function formComplexNothing():string
+    final public function formComplexNothing():string
     {
         return Base\Html::div($this->db()->lang()->text('common/nothing'),'nothing');
     }
@@ -118,7 +127,7 @@ class Col extends Core\Col
 
     // formComplexEmptyPlaceholder
     // le html pour un placeholder vide ('' ou null)
-    public function formComplexEmptyPlaceholder($value):string
+    final public function formComplexEmptyPlaceholder($value):string
     {
         return Base\Html::divCond($this->emptyPlaceholder($value),'empty-placeholder');
     }
@@ -126,7 +135,7 @@ class Col extends Core\Col
 
     // formComplexWrap
     // fait un wrap à partir de formComplex plutôt que form
-    public function formComplexWrap(?string $wrap=null,$pattern=null,$value=true,?array $attr=null,?array $replace=null,?array $option=null):string
+    final public function formComplexWrap(?string $wrap=null,$pattern=null,$value=true,?array $attr=null,?array $replace=null,?array $option=null):string
     {
         return $this->makeFormWrap('formComplex',$wrap,$pattern,$value,$attr,$replace,$option);
     }
@@ -136,6 +145,17 @@ class Col extends Core\Col
     // retourne les dates attr pour la colonne
     public function getDataAttr(array $return):array
     {
+        return $return;
+    }
+    
+    
+    // getComplexDataAttr
+    // retourne les data attr complet pour le form complex
+    final public function getComplexDataAttr():array
+    {
+        $return = ['name'=>$this,'group'=>$this->group(),'col'=>$this::className(true),'tag'=>$this->complexTag()];
+        $return = $this->getDataAttr($return);
+        
         return $return;
     }
 }

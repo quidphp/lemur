@@ -48,7 +48,7 @@ class User extends Core\Row\User
 
     // specificOperation
     // utilisé dans le cms, permet d'envoyer un courriel de bienvenue à l'utilisateur
-    public static function specificOperation(self $row):string
+    final public static function specificOperation(self $row):string
     {
         $r = '';
         $route = $row->routeClass('userWelcome');
@@ -75,7 +75,7 @@ class User extends Core\Row\User
 
     // userExport
     // méthode utilisé pour exporter les colonnes et cellules d'un utilisateur en plusieurs
-    public static function userExport(array $value,string $type,Core\Cell $cell,array $option):array
+    final public static function userExport(array $value,string $type,Core\Cell $cell,array $option):array
     {
         $return = [];
         $col = $cell->col();

@@ -19,7 +19,7 @@ trait _export
 
     // onBefore
     // vérifie que l'utilisateur a la permission pour exporter la table et qu'il y a des rows à exporter
-    protected function onBefore()
+    final protected function onBefore()
     {
         $return = false;
         $table = $this->table();
@@ -39,7 +39,7 @@ trait _export
 
     // generalSegments
     // retourne les segments à utiliser pour la création de l'objet sql de generalExport
-    protected function generalSegments():array
+    final protected function generalSegments():array
     {
         return $this->segment(['order','direction','filter','in','notIn']);
     }
@@ -47,7 +47,7 @@ trait _export
 
     // isType
     // retourne vrai si la valeur est un type valide
-    public static function isType($value):bool
+    final public static function isType($value):bool
     {
         return (is_string($value) && in_array($value,static::getTypes(),true))? true:false;
     }
@@ -55,7 +55,7 @@ trait _export
 
     // getTypes
     // retourne les types permis
-    public static function getTypes():array
+    final public static function getTypes():array
     {
         return ['format','raw'];
     }
@@ -63,7 +63,7 @@ trait _export
 
     // defaultType
     // retourne le type par défaut à utiliser
-    public static function defaultType():string
+    final public static function defaultType():string
     {
         return current(static::getTypes());
     }

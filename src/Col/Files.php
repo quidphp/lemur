@@ -29,7 +29,7 @@ abstract class Files extends Core\Col\Files
     // onGet
     // logique onGet pour un champ files
     // affichage spéciale si le contexte est cms:general
-    public function onGet($return,array $option)
+    final protected function onGet($return,array $option)
     {
         if($return instanceof Core\Cell\Files && !empty($option['context']) && is_string($option['context']) && strpos($option['context'],':general') !== false)
         $return = $return->generalOutput($option);
@@ -43,7 +43,7 @@ abstract class Files extends Core\Col\Files
 
     // formComplex
     // génère un élément de formulaire complexe pour les medias
-    public function formComplex($value=true,?array $attr=null,?array $option=null):string
+    final public function formComplex($value=true,?array $attr=null,?array $option=null):string
     {
         $return = '';
         $name = $this->name();
@@ -64,7 +64,7 @@ abstract class Files extends Core\Col\Files
 
     // formComplexInsert
     // génère l'élément de formulaire complexe média lors d'une insertion
-    protected function formComplexInsert(array $attr,array $option):string
+    final protected function formComplexInsert(array $attr,array $option):string
     {
         $return = '';
 
@@ -77,7 +77,7 @@ abstract class Files extends Core\Col\Files
             foreach($this->indexRange() as $i)
             {
                 $int = $i + 1;
-                $return .= Html::divOp(['block','empty']);
+                $return .= Html::divOp(['block','bind','empty']);
 
                 if($hasMultiple === true)
                 $return .= Html::div(Html::divtable($int),'count');
@@ -98,7 +98,7 @@ abstract class Files extends Core\Col\Files
 
     // commonFormComplexUpdate
     // génère l'élément de formulaire complexe média lors d'une mise à jour
-    protected function commonFormComplexUpdate(?int $index=null,Core\Cell $value,array $attr,array $option):string
+    final protected function commonFormComplexUpdate(?int $index=null,Core\Cell $value,array $attr,array $option):string
     {
         $return = '';
         $hasIndex = $this->hasIndex();
@@ -123,7 +123,7 @@ abstract class Files extends Core\Col\Files
         if($allowFileUpload === true || $isEmpty === false)
         {
             $class = ($isEmpty === true)? 'empty':'not-empty';
-            $return .= Html::divOp(['block',$class]);
+            $return .= Html::divOp(['block','bind',$class]);
 
             if(is_int($i))
             $return .= Html::div(Html::divtable($i),'count');
@@ -181,7 +181,7 @@ abstract class Files extends Core\Col\Files
 
     // commonFormComplexUpdateInfo
     // génère la partie info du formulaire complexe media
-    protected function commonFormComplexUpdateInfo(?int $index=null,Core\Cell $value,array $attr,array $option):string
+    final protected function commonFormComplexUpdateInfo(?int $index=null,Core\Cell $value,array $attr,array $option):string
     {
         $return = '';
         $hasIndex = $this->hasIndex();
@@ -247,7 +247,7 @@ abstract class Files extends Core\Col\Files
 
     // commonFormComplexUpdateVersion
     // génère la partie versions du formulaire complexe media
-    protected function commonFormComplexUpdateVersion(?int $index=null,Core\Cell $value,array $attr,array $option):string
+    final protected function commonFormComplexUpdateVersion(?int $index=null,Core\Cell $value,array $attr,array $option):string
     {
         $return = '';
 

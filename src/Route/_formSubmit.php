@@ -44,7 +44,7 @@ trait _formSubmit
 
     // fallbackRouteRedirect
     // permet de spécifier une route de redirection en cas de fallback
-    protected function fallbackRouteRedirect($context=null)
+    final protected function fallbackRouteRedirect($context=null)
     {
         return;
     }
@@ -76,7 +76,7 @@ trait _formSubmit
 
     // shoudLogForm
     // retourne vrai si le formulaire doit être loggé
-    protected function shoudLogForm():bool
+    final protected function shoudLogForm():bool
     {
         return true;
     }
@@ -84,7 +84,7 @@ trait _formSubmit
 
     // logFormData
     // retourne le tableua de donnés à logger
-    protected function logFormData():array
+    final protected function logFormData():array
     {
         $return = [];
         $return['route'] = static::class;
@@ -96,7 +96,7 @@ trait _formSubmit
 
     // logFormType
     // retourne le type de log à utiliser
-    protected function logFormType():string
+    final protected function logFormType():string
     {
         return $this->getAttr('logType') ?? 'form';
     }
@@ -117,7 +117,7 @@ trait _formSubmit
 
     // onAfterSuccessOrFailure
     // méthode appelé dans onAfter peut importe si c'est un succès ou failure
-    protected function onAfterSuccessOrFailure():void
+    final protected function onAfterSuccessOrFailure():void
     {
         return;
     }
@@ -150,7 +150,7 @@ trait _formSubmit
 
     // successComplete
     // traite le succès
-    protected function successComplete():void
+    final protected function successComplete():void
     {
         $this->setSuccess();
         $this->onSuccess();
@@ -161,7 +161,7 @@ trait _formSubmit
 
     // failureComplete
     // traite l'échec
-    protected function failureComplete():void
+    final protected function failureComplete():void
     {
         $this->setFlash();
         $this->onFailure();
@@ -173,7 +173,7 @@ trait _formSubmit
     // routeFailure
     // retourne l'objet route en cas d'erreur, par défaut renvoie à success
     // peut aussi retoruner une string
-    protected function routeFailure()
+    final protected function routeFailure()
     {
         return $this->routeSuccess();
     }
@@ -181,7 +181,7 @@ trait _formSubmit
 
     // isSuccess
     // retourne vrai si le formulaire est un succès
-    protected function isSuccess()
+    final protected function isSuccess()
     {
         return ($this->success === true)? true:false;
     }
@@ -189,7 +189,7 @@ trait _formSubmit
 
     // setSuccess
     // permet d'attribuer une valeur à la propriété success
-    protected function setSuccess(bool $value=true):void
+    final protected function setSuccess(bool $value=true):void
     {
         $this->success = $value;
 
@@ -200,7 +200,7 @@ trait _formSubmit
     // setFlash
     // conserve les données flash, par défaut utilise la méthode flashPost de session
     // ceci peut être désactiver via config
-    protected function setFlash():void
+    final protected function setFlash():void
     {
         if($this->getAttr('flashPost') === true)
         $this->session()->flashPost($this);
@@ -211,7 +211,7 @@ trait _formSubmit
 
     // post
     // retourne le tableau post pour le formulaire
-    protected function post():array
+    final protected function post():array
     {
         return $this->request()->post(true,false,true);
     }
@@ -219,7 +219,7 @@ trait _formSubmit
 
     // trigger
     // lance la méthode proceed et retoure null
-    public function trigger()
+    final public function trigger()
     {
         $this->proceed();
 

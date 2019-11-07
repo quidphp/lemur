@@ -16,7 +16,7 @@ use Quid\Lemur;
 class GeneralRelation extends Core\RouteAlias
 {
     // trait
-    use _common;
+    use _relation;
     use _general;
     use Lemur\Route\_generalRelation;
     use Lemur\Segment\_table;
@@ -38,19 +38,14 @@ class GeneralRelation extends Core\RouteAlias
             'selected'=>'structureSegmentSelected',
             'order'=>'structureSegmentOrderColRelation',
             'page'=>'structureSegmentPage'],
-        'order'=>true,
         'showCount'=>true,
-        'showEmptyNotEmpty'=>true,
-        'match'=>[
-            'ajax'=>true,
-            'role'=>['>'=>'user']],
-        'group'=>'relation'
+        'showEmptyNotEmpty'=>true
     ];
 
 
     // onBefore
     // validation avant le lancement de la route
-    protected function onBefore()
+    final protected function onBefore()
     {
         $return = false;
         $table = $this->segment('table');
@@ -75,7 +70,7 @@ class GeneralRelation extends Core\RouteAlias
 
     // getRoute
     // retourne la route à utiliser
-    protected function getRoute():Core\Route
+    final protected function getRoute():Core\Route
     {
         return $this->general();
     }

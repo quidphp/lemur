@@ -15,7 +15,7 @@ trait _orderColRelation
 {
     // structureSegmentOrderColRelation
     // gère le segment order avec colonne pour une route relation
-    public static function structureSegmentOrderColRelation(string $type,$value,array &$keyValue)
+    final public static function structureSegmentOrderColRelation(string $type,$value,array &$keyValue)
     {
         $return = false;
 

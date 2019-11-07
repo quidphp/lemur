@@ -43,7 +43,7 @@ abstract class ResetPasswordSubmit extends Core\RouteAlias
 
     // onSuccess
     // traite le succès
-    protected function onSuccess():void
+    final protected function onSuccess():void
     {
         static::timeoutIncrement('success');
 
@@ -53,7 +53,7 @@ abstract class ResetPasswordSubmit extends Core\RouteAlias
 
     // onFailure
     // traite l'erreur
-    protected function onFailure():void
+    final protected function onFailure():void
     {
         static::timeoutIncrement('failure');
 
@@ -71,7 +71,7 @@ abstract class ResetPasswordSubmit extends Core\RouteAlias
 
     // routeFailure
     // retourne l'objet route pour la redirection en cas d'erreur
-    protected function routeFailure():Lemur\Route
+    final protected function routeFailure():Lemur\Route
     {
         return static::makeParentOverload();
     }
@@ -79,7 +79,7 @@ abstract class ResetPasswordSubmit extends Core\RouteAlias
 
     // proceed
     // lance le processus resetPasswordSubmit
-    public function proceed():?string
+    final public function proceed():?string
     {
         $return = null;
         $session = static::session();
@@ -105,7 +105,7 @@ abstract class ResetPasswordSubmit extends Core\RouteAlias
 
     // post
     // retourne le tableau post pour le reset du mot de passe
-    public function post():array
+    final public function post():array
     {
         $return = [];
         $request = $this->request();
@@ -117,7 +117,7 @@ abstract class ResetPasswordSubmit extends Core\RouteAlias
 
     // emailReplace
     // replace pour l'envoie de courriel
-    protected function emailReplace():?array
+    final protected function emailReplace():?array
     {
         return null;
     }
@@ -125,7 +125,7 @@ abstract class ResetPasswordSubmit extends Core\RouteAlias
 
     // getOption
     // option pour le reset password
-    protected function getOption():?array
+    final protected function getOption():?array
     {
         return ['com'=>true];
     }

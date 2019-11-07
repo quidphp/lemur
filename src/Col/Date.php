@@ -11,6 +11,7 @@ namespace Quid\Lemur\Col;
 use Quid\Base;
 use Quid\Core;
 use Quid\Lemur;
+use Quid\Base\Html;
 
 // date
 // extended class for a date column, supports many date formats
@@ -27,12 +28,12 @@ class Date extends Core\Col\Date
     // formComplex
     // génère le formulaire complex pour date
     // un petit calendrier apparaît en popup
-    public function formComplex($value=true,?array $attr=null,?array $option=null):string
+    final public function formComplex($value=true,?array $attr=null,?array $option=null):string
     {
         $return = '';
         $tag = $this->complexTag($attr);
 
-        if(Base\Html::isFormTag($tag,true))
+        if(Html::isFormTag($tag,true))
         {
             $this->checkFormatCalendar();
             $value = $this->valueComplex($value);
@@ -56,10 +57,12 @@ class Date extends Core\Col\Date
             $placeholderMaxLength = strlen($placeholder);
             $attr = Base\Attr::append($attr,['placeholder'=>$placeholder,'maxlength'=>$placeholderMaxLength]);
             $return .= $this->form($value,$attr,$option);
-            $return .= Base\Html::divOp('popup');
+            $return .= Html::divOp('popup');
             $data = ['char'=>$route::getReplaceSegment(),'format'=>$formatCalendar,'current'=>$timestamp,'href'=>$route];
-            $return .= Base\Html::div(null,['calendar','data'=>$data]);
-            $return .= Base\Html::divCl();
+            $return .= Html::div(null,['calendar','data'=>$data]);
+            $return .= Html::divCl();
+            
+            $return = Html::divCond($return,'bind');
         }
 
         else

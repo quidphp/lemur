@@ -1,0 +1,67 @@
+// compileOnSave: false
+
+/*
+ * This file is part of the QuidPHP package.
+ * Website: https://quidphp.com
+ * License: https://github.com/quidphp/lemur/blob/master/LICENSE
+ */
+
+// quickEdit
+// stylesheet for the quickEdit component
+@mixin quickEdit() {
+    position: relative;
+    
+    .icon-small {
+        @include inbl(top);
+        @include wh(20px);
+        background-color: $lightGray;
+        border-left: 1px solid $gray;
+        border-bottom: 1px solid $gray;
+        
+        &:hover {
+            background-color: $gray;
+        }
+    }
+    
+    a.quick-edit {
+        @include abs(0px,0px);
+        z-index: 3;
+        display: none;
+        border-bottom-left-radius: 3px;
+    }
+    
+    &:hover > a.quick-edit,
+    &[data-status='loading'] > a.quick-edit {
+        display: block;
+    }
+    
+    &[data-status='loading'] > a.quick-edit {
+        background-color: $white;
+    }
+    
+    &[data-status='error'] > a.quick-edit {
+        background-color: $red;
+    }
+    
+    &[data-status='ready'] {
+        min-width: 250px;
+        
+        > .in > form > .field-edit {
+        
+        }
+        
+        > .in > form > .tools {
+            @include abs(0px,0px);
+            z-index: 3;
+            
+            .reset {
+                border-bottom-left-radius: 3px;
+            }
+        }
+        
+        > a.quick-edit {
+            display: none !important;
+            background-color: $lightGray;
+        }
+    }
+}

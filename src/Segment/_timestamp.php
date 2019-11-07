@@ -15,7 +15,7 @@ trait _timestamp
 {
     // structureSegmentTimestamp
     // gère le segment d'uri pour un timestamp, doit être plus grand que 0
-    public static function structureSegmentTimestamp(string $type,$value,array &$keyValue)
+    final public static function structureSegmentTimestamp(string $type,$value,array &$keyValue)
     {
         $return = false;
 

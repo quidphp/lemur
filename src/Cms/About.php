@@ -31,7 +31,7 @@ class About extends Core\RouteAlias
 
     // trigger
     // html pour la page à propos, qui est accessible à tous peu importe le role
-    public function trigger()
+    final public function trigger()
     {
         return $this->output();
     }
@@ -39,7 +39,7 @@ class About extends Core\RouteAlias
 
     // getContentReplaceArray
     // retourne le tableau de remplacement
-    protected function getContentReplaceArray():array
+    final protected function getContentReplaceArray():array
     {
         $return = [];
         $boot = static::boot();
@@ -55,7 +55,7 @@ class About extends Core\RouteAlias
 
     // output
     // génère le output html pour le popup about
-    protected function output():string
+    final protected function output():string
     {
         $r = '';
         $boot = static::boot();
@@ -74,7 +74,7 @@ class About extends Core\RouteAlias
 
     // aDialog
     // retourne le lien dialog
-    public function aDialog(?array $attr=null):string
+    final public function aDialog(?array $attr=null):string
     {
         return $this->aTitle(null,Base\Attr::append($attr,['data'=>['modal'=>static::name()]]));
     }

@@ -34,7 +34,7 @@ class SessionRole extends Core\RouteAlias
 
     // onBefore
     // avant le trigger, vérifie que l'utilisateur peut accéder à lar oute
-    protected function onBefore()
+    final protected function onBefore()
     {
         return $this->canTrigger();
     }
@@ -42,7 +42,7 @@ class SessionRole extends Core\RouteAlias
 
     // canTrigger
     // retourne vrai si la route peut être trigger
-    public function canTrigger():bool
+    final public function canTrigger():bool
     {
         $return = false;
         $session = static::session();
@@ -60,7 +60,7 @@ class SessionRole extends Core\RouteAlias
 
     // submitRoute
     // route à utiliser pour submit
-    public function submitRoute():Lemur\Cms\SessionRoleSubmit
+    final public function submitRoute():Lemur\Cms\SessionRoleSubmit
     {
         return SessionRoleSubmit::makeOverload();
     }
@@ -68,7 +68,7 @@ class SessionRole extends Core\RouteAlias
 
     // trigger
     // trigge la route accountChangePassword
-    public function trigger():string
+    final public function trigger():string
     {
         $r = '';
         $r .= Html::divtableOpen();
@@ -82,7 +82,7 @@ class SessionRole extends Core\RouteAlias
 
 
     // makeForm
-    protected function makeForm():string
+    final protected function makeForm():string
     {
         $r = '';
         $route = $this->submitRoute();
@@ -115,7 +115,7 @@ class SessionRole extends Core\RouteAlias
 
     // aDialog
     // retourne le lien dialog pour ouvrir la formulaire dans une box
-    public function aDialog($attr=null):string
+    final public function aDialog($attr=null):string
     {
         return $this->a(static::label(),Base\Attr::append($attr,['data'=>['modal'=>static::name()]]));
     }

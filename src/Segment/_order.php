@@ -16,7 +16,7 @@ trait _order
 {
     // structureSegmentOrder
     // gère le segment d'uri pour un ordre, similaire à colonne
-    public static function structureSegmentOrder(string $type,$value,array &$keyValue)
+    final public static function structureSegmentOrder(string $type,$value,array &$keyValue)
     {
         $return = false;
 

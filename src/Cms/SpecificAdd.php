@@ -45,7 +45,7 @@ class SpecificAdd extends Core\RouteAlias
 
     // onBefore
     // validation avant le lancement de la route
-    protected function onBefore()
+    final protected function onBefore()
     {
         $return = false;
         $table = $this->segment('table');
@@ -64,7 +64,7 @@ class SpecificAdd extends Core\RouteAlias
 
     // selectedUri
     // retourne les uri sélectionnés pour la route
-    public function selectedUri():array
+    final public function selectedUri():array
     {
         $return = [];
 
@@ -82,7 +82,7 @@ class SpecificAdd extends Core\RouteAlias
 
     // hasSpecificAddNavLink
     // retourne vrai si la route doit apparaître sur sa propre ligne dans le menu
-    public function hasSpecificAddNavLink():bool
+    final public function hasSpecificAddNavLink():bool
     {
         return ($this->table()->getAttr('specificAddNavLink') === true)? true:false;
     }
@@ -90,7 +90,7 @@ class SpecificAdd extends Core\RouteAlias
 
     // isPanelVisible
     // retourne vrai si le panneau est visible
-    protected function isPanelVisible(Core\Cols $cols):bool
+    final protected function isPanelVisible(Core\Cols $cols):bool
     {
         return ($cols->isHidden(static::session()))? false:true;
     }
@@ -98,7 +98,7 @@ class SpecificAdd extends Core\RouteAlias
 
     // flash
     // retourne la valeur flash à partir d'une colonne
-    protected function flash(?Core\Col $key=null)
+    final protected function flash(?Core\Col $key=null)
     {
         return Base\Arr::getSafe((!empty($key))? $key->name():$key,$this->flash);
     }
@@ -106,7 +106,7 @@ class SpecificAdd extends Core\RouteAlias
 
     // makeTitleBox
     // génère le titre pour la page specificAdd
-    protected function makeTitleBox():string
+    final protected function makeTitleBox():string
     {
         return $this->makeH1($this->makeTitle());
     }
@@ -114,7 +114,7 @@ class SpecificAdd extends Core\RouteAlias
 
     // makeNavLink
     // fait le lien ajout pour le menu
-    public function makeNavLink():string
+    final public function makeNavLink():string
     {
         $r = '';
         $table = $this->table();
@@ -134,7 +134,7 @@ class SpecificAdd extends Core\RouteAlias
 
     // makeAddTitle
     // génère le titre spécifique d'ajout pour la table, si existant
-    protected function makeAddTitle(?string $lang=null):?string
+    final protected function makeAddTitle(?string $lang=null):?string
     {
         $r = null;
         $table = $this->table();
@@ -146,7 +146,7 @@ class SpecificAdd extends Core\RouteAlias
 
     // makeTitle
     // génère le titre pour la route
-    protected function makeTitle(?string $lang=null):string
+    final protected function makeTitle(?string $lang=null):string
     {
         $r = $this->makeAddTitle($lang);
 
@@ -163,7 +163,7 @@ class SpecificAdd extends Core\RouteAlias
 
     // allSegment
     // tous les segments pour la route, un par table
-    public static function allSegment():array
+    final public static function allSegment():array
     {
         $return = [];
         $db = static::db();
@@ -180,7 +180,7 @@ class SpecificAdd extends Core\RouteAlias
 
     // main
     // fait main pour specificAdd
-    public function main():string
+    final public function main():string
     {
         $r = $this->makeTop();
         $r .= $this->makeForm();
@@ -191,7 +191,7 @@ class SpecificAdd extends Core\RouteAlias
 
     // makeNav
     // génère la nav pour la page, en haut à droite
-    protected function makeNav():string
+    final protected function makeNav():string
     {
         $r = '';
         $table = $this->table();
@@ -211,7 +211,7 @@ class SpecificAdd extends Core\RouteAlias
 
     // makeForm
     // génère le formulaire pour la page
-    protected function makeForm():string
+    final protected function makeForm():string
     {
         $r = '';
 
@@ -232,7 +232,7 @@ class SpecificAdd extends Core\RouteAlias
 
     // makeFormBottom
     // génère la partie inférieure du formulaire
-    protected function makeFormBottom():string
+    final protected function makeFormBottom():string
     {
         $r = '';
 
@@ -246,7 +246,7 @@ class SpecificAdd extends Core\RouteAlias
 
     // colCell
     // retourne la colonne
-    protected function colCell(Core\Col $col):Core\Col
+    final protected function colCell(Core\Col $col):Core\Col
     {
         return $col;
     }
@@ -254,7 +254,7 @@ class SpecificAdd extends Core\RouteAlias
 
     // colCellVisible
     // retourne la colonne si elle est visible
-    protected function colCellVisible(Core\Col $col):?Core\Col
+    final protected function colCellVisible(Core\Col $col):?Core\Col
     {
         $return = null;
 
@@ -270,7 +270,7 @@ class SpecificAdd extends Core\RouteAlias
     // makeOperation
     // fait le bloc opération en haut à doite
     // pour add seulement le bouton submit
-    protected function makeOperation():string
+    final protected function makeOperation():string
     {
         return $this->makeFormSubmit('top');
     }
@@ -278,7 +278,7 @@ class SpecificAdd extends Core\RouteAlias
 
     // makeFormWrap
     // génère un wrap label -> field pour le formulaire
-    protected function makeFormWrap(Core\Col $col,array $replace):string
+    final protected function makeFormWrap(Core\Col $col,array $replace):string
     {
         $return = '';
         $context = static::context();
@@ -295,7 +295,7 @@ class SpecificAdd extends Core\RouteAlias
 
     // formWrapAttr
     // retourne les attributs par défaut pour le formWrap
-    protected function formWrapAttr(Core\Col $col):?array
+    final protected function formWrapAttr(Core\Col $col):?array
     {
         return null;
     }
@@ -303,7 +303,7 @@ class SpecificAdd extends Core\RouteAlias
 
     // makeFormSubmit
     // génère le submit pour le formulaire d'ajout
-    protected function makeFormSubmit(string $type):string
+    final protected function makeFormSubmit(string $type):string
     {
         return Html::submit(static::langText('specific/add'),['icon','add','padLeft']);
     }

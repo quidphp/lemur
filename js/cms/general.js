@@ -19,10 +19,11 @@ $(document).ready(function() {
 		var search = main.find(".left > .search");
         var formTruncate = main.find(".truncate form");
 		var pageLimit = main.find("input[name='limit'],input[name='page']");
-        var filter = main.find("table th.filterable .filter-outer");
-		var colsSorter = main.find("table th.action");
-		var rowsChecker = main.find("table td.rows input[type='checkbox']");
-		var filesSlider = main.find("table td[data-group='media'] .slider");
+        var filter = scroller.find("table th.filterable .filter-outer");
+		var colsSorter = scroller.find("table th.action");
+		var rowsChecker = scroller.find("table td.rows input[type='checkbox']");
+		var filesSlider = scroller.find("table td[data-group='media'] .slider");
+        var quickEdit = scroller.find("table td[data-quick-edit='1'] a.quick-edit");
         
         // dragScroll
         scroller.dragScroll();
@@ -31,10 +32,10 @@ $(document).ready(function() {
 		pageLimit.inputNumeric();
 		
 		// colsSorter
-		colsSorter.colsSorter();
+		colsSorter.callThis(quid.cms.colsSorter);
 		
 		// rowsChecker
-		rowsChecker.rowsChecker(main);
+        colsSorter.callThis(quid.cms.rowsChecker,main);
 		
         // filter
 		filter.filterGeneralFull();
@@ -58,5 +59,8 @@ $(document).ready(function() {
         
         // filesSlider
         filesSlider.slider(null,null,'.slider-element',false);
+        
+        // quickEdit
+        quickEdit.callThis(quid.cms.quickEdit);
 	});
 });

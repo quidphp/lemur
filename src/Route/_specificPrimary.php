@@ -16,7 +16,7 @@ trait _specificPrimary
 {
     // onBefore
     // avant le lancement de la route
-    protected function onBefore()
+    final protected function onBefore()
     {
         return $this->row()->isVisible();
     }
@@ -24,7 +24,7 @@ trait _specificPrimary
 
     // rowExists
     // retourne vrai si la row existe
-    public function rowExists():bool
+    final public function rowExists():bool
     {
         return ($this->segment('primary') instanceof Core\Row)? true:false;
     }
@@ -32,7 +32,7 @@ trait _specificPrimary
 
     // row
     // retourne la row pour specific
-    public function row():Core\Row
+    final public function row():Core\Row
     {
         return $this->segment('primary');
     }

@@ -42,7 +42,7 @@ class SpecificDownload extends Core\RouteAlias
 
     // onBefore
     // vérifie qu'il y a une colonne et que c'est un média
-    protected function onBefore()
+    final protected function onBefore()
     {
         $return = false;
         $table = $this->segment('table');
@@ -60,7 +60,7 @@ class SpecificDownload extends Core\RouteAlias
 
     // cell
     // retourne la cellule défini par les segments
-    public function cell():Core\Cell
+    final public function cell():Core\Cell
     {
         $row = $this->segment('primary');
         $col = $this->segment('col');

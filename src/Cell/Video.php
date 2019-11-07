@@ -21,7 +21,7 @@ class Video extends Core\CellAlias
 
     // cast
     // pour cast, retourne le lien absolut de la vidéo
-    public function _cast()
+    final public function _cast()
     {
         $return = null;
         $video = $this->video();
@@ -35,7 +35,7 @@ class Video extends Core\CellAlias
 
     // video
     // retourne l'objet video ou null
-    public function video():?Main\Video
+    final public function video():?Main\Video
     {
         $return = $this->get();
 
@@ -48,7 +48,7 @@ class Video extends Core\CellAlias
 
     // html
     // output le html de la vidéo
-    public function html():?string
+    final public function html():?string
     {
         $return = null;
         $video = $this->video();

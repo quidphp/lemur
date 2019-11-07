@@ -37,7 +37,7 @@ class SessionRoleSubmit extends Core\RouteAlias
 
     // onBefore
     // avant le trigger, vérifie que l'utilisateur peut accéder à lar oute
-    protected function onBefore()
+    final protected function onBefore()
     {
         return $this->canTrigger();
     }
@@ -45,7 +45,7 @@ class SessionRoleSubmit extends Core\RouteAlias
 
     // onFailure
     // callback appelé lors d'une erreur dans l'attribution
-    protected function onFailure():void
+    final protected function onFailure():void
     {
         $com = static::session()->com();
         $com->neg('sessionRole/failure');
@@ -56,7 +56,7 @@ class SessionRoleSubmit extends Core\RouteAlias
 
     // canTrigger
     // retourne vrai si la route peut être trigger
-    public function canTrigger():bool
+    final public function canTrigger():bool
     {
         return static::makeParent()->canTrigger();
     }
@@ -64,7 +64,7 @@ class SessionRoleSubmit extends Core\RouteAlias
 
     // routeSuccess
     // route sur succès
-    protected function routeSuccess():Lemur\Route
+    final protected function routeSuccess():Lemur\Route
     {
         return static::session()->historyPreviousRoute(Home::makeOverload());
     }
@@ -72,7 +72,7 @@ class SessionRoleSubmit extends Core\RouteAlias
 
     // proceed
     // procède au changement de mot de passe
-    public function proceed():bool
+    final public function proceed():bool
     {
         $return = false;
         $session = static::session();
@@ -111,7 +111,7 @@ class SessionRoleSubmit extends Core\RouteAlias
 
     // action
     // retourne l'action du formulaire
-    protected function action():string
+    final protected function action():string
     {
         return ($this->request()->exists('reset'))? 'reset':'submit';
     }
@@ -119,7 +119,7 @@ class SessionRoleSubmit extends Core\RouteAlias
 
     // post
     // retourne les données post avec les rôles pour l'exploration
-    protected function post():array
+    final protected function post():array
     {
         $return = [];
         $request = $this->request();

@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Lemur\Route;
 use Quid\Base\Html;
 use Quid\Core;
+use Quid\Lemur;
 
 // accountChangePassword
 // abstract class for an account change password route
@@ -24,6 +25,7 @@ abstract class AccountChangePassword extends Core\RouteAlias
             'role'=>['>='=>'user']],
         'group'=>'submit',
         'parent'=>Account::class,
+        'row'=>Lemur\Row\User::class,
         'colPassword'=>'password',
         'sitemap'=>false
     ];
@@ -44,7 +46,7 @@ abstract class AccountChangePassword extends Core\RouteAlias
 
     // makeForm
     // génère le formulaire pour changer le mot de passe
-    protected function makeForm():string
+    final protected function makeForm():string
     {
         $r = '';
         $route = $this->submitRoute();

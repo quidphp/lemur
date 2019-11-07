@@ -15,7 +15,7 @@ trait _limit
 {
     // structureSegmentLimit
     // gère le segment d'uri pour une limite, doit être un int plus grand que 0
-    public static function structureSegmentLimit(string $type,$value,array &$keyValue)
+    final public static function structureSegmentLimit(string $type,$value,array &$keyValue)
     {
         $return = false;
 

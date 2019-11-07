@@ -33,7 +33,7 @@ trait _nobody
 
     // onReplace
     // change le background de la route
-    protected function onReplace(array $return):array
+    final protected function onReplace(array $return):array
     {
         $return['background'] = static::boot()->getOption('background');
 
@@ -43,7 +43,7 @@ trait _nobody
 
     // header
     // header seulement le logo
-    public function header()
+    final public function header()
     {
         $r = '';
         $boot = static::boot();
@@ -59,7 +59,7 @@ trait _nobody
 
     // main
     // fait main pour une page nobody
-    public function main():string
+    final public function main():string
     {
         $r = '';
         $boot = static::boot();
@@ -101,7 +101,7 @@ trait _nobody
 
     // makeAbout
     // bouton vers la page à propos
-    protected function makeAbout():string
+    final protected function makeAbout():string
     {
         $r = '';
         $session = static::session();
@@ -118,7 +118,7 @@ trait _nobody
 
     // makeRegister
     // bouton vers la page register, si permis
-    protected function makeRegister():string
+    final protected function makeRegister():string
     {
         $r = '';
         $session = static::session();
@@ -135,7 +135,7 @@ trait _nobody
 
     // makeLogin
     // bouton vers la page login
-    protected function makeLogin():string
+    final protected function makeLogin():string
     {
         $r = '';
         $route = Login::makeOverload();
@@ -147,7 +147,7 @@ trait _nobody
 
     // makeResetPassword
     // bouton pour regnérer le mot de passe
-    protected function makeResetPassword():string
+    final protected function makeResetPassword():string
     {
         $r = '';
         $session = static::session();

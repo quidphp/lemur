@@ -34,7 +34,7 @@ trait _generalRelation
 
     // col
     // retourne l'objet colonne
-    public function col():Core\Col
+    final public function col():Core\Col
     {
         return $this->segment('col');
     }
@@ -42,7 +42,7 @@ trait _generalRelation
 
     // trigger
     // lance la route generalRelation
-    public function trigger():string
+    final public function trigger():string
     {
         $r = '';
         $grab = $this->relationGrab();
@@ -79,7 +79,7 @@ trait _generalRelation
 
     // relationSearchNot
     // retourne le not à utiliser pour relationSearch
-    protected function relationSearchNot()
+    final protected function relationSearchNot()
     {
         return $this->segment('selected');
     }
@@ -87,7 +87,7 @@ trait _generalRelation
 
     // prepareSelected
     // prépare les éléments sélectionnés, ajoute les empty not empty au besoin
-    protected function prepareSelected(array $value,bool $emptyNotEmpty):array
+    final protected function prepareSelected(array $value,bool $emptyNotEmpty):array
     {
         $return = [];
 
@@ -110,7 +110,7 @@ trait _generalRelation
 
     // addEmptyNotEmpty
     // ajoute les empty not empty non sélectionnés dans le tableau de résultat
-    protected function addEmptyNotEmpty(array $array,array $selected):array
+    final protected function addEmptyNotEmpty(array $array,array $selected):array
     {
         $return = [];
         $not = array_keys($selected);
@@ -124,7 +124,7 @@ trait _generalRelation
     // getEmptyNotEmptyKeyValue
     // retourn le tableau key value des empty not empty
     // possible de retirer un élément sélectionné
-    protected function getEmptyNotEmptyKeyValue(?array $not=null):array
+    final protected function getEmptyNotEmptyKeyValue(?array $not=null):array
     {
         $return = [];
 
@@ -144,7 +144,7 @@ trait _generalRelation
 
     // makeRoutes
     // retourne un tableau avec toutes les routes de filtre à afficher
-    protected function makeRoutes(array $array):array
+    final protected function makeRoutes(array $array):array
     {
         $return = [];
 
@@ -166,7 +166,7 @@ trait _generalRelation
 
     // makeOneRoute
     // méthode utilisé pour générer le tableau d'une route
-    protected function makeOneRoute($key,string $label):array
+    final protected function makeOneRoute($key,string $label):array
     {
         $return = [];
 
@@ -229,7 +229,7 @@ trait _generalRelation
 
     // makeResults
     // génère les résultats d'affichage de la relation
-    protected function makeResults(array $array,$attr=null,?int $loadMore=null):string
+    final protected function makeResults(array $array,$attr=null,?int $loadMore=null):string
     {
         $r = '';
         $routes = $this->makeRoutes($array);
@@ -281,7 +281,7 @@ trait _generalRelation
 
     // makeShowCount
     // fait le html pour le count
-    protected function makeShowCount(Core\Route $route):string
+    final protected function makeShowCount(Core\Route $route):string
     {
         $r = '';
         $sql = $route->sql();
@@ -294,7 +294,7 @@ trait _generalRelation
 
     // makeFilter
     // construit un input filter
-    public static function makeFilter(Core\Col $col,Core\Route $currentRoute,$filter,$class=null,$closeAttr=null,?string $label=null):string
+    final public static function makeFilter(Core\Col $col,Core\Route $currentRoute,$filter,$class=null,$closeAttr=null,?string $label=null):string
     {
         $r = '';
         $html = '';
@@ -357,7 +357,7 @@ trait _generalRelation
 
     // showEmptyNotEmpty
     // retourne vrai s'il faut afficher le empty not empty
-    protected function showEmptyNotEmpty():bool
+    final protected function showEmptyNotEmpty():bool
     {
         return ($this->getAttr('showEmptyNotEmpty') === true && $this->segment('col')->isFilterEmptyNotEmpty())? true:false;
     }
@@ -365,7 +365,7 @@ trait _generalRelation
 
     // showCount
     // retourne vrai s'il faut afficher le count
-    protected function showCount():bool
+    final protected function showCount():bool
     {
         return $this->getAttr('showCount') ?? false;
     }

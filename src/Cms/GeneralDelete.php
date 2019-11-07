@@ -48,7 +48,7 @@ class GeneralDelete extends Core\RouteAlias
     // onBefore
     // validation des permissions avant de lancer la route
     // les ids à effacer sont conservé
-    protected function onBefore()
+    final protected function onBefore()
     {
         $return = false;
         $table = $this->table();
@@ -77,7 +77,7 @@ class GeneralDelete extends Core\RouteAlias
 
     // ids
     // retourne le tableau des ids à effacer
-    protected function ids():array
+    final protected function ids():array
     {
         return $this->ids;
     }
@@ -85,7 +85,7 @@ class GeneralDelete extends Core\RouteAlias
 
     // rows
     // retourne les rows à effacer
-    protected function rows():Core\Rows
+    final protected function rows():Core\Rows
     {
         return $this->table()->rows(...$this->ids());
     }
@@ -93,7 +93,7 @@ class GeneralDelete extends Core\RouteAlias
 
     // routeSuccess
     // retourne la route en cas de succès ou échec de la suppression
-    public function routeSuccess():Core\Route
+    final public function routeSuccess():Core\Route
     {
         return $this->general();
     }
@@ -101,7 +101,7 @@ class GeneralDelete extends Core\RouteAlias
 
     // proceed
     // efface la row ou les rows
-    protected function proceed():?int
+    final protected function proceed():?int
     {
         $return = null;
         $post = $this->post();

@@ -16,7 +16,7 @@ trait _colRelation
 {
     // structureSegmentColRelation
     // gère le segment d'uri pour colonne qui doit être de relation
-    public static function structureSegmentColRelation(string $type,$value,array &$keyValue)
+    final public static function structureSegmentColRelation(string $type,$value,array &$keyValue)
     {
         $return = false;
 

@@ -17,14 +17,13 @@ class AccountChangePasswordSubmit extends Lemur\Route\AccountChangePasswordSubmi
     // config
     public static $config = [
         'match'=>[
-            'role'=>['>'=>'user']],
-        'parent'=>AccountChangePassword::class
+            'role'=>['>'=>'user']]
     ];
 
 
     // routeSuccess
     // route utilisé pour rediriger après le formulaire
-    public function routeSuccess():Lemur\Route
+    final public function routeSuccess():Lemur\Route
     {
         return static::session()->historyPreviousRoute(Home::makeOverload());
     }

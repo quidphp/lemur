@@ -8,9 +8,6 @@
 
 // tableRelation
 // stylesheet for the tableRelation component
-
-// tableRelationPopup
-// mixin pour le popup de table relation
 @mixin tableRelationPopup() {
     @include filterPopupBase();
 

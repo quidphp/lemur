@@ -563,6 +563,8 @@ class Fr extends Core\Lang\Fr
                     'cliClearCache'=>'Vider les caches',
                     'general'=>'Général',
                     'generalDelete'=>'Général - Suppression',
+                    'generalEdit'=>'General - Édition rapide',
+                    'generalEditSubmit'=>'General - Édition rapide - Soumettre',
                     'generalExport'=>'Exportation',
                     'generalExportDownload'=>'Général - Exportation - Téléchargement',
                     'generalRelation'=>'Général - Relation',

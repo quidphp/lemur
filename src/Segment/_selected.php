@@ -16,7 +16,7 @@ trait _selected
 {
     // structureSegmentSelected
     // gère le segment d'uri pour une valeur sélectionné, la valeur peut être string ou numeric
-    public static function structureSegmentSelected(string $type,$value,array &$keyValue)
+    final public static function structureSegmentSelected(string $type,$value,array &$keyValue)
     {
         $return = false;
 

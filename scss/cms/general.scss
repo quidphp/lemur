@@ -17,6 +17,10 @@
         > .operation-element {
             @include inbl();
             margin-left: 10px;
+            
+            &:first-child {
+                margin-left: 0;
+            }
         }
     }
 
@@ -148,7 +152,7 @@
 }
 
 /* TABLE */
-[data-route='general'] main .inner > .container table {
+[data-route='general'] main .scroller > table {
     @include wh();
 
     .bottom-left .popup,
@@ -157,7 +161,7 @@
         bottom: inherit;
     }
 }
-[data-route='general'] main .inner > .container table thead th {
+[data-route='general'] main .scroller > table > thead > tr > th {
     vertical-align: middle;
     background-color: $color;
     min-width: 150px;
@@ -189,12 +193,12 @@
 }
 
 /* PRIMARY */
-[data-route='general'] main .inner > .container table thead th[data-col='primary'] {
+[data-route='general'] main .scroller > table > thead > tr > th[data-col='primary'] {
     min-width: 80px;
 }
 
 /* ROWS */
-[data-route='general'] main .inner > .container table thead .rows {
+[data-route='general'] main .scroller > table > thead > tr > .rows {
     min-width: 40px;
 
     .close {
@@ -229,16 +233,16 @@
 }
 
 /* COLS */
-[data-route='general'] main .inner > .container table thead .action {
+[data-route='general'] main .scroller > table > thead > tr > th.action {
     @include colsSorter();
     min-width: 40px;
 }
-[data-route='general'] main .inner > .container table tbody td.action .in:hover {
+[data-route='general'] main .scroller > table > tbody > tr > td.action .in:hover {
     background-color: $lightYellow;
 }
 
 /* ORDER */
-[data-route='general'] main .inner > .container table thead th.orderable {
+[data-route='general'] main .scroller > table > thead > tr > th.orderable {
     .label {
         padding-right: 30px;
     }
@@ -289,7 +293,7 @@
 }
 
 /* FILTER */
-[data-route='general'] main .inner > .container table thead th.filterable {
+[data-route='general'] main .scroller > table > thead > tr > th.filterable {
     .left {
         @include abs(0, '', '', 0);
         @include wh(30px, 100%);
@@ -299,41 +303,43 @@
     .label {
         padding-left: 30px;
     }
-}
-[data-route='general'] main .inner > .container table thead th.filterable .filter-outer {
-    @include transition(background-color);
-    height: 100%;
-
-    &:hover,
-    &.filtering,
-    &.active {
-        background-color: $lightYellow;
-    }
-
-    .close {
-        @include abs(-8px, -8px);
-    }
-
-    .trigger {
+    
+    .filter-outer {
+        @include transition(background-color);
         height: 100%;
 
-        .filter {
-            @include abs(50%, '', '', 50%);
-            @include transition(opacity);
-            margin-top: -7px;
-            margin-left: -8px;
-            background-position: 0px 0px;
-            display: block;
+        &:hover,
+        &.filtering,
+        &.active {
+            background-color: $lightYellow;
+        }
+
+        .close {
+            @include abs(-8px, -8px);
+        }
+
+        .trigger {
+            height: 100%;
+
+            .filter {
+                @include abs(50%, '', '', 50%);
+                @include transition(opacity);
+                margin-top: -7px;
+                margin-left: -8px;
+                background-position: 0px 0px;
+                display: block;
+            }
+        }
+        
+        > .popup {
+            @include filterPopup();
         }
     }
 }
-[data-route='general'] main .inner > .container table thead th.filterable .filter-outer > .popup {
-    @include filterPopup();
-}
 
 /* TBODY */
-[data-route='general'] main .inner > .container table tbody {
-    tr {
+[data-route='general'] main .scroller > table > tbody {
+    > tr {
         &:hover {
             background-color: $lighterGray !important;
         }
@@ -347,14 +353,15 @@
             background-color: $lightYellow !important;
         }
 
-        td:first-child .in {
+        > td:first-child .in {
             border-left: 1px solid $lighterGray;
         }
     }
-    td {
+    
+    > tr > td {
         height: 100%;
-
-        .in {
+        
+        > .in {
             @include transition(background-color);
             border-right: 1px solid $lighterGray;
             border-bottom: 1px solid $lighterGray;
@@ -383,26 +390,32 @@
             }
         }
 
-        &.primary a {
+        &.primary > .in {
             display: block;
             padding: 8px 10px;
         }
     }
 }
-[data-route='general'] main .inner > .container table tbody td .in .relation a {
-    display: inline;
-}
-[data-route='general'] main table td[data-group='relation'] {
-    @include enumSetGeneral();
-}
-[data-route='general'] main table td[data-group='media'] {
-    @include filesGeneral();
-}
-[data-route='general'] main .inner > .container table tbody td.rows {
-    @include rowsChecker();
-}
-[data-route='general'] main .inner > .container table tbody td.primary .in:hover {
-    background-color: $lightYellow;
+[data-route='general'] main .scroller > table > tbody > tr > td {
+    &[data-quick-edit='1'] {
+        @include quickEdit();
+    }
+    
+    &[data-group='relation'] {
+        @include enumSetGeneral();
+    }
+    
+    &.rows {
+        @include rowsChecker();
+    }
+    
+    &[data-group='media'] {
+        @include filesGeneral();
+    }
+    
+    &.primary > .in:hover {
+        background-color: $lightYellow;
+    }
 }
 
 /* GENERAL EXPORT */
@@ -435,8 +448,8 @@
 
 /* IE EDGE */
 @supports (-ms-ime-align: auto) {
-    [data-route='general'] main .inner > .container table thead th,
-    [data-route='general'] main .inner > .container table tbody td {
+    [data-route='general'] main .scroller > table > thead > tr,
+    [data-route='general'] main .scroller > table > tbody > tr > td {
         box-sizing: border-box;
     }
 }
@@ -461,19 +474,7 @@
 @media print {
     [data-route='general'] main .inner > .top .left .search,
     [data-route='general'] main .inner > .container .above,
-    [data-route='general'] main .inner > .container .bellow,
-    [data-route='general'] main .inner > .container table thead th.filterable .left,
-    [data-route='general'] main .inner > .container table thead th.orderable .right,
-    [data-route='general'] main .inner > .container table tr > *:first-child,
-    [data-route='general'] main .inner > .container table tr > *:last-child {
+    [data-route='general'] main .inner > .container .bellow {
         display: none !important;
-    }
-
-    [data-route='general'] main .inner > .container table thead th.orderable.ordering .right {
-        display: block !important;
-    }
-
-    [data-route='general'] main .inner > .container table thead th.filterable .label {
-        padding-left: 0;
     }
 }

@@ -42,7 +42,7 @@ class GeneralTruncate extends Core\RouteAlias
 
     // onBefore
     // vérifie que l'utilisateur a la permission pour truncate la table
-    protected function onBefore()
+    final protected function onBefore()
     {
         $return = false;
         $table = $this->table();
@@ -56,7 +56,7 @@ class GeneralTruncate extends Core\RouteAlias
 
     // routeSuccess
     // retourne la route en cas de succès ou échec du truncate
-    public function routeSuccess():Core\Route
+    final public function routeSuccess():Core\Route
     {
         return $this->general(false);
     }
@@ -64,7 +64,7 @@ class GeneralTruncate extends Core\RouteAlias
 
     // proceed
     // truncate la table
-    protected function proceed():bool
+    final protected function proceed():bool
     {
         $return = false;
         $post = $this->post();

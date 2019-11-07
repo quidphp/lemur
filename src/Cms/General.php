@@ -57,7 +57,7 @@ class General extends Core\RouteAlias
 
     // onBefore
     // validation avant le lancement de la route
-    protected function onBefore()
+    final protected function onBefore()
     {
         $return = false;
 
@@ -76,7 +76,7 @@ class General extends Core\RouteAlias
 
     // onFallback
     // sur fallback, efface la version de la route dans nav/session
-    protected function onFallback($context=null)
+    final protected function onFallback($context=null)
     {
         if($this->hasTable())
         {
@@ -91,7 +91,7 @@ class General extends Core\RouteAlias
 
     // onReplace
     // change le titre et la metaDescription pour la table
-    protected function onReplace(array $return):array
+    final protected function onReplace(array $return):array
     {
         $return['title'] = $this->title();
         $return['metaDescription'] = $this->table()->description();
@@ -102,7 +102,7 @@ class General extends Core\RouteAlias
 
     // selectedUri
     // génère une les uri sélectionnés pour une route en lien avec une table
-    public function selectedUri():array
+    final public function selectedUri():array
     {
         $return = [];
         $tables = $this->db()->tables();
@@ -119,7 +119,7 @@ class General extends Core\RouteAlias
 
     // hasTable
     // retouren vrai si la route est lié à une table
-    public function hasTable():bool
+    final public function hasTable():bool
     {
         return ($this->segment('table') instanceof Core\Table)? true:false;
     }
@@ -127,7 +127,7 @@ class General extends Core\RouteAlias
 
     // table
     // retourne l'objet table
-    public function table():Core\Table
+    final public function table():Core\Table
     {
         $return = $this->segment('table');
 
@@ -140,7 +140,7 @@ class General extends Core\RouteAlias
 
     // generalSegments
     // retourne les segments à utiliser pour la création de l'objet sql
-    protected function generalSegments():array
+    final protected function generalSegments():array
     {
         return $this->segment(['page','limit','order','direction','filter','in','notIn']);
     }
@@ -148,7 +148,7 @@ class General extends Core\RouteAlias
 
     // getCurrentCols
     // retourne les colonnes courantes
-    protected function getCurrentCols():Core\Cols
+    final protected function getCurrentCols():Core\Cols
     {
         $return = null;
         $table = $this->table();
@@ -179,7 +179,7 @@ class General extends Core\RouteAlias
 
     // hasSpecificCols
     // retourne vrai si des colonnes spécifiques ont été sélectionnés
-    protected function hasSpecificCols():bool
+    final protected function hasSpecificCols():bool
     {
         $return = false;
 
@@ -197,7 +197,7 @@ class General extends Core\RouteAlias
 
     // hasInNotIn
     // retourne vrai s'il y a des lignes in ou not in
-    protected function hasInNotIn():bool
+    final protected function hasInNotIn():bool
     {
         $return = false;
 
@@ -213,7 +213,7 @@ class General extends Core\RouteAlias
 
     // getHighlight
     // retourne les lignes highlight
-    protected function getHighlight():?array
+    final protected function getHighlight():?array
     {
         $return = null;
 
@@ -226,7 +226,7 @@ class General extends Core\RouteAlias
 
     // makeViewTitle
     // génère le titre spécifique de general pour la table, si existant
-    protected function makeViewTitle(?string $lang=null):?string
+    final protected function makeViewTitle(?string $lang=null):?string
     {
         $r = null;
         $table = $this->table();
@@ -238,7 +238,7 @@ class General extends Core\RouteAlias
 
     // makeTitle
     // retourne le titre de la route
-    protected function makeTitle(?string $lang=null):string
+    final protected function makeTitle(?string $lang=null):string
     {
         $r = $this->makeViewTitle($lang);
 
@@ -251,7 +251,7 @@ class General extends Core\RouteAlias
 
     // allSegment
     // retourne tous les segments de la route, un par table
-    public static function allSegment():array
+    final public static function allSegment():array
     {
         $return = [];
         $db = static::db();
@@ -268,7 +268,7 @@ class General extends Core\RouteAlias
 
     // main
     // génère le html de main pour general
-    public function main():string
+    final public function main():string
     {
         $r = $this->makeTop();
         $r .= $this->makeTable();
@@ -279,7 +279,7 @@ class General extends Core\RouteAlias
 
     // makeTop
     // génère la partie supérieur de la page
-    protected function makeTop():string
+    final protected function makeTop():string
     {
         $r = '';
         $table = $this->table();
@@ -317,7 +317,7 @@ class General extends Core\RouteAlias
 
     // makeSearchNote
     // génère les notes pour le champ recherche
-    protected function makeSearchNote():string
+    final protected function makeSearchNote():string
     {
         $r = '';
         $table = $this->table();
@@ -352,7 +352,7 @@ class General extends Core\RouteAlias
 
     // makeOperation
     // génère le bloc des opérations
-    protected function makeOperation():string
+    final protected function makeOperation():string
     {
         $r = '';
         $table = $this->table();
@@ -372,7 +372,7 @@ class General extends Core\RouteAlias
 
     // makeReset
     // génération le lien de réinitialisation
-    protected function makeReset():string
+    final protected function makeReset():string
     {
         $r = '';
 
@@ -389,7 +389,7 @@ class General extends Core\RouteAlias
 
     // makeInfo
     // génère le block d'informations
-    protected function makeInfo():string
+    final protected function makeInfo():string
     {
         $r = '';
 
@@ -411,7 +411,7 @@ class General extends Core\RouteAlias
     // generalInfoPopup
     // génère le popup de la page général
     // méthode publiquer car utilisé dans specific
-    public function generalInfoPopup(bool $icon=true):?string
+    final public function generalInfoPopup(bool $icon=true):?string
     {
         $return = null;
 
@@ -428,7 +428,7 @@ class General extends Core\RouteAlias
 
     // infoPopupValues
     // retourne un tableau avec les valeurs pour le popup d'informations
-    protected function infoPopupValues():array
+    final protected function infoPopupValues():array
     {
         $return = array_keys($this->segments());
         $return = Base\Arr::append($return,$this->getAttr('popup'));
@@ -439,7 +439,7 @@ class General extends Core\RouteAlias
 
     // infoPopupClosure
     // callback pour le popup d'informations de la page générale
-    protected function infoPopupClosure():\Closure
+    final protected function infoPopupClosure():\Closure
     {
         return function(string $key) {
             $return = [static::langText(['popup','general',$key])];
@@ -520,7 +520,7 @@ class General extends Core\RouteAlias
 
     // infoPopupFilterEmptyNotEmpty
     // gère les valeurs filtres empty/not empty pour le popup
-    protected function infoPopupFilterEmptyNotEmpty(array $value,Core\Col $col,array $array):array
+    final protected function infoPopupFilterEmptyNotEmpty(array $value,Core\Col $col,array $array):array
     {
         $return = ['array'=>$array,'value'=>$value];
 
@@ -541,7 +541,7 @@ class General extends Core\RouteAlias
 
     // makeAdd
     // génère le lien pour ajouter une nouvelle ligne
-    protected function makeAdd():string
+    final protected function makeAdd():string
     {
         $r = '';
         $table = $this->table();
@@ -555,7 +555,7 @@ class General extends Core\RouteAlias
 
     // makeExport
     // génère le lien pour exporter la table
-    protected function makeExport():string
+    final protected function makeExport():string
     {
         $r = '';
         $sql = $this->sql();
@@ -573,7 +573,7 @@ class General extends Core\RouteAlias
 
     // makeTruncate
     // génère le formulaire pour effacer toute la table
-    protected function makeTruncate():string
+    final protected function makeTruncate():string
     {
         $r = '';
         $table = $this->table();
@@ -597,7 +597,7 @@ class General extends Core\RouteAlias
 
     // makeTool
     // génère le block outil
-    protected function makeTool():string
+    final protected function makeTool():string
     {
         $r = '';
 
@@ -633,7 +633,7 @@ class General extends Core\RouteAlias
 
     // makeGeneralDelete
     // génère le formulaire pour effacer de multiples lignes
-    protected function makeGeneralDelete():string
+    final protected function makeGeneralDelete():string
     {
         $r = '';
 
@@ -659,7 +659,7 @@ class General extends Core\RouteAlias
 
     // makeRows
     // génère l'outil pour sélectionner une ou plusieurs lignes dans la table
-    protected function makeRows():string
+    final protected function makeRows():string
     {
         $r = '';
         $hasInNotIn = $this->hasInNotIn();
@@ -679,7 +679,7 @@ class General extends Core\RouteAlias
 
     // makeCols
     // génère l'outil pour choisir les colonnes à afficher dans la table
-    protected function makeCols():string
+    final protected function makeCols():string
     {
         $r = '';
         $table = $this->table();
@@ -745,7 +745,7 @@ class General extends Core\RouteAlias
 
     // makeTable
     // génère la table
-    protected function makeTable():string
+    final protected function makeTable():string
     {
         $r = '';
 
@@ -805,7 +805,7 @@ class General extends Core\RouteAlias
 
     // makeTableHeader
     // génère le header de la table
-    protected function makeTableHeader():string
+    final protected function makeTableHeader():string
     {
         $r = '';
         $table = $this->table();
@@ -863,7 +863,7 @@ class General extends Core\RouteAlias
 
     // makeTableHeaderOrder
     // génère un lien pour ordonner dans un header de table
-    protected function makeTableHeaderOrder(Core\Col $col,array $array,$icon=null):array
+    final protected function makeTableHeaderOrder(Core\Col $col,array $array,$icon=null):array
     {
         [$html,$thAttr] = $array;
 
@@ -896,7 +896,7 @@ class General extends Core\RouteAlias
 
     // makeTableHeaderFilter
     // génère un filtre dans un header de table
-    protected function makeTableHeaderFilter(Core\Col $col,array $array):array
+    final protected function makeTableHeaderFilter(Core\Col $col,array $array):array
     {
         $html = $array[0];
         $thAttr = $array[1];
@@ -919,7 +919,7 @@ class General extends Core\RouteAlias
 
     // makeTableBody
     // génère le body de la table
-    protected function makeTableBody():string
+    final protected function makeTableBody():string
     {
         $r = '';
         $cols = $this->getCurrentCols();
@@ -984,16 +984,28 @@ class General extends Core\RouteAlias
     // makeTableBodyCell
     // génère le contenu à afficher dans une cellule de table
     // le placeholder - ou NULL peut être utilisé si la valeur est vide
-    protected function makeTableBodyCell(Core\Cell $cell,?array $option=null):array
+    final protected function makeTableBodyCell(Core\Cell $cell,?array $option=null):array
     {
         $r = [];
         $option = Base\Arr::plus(['specific'=>null,'modify'=>false,'excerptMin'=>$cell->generalExcerptMin()],$option);
         $context = $this->context();
+        $col = $cell->col();
+        $v = $cell->get($context);
+        
         $data = ['name'=>$cell->name(),'cell'=>$cell::className(true),'group'=>$cell->group()];
+        $table = $this->table();
+        if($table->hasPermission('quickEdit'))
+        {
+            $generalEdit = GeneralEdit::makeOverload($cell);
+            if($generalEdit->canTrigger())
+            {
+                $data['quick-edit'] = true;
+                $quickEdit = $generalEdit->a(null,array('icon','solo','modify','quick-edit','icon-small'));
+            }
+        }
         $data = $cell->getDataAttr($data);
         $attr = ['data'=>$data];
-        $v = $cell->get($context);
-
+        
         if($cell->isPrimary() && is_string($option['specific']))
         {
             $specific = $option['specific'];
@@ -1003,14 +1015,19 @@ class General extends Core\RouteAlias
 
         else
         {
-            $placeholder = $cell->col()->emptyPlaceholder($v);
+            
+            $placeholder = $col->emptyPlaceholder($v);
             if(is_string($placeholder))
             $v = Html::div($placeholder,'empty-placeholder');
 
             $v = Html::div($v,'in',$option);
         }
-
-        $r = [$v,$attr];
+        
+        $html = $v;
+        if(!empty($quickEdit))
+        $html .= $quickEdit;
+        
+        $r = [$html,$attr];
 
         return $r;
     }

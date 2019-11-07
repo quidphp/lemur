@@ -16,7 +16,7 @@ trait _nobody
 {
     // browscap
     // génère le html pour les capacités du browser (noscript et cookie)
-    protected function browscap():string
+    final protected function browscap():string
     {
         $r = '';
         $r .= Html::noscript(static::langText('browscap/noscript'));

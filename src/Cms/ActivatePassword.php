@@ -15,10 +15,7 @@ use Quid\Lemur;
 class ActivatePassword extends Lemur\Route\ActivatePassword
 {
     // config
-    public static $config = [
-        'parent'=>Login::class,
-        'row'=>Lemur\Row\User::class
-    ];
+    public static $config = [];
 }
 
 // init

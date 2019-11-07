@@ -23,7 +23,7 @@ trait _calendar
 
     // getTimestamp
     // retourne le timestamp
-    protected function getTimestamp():int
+    final protected function getTimestamp():int
     {
         $return = null;
         $value = $this->segment('timestamp');
@@ -48,7 +48,7 @@ trait _calendar
 
     // calendar
     // génère l'objet calendrier
-    protected function calendar():Main\Calendar
+    final protected function calendar():Main\Calendar
     {
         $class = $this->getAttr('calendar');
 
@@ -86,7 +86,7 @@ trait _calendar
 
     // html
     // génère le html pour la page
-    public function html()
+    final public function html()
     {
         return $this->calendar()->output();
     }
@@ -94,7 +94,7 @@ trait _calendar
 
     // trigger
     // lance la route calendrier
-    public function trigger():string
+    final public function trigger():string
     {
         return $this->html();
     }

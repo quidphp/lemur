@@ -26,7 +26,7 @@ class Set extends Core\Col\Set
 
     // isSortable
     // retourne vrai si la relation est sortable
-    public function isSortable():bool
+    final public function isSortable():bool
     {
         $return = false;
 
@@ -45,7 +45,7 @@ class Set extends Core\Col\Set
 
     // getDataAttr
     // retourne les datas attr pour la colonne
-    public function getDataAttr(array $return):array
+    final public function getDataAttr(array $return):array
     {
         if($this->isSortable())
         $return['sortable'] = true;
@@ -57,7 +57,7 @@ class Set extends Core\Col\Set
     // onGet
     // logique onGet pour un champ relation
     // affichage spéciale si le contexte est cms:general
-    public function onGet($return,array $option)
+    final protected function onGet($return,array $option)
     {
         if($return instanceof Core\Cell\Relation && !$return->isNull() && !empty($option['context']) && is_string($option['context']) && strpos($option['context'],':general') !== false)
         {
@@ -75,7 +75,7 @@ class Set extends Core\Col\Set
     // prepareStandardRelation
     // retourne la relation pour un input avec choice
     // si sortable, met les éléments cochés en ordre au début de la liste
-    protected function prepareStandardRelation($value):array
+    final protected function prepareStandardRelation($value):array
     {
         $return = [];
 
@@ -107,7 +107,7 @@ class Set extends Core\Col\Set
 
     // prepareChoiceOption
     // retourne le html pour wrapper les choix
-    protected function prepareChoiceOption(array $return,bool $autoHidden=false):array
+    final protected function prepareChoiceOption(array $return,bool $autoHidden=false):array
     {
         $return = parent::prepareChoiceOption($return,$autoHidden);
 

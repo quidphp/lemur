@@ -16,7 +16,7 @@ trait _primary
 {
     // structureSegmentPrimary
     // gère le segment d'uri pour une clé primaire (row)
-    public static function structureSegmentPrimary(string $type,$value,array &$keyValue)
+    final public static function structureSegmentPrimary(string $type,$value,array &$keyValue)
     {
         $return = false;
 
@@ -33,7 +33,7 @@ trait _primary
         {
             $table = static::tableSegment($keyValue);
 
-            if(!empty($table) && (is_int($value) || $value instanceof Core\Row))
+            if(!empty($table) && (is_int($value) || $value instanceof Core\Row | $value instanceof Core\Cell))
             {
                 $row = $table->row($value);
 

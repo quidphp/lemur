@@ -56,7 +56,7 @@ abstract class LoginSubmit extends Core\RouteAlias
 
     // routeSuccess
     // retourne la route vers laquelle redirigé en cas de succès (si rien dans la mémoire)
-    public function routeSuccess():Lemur\Route
+    final public function routeSuccess():Lemur\Route
     {
         $return = $this->routeSuccessMemory();
 
@@ -69,7 +69,7 @@ abstract class LoginSubmit extends Core\RouteAlias
 
     // routeSuccessMemory
     // retourne la route de redirection si existante et valide
-    public function routeSuccessMemory():?Lemur\Route
+    final public function routeSuccessMemory():?Lemur\Route
     {
         $return = null;
         $post = $this->post();
@@ -91,7 +91,7 @@ abstract class LoginSubmit extends Core\RouteAlias
 
     // routeFailure
     // retourne la route vers laquelle redirigé en cas d'erreur
-    public function routeFailure():Lemur\Route
+    final public function routeFailure():Lemur\Route
     {
         return static::makeParentOverload();
     }
@@ -99,7 +99,7 @@ abstract class LoginSubmit extends Core\RouteAlias
 
     // proceed
     // lance l'opération de login standard
-    protected function proceed():bool
+    final protected function proceed():bool
     {
         $return = false;
         $session = static::session();
@@ -124,7 +124,7 @@ abstract class LoginSubmit extends Core\RouteAlias
 
     // post
     // retourne les données de post pour le login
-    protected function post():array
+    final protected function post():array
     {
         $return = [];
         $request = $this->request();
@@ -139,7 +139,7 @@ abstract class LoginSubmit extends Core\RouteAlias
 
     // password
     // retourne le mot de passe
-    protected function password():string
+    final protected function password():string
     {
         return (string) $this->request()->get('password');
     }
@@ -147,7 +147,7 @@ abstract class LoginSubmit extends Core\RouteAlias
 
     // setFlash
     // ajoute les données à l'objet flash
-    protected function setFlash():void
+    final protected function setFlash():void
     {
         $post = $this->post();
         $flash = static::session()->flash();

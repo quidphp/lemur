@@ -17,7 +17,7 @@ trait _primaries
 {
     // structureSegmentPrimaries
     // gère le segment d'uri pour plusieurs clés primaires (rows)
-    public static function structureSegmentPrimaries(string $type,$value,array &$keyValue)
+    final public static function structureSegmentPrimaries(string $type,$value,array &$keyValue)
     {
         $return = false;
 

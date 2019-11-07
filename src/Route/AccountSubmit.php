@@ -43,7 +43,7 @@ abstract class AccountSubmit extends Core\RouteAlias
 
     // onSuccess
     // callback appelé lors d'une modification réussi
-    protected function onSuccess():void
+    final protected function onSuccess():void
     {
         static::sessionCom()->stripFloor();
         static::timeoutIncrement('success');
@@ -54,7 +54,7 @@ abstract class AccountSubmit extends Core\RouteAlias
 
     // onFailure
     // callback appelé lors d'une modification échouée
-    protected function onFailure():void
+    final protected function onFailure():void
     {
         static::timeoutIncrement('failure');
 
@@ -64,7 +64,7 @@ abstract class AccountSubmit extends Core\RouteAlias
 
     // row
     // retourne la row user
-    public function row():Core\Row
+    final public function row():Core\Row
     {
         return static::session()->user();
     }
@@ -72,7 +72,7 @@ abstract class AccountSubmit extends Core\RouteAlias
 
     // routeSuccess
     // retourne l'objet route à rediriger en cas de succès ou erreur
-    public function routeSuccess():Lemur\Route
+    final public function routeSuccess():Lemur\Route
     {
         return static::makeParentOverload();
     }
@@ -80,7 +80,7 @@ abstract class AccountSubmit extends Core\RouteAlias
 
     // post
     // retourne le tableau post pour la modification du compte
-    public function post():array
+    final public function post():array
     {
         $return = [];
         $request = $this->request();
@@ -95,7 +95,7 @@ abstract class AccountSubmit extends Core\RouteAlias
     // proceed
     // lance le processus pour modifier le compte
     // retourne null ou un int
-    protected function proceed():?int
+    final protected function proceed():?int
     {
         $return = null;
         $row = $this->row();
@@ -104,7 +104,7 @@ abstract class AccountSubmit extends Core\RouteAlias
         $post = $this->onBeforeCommit($post);
 
         if($post !== null)
-        $return = $row->setUpdateChangedIncludedValid($post['data'],$option);
+        $return = $row->setUpdateValid($post['data'],$option);
 
         if(is_int($return))
         $this->successComplete();
@@ -118,7 +118,7 @@ abstract class AccountSubmit extends Core\RouteAlias
 
     // getOption
     // option pour le update
-    protected function getOption():?array
+    final protected function getOption():?array
     {
         return ['com'=>true];
     }
@@ -126,7 +126,7 @@ abstract class AccountSubmit extends Core\RouteAlias
 
     // getBaseFields
     // retourne les champs de base
-    public function getBaseFields():array
+    final public function getBaseFields():array
     {
         return $this->getAttr('baseFields') ?? [];
     }

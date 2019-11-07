@@ -20,7 +20,7 @@ trait _colRelation
 
     // relation
     // retourne l'objet relation de la colonne
-    public function relation():Orm\Relation
+    final public function relation():Orm\Relation
     {
         return $this->segment('col')->relation();
     }
@@ -28,7 +28,7 @@ trait _colRelation
 
     // relationSearchRequired
     // retourne vrai si la recherche est requise
-    public function relationSearchRequired():bool
+    final public function relationSearchRequired():bool
     {
         return $this->segment('col')->isRelationSearchRequired();
     }
@@ -36,7 +36,7 @@ trait _colRelation
 
     // isSearchValueValid
     // retourne vrai si la valeur de recherche est valide
-    protected function isSearchValueValid(string $value):bool
+    final protected function isSearchValueValid(string $value):bool
     {
         return ($this->segment('col')->isSearchTermValid($value))? true:false;
     }
@@ -44,7 +44,7 @@ trait _colRelation
 
     // relationKeyValue
     // retourne les keyValue à partir de valeur de relation
-    protected function relationKeyValue(array $values):?array
+    final protected function relationKeyValue(array $values):?array
     {
         $return = null;
         $col = $this->segment('col');

@@ -21,7 +21,7 @@ class Request extends Core\Col\Request
 
     // onGet
     // sur onGet recrée l'objet request, si cms var export
-    public function onGet($return,array $option)
+    final protected function onGet($return,array $option)
     {
         $return = parent::onGet($return,$option);
 

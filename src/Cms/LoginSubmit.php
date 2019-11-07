@@ -19,14 +19,12 @@ class LoginSubmit extends Lemur\Route\LoginSubmit
 
 
     // config
-    public static $config = [
-        'parent'=>Login::class
-    ];
+    public static $config = [];
 
 
     // routeSuccess
     // retourne la route vers laquelle redirigé en cas de succès par défaut, si rien dans la mémoire
-    public function routeSuccessDefault():Lemur\Route
+    final public function routeSuccessDefault():Lemur\Route
     {
         return Home::makeOverload();
     }

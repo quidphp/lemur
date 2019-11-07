@@ -25,7 +25,7 @@ class React extends Main\Service
 
     // callStatic
     // attrape toutes les méthodes statiques et renvoie vers la méthode component
-    public static function __callStatic(string $key,array $args):?string
+    final public static function __callStatic(string $key,array $args):?string
     {
         return static::component($key,...$args);
     }
@@ -33,7 +33,7 @@ class React extends Main\Service
 
     // component
     // génère la balise pour un component react
-    public static function component(string $key,$value=null,?array $props=null,?array $option=null):string
+    final public static function component(string $key,$value=null,?array $props=null,?array $option=null):string
     {
         $return = null;
         $option = Base\Arr::plus(static::$config,$option);
@@ -49,7 +49,7 @@ class React extends Main\Service
     // docOpenJs
     // retourne le javascript à lier en début de document
     // inclut le polyfill pour support ie11
-    public function docOpenJs()
+    final public function docOpenJs()
     {
         return [4=>'js/vendor/react/react.js',5=>'js/vendor/react/react-dom.js'];
     }

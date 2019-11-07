@@ -24,7 +24,7 @@ trait _specific
 
     // makeSpecificNav
     // génère la nav à partir d'un objet route vers general
-    protected function makeSpecificNav(Core\Route $general,Core\Row $row,string $segment,?string $highlightSegment=null,?array $attr=null):array
+    final protected function makeSpecificNav(Core\Route $general,Core\Row $row,string $segment,?string $highlightSegment=null,?array $attr=null):array
     {
         $return = [];
         $sql = $general->sql();

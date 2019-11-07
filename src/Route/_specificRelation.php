@@ -27,7 +27,7 @@ trait _specificRelation
 
     // trigger
     // lance la route specificRelation
-    public function trigger():string
+    final public function trigger():string
     {
         $r = '';
         $grab = $this->relationGrab();
@@ -49,7 +49,7 @@ trait _specificRelation
 
     // col
     // retourne l'objet colonne
-    protected function col():Core\Col
+    final protected function col():Core\Col
     {
         return $this->segment('col');
     }
@@ -57,7 +57,7 @@ trait _specificRelation
 
     // makeResults
     // génère les résultats d'affichage pour les relations
-    protected function makeResults(array $array,?int $loadMore=null):string
+    final protected function makeResults(array $array,?int $loadMore=null):string
     {
         $r = '';
         $col = $this->col();
@@ -95,7 +95,7 @@ trait _specificRelation
 
     // getCount
     // retounrne le nombre de lignes dans la table qui ont la valeur donnée en argument pour cette colonne
-    protected function getCount(int $value):?int
+    final protected function getCount(int $value):?int
     {
         return $this->col()->countPrimaries($value);
     }
@@ -103,7 +103,7 @@ trait _specificRelation
 
     // showCount
     // retourne vrai s'il faut afficher le count
-    protected function showCount():bool
+    final protected function showCount():bool
     {
         return $this->getAttr('showCount') ?? false;
     }

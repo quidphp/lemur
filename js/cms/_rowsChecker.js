@@ -7,11 +7,8 @@
  */
  
 // rowsChecker
-// script containing for the rows checker component
-
-// rowsChecker
-// gère les comportements pour les checkboxes à gauche des lignes d'une table
-quid.core.rowsChecker = $.fn.rowsChecker = function(parent)
+// script for the rows checker component in the general page of the CMS
+quid.cms.rowsChecker = function(parent)
 {
     var rowsCheckboxes = $(this);
     var rowsToggleAll = parent.find("table th.rows .toggle-all");

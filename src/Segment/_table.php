@@ -16,7 +16,7 @@ trait _table
 {
     // structureSegmentTable
     // gère le segment d'uri pour une table
-    public static function structureSegmentTable(string $type,$value,array &$keyValue)
+    final public static function structureSegmentTable(string $type,$value,array &$keyValue)
     {
         $return = false;
 

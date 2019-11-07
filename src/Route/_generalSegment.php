@@ -21,7 +21,7 @@ trait _generalSegment
 
     // hasTablePermission
     // méthode utilisé pour certaines requêtes de permissions
-    protected function hasTablePermission(string ...$types):bool
+    final protected function hasTablePermission(string ...$types):bool
     {
         return $this->table()->hasPermission(...$types);
     }
@@ -35,7 +35,7 @@ trait _generalSegment
     // sql
     // crée et conserve l'objet sql à partir des segments fournis par generalSegments
     // les segments dont la table n'a pas la permission sont effacés
-    public function sql():Orm\Sql
+    final public function sql():Orm\Sql
     {
         return $this->cache(__METHOD__,function() {
             $return = null;
@@ -69,7 +69,7 @@ trait _generalSegment
 
     // rows
     // retourne les rows de la route
-    public function rows():Core\Rows
+    final public function rows():Core\Rows
     {
         return $this->sql()->triggerRows();
     }
@@ -77,7 +77,7 @@ trait _generalSegment
 
     // rowsVisible
     // retourne les rows visible de la route
-    public function rowsVisible():Core\Rows
+    final public function rowsVisible():Core\Rows
     {
         return $this->rows()->filter(['isVisible'=>true]);
     }
@@ -85,7 +85,7 @@ trait _generalSegment
 
     // isSearchValueValid
     // retourne vrai si la valeur de recherche est valide
-    protected function isSearchValueValid(string $value):bool
+    final protected function isSearchValueValid(string $value):bool
     {
         return ($this->table()->isSearchTermValid($value))? true:false;
     }

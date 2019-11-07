@@ -17,7 +17,7 @@ trait _filter
 {
     // structureSegmentFilter
     // gère le segment d'uri pour un filtre, peut en contenir plusieurs
-    public static function structureSegmentFilter(string $type,$value,array &$keyValue)
+    final public static function structureSegmentFilter(string $type,$value,array &$keyValue)
     {
         $return = false;
         $table = static::tableSegment($keyValue);
@@ -43,7 +43,7 @@ trait _filter
 
     // makeSegmentFilter
     // gère le segment filter lors de la création d'une uri
-    protected static function makeSegmentFilter($value,Core\Table $table)
+    final protected static function makeSegmentFilter($value,Core\Table $table)
     {
         $return = false;
 
@@ -94,7 +94,7 @@ trait _filter
 
     // matchSegmentFilter
     // gère le segment filter lors de la validation d'une uri
-    protected static function matchSegmentFilter($value,Core\Table $table)
+    final protected static function matchSegmentFilter($value,Core\Table $table)
     {
         $return = false;
 
@@ -133,7 +133,7 @@ trait _filter
 
     // matchSegmentFilterArray
     // gère le segment filter lors d'une validation et que la valeur est un array
-    protected static function matchSegmentFilterArray(array $value,Core\Table $table)
+    final protected static function matchSegmentFilterArray(array $value,Core\Table $table)
     {
         $return = [];
 
@@ -165,7 +165,7 @@ trait _filter
 
     // prepareSegmentFilter
     // permet de préparer les valeurs pour une relation
-    protected static function prepareSegmentFilter(array $value,Core\Col $col)
+    final protected static function prepareSegmentFilter(array $value,Core\Col $col)
     {
         $return = [];
         $name = $col->name();
@@ -192,7 +192,7 @@ trait _filter
 
     // getFilterDelimiters
     // retourne les délimiteurs à utiliser pour les filtres
-    public static function getFilterDelimiters():array
+    final public static function getFilterDelimiters():array
     {
         $return = [];
         $default = static::getDefaultSegment();

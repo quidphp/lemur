@@ -77,7 +77,8 @@ class Row extends Core\Row
                     'panelDescription'=>true, // accès aux descriptions de panneaux
                     'colInfoPopup'=>false, // popup d'informations pour la colonne
                     'specificRelation'=>true, // relatif aux relations, ne pas changer
-                    'tableRelation'=>true], // relatif aux relations, ne pas changer
+                    'tableRelation'=>true, // relatif aux relations, ne pas changer
+                    'quickEdit'=>true], // active ou désactive l'edit rapide par la page générale
                 'nobody'=>[
                     'view'=>false,
                     'lemurInsert'=>false,

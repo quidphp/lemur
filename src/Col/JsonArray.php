@@ -46,7 +46,7 @@ class JsonArray extends Core\Col\JsonAlias
 
     // onGet
     // logique onGet pour un champ jsonArray
-    public function onGet($return,array $option)
+    protected function onGet($return,array $option)
     {
         if(!is_array($return))
         $return = parent::onGet($return,$option);
@@ -60,7 +60,7 @@ class JsonArray extends Core\Col\JsonAlias
 
     // onSet
     // gère la logique onSet pour jsonArray, prepare est utilisé sur le tableau
-    public function onSet($return,array $row,?Orm\Cell $cell=null,array $option)
+    protected function onSet($return,array $row,?Orm\Cell $cell=null,array $option)
     {
         if(is_array($return))
         $return = $this->prepare($return);
@@ -102,7 +102,7 @@ class JsonArray extends Core\Col\JsonAlias
 
     // makeModelUtils
     // génère les outils pour le model comme move et delete
-    protected function makeModelUtils():string
+    final protected function makeModelUtils():string
     {
         $return = Html::divOp('utils');
         $lang = $this->db()->lang();
@@ -131,7 +131,7 @@ class JsonArray extends Core\Col\JsonAlias
 
     // formComplex
     // génère le formComplex pour jsonArray
-    public function formComplex($value=true,?array $attr=null,?array $option=null):string
+    final public function formComplex($value=true,?array $attr=null,?array $option=null):string
     {
         $return = '';
         $tag = $this->complexTag($attr);

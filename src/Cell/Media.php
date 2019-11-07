@@ -20,7 +20,7 @@ class Media extends Core\Cell\Media
 
     // generalOutput
     // génère le output pour général
-    public function generalOutput(?array $option=null):string
+    final public function generalOutput(?array $option=null):string
     {
         return $this->commonGeneralOutput(null,$option);
     }

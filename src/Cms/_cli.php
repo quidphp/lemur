@@ -29,7 +29,7 @@ trait _cli
 
     // trigger
     // génère le cli ou le template
-    public function trigger()
+    final public function trigger()
     {
         return (Base\Server::isCli())? $this->cliWrap():$this->template();
     }
@@ -37,7 +37,7 @@ trait _cli
 
     // flushBeforeMain
     // flush le contenu avant main pour pouvoir utiliser le flush du cli dans un rendu html
-    protected function flushBeforeMain():bool
+    final protected function flushBeforeMain():bool
     {
         return true;
     }
@@ -45,7 +45,7 @@ trait _cli
 
     // main
     // si c'est main, renvoie à cliWrap
-    protected function main()
+    final protected function main()
     {
         return $this->cliWrap();
     }

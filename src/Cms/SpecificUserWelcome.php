@@ -43,7 +43,7 @@ class SpecificUserWelcome extends Core\RouteAlias
 
     // onBefore
     // vérifie que le user peut bien recevoir un courriel de bienvenue
-    protected function onBefore()
+    final protected function onBefore()
     {
         $return = false;
         $row = $this->row();
@@ -61,7 +61,7 @@ class SpecificUserWelcome extends Core\RouteAlias
 
     // onSuccess
     // communication lors du succès
-    protected function onSuccess()
+    final protected function onSuccess()
     {
         static::sessionCom()->pos('user/welcome/success');
 
@@ -71,7 +71,7 @@ class SpecificUserWelcome extends Core\RouteAlias
 
     // onFailure
     // communication lors d'un échec
-    protected function onFailure()
+    final protected function onFailure()
     {
         static::sessionCom()->neg('user/welcome/failure');
 
@@ -81,7 +81,7 @@ class SpecificUserWelcome extends Core\RouteAlias
 
     // routeSuccess
     // retourne la route à rediriger en cas de succès ou échec de l'opération
-    public function routeSuccess():Core\Route
+    final public function routeSuccess():Core\Route
     {
         return $this->row()->route();
     }
@@ -89,7 +89,7 @@ class SpecificUserWelcome extends Core\RouteAlias
 
     // proceed
     // procède à envoyer le courriel
-    public function proceed():bool
+    final public function proceed():bool
     {
         $return = false;
         $row = $this->row();
@@ -113,7 +113,7 @@ class SpecificUserWelcome extends Core\RouteAlias
 
     // emailReplace
     // replace pour l'envoie de courriel
-    protected function emailReplace():?array
+    final protected function emailReplace():?array
     {
         return null;
     }
@@ -121,7 +121,7 @@ class SpecificUserWelcome extends Core\RouteAlias
 
     // emailOption
     // option pour l'envoie de courriel
-    protected function emailOption():?array
+    final protected function emailOption():?array
     {
         return ['com'=>true];
     }

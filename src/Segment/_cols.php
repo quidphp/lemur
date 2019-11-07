@@ -17,7 +17,7 @@ trait _cols
 {
     // structureSegmentCols
     // gère le segment d'uri pour plusieurs colonnes
-    public static function structureSegmentCols(string $type,$value,array &$keyValue)
+    final public static function structureSegmentCols(string $type,$value,array &$keyValue)
     {
         $return = false;
 

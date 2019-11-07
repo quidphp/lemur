@@ -38,7 +38,7 @@ abstract class AccountChangePasswordSubmit extends Core\RouteAlias
 
     // onFailure
     // callback appelé lors d'un changement avec erreur
-    protected function onFailure():void
+    final protected function onFailure():void
     {
         $com = static::session()->com();
         $com->keepCeiling();
@@ -57,7 +57,7 @@ abstract class AccountChangePasswordSubmit extends Core\RouteAlias
 
     // proceed
     // procède au changement de mot de passe
-    public function proceed():bool
+    final public function proceed():bool
     {
         $return = false;
         $session = static::session();
@@ -79,7 +79,7 @@ abstract class AccountChangePasswordSubmit extends Core\RouteAlias
 
     // post
     // retourne les données post pour le changement de mot de passe compte
-    protected function post():array
+    final protected function post():array
     {
         $return = [];
         $request = $this->request();
@@ -96,7 +96,7 @@ abstract class AccountChangePasswordSubmit extends Core\RouteAlias
 
     // getFields
     // retourne le nom des champs pour le formulaire
-    public function getFields():array
+    final public function getFields():array
     {
         return $this->getAttr(['match','post']) ?? [];
     }

@@ -30,7 +30,7 @@ trait _general
     // selectedUri
     // gère les selected uri pour une route general
     // par défaut la route avec segment par défaut est sélectionné
-    public function selectedUri():array
+    final public function selectedUri():array
     {
         $return = [];
         $route = static::make();
@@ -43,7 +43,7 @@ trait _general
 
     // makeGeneral
     // cette méthode permet de retourner une route general à partir de la classe
-    public static function makeGeneral($navKey=null,$segment=null):?self
+    final public static function makeGeneral($navKey=null,$segment=null):?self
     {
         $return = null;
         $class = static::class;
@@ -66,7 +66,7 @@ trait _general
 
     // canReset
     // retourne vrai si la bouton reset peut s'afficher
-    protected function canReset(?string $search=null,$not=null):bool
+    final protected function canReset(?string $search=null,$not=null):bool
     {
         $return = false;
         $default = static::getDefaultSegment();
@@ -98,7 +98,7 @@ trait _general
 
     // makeCount
     // fait le count pour une page general
-    protected function makeCount():string
+    final protected function makeCount():string
     {
         $r = '';
         $sql = $this->sql();
@@ -146,7 +146,7 @@ trait _general
 
     // makeSearch
     // construit le input search
-    protected function makeSearch(?string $placeholder=null,?array $attr=null):string
+    final protected function makeSearch(?string $placeholder=null,?array $attr=null):string
     {
         $r = '';
         $table = $this->table();
@@ -183,7 +183,7 @@ trait _general
 
     // makeInputLimit
     // construit le input limit
-    protected function makeInputLimit():string
+    final protected function makeInputLimit():string
     {
         $r = '';
         $sql = $this->sql();
@@ -207,7 +207,7 @@ trait _general
 
     // makePageInput
     // construit le input page
-    protected function makePageInput(?array $attr=null):string
+    final protected function makePageInput(?array $attr=null):string
     {
         $r = '';
 
@@ -248,7 +248,7 @@ trait _general
 
     // makeGeneralNav
     // construit un block de navigation par page
-    protected function makeGeneralNav(bool $firstLast=true,bool $prevNext=true,int $amount=3,bool $str=false)
+    final protected function makeGeneralNav(bool $firstLast=true,bool $prevNext=true,int $amount=3,bool $str=false)
     {
         $return = null;
 
@@ -267,7 +267,7 @@ trait _general
 
     // makeGeneralPager
     // construit un block de navigation à partir d'un tableau general
-    protected function makeGeneralPager(array $general,bool $firstLast=true,bool $prevNext=true,bool $str=false)
+    final protected function makeGeneralPager(array $general,bool $firstLast=true,bool $prevNext=true,bool $str=false)
     {
         $return = [];
 

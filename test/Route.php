@@ -20,7 +20,7 @@ use Quid\Test\Suite;
 class Route extends Base\Test
 {
     // trigger
-    public static function trigger(array $data):bool
+    final public static function trigger(array $data):bool
     {
         // prepare
         $boot = $data['boot'];
@@ -650,7 +650,7 @@ class Route extends Base\Test
         $routes->init('cms');
 
         // routing
-        assert($app->count() === 5);
+        assert($app->count() === 45);
         assert($routes->type() === 'cms');
         assert($routes->keyParent()[Lemur\Cms\LoginSubmit::class] === Lemur\Cms\Login::class);
         assert(count($routes->hierarchy()) === 16);
@@ -689,15 +689,15 @@ class Route extends Base\Test
         assert($routes->sortDefault() === $routes);
 
         // map
-        assert($routes->isCount(43));
+        assert($routes->isCount(45));
         assert($routes->get('Sitemap') === Lemur\Cms\Sitemap::class);
         assert($routes->get(Lemur\Cms\Sitemap::class) === Lemur\Cms\Sitemap::class);
         assert(!$routes->in('Sitemap'));
         assert($routes->in(Lemur\Cms\Sitemap::class));
         assert($routes->exists('Sitemap'));
         assert($routes->exists(Lemur\Cms\Sitemap::class));
-        assert($routes->unset('Sitemap')->isCount(42));
-        assert($routes->add(Lemur\Cms\Sitemap::class)->isCount(43));
+        assert($routes->unset('Sitemap')->isCount(44));
+        assert($routes->add(Lemur\Cms\Sitemap::class)->isCount(45));
 
         return true;
     }

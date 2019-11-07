@@ -32,7 +32,7 @@ class Home extends Core\Route\Home
 
     // main
     // génère main pour home
-    protected function main():string
+    final protected function main():string
     {
         $r = Html::divCond($this->mainTop(),'top');
         $r .= Html::divCond($this->mainBottom(),'bottom');
@@ -43,7 +43,7 @@ class Home extends Core\Route\Home
 
     // mainTop
     // génère la partie top de main
-    protected function mainTop():string
+    final protected function mainTop():string
     {
         $r = '';
 
@@ -56,7 +56,7 @@ class Home extends Core\Route\Home
 
     // mainTopLeft
     // génère le html pour la partie en haut à gauche de la page d'accueil
-    protected function mainTopLeft():string
+    final protected function mainTopLeft():string
     {
         $r = '';
         $r .= $this->makeH1(static::boot()->typeLabel());
@@ -70,7 +70,7 @@ class Home extends Core\Route\Home
 
     // makeInfo
     // génère les informations en haut de la page
-    protected function makeInfo():string
+    final protected function makeInfo():string
     {
         $r = '';
         $tables = $this->db()->tables();
@@ -95,7 +95,7 @@ class Home extends Core\Route\Home
 
     // makeHomePopup
     // génère le popup d'informations pour home
-    protected function makeHomePopup():?string
+    final protected function makeHomePopup():?string
     {
         $return = null;
 
@@ -112,7 +112,7 @@ class Home extends Core\Route\Home
 
     // infoPopupClosure
     // callback pour le popup d'informations de la page d'accueil
-    protected function infoPopupClosure():\Closure
+    final protected function infoPopupClosure():\Closure
     {
         return function(string $key) {
             $return = [static::langText(['popup','home',$key])];
@@ -140,7 +140,7 @@ class Home extends Core\Route\Home
 
     // mainTopRight
     // génère le html pour la partie en haut à droite de la page d'accueil
-    protected function mainTopRight():string
+    final protected function mainTopRight():string
     {
         $r = '';
         $r .= $this->makeAbout();
@@ -151,7 +151,7 @@ class Home extends Core\Route\Home
 
     // makeAbout
     // bouton vers la page à propos
-    protected function makeAbout():string
+    final protected function makeAbout():string
     {
         $r = '';
         $session = static::session();
@@ -168,7 +168,7 @@ class Home extends Core\Route\Home
 
     // mainBottom
     // génère la partie bottom de main
-    protected function mainBottom():string
+    final protected function mainBottom():string
     {
         $r = '';
 
@@ -184,7 +184,7 @@ class Home extends Core\Route\Home
 
     // makeSearch
     // génère le champ de recherche globale
-    protected function makeSearch():string
+    final protected function makeSearch():string
     {
         $r = '';
 

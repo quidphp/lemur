@@ -15,9 +15,7 @@ use Quid\Lemur;
 class ResetPasswordSubmit extends Lemur\Route\ResetPasswordSubmit
 {
     // config
-    public static $config = [
-        'parent'=>ResetPassword::class
-    ];
+    public static $config = [];
 }
 
 // init

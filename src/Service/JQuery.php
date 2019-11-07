@@ -20,7 +20,7 @@ class JQuery extends Main\Service
 
     // docOpenJs
     // retourne le javascript à lier en début de document
-    public function docOpenJs()
+    final public function docOpenJs()
     {
         return [1=>'js/vendor/jquery/jquery.js'];
     }

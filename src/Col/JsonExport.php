@@ -28,7 +28,7 @@ class JsonExport extends Core\Col\JsonAlias
 
     // varExport
     // permet d'envoyer un array dans var export
-    public static function varExport(array $return)
+    final public static function varExport(array $return)
     {
         return Base\Debug::export($return);
     }
@@ -36,7 +36,7 @@ class JsonExport extends Core\Col\JsonAlias
 
     // onGet
     // onGet spécial si contexte est cms, retourne le résultat debug/export
-    public function onGet($return,array $option)
+    final protected function onGet($return,array $option)
     {
         $return = parent::onGet($return,$option);
 
@@ -50,7 +50,7 @@ class JsonExport extends Core\Col\JsonAlias
     // onSet
     // gère la logique onSet pour jsonExport
     // si la valeur est trop longue, n'envoie pas d'erreur mais retourne un tableau avec la clé incomplete à true
-    public function onSet($return,array $row,?Orm\Cell $cell=null,array $option)
+    final protected function onSet($return,array $row,?Orm\Cell $cell=null,array $option)
     {
         $return = parent::onSet($return,$row,$cell,$option);
 
@@ -63,7 +63,7 @@ class JsonExport extends Core\Col\JsonAlias
 
     // invalidValue
     // retourne la valeur pour représenter que la valeur enregistrée est invalide (trop longue)
-    public static function invalidValue():array
+    final public static function invalidValue():array
     {
         return ['incomplete'=>true];
     }

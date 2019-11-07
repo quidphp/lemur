@@ -24,7 +24,7 @@ class UserRole extends Core\Col\UserRole
     // formComplex
     // génère le formComplex pour userRole
     // retourne un input plain si c'est l'utilisateur courant
-    public function formComplex($value=true,?array $attr=null,?array $option=null):string
+    final public function formComplex($value=true,?array $attr=null,?array $option=null):string
     {
         $return = null;
         $session = $current = static::boot()->session();

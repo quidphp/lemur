@@ -16,7 +16,7 @@ trait _pointer
 {
     // structureSegmentPointer
     // gère le segment d'uri pour un pointeur, c'est à dire table-id en un seul segment
-    public static function structureSegmentPointer(string $type,$value,array &$keyValue)
+    final public static function structureSegmentPointer(string $type,$value,array &$keyValue)
     {
         $return = false;
         $valid = static::getPointerValidTables();
@@ -56,7 +56,7 @@ trait _pointer
 
     // getPointerValidTables
     // retourne les tables valables pour le pointeur, si vide tout est valable
-    public static function getPointerValidTables():?array
+    final public static function getPointerValidTables():?array
     {
         return null;
     }
@@ -64,7 +64,7 @@ trait _pointer
 
     // structureSegmentPointerValidateDefault
     // retourne la valeur par défaut pour le segment
-    public static function structureSegmentPointerValidateDefault()
+    final public static function structureSegmentPointerValidateDefault()
     {
         return false;
     }

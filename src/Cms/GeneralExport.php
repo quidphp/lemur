@@ -51,7 +51,7 @@ class GeneralExport extends Core\RouteAlias
 
     // trigger
     // html pour la page avant l'exportation, s'ouvre dans une box
-    public function trigger()
+    final public function trigger()
     {
         $r = '';
         $table = $this->table();
@@ -78,7 +78,7 @@ class GeneralExport extends Core\RouteAlias
 
     // makeChoices
     // génère les choix de route, en lien avec l'encodage
-    protected function makeChoices():string
+    final protected function makeChoices():string
     {
         $r = '';
         $segment = $this->segments();
@@ -97,7 +97,7 @@ class GeneralExport extends Core\RouteAlias
 
     // aDialog
     // retourne le lien dialog
-    public function aDialog():string
+    final public function aDialog():string
     {
         return $this->aTitle(null,['operation-element','submit','icon','padLeft','download','data'=>['modal'=>static::name()]]);
     }
@@ -105,7 +105,7 @@ class GeneralExport extends Core\RouteAlias
 
     // longExport
     // retourne le nombre de ligne pour considérer que c'est une longue exportation
-    public function longExport():int
+    final public function longExport():int
     {
         return $this->getAttr('longExport');
     }

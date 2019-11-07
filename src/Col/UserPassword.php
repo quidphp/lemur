@@ -21,7 +21,7 @@ class UserPassword extends Core\Col\UserPassword
 
     // formComplex
     // génère le formulaire complex pour password
-    public function formComplex($value=true,?array $attr=null,?array $option=null):string
+    final public function formComplex($value=true,?array $attr=null,?array $option=null):string
     {
         $return = '';
         $tag = $this->complexTag($attr);

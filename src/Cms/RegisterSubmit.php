@@ -15,9 +15,7 @@ use Quid\Lemur;
 class RegisterSubmit extends Lemur\Route\RegisterSubmit
 {
     //  config
-    public static $config = [
-        'parent'=>Register::class
-    ];
+    public static $config = [];
 }
 
 // init

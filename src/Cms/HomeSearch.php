@@ -36,13 +36,14 @@ class HomeSearch extends Core\RouteAlias
             'genuine'=>true,
             'post'=>['search'=>true]],
         'parent'=>Home::class,
-        'group'=>'submit'
+        'group'=>'submit',
+        'history'=>false
     ];
 
 
     // onBefore
     // avant le trigger de la route, vérifie si la recherche est possible
-    protected function onBefore()
+    final protected function onBefore()
     {
         $return = false;
 
@@ -60,7 +61,7 @@ class HomeSearch extends Core\RouteAlias
 
     // isSearchValueValid
     // retourne vrai si le terme de recherche est valide
-    protected function isSearchValueValid(string $value):bool
+    final protected function isSearchValueValid(string $value):bool
     {
         $return = false;
         $searchable = $this->searchable();
@@ -74,7 +75,7 @@ class HomeSearch extends Core\RouteAlias
 
     // trigger
     // lance la route homeSearch
-    public function trigger():string
+    final public function trigger():string
     {
         $r = '';
         $search = $this->getSearchValue();
@@ -91,7 +92,7 @@ class HomeSearch extends Core\RouteAlias
 
     // makeResults
     // retourne les résultats de la recherche
-    protected function makeResults(array $array):string
+    final protected function makeResults(array $array):string
     {
         $r = '';
         $tables = $this->db()->tables();
@@ -128,7 +129,7 @@ class HomeSearch extends Core\RouteAlias
     // searchable
     // retourne les tables cherchables et ayant les permission
     // est public car utilisé dans home
-    public function searchable():Orm\Tables
+    final public function searchable():Orm\Tables
     {
         return $this->db()->tables()->searchable()->hasPermission('search','view');
     }

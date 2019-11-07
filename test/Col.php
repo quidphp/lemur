@@ -16,7 +16,7 @@ use Quid\Lemur;
 class Col extends Base\Test
 {
     // trigger
-    public static function trigger(array $data):bool
+    final public static function trigger(array $data):bool
     {
         // prepare
         $db = Lemur\Boot::inst()->db();
@@ -87,7 +87,7 @@ class Col extends Base\Test
         // getDataAttr
 
         // col
-        assert(count($col->attr()) === 63);
+        assert(count($col->attr()) === 64);
         assert(strlen($date->formComplex()) === 260);
         assert(strlen($date->formComplex('08-08-1984')) === 278);
         assert(strlen($date->formComplex(mktime(0,0,0,8,8,1984))) === 278);
@@ -101,10 +101,8 @@ class Col extends Base\Test
         assert($jsonArray->completeValidation('') === ['required']);
         assert($jsonArray->completeValidation(Base\Json::encode(['test'])) === true);
         assert($phone instanceof Lemur\Col\Phone);
-        assert($phone->onGet(5144839999,[]) === '(514) 483-9999');
+        assert($phone->get(5144839999) === '(514) 483-9999');
         assert($slug instanceof Lemur\Col\Slug);
-        assert($slug->onSet('dasasd dsaasd asddas',[],null,[]) === 'dasasd dsaasd asddas');
-        assert($slug->onSet(null,['name_en'=>'OK'],null,[]) === null);
         assert(is_array($slug->slugAttr()));
         assert($slug->slugDateConvert('date','12-05-2018') === '2018-12-05');
         assert($slug->slugDo('lol') === false);

@@ -29,7 +29,7 @@ class Phone extends Core\ColAlias
 
     // onGet
     // ramène le numéro de téléphone dans un format nord-américain
-    public function onGet($return,array $option)
+    final protected function onGet($return,array $option)
     {
         $return = $this->value($return);
 
@@ -43,7 +43,7 @@ class Phone extends Core\ColAlias
     // onSet
     // gère la logique onSet pour un téléphone
     // enlève tous les caractères non numérique
-    public function onSet($return,array $row,?Orm\Cell $cell=null,array $option)
+    final protected function onSet($return,array $row,?Orm\Cell $cell=null,array $option)
     {
         if(is_string($return))
         $return = Base\Str::keepNumber($return);

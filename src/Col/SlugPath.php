@@ -22,7 +22,7 @@ class SlugPath extends SlugAlias
 
     // slugMake
     // gère l'appel à la classe base/slugPath
-    public static function slugMake($value,?array $option=null):string
+    final public static function slugMake($value,?array $option=null):string
     {
         return Base\SlugPath::str($value,['slug'=>$option]);
     }

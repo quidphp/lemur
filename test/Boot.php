@@ -16,7 +16,7 @@ use Quid\Lemur;
 class Boot extends Base\Test
 {
     // trigger
-    public static function trigger(array $data):bool
+    final public static function trigger(array $data):bool
     {
         // prepare
         $boot = Lemur\Boot::inst();

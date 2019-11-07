@@ -5,9 +5,14 @@
  * Website: https://quidphp.com
  * License: https://github.com/quidphp/lemur/blob/master/LICENSE
  */
- 
+
 // cms
 // script of common behaviours for all pages of the CMS
+
+// globale 
+quid.cms = {}; 
+
+// ready
 $(document).ready(function() {
 	
 	// window

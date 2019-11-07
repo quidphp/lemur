@@ -15,7 +15,7 @@ trait _page
 {
     // structureSegmentPage
     // gère le segment d'uri pour une page, doit être un int plus grand que 0
-    public static function structureSegmentPage(string $type,$value,array &$keyValue)
+    final public static function structureSegmentPage(string $type,$value,array &$keyValue)
     {
         $return = false;
 

@@ -563,6 +563,8 @@ class En extends Core\Lang\En
                     'cliClearCache'=>'Empty caches',
                     'general'=>'General',
                     'generalDelete'=>'General - Delete',
+                    'generalEdit'=>'General - Quick Edit',
+                    'generalEditSubmit'=>'General - Quick Edit - Submit',
                     'generalExport'=>'Export',
                     'generalExportDownload'=>'General - Export - Download',
                     'generalRelation'=>'General - Relation',

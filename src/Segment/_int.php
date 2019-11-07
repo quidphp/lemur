@@ -15,7 +15,7 @@ trait _int
 {
     // structureSegmentInt
     // gère le segment d'uri pour un chiffre entier, int, accepte 0
-    public static function structureSegmentInt(string $type,$value,array &$keyValue)
+    final public static function structureSegmentInt(string $type,$value,array &$keyValue)
     {
         $return = false;
         $default = static::structureSegmentIntDefault();
@@ -44,7 +44,7 @@ trait _int
 
     // structureSegmentIntDefault
     // retourne le int par défaut pour le segment
-    public static function structureSegmentIntDefault()
+    final public static function structureSegmentIntDefault()
     {
         return;
     }
@@ -52,7 +52,7 @@ trait _int
 
     // structureSegmentIntPossible
     // retourne un tableau avec les int possible pour la route
-    public static function structureSegmentIntPossible():?array
+    final public static function structureSegmentIntPossible():?array
     {
         return null;
     }

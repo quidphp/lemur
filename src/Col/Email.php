@@ -24,7 +24,7 @@ class Email extends Core\Col\Email
 
     // onGet
     // sur onGet retourne le courriel dans un lien a:mailto
-    public function onGet($return,array $option)
+    final protected function onGet($return,array $option)
     {
         $return = $this->value($return);
         $option['context'] = (empty($option['context']))? null:$option['context'];

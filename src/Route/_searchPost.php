@@ -21,7 +21,7 @@ trait _searchPost
 
     // isSearchValueValid
     // retourne vrai si la valeur de recherche est valide
-    protected function isSearchValueValid(string $value):bool
+    final protected function isSearchValueValid(string $value):bool
     {
         return true;
     }
@@ -30,7 +30,7 @@ trait _searchPost
     // getSearchValue
     // retourne la valeur de la recherche,
     // peut retourner null
-    protected function getSearchValue():?string
+    final protected function getSearchValue():?string
     {
         $return = null;
         $searchKey = $this->getSearchName();
@@ -50,7 +50,7 @@ trait _searchPost
 
     // hasSearchValue
     // retourne vrai s'il y a une valeur de recherche
-    protected function hasSearchValue():bool
+    final protected function hasSearchValue():bool
     {
         return ($this->getSearchValue() !== null)? true:false;
     }
@@ -58,7 +58,7 @@ trait _searchPost
 
     // getSearchName
     // retourne la nom du champ search, envoie une exception si non existant
-    public function getSearchName():string
+    final public function getSearchName():string
     {
         return $this->getAttr('searchName');
     }

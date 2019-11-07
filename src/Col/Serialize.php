@@ -23,7 +23,7 @@ class Serialize extends Core\Col\Serialize
 
     // onGet
     // onGet spécial si contexte est cms, retourne le résultat debug/export
-    public function onGet($return,array $option)
+    final protected function onGet($return,array $option)
     {
         $return = parent::onGet($return,$option);
 

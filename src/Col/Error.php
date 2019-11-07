@@ -21,7 +21,7 @@ class Error extends Core\Col\Error
 
     // onGet
     // sur onGet recrée l'objet error si c'est du json, si cms var export
-    public function onGet($return,array $option)
+    final protected function onGet($return,array $option)
     {
         $return = parent::onGet($return,$option);
 

@@ -20,7 +20,7 @@ class Cells extends Core\Cells
 
     // formComplex
     // génère les éléments formulaires complexes pour toutes les cellules
-    public function formComplex(bool $str=false)
+    final public function formComplex(bool $str=false)
     {
         $return = $this->pair('formComplex');
         return ($str === true)? implode($return):$return;
@@ -29,7 +29,7 @@ class Cells extends Core\Cells
 
     // formComplexWrap
     // génère les éléments formComplexWrap pour toutes les cellules
-    public function formComplexWrap(?string $wrap=null,$pattern=null,bool $str=false)
+    final public function formComplexWrap(?string $wrap=null,$pattern=null,bool $str=false)
     {
         $return = $this->pair('formComplexWrap',$wrap,$pattern);
         return ($str === true)? implode($return):$return;

@@ -20,7 +20,7 @@ class JsonArray extends Core\CellAlias
 
     // index
     // retourne un index de jsonArray
-    public function index(int $value)
+    final public function index(int $value)
     {
         $return = null;
         $get = $this->get();

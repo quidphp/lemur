@@ -29,6 +29,7 @@ abstract class Register extends Core\RouteAlias
             'role'=>'nobody',
             'session'=>'allowRegister'],
         'parent'=>Login::class,
+        'row'=>Lemur\Row\User::class,
         'group'=>'nobody',
     ];
 
@@ -40,7 +41,7 @@ abstract class Register extends Core\RouteAlias
 
     // submitRoute
     // route pour soumettre le formulaire
-    public function submitRoute():RegisterSubmit
+    final public function submitRoute():RegisterSubmit
     {
         return static::submitClass()::make();
     }
@@ -56,7 +57,7 @@ abstract class Register extends Core\RouteAlias
 
     // flash
     // retourne les données flash pour le formulaire
-    protected function flash():?array
+    final protected function flash():?array
     {
         return $this->cache(__METHOD__,function() {
             $return = null;
@@ -73,7 +74,7 @@ abstract class Register extends Core\RouteAlias
 
     // makeForm
     // génère le form de resetPassword
-    protected function makeForm():string
+    final protected function makeForm():string
     {
         $r = '';
         $route = $this->submitRoute();
@@ -99,7 +100,7 @@ abstract class Register extends Core\RouteAlias
 
     // makeFormBase
     // génère la première partie du formulaire d'enregistrement
-    protected function makeFormBase():string
+    final protected function makeFormBase():string
     {
         $r = '';
         $table = static::tableFromRowClass();
@@ -120,7 +121,7 @@ abstract class Register extends Core\RouteAlias
 
     // makeFormPassword
     // génère la deuxième partie du formulaire d'enregistrement pour les mots de passes
-    protected function makeFormPassword():string
+    final protected function makeFormPassword():string
     {
         $r = '';
         $fields = $this->getPasswordFields();
@@ -138,7 +139,7 @@ abstract class Register extends Core\RouteAlias
 
     // makeFormOther
     // génère la troisième partie du formulaire d'enregistrement
-    protected function makeFormOther():string
+    final protected function makeFormOther():string
     {
         return '';
     }
@@ -146,7 +147,7 @@ abstract class Register extends Core\RouteAlias
 
     // getBaseFields
     // retourne les champs de base
-    public function getBaseFields():array
+    final public function getBaseFields():array
     {
         return $this->submitRoute()->getBaseFields();
     }
@@ -154,7 +155,7 @@ abstract class Register extends Core\RouteAlias
 
     // getPasswordFields
     // retourne les champs de mot de passe
-    public function getPasswordFields():array
+    final public function getPasswordFields():array
     {
         return $this->submitRoute()->getPasswordFields();
     }

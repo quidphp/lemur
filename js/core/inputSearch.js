@@ -25,16 +25,19 @@ quid.core.inputSearch = $.fn.inputSearch = function(button)
     })
     .on('inputSearch:redirect', function() {
         var val = $(this).inputValue(true);
-        var href = $(this).data("href");
-        var current = $(this).data("current") || '';
+        var href = $(this).attr("data-href");
+        var current = $(this).attr("data-current") || '';
         
-        if($(this).triggerHandler('validate:isValid') && val !== current)
+        if(val === current)
+        $(this).trigger('validate:invalid');
+        
+        else if($(this).triggerHandler('validate:isValid'))
         {
             $(this).trigger('block');
             
             if(quid.base.isStringNotEmpty(val))
             {
-                var char = $(this).data("char");
+                var char = $(this).attr("data-char");
                 val = encodeURIComponent(val);
                 href += "?"+char+"="+val;
             }

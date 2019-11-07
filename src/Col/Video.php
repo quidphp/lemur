@@ -34,7 +34,7 @@ abstract class Video extends Core\ColAlias
 
     // getService
     // retourne le service à utiliser
-    public function getService():Main\Service
+    final public function getService():Main\Service
     {
         $return = null;
         $service = $this->getAttr('service');
@@ -51,7 +51,7 @@ abstract class Video extends Core\ColAlias
 
     // showDetailsMaxLength
     // n'affiche pas le détail sur le maxLength de la colonne
-    public function showDetailsMaxLength():bool
+    final public function showDetailsMaxLength():bool
     {
         return false;
     }
@@ -59,7 +59,7 @@ abstract class Video extends Core\ColAlias
 
     // onGet
     // sur onGet retourne l'objet video s'il y a une valeur
-    public function onGet($return,array $option)
+    final protected function onGet($return,array $option)
     {
         if(!$return instanceof Main\Video)
         {
@@ -81,7 +81,7 @@ abstract class Video extends Core\ColAlias
 
     // onSet
     // gère la logique onSet pour la vidéo
-    public function onSet($return,array $row,?Orm\Cell $cell=null,array $option)
+    final protected function onSet($return,array $row,?Orm\Cell $cell=null,array $option)
     {
         $hasChanged = true;
 
@@ -109,7 +109,7 @@ abstract class Video extends Core\ColAlias
     // formComplex
     // génère le formComplex pour la vidéo
     // le html du video sera ajouté au-dessus du champ
-    public function formComplex($value=true,?array $attr=null,?array $option=null):string
+    final public function formComplex($value=true,?array $attr=null,?array $option=null):string
     {
         $return = '';
         $value = $this->value($value);
@@ -131,7 +131,7 @@ abstract class Video extends Core\ColAlias
 
     // html
     // fait le html video à d'un objet video
-    public function html(Main\Video $value):?string
+    final public function html(Main\Video $value):?string
     {
         $return = '';
         $excerpt = $this->getAttr('descriptionExcerpt');

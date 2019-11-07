@@ -20,7 +20,7 @@ class Cols extends Core\Cols
 
     // formComplex
     // génère les éléments formulaires complexes pour toutes les colonnes
-    public function formComplex(bool $str=false)
+    final public function formComplex(bool $str=false)
     {
         $return = $this->pair('formComplex');
         return ($str === true)? implode($return):$return;
@@ -29,7 +29,7 @@ class Cols extends Core\Cols
 
     // formComplexWrap
     // génère les éléments formComplexWrap pour toutes les colonnes
-    public function formComplexWrap(?string $wrap=null,$pattern=null,bool $str=false)
+    final public function formComplexWrap(?string $wrap=null,$pattern=null,bool $str=false)
     {
         $return = $this->pair('formComplexWrap',$wrap,$pattern);
         return ($str === true)? implode($return):$return;

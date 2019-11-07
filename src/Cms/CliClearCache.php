@@ -29,7 +29,7 @@ class CliClearCache extends Core\RouteAlias
 
     // cli
     // méthode pour vider les caches
-    protected function cli(bool $cli)
+    final protected function cli(bool $cli)
     {
         Cli::neutral(static::label());
         $return = $this->clearCache();
@@ -40,7 +40,7 @@ class CliClearCache extends Core\RouteAlias
 
     // clearCache
     // vide le dossier de cache
-    protected function clearCache():array
+    final protected function clearCache():array
     {
         $return = [];
 
@@ -50,12 +50,18 @@ class CliClearCache extends Core\RouteAlias
             $method = 'neg';
             $value = "! $path";
 
-            if((Base\Symlink::is($path) && Base\Symlink::unset($path)) || (Base\Dir::is($path) && Base\Dir::emptyAndUnlink($path)))
+            if(Base\Symlink::is($path) && Base\Symlink::unset($path))
             {
                 $method = 'pos';
                 $value = "- $path";
             }
-
+            
+            elseif(Base\Dir::is($path) && Base\Dir::emptyAndUnlink($path))
+            {
+                $method = 'pos';
+                $value = "x $path";
+            }
+            
             Cli::$method($value);
             $return[] = [$method=>$value];
         }

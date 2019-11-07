@@ -15,7 +15,7 @@ trait _direction
 {
     // structureSegmentDirection
     // gère le segment d'uri pour une direction de tri
-    public static function structureSegmentDirection(string $type,$value,array &$keyValue)
+    final public static function structureSegmentDirection(string $type,$value,array &$keyValue)
     {
         $return = false;
 

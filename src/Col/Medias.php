@@ -19,7 +19,7 @@ class Medias extends Core\Col\Medias
 
     // formComplexUpdate
     // génère l'élément de formulaire complexe média lors d'une mise à jour
-    protected function formComplexUpdate(Core\Cell $value,array $attr,array $option):string
+    final protected function formComplexUpdate(Core\Cell $value,array $attr,array $option):string
     {
         $return = '';
 

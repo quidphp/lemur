@@ -30,7 +30,7 @@ class Login extends Lemur\Route\Login
 
     // onBefore
     // enregistre l'uri demandé si path n'est pas empty
-    protected function onBefore()
+    final protected function onBefore()
     {
         $return = false;
         $session = static::session();
@@ -54,7 +54,7 @@ class Login extends Lemur\Route\Login
     // onFallback
     // retourne la route login pour la redirection
     // seulement si l'url n'est pas celle de la requête courante
-    public function onFallback($context=null)
+    final protected function onFallback($context=null)
     {
         $return = null;
 
@@ -73,7 +73,7 @@ class Login extends Lemur\Route\Login
 
     // onReplace
     // change le titre et background de la route
-    protected function onReplace(array $return):array
+    final protected function onReplace(array $return):array
     {
         $return['title'] = $return['bootLabel'];
         $return['background'] = static::boot()->getOption('background');
@@ -84,7 +84,7 @@ class Login extends Lemur\Route\Login
 
     // submitRoute
     // route pour soumettre le formulaire
-    public function submitRoute():Lemur\Route\LoginSubmit
+    final public function submitRoute():Lemur\Route\LoginSubmit
     {
         return LoginSubmit::makeOverload();
     }
@@ -92,7 +92,7 @@ class Login extends Lemur\Route\Login
 
     // submitAttr
     // attribut pour le bouton submit du formulaire
-    public function submitAttr()
+    final public function submitAttr()
     {
         return ['icon','padLeft','login'];
     }
@@ -100,7 +100,7 @@ class Login extends Lemur\Route\Login
 
     // makeForm
     // génère le form du login
-    protected function makeForm():string
+    final protected function makeForm():string
     {
         $r = '';
         $route = $this->submitRoute();
@@ -136,7 +136,7 @@ class Login extends Lemur\Route\Login
 
     // makeButtons
     // retourne un tableau avec les boutons sous le formulaire de connexion
-    protected function makeButtons():array
+    final protected function makeButtons():array
     {
         $return = [];
         $return['register'] = $this->makeRegister();

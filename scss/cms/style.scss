@@ -138,7 +138,8 @@ body .loading-icon,
 body [data-status='loading'] .popup,
 body [data-status='loading'].popup,
 .load-more[data-status='loading'],
-.modal[data-status='loading'] .inner {
+.modal[data-status='loading'] .inner,
+[data-route='general'] main .container table td[data-quick-edit='1'][data-status='loading'] > a.quick-edit {
     @include bgimg64($iconLoading, center);
     background-size: 16px 16px;
 }

@@ -47,7 +47,7 @@ class SpecificAddSubmit extends Core\RouteAlias
 
     // onBefore
     // validation avant le lancement de la route
-    protected function onBefore()
+    final protected function onBefore()
     {
         $return = false;
         $table = $this->table();
@@ -61,7 +61,7 @@ class SpecificAddSubmit extends Core\RouteAlias
 
     // fallbackRouteRedirect
     // si c'est un failedFileUpload, renvoie vers le referer
-    protected function fallbackRouteRedirect($context=null)
+    final protected function fallbackRouteRedirect($context=null)
     {
         return ($context === 'failedFileUpload')? true:null;
     }
@@ -69,10 +69,9 @@ class SpecificAddSubmit extends Core\RouteAlias
 
     // proceed
     // insère la ligne
-    protected function proceed():?Core\Row
+    final protected function proceed():?Core\Row
     {
         $return = null;
-        $context = static::context();
         $post = $this->post();
         $post = $this->onBeforeCommit($post);
 
@@ -81,7 +80,7 @@ class SpecificAddSubmit extends Core\RouteAlias
             $table = $this->table();
             $db = $table->db();
             $db->setExceptionClass(true); // catchable exception
-            $return = $table->insert($post,['preValidate'=>true,'com'=>true,'context'=>$context]);
+            $return = $table->insert($post,['preValidate'=>true,'com'=>true,'context'=>static::class]);
             $db->setExceptionClass(false);
         }
 

@@ -70,7 +70,7 @@ quid.core.ajaxEvents = $.fn.ajaxEvents = function()
     .on('ajax:trigger', function(event,config,tag,triggerEvent) {
         event.stopImmediatePropagation();
         var r = quid.core.ajaxTrigger.call(this,config,tag);
-
+        
         if(r !== false && triggerEvent)
         {
             triggerEvent.stopImmediatePropagation();
@@ -169,7 +169,7 @@ quid.core.ajaxTrigger = $.fn.ajaxTrigger = function(config,tag)
 quid.core.ajaxConfigFromTag = $.fn.ajaxConfigFromTag = function(r)
 {
     var tagName = $(this).tagName();
-    
+
     if(r.url == null)
     r.url = (tagName === 'form')? $(this).prop("action"):($(this).prop("href") || $(this).data('href'));
     
@@ -204,15 +204,18 @@ quid.core.ajaxBlock = $.fn.ajaxBlock = function(type)
     if(quid.base.isStringNotEmpty(type))
     {
         $(this).block(type).ajax(type)
+        .on('ajaxBlock:getStatusNode', function(event) {
+            return $(this);
+        })
         .on('ajax:before', function(event) {
-            $(this).attr('data-status','loading');
+            $(this).triggerHandler('ajaxBlock:getStatusNode').attr('data-status','loading');
             $(this).trigger('block');
         })
-        .on('ajax:error', function(event) {
-            $(this).attr("data-status",'error');
+        .on('ajax:error', function(event,jqXHR,textStatus,errorThrown) {
+            $(this).triggerHandler('ajaxBlock:getStatusNode').attr("data-status",'error');
         })
-        .on('ajax:success', function(event) {
-            $(this).attr("data-status",'ready');
+        .on('ajax:success', function(event,data,textStatus,jqXHR) {
+            $(this).triggerHandler('ajaxBlock:getStatusNode').attr("data-status",'ready');
         })
         .on('ajax:complete', function(event) {
             $(this).trigger('unblock');

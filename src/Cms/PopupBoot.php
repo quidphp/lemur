@@ -16,7 +16,7 @@ use Quid\Core;
 class PopupBoot extends Core\RouteAlias
 {
     // trait
-    use _common;
+    use _popup;
 
 
     // config
@@ -26,10 +26,6 @@ class PopupBoot extends Core\RouteAlias
             'fr'=>'popup/demerrage/[route]'],
         'segment'=>[
             'route'=>'structureSegmentRoute'],
-        'match'=>[
-            'ajax'=>true,
-            'role'=>['>'=>'user']],
-        'group'=>'popup',
         'popup'=>[
             'phpVersion','quidVersion','envLabel','typeLabel','classFqcn','classRoute','hostname','httpProtocol','ip',
             'os','isCaseSensitive','processId','user','group','serverType','sapi','paths','phpOverview','jsOverview','cssOverview','schemeHosts','memory',
@@ -37,46 +33,17 @@ class PopupBoot extends Core\RouteAlias
     ];
 
 
-    // onBefore
-    // vérifie que la permission est la
-    protected function onBefore()
-    {
-        return $this->canTrigger();
-    }
-
-
     // canTrigger
     // retourne vrai si la route peut être trigger
-    public function canTrigger():bool
+    final public function canTrigger():bool
     {
         return ($this->hasPermission('popup','bootPopup'))? true:false;
     }
 
 
-    // triger
-    // lance la route
-    public function trigger():string
-    {
-        return $this->popup();
-    }
-
-
-    // popup
-    // génère le popup d'informations pour boot dans le footer
-    protected function popup():?string
-    {
-        $return = null;
-        $values = $this->getAttr('popup');
-        $closure = $this->popupClosure();
-        $return = static::makeInfoPopup($values,$closure,false);
-
-        return $return;
-    }
-
-
     // popupClosure
     // callback pour le popup d'informations de boot
-    protected function popupClosure():\Closure
+    final protected function popupClosure():\Closure
     {
         return function(string $key):array {
             $return = [];
@@ -123,7 +90,7 @@ class PopupBoot extends Core\RouteAlias
 
     // structureSegmentRoute
     // gère le segment de route
-    public static function structureSegmentRoute(string $type,$value)
+    final public static function structureSegmentRoute(string $type,$value)
     {
         $return = false;
 

@@ -18,7 +18,7 @@ trait _common
     // isTableTop
     // retourne vrai si la table courante est dans le tableau
     // la page n'a pas nécessairement une table
-    protected function isTableTop(array $value)
+    final protected function isTableTop(array $value)
     {
         $return = false;
 
@@ -36,7 +36,7 @@ trait _common
 
     // tableHiddenInput
     // génère le input hidden pour table
-    public function tableHiddenInput():string
+    final public function tableHiddenInput():string
     {
         return Html::inputHidden($this->table(),static::tableInputName());
     }
@@ -44,7 +44,7 @@ trait _common
 
     // tableInputName
     // retourne le nom du input pour table
-    public static function tableInputName():string
+    final public static function tableInputName():string
     {
         return '-table-';
     }
@@ -52,7 +52,7 @@ trait _common
 
     // panelInputName
     // retourne le nom du input pour panel
-    public static function panelInputName():string
+    final public static function panelInputName():string
     {
         return '-panel-';
     }
@@ -60,7 +60,7 @@ trait _common
 
     // authorLink
     // retourne le lien web pour l'auteur
-    public static function authorLink():string
+    final public static function authorLink():string
     {
         return Html::a(static::langText('author/uri'),static::langText('author/name'));
     }
@@ -68,7 +68,7 @@ trait _common
 
     // authorEmail
     // retourne le lien email pour l'auteur
-    public static function authorEmail():string
+    final public static function authorEmail():string
     {
         return Html::a(static::langText('author/email'),true);
     }
@@ -76,7 +76,7 @@ trait _common
 
     // makeInfoPopup
     // génère un popup d'informations
-    public static function makeInfoPopup(array $values,\Closure $closure,bool $icon):string
+    final public static function makeInfoPopup(array $values,\Closure $closure,bool $icon):string
     {
         $r = '';
 
@@ -130,7 +130,7 @@ trait _common
 
     // infoPopopArray
     // méthode utilisé par makeInfoPopup
-    protected static function infoPopupArray(array $value):string
+    final protected static function infoPopupArray(array $value):string
     {
         $return = '';
         foreach ($value as $k => $v)

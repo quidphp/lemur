@@ -16,7 +16,7 @@ use Quid\Lemur;
 class Db extends Base\Test
 {
     // trigger
-    public static function trigger(array $data):bool
+    final public static function trigger(array $data):bool
     {
         // prepare
         $db = Lemur\Boot::inst()->db();

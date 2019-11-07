@@ -20,14 +20,12 @@ class ResetPassword extends Lemur\Route\ResetPassword
 
 
     // config
-    public static $config = [
-        'parent'=>Login::class
-    ];
+    public static $config = [];
 
 
     // submitRoute
     // route pour soumettre le formulaire
-    public function submitRoute():Lemur\Route\ResetPasswordSubmit
+    final public function submitRoute():Lemur\Route\ResetPasswordSubmit
     {
         return ResetPasswordSubmit::makeOverload();
     }
@@ -35,7 +33,7 @@ class ResetPassword extends Lemur\Route\ResetPassword
 
     // submitAttr
     // attribut pour le bouton submit du formulaire
-    public function submitAttr()
+    final public function submitAttr()
     {
         return ['icon','padLeft','reset'];
     }
@@ -43,7 +41,7 @@ class ResetPassword extends Lemur\Route\ResetPassword
 
     // makeForm
     // génère le form de resetPassword
-    protected function makeForm():string
+    final protected function makeForm():string
     {
         $r = '';
         $route = $this->submitRoute();
@@ -68,7 +66,7 @@ class ResetPassword extends Lemur\Route\ResetPassword
 
     // makeButtons
     // retourne un tableau avec les boutons sous le formulaire de connexion
-    protected function makeButtons():array
+    final protected function makeButtons():array
     {
         $return = [];
         $return['login'] = $this->makeLogin();

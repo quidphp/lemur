@@ -33,7 +33,7 @@ class Auto extends Core\ColAlias
 
     // onSet
     // sur onSet créer les valeurs automatiques à partir des colonnes spécifiés et du séparateur
-    public function onSet($return,array $row,?Orm\Cell $cell=null,array $option)
+    final protected function onSet($return,array $row,?Orm\Cell $cell=null,array $option)
     {
         $return = '';
         $attr = $this->autoAttr();
@@ -70,7 +70,7 @@ class Auto extends Core\ColAlias
 
     // autoCols
     // va chercher les éléments à partir des tableaux colonnes et row
-    public function autoCols($segment,array $cols,array $row,?callable $callable=null)
+    final public function autoCols($segment,array $cols,array $row,?callable $callable=null)
     {
         $return = null;
         $attr = $this->autoAttr();
@@ -119,7 +119,7 @@ class Auto extends Core\ColAlias
     // autoAttr
     // retourne les attr pour auto
     // peut envoyer une exception si attr invalide
-    public function autoAttr():array
+    final public function autoAttr():array
     {
         $return = null;
         $attr = $this->getAttr('auto');

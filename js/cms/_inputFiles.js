@@ -6,12 +6,9 @@
  * License: https://github.com/quidphp/lemur/blob/master/LICENSE
  */
  
-// files
-// script with some logic for a file upload component
-
-// files
-// comportement pour le champ de chargement de fichiers
-quid.core.inputFiles = $.fn.inputFiles = function()
+// inputFiles
+// script with logic for the file upload component of the CMS
+quid.cms.inputFiles = function()
 {
     var mediaAction = $(this).find(".action");
     var mediaCancelAction = $(this).find(".message .close");

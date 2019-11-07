@@ -50,7 +50,7 @@ abstract class RegisterSubmit extends Core\RouteAlias
 
     // onSuccess
     // traite le succès
-    protected function onSuccess():void
+    final protected function onSuccess():void
     {
         static::sessionCom()->stripFloor();
         static::timeoutIncrement('success');
@@ -61,7 +61,7 @@ abstract class RegisterSubmit extends Core\RouteAlias
 
     // onFailure
     // increment le timeout et appele onFailure
-    protected function onFailure():void
+    final protected function onFailure():void
     {
         static::sessionCom()->stripFloor();
         static::timeoutIncrement('failure');
@@ -72,7 +72,7 @@ abstract class RegisterSubmit extends Core\RouteAlias
 
     // routeSuccess
     // méthode abstraite, retourne l'objet route en cas de succès
-    protected function routeSuccess():Lemur\Route
+    final protected function routeSuccess():Lemur\Route
     {
         return Login::makeOverload();
     }
@@ -80,7 +80,7 @@ abstract class RegisterSubmit extends Core\RouteAlias
 
     // routeFailure
     // retourne l'objet route pour la redirection en cas d'erreur
-    protected function routeFailure():Lemur\Route
+    final protected function routeFailure():Lemur\Route
     {
         return static::makeParentOverload();
     }
@@ -88,7 +88,7 @@ abstract class RegisterSubmit extends Core\RouteAlias
 
     // post
     // retourne le tableau post pour l'enregistrement
-    public function post():array
+    final public function post():array
     {
         $return = [];
         $request = $this->request();
@@ -110,7 +110,7 @@ abstract class RegisterSubmit extends Core\RouteAlias
     // proceed
     // lance le processus pour register
     // retourne null ou un objet user
-    protected function proceed():?Lemur\Row\User
+    final protected function proceed():?Lemur\Row\User
     {
         $return = null;
         $session = static::session();
@@ -134,7 +134,7 @@ abstract class RegisterSubmit extends Core\RouteAlias
 
     // getOption
     // option pour le reset password
-    protected function getOption():?array
+    final protected function getOption():?array
     {
         return ['com'=>true];
     }
@@ -143,7 +143,7 @@ abstract class RegisterSubmit extends Core\RouteAlias
     // getDataDefault
     // retourne les valeurs data par défaut, écrase ce qu'il y a dans post
     // possible de lier une callable à une clé
-    public function getDataDefault(array $data):array
+    final public function getDataDefault(array $data):array
     {
         $return = $this->getAttr('dataDefault') ?? [];
 
@@ -159,7 +159,7 @@ abstract class RegisterSubmit extends Core\RouteAlias
 
     // getBaseFields
     // retourne les champs de base
-    public function getBaseFields():array
+    final public function getBaseFields():array
     {
         return $this->getAttr('baseFields') ?? [];
     }
@@ -167,7 +167,7 @@ abstract class RegisterSubmit extends Core\RouteAlias
 
     // getPasswordFields
     // retourne les champs de mot de passe
-    public function getPasswordFields():array
+    final public function getPasswordFields():array
     {
         return $this->getAttr('passwordFields') ?? [];
     }

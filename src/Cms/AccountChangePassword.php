@@ -24,15 +24,13 @@ class AccountChangePassword extends Lemur\Route\AccountChangePassword
     public static $config = [
         'match'=>[
             'role'=>['>'=>'user'],
-            'ajax'=>true],
-        'row'=>Lemur\Row\User::class,
-        'parent'=>Account::class
+            'ajax'=>true]
     ];
 
 
     // submitRoute
     // route à utiliser pour submit
-    public function submitRoute():Lemur\Route\AccountChangePasswordSubmit
+    final public function submitRoute():Lemur\Route\AccountChangePasswordSubmit
     {
         return AccountChangePasswordSubmit::makeOverload();
     }
@@ -40,7 +38,7 @@ class AccountChangePassword extends Lemur\Route\AccountChangePassword
 
     // submitAttr
     // attribut pour le bouton submit du formulaire
-    public function submitAttr()
+    final public function submitAttr()
     {
         return ['icon','modify','padLeft'];
     }
@@ -48,7 +46,7 @@ class AccountChangePassword extends Lemur\Route\AccountChangePassword
 
     // trigger
     // trigge la route accountChangePassword
-    public function trigger():string
+    final public function trigger():string
     {
         $r = '';
         $r .= Html::divtableOpen();
@@ -63,7 +61,7 @@ class AccountChangePassword extends Lemur\Route\AccountChangePassword
 
     // aDialog
     // retourne le lien dialog pour ouvrir la formulaire dans une box
-    public function aDialog($attr=null):string
+    final public function aDialog($attr=null):string
     {
         return $this->a(static::langText('accountChangePassword/link'),Base\Attr::append($attr,['data'=>['modal'=>static::name()]]));
     }

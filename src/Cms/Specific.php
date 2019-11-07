@@ -44,7 +44,7 @@ class Specific extends Core\RouteAlias
 
     // onBefore
     // validation avant le lancement de la route
-    protected function onBefore()
+    final protected function onBefore()
     {
         $return = false;
         $table = $this->segment('table');
@@ -59,7 +59,7 @@ class Specific extends Core\RouteAlias
     // selectedUri
     // retourne les uris sélectionnés pour la route
     // la route account peut être sélectionner
-    public function selectedUri():array
+    final public function selectedUri():array
     {
         $return = [];
         $table = $this->table();
@@ -81,7 +81,7 @@ class Specific extends Core\RouteAlias
 
     // allSegment
     // retourne tous les segments pour la route specific, un par table et id
-    public static function allSegment():array
+    final public static function allSegment():array
     {
         $return = [];
         $db = static::db();
@@ -105,7 +105,7 @@ class Specific extends Core\RouteAlias
 
     // isUpdateable
     // retourne vrai si la row peut être modifié
-    public function isUpdateable():bool
+    final public function isUpdateable():bool
     {
         $return = false;
         $table = $this->table();
@@ -120,7 +120,7 @@ class Specific extends Core\RouteAlias
 
     // isDeleteable
     // retourne vrai si la row peut être effacé
-    public function isDeleteable():bool
+    final public function isDeleteable():bool
     {
         $return = false;
         $table = $this->table();
@@ -135,7 +135,7 @@ class Specific extends Core\RouteAlias
 
     // isUpdateableOrDeleteable
     // retourne vrai si la row peut être modifié ou effacé
-    public function isUpdateableOrDeleteable():bool
+    final public function isUpdateableOrDeleteable():bool
     {
         $return = $this->isUpdateable();
 
@@ -148,7 +148,7 @@ class Specific extends Core\RouteAlias
 
     // isPanelVisible
     // retourne vrai si le panneau est visible
-    protected function isPanelVisible(Core\Cols $cols):bool
+    final protected function isPanelVisible(Core\Cols $cols):bool
     {
         $return = true;
         $row = $this->row();
@@ -164,7 +164,7 @@ class Specific extends Core\RouteAlias
 
     // main
     // fait main pour specific
-    public function main():string
+    final public function main():string
     {
         $r = $this->makeTop();
         $r .= $this->makeForm();
@@ -175,7 +175,7 @@ class Specific extends Core\RouteAlias
 
     // makeTitleBox
     // génère le titre pour la page specific
-    protected function makeTitleBox():string
+    final protected function makeTitleBox():string
     {
         $r = $this->makeH1($this->makeTitle());
         $r .= Html::divCond($this->makeRelationChilds(),['relation-childs','popup-trigger','with-icon','with-popup','anchor-corner']);
@@ -186,7 +186,7 @@ class Specific extends Core\RouteAlias
 
     // makeTitle
     // génère le titre pour la route
-    protected function makeTitle(?string $lang=null):string
+    final protected function makeTitle(?string $lang=null):string
     {
         return $this->row()->label(null,$lang);
     }
@@ -194,7 +194,7 @@ class Specific extends Core\RouteAlias
 
     // makeRelationChilds
     // génère le block pour les enfants direct
-    protected function makeRelationChilds():string
+    final protected function makeRelationChilds():string
     {
         $r = '';
         $table = $this->table();
@@ -221,8 +221,7 @@ class Specific extends Core\RouteAlias
 
     // makeRelationChildsInner
     // génère les li dans le block enfants directs
-    // méthode protégé
-    protected function makeRelationChildsInner(array $value):string
+    final protected function makeRelationChildsInner(array $value):string
     {
         $r = '';
         $db = $this->db();
@@ -273,7 +272,7 @@ class Specific extends Core\RouteAlias
 
     // makeNav
     // génère la nav en haut à droite
-    protected function makeNav():string
+    final protected function makeNav():string
     {
         $r = '';
         $table = $this->table();
@@ -327,7 +326,7 @@ class Specific extends Core\RouteAlias
 
     // makeForm
     // génère le formulaire
-    protected function makeForm():string
+    final protected function makeForm():string
     {
         $r = '';
         $dispatch = $this->isUpdateableOrDeleteable();
@@ -359,13 +358,12 @@ class Specific extends Core\RouteAlias
 
     // makeFormPrimary
     // génère le input hidden pour la colonne primaire
-    protected function makeFormPrimary():string
+    final protected function makeFormPrimary():string
     {
         $r = '';
-        $primary = static::db()->primary();
-        $row = $this->row();
-        $cell = $row->cell($primary);
-        $r = $cell->formHidden(null,static::context());
+        $primary = $this->table()->primary();
+        $cell = $this->row()->cell($primary);
+        $r .= $cell->formHidden(array('name'=>'-primary-'));
 
         return $r;
     }
@@ -373,7 +371,7 @@ class Specific extends Core\RouteAlias
 
     // colCell
     // retourne la cellule à partir d'une colonne
-    protected function colCell(Core\Col $col):Core\Cell
+    final protected function colCell(Core\Col $col):Core\Cell
     {
         return $this->row()->cell($col);
     }
@@ -381,7 +379,7 @@ class Specific extends Core\RouteAlias
 
     // colCellVisible
     // retourne la cellule si elle est visible
-    protected function colCellVisible(Core\Col $col):?Core\Cell
+    final protected function colCellVisible(Core\Col $col):?Core\Cell
     {
         $return = null;
 
@@ -396,7 +394,7 @@ class Specific extends Core\RouteAlias
 
     // makeFormWrap
     // génère un wrap label -> field pour le formulaire
-    protected function makeFormWrap(Core\Cell $cell,array $replace):string
+    final protected function makeFormWrap(Core\Cell $cell,array $replace):string
     {
         return $cell->formComplexWrap($this->getFormWrap(),'%:',$this->formWrapAttr($cell),$replace,static::context());
     }
@@ -404,7 +402,7 @@ class Specific extends Core\RouteAlias
 
     // formWrapAttr
     // retourne les attributs par défaut pour le formWrap
-    protected function formWrapAttr(Core\Cell $cell):?array
+    final protected function formWrapAttr(Core\Cell $cell):?array
     {
         $return = null;
         $table = $this->table();
@@ -419,7 +417,7 @@ class Specific extends Core\RouteAlias
     // makeOperation
     // génère le bloc opération en haut à droite
     // possible que la table ait une opération spécifique dans ses attributs, doit être une callable
-    protected function makeOperation():string
+    final protected function makeOperation():string
     {
         $r = '';
         $row = $this->row();
@@ -439,7 +437,7 @@ class Specific extends Core\RouteAlias
 
     // makeViewRoute
     // génère le lien view vers une route
-    protected function makeViewRoute(?string $key=null):string
+    final protected function makeViewRoute(?string $key=null):string
     {
         $r = '';
         $row = $this->row();
@@ -464,7 +462,7 @@ class Specific extends Core\RouteAlias
 
     // makeDuplicate
     // génère le lien pour dupliquer la ligne si permis
-    protected function makeDuplicate():string
+    final protected function makeDuplicate():string
     {
         $r = '';
         $table = $this->table();
@@ -483,7 +481,7 @@ class Specific extends Core\RouteAlias
 
     // makeFormSubmit
     // génère le submit pour le formulaire
-    protected function makeFormSubmit(string $type):string
+    final protected function makeFormSubmit(string $type):string
     {
         $r = '';
 
@@ -505,7 +503,7 @@ class Specific extends Core\RouteAlias
 
     // makeFormBottom
     // génère la partie inférieure du formulaire
-    protected function makeFormBottom():string
+    final protected function makeFormBottom():string
     {
         $r = '';
 
@@ -521,7 +519,7 @@ class Specific extends Core\RouteAlias
 
     // makeFormDelete
     // génère le bouton submit pour la suppression
-    protected function makeFormDelete():string
+    final protected function makeFormDelete():string
     {
         $r = '';
 

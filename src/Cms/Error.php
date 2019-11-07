@@ -24,7 +24,7 @@ class Error extends Core\Route\Error
 
     // trigger
     // trigge la route error du cms
-    public function trigger()
+    final public function trigger()
     {
         return $this->output('template');
     }
@@ -32,7 +32,7 @@ class Error extends Core\Route\Error
 
     // main
     // génère la page erreur dans la balise main
-    protected function main():string
+    final protected function main():string
     {
         return $this->outputHtml();
     }

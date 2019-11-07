@@ -30,7 +30,7 @@ trait _download
 
     // trigger
     // lance la route download
-    public function trigger()
+    final public function trigger()
     {
         return $this->download();
     }
@@ -38,7 +38,7 @@ trait _download
 
     // getMethod
     // retourne la méthode à utiliser pour le download
-    public function getMethod():string
+    final public function getMethod():string
     {
         return ($this->getAttr('toScreen') === true)? 'toScreen':'download';
     }
@@ -46,7 +46,7 @@ trait _download
 
     // getFile
     // retourne l'objet fichier à downloader ou null
-    public function getFile():?Main\File
+    final public function getFile():?Main\File
     {
         $return = null;
         $cell = $this->cell();
@@ -68,7 +68,7 @@ trait _download
 
     // download
     // download le fichier dans la cellule
-    public function download():bool
+    final public function download():bool
     {
         $return = false;
         $file = $this->getFile();

@@ -35,7 +35,7 @@ trait _relation
 
     // relationSearchRequired
     // retourne vrai si la recherche est requise
-    public function relationSearchRequired():bool
+    final public function relationSearchRequired():bool
     {
         return false;
     }
@@ -44,7 +44,7 @@ trait _relation
     // limit
     // retourne la limite à utiliser
     // public car utilisé via d'autres routes
-    public function limit():int
+    final public function limit():int
     {
         return $this->getAttr('limit');
     }
@@ -52,7 +52,7 @@ trait _relation
 
     // hasPage
     // retourne vrai si la route gère les pages
-    public function hasPage():bool
+    final public function hasPage():bool
     {
         return ($this->hasSegment('page'))? true:false;
     }
@@ -60,7 +60,7 @@ trait _relation
 
     // isFirstPage
     // retourne vrai si c'est la première page
-    public function isFirstPage():bool
+    final public function isFirstPage():bool
     {
         return ($this->hasPage() && $this->segment('page') === 1)? true:false;
     }
@@ -68,7 +68,7 @@ trait _relation
 
     // pageNext
     // retourne la prochaine page si existante
-    public function pageNext():?int
+    final public function pageNext():?int
     {
         $return = null;
 
@@ -91,7 +91,7 @@ trait _relation
 
     // relationSearchNot
     // retourne le not à utiliser pour relationSearch
-    protected function relationSearchNot()
+    final protected function relationSearchNot()
     {
         return;
     }
@@ -99,7 +99,7 @@ trait _relation
 
     // loadMore
     // génère le html pour loadMore si relation a page
-    protected function loadMore(?int $total=null):string
+    final protected function loadMore(?int $total=null):string
     {
         $r = '';
         $pageNext = $this->pageNext();
@@ -129,7 +129,7 @@ trait _relation
 
     // hasOrder
     // retourne vrai si la route gère l'ordre
-    public function hasOrder():bool
+    final public function hasOrder():bool
     {
         $return = false;
         $relation = $this->relation();
@@ -143,7 +143,7 @@ trait _relation
 
     // currentOrder
     // retourne l'ordre courant de la route
-    public function currentOrder():?int
+    final public function currentOrder():?int
     {
         $return = null;
 
@@ -161,7 +161,7 @@ trait _relation
 
     // orderSelect
     // génère le menu de sélection pour le choix d'ordre
-    public function orderSelect():string
+    final public function orderSelect():string
     {
         $return = '';
         $order = $this->currentOrder();
@@ -180,7 +180,7 @@ trait _relation
 
     // validOrders
     // retourne les ordres valables pour la route
-    public static function validOrders(object $relation):array
+    final public static function validOrders(object $relation):array
     {
         $return = [];
         $lang = static::lang();
@@ -198,7 +198,7 @@ trait _relation
 
     // isValidOrder
     // retourne vrai si l'ordre est valable pour la route
-    public static function isValidOrder($value,object $relation):bool
+    final public static function isValidOrder($value,object $relation):bool
     {
         $return = false;
         $orders = static::validOrders($relation);
@@ -212,7 +212,7 @@ trait _relation
 
     // relationGrab
     // lance la recherche de relation ou retourne all si pas de recherche
-    protected function relationGrab(?array $option=null):?array
+    final protected function relationGrab(?array $option=null):?array
     {
         $return = null;
         $method = $this->getAttr('method');

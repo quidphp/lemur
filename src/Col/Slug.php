@@ -41,7 +41,7 @@ class Slug extends Core\ColAlias
 
     // slugExists
     // méthode appelé lorsque le slug retourné existe déjà
-    protected function slugExists(string $return,array $row,?Core\Cell $cell=null,array $option):string
+    final protected function slugExists(string $return,array $row,?Core\Cell $cell=null,array $option):string
     {
         $slug = $this->slugAttr(true);
         $keep = $return;
@@ -77,7 +77,7 @@ class Slug extends Core\ColAlias
     // onSet
     // gère la logique set pour slug
     // génère le slug à partir de name_[lang] si vide
-    public function onSet($return,array $row,?Orm\Cell $cell=null,array $option)
+    final protected function onSet($return,array $row,?Orm\Cell $cell=null,array $option)
     {
         if($this->slugDo($return,$cell))
         {
@@ -115,7 +115,7 @@ class Slug extends Core\ColAlias
 
     // slugHasChanged
     // gère l'appel au callback si le slug a changé
-    protected function slugHasChanged(string $return,Core\Cell $cell,array $option):void
+    final protected function slugHasChanged(string $return,Core\Cell $cell,array $option):void
     {
         $option = Base\Arr::plus(['com'=>false],$option);
         $old = $cell->value();
@@ -141,7 +141,7 @@ class Slug extends Core\ColAlias
 
     // slugOnChangeReplace
     // permet de faire le changement de slug dans un ou plusieurs champs d'une ou plusieurs tables
-    protected function slugOnChangeReplace(string $to,string $from,Core\Cell $cell,array $option):int
+    final protected function slugOnChangeReplace(string $to,string $from,Core\Cell $cell,array $option):int
     {
         $return = 0;
         $tablesCols = $this->getAttr('slugChangeTablesCols');
@@ -184,8 +184,7 @@ class Slug extends Core\ColAlias
 
     // slugOnChangeMake
     // génère le chemin à remplacer lors d'un changement de slug
-    // méthode protégé
-    protected function slugOnChangeMake(string $return,string $uri,string $langCode):string
+    final protected function slugOnChangeMake(string $return,string $uri,string $langCode):string
     {
         $return = Base\Str::replace(['%lang%'=>$langCode,'%slug%'=>$return],$uri);
         $return = Base\Path::wrapStart($return);
@@ -197,7 +196,7 @@ class Slug extends Core\ColAlias
 
     // slugDateConvert
     // permet de convertir une date de row dans le format contenu dans slugDateFirst
-    public function slugDateConvert(string $col,$value):?string
+    final public function slugDateConvert(string $col,$value):?string
     {
         $return = null;
         $method = $this->slugDateFirst();
@@ -224,7 +223,7 @@ class Slug extends Core\ColAlias
 
     // slugAttr
     // retourne les attributs pour slug
-    public function slugAttr(bool $array=false)
+    final public function slugAttr(bool $array=false)
     {
         $return = $this->getAttr('slug');
 
@@ -237,7 +236,7 @@ class Slug extends Core\ColAlias
 
     // slugDo
     // détermine s'il faut générer un nouveau slug
-    public function slugDo($value,?Core\Cell $cell=null):bool
+    final public function slugDo($value,?Core\Cell $cell=null):bool
     {
         $return = false;
 
@@ -253,7 +252,7 @@ class Slug extends Core\ColAlias
 
     // slugUnique
     // retourne vrai si le slug est unique
-    public function slugUnique($value,?Core\Cell $cell=null):bool
+    final public function slugUnique($value,?Core\Cell $cell=null):bool
     {
         $return = false;
         $notIn = null;
@@ -270,7 +269,7 @@ class Slug extends Core\ColAlias
 
     // slugKeyFromArr
     // retourne le champ a utilisé pour slug à partir du tableau row
-    public function slugKeyFromArr(array $row):?string
+    final public function slugKeyFromArr(array $row):?string
     {
         $return = null;
         $lang = $this->langCode();
@@ -292,7 +291,7 @@ class Slug extends Core\ColAlias
     // slugAddNow
     // ajoute la date courante au slug
     // essaie via deux formats, ymd et ymdhist
-    public function slugAddNow($value,?Core\Cell $cell=null,?array $option=null):string
+    final public function slugAddNow($value,?Core\Cell $cell=null,?array $option=null):string
     {
         $return = null;
         $keep = $value;
@@ -333,7 +332,7 @@ class Slug extends Core\ColAlias
 
     // slugDateFirst
     // retourne la première méthode dans slugDate
-    public function slugDateFirst():string
+    final public function slugDateFirst():string
     {
         $return = null;
         $dates = $this->getAttr('slugDate');
@@ -347,7 +346,7 @@ class Slug extends Core\ColAlias
 
     // slugAdd
     // ajoute un élément à la fin du slug
-    public function slugAdd(string $return,string $add,?array $option=null):string
+    final public function slugAdd(string $return,string $add,?array $option=null):string
     {
         if(strlen($return) && strlen($add))
         {

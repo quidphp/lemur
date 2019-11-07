@@ -22,14 +22,14 @@ trait _template
 
     // trigger
     // trigger pour toutes les pages html du cms
-    public function trigger()
+    final public function trigger()
     {
         return $this->template();
     }
 
 
     // template
-    protected function template():string
+    final protected function template():string
     {
         $r = '';
 
@@ -70,7 +70,7 @@ trait _template
 
     // header
     // génère le header pour toutes les pages du cms
-    protected function header():string
+    final protected function header():string
     {
         $r = '';
 
@@ -87,7 +87,7 @@ trait _template
 
     // headerLeft
     // génère le header gauche pour toutes les pages du cms
-    protected function headerLeft():string
+    final protected function headerLeft():string
     {
         $r = '';
         $boot = static::boot();
@@ -103,7 +103,7 @@ trait _template
 
     // headerRight
     // génère le header droite pour toutes les pages du cms
-    protected function headerRight():string
+    final protected function headerRight():string
     {
         $r = '';
         $session = static::session();
@@ -155,7 +155,7 @@ trait _template
 
     // nav
     // génère la navigation principale pour toutes les pages du cms
-    protected function nav():string
+    final protected function nav():string
     {
         $r = '';
         $tables = $this->db()->tables();
@@ -170,7 +170,7 @@ trait _template
 
     // navMenu
     // génère un niveau de menu pour la navigation principale
-    protected function navMenu(array $array,int $i=0):string
+    final protected function navMenu(array $array,int $i=0):string
     {
         $r = '';
         $session = $this->session();
@@ -248,7 +248,7 @@ trait _template
 
     // flushBeforeMain
     // active ou désactive le flush du contenu avant main
-    protected function flushBeforeMain():bool
+    final protected function flushBeforeMain():bool
     {
         return false;
     }
@@ -261,7 +261,7 @@ trait _template
 
     // makeH1
     // génère le tag h1 de la page, il y a dans le h1 un lien qui renvoie vers la même page
-    protected function makeH1(string $title):string
+    final protected function makeH1(string $title):string
     {
         return Html::h1($this->a($title));
     }
@@ -269,7 +269,7 @@ trait _template
 
     // footer
     // génère le footer pour toutes les pages du cms
-    protected function footer():string
+    final protected function footer():string
     {
         $r = '';
 
@@ -282,7 +282,7 @@ trait _template
 
     // footerLeft
     // génère la partie gauche du footer pour toutes les pages du cms
-    protected function footerLeft():string
+    final protected function footerLeft():string
     {
         $r = '';
 
@@ -304,7 +304,7 @@ trait _template
 
     // footerLeftElement
     // génère un clickOpen pour la partie gauche du footer
-    protected function footerLeftElement(string $type,array $array):string
+    final protected function footerLeftElement(string $type,array $array):string
     {
         $r = '';
         $popup = '';
@@ -336,7 +336,7 @@ trait _template
 
     // footerLink
     // retourne un tableau avec les routes liens
-    protected function footerLink():array
+    final protected function footerLink():array
     {
         $return = [];
 
@@ -352,7 +352,7 @@ trait _template
     // footerLinkType
     // retourne un tableau avec les liens vers les différents types
     // n'inclut pas un lien vers le type courant
-    protected function footerLinkType():array
+    final protected function footerLinkType():array
     {
         $return = [];
         $session = static::session();
@@ -379,7 +379,7 @@ trait _template
 
     // footerLang
     // retourne un tableau avec les routes lang
-    protected function footerLang():array
+    final protected function footerLang():array
     {
         $return = [];
         $lang = static::lang();
@@ -398,7 +398,7 @@ trait _template
 
     // footerModule
     // retourne un tableau avec les routes modules
-    protected function footerModule():array
+    final protected function footerModule():array
     {
         return $this->footerRouteGroup('module');
     }
@@ -406,7 +406,7 @@ trait _template
 
     // footerCli
     // retourne un tableau avec les routes cli
-    protected function footerCli():array
+    final protected function footerCli():array
     {
         return $this->footerRouteGroup('cli');
     }
@@ -414,7 +414,7 @@ trait _template
 
     // footerRouteGroup
     // méthode utilisé par link, module et cli pour obtenir un tableau avec les liens de route
-    protected function footerRouteGroup(string $group):array
+    final protected function footerRouteGroup(string $group):array
     {
         $return = [];
         $routes = static::boot()->routesActive();
@@ -434,7 +434,7 @@ trait _template
 
     // footerRight
     // génère la partie droite du footer pour toutes les pages du cms
-    protected function footerRight():string
+    final protected function footerRight():string
     {
         $r = '';
         $boot = static::boot();
@@ -466,7 +466,7 @@ trait _template
 
     // makeModal
     // génère le html pour le modal
-    protected function makeModal():string
+    final protected function makeModal():string
     {
         $r = Html::divOp('outer');
         $r .= Html::divOp('box');
@@ -482,7 +482,7 @@ trait _template
 
     // makeCom
     // génère le block pour la communication
-    protected function makeCom():string
+    final protected function makeCom():string
     {
         $r = '';
         $com = static::sessionCom();

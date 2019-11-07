@@ -15,7 +15,7 @@ trait _orderTableRelation
 {
     // structureSegmentOrderTableRelation
     // gère le segment order pour une route relation
-    public static function structureSegmentOrderTableRelation(string $type,$value,array &$keyValue)
+    final public static function structureSegmentOrderTableRelation(string $type,$value,array &$keyValue)
     {
         $return = false;
 

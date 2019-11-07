@@ -36,7 +36,7 @@ class SpecificDelete extends Core\RouteAlias
             'csrf'=>true,
             'genuine'=>true,
             'method'=>'post',
-            'post'=>['id'=>['='=>'[primary]'],'-table-'=>['='=>'[table]']],
+            'post'=>['-primary-'=>['='=>'[primary]'],'-table-'=>['='=>'[table]']],
             'role'=>['>'=>'user']],
         'parent'=>Specific::class,
         'group'=>'submit'
@@ -45,7 +45,7 @@ class SpecificDelete extends Core\RouteAlias
 
     // onBefore
     // validation avant le lancement de la route
-    protected function onBefore()
+    final protected function onBefore()
     {
         $return = false;
         $table = $this->table();
@@ -61,7 +61,7 @@ class SpecificDelete extends Core\RouteAlias
     // routeSuccess
     // retourne la route en cas de succès ou échec de la suppression
     // renvoie à la même pas ou l'élément se trouvait, sauf si c'était le dernier (renvoie à la première page)
-    public function routeSuccess():Core\Route
+    final public function routeSuccess():Core\Route
     {
         $return = $this->general();
         $rows = $return->rows();
@@ -75,7 +75,7 @@ class SpecificDelete extends Core\RouteAlias
 
     // proceed
     // efface la row
-    protected function proceed():?int
+    final protected function proceed():?int
     {
         $return = null;
         $post = $this->post();

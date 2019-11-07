@@ -33,13 +33,13 @@ abstract class ActivatePassword extends Core\RouteAlias
         'parent'=>Login::class,
         'sitemap'=>false,
         'group'=>'nobody',
-        'row'=>null // à spécifier dans la classe qui étend
+        'row'=>Lemur\Row\User::class
     ];
 
 
     // trigger
     // lance la route activatePassword
-    public function trigger()
+    final public function trigger()
     {
         $user = $this->segment('primary');
         $primary = $user->primary();
@@ -52,7 +52,7 @@ abstract class ActivatePassword extends Core\RouteAlias
 
     // onAfter
     // donne la route vers le parent
-    protected function onAfter():Lemur\Route
+    final protected function onAfter():Lemur\Route
     {
         return static::makeParentOverload();
     }

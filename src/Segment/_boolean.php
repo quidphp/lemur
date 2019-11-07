@@ -15,7 +15,7 @@ trait _boolean
 {
     // structureSegmentBoolean
     // gère le segment d'uri booléen
-    public static function structureSegmentBoolean(string $type,$value,array &$keyValue)
+    final public static function structureSegmentBoolean(string $type,$value,array &$keyValue)
     {
         $return = false;
 

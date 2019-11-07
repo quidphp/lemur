@@ -15,7 +15,7 @@ trait _slug
 {
     // structureSegmentSlug
     // gère le segment d'uri pour un slug
-    public static function structureSegmentSlug(string $type,$value,array &$keyValue)
+    final public static function structureSegmentSlug(string $type,$value,array &$keyValue)
     {
         $return = false;
         $table = static::tableSegment($keyValue);
@@ -55,7 +55,7 @@ trait _slug
 
     // structureSegmentSlugValidateDefault
     // retourne la valeur par défaut pour le segment
-    public static function structureSegmentSlugValidateDefault()
+    final public static function structureSegmentSlugValidateDefault()
     {
         return false;
     }

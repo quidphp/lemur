@@ -16,7 +16,7 @@ trait _timestampMonth
 {
     // structureSegmentTimestampMonth
     // gère le segment d'uri pour un timestamp de mois, utile pour un calendrier
-    public static function structureSegmentTimestampMonth(string $type,$value,array &$keyValue)
+    final public static function structureSegmentTimestampMonth(string $type,$value,array &$keyValue)
     {
         $return = false;
 

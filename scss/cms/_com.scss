@@ -8,9 +8,6 @@
 
 // com
 // stylesheet for the communication component
-
-// com
-// mixin avec les styles pour l'encadré de communication
 @mixin com() {
     @include fixed('', 20px, 10px);
     background-color: rgba(249, 253, 216, 0.95);

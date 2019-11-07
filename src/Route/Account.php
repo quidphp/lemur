@@ -28,7 +28,7 @@ abstract class Account extends Core\RouteAlias
 
     // submitClass
     // retourne la classe pour soumettre
-    public static function submitClass():string
+    final public static function submitClass():string
     {
         return AccountSubmit::getOverloadClass();
     }
@@ -36,7 +36,7 @@ abstract class Account extends Core\RouteAlias
 
     // submitRoute
     // retourne la route pour soumettre
-    public function submitRoute():AccountSubmit
+    final public function submitRoute():AccountSubmit
     {
         return static::submitClass()::make();
     }
@@ -44,7 +44,7 @@ abstract class Account extends Core\RouteAlias
 
     // submitAttr
     // retourne les attributs pour le bouton submit
-    public function submitAttr()
+    final public function submitAttr()
     {
         return;
     }
@@ -52,7 +52,7 @@ abstract class Account extends Core\RouteAlias
 
     // getBaseFields
     // retourne les champs du formulaire
-    public function getBaseFields():array
+    final public function getBaseFields():array
     {
         return $this->submitRoute()->getBaseFields();
     }
@@ -60,7 +60,7 @@ abstract class Account extends Core\RouteAlias
 
     // row
     // retourne la row user
-    public function row():Core\Row
+    final public function row():Core\Row
     {
         return static::session()->user();
     }

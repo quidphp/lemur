@@ -20,7 +20,7 @@ trait _specificSubmit
 
 
     // onAfterSuccessOrFailure
-    protected function onAfterSuccessOrFailure():void
+    final protected function onAfterSuccessOrFailure():void
     {
         $panel = $this->currentPanel();
         static::session()->flash()->set('currentPanel',$panel);
@@ -31,7 +31,7 @@ trait _specificSubmit
 
     // routeSuccess
     // retourne la route en cas de succès ou échec de l'ajout
-    public function routeSuccess():Lemur\Route
+    final public function routeSuccess():Lemur\Route
     {
         return $this->specific();
     }
@@ -39,7 +39,7 @@ trait _specificSubmit
 
     // currentPanel
     // retourne le panel courant à partir de la requête
-    public function currentPanel():?string
+    final public function currentPanel():?string
     {
         return $this->request()->get(static::panelInputName());
     }
@@ -47,7 +47,7 @@ trait _specificSubmit
 
     // specific
     // retourne la route parent, peut retourner specific ou specificAdd
-    public function specific():Core\Route
+    final public function specific():Core\Route
     {
         return static::makeParentOverload($this->segments());
     }

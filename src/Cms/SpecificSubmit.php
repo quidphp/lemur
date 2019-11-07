@@ -35,7 +35,7 @@ class SpecificSubmit extends Core\RouteAlias
         'match'=>[
             'method'=>'post',
             'csrf'=>true,
-            'post'=>['id'=>['='=>'[primary]'],'-table-'=>['='=>'[table]']],
+            'post'=>['-primary-'=>['='=>'[primary]'],'-table-'=>['='=>'[table]']],
             'genuine'=>true,
             'role'=>['>'=>'user']],
         'response'=>[
@@ -47,7 +47,7 @@ class SpecificSubmit extends Core\RouteAlias
 
     // onBefore
     // validation avant le lancement
-    protected function onBefore()
+    final protected function onBefore()
     {
         $return = false;
         $table = $this->table();
@@ -62,7 +62,7 @@ class SpecificSubmit extends Core\RouteAlias
 
     // proceed
     // fait la mise à jour sur la ligne
-    public function proceed():?int
+    final public function proceed():?int
     {
         $return = null;
         $post = $this->post();
@@ -72,8 +72,8 @@ class SpecificSubmit extends Core\RouteAlias
         {
             $row = $this->row();
             $db = $row->db();
-            $db->setExceptionClass(true); // catchable exception
-            $return = $row->setUpdateChangedIncludedValid($post,['preValidate'=>true,'com'=>true,'context'=>static::class]);
+            $db->setExceptionClass(true);
+            $return = $row->setUpdateValid($post,['preValidate'=>true,'com'=>true,'context'=>static::class]);
             $db->setExceptionClass(false);
         }
 

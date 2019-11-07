@@ -15,7 +15,7 @@ trait _yes
 {
     // structureSegmentYes
     // gère le segment d'uri yes
-    public static function structureSegmentYes(string $type,$value,array &$keyValue)
+    final public static function structureSegmentYes(string $type,$value,array &$keyValue)
     {
         $return = false;
 

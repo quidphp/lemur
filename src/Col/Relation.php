@@ -39,7 +39,7 @@ abstract class Relation extends Core\Col\Relation
 
     // prepareRelationRadioCheckbox
     // méthode utilisé lors de la préparation d'une valeur relation radio ou checkbox, incluant search
-    protected function prepareRelationRadioCheckbox(array $return):array
+    final protected function prepareRelationRadioCheckbox(array $return):array
     {
         $rel = $this->relation();
 
@@ -72,7 +72,7 @@ abstract class Relation extends Core\Col\Relation
     // prepareRelationPlainGeneral
     // méthode utilisé pour préparer l'affichage des relations plains (sans formulaire)
     // crée les routes spécifiques
-    public function prepareRelationPlainGeneral(array $array):array
+    final public function prepareRelationPlainGeneral(array $array):array
     {
         $return = [];
         $array = parent::prepareRelationPlainGeneral($array);
@@ -102,7 +102,7 @@ abstract class Relation extends Core\Col\Relation
     // onGet
     // logique onGet pour un champ files
     // affichage spéciale si le contexte est cms:general
-    public function onGet($return,array $option)
+    protected function onGet($return,array $option)
     {
         if($return instanceof Core\Cell\Relation && !$return->isNull() && !empty($option['context']) && is_string($option['context']) && strpos($option['context'],':general') !== false)
         {
@@ -152,7 +152,7 @@ abstract class Relation extends Core\Col\Relation
 
     // formComplexSearch
     // génère un élément de formulaire pour la recherche
-    protected function formComplexSearch($value=true,?array $attr=null,?array $option=null):string
+    final protected function formComplexSearch($value=true,?array $attr=null,?array $option=null):string
     {
         $return = '';
         $option = Base\Arr::plus(['button'=>true],$option);
@@ -186,7 +186,7 @@ abstract class Relation extends Core\Col\Relation
         if(is_array($attr) && array_key_exists('id',$attr))
         unset($attr['id']);
 
-        $return .= Html::divOp(['search-enumset',$mode,'data-mode'=>$mode]);
+        $return .= Html::divOp(['search-enumset','bind',$mode,'data-mode'=>$mode]);
         $return .= Html::divOp('input');
         $return .= Html::inputText(null,['placeholder'=>$placeholder,'name'=>true,'data'=>$data,'id'=>$id]);
 
@@ -211,7 +211,7 @@ abstract class Relation extends Core\Col\Relation
 
     // formComplexSearchChoices
     // génère un checkbox à partir de la relation
-    public function formComplexSearchChoices($value,?array $attr=null,?array $option=null):string
+    final public function formComplexSearchChoices($value,?array $attr=null,?array $option=null):string
     {
         $return = '';
         $value = $this->valueComplex($value,$option);
@@ -236,7 +236,7 @@ abstract class Relation extends Core\Col\Relation
 
     // formComplexStandard
     // génère un champ pour relation standard comme select, radio, checkbox et multiselect
-    public function formComplexStandard($value,?array $attr=null,?array $option=null):string
+    final public function formComplexStandard($value,?array $attr=null,?array $option=null):string
     {
         $return = '';
         $value = $this->valueComplex($value,$option);
@@ -264,7 +264,7 @@ abstract class Relation extends Core\Col\Relation
 
     // formComplexPlain
     // génère un élément de formulaire plain, c'est à dire sans balise de formulaire (comme une div)
-    public function formComplexPlain($value,?array $attr=null,?array $option=null):string
+    final public function formComplexPlain($value,?array $attr=null,?array $option=null):string
     {
         $return = '';
         $tag = $this->complexTag($attr);
@@ -333,7 +333,7 @@ abstract class Relation extends Core\Col\Relation
 
     // relationPlainHtml
     // fait le html pour chaque choix de relation, lorsque le input est plain
-    public function relationPlainHtml($array):string
+    final public function relationPlainHtml($array):string
     {
         $return = '';
 

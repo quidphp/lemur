@@ -31,7 +31,7 @@ class Excerpt extends Core\ColAlias
 
     // onSet
     // sur onSet génère le résumé à partir de la colonne spécifié dans config
-    public function onSet($return,array $row,?Orm\Cell $cell=null,array $option)
+    final protected function onSet($return,array $row,?Orm\Cell $cell=null,array $option)
     {
         $return = $this->value($return);
 
@@ -64,7 +64,7 @@ class Excerpt extends Core\ColAlias
 
     // excerptLength
     // retourne la longueur du résumé désiré
-    public function excerptLength():?int
+    final public function excerptLength():?int
     {
         return $this->getAttr('excerpt/length');
     }

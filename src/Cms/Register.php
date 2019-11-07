@@ -19,15 +19,12 @@ class Register extends Lemur\Route\Register
 
 
     // config
-    public static $config = [
-        'parent'=>Login::class,
-        'row'=>Lemur\Row\User::class
-    ];
+    public static $config = [];
 
 
     // submitClass
     // classe de la route pour soumettre le formulaire
-    public static function submitClass():string
+    final public static function submitClass():string
     {
         return RegisterSubmit::getOverloadClass();
     }
@@ -35,7 +32,7 @@ class Register extends Lemur\Route\Register
 
     // submitAttr
     // attribut pour le bouton submit du formulaire
-    public function submitAttr()
+    final public function submitAttr()
     {
         return ['icon','padLeft','add'];
     }
@@ -43,7 +40,7 @@ class Register extends Lemur\Route\Register
 
     // makeButtons
     // retourne un tableau avec les boutons sous le formulaire de connexion
-    protected function makeButtons():array
+    final protected function makeButtons():array
     {
         $return = [];
         $return['login'] = $this->makeLogin();

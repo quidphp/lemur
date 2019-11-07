@@ -20,7 +20,7 @@ class Relation extends Core\Cell\Relation
 
     // generalOutput
     // génère le output pour général
-    public function generalOutput(?array $option=null):?string
+    final public function generalOutput(?array $option=null):?string
     {
         $return = null;
         $relation = $this->relationKeyValue();

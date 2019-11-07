@@ -16,7 +16,7 @@ trait _col
 {
     // structureSegmentCol
     // gère le segment d'uri pour colonne
-    public static function structureSegmentCol(string $type,$value,array &$keyValue)
+    final public static function structureSegmentCol(string $type,$value,array &$keyValue)
     {
         $return = false;
 

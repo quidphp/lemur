@@ -33,8 +33,9 @@ class SpecificCalendar extends Core\RouteAlias
             'timestamp'=>'structureSegmentTimestampMonth',
             'format'=>'structureSegmentStr',
             'selected'=>'structureSegmentSelected'],
+        'history'=>false,
         'match'=>[
-            'ajax'=>null,
+            'ajax'=>true,
             'role'=>['>'=>'user']],
         'group'=>'specific'
     ];
@@ -42,7 +43,7 @@ class SpecificCalendar extends Core\RouteAlias
 
     // setCallback
     // change les callback pour le calendrier de specific
-    public function setCallback(Main\Calendar $return):Main\Calendar
+    final public function setCallback(Main\Calendar $return):Main\Calendar
     {
         $return->setCallback('prev',function(int $value) {
             $route = $this->changeSegments(['timestamp'=>$value]);

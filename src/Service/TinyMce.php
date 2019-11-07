@@ -20,7 +20,7 @@ class TinyMce extends Main\Service
 
     // docOpenJs
     // retourne le javascript à lier en début de document
-    public function docOpenJs()
+    final public function docOpenJs()
     {
         return 'js/vendor/tinymce/tinymce.min.js';
     }

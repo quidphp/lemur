@@ -21,7 +21,7 @@ class JsonArrayRelation extends Core\CellAlias
     // relationRow
     // retourne la row de relation pour la cellule
     // peut envoyer une exception
-    public function relationRow():?Core\Row
+    final public function relationRow():?Core\Row
     {
         $return = null;
         $fromCell = $this->fromCell();
@@ -44,7 +44,7 @@ class JsonArrayRelation extends Core\CellAlias
     // retourne la valeur index du input jsonArray
     // relationCols doit contenir deux noms de colonnes
     // peut envoyer une exception
-    public function relationIndex(int $value)
+    final public function relationIndex(int $value)
     {
         $return = null;
         $toCell = $this->toCell();
@@ -69,7 +69,7 @@ class JsonArrayRelation extends Core\CellAlias
 
     // fromCell
     // retourne la cellule from de la ligne courante
-    public function fromCell():?string
+    final public function fromCell():?string
     {
         $return = null;
         $relationCols = $this->getAttr('relationCols');
@@ -83,7 +83,7 @@ class JsonArrayRelation extends Core\CellAlias
 
     // toCell
     // retourne la cellule to de la ligne de relation
-    public function toCell():?string
+    final public function toCell():?string
     {
         $return = null;
         $relationCols = $this->getAttr('relationCols');

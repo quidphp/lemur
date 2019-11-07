@@ -27,7 +27,7 @@ class JsonArrayRelation extends Core\ColAlias
 
     // onGet
     // méthode onGet pour jsonArrayRelation
-    public function onGet($return,array $option)
+    final protected function onGet($return,array $option)
     {
         if($return instanceof Core\Cell)
         {
@@ -44,7 +44,7 @@ class JsonArrayRelation extends Core\ColAlias
 
     // formComplex
     // génère le formComplex pour jsonArrayRelation
-    public function formComplex($value=true,?array $attr=null,?array $option=null):string
+    final public function formComplex($value=true,?array $attr=null,?array $option=null):string
     {
         $return = '';
         $tag = $this->complexTag($attr);

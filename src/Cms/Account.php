@@ -27,7 +27,7 @@ class Account extends Lemur\Route\Account
 
     // onBefore
     // au lancement de la route, vérifie si le user peut aller voir son compte
-    protected function onBefore()
+    final protected function onBefore()
     {
         return ($this->hasPermission('account'))? true:false;
     }
@@ -35,7 +35,7 @@ class Account extends Lemur\Route\Account
 
     // trigger
     // ne fait rien
-    public function trigger()
+    final public function trigger()
     {
         return;
     }
@@ -43,7 +43,7 @@ class Account extends Lemur\Route\Account
 
     // onAfter
     // après trigger renvoie vers la page specifique du user
-    protected function onAfter()
+    final protected function onAfter()
     {
         return static::sessionUser()->route();
     }

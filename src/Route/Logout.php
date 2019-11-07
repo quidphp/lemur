@@ -39,7 +39,7 @@ abstract class Logout extends Core\RouteAlias
 
     // onAfter
     // renvoie vers le parent
-    protected function onAfter()
+    final protected function onAfter()
     {
         return static::makeParentOverload();
     }
@@ -47,7 +47,7 @@ abstract class Logout extends Core\RouteAlias
 
     // trigger
     // lance la route logout, redirige vers le parent
-    public function trigger()
+    final public function trigger()
     {
         static::session()->logoutProcess(['com'=>true]);
         $this->onLogout();

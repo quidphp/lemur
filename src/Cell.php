@@ -20,7 +20,7 @@ class Cell extends Core\Cell
 
     // complexTag
     // retourne la tag complex en lien avec la colonne
-    public function complexTag(?array $attr=null):string
+    final public function complexTag(?array $attr=null):string
     {
         return $this->tag($attr,true);
     }
@@ -28,7 +28,7 @@ class Cell extends Core\Cell
 
     // formComplex
     // génère un élément de formulaire complexe pour la cellule
-    public function formComplex(?array $attr=null,?array $option=null):string
+    final public function formComplex(?array $attr=null,?array $option=null):string
     {
         return $this->col()->formComplex($this,$attr,$option);
     }
@@ -36,7 +36,7 @@ class Cell extends Core\Cell
 
     // formComplexWrap
     // fait un wrap à partir de formComplex plutôt que form, si existant
-    public function formComplexWrap(?string $wrap=null,$pattern=null,array $attr=null,?array $replace=null,?array $option=null):string
+    final public function formComplexWrap(?string $wrap=null,$pattern=null,array $attr=null,?array $replace=null,?array $option=null):string
     {
         return $this->col()->formComplexWrap($wrap,$pattern,$this,$attr,$replace,$option);
     }
@@ -44,7 +44,7 @@ class Cell extends Core\Cell
 
     // getDataAttr
     // retourne les dates attr pour la cellule
-    public function getDataAttr(array $return):array
+    final public function getDataAttr(array $return):array
     {
         return $this->col()->getDataAttr($return);
     }

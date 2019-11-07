@@ -24,7 +24,7 @@ abstract class Files extends Core\Cell\Files
     // commonGeneralOutput
     // génère le output pour général
     // retourne seulement la première image de la cellule
-    protected function commonGeneralOutput(?int $index=null,?array $option=null):string
+    final protected function commonGeneralOutput(?int $index=null,?array $option=null):string
     {
         $return = '';
         $col = $this->col();

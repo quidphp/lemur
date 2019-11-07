@@ -16,7 +16,7 @@ use Quid\Lemur;
 class Cell extends Base\Test
 {
     // trigger
-    public static function trigger(array $data):bool
+    final public static function trigger(array $data):bool
     {
         // prepare
         $db = Lemur\Boot::inst()->db();
@@ -40,7 +40,7 @@ class Cell extends Base\Test
         // getDataAttr
 
         // cell
-        assert(count($cell->attr()) === 64);
+        assert(count($cell->attr()) === 65);
         assert(strlen($date->formComplex()) === 279);
         assert($db->truncate($table) instanceof \PDOStatement);
         assert($cell->description() === 'Name to represent the element');

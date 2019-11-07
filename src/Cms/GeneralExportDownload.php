@@ -56,7 +56,7 @@ class GeneralExportDownload extends Core\RouteAlias
 
     // isLatin1
     // retourne vrai si l'encodage doit se fait en latin1
-    protected function isLatin1():bool
+    final protected function isLatin1():bool
     {
         return ($this->getAttr('latin1') === true)? true:false;
     }
@@ -64,7 +64,7 @@ class GeneralExportDownload extends Core\RouteAlias
 
     // structureSegmentType
     // gère le segment type de la route
-    public static function structureSegmentType(string $type,$value,array &$keyValue)
+    final public static function structureSegmentType(string $type,$value,array &$keyValue)
     {
         $return = false;
 
@@ -80,7 +80,7 @@ class GeneralExportDownload extends Core\RouteAlias
 
     // file
     // retourne l'objet fichier
-    protected function file():Main\File
+    final protected function file():Main\File
     {
         $return = null;
         $table = $this->table();
@@ -95,7 +95,7 @@ class GeneralExportDownload extends Core\RouteAlias
     // insertRows
     // insère les lignes dans l'objet
     // fait le par chunk car c'est trop long s'il y a plusieurs lignes
-    protected function insertRows(Main\File $file,Orm\Sql $sql,int $limit=100):void
+    final protected function insertRows(Main\File $file,Orm\Sql $sql,int $limit=100):void
     {
         $offset = 0;
         $total = $sql->triggerRowCount();
@@ -133,7 +133,7 @@ class GeneralExportDownload extends Core\RouteAlias
 
     // trigger
     // lance la route generalExport
-    public function trigger()
+    final public function trigger()
     {
         $sql = $this->sql();
         $file = $this->file();

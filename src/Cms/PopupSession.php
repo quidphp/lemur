@@ -16,7 +16,7 @@ use Quid\Core;
 class PopupSession extends Core\RouteAlias
 {
     // trait
-    use _common;
+    use _popup;
 
 
     // config
@@ -24,10 +24,6 @@ class PopupSession extends Core\RouteAlias
         'path'=>[
             'en'=>'popup/session',
             'fr'=>'popup/session'],
-        'match'=>[
-            'ajax'=>true,
-            'role'=>['>'=>'user']],
-        'group'=>'popup',
         'popup'=>[
             'id','username','email','fullName','roles','fakeRoles','timezone','dateLogin','dateAdd',
             'requestCount','ip','lang','name','getLoginLifetime','getLifetime','expire','getCookieParams','getGarbageCollect',
@@ -35,17 +31,9 @@ class PopupSession extends Core\RouteAlias
     ];
 
 
-    // onBefore
-    // vérifie que la permission est la
-    protected function onBefore()
-    {
-        return $this->canTrigger();
-    }
-
-
     // canTrigger
     // retourne vrai si la route peut être trigger
-    public function canTrigger():bool
+    final public function canTrigger():bool
     {
         $return = false;
         $realRoles = static::session()->roles();
@@ -62,30 +50,9 @@ class PopupSession extends Core\RouteAlias
     }
 
 
-    // triger
-    // lance la route
-    public function trigger():string
-    {
-        return $this->popup();
-    }
-
-
-    // popup
-    // génère le popup d'informations pour la session
-    protected function popup():?string
-    {
-        $return = null;
-        $values = $this->getAttr('popup');
-        $closure = $this->popupClosure();
-        $return = static::makeInfoPopup($values,$closure,false);
-
-        return $return;
-    }
-
-
     // popupClosure
     // callback pour le popup d'informations de la session
-    protected function popupClosure():\Closure
+    final protected function popupClosure():\Closure
     {
         return function(string $key):array {
             $return = [];

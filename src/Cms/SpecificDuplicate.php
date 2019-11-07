@@ -48,7 +48,7 @@ class SpecificDuplicate extends Core\RouteAlias
 
     // onBefore
     // validation avant le lancement
-    protected function onBefore()
+    final protected function onBefore()
     {
         $return = false;
         $table = $this->table();
@@ -63,7 +63,7 @@ class SpecificDuplicate extends Core\RouteAlias
 
     // onSuccess
     // traite le succès
-    protected function onSuccess():void
+    final protected function onSuccess():void
     {
         $this->getDuplicate()->updateCom('duplicate/success','pos',null,null,null,true);
 
@@ -73,7 +73,7 @@ class SpecificDuplicate extends Core\RouteAlias
 
     // onFailure
     // traite l'échec
-    protected function onFailure():void
+    final protected function onFailure():void
     {
         $this->row()->table()->insertCom('duplicate/failure','neg',null,null,null,true);
 
@@ -83,7 +83,7 @@ class SpecificDuplicate extends Core\RouteAlias
 
     // routeSuccess
     // retourne la route en cas de succès de la duplication
-    public function routeSuccess():Core\Route
+    final public function routeSuccess():Core\Route
     {
         return static::makeParentOverload($this->getDuplicate());
     }
@@ -91,7 +91,7 @@ class SpecificDuplicate extends Core\RouteAlias
 
     // routeFailure
     // retourne la route en cas d'échec de la duplication
-    public function routeFailure():Core\Route
+    final public function routeFailure():Core\Route
     {
         return static::makeParentOverload($this->segments());
     }
@@ -99,7 +99,7 @@ class SpecificDuplicate extends Core\RouteAlias
 
     // getDuplicate
     // retourne la row duplicate
-    public function getDuplicate():Core\Row
+    final public function getDuplicate():Core\Row
     {
         return $this->duplicate;
     }
@@ -107,7 +107,7 @@ class SpecificDuplicate extends Core\RouteAlias
 
     // proceed
     // duplicate la row courante
-    protected function proceed():?Core\Row
+    final protected function proceed():?Core\Row
     {
         $return = null;
         $row = $this->row();

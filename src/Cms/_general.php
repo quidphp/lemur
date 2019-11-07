@@ -16,7 +16,7 @@ trait _general
 {
     // table
     // retourne la table en lien avec la route
-    public function table():Core\Table
+    final public function table():Core\Table
     {
         $return = $this->segment('table');
 
@@ -29,7 +29,7 @@ trait _general
 
     // general
     // retourne la route general a utilisé pour rediriger
-    public function general(bool $nav=true):General
+    final public function general(bool $nav=true):General
     {
         return static::session()->routeTableGeneral($this->table(),$nav);
     }

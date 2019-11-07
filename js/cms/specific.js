@@ -10,9 +10,42 @@
 // script of behaviours for the specific form page of the CMS
 $(document).ready(function() {
 	
+    // formPrepare
+    // permet de faire des binding sur ouverture d'un preparable de form (un panel)
+    $(this).on('specific:formPrepare', function(event,parent) {
+        var date = parent.find("[data-group='date'] .bind");
+        var addRemove = parent.find("[data-tag='add-remove']");
+        var tableRelation = parent.find("[data-table-relation='1']");
+        var enumSet = parent.find("[data-tag='search'] .bind");
+        var checkboxSortable = parent.find("[data-group='relation'][data-sortable='1']");
+        var files = parent.find("[data-group='media'] .bind");
+        var tinymce = parent.find("[data-group='tinymce']");
+
+        // date
+        date.calendarInput();
+        
+        // addRemove
+        addRemove.addRemove();
+        
+        // tableRelation
+        tableRelation.callThis(quid.cms.tableRelation);
+        
+        // enumSet
+        enumSet.enumSetFull();
+        
+        // checkboxSortable
+        checkboxSortable.verticalSorting(".choice",'.choice-in');
+        
+        // files
+        files.callThis(quid.cms.inputFiles);
+        
+        // tinycme
+        tinymce.callThis(quid.cms.tinymceWithTableRelation);
+    })
+    
 	// specific
     // comportement pour la page de modification spécifique
-	$(this).on('route:specific', function() {
+	.on('route:specific', function() {
 		$(this).trigger('route:specificCommon');
 		$(this).trigger('route:specificTrigger');
 	})
@@ -46,71 +79,21 @@ $(document).ready(function() {
 		
 		// fields
 		fields.fieldValidateFull();
-		
-		// preparable
-		formWrapper.on('form:getPreparable', function(event) {
-			var r = null;
-			
-			if(panel.length > 1)
-			r = panel;
-			
-			else
-			r = $(this);
-			
-			return r;
-		});
-		
-		// prepare
-        var preparable = formWrapper.triggerHandler('form:getPreparable');
-        if(preparable)
-		$(this).trigger('route:specificPrepare',[preparable]);
 	})
 	
-    // specificPrepare
-    // permet de faire des binding sur ouverture d'un preparable de form (un panel)
-    .on('route:specificPrepare', function(event,preparable) {
-		preparable.on('specificForm:prepare', function(event) {
-            $(this).find("[data-group='tinymce']").tinymceWithTableRelation();
-        });
-    })
-    
 	// specificTrigger
     // comportements communs pour la préparation des différents inputs du formulaire
 	.on('route:specificTrigger', function(event) {
 		var formWrapper = $("main .container > .form");
 		var form = formWrapper.find("form");
-		var panel = $("main .form .inside .panel");
-		var date = form.find("[data-group='date'] .right");
-		var addRemove = form.find("[data-tag='add-remove']");
-		var tableRelation = $(this).find("[data-table-relation='1']");
-        var enumSet = form.find("[data-tag='search'] .search-enumset");
-		var checkboxSortable = form.find("[data-group='relation'][data-sortable='1']");
-        var files = form.find("[data-group='media'] .block");
-        
+		var panel = form.find(".panel");
+		
 		// avec panel
 		if(panel.length > 1)
 		$(this).trigger('route:specificCommon:panel',[formWrapper,panel])
 		
 		else
-		formWrapper.trigger('specificForm:prepare');
-		
-        // files
-        files.inputFiles();
-        
-		// date
-		date.calendarInput();
-		
-		// enumSet
-		enumSet.enumSetFull();
-		
-		// tableRelation
-		tableRelation.tableRelation();
-		
-		// addRemove
-		addRemove.addRemove();
-		
-		// checkboxSortable
-		checkboxSortable.verticalSorting(".choice",'.choice-in');
+		$(this).trigger('specific:formPrepare',[formWrapper]);
 	})
 	
 	// route:specificCommon:panel
@@ -121,7 +104,7 @@ $(document).ready(function() {
 		
 		// panel
 		panel.tabNav(panelNav).fragment().on('tab:init', function(event) {
-			$(this).trigger('specificForm:prepare');
+			$(this).trigger('specific:formPrepare',[$(this)]);
 		})
 		.on('tab:open', function() {
 			var nav = $(this).triggerHandler('link:getNav');

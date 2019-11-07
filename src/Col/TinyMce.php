@@ -54,7 +54,7 @@ class TinyMce extends TextareaAlias
 
     // hasFormLabelId
     // tinymce change le id, donc formLabelId doit retourner faux
-    public function hasFormLabelId(?array $attr=null,bool $complex=false):bool
+    final public function hasFormLabelId(?array $attr=null,bool $complex=false):bool
     {
         return false;
     }
@@ -62,7 +62,7 @@ class TinyMce extends TextareaAlias
 
     // tinymceData
     // retourne les données de tinymce
-    public function tinymceData():array
+    final public function tinymceData():array
     {
         $return = (array) $this->getAttr('tinymce');
         $boot = static::boot();
@@ -107,7 +107,7 @@ class TinyMce extends TextareaAlias
 
     // formComplex
     // génère le formComplex pour tinymce
-    public function formComplex($value=true,?array $attr=null,?array $option=null):string
+    final public function formComplex($value=true,?array $attr=null,?array $option=null):string
     {
         $return = null;
         $tag = $this->complexTag($attr);
