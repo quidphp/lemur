@@ -55,13 +55,13 @@ class CliClearCache extends Core\RouteAlias
                 $method = 'pos';
                 $value = "- $path";
             }
-            
+
             elseif(Base\Dir::is($path) && Base\Dir::emptyAndUnlink($path))
             {
                 $method = 'pos';
                 $value = "x $path";
             }
-            
+
             Cli::$method($value);
             $return[] = [$method=>$value];
         }

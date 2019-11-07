@@ -991,7 +991,7 @@ class General extends Core\RouteAlias
         $context = $this->context();
         $col = $cell->col();
         $v = $cell->get($context);
-        
+
         $data = ['name'=>$cell->name(),'cell'=>$cell::className(true),'group'=>$cell->group()];
         $table = $this->table();
         if($table->hasPermission('quickEdit'))
@@ -1000,12 +1000,12 @@ class General extends Core\RouteAlias
             if($generalEdit->canTrigger())
             {
                 $data['quick-edit'] = true;
-                $quickEdit = $generalEdit->a(null,array('icon','solo','modify','quick-edit','icon-small'));
+                $quickEdit = $generalEdit->a(null,['icon','solo','modify','quick-edit','icon-small']);
             }
         }
         $data = $cell->getDataAttr($data);
         $attr = ['data'=>$data];
-        
+
         if($cell->isPrimary() && is_string($option['specific']))
         {
             $specific = $option['specific'];
@@ -1015,18 +1015,18 @@ class General extends Core\RouteAlias
 
         else
         {
-            
+
             $placeholder = $col->emptyPlaceholder($v);
             if(is_string($placeholder))
             $v = Html::div($placeholder,'empty-placeholder');
 
             $v = Html::div($v,'in',$option);
         }
-        
+
         $html = $v;
         if(!empty($quickEdit))
         $html .= $quickEdit;
-        
+
         $r = [$html,$attr];
 
         return $r;

@@ -186,7 +186,7 @@ $red: #8d1e2d;
 @mixin iconSolo() {
     @include icon();
     @include inbl();
-    @include transitions(background-color 0.3s,opacity 0.3s);
+    @include transitions(background-color 0.3s, opacity 0.3s);
     @include wh(16px);
     padding: 0;
     cursor: pointer;

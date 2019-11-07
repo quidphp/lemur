@@ -15,8 +15,8 @@ trait _popup
 {
     // trait
     use _common;
-    
-    
+
+
     // config
     public static $configPopup = [
         'match'=>[
@@ -25,8 +25,8 @@ trait _popup
         'group'=>'popup',
         'history'=>false
     ];
-    
-    
+
+
     // onBefore
     // vérifie que la permission est la
     final protected function onBefore()

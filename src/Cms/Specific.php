@@ -363,7 +363,7 @@ class Specific extends Core\RouteAlias
         $r = '';
         $primary = $this->table()->primary();
         $cell = $this->row()->cell($primary);
-        $r .= $cell->formHidden(array('name'=>'-primary-'));
+        $r .= $cell->formHidden(['name'=>'-primary-']);
 
         return $r;
     }

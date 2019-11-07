@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Quid\Lemur\Col;
 use Quid\Base;
+use Quid\Base\Html;
 use Quid\Core;
 use Quid\Lemur;
-use Quid\Base\Html;
 
 // date
 // extended class for a date column, supports many date formats
@@ -61,7 +61,7 @@ class Date extends Core\Col\Date
             $data = ['char'=>$route::getReplaceSegment(),'format'=>$formatCalendar,'current'=>$timestamp,'href'=>$route];
             $return .= Html::div(null,['calendar','data'=>$data]);
             $return .= Html::divCl();
-            
+
             $return = Html::divCond($return,'bind');
         }
 

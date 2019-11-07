@@ -23,7 +23,7 @@ class GeneralEditSubmit extends Core\RouteAlias
     use Lemur\Segment\_table;
     use Lemur\Segment\_primary;
     use Lemur\Segment\_col;
-    
+
 
     // config
     public static $config = [
@@ -54,23 +54,23 @@ class GeneralEditSubmit extends Core\RouteAlias
         return static::makeParentOverload($this->segments())->canTrigger();
     }
 
-    
+
     // routeSuccess
     // retourne la route en cas de succès ou échec de la suppression
     final public function routeSuccess():Core\Route
     {
         return $this->general();
     }
-    
-    
+
+
     // cell
     // retourne la cellule
-    final protected function cell():Lemur\Cell 
+    final protected function cell():Lemur\Cell
     {
         return $this->row()->cell($this->segment('col'));
     }
-    
-    
+
+
     // proceed
     // modifie la cellule
     final protected function proceed():?int
@@ -81,7 +81,7 @@ class GeneralEditSubmit extends Core\RouteAlias
         $name = $cell->name();
         $post = $this->post();
         $post = $this->onBeforeCommit($post);
-        
+
         if($post !== null && array_key_exists($name,$post))
         {
             $db = $row->db();

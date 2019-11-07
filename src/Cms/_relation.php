@@ -15,8 +15,8 @@ trait _relation
 {
     // trait
     use _common;
-    
-    
+
+
     // config
     public static $configRelationCms = [
         'history'=>false,

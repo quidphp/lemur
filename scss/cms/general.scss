@@ -17,7 +17,7 @@
         > .operation-element {
             @include inbl();
             margin-left: 10px;
-            
+
             &:first-child {
                 margin-left: 0;
             }
@@ -303,7 +303,7 @@
     .label {
         padding-left: 30px;
     }
-    
+
     .filter-outer {
         @include transition(background-color);
         height: 100%;
@@ -330,7 +330,7 @@
                 display: block;
             }
         }
-        
+
         > .popup {
             @include filterPopup();
         }
@@ -357,10 +357,10 @@
             border-left: 1px solid $lighterGray;
         }
     }
-    
+
     > tr > td {
         height: 100%;
-        
+
         > .in {
             @include transition(background-color);
             border-right: 1px solid $lighterGray;
@@ -400,19 +400,19 @@
     &[data-quick-edit='1'] {
         @include quickEdit();
     }
-    
+
     &[data-group='relation'] {
         @include enumSetGeneral();
     }
-    
+
     &.rows {
         @include rowsChecker();
     }
-    
+
     &[data-group='media'] {
         @include filesGeneral();
     }
-    
+
     &.primary > .in:hover {
         background-color: $lightYellow;
     }
@@ -449,7 +449,7 @@
 /* IE EDGE */
 @supports (-ms-ime-align: auto) {
     [data-route='general'] main .scroller > table > thead > tr,
-    [data-route='general'] main .scroller > table > tbody > tr > td {
+    [data-route='general'] main .scroller > table > tbody > tr  > td {
         box-sizing: border-box;
     }
 }

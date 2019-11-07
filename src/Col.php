@@ -26,15 +26,15 @@ class Col extends Core\Col
             'generalExcerptMin'=>100]
     ];
 
-    
+
     // isQuickEditable
     // retourne vrai si la colonne est éditable rapidement via le cms
-    final public function isQuickEditable():bool 
+    final public function isQuickEditable():bool
     {
-        return ($this->getAttr('quickEdit') === true && $this->isEditable() && $this->isFormTag(null,true));
+        return $this->getAttr('quickEdit') === true && $this->isEditable() && $this->isFormTag(null,true);
     }
-    
-    
+
+
     // onComplex
     // permet de formater une valeur simple vers un type plus complexe
     // utilisé lors de la génération d'un élément de formulaire, si onComplex est true renvoie à onGet
@@ -147,15 +147,15 @@ class Col extends Core\Col
     {
         return $return;
     }
-    
-    
+
+
     // getComplexDataAttr
     // retourne les data attr complet pour le form complex
     final public function getComplexDataAttr():array
     {
         $return = ['name'=>$this,'group'=>$this->group(),'col'=>$this::className(true),'tag'=>$this->complexTag()];
         $return = $this->getDataAttr($return);
-        
+
         return $return;
     }
 }

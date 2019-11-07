@@ -8,9 +8,9 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Cms;
+use Quid\Base\Html;
 use Quid\Core;
 use Quid\Lemur;
-use Quid\Base\Html;
 
 // generalEdit
 // class for the route that allows quick editing a cell from the general page
@@ -23,7 +23,7 @@ class GeneralEdit extends Core\RouteAlias
     use Lemur\Segment\_table;
     use Lemur\Segment\_primary;
     use Lemur\Segment\_col;
-    
+
 
     // config
     public static $config = [
@@ -47,69 +47,69 @@ class GeneralEdit extends Core\RouteAlias
     {
         return $this->canTrigger();
     }
-    
-    
+
+
     // canTrigger
     // retourne vrai si la route peut être trigger
-    final public function canTrigger():bool 
+    final public function canTrigger():bool
     {
         $return = false;
         $table = $this->table();
         $row = $this->row();
         $col = $this->segment('col');
-        
+
         if($table instanceof Core\Table && $table->hasPermission('view','update','lemurUpdate','quickEdit'))
         {
             if($row->isUpdateable() && $col->isQuickEditable())
             $return = true;
         }
-        
+
         return $return;
     }
-    
-    
+
+
     // cell
     // retourne la cellule
-    final protected function cell():Lemur\Cell 
+    final protected function cell():Lemur\Cell
     {
         return $this->row()->cell($this->segment('col'));
     }
-    
-    
+
+
     // trigger
     // lance la route
-    final public function trigger() 
+    final public function trigger()
     {
         return $this->output();
     }
-    
-    
+
+
     // submitRoute
     // retourne la route pour soumettre le formulaire
-    final protected function submitRoute():GeneralEditSubmit 
+    final protected function submitRoute():GeneralEditSubmit
     {
         return GeneralEditSubmit::makeOverload($this->segments());
     }
-    
-    
+
+
     // output
     // génère le output html de la route
-    final protected function output():string 
+    final protected function output():string
     {
         $r = '';
         $route = $this->submitRoute();
-        
+
         $r .= $route->formOpen();
         $r .= $this->makeFormPrimary();
         $r .= $this->tableHiddenInput();
         $r .= $this->makeField();
         $r .= Html::divCond($this->makeTools(),'tools');
         $r .= Html::formCl();
-        
+
         return $r;
     }
-    
-    
+
+
     // makeFormPrimary
     // génère le input hidden pour la colonne primaire
     final protected function makeFormPrimary():string
@@ -117,37 +117,37 @@ class GeneralEdit extends Core\RouteAlias
         $r = '';
         $primary = $this->table()->primary();
         $cell = $this->row()->cell($primary);
-        $r = $cell->formHidden(array('name'=>'-primary-'));
+        $r = $cell->formHidden(['name'=>'-primary-']);
 
         return $r;
     }
-    
-    
+
+
     // makeField
     // génère le champ pour la cellule
-    final protected function makeField():string 
+    final protected function makeField():string
     {
         $r = '';
         $cell = $this->cell();
         $col = $cell->col();
         $data = $col->getComplexDataAttr();
-        $attr = array('anchor-corner','field-edit','data'=>$data);
-        
+        $attr = ['anchor-corner','field-edit','data'=>$data];
+
         $form = $cell->formComplex();
         $r = Html::divCond($form,$attr);
-        
+
         return $r;
     }
-    
-    
+
+
     // makeTools
     // génère les outils, soit les boutons submit et revert
-    final protected function makeTools():string 
+    final protected function makeTools():string
     {
         $r = '';
-        $r .= Html::button(null,array('icon','solo','reset','icon-small'));
-        $r .= Html::submit(null,array('icon','solo','check','icon-small'));
-        
+        $r .= Html::button(null,['icon','solo','reset','icon-small']);
+        $r .= Html::submit(null,['icon','solo','check','icon-small']);
+
         return $r;
     }
 }
