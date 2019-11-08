@@ -52,7 +52,7 @@ class Col extends Base\Test
         assert($lang->complexTag() === 'radio');
         assert(strlen($lang->formComplex()) === 642);
         assert(strlen($lang->formComplex(3)) === 660);
-        assert($media->formComplex() === "<div class='block empty'><div class='form'><input name='media' type='file'/></div></div>");
+        assert($media->formComplex() === "<div class='file-block empty'><div class='form'><input name='media' type='file'/></div></div>");
         assert($multi->complexTag() === 'multiselect');
         assert($check->complexTag() === 'search');
         assert(strlen($array->formComplex(null,['data-required'=>null])) === 177);

@@ -151,8 +151,8 @@ abstract class Video extends Core\ColAlias
             $content .= Html::span($excerpt);
         }
 
-        $return .= Html::div($html,'html');
-        $return .= Html::divCond($content,'content');
+        $return .= Html::div($html,'video-player');
+        $return .= Html::divCond($content,'video-meta');
 
         return $return;
     }

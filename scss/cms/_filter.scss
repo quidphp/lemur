@@ -9,6 +9,41 @@
 // filter
 // stylesheet for the filter component
 
+// filterTogglerOuter
+// mixin pour le toggler du filter dans general
+@mixin filterTogglerOuter()
+{
+    @include transition(background-color);
+    height: 100%;
+
+    &:hover,
+    &.filtering,
+    &.active {
+        background-color: $lightYellow;
+    }
+
+    .close {
+        @include abs(-8px, -8px);
+    }
+
+    .trigger {
+        height: 100%;
+
+        .filter {
+            @include abs(50%, null, null, 50%);
+            @include transition(opacity);
+            margin-top: -7px;
+            margin-left: -8px;
+            background-position: 0px 0px;
+            display: block;
+        }
+    }
+
+    > .popup {
+        @include filterPopup();
+    }
+}
+
 // filterPopupTop
 // mixin pour la partie supérieure du popup filter avec search et order
 @mixin filterPopupTop() {
@@ -114,7 +149,7 @@
 
             a.icon {
                 @include abs(50%, 5px);
-                @include wh(16px, true, '', true);
+                @include wh(16px, true, null, true);
 
                 &:hover {
                     opacity: 0.5;
@@ -128,7 +163,7 @@
 // mixin avec des styles commons pour un élément d'un filtre et enum set
 @mixin filterElementBase() {
     @include transitions(background-color 0.3s);
-    display: block;
+    @include flex(center);
     cursor: pointer;
     text-align: center;
     position: relative;
@@ -136,7 +171,6 @@
     padding: 5px 10px;
 
     .label-content {
-        @include inbl();
         max-width: 80%;
 
         .thumbnail {
@@ -156,7 +190,6 @@
     }
 
     .label-count {
-        @include inbl();
         height: 16px;
         min-width: 16px;
         padding: 0 3px;

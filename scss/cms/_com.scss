@@ -9,7 +9,7 @@
 // com
 // stylesheet for the communication component
 @mixin com() {
-    @include fixed('', 20px, 10px);
+    @include fixed(null, 20px, 10px);
     background-color: rgba(249, 253, 216, 0.95);
     width: 35%;
     z-index: 3;
@@ -26,19 +26,16 @@
         z-index: 3;
     }
     .top {
-        position: relative;
+        @include flex();
 
         .triangle {
-            @include abs(50%, '', '', 0px);
-            @include triangle('bottom', $darkColor, 10px, 6px);
-            margin-top: -4px;
+            @include triangle(bottom, $darkColor, 10px, 6px);
         }
 
         .date {
-            @include inbl();
             cursor: pointer;
             font-size: 90%;
-            padding-left: 16px;
+            margin-left: 7px;
 
             &:hover {
                 color: $darkGray;
@@ -47,7 +44,7 @@
     }
 
     &.slide-close .top .triangle {
-        @include triangle('right', $darkColor, 10px, 6px);
+        @include triangle(right, $darkColor, 10px, 6px);
     }
 
     .spacer {

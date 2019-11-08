@@ -12,9 +12,10 @@
 // fakeselect
 // mixin pour styliser un faux menu de sélection
 @mixin fakeselect() {
-    font-size: 1.4rem;
     @include fakeselectTrigger();
-
+    @include inbl();
+    font-size: 1.4rem;
+    
     > .popup {
         @include fakeselectPopup();
     }
@@ -23,7 +24,6 @@
 // fakeselectTrigger
 // mixin pour le trigger d'un fakeselect
 @mixin fakeselectTrigger() {
-    @include inbl();
     position: relative;
     min-width: 150px;
 
@@ -51,7 +51,7 @@
 
         > .ico {
             @include abs(50%, 10px);
-            @include triangle('bottom', $color, 9px, 6px);
+            @include triangle(bottom, $color, 9px, 6px);
             background-size: contain;
             margin-top: -4px;
         }

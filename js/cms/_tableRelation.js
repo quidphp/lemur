@@ -49,10 +49,11 @@ quid.cms.tableRelation = function()
 quid.cms.tinymceWithTableRelation = function()
 {
     $(this).each(function(index, el) {
-        var target = $(this).find(".tinymce");
+        var target = $(this).find("textarea");
         var data = target.data('tinymce') || { };
-        var textarea = target.parent().find("textarea");
-        var hasTableRelation = $(this).is("[data-table-relation='1']");
+        var hasTableRelation = $(this).parents(".form-element").is("[data-table-relation='1']");
+        var editor = quid.core.tinycme.call(target,data);
+        target.data('editor',editor);
         
         if(hasTableRelation === true)
         {
@@ -63,7 +64,7 @@ quid.cms.tinymceWithTableRelation = function()
                 });
             };
             
-            textarea.on('textarea:insert', function(event,html) {
+            target.on('textarea:insert', function(event,html) {
                 var r = false;
                 var editor = $(this).data('editor');
                 
@@ -73,9 +74,6 @@ quid.cms.tinymceWithTableRelation = function()
                 return r;
             });
         }
-        
-        var editor = quid.core.tinycme.call(target,data);
-        textarea.data('editor',editor);
     });
     
     return this;

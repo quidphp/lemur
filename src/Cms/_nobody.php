@@ -82,8 +82,7 @@ trait _nobody
 
         if(!empty($buttons))
         {
-            $class = 'amount-'.count($buttons);
-            $r .= Html::divOp(['buttons',$class]);
+            $r .= Html::divOp('buttons');
 
             foreach ($buttons as $key => $value)
             {

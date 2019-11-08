@@ -51,7 +51,7 @@ $red: #8d1e2d;
 // specificNav
 // styles utilisés pour la navigation de la page spécifique
 @mixin specificNav() {
-    @include inbl();
+    @include iflex(flex-end);
     background-color: $lightestGray;
     border: 1px solid $lightGray;
     padding: 5px 10px;
@@ -59,7 +59,6 @@ $red: #8d1e2d;
     box-shadow: 2px 2px 6px -4px $gray;
 
     > a {
-        @include inbl();
         color: $black;
         font-weight: bold;
         margin: 0 8px;
@@ -71,104 +70,11 @@ $red: #8d1e2d;
     }
 
     > .count {
-        @include inbl();
         position: relative;
         padding: 0px 8px;
 
         > span.count {
             font-size: 90%;
-        }
-    }
-}
-
-// inputChoice
-// style utilisé pour faire un choix parmis plusieurs input radio ou checkbox
-@mixin inputChoice($paddingtb: 8px) {
-    padding: 5px 0;
-
-    .choice-in {
-        @include inbl();
-        line-height: 1;
-
-        input[type='radio'] + label,
-        input[type='checkbox'] + label,
-        input[type='radio']:checked + label,
-        input[type='checkbox']:checked + label {
-            @include transitions(box-shadow 0.3s, background-color 0.3s, border 0.3s);
-            @include inbl();
-            padding: $paddingtb 10px $paddingtb 30px;
-            background-position: 10px 50%;
-            cursor: pointer;
-            background-color: $lighterGray;
-            border: 1px solid $lightGray;
-            border-radius: 5px;
-            box-shadow: 2px 2px 6px -4px $lightGray;
-
-            &:hover {
-                color: $black;
-                border: 1px solid $gray;
-                background-color: $lightYellow;
-                box-shadow: 2px 2px 6px -4px $gray;
-            }
-
-            &:active {
-                border: 1px solid $darkColor;
-            }
-        }
-
-        input[type='radio']:checked + label,
-        input[type='checkbox']:checked + label {
-            background-color: $white;
-            box-shadow: 2px 2px 6px -4px $black;
-        }
-    }
-}
-
-// tableForm
-// mixin avec les styles pour un formulaire dans une table, comme la page de connexion
-@mixin tableForm($color, $labelHover) {
-    label {
-        color: $color;
-
-        &[for]:hover {
-            color: $labelHover;
-        }
-    }
-
-    .required label:before {
-        content: '* ';
-    }
-
-    textarea,
-    select,
-    input[type='text'],
-    input[type='email'],
-    input[type='password'] {
-        display: block;
-        width: 100%;
-    }
-
-    textarea {
-        height: 100px;
-    }
-
-    .choice {
-        @include inputChoice();
-    }
-
-    .table {
-        width: 100%;
-
-        .table-cell {
-            padding: 10px 0 5px;
-
-            &.label-cell {
-                padding-right: 10px;
-            }
-        }
-
-        .table-cell:first-child {
-            width: 40%;
         }
     }
 }
@@ -188,6 +94,7 @@ $red: #8d1e2d;
     @include inbl();
     @include transitions(background-color 0.3s, opacity 0.3s);
     @include wh(16px);
+    min-width: 16px;
     padding: 0;
     cursor: pointer;
 }
@@ -204,7 +111,7 @@ $red: #8d1e2d;
 // mixin pour générer un icon centré
 @mixin iconCenter() {
     @include icon();
-    @include abs(50%, '', '', 50%);
+    @include abs(50%, null, null, 50%);
     margin-left: -8px;
     margin-top: -8px;
 }
@@ -239,11 +146,11 @@ $red: #8d1e2d;
 
 // nothing
 // style pour le texte Rien à afficher
-@mixin nothing($center: '') {
+@mixin nothing($center: null) {
     display: block;
     font-weight: bold;
 
-    @if ($center != '') {
+    @if ($center) {
         text-align: center;
     }
 }
@@ -257,7 +164,7 @@ $red: #8d1e2d;
 // panelButton
 // mixin pour les styles des boutons de panneaux
 @mixin panelButton() {
-    @include inbl();
+    display: block;
     padding: 5px 15px;
     margin: 0 5px 5px 0;
     background-color: $gray;
@@ -319,28 +226,28 @@ $red: #8d1e2d;
     cursor: pointer;
 
     &.prev {
-        @include triangle('left', $color1, 10px, 6px);
+        @include triangle(left, $color1, 10px, 6px);
         margin-right: 8px;
 
         &:hover {
-            @include triangle('left', $color2, 10px, 6px);
+            @include triangle(left, $color2, 10px, 6px);
         }
 
         &:active {
-            @include triangle('left', $color3, 10px, 6px);
+            @include triangle(left, $color3, 10px, 6px);
         }
     }
 
     &.next {
-        @include triangle('right', $color1, 10px, 6px);
+        @include triangle(right, $color1, 10px, 6px);
         margin-left: 8px;
 
         &:hover {
-            @include triangle('right', $color2, 10px, 6px);
+            @include triangle(right, $color2, 10px, 6px);
         }
 
         &:active {
-            @include triangle('right', $color3, 10px, 6px);
+            @include triangle(right, $color3, 10px, 6px);
         }
     }
 }

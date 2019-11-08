@@ -61,13 +61,12 @@ class About extends Core\RouteAlias
         $boot = static::boot();
         $replace = $this->getContentReplaceArray();
 
-        $r .= Html::divtableOpen();
         $r .= Html::h1(static::label());
         $r .= Html::h2($boot->label());
         $r .= Html::h3($boot->typeLabel());
         $r .= Html::divCond(static::langText('about/content',$replace),'content');
-        $r .= Html::divtableClose();
-
+        $r = Html::div($r,'inner-centered');
+        
         return $r;
     }
 

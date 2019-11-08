@@ -49,11 +49,11 @@ class AccountChangePassword extends Lemur\Route\AccountChangePassword
     final public function trigger():string
     {
         $r = '';
-        $r .= Html::divtableOpen();
+
         $r .= Html::h1(static::label());
         $r .= Html::divCond(static::langText('accountChangePassword/info'),'info');
         $r .= Html::divCond($this->makeForm(),'form');
-        $r .= Html::divtableClose();
+        $r = Html::div($r,'inner-centered');
 
         return $r;
     }

@@ -15,20 +15,22 @@
 @import '_clickOpen';
 @import '_colsSorter';
 @import '_com';
+@import '_component';
 @import '_enumSet';
 @import '_fakeselect';
-@import '_files';
 @import '_filter';
+@import '_form';
 @import '_icon';
+@import '_inputFiles';
 @import '_mainNav';
 @import '_modal';
 @import '_quickEdit';
+@import '_relation';
 @import '_rowsChecker';
 @import '_tableRelation';
 
 // import
 @import 'style';
-@import 'form';
 @import 'interface';
 @import 'page';
 @import 'general';

@@ -666,7 +666,7 @@ class General extends Core\RouteAlias
 
         $r .= Html::div(null,['icon','solo','check','center']);
         $r .= Html::div(null,['icon','solo','uncheck','center']);
-        $r = Html::div($r,['in','toggle-all',($hasInNotIn === true)? 'selected':null]);
+        $r = Html::div($r,['cell-inner','toggle-all',($hasInNotIn === true)? 'selected':null]);
         if($hasInNotIn === true)
         {
             $route = $this->changeSegments(['in'=>null,'notIn'=>null]);
@@ -686,7 +686,7 @@ class General extends Core\RouteAlias
         $cols = $table->cols();
         $currentCols = $this->getCurrentCols();
         $hasSpecificCols = $this->hasSpecificCols();
-        $inAttr = ['in','toggler',($hasSpecificCols === true)? 'selected':null];
+        $inAttr = ['cell-inner','toggler',($hasSpecificCols === true)? 'selected':null];
 
         if($this->hasTablePermission('view','cols') && $cols->isNotEmpty() && $currentCols->isNotEmpty())
         {
@@ -845,7 +845,7 @@ class General extends Core\RouteAlias
                     [$in,$thAttr] = $this->makeTableHeaderOrder($col,[$in,$thAttr],$icon);
                 }
 
-                $in = Html::div($in,'in');
+                $in = Html::div($in,'cell-inner');
                 $array = [$in,$thAttr];
 
                 if($permission['filter'] === true && $col->isFilterable() && $col->relation()->size() > 0)
@@ -948,7 +948,7 @@ class General extends Core\RouteAlias
                 if($rowsPermission === true)
                 {
                     $checkbox = Html::inputCheckbox($row,'row');
-                    $label = Html::label($checkbox,['in']);
+                    $label = Html::label($checkbox,['cell-inner']);
                     $array[] = [$label,'rows'];
                 }
 
@@ -959,7 +959,7 @@ class General extends Core\RouteAlias
                     if($specificPermission === true)
                     {
                         $action = ($modify === true && $row->isUpdateable())? 'modify':'view';
-                        $html = Html::a($specific,Html::div(null,['icon','solo',$action,'center']),'in');
+                        $html = Html::a($specific,Html::div(null,['icon','solo',$action,'center']),'cell-inner');
                     }
 
                     $array[] = [$html,'action'];
@@ -991,7 +991,8 @@ class General extends Core\RouteAlias
         $context = $this->context();
         $col = $cell->col();
         $v = $cell->get($context);
-
+        $isPrimary = $cell->isPrimary();
+        
         $data = ['name'=>$cell->name(),'cell'=>$cell::className(true),'group'=>$cell->group()];
         $table = $this->table();
         if($table->hasPermission('quickEdit'))
@@ -1000,33 +1001,30 @@ class General extends Core\RouteAlias
             if($generalEdit->canTrigger())
             {
                 $data['quick-edit'] = true;
-                $quickEdit = $generalEdit->a(null,['icon','solo','modify','quick-edit','icon-small']);
+                $quickEdit = $generalEdit->a(null,['icon','solo','modify','quick-edit','tool']);
             }
         }
         $data = $cell->getDataAttr($data);
         $attr = ['data'=>$data];
-
-        if($cell->isPrimary() && is_string($option['specific']))
-        {
-            $specific = $option['specific'];
-            $v = Html::a($specific,$v,'in');
-            $attr[] = 'primary';
-        }
-
+        
+        $placeholder = $col->emptyPlaceholder($v);
+        if(is_string($placeholder))
+        $v = Html::div($placeholder,'empty-placeholder');
+        
+        $inAttr = array('general-component');
+        if($isPrimary === true && is_string($option['specific']))
+        $v = Html::a($option['specific'],$v,$inAttr);
         else
-        {
-
-            $placeholder = $col->emptyPlaceholder($v);
-            if(is_string($placeholder))
-            $v = Html::div($placeholder,'empty-placeholder');
-
-            $v = Html::div($v,'in',$option);
-        }
+        $v = Html::div($v,$inAttr,$option);
 
         $html = $v;
         if(!empty($quickEdit))
-        $html .= $quickEdit;
-
+        {
+            $html .= $quickEdit;
+            $html .= Html::div(null,'quick-edit-container');
+        }
+        
+        $html = Html::div($html,'cell-inner');
         $r = [$html,$attr];
 
         return $r;

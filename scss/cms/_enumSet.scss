@@ -9,6 +9,22 @@
 // enumSet
 // stylesheet for the enumSet component
 
+// componentEnumSetSpecific
+// mixin pour un component enumSet dans le formulaire
+@mixin componentEnumSetSpecific() {
+    @include enumSet();
+
+    .thumbnail {
+        margin-bottom: 3px;
+
+        img {
+            max-width: 100px;
+            pointer-events: none;
+        }
+    }
+}
+
+
 // enumSet
 // mixin avec des styles de base pour un champ enumSet (recherche dans relation)
 @mixin enumSet() {
@@ -22,13 +38,24 @@
         margin: 5px 0;
 
         input[type='text'] {
-            max-width: 300px !important;
+            width: 80%;
+            max-width: 250px !important;
             margin-right: 10px;
         }
     }
 
     .input > .popup {
         @include enumSetPopup();
+    }
+    
+    &.general-page label {
+        max-width: calc(100% - 45px);
+    }
+    
+    @media print {
+        .input {
+            display: none !important;
+        }
     }
 }
 
@@ -60,15 +87,5 @@
         > .ele {
             @include filterElementBase();
         }
-    }
-}
-
-// enumSetGeneral
-// mixin pour une cellule de relation dans le tableau general
-@mixin enumSetGeneral() {
-    @include filesGeneralThumbnail();
-
-    .relation a {
-        display: inline;
     }
 }

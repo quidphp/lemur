@@ -111,7 +111,7 @@
 
     .scroller {
         width: 100%;
-        padding-top: 10px;
+        padding-top: 5px;
         overflow-y: visible;
         overflow-x: auto;
         min-height: 400px;
@@ -124,7 +124,7 @@
 }
 
 /* TOOL */
-[data-route='general'] main .inner > .container .tool {
+[data-route='general'] main .inner > .container .above .tool {
     @include rowsCheckerTools();
 }
 
@@ -169,11 +169,11 @@
     height: 100%;
     font-weight: bold;
 
-    &:first-child .in {
+    &:first-child .cell-inner {
         border-left: 1px solid $darkColor;
     }
 
-    .in {
+    .cell-inner {
         @include transitions(background-color 0.3s, border 0.3s);
         display: block;
         height: 100%;
@@ -186,7 +186,7 @@
             @include inbl();
             vertical-align: middle;
             color: $white;
-            font-size: 1.2rem;
+            font-size: 85%;
             text-transform: uppercase;
         }
     }
@@ -200,36 +200,7 @@
 /* ROWS */
 [data-route='general'] main .scroller > table > thead > tr > .rows {
     min-width: 40px;
-
-    .close {
-        @include abs(-8px, -8px);
-        z-index: 1;
-    }
-
-    .in {
-        cursor: pointer;
-        padding: 0 10px;
-
-        &.selected,
-        &:hover {
-            background-color: $lightYellow;
-            border: 1px solid $lightYellow;
-        }
-
-        .uncheck {
-            display: none;
-        }
-
-        &.all-checked {
-            .check {
-                display: none;
-            }
-
-            .uncheck {
-                display: block;
-            }
-        }
-    }
+    @include rowsCheckerToggleAll();
 }
 
 /* COLS */
@@ -237,7 +208,7 @@
     @include colsSorter();
     min-width: 40px;
 }
-[data-route='general'] main .scroller > table > tbody > tr > td.action .in:hover {
+[data-route='general'] main .scroller > table > tbody > tr > td.action .cell-inner:hover {
     background-color: $lightYellow;
 }
 
@@ -254,7 +225,7 @@
         @include transition(background-color);
 
         .triangle {
-            @include abs(50%, '', '', 50%);
+            @include abs(50%, null, null, 50%);
             @include transition(opacity);
             margin-top: -5px;
             margin-left: -5px;
@@ -277,25 +248,25 @@
     }
 
     &[data-direction='asc'] .right .triangle {
-        @include triangle('top', $white, 12px, 6px);
+        @include triangle(top, $white, 12px, 6px);
     }
     &[data-direction='desc'] .right .triangle {
-        @include triangle('bottom', $white, 12px, 6px);
+        @include triangle(bottom, $white, 12px, 6px);
     }
     &[data-direction='asc'] .right:hover .triangle,
     &[data-direction='asc'].ordering .right .triangle {
-        @include triangle('top', $color, 12px, 6px);
+        @include triangle(top, $color, 12px, 6px);
     }
     &[data-direction='desc'] .right:hover .triangle,
     &[data-direction='desc'].ordering .right .triangle {
-        @include triangle('bottom', $color, 12px, 6px);
+        @include triangle(bottom, $color, 12px, 6px);
     }
 }
 
 /* FILTER */
 [data-route='general'] main .scroller > table > thead > tr > th.filterable {
     .left {
-        @include abs(0, '', '', 0);
+        @include abs(0, null, null, 0);
         @include wh(30px, 100%);
         cursor: pointer;
     }
@@ -305,46 +276,26 @@
     }
 
     .filter-outer {
-        @include transition(background-color);
-        height: 100%;
-
-        &:hover,
-        &.filtering,
-        &.active {
-            background-color: $lightYellow;
-        }
-
-        .close {
-            @include abs(-8px, -8px);
-        }
-
-        .trigger {
-            height: 100%;
-
-            .filter {
-                @include abs(50%, '', '', 50%);
-                @include transition(opacity);
-                margin-top: -7px;
-                margin-left: -8px;
-                background-position: 0px 0px;
-                display: block;
-            }
-        }
-
-        > .popup {
-            @include filterPopup();
-        }
+        @include filterTogglerOuter();
     }
 }
 
 /* TBODY */
+[data-route='general'] .scroller > table tbody {
+    a {
+        @include inbl();
+        color: $black;
+
+        &:hover {
+            color: $darkGray;
+            text-decoration: underline;
+        }
+    }
+}
 [data-route='general'] main .scroller > table > tbody {
     > tr {
-        &:hover {
-            background-color: $lighterGray !important;
-        }
         &:nth-child(even) {
-            background-color: $lightestGray;
+            background-color: $lighterGray;
         }
         &.highlight {
             background-color: $lightGrayAlt !important;
@@ -353,7 +304,7 @@
             background-color: $lightYellow !important;
         }
 
-        > td:first-child .in {
+        > td:first-child > .cell-inner {
             border-left: 1px solid $lighterGray;
         }
     }
@@ -361,38 +312,32 @@
     > tr > td {
         height: 100%;
 
-        > .in {
+        > .cell-inner {
             @include transition(background-color);
             border-right: 1px solid $lighterGray;
             border-bottom: 1px solid $lighterGray;
             height: 100%;
             min-height: 15px;
-            padding: 8px 10px;
-            font-size: 90%;
             color: $black;
-            display: block;
             position: relative;
-
-            > .empty-placeholder {
-                font-style: italic;
-                color: $darkGray;
-                text-align: left;
-            }
-
-            a {
-                @include inbl();
-                color: $black;
-
-                &:hover {
+            display: block;
+            
+            > .general-component {
+                padding: 8px 10px;
+                height: 100%;
+                display: block;
+                font-size: 90%;
+                
+                .empty-placeholder {
+                    font-style: italic;
                     color: $darkGray;
-                    text-decoration: underline;
+                    text-align: left;
                 }
             }
-        }
-
-        &.primary > .in {
-            display: block;
-            padding: 8px 10px;
+            
+            > * {
+                box-sizing: border-box;
+            }
         }
     }
 }
@@ -400,49 +345,9 @@
     &[data-quick-edit='1'] {
         @include quickEdit();
     }
-
-    &[data-group='relation'] {
-        @include enumSetGeneral();
-    }
-
+    
     &.rows {
         @include rowsChecker();
-    }
-
-    &[data-group='media'] {
-        @include filesGeneral();
-    }
-
-    &.primary > .in:hover {
-        background-color: $lightYellow;
-    }
-}
-
-/* GENERAL EXPORT */
-.modal[data-route='generalExport'] .inner {
-    .count {
-        margin-bottom: 20px;
-    }
-
-    h3 {
-        margin-bottom: 20px;
-    }
-
-    .choices {
-        > a {
-            margin: 0 5px;
-        }
-
-        margin-bottom: 20px;
-    }
-
-    ul {
-        list-style-type: none;
-
-        > li {
-            padding: 3px 0;
-            font-size: 90%;
-        }
     }
 }
 

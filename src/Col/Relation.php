@@ -36,7 +36,18 @@ abstract class Relation extends Core\Col\Relation
         return false;
     }
 
+    
+    // getDataAttr
+    // retourne les attr pour la colonne
+    public function getDataAttr(array $return):array
+    {
+        $rel = $this->relation();
+        $return['mode'] = $rel->mode();
 
+        return parent::getDataAttr($return);
+    }
+    
+    
     // prepareRelationRadioCheckbox
     // méthode utilisé lors de la préparation d'une valeur relation radio ou checkbox, incluant search
     final protected function prepareRelationRadioCheckbox(array $return):array
@@ -186,7 +197,6 @@ abstract class Relation extends Core\Col\Relation
         if(is_array($attr) && array_key_exists('id',$attr))
         unset($attr['id']);
 
-        $return .= Html::divOp(['search-enumset','bind',$mode,'data-mode'=>$mode]);
         $return .= Html::divOp('input');
         $return .= Html::inputText(null,['placeholder'=>$placeholder,'name'=>true,'data'=>$data,'id'=>$id]);
 
@@ -202,7 +212,6 @@ abstract class Relation extends Core\Col\Relation
         $return .= Html::divOp('current');
         $return .= $this->formHidden();
         $return .= $this->formComplexSearchChoices($value,$attr,$option);
-        $return .= Html::divCl();
         $return .= Html::divCl();
 
         return $return;

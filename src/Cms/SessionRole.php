@@ -71,11 +71,11 @@ class SessionRole extends Core\RouteAlias
     final public function trigger():string
     {
         $r = '';
-        $r .= Html::divtableOpen();
+
         $r .= Html::h1(static::langText('sessionRole/title'));
         $r .= Html::divCond(static::langText('sessionRole/info'),'info');
         $r .= Html::divCond($this->makeForm(),'form');
-        $r .= Html::divtableClose();
+        $r = Html::div($r,'inner-centered');
 
         return $r;
     }

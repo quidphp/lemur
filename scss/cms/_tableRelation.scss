@@ -6,7 +6,25 @@
  * License: https://github.com/quidphp/lemur/blob/master/LICENSE
  */
 
-// tableRelation
+// componentTableRelationSpecific
+// mixin pour un component table relation dans le formulaire
+@mixin componentTableRelationSpecific() {
+    .relations-container {
+        @include flex(center);
+        padding-top: 3px;
+
+        .table-relation {
+            @include fakeselectTrigger();
+            margin: 3px;
+
+            > .popup {
+                @include tableRelationPopup();
+            }
+        }
+    }
+}
+ 
+// tableRelationPopup
 // stylesheet for the tableRelation component
 @mixin tableRelationPopup() {
     @include filterPopupBase();

@@ -1,0 +1,51 @@
+// compileOnSave: false
+
+/*
+ * This file is part of the QuidPHP package.
+ * Website: https://quidphp.com
+ * License: https://github.com/quidphp/lemur/blob/master/LICENSE
+ */
+
+// relation
+// stylesheet for relation-related content
+
+// componentRelationGeneral
+// mixin pour une cellule de relation dans le tableau general
+@mixin componentRelationGeneral() {
+    @include filesShowThumbnail();
+}
+
+// componentRelationSortableSpecific
+// mixin pour une relation sortable (checkboxes)
+@mixin componentRelationSortableSpecific()
+{
+    .move {
+        margin-right: 5px;
+    }
+    
+    @media print {
+        .move {
+            display: none !important;
+        }
+    }
+}
+
+// componentRelationPlainSpecific
+// mixin pour une relation plain dans le formulaire spécifique
+@mixin componentRelationPlainSpecific() {
+    .relation-plain {
+        margin-bottom: 5px;
+
+        a {
+            @include inbl();
+        }
+
+        .legend {
+            font-size: 80%;
+        }
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+}

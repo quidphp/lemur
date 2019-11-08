@@ -347,65 +347,90 @@ $media: $uriMedia;
 
 // abs
 // mixin utilisé pour positionner un élément en absolute
-@mixin abs($top: '', $right: '', $bottom: '', $left: '') {
+@mixin abs($top: null, $right: null, $bottom: null, $left: null) {
     position: absolute;
 
-    @if ($top != '') {
+    @if ($top) {
         top: $top;
     }
 
-    @if ($right != '') {
+    @if ($right) {
         right: $right;
     }
 
-    @if ($bottom != '') {
+    @if ($bottom) {
         bottom: $bottom;
     }
 
-    @if ($left != '') {
+    @if ($left) {
         left: $left;
     }
 }
 
 // fixed
 // mixin utilisé pour positionner un élément de façon fixed
-@mixin fixed($top: '', $right: '', $bottom: '', $left: '') {
+@mixin fixed($top: null, $right: null, $bottom: null, $left: null) {
     position: fixed;
 
-    @if ($top != '') {
+    @if ($top) {
         top: $top;
     }
 
-    @if ($right != '') {
+    @if ($right) {
         right: $right;
     }
 
-    @if ($bottom != '') {
+    @if ($bottom) {
         bottom: $bottom;
     }
 
-    @if ($left != '') {
+    @if ($left) {
         left: $left;
     }
 }
 
-// flexCenter
-// mixin utilisé pour créer un flexbox dont le contenu est centré horizontalement et verticalement
-@mixin flexCenter() {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+// flex
+// mixin utilisé pour créer un flexbox dont le contenu est centré verticalement
+// et possiblement horizontalement
+@mixin flex($justify:null,$align:center,$wrap:null,$inline:null) {
+    
+    @if ($inline) {
+        display: inline-flex;
+    }
+    
+    @else {
+        display: flex;
+    }
+    
+    @if ($justify) {
+        justify-content: $justify;
+    }
+    
+    @if ($align) {
+        align-items: $align;
+    }
+    
+    @if ($wrap) {
+        flex-wrap: $wrap;
+    }
+}
+
+// iflex
+// mixin utilisé pour créer un inline-flex dont le contenu est centré verticalement
+// et possiblement horizontalement
+@mixin iflex($justify:null,$align:center,$wrap:null) {
+    @include flex($justify,$align,$wrap,true);
 }
 
 // wh
 // mixin utilisé pour attribuer une width et une height à un élément
 // possible d'ajouter une margin left ou top
-@mixin wh($width: 100%, $height: true, $marginLeft: '', $marginTop: '') {
-    @if ($width != '') {
+@mixin wh($width: 100%, $height: true, $marginLeft: null, $marginTop: null) {
+    @if ($width) {
         width: $width;
     }
 
-    @if ($height != '') {
+    @if ($height) {
         @if ($height == true) {
             $height: $width;
         }
@@ -413,7 +438,7 @@ $media: $uriMedia;
         height: $height;
     }
 
-    @if ($marginLeft != '') {
+    @if ($marginLeft) {
         @if ($marginLeft == true) {
             margin-left: -(round($width/2));
         } @else {
@@ -421,7 +446,7 @@ $media: $uriMedia;
         }
     }
 
-    @if ($marginTop != '') {
+    @if ($marginTop) {
         @if ($marginTop == true) {
             margin-top: -(round($height/2));
         } @else {
@@ -432,50 +457,50 @@ $media: $uriMedia;
 
 // inbl
 // mixin utilisé pour créer rapidement un élément en display inline-block
-@mixin inbl($verticalAlign: middle, $width: '') {
+@mixin inbl($verticalAlign: middle, $width: null) {
     display: inline-block;
 
-    @if ($verticalAlign != '') {
+    @if ($verticalAlign) {
         vertical-align: $verticalAlign;
     }
 
-    @if ($width != '') {
+    @if ($width) {
         width: $width;
     }
 }
 
 // blmw
 // mixin utilisé pour créer un élément en display block avec un maxWidth
-@mixin blmw($maxWidth: 100%, $marginAuto: '') {
+@mixin blmw($maxWidth: 100%, $marginAuto: null) {
     display: block;
 
-    @if ($maxWidth != '') {
+    @if ($maxWidth) {
         max-width: $maxWidth;
     }
 
-    @if ($marginAuto != '') {
+    @if ($marginAuto) {
         margin: auto;
     }
 }
 
 // bgimg
 // mixin utilisé pour ajouter une image d'arrière-plan
-@mixin bgimg($filename, $extension: png, $position: '') {
+@mixin bgimg($filename, $extension: png, $position: null) {
     background-image: url(#{$media}/#{$filename}.#{$extension});
     background-repeat: no-repeat;
 
-    @if ($position != '') {
+    @if ($position) {
         background-position: $position;
     }
 }
 
 // bgimg64
 // mixin utilisé pour ajouter une image d'arrière-plan avec du code base64
-@mixin bgimg64($value, $position: '') {
+@mixin bgimg64($value, $position: null) {
     background-image: url($value);
     background-repeat: no-repeat;
 
-    @if ($position != '') {
+    @if ($position) {
         background-position: $position;
     }
 }
@@ -486,7 +511,7 @@ $media: $uriMedia;
     background-size: cover;
     background-repeat: no-repeat;
 
-    @if ($position != '') {
+    @if ($position) {
         background-position: $position;
     }
 }
@@ -572,19 +597,55 @@ $media: $uriMedia;
     }
 }
 
-// responsiveBlock
-// mixin utilisé pour annuler des styles et que l'élément s'affiche en block avec width auto
-@mixin responsiveBlock($important: '') {
-    @if ($important != '') {
-        display: block !important;
+// responsiveSize
+// mixin utilisé pour annuler les styles width, padding et margin
+@mixin responsiveSize($important:null) {
+    @if ($important) {
         width: auto !important;
         padding: 0 !important;
         margin: 0 !important;
     } @else {
-        display: block;
         width: auto;
         padding: 0;
         margin: 0;
+    }
+}
+
+// responsiveBlock
+// mixin utilisé pour annuler des styles et que l'élément s'affiche en block avec width auto
+@mixin responsiveBlock($important:null) {
+    @if ($important) {
+        @include responsiveSize($important);
+        display: block !important;
+    } @else {
+        @include responsiveSize($important);
+        display: block;
+    }
+}
+
+// responsiveFlex
+// mixin utilisé que les éléments s'affiche en flex column
+@mixin responsiveFlex($justify:null,$wrap:null,$important:null) {
+    @if ($important) {
+        flex-direction: column !important;
+        
+        @if ($justify) {
+            justify-content: $justify !important;
+        }
+        
+        @if ($wrap) {
+            flex-wrap: $wrap !important;
+        }
+    } @else {
+        flex-direction: column;
+        
+        @if ($justify) {
+            justify-content: $justify;
+        }
+        
+        @if ($wrap) {
+            flex-wrap: $wrap;
+        }
     }
 }
 
@@ -601,8 +662,8 @@ $media: $uriMedia;
 
 // triangle
 // mixin pour faire un triangle
-@mixin triangle($side, $color: $black, $dimension: 16px, $transparent: '') {
-    @if ($transparent == '') {
+@mixin triangle($side, $color: $black, $dimension: 16px, $transparent: null) {
+    @if (!$transparent) {
         $transparent: ($dimension/2);
     }
 

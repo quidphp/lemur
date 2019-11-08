@@ -98,12 +98,16 @@ class GeneralEdit extends Core\RouteAlias
     {
         $r = '';
         $route = $this->submitRoute();
-
+        $col = $this->segment('col');
+        $data = $col->getComplexDataAttr();
+        $attr = ['anchor-corner','form-element','data'=>$data];
+        
         $r .= $route->formOpen();
         $r .= $this->makeFormPrimary();
         $r .= $this->tableHiddenInput();
-        $r .= $this->makeField();
         $r .= Html::divCond($this->makeTools(),'tools');
+        
+        $r .= Html::div($this->makeComponent(),$attr);
         $r .= Html::formCl();
 
         return $r;
@@ -123,18 +127,14 @@ class GeneralEdit extends Core\RouteAlias
     }
 
 
-    // makeField
+    // makeComponent
     // génère le champ pour la cellule
-    final protected function makeField():string
+    final protected function makeComponent():string
     {
         $r = '';
         $cell = $this->cell();
-        $col = $cell->col();
-        $data = $col->getComplexDataAttr();
-        $attr = ['anchor-corner','field-edit','data'=>$data];
-
         $form = $cell->formComplex();
-        $r = Html::divCond($form,$attr);
+        $r = Html::divCond($form,array('specific-component','general-page'));
 
         return $r;
     }
@@ -145,8 +145,8 @@ class GeneralEdit extends Core\RouteAlias
     final protected function makeTools():string
     {
         $r = '';
-        $r .= Html::button(null,['icon','solo','reset','icon-small']);
-        $r .= Html::submit(null,['icon','solo','check','icon-small']);
+        $r .= Html::button(null,['icon','solo','close','revert','tool']);
+        $r .= Html::submit(null,['icon','solo','check','tool']);
 
         return $r;
     }

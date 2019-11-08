@@ -43,7 +43,10 @@ class GeneralEditSubmit extends Core\RouteAlias
         'response'=>[
             'timeLimit'=>60],
         'parent'=>GeneralEdit::class,
-        'group'=>'submit'
+        'group'=>'submit',
+        'form'=>[
+            'attr'=>[
+                'data-unload'=>'common/unload']]
     ];
 
 

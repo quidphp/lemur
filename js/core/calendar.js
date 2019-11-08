@@ -128,6 +128,9 @@ $.fn.calendarInput = function()
     $(this).clickOpenWithTrigger("input[type='text']",'focus').on('calendarInput:getInput', function(event) {
         return $(this).find("input[type='text']");
     })
+    .on('clickOpen:getBackgroundFrom', function(event) {
+        return 'calendar';
+    })
     .on('calendarInput:getCalendar', function(event) {
         return $(this).triggerHandler('clickOpen:getPopup').find(".calendar");
     })

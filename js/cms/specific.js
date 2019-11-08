@@ -11,24 +11,31 @@
 $(document).ready(function() {
 	
     // formPrepare
-    // permet de faire des binding sur ouverture d'un preparable de form (un panel)
+    // permet de faire tous les bindings des champs (simples et complexes)
     $(this).on('specific:formPrepare', function(event,parent) {
-        var date = parent.find("[data-group='date'] .bind");
-        var addRemove = parent.find("[data-tag='add-remove']");
-        var tableRelation = parent.find("[data-table-relation='1']");
-        var enumSet = parent.find("[data-tag='search'] .bind");
-        var checkboxSortable = parent.find("[data-group='relation'][data-sortable='1']");
-        var files = parent.find("[data-group='media'] .bind");
-        var tinymce = parent.find("[data-group='tinymce']");
-
+        $(this).trigger('specific:formPrepareSimple',[parent]);
+        $(this).trigger('specific:formPrepareViewable',[parent]);
+    })
+    
+    // formPrepareSimple
+    // permet de faire les bindings des champs simples
+    // ces champs sont bindés dès que le formulaire s'affiche
+    .on('specific:formPrepareSimple', function(event,parent) { })
+    
+    // formPrepareViewable
+    // permet de faire les bindings de champs
+    // ces champs seront bindés à l'initialisation du panneau, lorsqu'ils sont visibles
+    .on('specific:formPrepareViewable', function(event,parent) {
+        var date = parent.find("[data-group='date'] .specific-component");
+        var enumSet = parent.find("[data-tag='search'] .specific-component");
+        var checkboxSortable = parent.find("[data-group='relation'][data-sortable='1'] .specific-component");
+        var files = parent.find("[data-group='media'] .specific-component");
+        var addRemove = parent.find("[data-tag='add-remove'] .specific-component");
+        var tableRelation = parent.find("[data-table-relation='1'] .specific-component");
+        var tinymce = parent.find("[data-group='tinymce'] .specific-component");
+        
         // date
         date.calendarInput();
-        
-        // addRemove
-        addRemove.addRemove();
-        
-        // tableRelation
-        tableRelation.callThis(quid.cms.tableRelation);
         
         // enumSet
         enumSet.enumSetFull();
@@ -38,6 +45,12 @@ $(document).ready(function() {
         
         // files
         files.callThis(quid.cms.inputFiles);
+        
+        // addRemove
+        addRemove.addRemove();
+        
+        // tableRelation
+        tableRelation.callThis(quid.cms.tableRelation);
         
         // tinycme
         tinymce.callThis(quid.cms.tinymceWithTableRelation);
@@ -88,12 +101,15 @@ $(document).ready(function() {
 		var form = formWrapper.find("form");
 		var panel = form.find(".panel");
 		
+        // champs simples
+        $(this).trigger('specific:formPrepareSimple',[formWrapper]);
+        
 		// avec panel
 		if(panel.length > 1)
 		$(this).trigger('route:specificCommon:panel',[formWrapper,panel])
 		
 		else
-		$(this).trigger('specific:formPrepare',[formWrapper]);
+		$(this).trigger('specific:formPrepareViewable',[formWrapper]);
 	})
 	
 	// route:specificCommon:panel
@@ -104,7 +120,7 @@ $(document).ready(function() {
 		
 		// panel
 		panel.tabNav(panelNav).fragment().on('tab:init', function(event) {
-			$(this).trigger('specific:formPrepare',[$(this)]);
+			$(this).trigger('specific:formPrepareViewable',[$(this)]);
 		})
 		.on('tab:open', function() {
 			var nav = $(this).triggerHandler('link:getNav');

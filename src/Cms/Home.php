@@ -59,11 +59,14 @@ class Home extends Core\Route\Home
     final protected function mainTopLeft():string
     {
         $r = '';
+        
+        $r .= Html::divOp('title');
         $r .= $this->makeH1(static::boot()->typeLabel());
 
         if($this->hasPermission('homeInfo'))
         $r .= $this->makeInfo();
-
+        $r .= Html::divCl();
+        
         return $r;
     }
 
@@ -173,9 +176,7 @@ class Home extends Core\Route\Home
         $r = '';
 
         $r .= Html::divOp('search');
-        $r .= Html::divtableOpen();
-        $r .= $this->makeSearch();
-        $r .= Html::divtableClose();
+        $r .= Html::divCond($this->makeSearch(),'inner-centered');
         $r .= Html::divCl();
 
         return $r;
@@ -210,7 +211,7 @@ class Home extends Core\Route\Home
                 $r .= Html::div(null,'popup');
                 $r .= Html::formClose();
 
-                $r .= Html::divOp('in');
+                $r .= Html::divOp('search-in');
                 $r .= Html::divOp('first');
                 $r .= Html::span($lang->text('home/note').':');
                 $r .= Html::span($note,'note');

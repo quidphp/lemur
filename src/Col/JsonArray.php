@@ -107,14 +107,11 @@ class JsonArray extends Core\Col\JsonAlias
         $return = Html::divOp('utils');
         $lang = $this->db()->lang();
 
-        $return .= Html::divOp('outer');
-
         if($this->getAttr('sortable'))
         $return .= Html::div(null,['icon','solo','move']);
 
         $data = ['confirm'=>$lang->text('common/confirm')];
         $return .= Html::div(null,['icon','solo','remove','data'=>$data]);
-        $return .= Html::divCl();
         $return .= Html::divCl();
 
         return $return;
@@ -147,7 +144,7 @@ class JsonArray extends Core\Col\JsonAlias
             $option = Base\Arr::plus(['multi'=>true],$option);
             $model = $this->makeModel(null,$attr,null,$option);
             $data = ['html'=>$model];
-            $return .= Html::divOp('container');
+            $return .= Html::divOp('playground');
 
             foreach ($value as $i => $v)
             {
@@ -158,7 +155,7 @@ class JsonArray extends Core\Col\JsonAlias
 
             $return .= Html::divOp(['insert','data'=>$data]);
             $return .= Html::span($lang->text('common/insert'));
-            $return .= Html::span(null,['icon','solo','add']);
+            $return .= Html::div(null,['icon','solo','add']);
             $return .= Html::divCl();
         }
 

@@ -1,0 +1,52 @@
+// compileOnSave: false
+
+/*
+ * This file is part of the QuidPHP package.
+ * Website: https://quidphp.com
+ * License: https://github.com/quidphp/lemur/blob/master/LICENSE
+ */
+
+// component
+// stylesheet for various simple componentns
+
+// componentPrimaryGeneral
+// mixin pour le champ primary dans général
+@mixin componentPrimaryGeneral()
+{
+    &:hover {
+        background-color: $lightYellow;
+        text-decoration: none !important;
+        color: $black !important;
+    }
+}
+
+// componentUserPasswordSpecific
+// mixin pour un champ de modification de mots de passe pour user
+@mixin componentUserPasswordSpecific() 
+{
+    input[type='password']:first-child {
+        margin-bottom: 10px;
+    }
+}
+
+// componentVideoSpecific
+// mixin pour un component de video
+@mixin componentVideoSpecific()
+{
+    .video-player {
+        margin-bottom: 5px;
+    }
+    .video-meta {
+        font-size: 90%;
+        margin-bottom: 10px;
+    }
+}
+
+// componentTinymceSpecific
+// mixin pour le component avec un tinymce
+@mixin componentTinymceSpecific() 
+{
+    textarea {
+        height: 350px !important;
+    }
+}

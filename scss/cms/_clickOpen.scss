@@ -34,7 +34,7 @@
         bottom: 100%;
     }
     .popup {
-        @include abs(100%, '', '', 0px);
+        @include abs(100%, null, null, 0px);
         display: none;
     }
 
@@ -85,12 +85,11 @@
 // popup
 // mixin avec les styles pour le popup-trigger
 @mixin popupTrigger() {
-    @include inbl();
     position: relative;
 
     .popup-title {
-        @include inbl();
-        padding: 5px;
+        display: block;
+        padding: 5px 10px;
     }
 
     &.with-icon {

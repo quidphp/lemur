@@ -13,7 +13,7 @@
 // mixin avec les styles de base pour le modal
 @mixin modalBase() {
     .modal {
-        @include fixed(0, '', '', 0);
+        @include fixed(0, null, null, 0);
         @include wh(100%);
         z-index: 999;
         display: none;
@@ -28,7 +28,7 @@
         }
     }
     .modal .outer {
-        @include abs(20%, '', '', 20%);
+        @include abs(20%, null, null, 20%);
         @include wh(60%);
 
         > .box {
@@ -60,6 +60,7 @@
             @include abs(-8px, -8px);
         }
         > .inner {
+            @include flex(center);
             padding: 20px;
             text-align: center;
             overflow-y: auto;

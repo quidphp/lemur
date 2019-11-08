@@ -11,7 +11,8 @@
 
 // dragScroll
 // permet de faire un scroll dans un élément au clic (dragging)
-quid.core.dragScroll = $.fn.dragScroll = function()
+// possible d'activer le scroll seulement si le mousedown a lieu sur un type de tag
+quid.core.dragScroll = $.fn.dragScroll = function(targetTag)
 {
     $(this).each(function(index, el) {
         var $this = $(this);
@@ -28,16 +29,21 @@ quid.core.dragScroll = $.fn.dragScroll = function()
         });
 
         $(this).on('mousedown', function(event) {
-            if(event.which === 1)
+            var target = $(event.target);
+            
+            if(event.which === 1 && target.length)
             {
-                curDown = true;
-                curYPos = event.pageY;
-                curXPos = event.pageX;
-                $this.attr('data-status','grabbing');
+                if(targetTag == null || target.tagName() === targetTag)
+                {
+                    curDown = true;
+                    curYPos = event.pageY;
+                    curXPos = event.pageX;
+                    $this.attr('data-status','grabbing');
+                }
             }
         });
 
-        $(this).on('mouseup', function() {
+        $(this).on('mouseup mouseout', function() {
             curDown = false;
             $this.removeAttr('data-status');
         });

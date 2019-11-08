@@ -11,14 +11,14 @@
 @mixin colsSorter() {
     font-weight: normal;
 
-    &.active .in,
-    .in:hover,
-    .in.selected {
+    &.active .cell-inner,
+    .cell-inner:hover,
+    .cell-inner.selected {
         background-color: $lightYellow;
         border: 1px solid $lightYellow;
     }
 
-    .in {
+    .cell-inner {
         padding: 0px 10px;
         cursor: pointer;
 

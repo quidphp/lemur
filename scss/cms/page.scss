@@ -20,14 +20,14 @@
         padding: 0 20px;
 
         .inner {
-            @include flexCenter();
+            @include flex(center);
             min-height: 100vh;
             padding: 60px 0;
         }
     }
 
     header {
-        @include abs('', 20px, 50px);
+        @include abs(null, 20px, 50px);
         z-index: 1;
 
         .logo {
@@ -108,26 +108,14 @@
     text-align: right;
 }
 [data-group='nobody'] main .box .buttons {
+    @include flex();
     padding: 10px 25px 0;
     border-top: 1px solid $darkerColor;
-
-    &.amount-1 .button {
-        @include inbl(middle, 100%);
-    }
-    &.amount-2 .button {
-        @include inbl(middle, 50%);
-    }
-    &.amount-3 .button {
-        @include inbl(middle, 33%);
-
-        &:first-child {
-            width: 34%;
-        }
-    }
-
+    
     .button {
         padding-left: 10px;
-
+        flex-grow: 1;
+        
         > a {
             border-radius: 5px;
             font-size: 90%;
@@ -151,8 +139,9 @@
 /* LOGIN */
 [data-route='login'] main .box form {
     .bottom {
+        @include flex();
+        
         .left {
-            @include inbl();
             width: 50%;
             text-align: left;
 
@@ -162,7 +151,6 @@
         }
 
         .right {
-            @include inbl();
             width: 50%;
         }
     }
@@ -192,7 +180,7 @@
 }
 
 /* CHANGE PASSWORD */
-.modal[data-route='accountChangePassword'] .inner {
+.modal[data-route='accountChangePassword'] .inner-centered {
     @include modalForm();
 
     .form .field input {
@@ -201,12 +189,12 @@
 }
 
 /* SESSION ROLE */
-.modal[data-route='sessionRole'] .inner {
+.modal[data-route='sessionRole'] .inner-centered {
     @include modalForm();
 }
 
 /* ABOUT */
-.modal[data-route='about'] .inner {
+.modal[data-route='about'] .inner-centered {
     h3 {
         margin-bottom: 20px;
     }
@@ -245,6 +233,7 @@
     margin-right: 10px;
 }
 [data-route='home'] main .inner > .bottom > .search {
+    @include flex(center);
     @include wh(60%, 50vh);
     margin: auto;
     padding: 0 20px;
@@ -263,7 +252,7 @@
         }
 
         .icon {
-            @include abs(50%, '', '', 10px);
+            @include abs(50%, null, null, 10px);
             margin-top: -8px;
         }
 
@@ -275,7 +264,7 @@
         }
     }
 
-    .in {
+    .search-in {
         font-size: 90%;
 
         div span:first-child {
@@ -285,9 +274,37 @@
     }
 }
 
+/* GENERAL EXPORT */
+.modal[data-route='generalExport'] .inner {
+    .count {
+        margin-bottom: 20px;
+    }
+
+    h3 {
+        margin-bottom: 20px;
+    }
+
+    .choices {
+        > a {
+            margin: 0 5px;
+        }
+
+        margin-bottom: 20px;
+    }
+
+    ul {
+        list-style-type: none;
+
+        > li {
+            padding: 3px 0;
+            font-size: 90%;
+        }
+    }
+}
+
 /* RESPONSIVE */
 @media screen and (max-width: 900px), screen and (orientation: portrait) {
-    [data-group='nobody'] header {
+    [data-group='nobody'] body header {
         position: static;
         padding: 10px 20px;
         text-align: center;
@@ -297,7 +314,7 @@
         }
     }
 
-    [data-group='nobody'] main {
+    [data-group='nobody'] body main {
         display: block;
 
         .inner {
@@ -322,13 +339,7 @@
                     }
                 }
 
-                .form .bottom .left,
-                .form .bottom .right {
-                    @include responsiveBlock();
-                }
-
                 .buttons .button {
-                    @include responsiveBlock(true);
                     margin-top: 10px !important;
 
                     &:first-child {
@@ -339,7 +350,7 @@
         }
     }
 
-    [data-route='home'] main .inner > .bottom > .search {
+    [data-route='home'] body main .inner > .bottom > .search {
         @include responsiveBlock();
         height: auto;
         margin-top: 20px;

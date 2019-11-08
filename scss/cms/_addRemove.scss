@@ -6,51 +6,45 @@
  * License: https://github.com/quidphp/lemur/blob/master/LICENSE
  */
 
-// addRemove
-// stylesheet for the addRemove component
-@mixin addRemove() {
-    .right .container {
-        position: relative;
+// componentAddRemoveSpecific
+// stylesheet for the addRemove form component
+@mixin componentAddRemoveSpecific() {
+    > .playground {
 
         > .ele {
+            @include flex();
             position: relative;
             margin-bottom: 10px;
 
             > .current {
-                @include inbl();
-                width: 85%;
+                width: calc(100% - 75px);
             }
 
             > .utils {
-                @include inbl();
-                width: 15%;
-                padding-left: 10px;
-                text-align: right;
+                @include flex(center);
+                width: 65px;
+                margin-left: 10px;
+                background-color: $lightGray;
+                padding: 8px 10px;
+                border-radius: 3px;
+                text-align: center;
 
-                > .outer {
-                    @include inbl();
-                    background-color: $lightGray;
-                    padding: 5px 10px;
-                    border-radius: 3px;
-                    text-align: center;
+                > .icon {
+                    margin-left: 10px;
 
-                    > .icon {
-                        margin-left: 10px;
+                    &:hover {
+                        opacity: 0.6;
+                    }
 
-                        &:hover {
-                            opacity: 0.6;
-                        }
-
-                        &:first-child {
-                            margin-left: 0;
-                        }
+                    &:first-child {
+                        margin-left: 0;
                     }
                 }
             }
         }
     }
 
-    .right .insert {
+    > .insert {
         @include transitions(background-color 0.3s);
         padding: 5px;
         text-align: center;
@@ -61,10 +55,11 @@
         > span {
             @include inbl();
             font-weight: bold;
-
-            &.icon {
-                margin-left: 10px;
-            }
+        }
+        
+        > .icon {
+            @include inbl();
+            margin-left: 5px;
         }
 
         &:hover {
@@ -73,7 +68,7 @@
     }
 
     @media screen and (max-width: 900px), screen and (orientation: portrait) {
-        .right .container > .ele {
+        > .container > .ele {
             .current {
                 width: auto;
                 display: block;

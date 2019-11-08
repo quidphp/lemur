@@ -246,7 +246,7 @@ class Fr extends Core\Lang\Fr
 
             // author
             'author'=>[
-                'name'=>'QuidPHP',
+                'name'=>'QuidPHP + Lemur',
                 'uri'=>'https://quidphp.com',
                 'email'=>'emondpph@gmail.com'
             ],

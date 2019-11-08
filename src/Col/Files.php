@@ -77,7 +77,7 @@ abstract class Files extends Core\Col\Files
             foreach($this->indexRange() as $i)
             {
                 $int = $i + 1;
-                $return .= Html::divOp(['block','bind','empty']);
+                $return .= Html::divOp(['file-block','empty']);
 
                 if($hasMultiple === true)
                 $return .= Html::div(Html::divtable($int),'count');
@@ -123,7 +123,7 @@ abstract class Files extends Core\Col\Files
         if($allowFileUpload === true || $isEmpty === false)
         {
             $class = ($isEmpty === true)? 'empty':'not-empty';
-            $return .= Html::divOp(['block','bind',$class]);
+            $return .= Html::divOp(['file-block',$class]);
 
             if(is_int($i))
             $return .= Html::div(Html::divtable($i),'count');

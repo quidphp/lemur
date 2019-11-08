@@ -16,15 +16,18 @@
     padding: 0px 20px;
 
     > ul {
-        text-align: left;
+        @include flex(null,center,wrap);
         padding: 0;
-
+        list-style-type: none;
+        
         > li {
-            @include inbl();
-
+            
+            > a {
+                display: block;
+            }
+            
             > a,
             > .trigger {
-                @include inbl();
                 padding: 8px 15px 8px 0;
                 color: $white;
 
@@ -50,18 +53,16 @@
         position: relative;
 
         .trigger {
-            position: relative;
-            padding-left: 20px;
+            @include flex();
             cursor: pointer;
 
             .triangle {
-                @include triangle('right', $white, 9px, 6px);
-                @include abs(50%, false, false, 2px);
-                margin-top: -6px;
+                @include triangle(right, $white, 9px, 6px);
+                margin-right: 5px;
             }
 
             &:hover .triangle {
-                @include triangle('right', $gray, 9px, 6px);
+                @include triangle(right, $gray, 9px, 6px);
             }
         }
 
@@ -69,8 +70,8 @@
             color: $gray;
 
             .triangle {
-                @include triangle('bottom', $gray, 9px, 6px);
-                margin-top: -5px;
+                @include triangle(bottom, $gray, 9px, 6px);
+                margin-top: 4px;
             }
         }
 
@@ -91,32 +92,37 @@
 
     // responsive
     @media screen and (max-width: 900px), screen and (orientation: portrait) {
-        @include fixed(0, '', '', 0);
+        @include fixed(0, null, null, 0);
         @include wh(100%);
         display: none;
         padding: 20px 80px;
         z-index: 8;
         overflow-y: auto;
 
-        > ul > li {
-            display: block;
-            text-align: center;
-            margin-top: 20px;
+        > ul {
+            flex-direction: column;
+            
+            > li {
+                text-align: center;
+                margin-top: 20px;
 
-            &:first-child {
-                margin-top: 0;
-            }
+                &:first-child {
+                    margin-top: 0;
+                }
 
-            .trigger {
-                cursor: default !important;
-            }
+                .trigger {
+                    cursor: default !important;
+                }
 
-            > a,
-            > .trigger {
-                @include inbl();
-                color: $white !important;
-                padding: 0px !important;
-                font-size: 120%;
+                > a,
+                > .trigger {
+                    padding: 0px !important;
+                    font-size: 120%;
+                }
+                
+                > .trigger {
+                    color: $white !important;
+                }
             }
         }
 
@@ -145,7 +151,6 @@
                     padding: 3px 0;
 
                     > a:first-child {
-                        @include inbl();
                         text-align: center;
                         padding: 0;
 

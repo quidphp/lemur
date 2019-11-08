@@ -60,7 +60,6 @@ class GeneralExport extends Core\RouteAlias
         $longExport = $this->longExport();
         $count = $total.' '.static::langPlural($total,'lc|common/row');
 
-        $r .= Html::divtableOpen();
         $r .= Html::h1(static::label());
         $r .= Html::h2($table->label());
         $r .= Html::div($count,'count');
@@ -70,7 +69,7 @@ class GeneralExport extends Core\RouteAlias
         if($total > $longExport)
         $r .= Html::div(static::langText('export/long'),'note');
 
-        $r .= Html::divtableClose();
+        $r = Html::div($r,'inner-centered');
 
         return $r;
     }

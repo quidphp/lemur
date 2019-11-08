@@ -61,8 +61,6 @@ class Date extends Core\Col\Date
             $data = ['char'=>$route::getReplaceSegment(),'format'=>$formatCalendar,'current'=>$timestamp,'href'=>$route];
             $return .= Html::div(null,['calendar','data'=>$data]);
             $return .= Html::divCl();
-
-            $return = Html::divCond($return,'bind');
         }
 
         else

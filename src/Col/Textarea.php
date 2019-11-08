@@ -112,7 +112,7 @@ class Textarea extends Core\ColAlias
             $tables = $tables->gets(...array_values($relations));
 
             if($tables->isNotEmpty())
-            $return .= Html::divCond($this->relationBox($tables),'relations');
+            $return .= Html::divCond($this->relationBox($tables),'relations-container');
         }
 
         return $return;

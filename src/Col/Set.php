@@ -50,7 +50,7 @@ class Set extends Core\Col\Set
         if($this->isSortable())
         $return['sortable'] = true;
 
-        return $return;
+        return parent::getDataAttr($return);
     }
 
 

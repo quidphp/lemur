@@ -20,16 +20,15 @@
     }
 
     .loading-fixed {
-        display: block;
+        @include flex(null,flex-start);
     }
 }
 body .loading-fixed {
-    @include fixed(0, '', '', 0);
+    @include fixed(0, null, null, 0);
     z-index: 9;
     display: none;
-
+    
     > .loading-icon {
-        @include inbl(top);
         @include wh(20px);
         background-position: center;
         background-color: $white;
@@ -37,17 +36,15 @@ body .loading-fixed {
     }
 
     > .loading-progress {
-        @include inbl(top);
 
         > .percent {
             @include wh(40px, 16px);
             font-size: 80%;
             text-align: center;
-            line-height: 16px;
             color: $white;
             background-color: $darkColor;
-            border-bottom-left-radius: 3px;
-            border-bottom-right-radius: 3px;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
         }
     }
 }
@@ -66,7 +63,7 @@ body > #wrapper {
     opacity: 1;
 }
 body > .background {
-    @include fixed(0, '', '', 0);
+    @include fixed(0, null, null, 0);
     @include transitions(opacity 1.5s);
     @include wh(100%);
     z-index: 1;
@@ -86,11 +83,12 @@ body > .background {
 
 /* HEADER */
 header > .top {
+    @include flex();
     padding: 6px 20px;
     background-color: $color;
 
     .burger-menu {
-        @include abs(40px, '', '', 20px);
+        @include abs(40px, null, null, 20px);
         @include wh(32px);
         margin-top: -16px;
         background-color: $lightYellow;
@@ -104,7 +102,6 @@ header > .top {
     }
 
     .left {
-        @include inbl();
         width: 50%;
 
         .boot-label {
@@ -122,10 +119,9 @@ header > .top {
     }
 
     .right {
-        @include inbl();
+        @include flex(flex-end,center,wrap);
         width: 50%;
-        text-align: right;
-
+        
         > a {
             border: 0;
             margin-left: 5px;
@@ -140,13 +136,8 @@ header > .top {
             }
         }
 
-        .popup-trigger {
-            margin-top: 3px;
-
-            > .popup-title {
-                color: $lightGray;
-                font-size: 90%;
-            }
+        .popup-trigger > .popup-title {
+            color: $lightGray;
         }
     }
 }
@@ -164,9 +155,11 @@ main {
     }
 }
 main .inner > .top {
+    @include flex(null,flex-start);
     margin-bottom: 20px;
 
     .title {
+        @include flex();
         margin-bottom: 3px;
     }
 
@@ -175,24 +168,18 @@ main .inner > .top {
     }
 
     .left {
-        @include inbl(top);
         width: 55%;
 
-        h1 {
-            @include inbl;
+        h1 > a {
+            display: block;
 
-            > a {
-                display: block;
-
-                &:hover {
-                    color: $darkGray;
-                }
+            &:hover {
+                color: $darkGray;
             }
         }
     }
 
     .right {
-        @include inbl(top);
         width: 45%;
         text-align: right;
     }
@@ -205,7 +192,8 @@ main .inner > .top {
 
 /* FOOTER */
 footer {
-    @include abs('', '', 0, 0);
+    @include abs(null, null, 0, 0);
+    @include flex();
     z-index: 2;
     width: 100%;
     padding: 5px 20px;
@@ -213,11 +201,10 @@ footer {
     font-size: 90%;
 }
 footer .left {
-    @include inbl();
+    @include flex();
     width: 70%;
 
     .with-submenu {
-        @include inbl();
         margin-left: 5px;
         position: relative;
 
@@ -243,13 +230,11 @@ footer .left {
     }
 }
 footer .right {
-    @include inbl();
+    @include flex(flex-end);
     width: 30%;
-    text-align: right;
     color: $lightGray;
 
     > span {
-        @include inbl();
         color: $lightGray;
 
         &.separator {
@@ -277,15 +262,20 @@ footer .right {
     }
 
     header > .top {
+        @include responsiveFlex();
         padding: 10px 60px;
 
         .left,
         .right {
-            @include responsiveBlock();
+            @include responsiveSize();
             text-align: center;
 
             &.left {
                 margin-bottom: 5px;
+            }
+            
+            &.right {
+                justify-content: center;
             }
         }
 
@@ -310,11 +300,12 @@ footer .right {
     }
 
     footer {
+        @include responsiveFlex();
         position: static;
-
+        
         .left,
         .right {
-            @include responsiveBlock();
+            @include responsiveSize();
             text-align: center;
         }
 

@@ -113,7 +113,7 @@ class TinyMce extends TextareaAlias
         $tag = $this->complexTag($attr);
 
         if(Base\Html::isFormTag($tag,true))
-        $attr = Base\Attr::append(['tinymce','data'=>['tinymce'=>$this->tinymceData()]],$attr);
+        $attr = Base\Attr::append(['data'=>['tinymce'=>$this->tinymceData()]],$attr);
 
         else
         $attr['tag'] = 'iframe';

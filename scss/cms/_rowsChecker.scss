@@ -16,7 +16,7 @@
     min-width: inherit;
     text-align: center;
 
-    .in {
+    .cell-inner {
         padding: 0 10px;
         cursor: pointer;
 
@@ -27,7 +27,7 @@
 
     input[type='checkbox'] {
         @include inbl();
-        @include abs(50%, '', '', 50%);
+        @include abs(50%, null, null, 50%);
         @include wh(12px);
         margin-top: -6px;
         margin-left: -6px;
@@ -35,17 +35,53 @@
     }
 }
 
+// rowsCheckerToggleAll
+// mixin pour le toggle all des rows
+@mixin rowsCheckerToggleAll()
+{
+    
+    .close {
+        @include abs(-8px, -8px);
+        z-index: 1;
+    }
+
+    .cell-inner {
+        cursor: pointer;
+        padding: 0 10px;
+        
+        &.selected,
+        &:hover {
+            background-color: $lightYellow;
+            border: 1px solid $lightYellow;
+        }
+
+        .uncheck {
+            display: none;
+        }
+
+        &.all-checked {
+            .check {
+                display: none;
+            }
+
+            .uncheck {
+                display: block;
+            }
+        }
+    }
+}
+
 // rowsCheckerTools
 // mixin pour les styles de l'espace outil lorsqu'une row est checked
 @mixin rowsCheckerTools() {
+    @include flex(null,flex-end);
     visibility: hidden;
 
     > .icon {
-        @include inbl(bottom);
         margin-right: 5px;
     }
-
-    .multi-delete {
-        @include inbl(bottom);
+    
+    .icon:hover {
+        opacity: 0.6;
     }
 }

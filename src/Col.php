@@ -31,7 +31,7 @@ class Col extends Core\Col
     // retourne vrai si la colonne est éditable rapidement via le cms
     final public function isQuickEditable():bool
     {
-        return $this->getAttr('quickEdit') === true && $this->isEditable() && $this->isFormTag(null,true);
+        return $this->getAttr('quickEdit') === true && $this->isEditable() && !$this->isPlainTag(null,true);
     }
 
 
@@ -142,7 +142,7 @@ class Col extends Core\Col
 
 
     // getDataAttr
-    // retourne les dates attr pour la colonne
+    // retourne les attr pour la colonne
     public function getDataAttr(array $return):array
     {
         return $return;
@@ -155,7 +155,7 @@ class Col extends Core\Col
     {
         $return = ['name'=>$this,'group'=>$this->group(),'col'=>$this::className(true),'tag'=>$this->complexTag()];
         $return = $this->getDataAttr($return);
-
+        
         return $return;
     }
 }

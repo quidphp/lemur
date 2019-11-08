@@ -19,23 +19,23 @@ $(document).ready(function() {
 		var search = main.find(".left > .search");
         var formTruncate = main.find(".truncate form");
 		var pageLimit = main.find("input[name='limit'],input[name='page']");
-        var filter = scroller.find("table th.filterable .filter-outer");
-		var colsSorter = scroller.find("table th.action");
-		var rowsChecker = scroller.find("table td.rows input[type='checkbox']");
-		var filesSlider = scroller.find("table td[data-group='media'] .slider");
-        var quickEdit = scroller.find("table td[data-quick-edit='1'] a.quick-edit");
+        var table = scroller.find("table").first();
+        var filter = table.find("th.filterable .filter-outer");
+		var colsSorter = table.find("th.action");
+		var filesSlider = table.find("td[data-group='media'] .slider");
+        var quickEdit = table.find("td[data-quick-edit='1'] a.quick-edit");
         
         // dragScroll
-        scroller.dragScroll();
+        scroller.dragScroll('div');
         
         // page + limit
 		pageLimit.inputNumeric();
 		
+        // rowsChecker
+        main.callThis(quid.cms.rowsChecker);
+        
 		// colsSorter
 		colsSorter.callThis(quid.cms.colsSorter);
-		
-		// rowsChecker
-        colsSorter.callThis(quid.cms.rowsChecker,main);
 		
         // filter
 		filter.filterGeneralFull();

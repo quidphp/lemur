@@ -6,8 +6,31 @@
  * License: https://github.com/quidphp/lemur/blob/master/LICENSE
  */
 
-// clickOpen
+// calendar
 // stylesheet for the calendar component
+
+// componentDateSpecific
+// style pour le component dateInput dans le formulaire
+@mixin componentDateSpecific()
+{
+    > .popup {
+        width: 250px;
+        padding: 0;
+        border: 0;
+        overflow: hidden;
+
+        .calendar {
+            @include calendar();
+        }
+
+        &:after {
+            display: none;
+        }
+    }
+}
+
+// calendar
+// mixin pour le popup du calendrier
 @mixin calendar() {
     .head {
         padding: 5px;
@@ -20,7 +43,7 @@
             margin-top: -6px;
 
             &.prev {
-                @include abs(50%, '', '', 10px);
+                @include abs(50%, null, null, 10px);
             }
 
             &.next {

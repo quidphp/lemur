@@ -50,7 +50,7 @@ quid.core.enumSet = $.fn.enumSet = function()
     })
     .on('choice:append', function(event,value,html) {
         var mode = $(this).triggerHandler('enumSet:getMode');
-
+        
         if(quid.base.isStringNotEmpty(html) && quid.base.isScalar(value) && quid.base.isStringNotEmpty(mode))
         {
             var ele = $(this).triggerHandler('clickOpen:getPopup').find("li[data-value='"+value+"']");
@@ -124,7 +124,7 @@ quid.core.enumSetInput = $.fn.enumSetInput = function()
         }
         
         else
-        $(this).triggerHandler('getParent').trigger('clickOpen:close');
+        $(this).triggerHandler('enumSetInput:getParent').trigger('clickOpen:close');
         
         $(this).data('valueLast',val);
     })
@@ -132,7 +132,7 @@ quid.core.enumSetInput = $.fn.enumSetInput = function()
         $(this).triggerHandler('getPopup').trigger('clickOpen:close');
     })
     .on('enumSetInput:getParent', function(event) {
-        return $(this).parents(".search-enumset");
+        return $(this).parents(".specific-component");
     })
     .on('enumSetInput:getPopup', function(event) {
         return $(this).triggerHandler('enumSetInput:getParent').triggerHandler('clickOpen:getPopup');
@@ -190,7 +190,11 @@ quid.core.enumSetFull = $.fn.enumSetFull = function()
         var enumSet = $(this);
         
         // enumSet
-        $(this).clickOpenWithTrigger("> .trigger").enumSet().on('clickOpen:ready', function(event) {
+        $(this).clickOpenWithTrigger("> .trigger").enumSet()
+        .on('enumSet:getMode', function(event) {
+            return $(this).parents(".form-element").data('mode');
+        })
+        .on('clickOpen:ready', function(event) {
             $(this).triggerHandler('clickOpen:getPopup').trigger('feed:bind');
         }).on('clickOpen:getBackgroundFrom', function(event) {
             return 'enumSet';
@@ -204,7 +208,7 @@ quid.core.enumSetFull = $.fn.enumSetFull = function()
             return quid.core.parseHtmlDocument(data).find("li");
         })
         .on('click', 'li', function(event) {
-            $(this).parents(".search-enumset").trigger('choice:append',[$(this).data('value'),$(this).data('html')]);
+            enumSet.trigger('choice:append',[$(this).data('value'),$(this).data('html')]);
             event.stopPropagation();
         });
         
@@ -218,7 +222,7 @@ quid.core.enumSetFull = $.fn.enumSetFull = function()
         
         // button
         $(this).find("button").on('enumSet:getInput', function(event) {
-            return $(this).parents(".search-enumset").triggerHandler('enumSet:getInput');
+            return enumSet.triggerHandler('enumSet:getInput');
         })
         .on('click',function(event) {
             event.stopPropagation();

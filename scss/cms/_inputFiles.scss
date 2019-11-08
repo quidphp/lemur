@@ -6,15 +6,57 @@
  * License: https://github.com/quidphp/lemur/blob/master/LICENSE
  */
 
-// files
-// stylesheet for the files upload component
+// inputFiles
+// stylesheet for the files upload inputs component
 
-// files
-// mixin avec les styles pour le champ de chargement de fichiers
-@mixin files() {
-    @include inbl();
+// componentFilesSpecific
+// style pour le component files dans le formulaire
+@mixin componentFilesSpecific()
+{
+    .file-block {
+        @include filesBlock();
+        margin: 5px;
+    }
+}
+
+// componentFilesGeneral
+// mixin pour l'affichage d'un champ media/medias dans general
+@mixin componentFilesGeneral() {
+    @include filesShowThumbnail();
+    text-align: center;
+
+    .slider {
+        position: relative;
+        padding: 0 20px;
+
+        .prev,
+        .next {
+            @include trianglePrevNext();
+            margin-top: -8px;
+        }
+
+        .prev {
+            @include abs(50%, null, null, 0);
+        }
+
+        .next {
+            @include abs(50%, 0);
+        }
+
+        .slider-element {
+            display: none;
+
+            &.active {
+                display: block;
+            }
+        }
+    }
+}
+
+// filesBlock
+// mixin avec les styles pour un bloc du champ de chargement de fichiers
+@mixin filesBlock() {
     width: 480px;
-    margin: 10px 10px 0 0;
     background-color: $white;
     border-radius: 5px;
     position: relative;
@@ -32,12 +74,12 @@
         }
 
         .form .message {
-            display: block;
+            @include flex(center);
         }
     }
 
     .count {
-        @include abs(8px, 7px);
+        @include abs(12px, 12px);
         @include wh(24px);
         background-color: $white;
         text-align: center;
@@ -47,10 +89,10 @@
     }
 
     .actions {
-        @include abs(-12px, -8px);
-
+        @include abs(-8px, -8px);
+        @include flex();
+        
         > .action {
-            @include inbl();
             margin-left: 4px;
 
             &:hover {
@@ -65,17 +107,11 @@
 
         .message {
             display: none;
-            text-align: center;
             font-size: 90%;
             font-weight: bold;
 
-            .actionText {
-                @include inbl(top);
-            }
-
             .close {
                 margin-left: 4px;
-                @include inbl(top);
             }
         }
     }
@@ -92,6 +128,10 @@
             &:hover {
                 opacity: 0.8;
             }
+            
+            &:first-child {
+                margin-bottom: 10px;
+            }
         }
 
         .media-placeholder {
@@ -104,24 +144,21 @@
             min-width: 50px;
             display: block;
             margin: auto;
-            margin-bottom: 10px;
         }
 
         .line {
+            @include flex(center);
+            
             .notFound {
                 @include nothing();
                 margin-bottom: 3px;
             }
 
-            .filename {
-                @include inbl();
-            }
             a.filename {
                 text-decoration: underline;
             }
 
             .filesize {
-                @include inbl();
                 margin-left: 10px;
                 font-weight: bold;
             }
@@ -168,43 +205,9 @@
     }
 }
 
-// filesGeneral
-// mixin pour l'affichage d'un champ media/medias dans general
-@mixin filesGeneral() {
-    @include filesGeneralThumbnail();
-    text-align: center;
-
-    .slider {
-        position: relative;
-        padding: 0 20px;
-
-        .prev,
-        .next {
-            @include trianglePrevNext();
-            margin-top: -8px;
-        }
-
-        .prev {
-            @include abs(50%, '', '', 0);
-        }
-
-        .next {
-            @include abs(50%, 0);
-        }
-
-        .slider-element {
-            display: none;
-
-            &.active {
-                display: block;
-            }
-        }
-    }
-}
-
-// filesGeneralThumbnail
+// filesShowThumbnail
 // mixin pour afficher une image dans une cellule du tableau general
-@mixin filesGeneralThumbnail() {
+@mixin filesShowThumbnail() {
     a .thumbnail,
     a .media-placeholder {
         @include transitions(opacity 0.3s);
