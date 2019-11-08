@@ -17,12 +17,11 @@
 
 // componentRelationSortableSpecific
 // mixin pour une relation sortable (checkboxes)
-@mixin componentRelationSortableSpecific()
-{
+@mixin componentRelationSortableSpecific() {
     .move {
         margin-right: 5px;
     }
-    
+
     @media print {
         .move {
             display: none !important;

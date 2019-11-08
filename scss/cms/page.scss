@@ -111,11 +111,11 @@
     @include flex();
     padding: 10px 25px 0;
     border-top: 1px solid $darkerColor;
-    
+
     .button {
         padding-left: 10px;
         flex-grow: 1;
-        
+
         > a {
             border-radius: 5px;
             font-size: 90%;
@@ -140,7 +140,7 @@
 [data-route='login'] main .box form {
     .bottom {
         @include flex();
-        
+
         .left {
             width: 50%;
             text-align: left;

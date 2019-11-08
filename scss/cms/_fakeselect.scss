@@ -15,7 +15,7 @@
     @include fakeselectTrigger();
     @include inbl();
     font-size: 1.4rem;
-    
+
     > .popup {
         @include fakeselectPopup();
     }

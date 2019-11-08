@@ -24,7 +24,6 @@
     }
 }
 
-
 // enumSet
 // mixin avec des styles de base pour un champ enumSet (recherche dans relation)
 @mixin enumSet() {
@@ -47,11 +46,11 @@
     .input > .popup {
         @include enumSetPopup();
     }
-    
+
     &.general-page label {
         max-width: calc(100% - 45px);
     }
-    
+
     @media print {
         .input {
             display: none !important;

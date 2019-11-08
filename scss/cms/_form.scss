@@ -11,10 +11,9 @@
 
 // complexForm
 // mixin de base pour les éléments de formulaire complexe
-@mixin complexForm()
-{
+@mixin complexForm() {
     position: relative;
-    
+
     > div.nothing {
         @include nothing();
     }
@@ -48,7 +47,6 @@
         }
 
         .choice-in {
-            
             > span {
                 display: none;
                 margin-left: 5px;
@@ -136,7 +134,7 @@
     .choice-in {
         @include flex();
         line-height: 1.1;
-        
+
         input[type='radio'] + label,
         input[type='checkbox'] + label,
         input[type='radio']:checked + label,
@@ -149,7 +147,7 @@
             border: 1px solid $lightGray;
             border-radius: 5px;
             box-shadow: 2px 2px 6px -4px $lightGray;
-            
+
             &:hover {
                 color: $black;
                 border: 1px solid $gray;

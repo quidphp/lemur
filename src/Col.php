@@ -155,7 +155,7 @@ class Col extends Core\Col
     {
         $return = ['name'=>$this,'group'=>$this->group(),'col'=>$this::className(true),'tag'=>$this->complexTag()];
         $return = $this->getDataAttr($return);
-        
+
         return $return;
     }
 }

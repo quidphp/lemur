@@ -37,9 +37,7 @@
 
 // rowsCheckerToggleAll
 // mixin pour le toggle all des rows
-@mixin rowsCheckerToggleAll()
-{
-    
+@mixin rowsCheckerToggleAll() {
     .close {
         @include abs(-8px, -8px);
         z-index: 1;
@@ -48,7 +46,7 @@
     .cell-inner {
         cursor: pointer;
         padding: 0 10px;
-        
+
         &.selected,
         &:hover {
             background-color: $lightYellow;
@@ -74,13 +72,13 @@
 // rowsCheckerTools
 // mixin pour les styles de l'espace outil lorsqu'une row est checked
 @mixin rowsCheckerTools() {
-    @include flex(null,flex-end);
+    @include flex(null, flex-end);
     visibility: hidden;
 
     > .icon {
         margin-right: 5px;
     }
-    
+
     .icon:hover {
         opacity: 0.6;
     }

@@ -41,25 +41,24 @@
     &[data-status='error'] > .cell-inner > a.quick-edit {
         background-color: $red;
     }
-    
+
     > .cell-inner .quick-edit-container {
         display: none;
         padding: 8px 45px 8px 10px;
         height: 100%;
     }
-    
+
     &[data-editing='1'] {
         min-width: 250px;
-        
+
         > .cell-inner {
-            
             > .general-component {
                 display: none;
             }
-            
+
             > .quick-edit-container {
                 display: block;
-                
+
                 > form > .tools {
                     @include abs(0px, 0px);
                     @include flex();

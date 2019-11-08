@@ -321,20 +321,20 @@
             color: $black;
             position: relative;
             display: block;
-            
+
             > .general-component {
                 padding: 8px 10px;
                 height: 100%;
                 display: block;
                 font-size: 90%;
-                
+
                 .empty-placeholder {
                     font-style: italic;
                     color: $darkGray;
                     text-align: left;
                 }
             }
-            
+
             > * {
                 box-sizing: border-box;
             }
@@ -345,7 +345,7 @@
     &[data-quick-edit='1'] {
         @include quickEdit();
     }
-    
+
     &.rows {
         @include rowsChecker();
     }

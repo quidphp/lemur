@@ -11,8 +11,7 @@
 
 // filterTogglerOuter
 // mixin pour le toggler du filter dans general
-@mixin filterTogglerOuter()
-{
+@mixin filterTogglerOuter() {
     @include transition(background-color);
     height: 100%;
 

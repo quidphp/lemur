@@ -992,7 +992,7 @@ class General extends Core\RouteAlias
         $col = $cell->col();
         $v = $cell->get($context);
         $isPrimary = $cell->isPrimary();
-        
+
         $data = ['name'=>$cell->name(),'cell'=>$cell::className(true),'group'=>$cell->group()];
         $table = $this->table();
         if($table->hasPermission('quickEdit'))
@@ -1006,12 +1006,12 @@ class General extends Core\RouteAlias
         }
         $data = $cell->getDataAttr($data);
         $attr = ['data'=>$data];
-        
+
         $placeholder = $col->emptyPlaceholder($v);
         if(is_string($placeholder))
         $v = Html::div($placeholder,'empty-placeholder');
-        
-        $inAttr = array('general-component');
+
+        $inAttr = ['general-component'];
         if($isPrimary === true && is_string($option['specific']))
         $v = Html::a($option['specific'],$v,$inAttr);
         else
@@ -1023,7 +1023,7 @@ class General extends Core\RouteAlias
             $html .= $quickEdit;
             $html .= Html::div(null,'quick-edit-container');
         }
-        
+
         $html = Html::div($html,'cell-inner');
         $r = [$html,$attr];
 

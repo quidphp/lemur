@@ -101,12 +101,12 @@ class GeneralEdit extends Core\RouteAlias
         $col = $this->segment('col');
         $data = $col->getComplexDataAttr();
         $attr = ['anchor-corner','form-element','data'=>$data];
-        
+
         $r .= $route->formOpen();
         $r .= $this->makeFormPrimary();
         $r .= $this->tableHiddenInput();
         $r .= Html::divCond($this->makeTools(),'tools');
-        
+
         $r .= Html::div($this->makeComponent(),$attr);
         $r .= Html::formCl();
 
@@ -134,7 +134,7 @@ class GeneralEdit extends Core\RouteAlias
         $r = '';
         $cell = $this->cell();
         $form = $cell->formComplex();
-        $r = Html::divCond($form,array('specific-component','general-page'));
+        $r = Html::divCond($form,['specific-component','general-page']);
 
         return $r;
     }

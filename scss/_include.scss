@@ -392,24 +392,21 @@ $media: $uriMedia;
 // flex
 // mixin utilisé pour créer un flexbox dont le contenu est centré verticalement
 // et possiblement horizontalement
-@mixin flex($justify:null,$align:center,$wrap:null,$inline:null) {
-    
+@mixin flex($justify: null, $align: center, $wrap: null, $inline: null) {
     @if ($inline) {
         display: inline-flex;
-    }
-    
-    @else {
+    } @else {
         display: flex;
     }
-    
+
     @if ($justify) {
         justify-content: $justify;
     }
-    
+
     @if ($align) {
         align-items: $align;
     }
-    
+
     @if ($wrap) {
         flex-wrap: $wrap;
     }
@@ -418,8 +415,8 @@ $media: $uriMedia;
 // iflex
 // mixin utilisé pour créer un inline-flex dont le contenu est centré verticalement
 // et possiblement horizontalement
-@mixin iflex($justify:null,$align:center,$wrap:null) {
-    @include flex($justify,$align,$wrap,true);
+@mixin iflex($justify: null, $align: center, $wrap: null) {
+    @include flex($justify, $align, $wrap, true);
 }
 
 // wh
@@ -599,7 +596,7 @@ $media: $uriMedia;
 
 // responsiveSize
 // mixin utilisé pour annuler les styles width, padding et margin
-@mixin responsiveSize($important:null) {
+@mixin responsiveSize($important: null) {
     @if ($important) {
         width: auto !important;
         padding: 0 !important;
@@ -613,7 +610,7 @@ $media: $uriMedia;
 
 // responsiveBlock
 // mixin utilisé pour annuler des styles et que l'élément s'affiche en block avec width auto
-@mixin responsiveBlock($important:null) {
+@mixin responsiveBlock($important: null) {
     @if ($important) {
         @include responsiveSize($important);
         display: block !important;
@@ -625,24 +622,24 @@ $media: $uriMedia;
 
 // responsiveFlex
 // mixin utilisé que les éléments s'affiche en flex column
-@mixin responsiveFlex($justify:null,$wrap:null,$important:null) {
+@mixin responsiveFlex($justify: null, $wrap: null, $important: null) {
     @if ($important) {
         flex-direction: column !important;
-        
+
         @if ($justify) {
             justify-content: $justify !important;
         }
-        
+
         @if ($wrap) {
             flex-wrap: $wrap !important;
         }
     } @else {
         flex-direction: column;
-        
+
         @if ($justify) {
             justify-content: $justify;
         }
-        
+
         @if ($wrap) {
             flex-wrap: $wrap;
         }

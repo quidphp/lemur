@@ -16,16 +16,15 @@
     padding: 0px 20px;
 
     > ul {
-        @include flex(null,center,wrap);
+        @include flex(null, center, wrap);
         padding: 0;
         list-style-type: none;
-        
+
         > li {
-            
             > a {
                 display: block;
             }
-            
+
             > a,
             > .trigger {
                 padding: 8px 15px 8px 0;
@@ -101,7 +100,7 @@
 
         > ul {
             flex-direction: column;
-            
+
             > li {
                 text-align: center;
                 margin-top: 20px;
@@ -119,7 +118,7 @@
                     padding: 0px !important;
                     font-size: 120%;
                 }
-                
+
                 > .trigger {
                     color: $white !important;
                 }

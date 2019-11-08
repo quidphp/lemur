@@ -66,7 +66,7 @@ class About extends Core\RouteAlias
         $r .= Html::h3($boot->typeLabel());
         $r .= Html::divCond(static::langText('about/content',$replace),'content');
         $r = Html::div($r,'inner-centered');
-        
+
         return $r;
     }
 

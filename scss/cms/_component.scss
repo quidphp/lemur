@@ -11,8 +11,7 @@
 
 // componentPrimaryGeneral
 // mixin pour le champ primary dans général
-@mixin componentPrimaryGeneral()
-{
+@mixin componentPrimaryGeneral() {
     &:hover {
         background-color: $lightYellow;
         text-decoration: none !important;
@@ -22,8 +21,7 @@
 
 // componentUserPasswordSpecific
 // mixin pour un champ de modification de mots de passe pour user
-@mixin componentUserPasswordSpecific() 
-{
+@mixin componentUserPasswordSpecific() {
     input[type='password']:first-child {
         margin-bottom: 10px;
     }
@@ -31,8 +29,7 @@
 
 // componentVideoSpecific
 // mixin pour un component de video
-@mixin componentVideoSpecific()
-{
+@mixin componentVideoSpecific() {
     .video-player {
         margin-bottom: 5px;
     }
@@ -44,8 +41,7 @@
 
 // componentTinymceSpecific
 // mixin pour le component avec un tinymce
-@mixin componentTinymceSpecific() 
-{
+@mixin componentTinymceSpecific() {
     textarea {
         height: 350px !important;
     }

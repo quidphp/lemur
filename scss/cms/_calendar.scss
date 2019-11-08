@@ -11,8 +11,7 @@
 
 // componentDateSpecific
 // style pour le component dateInput dans le formulaire
-@mixin componentDateSpecific()
-{
+@mixin componentDateSpecific() {
     > .popup {
         width: 250px;
         padding: 0;

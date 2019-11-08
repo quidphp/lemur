@@ -179,9 +179,9 @@ trait _generalRelation
             $current = $route->segment('filter');
             $current = (is_array($current))? $current:[];
             $currentName = (array_key_exists($name,$current))? $current[$name]:null;
-            
+
             $label = $col->valueExcerpt($label);
-            
+
             $label = Html::div($label,'label-content');
             $active = (in_array($key,$selected,true))? true:false;
             $filter = $current;

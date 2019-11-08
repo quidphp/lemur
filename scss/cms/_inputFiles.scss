@@ -11,8 +11,7 @@
 
 // componentFilesSpecific
 // style pour le component files dans le formulaire
-@mixin componentFilesSpecific()
-{
+@mixin componentFilesSpecific() {
     .file-block {
         @include filesBlock();
         margin: 5px;
@@ -91,7 +90,7 @@
     .actions {
         @include abs(-8px, -8px);
         @include flex();
-        
+
         > .action {
             margin-left: 4px;
 
@@ -128,7 +127,7 @@
             &:hover {
                 opacity: 0.8;
             }
-            
+
             &:first-child {
                 margin-bottom: 10px;
             }
@@ -148,7 +147,7 @@
 
         .line {
             @include flex(center);
-            
+
             .notFound {
                 @include nothing();
                 margin-bottom: 3px;

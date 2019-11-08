@@ -10,7 +10,6 @@
 // stylesheet for the addRemove form component
 @mixin componentAddRemoveSpecific() {
     > .playground {
-
         > .ele {
             @include flex();
             position: relative;
@@ -56,7 +55,7 @@
             @include inbl();
             font-weight: bold;
         }
-        
+
         > .icon {
             @include inbl();
             margin-left: 5px;

@@ -36,7 +36,7 @@ abstract class Relation extends Core\Col\Relation
         return false;
     }
 
-    
+
     // getDataAttr
     // retourne les attr pour la colonne
     public function getDataAttr(array $return):array
@@ -46,8 +46,8 @@ abstract class Relation extends Core\Col\Relation
 
         return parent::getDataAttr($return);
     }
-    
-    
+
+
     // prepareRelationRadioCheckbox
     // méthode utilisé lors de la préparation d'une valeur relation radio ou checkbox, incluant search
     final protected function prepareRelationRadioCheckbox(array $return):array
