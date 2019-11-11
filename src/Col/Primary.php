@@ -4,12 +4,12 @@ declare(strict_types=1);
 /*
  * This file is part of the QuidPHP package.
  * Website: https://quidphp.com
- * License: https://github.com/quidphp/core/blob/master/LICENSE
+ * License: https://github.com/quidphp/lemur/blob/master/LICENSE
  */
 
 namespace Quid\Lemur\Col;
-use Quid\Core;
 use Quid\Base\Html;
+use Quid\Core;
 
 // primary
 // extended class for dealing with a column which has an auto increment primary key
@@ -17,8 +17,8 @@ class Primary extends Core\Col\Primary
 {
     // config
     public static $config = [];
-    
-    
+
+
     // onGet
     // logique onGet pour un champ primary
     // affichage d'un lien si le contexte est cms:general

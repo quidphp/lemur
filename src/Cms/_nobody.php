@@ -41,7 +41,7 @@ trait _nobody
         return $return;
     }
 
-    
+
     // header
     // header seulement le logo
     final public function header()

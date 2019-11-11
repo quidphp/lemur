@@ -14,7 +14,7 @@
     > .operation {
         @include flex(flex-end);
         margin-bottom: 15px;
-        
+
         > .operation-element {
             margin-left: 10px;
 
@@ -75,7 +75,6 @@
 
 /* MAIN */
 [data-route='general'] main .inner > .container {
-
     &.empty {
         .notFound {
             margin-bottom: 10px;
@@ -88,7 +87,7 @@
 
     .above {
         @include flex();
-        
+
         .left {
             width: 50%;
             text-align: left;
@@ -128,13 +127,13 @@
 /* PAGE */
 [data-route='general'] main .inner > .container .page-input {
     @include flex(flex-end);
-    
+
     a {
         @include trianglePrevNext();
     }
     .center {
         @include flex();
-        
+
         span {
             font-size: 90%;
         }

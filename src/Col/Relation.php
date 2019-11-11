@@ -43,10 +43,10 @@ abstract class Relation extends Core\Col\Relation
     {
         $rel = $this->relation();
         $return['mode'] = $rel->mode();
-        
+
         if($rel->isRelationTable())
         $return['relation-table'] = $rel->relationTable();
-        
+
         return parent::getDataAttr($return);
     }
 
@@ -353,9 +353,9 @@ abstract class Relation extends Core\Col\Relation
         {
             $return .= Html::liCond($value);
         }
-        
+
         $return = Html::ulCond($return);
-        
+
         return $return;
     }
 }

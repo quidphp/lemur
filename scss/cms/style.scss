@@ -109,10 +109,10 @@ body .submit {
 body a.with-icon,
 body button.with-icon,
 body input[type='submit'].with-icon,
-body .trigger.with-icon, {
+body .trigger.with-icon {
     @include button();
     @include iconLeft();
-    
+
     &.no-border {
         border: 0;
         border-radius: 0;

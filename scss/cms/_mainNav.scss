@@ -12,13 +12,11 @@
 // mainNav
 // mixin avec les styles pour la navigation principale
 @mixin mainNav() {
-
     > ul {
         padding: 0;
         list-style-type: none;
 
         > li {
-
             > a {
                 display: block;
             }
@@ -30,13 +28,13 @@
                 color: $white;
                 border-top: 1px solid $color;
             }
-            
+
             &:hover > a,
             &:hover > .trigger,
             & > a.clicked {
                 background-color: $color;
             }
-            
+
             &:last-child > a,
             &:last-child > .trigger {
                 border-bottom: 0;
@@ -47,7 +45,7 @@
                 background-color: $color;
                 text-decoration: underline;
             }
-            
+
             &.top > a,
             &.top > .trigger {
                 text-decoration: underline;
@@ -71,50 +69,49 @@
                 @include triangle(right, $gray, 9px, 6px);
             }
         }
-        
+
         &.active .trigger {
             background-color: $darkerColor;
-            
+
             .triangle {
                 @include triangle(bottom, $gray, 9px, 6px);
                 margin-top: 4px;
             }
         }
-        
+
         &.active > .target {
             display: block;
         }
 
         > .target {
             display: none;
-            
+
             > ul > li {
                 position: relative;
-                
+
                 > a:first-child {
                     display: block;
                     padding: 4px 15px 4px 28px;
                     color: $white;
                     font-size: 1.2rem;
                     border-top: 1px solid $color;
-                    
+
                     &:hover,
                     &.selected,
                     &.clicked {
                         background-color: $color;
                     }
-                    
+
                     &.selected {
                         text-decoration: underline;
                     }
                 }
-                
+
                 &.with-specific-add {
-                    
                     > a:first-child {
                         padding-right: 25px;
                     }
-                    
+
                     > .specific-add {
                         @include abs(50%, 10px);
                         margin-top: -8px;
@@ -132,7 +129,7 @@
     // responsive
     @media screen and (max-width: 900px), screen and (orientation: portrait) {
         text-align: center;
-        
+
         > ul > li.with-carousel .trigger {
             justify-content: center;
         }

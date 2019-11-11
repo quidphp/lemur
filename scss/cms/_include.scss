@@ -15,7 +15,7 @@ $font: 'Helvetica Neue', 'Helvetica', sans-serif;
 $color: #2a2b69;
 $darkColor: #181844;
 $darkerColor: #000;
-$lightGrayAlt: #E2E5EB;
+$lightGrayAlt: #e2e5eb;
 $lighterGray: #eee;
 $lightestGray: #f7f7f7;
 $lightGray: #ddd;
@@ -51,7 +51,7 @@ $red: #8d1e2d;
 // specificNav
 // styles utilisés pour la navigation de la page spécifique
 @mixin specificNav() {
-    @include iflex(center,center,wrap);
+    @include iflex(center, center, wrap);
     background-color: $lightestGray;
     border: 1px solid $lightGray;
     padding: 2px 5px;
@@ -63,7 +63,7 @@ $red: #8d1e2d;
         font-weight: bold;
         margin: 0 8px;
         font-size: 90%;
-        
+
         &:hover,
         &.clicked {
             color: $darkGray;
@@ -183,8 +183,7 @@ $red: #8d1e2d;
 
 // fixedNavButton
 // mixin pour le bouton de la fixed nav (burget et close)
-@mixin fixedNavButton()
-{
+@mixin fixedNavButton() {
     @include transitions(background-color 0.3s);
     @include wh(32px);
     margin-top: -14px;
@@ -203,7 +202,7 @@ $red: #8d1e2d;
 // mixin pour la scrollbar
 @mixin scrollbar() {
     &::-webkit-scrollbar-track {
-        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
         background-color: $lightestGray;
     }
 
@@ -214,9 +213,14 @@ $red: #8d1e2d;
 
     &::-webkit-scrollbar-thumb {
         background-color: $gray;
-        background-image: -webkit-gradient(linear, 0 0, 0 100%,
-        color-stop(.5, rgba(255, 255, 255, .2)),
-        color-stop(.5, transparent), to(transparent));
+        background-image: -webkit-gradient(
+            linear,
+            0 0,
+            0 100%,
+            color-stop(0.5, rgba(255, 255, 255, 0.2)),
+            color-stop(0.5, transparent),
+            to(transparent)
+        );
     }
 }
 

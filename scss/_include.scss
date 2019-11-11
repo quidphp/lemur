@@ -625,11 +625,11 @@ $media: $uriMedia;
 @mixin responsiveFlex($justify: null, $align: null, $wrap: wrap, $important: null) {
     @if ($important) {
         flex-direction: column !important;
-        
+
         @if ($align) {
             align-items: $align !important;
         }
-        
+
         @if ($justify) {
             justify-content: $justify !important;
         }
@@ -643,7 +643,7 @@ $media: $uriMedia;
         @if ($align) {
             align-items: $align !important;
         }
-        
+
         @if ($justify) {
             justify-content: $justify;
         }

@@ -33,12 +33,12 @@
     > ul,
     > ol {
         list-style-type: none;
-        
+
         > li {
             padding: 2px 0;
         }
     }
-    
+
     a {
         color: $black;
 
@@ -48,11 +48,11 @@
             text-decoration: underline;
         }
     }
-    
+
     .fakeselect {
         min-width: 250px;
     }
-    
+
     .choice {
         @include inputChoice();
 
@@ -201,7 +201,7 @@
         border: 1px solid $darkerColor;
         opacity: 1;
     }
-    
+
     &.submitted,
     &.clicked,
     &:active {

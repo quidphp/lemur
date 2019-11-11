@@ -46,26 +46,26 @@ body .loading-fixed {
 body.responsive-menu-open #wrapper {
     .nav-wrap .nav-fixed {
         width: 100%;
-        
+
         .nav-close {
             display: block;
         }
     }
-    
+
     .main-wrap {
         display: none;
     }
 }
 body > #wrapper {
-    @include flex(flex-start,stretch);
+    @include flex(flex-start, stretch);
     @include wrapper();
     @include transitions(opacity 0.3s);
     opacity: 1;
-    
+
     > .nav-wrap {
         width: 200px;
     }
-    
+
     > .main-wrap {
         width: calc(100% - 200px);
         position: relative;
@@ -92,38 +92,38 @@ body > .background {
 
 /* NAV */
 .nav-wrap .nav-fixed {
-    @include fixed(0,null,null,0);
-    @include wh(200px,100vh);
+    @include fixed(0, null, null, 0);
+    @include wh(200px, 100vh);
     @include scrollbar();
     background: $darkColor;
     overflow-y: scroll;
     overflow-x: hidden;
     z-index: 9;
-    
+
     > .nav-top {
         background-color: $white;
         min-height: 25px;
         border-bottom: 5px solid $color;
         text-align: center;
         position: relative;
-        
+
         > .nav-close {
-            @include abs(20px,null,null,15px);
+            @include abs(20px, null, null, 15px);
             @include fixedNavButton();
             display: none;
         }
-        
+
         > .logo {
             @include inbl();
             padding: 10px;
-            
+
             img {
                 @include transitions(opacity 0.3s);
                 display: block;
             }
         }
     }
-    
+
     nav {
         @include mainNav();
     }
@@ -131,12 +131,12 @@ body > .background {
 
 /* HEADER */
 header > .top {
-    @include flex(space-between,center,wrap);
+    @include flex(space-between, center, wrap);
     position: relative;
     background-color: $color;
 
     .burger-menu {
-        @include abs(20px,null,null,15px);
+        @include abs(20px, null, null, 15px);
         @include fixedNavButton();
         display: none;
     }
@@ -157,18 +157,18 @@ header > .top {
 /* MAIN */
 main {
     padding: 15px 0 55px 0;
-    
+
     .inner {
         padding: 0 15px;
         position: relative;
     }
 }
 main .inner > .top {
-    @include flex(space-between,flex-start,wrap);
+    @include flex(space-between, flex-start, wrap);
     margin-bottom: 20px;
 
     .title {
-        @include flex(flex-start,center,wrap);
+        @include flex(flex-start, center, wrap);
         margin-bottom: 3px;
     }
 
@@ -178,7 +178,7 @@ main .inner > .top {
 
     .left h1 > a {
         display: block;
-        
+
         &:hover,
         &.clicked {
             color: $darkGray;
@@ -202,14 +202,14 @@ footer {
     z-index: 2;
     width: 100%;
     background-color: $color;
-    
+
     .with-submenu {
         position: relative;
 
         &:first-child {
             margin-left: 0;
         }
-        
+
         &.active .trigger {
             background-color: $darkColor;
         }
@@ -223,17 +223,17 @@ footer {
             @include subMenuPopup();
         }
     }
-    
+
     .popup-trigger {
         > a,
         > span {
             color: $white;
         }
     }
-    
+
     > * {
         margin-left: 5px;
-        
+
         &:first-child {
             margin-left: 0;
         }
@@ -244,24 +244,24 @@ footer {
 @media screen and (max-width: 900px), screen and (orientation: portrait) {
     body > #wrapper {
         min-width: inherit;
-        
+
         .nav-wrap {
             width: 0;
-            
+
             .nav-fixed {
                 width: 0;
-                
+
                 .logo {
                     max-width: 180px;
                 }
             }
         }
-        
+
         .main-wrap {
             width: 100%;
         }
     }
-    
+
     header > .top {
         padding: 10px 60px;
 

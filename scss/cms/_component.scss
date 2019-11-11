@@ -13,12 +13,12 @@
 // mixin pour le champ primary dans général
 @mixin componentPrimaryGeneral() {
     padding: 0;
-    
+
     > a {
         display: block;
         height: 100%;
         padding: 8px 10px;
-        
+
         &:hover,
         &.clicked {
             background-color: $lightYellow;

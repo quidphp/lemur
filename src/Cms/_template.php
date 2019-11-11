@@ -19,13 +19,13 @@ trait _template
     // trait
     use _common;
 
-    
+
     // config
     public static $configTemplate = [
         'mainNav'=>true
     ];
-    
-    
+
+
     // trigger
     // trigger pour toutes les pages html du cms
     final public function trigger()
@@ -40,19 +40,19 @@ trait _template
         $r = '';
         $flush = $this->docOpen();
         $hasNav = $this->hasNav();
-        
+
         $flush .= Html::div($this->loader(),'loading-fixed');
         $flush .= Html::div(null,'background');
         $flush .= Html::divCond($this->makeModal(),'modal');
-        
+
         $flush .= Html::divOp('#wrapper');
-        
+
         if($hasNav === true)
         {
             $flush .= Html::div($this->navWrap(),'nav-wrap');
             $flush .= Html::divOp('main-wrap');
         }
-        
+
         $flush .= Html::headerCond($this->header());
         $flush .= Html::mainOp();
         $flush .= Html::divOp('inner');
@@ -67,12 +67,12 @@ trait _template
         $main .= Html::mainCl();
 
         $close = Html::footerCond($this->footer());
-        
+
         if($hasNav === true)
         $close .= Html::divCl();
-        
+
         $close .= Html::divCl();
-        
+
         $close .= $this->docClose();
 
         $com = $this->makeCom();
@@ -81,18 +81,18 @@ trait _template
         return $r;
     }
 
-    
+
     // loader
     // génère le html pour le loader
-    final protected function loader():string 
+    final protected function loader():string
     {
         $r = Html::div(null,'loading-icon');
         $r .= Html::div(null,'loading-progress');
-        
+
         return $r;
     }
-    
-    
+
+
     // header
     // génère le header pour toutes les pages du cms
     final protected function header():string
@@ -170,40 +170,40 @@ trait _template
         return $r;
     }
 
-    
+
     // hasNav
     // retourne vrai si la route doit afficher la navigation
-    final public function hasNav():bool 
+    final public function hasNav():bool
     {
         return ($this->getAttr('mainNav') === true)? true:false;
     }
-    
-    
+
+
     // navWrap
     // génère le html pour la navigation à gauche
-    final protected function navWrap():string 
+    final protected function navWrap():string
     {
         $r = null;
         $boot = static::boot();
         $img = Html::ImgCond($boot->getOption('logo'),$boot->label());
 
         $r .= Html::divOp('nav-fixed');
-        
+
         $r .= Html::divOp('nav-top');
-        $r .= Html::div(null,array('nav-close','icon-solo','close'));
-        
+        $r .= Html::div(null,['nav-close','icon-solo','close']);
+
         if(!empty($img))
         $r .= Html::a($boot->schemeHost(),$img,'logo');
-        
+
         $r .= Html::divCl();
-        
+
         $r .= Html::navCond($this->nav());
         $r .= Html::divCl();
-        
+
         return $r;
     }
-    
-    
+
+
     // nav
     // génère la navigation principale pour toutes les pages du cms
     final protected function nav():string
@@ -265,7 +265,7 @@ trait _template
                         $keys = array_keys($value);
 
                         if($this->isTableTop($keys))
-                        $class[] = array('active','top');
+                        $class[] = ['active','top'];
 
                         $label = $lang->tableLabel($key);
                         $subNav = $this->navMenu($value,$ii);
@@ -326,7 +326,7 @@ trait _template
         $boot = static::boot();
         $showQuid = $boot->getOption('versionQuid') ?? true;
         $version = $boot->version(true,$showQuid,true);
-        
+
         if($this->hasPermission('footerLink'))
         $r .= $this->footerElement('link',$this->footerLink());
 
@@ -338,10 +338,10 @@ trait _template
 
         if($this->hasPermission('footerCli'))
         $r .= $this->footerElement('cli',$this->footerCli());
-        
+
         if($this->hasPermission('footerAuthor'))
-        $r .= $this->authorLink(array('with-icon','author','lemur','no-border'));
-        
+        $r .= $this->authorLink(['with-icon','author','lemur','no-border']);
+
         $copyright = static::langText('footer/version',['version'=>$version]);
         $route = PopupBoot::make($this);
         $popup = ($route->canTrigger() && $route->isValidSegment())? true:false;
@@ -355,7 +355,7 @@ trait _template
 
         $r .= Html::divCond($popup,'popup');
         $r .= Html::divCl();
-        
+
         return $r;
     }
 

@@ -26,7 +26,7 @@ class Col extends Core\Col
             'generalExcerptMin'=>100]
     ];
 
-    
+
     // isQuickEditable
     // retourne vrai si la colonne est éditable rapidement via le cms
     final public function isQuickEditable():bool
@@ -34,20 +34,20 @@ class Col extends Core\Col
         return $this->getAttr('quickEdit') === true && !$this->isPlainTag(null,true);
     }
 
-    
+
     // specificComponent
     // génère le html pour le specific component de la colonne
     // utilisé dans les formulaires spécifiques de lemur
     final public function specificComponent(string $wrap,$pattern=null,$value,array $attr=null,?array $replace=null,?array $option=null):string
     {
         $return = '';
-        $option = Base\Arr::plus(array('context'=>'cms:specific'),$option);
+        $option = Base\Arr::plus(['context'=>'cms:specific'],$option);
         $return = $this->formComplexWrap($wrap,$pattern,$value,$attr,$replace,$option);
-        
+
         return $return;
     }
-    
-    
+
+
     // onComplex
     // permet de formater une valeur simple vers un type plus complexe
     // utilisé lors de la génération d'un élément de formulaire, si onComplex est true renvoie à onGet
@@ -112,18 +112,18 @@ class Col extends Core\Col
     {
         $return = '';
         $tag = $this->complexTag($attr);
-        
+
         if(Base\Html::isFormTag($tag))
         {
             $isTextTag = Base\Html::isTextTag($tag);
             $attr = $this->formComplexAttr($attr);
-            
+
             if(empty($attr['placeholder']) && $isTextTag === true && $this->hasNullPlaceholder())
             $attr['placeholder'] = 'NULL';
-            
+
             $return = Base\Html::$tag($value,$attr,$option);
         }
-        
+
         else
         $return = Base\Obj::cast($value);
 

@@ -133,7 +133,7 @@ abstract class Files extends Core\Col\Files
                 $count = Html::div($i,'count');
                 $return .= Html::div($count,'count-circle');
             }
-            
+
             if($isEmpty === false)
             {
                 if($allowFileUpload === true)

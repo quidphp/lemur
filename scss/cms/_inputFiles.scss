@@ -15,7 +15,7 @@
     .file-block {
         @include filesBlock();
         margin-bottom: 10px;
-        
+
         &:last-child {
             margin-bottom: 0;
         }
@@ -89,7 +89,7 @@
         font-weight: bold;
         border-radius: 50%;
         border: 1px solid $lightGray;
-        
+
         > .count {
             line-height: 1;
         }

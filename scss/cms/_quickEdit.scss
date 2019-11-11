@@ -19,10 +19,10 @@
             background-color: $gray;
         }
     }
-    
+
     > .cell-inner {
         padding-right: 10px;
-        
+
         > a.quick-edit {
             @include abs(0px, 0px);
             z-index: 2;

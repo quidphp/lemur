@@ -37,13 +37,13 @@
 }
 [data-group='specific'] main .inner > .container .form > .top,
 [data-group='specific'] main .inner > .container .form form > .top {
-    @include flex(space-between,flex-start,wrap);
+    @include flex(space-between, flex-start, wrap);
     margin-bottom: 15px;
 }
 [data-group='specific'] main .inner > .container .form > .top .left,
 [data-group='specific'] main .inner > .container .form form > .top .left {
     > ul {
-        @include flex(null,center,wrap);
+        @include flex(null, center, wrap);
         list-style-type: none;
 
         li a {
@@ -64,7 +64,7 @@
 [data-group='specific'] main .inner > .container .form > .top .right .operation-element,
 [data-group='specific'] main .inner > .container .form form > .top .right .operation-element {
     margin-left: 10px;
-    
+
     &:first-child {
         margin-left: 0;
     }
@@ -181,31 +181,29 @@
 
 /* RESPONSIVE */
 @media screen and (max-width: 900px), screen and (orientation: portrait) {
-    
-    
     [data-group='specific'] main .inner > .container .form > .top > .right,
     [data-group='specific'] main .inner > .container .form form > .top > .right {
         width: 100%;
         padding-top: 5px;
         text-align: center;
     }
-    
+
     [data-group='specific'] main .inner > .container .form .panel .form-element {
-        @include responsiveFlex(flex-start,flex-start);
-        
-        > .left, 
+        @include responsiveFlex(flex-start, flex-start);
+
+        > .left,
         > .right {
             @include responsiveSize();
             width: 100%;
         }
-        
+
         > .left {
             margin-bottom: 10px;
             padding-bottom: 5px;
             border-bottom: 1px solid $lightGray;
         }
     }
-    
+
     [data-group='specific'] main .inner > .container .form > .bottom,
     [data-group='specific'] main .inner > .container .form > form > .bottom {
         justify-content: center;

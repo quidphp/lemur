@@ -20,7 +20,7 @@ class UserRole extends Core\Col\UserRole
         'sortable'=>false
     ];
 
-    
+
     // formComplex
     // génère le formComplex pour userRole
     // retourne un input plain si c'est l'utilisateur courant

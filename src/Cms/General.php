@@ -1003,7 +1003,7 @@ class General extends Core\RouteAlias
         $data = $cell->getDataAttr($data);
         $attr = ['data'=>$data];
         $html = $cell->generalComponent('general-component',$option);
-        
+
         if(!empty($quickEdit))
         {
             $html .= $quickEdit;
