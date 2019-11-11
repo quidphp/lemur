@@ -126,7 +126,7 @@ class SpecificAdd extends Core\RouteAlias
         }
 
         else
-        $r .= $this->a(null,['add','icon','solo','specific-add']);
+        $r .= $this->a(null,['add','icon-solo','specific-add']);
 
         return $r;
     }
@@ -217,7 +217,7 @@ class SpecificAdd extends Core\RouteAlias
 
         $r .= Html::divOp('container');
         $r .= Html::divOp('form');
-        $r .= SpecificAddSubmit::makeOverload($this->segments())->formOpen();
+        $r .= SpecificAddSubmit::make($this->segments())->formOpen();
         $r .= $this->makeFormTop();
         $r .= $this->makeFormInner();
         $r .= $this->makeFormBottom();
@@ -280,13 +280,12 @@ class SpecificAdd extends Core\RouteAlias
     final protected function makeFormWrap(Core\Col $col,array $replace):string
     {
         $return = '';
-        $context = static::context();
         $value = true;
 
         if(!empty($this->flash))
         $value = $this->flash($col);
 
-        $return .= $col->formComplexWrap($this->getFormWrap(),'%:',$value,null,$replace,$context);
+        $return .= $col->specificComponent($this->getFormWrap(),'%:',$value,null,$replace);
 
         return $return;
     }
@@ -304,7 +303,7 @@ class SpecificAdd extends Core\RouteAlias
     // génère le submit pour le formulaire d'ajout
     final protected function makeFormSubmit(string $type):string
     {
-        return Html::submit(static::langText('specific/add'),['icon','add','padLeft']);
+        return Html::submit(static::langText('specific/add'),['with-icon','add']);
     }
 }
 

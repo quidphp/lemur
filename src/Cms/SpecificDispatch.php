@@ -76,7 +76,7 @@ class SpecificDispatch extends Core\RouteAlias
         foreach ($this->getAttr('dispatch') as $key => $value)
         {
             if(array_key_exists($key,$post) && $post[$key] === 1)
-            $return = $value::makeOverload($segment);
+            $return = $value::make($segment);
         }
 
         if(empty($return))

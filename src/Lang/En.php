@@ -262,7 +262,7 @@ class En extends Core\Lang\En
                 'lang'=>'Language',
                 'module'=>'Module',
                 'cli'=>'Cli',
-                'copyright'=>'Version [version]'
+                'version'=>'Version [version]'
             ],
 
             // home

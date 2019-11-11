@@ -21,6 +21,7 @@ trait _nobody
 
     // config
     public static $configNobody = [
+        'mainNav'=>false,
         'docOpen'=>[
             'body'=>['background-image'=>'%background%']]
     ];
@@ -40,7 +41,7 @@ trait _nobody
         return $return;
     }
 
-
+    
     // header
     // header seulement le logo
     final public function header()
@@ -64,7 +65,7 @@ trait _nobody
         $r = '';
         $boot = static::boot();
 
-        $route = Login::makeOverload();
+        $route = Login::make();
         $anchor = $route->a($boot->label());
         $buttons = $this->makeButtons();
 
@@ -107,7 +108,7 @@ trait _nobody
 
         if($this->hasPermission('about'))
         {
-            $route = About::makeOverload();
+            $route = About::make();
             $r .= $route->aDialog();
         }
 
@@ -124,7 +125,7 @@ trait _nobody
 
         if($session->allowRegister())
         {
-            $route = Register::makeOverload();
+            $route = Register::make();
             $r .= $route->aTitle();
         }
 
@@ -137,7 +138,7 @@ trait _nobody
     final protected function makeLogin():string
     {
         $r = '';
-        $route = Login::makeOverload();
+        $route = Login::make();
         $r .= $route->aTitle();
 
         return $r;
@@ -153,7 +154,7 @@ trait _nobody
 
         if($session->allowResetPasswordEmail())
         {
-            $route = ResetPassword::makeOverload();
+            $route = ResetPassword::make();
             $r .= $route->a(static::langText('resetPassword/forgot'));
         }
 

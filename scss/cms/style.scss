@@ -21,6 +21,7 @@ body {
     font-size: 1.4rem;
     font-weight: 300;
     line-height: 1.5;
+    @include scrollbar();
 }
 table,
 input,
@@ -105,23 +106,40 @@ button[type='submit'],
 body .submit {
     @include button();
 }
-a.button {
-    color: $white !important;
-
-    &:hover {
-        text-decoration: none !important;
+body a.with-icon,
+body button.with-icon,
+body input[type='submit'].with-icon,
+body .trigger.with-icon, {
+    @include button();
+    @include iconLeft();
+    
+    &.no-border {
+        border: 0;
+        border-radius: 0;
     }
 }
-button,
-.button {
+button.button,
+input[type='submit'].button {
     @include inbl();
     @include transitions(opacity 0.3s);
     background: transparent;
     cursor: pointer;
     border: 0;
 
-    &:hover {
+    &:hover,
+    &.clicked {
         opacity: 0.8;
+    }
+}
+
+/* ICON */
+body .icon-solo {
+    @include iconSolo();
+
+    &.center {
+        @include abs(50%, null, null, 50%);
+        margin-left: -8px;
+        margin-top: -8px;
     }
 }
 
@@ -138,15 +156,16 @@ td[data-quick-edit='1'][data-status='loading'] > .cell-inner > a.quick-edit {
 
 /* CLOSE */
 body.responsive-menu-open header > .top .burger-menu,
-body .icon.close {
+body .icon-solo.close {
     @include bgimg64($iconClose);
 }
 
 /* OPACITY */
-body .icon.close,
-body .icon.search,
-html body .icon.move {
-    &:hover {
+body .icon-solo.close,
+body .icon-solo.search,
+html body .icon-solo.move {
+    &:hover,
+    &.clicked {
         opacity: 0.6;
     }
 }
@@ -164,112 +183,103 @@ form [data-table-relation='1'] .right .table-relation .popup .big-icon.video {
 }
 
 /* INFO */
-body .icon.info,
+body .icon-solo.info,
 body .popup-trigger.with-icon .popup-title,
 body .popup-trigger.with-icon-solo .popup-title {
     @include bgimg64($iconInfo);
 }
 
 /* MOVE */
-html body .icon.move {
+html body .icon-solo.move {
     @include bgimg64($iconMove);
     cursor: move;
 }
 
-/* CLASSE */
-body .icon {
-    &.solo {
-        @include iconSolo();
-    }
-
-    &.padLeft {
-        @include iconLeft();
-    }
-
-    &.center {
-        @include iconCenter();
-    }
-}
-
 /* ICON */
-body .icon.account {
-    @include bgimg64($iconAccount);
-}
-body .icon.add {
-    @include bgimg64($iconAdd);
-}
-body .icon.burger {
-    @include bgimg64($iconBurger);
-}
-body .icon.check {
-    @include bgimg64($iconCheck);
-}
-body .icon.cli {
-    @include bgimg64($iconCli);
-}
-body .icon.cols {
-    @include bgimg64($iconCols);
-}
-body .icon.copy {
-    @include bgimg64($iconCopy);
-}
-body .icon.download {
-    @include bgimg64($iconDownload);
-}
-body .icon.email {
-    @include bgimg64($iconEmail);
-}
-body .icon.filter {
-    @include bgimg64($iconFilter);
-}
-body .icon.help {
-    @include bgimg64($iconHelp);
-}
-body .icon.lang {
-    @include bgimg64($iconLang);
-}
-body .icon.link {
-    @include bgimg64($iconLink);
-}
-body .icon.login,
-body .icon.logout {
-    @include bgimg64($iconLogin);
-}
-body .icon.mask {
-    @include bgimg64($iconMask);
-}
-body .icon.minus {
-    @include bgimg64($iconMinus);
-}
-body .icon.modify {
-    @include bgimg64($iconModify);
-}
-body .icon.module {
-    @include bgimg64($iconModule);
-}
-body .icon.password {
-    @include bgimg64($iconPassword);
-}
-body .icon.plus {
-    @include bgimg64($iconPlus);
-}
-body .icon.remove,
-body .icon.multi-delete,
-body .icon.truncate {
-    @include bgimg64($iconRemove);
-}
-body .icon.reset,
-body .icon.regenerate {
-    @include bgimg64($iconReset);
-}
-body .icon.search {
-    @include bgimg64($iconSearch);
-}
-body .icon.uncheck {
-    @include bgimg64($iconUncheck);
-}
-body .icon.view {
-    @include bgimg64($iconView);
+body .icon-solo,
+body .with-icon {
+    &.account {
+        @include bgimg64($iconAccount);
+    }
+    &.add {
+        @include bgimg64($iconAdd);
+    }
+    &.burger {
+        @include bgimg64($iconBurger);
+    }
+    &.check {
+        @include bgimg64($iconCheck);
+    }
+    &.cli {
+        @include bgimg64($iconCli);
+    }
+    &.cols {
+        @include bgimg64($iconCols);
+    }
+    &.copy {
+        @include bgimg64($iconCopy);
+    }
+    &.download {
+        @include bgimg64($iconDownload);
+    }
+    &.email {
+        @include bgimg64($iconEmail);
+    }
+    &.filter {
+        @include bgimg64($iconFilter);
+    }
+    &.help {
+        @include bgimg64($iconHelp);
+    }
+    &.lang {
+        @include bgimg64($iconLang);
+    }
+    &.lemur {
+        @include bgimg64($iconLemur);
+    }
+    &.link {
+        @include bgimg64($iconLink);
+    }
+    &.login,
+    &.logout {
+        @include bgimg64($iconLogin);
+    }
+    &.mask {
+        @include bgimg64($iconMask);
+    }
+    &.minus {
+        @include bgimg64($iconMinus);
+    }
+    &.modify {
+        @include bgimg64($iconModify);
+    }
+    &.module {
+        @include bgimg64($iconModule);
+    }
+    &.password {
+        @include bgimg64($iconPassword);
+    }
+    &.plus {
+        @include bgimg64($iconPlus);
+    }
+    &.remove,
+    &.multi-delete,
+    &.truncate {
+        @include bgimg64($iconRemove);
+    }
+    &.reset,
+    &.regenerate {
+        @include bgimg64($iconReset);
+    }
+    &.search {
+        @include bgimg64($iconSearch);
+    }
+    &.uncheck {
+        @include bgimg64($iconUncheck);
+    }
+    &.view {
+        @include bgimg64($iconView);
+    }
 }
 
 /* COMPONENT */
@@ -280,62 +290,65 @@ body .icon.view {
     @include popupTrigger();
 }
 .specific-component {
-    @include complexForm();
+    @include specificComponent();
 }
 
 // primary
-[data-cell='primary'] .general-component {
+#wrapper [data-cell='primary'] .general-component {
     @include componentPrimaryGeneral();
 }
 
 // date
-[data-group='date'] .specific-component {
+#wrapper [data-group='date'] .specific-component {
     @include componentDateSpecific();
 }
 
 // relation
-[data-group='relation'][data-tag='search'] .specific-component {
+#wrapper [data-group='relation'][data-tag='search'] .specific-component {
     @include componentEnumSetSpecific();
 }
-[data-group='relation'][data-sortable='1'] .specific-component {
+#wrapper [data-group='relation'][data-sortable='1'] .specific-component {
     @include componentRelationSortableSpecific();
 }
-[data-group='relation'][data-plain='1'] .specific-component {
+#wrapper [data-group='relation'][data-plain='1'] .specific-component {
     @include componentRelationPlainSpecific();
 }
-[data-group='relation'] .general-component {
+#wrapper [data-group='relation'] .general-component {
     @include componentRelationGeneral();
+}
+#wrapper [data-group='relation'][data-relation-table='media'] .general-component {
+    @include componentRelationMediaGeneral();
 }
 
 // files
-[data-group='media'] .specific-component {
+#wrapper [data-group='media'] .specific-component {
     @include componentFilesSpecific();
 }
-[data-group='media'] .general-component {
+#wrapper [data-group='media'] .general-component {
     @include componentFilesGeneral();
 }
 
 // addRemove
-[data-tag='add-remove'] .specific-component {
+#wrapper [data-tag='add-remove'] .specific-component {
     @include componentAddRemoveSpecific();
 }
 
 // tableRelation
-[data-table-relation='1'] .specific-component {
+#wrapper [data-table-relation='1'] .specific-component {
     @include componentTableRelationSpecific();
 }
 
 /* userPassword */
-[data-col='userPassword'] .specific-component {
+#wrapper [data-col='userPassword'] .specific-component {
     @include componentUserPasswordSpecific();
 }
 
 // video
-[data-group='video'] .specific-component {
+#wrapper [data-group='video'] .specific-component {
     @include componentVideoSpecific();
 }
 
 // tinymce
-[data-group='tinymce'] .specific-component {
+#wrapper [data-group='tinymce'] .specific-component {
     @include componentTinymceSpecific();
 }

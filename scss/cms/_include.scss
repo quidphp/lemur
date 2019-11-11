@@ -15,7 +15,7 @@ $font: 'Helvetica Neue', 'Helvetica', sans-serif;
 $color: #2a2b69;
 $darkColor: #181844;
 $darkerColor: #000;
-$lightGrayAlt: #d3ecff;
+$lightGrayAlt: #E2E5EB;
 $lighterGray: #eee;
 $lightestGray: #f7f7f7;
 $lightGray: #ddd;
@@ -51,10 +51,10 @@ $red: #8d1e2d;
 // specificNav
 // styles utilisés pour la navigation de la page spécifique
 @mixin specificNav() {
-    @include iflex(flex-end);
+    @include iflex(center,center,wrap);
     background-color: $lightestGray;
     border: 1px solid $lightGray;
-    padding: 5px 10px;
+    padding: 2px 5px;
     border-radius: 5px;
     box-shadow: 2px 2px 6px -4px $gray;
 
@@ -63,8 +63,9 @@ $red: #8d1e2d;
         font-weight: bold;
         margin: 0 8px;
         font-size: 90%;
-
-        &:hover {
+        
+        &:hover,
+        &.clicked {
             color: $darkGray;
         }
     }
@@ -107,15 +108,6 @@ $red: #8d1e2d;
     padding-left: 25px;
 }
 
-// iconCenter
-// mixin pour générer un icon centré
-@mixin iconCenter() {
-    @include icon();
-    @include abs(50%, null, null, 50%);
-    margin-left: -8px;
-    margin-top: -8px;
-}
-
 // emptyPlaceholder
 // mixin pour le style de empty placeholder
 @mixin emptyPlaceholder() {
@@ -136,10 +128,12 @@ $red: #8d1e2d;
     }
 
     a {
+        font-weight: bold;
         color: $color;
 
-        &:hover {
-            color: $darkGray;
+        &:hover,
+        &.clicked {
+            text-decoration: underline;
         }
     }
 }
@@ -187,36 +181,42 @@ $red: #8d1e2d;
     }
 }
 
-// button
-// mixin pour le bouton
-@mixin button() {
-    @include inbl();
-    @include transitions(background-color 0.3s, opacity 0.3s);
-    cursor: pointer;
-    line-height: inherit;
-    padding: 5px 10px;
-    border-radius: 6px;
-    color: $white;
-    background-color: $color;
+// fixedNavButton
+// mixin pour le bouton de la fixed nav (burget et close)
+@mixin fixedNavButton()
+{
+    @include transitions(background-color 0.3s);
+    @include wh(32px);
+    margin-top: -14px;
+    background-color: $white;
     border: 1px solid $darkColor;
+    border-radius: 3px;
+    z-index: 2;
 
-    &.selected,
     &:hover {
-        background-color: $darkColor;
-        border: 1px solid $darkerColor;
-        opacity: 1;
+        background-color: $lightYellow;
+        opacity: 1 !important;
+    }
+}
+
+// scrollbar
+// mixin pour la scrollbar
+@mixin scrollbar() {
+    &::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+        background-color: $lightestGray;
     }
 
-    &:active {
-        background-color: $darkerColor;
-        border: 1px solid $black;
+    &::-webkit-scrollbar {
+        width: 8px;
+        background-color: $lightestGray;
     }
 
-    &.solo {
-        background-color: transparent;
-        border: transparent;
-        padding: 0;
-        border-radius: 0;
+    &::-webkit-scrollbar-thumb {
+        background-color: $gray;
+        background-image: -webkit-gradient(linear, 0 0, 0 100%,
+        color-stop(.5, rgba(255, 255, 255, .2)),
+        color-stop(.5, transparent), to(transparent));
     }
 }
 

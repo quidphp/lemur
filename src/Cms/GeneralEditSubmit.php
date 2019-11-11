@@ -54,7 +54,7 @@ class GeneralEditSubmit extends Core\RouteAlias
     // validation avant le lancement de la route
     final protected function onBefore()
     {
-        return static::makeParentOverload($this->segments())->canTrigger();
+        return static::makeParent($this->segments())->canTrigger();
     }
 
 
@@ -86,12 +86,7 @@ class GeneralEditSubmit extends Core\RouteAlias
         $post = $this->onBeforeCommit($post);
 
         if($post !== null && array_key_exists($name,$post))
-        {
-            $db = $row->db();
-            $db->setExceptionClass(true);
-            $return = $row->setUpdateValid($post,['preValidate'=>true,'com'=>true,'context'=>static::class]);
-            $db->setExceptionClass(false);
-        }
+        $return = $row->setUpdateValid($post,['preValidate'=>true,'com'=>true,'catchException'=>true,'context'=>static::class]);
 
         if(empty($return))
         $this->failureComplete();

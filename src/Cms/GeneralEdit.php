@@ -88,7 +88,7 @@ class GeneralEdit extends Core\RouteAlias
     // retourne la route pour soumettre le formulaire
     final protected function submitRoute():GeneralEditSubmit
     {
-        return GeneralEditSubmit::makeOverload($this->segments());
+        return GeneralEditSubmit::make($this->segments());
     }
 
 
@@ -131,12 +131,7 @@ class GeneralEdit extends Core\RouteAlias
     // génère le champ pour la cellule
     final protected function makeComponent():string
     {
-        $r = '';
-        $cell = $this->cell();
-        $form = $cell->formComplex();
-        $r = Html::divCond($form,['specific-component','general-page']);
-
-        return $r;
+        return Html::div($this->cell()->specificComponent('form'),['specific-component','general-page']);
     }
 
 
@@ -145,8 +140,8 @@ class GeneralEdit extends Core\RouteAlias
     final protected function makeTools():string
     {
         $r = '';
-        $r .= Html::button(null,['icon','solo','close','revert','tool']);
-        $r .= Html::submit(null,['icon','solo','check','tool']);
+        $r .= Html::button(null,['icon-solo','close','revert','tool']);
+        $r .= Html::submit(null,['icon-solo','check','tool']);
 
         return $r;
     }

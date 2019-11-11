@@ -18,7 +18,7 @@ trait _specific
 {
     //  configSpecific
     public static $configCmsSpecific = [
-        'formWrap'=>"<div class='left'><div class='label'>%label%</div>%description%%details%</div><div class='right specific-component specific-page'>%form%</div>%popup%",
+        'formWrap'=>"<div class='left'><div class='label'>%label%</div>%description%%details%</div><div class='right'><div class='specific-component anchor-corner specific-page'>%form%</div></div>%popup%",
         'popup'=>[
             'name','isRequired','shouldBeUnique','isEditable','priority','pattern','preValidate','validate','compare','type','length','unsigned',
             'default','acceptsNull','collation','isRelation','isOrderable','isFilterable','isSearchable','isExportable','classFqcn','classCell'
@@ -298,7 +298,7 @@ trait _specific
             $class[] = ($col->isRequired())? 'required':null;
             $class[] = ($colCell->hasFormLabelId($this->formWrapAttr($colCell),true))? 'cursor-pointer':null;
             $data = $col->getComplexDataAttr();
-            $attr = ['form-element','anchor-corner',$class,'data'=>$data];
+            $attr = ['form-element',$class,'data'=>$data];
 
             $detailsHtml = Html::liMany(...$details);
             $detailsHtml = Html::ulCond($detailsHtml);

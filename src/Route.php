@@ -41,6 +41,7 @@ abstract class Route extends Core\Route
                     'footerLang'=>true,
                     'footerModule'=>true,
                     'footerCli'=>true,
+                    'footerAuthor'=>true,
                     'bootPopup'=>true,
                     'about'=>true,
                     'homeInfo'=>true,

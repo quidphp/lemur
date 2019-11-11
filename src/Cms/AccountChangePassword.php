@@ -32,7 +32,7 @@ class AccountChangePassword extends Lemur\Route\AccountChangePassword
     // route à utiliser pour submit
     final public function submitRoute():Lemur\Route\AccountChangePasswordSubmit
     {
-        return AccountChangePasswordSubmit::makeOverload();
+        return AccountChangePasswordSubmit::make();
     }
 
 
@@ -40,7 +40,7 @@ class AccountChangePassword extends Lemur\Route\AccountChangePassword
     // attribut pour le bouton submit du formulaire
     final public function submitAttr()
     {
-        return ['icon','modify','padLeft'];
+        return ['with-icon','modify'];
     }
 
 

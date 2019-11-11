@@ -18,7 +18,7 @@
     &:hover,
     &.filtering,
     &.active {
-        background-color: $lightYellow;
+        background-color: $darkerColor;
     }
 
     .close {
@@ -122,23 +122,21 @@
                 border-top: 0;
             }
 
-            &:hover > .replace {
-                background-color: $lightYellow;
-            }
-
             &.has-icon > .replace {
                 padding-right: 30px;
             }
 
-            &.has-icon .icon {
+            &.has-icon .icon-solo {
                 @include iconSolo();
             }
 
             > a.replace {
                 @include filterElementBase();
 
-                &:hover {
+                &:hover,
+                &.clicked {
                     color: $black;
+                    background-color: $lightYellow;
                 }
 
                 &.selected {
@@ -146,11 +144,12 @@
                 }
             }
 
-            a.icon {
+            a.icon-solo {
                 @include abs(50%, 5px);
                 @include wh(16px, true, null, true);
 
-                &:hover {
+                &:hover,
+                &.clicked {
                     opacity: 0.5;
                 }
             }
@@ -212,7 +211,8 @@
     background-color: $gray;
     font-weight: bold;
 
-    &:hover {
+    &:hover,
+    &.clicked {
         background-color: $darkGray;
         color: $white;
     }

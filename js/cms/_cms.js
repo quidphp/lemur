@@ -29,13 +29,18 @@ $(document).ready(function() {
 	$(this).on('document:mount', function(event) {
 		var body = $(this).find("body");
 		var modal = $(this).find(".modal");
-		var burger = $(this).find("header .burger-menu");
+		var burger = $(this).find("header .burger-menu, .nav-fixed .nav-close");
 		var com = $(this).find("#wrapper .com");
-        var subMenu = $(this).find("header nav .with-submenu, footer .left .with-submenu");
+        var subMenu = $(this).find(".with-submenu");
+        var carousel = $(this).find(".with-carousel");
         
+        // carousel
+        carousel.callThis(quid.core.carousel,".trigger");
+        
+        // subMenu
         subMenu.callThis(quid.core.clickOpenWithTrigger,".trigger").on('clickOpen:getBackgroundFrom', function(event) {
             return false;
-        });;
+        });
         
 		// modal
 		modal.modal();

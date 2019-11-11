@@ -93,7 +93,7 @@ abstract class LoginSubmit extends Core\RouteAlias
     // retourne la route vers laquelle redirigé en cas d'erreur
     final public function routeFailure():Lemur\Route
     {
-        return static::makeParentOverload();
+        return static::makeParent();
     }
 
 

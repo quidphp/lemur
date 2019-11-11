@@ -61,9 +61,9 @@ class User extends Core\Row\User
 
                 if(!empty($route))
                 {
-                    $route = $route::makeOverload($row);
+                    $route = $route::make($row);
                     $data = ['confirm'=>static::langText('common/confirm')];
-                    $attr = ['name'=>'--userWelcome--','value'=>1,'submit','icon','padLeft','email','data'=>$data];
+                    $attr = ['name'=>'--userWelcome--','value'=>1,'with-icon','email','data'=>$data];
                     $r .= $route->submitTitle(null,$attr);
                 }
             }

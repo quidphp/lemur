@@ -89,13 +89,13 @@
 
     .popup-title {
         display: block;
-        padding: 5px 10px;
+        padding: 5px;
     }
 
     &.with-icon {
         .popup-title {
+            padding: 5px 10px 5px 25px;
             @include iconLeft();
-            padding-left: 25px;
         }
     }
 
@@ -138,6 +138,11 @@
     .popup {
         @include popupList();
     }
+    
+    /* PRINT */
+    @media print {
+        display: none !important;
+    }
 }
 
 // popupList
@@ -154,7 +159,8 @@
     a {
         color: $black;
 
-        &:hover {
+        &:hover,
+        &.clicked {
             color: gray;
         }
     }
@@ -182,6 +188,36 @@
         > ul {
             padding-top: 5px;
             word-break: break-all;
+        }
+    }
+}
+
+// subMenuPopup
+// mixin pour le popup d'un sous-menu
+@mixin subMenuPopup() {
+    background-color: $darkColor;
+    max-width: 200px;
+    border: 0;
+    box-shadow: none;
+    
+    > ul > li {
+        position: relative;
+        list-style-type: none;
+
+        > a:first-child {
+            display: block;
+            color: $white;
+            border-top: 0;
+            padding: 10px 35px 10px 20px;
+
+            &:hover,
+            &.selected {
+                background-color: $color;
+            }
+
+            &.selected {
+                text-decoration: underline;
+            }
         }
     }
 }

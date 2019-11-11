@@ -41,7 +41,7 @@ abstract class Logout extends Core\RouteAlias
     // renvoie vers le parent
     final protected function onAfter()
     {
-        return static::makeParentOverload();
+        return static::makeParent();
     }
 
 

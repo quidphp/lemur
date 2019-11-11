@@ -20,7 +20,7 @@ class Set extends Core\Col\Set
     public static $config = [
         '@cms'=>[
             'sortable'=>true,
-            'relationHtmlSortable'=>"<div class='choice'><div class='choice-in'><div class='icon solo move'></div>%</div></div>"]
+            'relationHtmlSortable'=>"<div class='choice'><div class='choice-in'><div class='icon-solo move'></div>%</div></div>"]
     ];
 
 

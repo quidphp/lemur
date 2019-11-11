@@ -11,18 +11,13 @@
 
 // carousel
 // crée un carousel qui slide up ou down
-quid.core.carousel = $.fn.carousel = function(arg,multi)
+quid.core.carousel = $.fn.carousel = function(trigger,target)
 {
     $(this).each(function(index, el) {
-        var target = arg;
+        trigger = (trigger == null)? '.trigger':trigger;
+        target = (target == null)? '.target':target;
         
-        if(multi === true && target instanceof jQuery)
-        target = target.eq(index);
-        
-        $(this).on('click', function(event) {
-            $(this).trigger('carousel:toggle');
-        })
-        .on('carousel:isClose', function(event) {
+        $(this).on('carousel:isClose', function(event) {
             return $(this).triggerHandler('carousel:getTarget').is(":hidden");
         })
         .on('carousel:isOpen', function(event) {
@@ -32,7 +27,10 @@ quid.core.carousel = $.fn.carousel = function(arg,multi)
             return $(this).triggerHandler('carousel:getTarget').is(":empty");
         })
         .on('carousel:getTarget', function(event) {
-            return target;
+            return $(this).find(".target").first();
+        })
+        .on('carousel:getTrigger', function(event) {
+            return $(this).find(trigger).first();
         })
         .on('carousel:setContent', function(event,html) {
             $(this).triggerHandler('carousel:getTarget').html(html);
@@ -42,12 +40,17 @@ quid.core.carousel = $.fn.carousel = function(arg,multi)
         })
         .on('carousel:open', function(event) {
             $(this).addClass("active");
-            $(this).triggerHandler('carousel:getTarget').stop(true,true).slideDown("fast");
         })
         .on('carousel:close', function(event) {
             $(this).removeClass("active");
-            $(this).triggerHandler('carousel:getTarget').stop(true,true).slideUp("fast");
-        });
+        })
+        .on('carousel:prepare', function(event) {
+            var $this = $(this);
+            $(this).triggerHandler('carousel:getTrigger').on('click', function(event) {
+                $this.trigger('carousel:toggle');
+            });
+        })
+        .trigger('carousel:prepare');
     });
     
     return this;

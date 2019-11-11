@@ -161,8 +161,8 @@ class Home extends Core\Route\Home
 
         if($this->hasPermission('about'))
         {
-            $route = About::makeOverload();
-            $r .= $route->aDialog(['submit','help','icon','padLeft']);
+            $route = About::make();
+            $r .= $route->aDialog(['with-icon','help']);
         }
 
         return $r;
@@ -191,7 +191,7 @@ class Home extends Core\Route\Home
 
         if($this->hasPermission('homeSearch'))
         {
-            $route = HomeSearch::makeOverload();
+            $route = HomeSearch::make();
             $tables = $this->db()->tables();
             $searchable = $route->searchable();
             $lang = static::lang();
@@ -207,7 +207,7 @@ class Home extends Core\Route\Home
 
                 $r .= $route->formOpen();
                 $r .= Html::inputText(null,['name'=>$name,'placeholder'=>static::langText('home/searchSubmit'),'data'=>$data]);
-                $r .= Html::submit(true,['button','solo','icon','search']);
+                $r .= Html::submit(true,['button','icon-solo','search']);
                 $r .= Html::div(null,'popup');
                 $r .= Html::formClose();
 

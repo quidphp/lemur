@@ -31,7 +31,7 @@ class Cell extends Base\Test
         $cell = $row->cell('name');
 
         // complexTag
-        assert($dateAdd->formComplex() === '<div>February 9, 2009 22:10:34</div>');
+        assert($dateAdd->formComplex() === 'February 9, 2009 22:10:34');
 
         // formComplex
 

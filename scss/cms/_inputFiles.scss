@@ -14,7 +14,11 @@
 @mixin componentFilesSpecific() {
     .file-block {
         @include filesBlock();
-        margin: 5px;
+        margin-bottom: 10px;
+        
+        &:last-child {
+            margin-bottom: 0;
+        }
     }
 }
 
@@ -77,14 +81,18 @@
         }
     }
 
-    .count {
+    .count-circle {
+        @include flex(center);
         @include abs(12px, 12px);
         @include wh(24px);
         background-color: $white;
-        text-align: center;
         font-weight: bold;
         border-radius: 50%;
-        border: 1px solid $lightestGray;
+        border: 1px solid $lightGray;
+        
+        > .count {
+            line-height: 1;
+        }
     }
 
     .actions {
@@ -124,7 +132,8 @@
         > a {
             @include inbl();
 
-            &:hover {
+            &:hover,
+            &.clicked {
                 opacity: 0.8;
             }
 
@@ -200,7 +209,11 @@
 
     /* PRINT */
     @media print {
-        display: none !important;
+        .actions,
+        .form,
+        &.empty {
+            display: none !important;
+        }
     }
 }
 

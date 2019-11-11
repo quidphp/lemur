@@ -81,13 +81,13 @@ class GeneralExport extends Core\RouteAlias
     {
         $r = '';
         $segment = $this->segments();
-        $route = GeneralExportDownload::makeOverload($segment);
+        $route = GeneralExportDownload::make($segment);
 
         foreach (static::getTypes() as $value)
         {
             $route = $route->changeSegment('type',$value);
             $label = static::langText(['export',$value]);
-            $r .= $route->a($label,['submit','icon','padLeft','download']);
+            $r .= $route->a($label,['with-icon','download']);
         }
 
         return $r;
@@ -98,7 +98,7 @@ class GeneralExport extends Core\RouteAlias
     // retourne le lien dialog
     final public function aDialog():string
     {
-        return $this->aTitle(null,['operation-element','submit','icon','padLeft','download','data'=>['modal'=>static::name()]]);
+        return $this->aTitle(null,['operation-element','with-icon','download','data'=>['modal'=>static::name()]]);
     }
 
 

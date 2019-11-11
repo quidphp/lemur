@@ -80,7 +80,10 @@ abstract class Files extends Core\Col\Files
                 $return .= Html::divOp(['file-block','empty']);
 
                 if($hasMultiple === true)
-                $return .= Html::div(Html::divtable($int),'count');
+                {
+                    $count = Html::div($int,'count');
+                    $return .= Html::div($count,'count-circle');
+                }
 
                 $return .= Html::divOp('form');
                 $return .= $this->form(null,$attr,$option);
@@ -126,8 +129,11 @@ abstract class Files extends Core\Col\Files
             $return .= Html::divOp(['file-block',$class]);
 
             if(is_int($i))
-            $return .= Html::div(Html::divtable($i),'count');
-
+            {
+                $count = Html::div($i,'count');
+                $return .= Html::div($count,'count-circle');
+            }
+            
             if($isEmpty === false)
             {
                 if($allowFileUpload === true)
@@ -139,13 +145,13 @@ abstract class Files extends Core\Col\Files
                     if($isRegenerateable === true)
                     {
                         $data = ['action'=>'regenerate','confirm'=>$lang->text('common/confirm'),'text'=>$lang->text('specific/mediaRegenerate')];
-                        $action .= Html::div(null,['icon','solo','action','regenerate','data'=>$data]);
+                        $action .= Html::div(null,['icon-solo','action','regenerate','data'=>$data]);
                     }
 
                     if($isDeleteable === true)
                     {
                         $data = ['action'=>'delete','confirm'=>$lang->text('common/confirm'),'text'=>$lang->text('specific/mediaDelete')];
-                        $action .= Html::div(null,['icon','solo','action','remove','data'=>$data]);
+                        $action .= Html::div(null,['icon-solo','action','remove','data'=>$data]);
                     }
 
                     $return .= Html::divCond($action,'actions');
@@ -166,7 +172,7 @@ abstract class Files extends Core\Col\Files
 
                 $return .= Html::divOp('message');
                 $return .= Html::div(null,'actionText');
-                $return .= Html::div(null,['icon','solo','close']);
+                $return .= Html::div(null,['icon-solo','close']);
                 $return .= Html::divCl();
 
                 $return .= Html::divCl();

@@ -10,7 +10,7 @@
 // mixin pour un component table relation dans le formulaire
 @mixin componentTableRelationSpecific() {
     .relations-container {
-        @include flex(center);
+        @include flex(center,center,wrap);
         padding-top: 3px;
 
         .table-relation {

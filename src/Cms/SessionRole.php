@@ -62,7 +62,7 @@ class SessionRole extends Core\RouteAlias
     // route à utiliser pour submit
     final public function submitRoute():Lemur\Cms\SessionRoleSubmit
     {
-        return SessionRoleSubmit::makeOverload();
+        return SessionRoleSubmit::make();
     }
 
 
@@ -101,9 +101,9 @@ class SessionRole extends Core\RouteAlias
         $r .= Html::divOp('action');
 
         if($session->hasFakeRoles())
-        $r .= Html::submit(static::langText('sessionRole/reset'),['name'=>'reset','class'=>['submit','icon','reset','padLeft']]);
+        $r .= Html::submit(static::langText('sessionRole/reset'),['name'=>'reset','class'=>['with-icon','reset']]);
 
-        $r .= Html::submit(static::langText('sessionRole/submit'),['name'=>'submit','class'=>['submit','icon','modify','padLeft']]);
+        $r .= Html::submit(static::langText('sessionRole/submit'),['name'=>'submit','class'=>['with-icon','modify']]);
 
         $r .= Html::divCl();
 

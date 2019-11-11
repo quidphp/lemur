@@ -74,7 +74,7 @@ abstract class AccountSubmit extends Core\RouteAlias
     // retourne l'objet route à rediriger en cas de succès ou erreur
     final public function routeSuccess():Lemur\Route
     {
-        return static::makeParentOverload();
+        return static::makeParent();
     }
 
 

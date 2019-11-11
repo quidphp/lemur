@@ -34,7 +34,7 @@ class Register extends Lemur\Route\Register
     // attribut pour le bouton submit du formulaire
     final public function submitAttr()
     {
-        return ['icon','padLeft','add'];
+        return ['with-icon','add'];
     }
 
 

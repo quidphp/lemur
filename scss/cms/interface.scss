@@ -15,16 +15,12 @@
         cursor: wait !important;
     }
 
-    #wrapper {
-        opacity: 0.9;
-    }
-
     .loading-fixed {
         @include flex(null, flex-start);
     }
 }
 body .loading-fixed {
-    @include fixed(0, null, null, 0);
+    @include fixed(0, 0);
     z-index: 9;
     display: none;
 
@@ -32,7 +28,7 @@ body .loading-fixed {
         @include wh(20px);
         background-position: center;
         background-color: $white;
-        border-bottom-right-radius: 50%;
+        border-bottom-left-radius: 50%;
     }
 
     > .loading-progress {
@@ -47,19 +43,33 @@ body .loading-fixed {
         }
     }
 }
-body.responsive-menu-open header {
-    > .top .burger-menu {
-        position: fixed;
+body.responsive-menu-open #wrapper {
+    .nav-wrap .nav-fixed {
+        width: 100%;
+        
+        .nav-close {
+            display: block;
+        }
     }
-
-    nav {
-        display: block;
+    
+    .main-wrap {
+        display: none;
     }
 }
 body > #wrapper {
+    @include flex(flex-start,stretch);
     @include wrapper();
     @include transitions(opacity 0.3s);
     opacity: 1;
+    
+    > .nav-wrap {
+        width: 200px;
+    }
+    
+    > .main-wrap {
+        width: calc(100% - 200px);
+        position: relative;
+    }
 }
 body > .background {
     @include fixed(0, null, null, 0);
@@ -80,59 +90,62 @@ body > .background {
     }
 }
 
+/* NAV */
+.nav-wrap .nav-fixed {
+    @include fixed(0,null,null,0);
+    @include wh(200px,100vh);
+    @include scrollbar();
+    background: $darkColor;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    z-index: 9;
+    
+    > .nav-top {
+        background-color: $white;
+        min-height: 25px;
+        border-bottom: 5px solid $color;
+        text-align: center;
+        position: relative;
+        
+        > .nav-close {
+            @include abs(20px,null,null,15px);
+            @include fixedNavButton();
+            display: none;
+        }
+        
+        > .logo {
+            @include inbl();
+            padding: 10px;
+            
+            img {
+                @include transitions(opacity 0.3s);
+                display: block;
+            }
+        }
+    }
+    
+    nav {
+        @include mainNav();
+    }
+}
+
 /* HEADER */
 header > .top {
-    @include flex();
-    padding: 6px 20px;
+    @include flex(space-between,center,wrap);
+    position: relative;
     background-color: $color;
 
     .burger-menu {
-        @include abs(40px, null, null, 20px);
-        @include wh(32px);
-        margin-top: -16px;
-        background-color: $lightYellow;
-        border: 2px solid $darkerColor;
+        @include abs(20px,null,null,15px);
+        @include fixedNavButton();
         display: none;
-        z-index: 9;
-
-        &:hover {
-            opacity: 0.8;
-        }
-    }
-
-    .left {
-        width: 50%;
-
-        .boot-label {
-            font-size: 2.4rem;
-            font-weight: 600;
-
-            > a {
-                color: $white;
-
-                &:hover {
-                    color: $gray;
-                }
-            }
-        }
     }
 
     .right {
         @include flex(flex-end, center, wrap);
-        width: 50%;
 
-        > a {
-            border: 0;
-            margin-left: 5px;
-
-            &:first-child {
-                margin: 0;
-            }
-
-            &.active {
-                background-color: $darkColor;
-                text-decoration: underline;
-            }
+        > a.clicked {
+            background-color: $darkColor;
         }
 
         .popup-trigger > .popup-title {
@@ -140,25 +153,22 @@ header > .top {
         }
     }
 }
-header nav {
-    @include mainNav();
-}
 
 /* MAIN */
 main {
-    padding: 20px 0 50px 0;
-
+    padding: 15px 0 55px 0;
+    
     .inner {
-        padding: 0 20px;
+        padding: 0 15px;
         position: relative;
     }
 }
 main .inner > .top {
-    @include flex(null, flex-start);
+    @include flex(space-between,flex-start,wrap);
     margin-bottom: 20px;
 
     .title {
-        @include flex();
+        @include flex(flex-start,center,wrap);
         margin-bottom: 3px;
     }
 
@@ -166,20 +176,16 @@ main .inner > .top {
         font-size: 90%;
     }
 
-    .left {
-        width: 55%;
-
-        h1 > a {
-            display: block;
-
-            &:hover {
-                color: $darkGray;
-            }
+    .left h1 > a {
+        display: block;
+        
+        &:hover,
+        &.clicked {
+            color: $darkGray;
         }
     }
 
     .right {
-        width: 45%;
         text-align: right;
     }
 }
@@ -192,65 +198,45 @@ main .inner > .top {
 /* FOOTER */
 footer {
     @include abs(null, null, 0, 0);
-    @include flex();
+    @include flex(flex-end);
     z-index: 2;
     width: 100%;
-    padding: 5px 20px;
     background-color: $color;
-    font-size: 90%;
-}
-footer .left {
-    @include flex();
-    width: 70%;
-
+    
     .with-submenu {
-        margin-left: 5px;
         position: relative;
 
         &:first-child {
             margin-left: 0;
         }
-
-        > .trigger {
-            border: 0;
-        }
-
+        
         &.active .trigger {
             background-color: $darkColor;
         }
 
         &.top .trigger {
+            background-color: $darkerColor;
             text-decoration: underline;
         }
 
         > .popup {
-            @include mainNavPopup();
+            @include subMenuPopup();
         }
     }
-}
-footer .right {
-    @include flex(flex-end);
-    width: 30%;
-    color: $lightGray;
-
-    > span {
-        color: $lightGray;
-
-        &.separator {
-            margin: 0 5px;
+    
+    .popup-trigger {
+        > a,
+        > span {
+            color: $white;
         }
     }
-
-    > span a {
-        color: $lightGray;
-
-        &:hover {
-            text-decoration: underline;
+    
+    > * {
+        margin-left: 5px;
+        
+        &:first-child {
+            margin-left: 0;
         }
-    }
-
-    .popup-title {
-        color: $lightGray;
     }
 }
 
@@ -258,24 +244,29 @@ footer .right {
 @media screen and (max-width: 900px), screen and (orientation: portrait) {
     body > #wrapper {
         min-width: inherit;
+        
+        .nav-wrap {
+            width: 0;
+            
+            .nav-fixed {
+                width: 0;
+                
+                .logo {
+                    max-width: 180px;
+                }
+            }
+        }
+        
+        .main-wrap {
+            width: 100%;
+        }
     }
-
+    
     header > .top {
-        @include responsiveFlex();
         padding: 10px 60px;
 
-        .left,
         .right {
-            @include responsiveSize();
-            text-align: center;
-
-            &.left {
-                margin-bottom: 5px;
-            }
-
-            &.right {
-                justify-content: center;
-            }
+            justify-content: center;
         }
 
         .burger-menu {
@@ -284,33 +275,13 @@ footer .right {
     }
 
     main {
-        height: auto;
-        padding: 20px 0 40px 0;
-
-        .inner > .top .left,
-        .inner > .top .right {
-            @include responsiveBlock();
-            text-align: left;
-
-            &.right {
-                margin-top: 10px;
-            }
-        }
+        padding-bottom: 25px;
     }
 
     footer {
-        @include responsiveFlex();
+        justify-content: center;
+        flex-wrap: wrap;
         position: static;
-
-        .left,
-        .right {
-            @include responsiveSize();
-            text-align: center;
-        }
-
-        .left {
-            margin-bottom: 5px;
-        }
     }
 }
 
@@ -325,6 +296,7 @@ footer .right {
     }
 
     header,
+    .nav-wrap,
     footer,
     main .inner > .top .right,
     .submit,

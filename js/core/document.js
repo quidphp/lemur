@@ -43,7 +43,9 @@ quid.core.document = $.fn.document = function(option)
         $(this).on('click', $settings.anchor, function(event) { 
             var r = true;
             $target.triggerHandler('document:clickEvent',[event]);
-            r = (event.isDefaultPrevented())? false:true;
+            
+            if(event.isDefaultPrevented())
+            r = false;
             
             return r;
         });
@@ -52,7 +54,9 @@ quid.core.document = $.fn.document = function(option)
         $(this).on('submit', $settings.form, function(event) { 
             var r = true;
             $target.triggerHandler('document:submitEvent',[event]);
-            r = (event.isDefaultPrevented())? false:true;
+            
+            if(event.isDefaultPrevented())
+            r = false;
             
             return r;
         });
@@ -462,6 +466,9 @@ quid.core.document = $.fn.document = function(option)
             {
                 var uri = target.prop('href');
                 r = $(this).triggerHandler('document:go',[uri,click]);
+                
+                if(click.isDefaultPrevented())
+                target.addClass('clicked');
             }
         }
         
@@ -479,6 +486,13 @@ quid.core.document = $.fn.document = function(option)
         {
             var uri = target.prop('action');
             r = $(this).triggerHandler('document:go',[uri,submit]);
+            
+            if(submit.isDefaultPrevented())
+            {
+                var clickedSubmit = target.triggerHandler('form:getClickedSubmit');
+                if(clickedSubmit != null)
+                clickedSubmit.addClass('submitted');
+            }
         }
         
         return r;

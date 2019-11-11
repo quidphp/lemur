@@ -9,7 +9,7 @@
 // com
 // stylesheet for the communication component
 @mixin com() {
-    @include fixed(null, 20px, 10px);
+    @include fixed(null, 15px, 10px);
     background-color: rgba(249, 253, 216, 0.95);
     width: 35%;
     z-index: 3;
@@ -63,7 +63,8 @@
             > span {
                 cursor: pointer;
 
-                &:hover {
+                &:hover,
+                &.clicked {
                     color: $darkGray;
                 }
             }
@@ -94,7 +95,6 @@
     }
 
     @media screen and (max-width: 900px), screen and (orientation: portrait) {
-        padding: 0px 20px 20px;
         max-height: inherit;
         display: block;
         width: 100%;
@@ -102,6 +102,7 @@
         right: 0;
         bottom: 0;
         padding: 5px;
+        margin-bottom: 10px;
     }
 
     @media print {

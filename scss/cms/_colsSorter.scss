@@ -14,8 +14,7 @@
     &.active .cell-inner,
     .cell-inner:hover,
     .cell-inner.selected {
-        background-color: $lightYellow;
-        border: 1px solid $lightYellow;
+        background-color: $darkerColor;
     }
 
     .cell-inner {

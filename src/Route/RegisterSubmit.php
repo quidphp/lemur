@@ -74,7 +74,7 @@ abstract class RegisterSubmit extends Core\RouteAlias
     // méthode abstraite, retourne l'objet route en cas de succès
     final protected function routeSuccess():Lemur\Route
     {
-        return Login::makeOverload();
+        return Login::make();
     }
 
 
@@ -82,7 +82,7 @@ abstract class RegisterSubmit extends Core\RouteAlias
     // retourne l'objet route pour la redirection en cas d'erreur
     final protected function routeFailure():Lemur\Route
     {
-        return static::makeParentOverload();
+        return static::makeParent();
     }
 
 

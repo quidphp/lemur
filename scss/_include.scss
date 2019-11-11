@@ -622,10 +622,14 @@ $media: $uriMedia;
 
 // responsiveFlex
 // mixin utilisé que les éléments s'affiche en flex column
-@mixin responsiveFlex($justify: null, $wrap: null, $important: null) {
+@mixin responsiveFlex($justify: null, $align: null, $wrap: wrap, $important: null) {
     @if ($important) {
         flex-direction: column !important;
-
+        
+        @if ($align) {
+            align-items: $align !important;
+        }
+        
         @if ($justify) {
             justify-content: $justify !important;
         }
@@ -636,6 +640,10 @@ $media: $uriMedia;
     } @else {
         flex-direction: column;
 
+        @if ($align) {
+            align-items: $align !important;
+        }
+        
         @if ($justify) {
             justify-content: $justify;
         }

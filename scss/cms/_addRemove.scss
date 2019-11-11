@@ -28,7 +28,7 @@
                 border-radius: 3px;
                 text-align: center;
 
-                > .icon {
+                > .icon-solo {
                     margin-left: 10px;
 
                     &:hover {
@@ -56,28 +56,13 @@
             font-weight: bold;
         }
 
-        > .icon {
+        > .icon-solo {
             @include inbl();
             margin-left: 5px;
         }
 
         &:hover {
             background-color: $gray;
-        }
-    }
-
-    @media screen and (max-width: 900px), screen and (orientation: portrait) {
-        > .container > .ele {
-            .current {
-                width: auto;
-                display: block;
-            }
-
-            .utils {
-                padding-top: 5px;
-                width: auto;
-                display: block;
-            }
         }
     }
 }

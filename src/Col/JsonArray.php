@@ -108,10 +108,10 @@ class JsonArray extends Core\Col\JsonAlias
         $lang = $this->db()->lang();
 
         if($this->getAttr('sortable'))
-        $return .= Html::div(null,['icon','solo','move']);
+        $return .= Html::div(null,['icon-solo','move']);
 
         $data = ['confirm'=>$lang->text('common/confirm')];
-        $return .= Html::div(null,['icon','solo','remove','data'=>$data]);
+        $return .= Html::div(null,['icon-solo','remove','data'=>$data]);
         $return .= Html::divCl();
 
         return $return;
@@ -155,7 +155,7 @@ class JsonArray extends Core\Col\JsonAlias
 
             $return .= Html::divOp(['insert','data'=>$data]);
             $return .= Html::span($lang->text('common/insert'));
-            $return .= Html::div(null,['icon','solo','add']);
+            $return .= Html::div(null,['icon-solo','add']);
             $return .= Html::divCl();
         }
 

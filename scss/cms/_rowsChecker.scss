@@ -49,8 +49,7 @@
 
         &.selected,
         &:hover {
-            background-color: $lightYellow;
-            border: 1px solid $lightYellow;
+            background-color: $darkerColor;
         }
 
         .uncheck {
@@ -75,11 +74,11 @@
     @include flex(null, flex-end);
     visibility: hidden;
 
-    > .icon {
+    > .icon-solo {
         margin-right: 5px;
     }
 
-    .icon:hover {
+    .icon-solo:hover {
         opacity: 0.6;
     }
 }

@@ -12,10 +12,19 @@
 // componentPrimaryGeneral
 // mixin pour le champ primary dans général
 @mixin componentPrimaryGeneral() {
-    &:hover {
-        background-color: $lightYellow;
-        text-decoration: none !important;
-        color: $black !important;
+    padding: 0;
+    
+    > a {
+        display: block;
+        height: 100%;
+        padding: 8px 10px;
+        
+        &:hover,
+        &.clicked {
+            background-color: $lightYellow;
+            text-decoration: none !important;
+            color: $black !important;
+        }
     }
 }
 

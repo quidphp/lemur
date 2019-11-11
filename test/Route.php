@@ -76,9 +76,6 @@ class Route extends Base\Test
         // schemeHost
         assert($route::schemeHost() === $boot->schemeHost(true,$type));
 
-        // context
-        assert($route::make()->context()['context'] === $type.':error');
-
         // routes
         assert($route::routes() instanceof Routing\Routes);
 
@@ -150,8 +147,7 @@ class Route extends Base\Test
         assert($loginMake::submitLabel('% ok') === "<button type='submit'>Login ok</button>");
         assert($loginMake->submitTitle('% ok') === "<button type='submit'>Login ok</button>");
         assert($loginSubmit::make() instanceof $loginSubmit);
-        assert($loginSubmit::makeOverload() instanceof $loginSubmit);
-        assert(Lemur\Route\ActivatePassword::makeOverload() instanceof Suite\Assert\ActivatePassword);
+        assert(Lemur\Route\ActivatePassword::make() instanceof Suite\Assert\ActivatePassword);
         assert($loginSubmit::getOverloadClass() === Lemur\Cms\LoginSubmit::class);
         assert($loginSubmit::makeParent() instanceof Lemur\Cms\Login);
         assert(count($loginMake->tagAttr('a',['class','#id'])) === 2);

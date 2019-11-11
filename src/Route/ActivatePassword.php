@@ -54,7 +54,7 @@ abstract class ActivatePassword extends Core\RouteAlias
     // donne la route vers le parent
     final protected function onAfter():Lemur\Route
     {
-        return static::makeParentOverload();
+        return static::makeParent();
     }
 }
 

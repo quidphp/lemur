@@ -43,7 +43,10 @@ abstract class Relation extends Core\Col\Relation
     {
         $rel = $this->relation();
         $return['mode'] = $rel->mode();
-
+        
+        if($rel->isRelationTable())
+        $return['relation-table'] = $rel->relationTable();
+        
         return parent::getDataAttr($return);
     }
 
@@ -69,7 +72,7 @@ abstract class Relation extends Core\Col\Relation
 
                     if(!empty($uri))
                     {
-                        $link = Html::a($uri,null,['icon','solo',$action]);
+                        $link = Html::a($uri,null,['icon-solo',$action]);
                         $return[$key] = [$value,$link];
                     }
                 }
@@ -116,10 +119,7 @@ abstract class Relation extends Core\Col\Relation
     protected function onGet($return,array $option)
     {
         if($return instanceof Core\Cell\Relation && !$return->isNull() && !empty($option['context']) && is_string($option['context']) && strpos($option['context'],':general') !== false)
-        {
-            $output = $return->generalOutput($option);
-            $return = Html::divCond($output,'relation');
-        }
+        $return = $return->generalOutput($option);
 
         else
         $return = parent::onGet($return,$option);
@@ -201,7 +201,7 @@ abstract class Relation extends Core\Col\Relation
         $return .= Html::inputText(null,['placeholder'=>$placeholder,'name'=>true,'data'=>$data,'id'=>$id]);
 
         if($option['button'] === true)
-        $return .= Html::button(null,['icon','solo','search']);
+        $return .= Html::button(null,['icon-solo','search']);
 
         $return .= Html::divOp('popup');
         $return .= $route->orderSelect();
@@ -351,9 +351,11 @@ abstract class Relation extends Core\Col\Relation
 
         foreach ($array as $value)
         {
-            $return .= Html::divCond($value,'relation-plain');
+            $return .= Html::liCond($value);
         }
-
+        
+        $return = Html::ulCond($return);
+        
         return $return;
     }
 }

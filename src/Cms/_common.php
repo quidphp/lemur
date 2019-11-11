@@ -60,9 +60,9 @@ trait _common
 
     // authorLink
     // retourne le lien web pour l'auteur
-    final public static function authorLink():string
+    final public static function authorLink($attr=null):string
     {
-        return Html::a(static::langText('author/uri'),static::langText('author/name'));
+        return Html::a(static::langText('author/uri'),static::langText('author/name'),$attr);
     }
 
 
@@ -121,7 +121,7 @@ trait _common
             $r = Html::ul($r);
 
             if($icon === true)
-            $r = Html::div(null,['icon','top-right','solo','info']).$r;
+            $r = Html::div(null,['icon-solo','top-right','info']).$r;
         }
 
         return $r;

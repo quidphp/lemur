@@ -86,7 +86,7 @@ class Login extends Lemur\Route\Login
     // route pour soumettre le formulaire
     final public function submitRoute():Lemur\Route\LoginSubmit
     {
-        return LoginSubmit::makeOverload();
+        return LoginSubmit::make();
     }
 
 
@@ -94,7 +94,7 @@ class Login extends Lemur\Route\Login
     // attribut pour le bouton submit du formulaire
     final public function submitAttr()
     {
-        return ['icon','padLeft','login'];
+        return ['with-icon','login'];
     }
 
 

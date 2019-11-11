@@ -257,10 +257,10 @@ trait _generalRelation
                         $liAttr[] = 'has-icon';
 
                         if(!empty($plus))
-                        $value .= $plus->a(null,['icon','plus']);
+                        $value .= $plus->a(null,['icon-solo','plus']);
 
                         elseif(!empty($minus))
-                        $value .= $minus->a(null,['icon','minus']);
+                        $value .= $minus->a(null,['icon-solo','minus']);
 
                         $r .= Html::li($value,$liAttr);
                     }

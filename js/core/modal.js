@@ -46,7 +46,6 @@ quid.core.modal = $.fn.modal = function()
         })
         .on('modal:opened', function(event) {
             $(this).attr('data-status','ready');
-            $(this).removeData('promise');
         })
         .on('modal:html', function(event,data,callback) {
             if(!$(this).triggerHandler('modal:isOpen'))

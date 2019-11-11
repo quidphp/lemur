@@ -20,30 +20,37 @@ quid.core.dragScroll = $.fn.dragScroll = function(targetTag)
         var curYPos = 0;
         var curXPos = 0;
         
-        $(this).on('mousemove', function(event) {
+        $(this).on('dragScroll:required', function(event) {
+            return (($(this).children().width() - $(this).width()) > 0)? true:false;
+        })
+        
+        .on('mousemove', function(event) {
             if(curDown === true)
             {
                 $this.scrollTop($this.scrollTop() + (curYPos - event.pageY)); 
                 $this.scrollLeft($this.scrollLeft() + (curXPos - event.pageX));
             }
-        });
+        })
 
-        $(this).on('mousedown', function(event) {
-            var target = $(event.target);
-            
-            if(event.which === 1 && target.length)
+        .on('mousedown', function(event) {
+            if($(this).triggerHandler('dragScroll:required'))
             {
-                if(targetTag == null || target.tagName() === targetTag)
+                var target = $(event.target);
+                
+                if(event.which === 1 && target.length)
                 {
-                    curDown = true;
-                    curYPos = event.pageY;
-                    curXPos = event.pageX;
-                    $this.attr('data-status','grabbing');
+                    if(targetTag == null || target.tagName() === targetTag)
+                    {
+                        curDown = true;
+                        curYPos = event.pageY;
+                        curXPos = event.pageX;
+                        $this.attr('data-status','grabbing');
+                    }
                 }
             }
-        });
+        })
 
-        $(this).on('mouseup mouseout', function() {
+        .on('mouseup mouseout', function() {
             curDown = false;
             $this.removeAttr('data-status');
         });

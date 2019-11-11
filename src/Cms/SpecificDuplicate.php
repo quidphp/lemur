@@ -85,7 +85,7 @@ class SpecificDuplicate extends Core\RouteAlias
     // retourne la route en cas de succès de la duplication
     final public function routeSuccess():Core\Route
     {
-        return static::makeParentOverload($this->getDuplicate());
+        return static::makeParent($this->getDuplicate());
     }
 
 
@@ -93,7 +93,7 @@ class SpecificDuplicate extends Core\RouteAlias
     // retourne la route en cas d'échec de la duplication
     final public function routeFailure():Core\Route
     {
-        return static::makeParentOverload($this->segments());
+        return static::makeParent($this->segments());
     }
 
 

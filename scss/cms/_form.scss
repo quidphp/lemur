@@ -9,9 +9,9 @@
 // form
 // stylesheet with form-related mixins
 
-// complexForm
+// specificComponent
 // mixin de base pour les éléments de formulaire complexe
-@mixin complexForm() {
+@mixin specificComponent() {
     position: relative;
 
     > div.nothing {
@@ -30,25 +30,39 @@
         background-color: $white;
     }
 
+    > ul,
+    > ol {
+        list-style-type: none;
+        
+        > li {
+            padding: 2px 0;
+        }
+    }
+    
     a {
         color: $black;
 
-        &:hover {
+        &:hover,
+        &.clicked {
             color: $darkGray;
             text-decoration: underline;
         }
     }
-
+    
+    .fakeselect {
+        min-width: 250px;
+    }
+    
     .choice {
         @include inputChoice();
 
         &:hover .choice-in > span {
-            display: block;
+            visibility: visible;
         }
 
         .choice-in {
             > span {
-                display: none;
+                visibility: hidden;
                 margin-left: 5px;
 
                 a {
@@ -165,5 +179,40 @@
             background-color: $white;
             box-shadow: 2px 2px 6px -4px $black;
         }
+    }
+}
+
+// button
+// mixin pour le bouton
+@mixin button() {
+    @include inbl();
+    @include transitions(background-color 0.3s, opacity 0.3s);
+    cursor: pointer;
+    line-height: inherit;
+    padding: 5px 10px;
+    border-radius: 6px;
+    color: $white;
+    background-color: $color;
+    border: 1px solid $darkColor;
+
+    &.selected,
+    &:hover {
+        background-color: $darkColor;
+        border: 1px solid $darkerColor;
+        opacity: 1;
+    }
+    
+    &.submitted,
+    &.clicked,
+    &:active {
+        background-color: $darkerColor;
+        border: 1px solid $black;
+    }
+
+    &.icon-solo {
+        background-color: transparent;
+        border: transparent;
+        padding: 0;
+        border-radius: 0;
     }
 }

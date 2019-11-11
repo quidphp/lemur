@@ -19,7 +19,13 @@ trait _template
     // trait
     use _common;
 
-
+    
+    // config
+    public static $configTemplate = [
+        'mainNav'=>true
+    ];
+    
+    
     // trigger
     // trigger pour toutes les pages html du cms
     final public function trigger()
@@ -32,17 +38,21 @@ trait _template
     final protected function template():string
     {
         $r = '';
-
         $flush = $this->docOpen();
-
-        $flush .= Html::divOp('loading-fixed');
-        $flush .= Html::div(null,'loading-icon');
-        $flush .= Html::div(null,'loading-progress');
-        $flush .= Html::divCl();
-
+        $hasNav = $this->hasNav();
+        
+        $flush .= Html::div($this->loader(),'loading-fixed');
         $flush .= Html::div(null,'background');
-
+        $flush .= Html::divCond($this->makeModal(),'modal');
+        
         $flush .= Html::divOp('#wrapper');
+        
+        if($hasNav === true)
+        {
+            $flush .= Html::div($this->navWrap(),'nav-wrap');
+            $flush .= Html::divOp('main-wrap');
+        }
+        
         $flush .= Html::headerCond($this->header());
         $flush .= Html::mainOp();
         $flush .= Html::divOp('inner');
@@ -57,8 +67,12 @@ trait _template
         $main .= Html::mainCl();
 
         $close = Html::footerCond($this->footer());
+        
+        if($hasNav === true)
         $close .= Html::divCl();
-        $close .= Html::divCond($this->makeModal(),'modal');
+        
+        $close .= Html::divCl();
+        
         $close .= $this->docClose();
 
         $com = $this->makeCom();
@@ -67,7 +81,18 @@ trait _template
         return $r;
     }
 
-
+    
+    // loader
+    // génère le html pour le loader
+    final protected function loader():string 
+    {
+        $r = Html::div(null,'loading-icon');
+        $r .= Html::div(null,'loading-progress');
+        
+        return $r;
+    }
+    
+    
     // header
     // génère le header pour toutes les pages du cms
     final protected function header():string
@@ -75,11 +100,10 @@ trait _template
         $r = '';
 
         $r .= Html::divOp('top');
-        $r .= Html::div(null,['burger-menu','icon','burger','solo']);
-        $r .= Html::divCond($this->headerLeft(),'left');
-        $r .= Html::divCond($this->headerRight(),'right');
+        $r .= Html::div(null,['burger-menu','icon-solo','burger']);
+        $r .= Html::div($this->headerLeft(),'left');
+        $r .= Html::div($this->headerRight(),'right');
         $r .= Html::divCl();
-        $r .= Html::navCond($this->nav());
 
         return $r;
     }
@@ -90,12 +114,6 @@ trait _template
     final protected function headerLeft():string
     {
         $r = '';
-        $boot = static::boot();
-        $route = Home::makeOverload();
-
-        $r .= Html::divOp('boot-label');
-        $r .= $route->a($boot->label());
-        $r .= Html::divCl();
 
         return $r;
     }
@@ -117,7 +135,7 @@ trait _template
 
             if($this->hasPermission('sessionInfo'))
             {
-                $route = PopupSession::makeOverload();
+                $route = PopupSession::make();
                 $popup = ($route->canTrigger())? true:false;
 
                 $attr = ['popup-trigger',(!empty($popup))? ['with-ajax','with-popup','with-icon','anchor-corner']:null];
@@ -133,26 +151,59 @@ trait _template
             }
 
             if($this->hasPermission('account'))
-            $r .= Account::makeOverload()->aTitle(null,['submit','icon','padLeft','account']);
+            $r .= Account::make()->aTitle(null,['with-icon','no-border','account']);
 
             if($this->hasPermission('accountChangePassword'))
-            $r .= AccountChangePassword::makeOverload()->aDialog(['submit','icon','padLeft','password']);
+            $r .= AccountChangePassword::make()->aDialog(['with-icon','no-border','password']);
 
-            $route = SessionRole::makeOverload();
+            $route = SessionRole::make();
             if($route->canTrigger())
             {
                 $active = ($session->hasFakeRoles())? 'active':null;
-                $r .= SessionRole::makeOverload()->aDialog(['submit','icon','padLeft','mask',$active]);
+                $r .= SessionRole::make()->aDialog(['with-icon','no-border','mask',$active]);
             }
 
             if($this->hasPermission('logout'))
-            $r .= Logout::makeOverload()->aTitle(null,['submit','icon','padLeft','logout']);
+            $r .= Logout::make()->aTitle(null,['with-icon','no-border','logout']);
         }
 
         return $r;
     }
 
+    
+    // hasNav
+    // retourne vrai si la route doit afficher la navigation
+    final public function hasNav():bool 
+    {
+        return ($this->getAttr('mainNav') === true)? true:false;
+    }
+    
+    
+    // navWrap
+    // génère le html pour la navigation à gauche
+    final protected function navWrap():string 
+    {
+        $r = null;
+        $boot = static::boot();
+        $img = Html::ImgCond($boot->getOption('logo'),$boot->label());
 
+        $r .= Html::divOp('nav-fixed');
+        
+        $r .= Html::divOp('nav-top');
+        $r .= Html::div(null,array('nav-close','icon-solo','close'));
+        
+        if(!empty($img))
+        $r .= Html::a($boot->schemeHost(),$img,'logo');
+        
+        $r .= Html::divCl();
+        
+        $r .= Html::navCond($this->nav());
+        $r .= Html::divCl();
+        
+        return $r;
+    }
+    
+    
     // nav
     // génère la navigation principale pour toutes les pages du cms
     final protected function nav():string
@@ -202,19 +253,19 @@ trait _template
 
                         if($i > 0 && $table->hasPermission('insert','lemurInsert','mainNavAdd'))
                         {
-                            $route = $specificAdd::makeOverload($table);
+                            $class[] = 'with-specific-add';
+                            $route = $specificAdd::make($table);
                             $routeHtml .= $route->makeNavLink();
                         }
                     }
 
                     if(is_array($value))
                     {
-                        $class[] = 'with-submenu';
-                        $class[] = 'anchor-corner';
+                        $class[] = 'with-carousel';
                         $keys = array_keys($value);
 
                         if($this->isTableTop($keys))
-                        $class[] = 'top';
+                        $class[] = array('active','top');
 
                         $label = $lang->tableLabel($key);
                         $subNav = $this->navMenu($value,$ii);
@@ -225,7 +276,7 @@ trait _template
                             $html .= Html::div(null,['triangle']);
                             $html .= Html::span($label);
                             $html .= Html::divCl();
-                            $html .= Html::divOp('popup');
+                            $html .= Html::divOp('target');
                             $html .= Html::ulOp();
                             $html .= $routeHtml;
                             $html .= $subNav;
@@ -272,39 +323,46 @@ trait _template
     final protected function footer():string
     {
         $r = '';
-
-        $r .= Html::div($this->footerLeft(),'left');
-        $r .= Html::divCond($this->footerRight(),'right');
-
-        return $r;
-    }
-
-
-    // footerLeft
-    // génère la partie gauche du footer pour toutes les pages du cms
-    final protected function footerLeft():string
-    {
-        $r = '';
-
+        $boot = static::boot();
+        $showQuid = $boot->getOption('versionQuid') ?? true;
+        $version = $boot->version(true,$showQuid,true);
+        
         if($this->hasPermission('footerLink'))
-        $r .= $this->footerLeftElement('link',$this->footerLink());
+        $r .= $this->footerElement('link',$this->footerLink());
 
         if($this->hasPermission('footerLang'))
-        $r .= $this->footerLeftElement('lang',$this->footerLang());
+        $r .= $this->footerElement('lang',$this->footerLang());
 
         if($this->hasPermission('footerModule'))
-        $r .= $this->footerLeftElement('module',$this->footerModule());
+        $r .= $this->footerElement('module',$this->footerModule());
 
         if($this->hasPermission('footerCli'))
-        $r .= $this->footerLeftElement('cli',$this->footerCli());
+        $r .= $this->footerElement('cli',$this->footerCli());
+        
+        if($this->hasPermission('footerAuthor'))
+        $r .= $this->authorLink(array('with-icon','author','lemur','no-border'));
+        
+        $copyright = static::langText('footer/version',['version'=>$version]);
+        $route = PopupBoot::make($this);
+        $popup = ($route->canTrigger() && $route->isValidSegment())? true:false;
+        $attr = ['popup-trigger',(!empty($popup))? ['with-ajax','with-popup','with-icon','anchor-corner']:null];
+        $r .= Html::divOp($attr);
 
+        if($popup === true)
+        $r .= $route->a($copyright,'popup-title');
+        else
+        $r .= Html::span($copyright,'popup-title');
+
+        $r .= Html::divCond($popup,'popup');
+        $r .= Html::divCl();
+        
         return $r;
     }
 
 
-    // footerLeftElement
+    // footerElement
     // génère un clickOpen pour la partie gauche du footer
-    final protected function footerLeftElement(string $type,array $array):string
+    final protected function footerElement(string $type,array $array):string
     {
         $r = '';
         $popup = '';
@@ -325,8 +383,8 @@ trait _template
         {
             $attr = [$top,'anchor-corner','with-submenu'];
             $r .= Html::divOp($attr);
-            $r .= Html::span($label,['submit','icon','padLeft','trigger',$type]);
-            $r .= Html::div($popup,'popup');
+            $r .= Html::div($label,['with-icon','no-border','trigger',$type]);
+            $r .= Html::divCond($popup,'popup');
             $r .= Html::divCl();
         }
 
@@ -387,7 +445,7 @@ trait _template
         foreach ($lang->allLang() as $value)
         {
             $label = $lang->langLabel($value);
-            $route = ($this::isRedirectable())? $this:Home::makeOverload();
+            $route = ($this::isRedirectable())? $this:Home::make();
 
             $return[] = $route->a($label,null,$value);
         }
@@ -424,43 +482,11 @@ trait _template
         {
             foreach ($routes as $route)
             {
-                $return[] = $route::makeOverload();
+                $return[] = $route::make();
             }
         }
 
         return $return;
-    }
-
-
-    // footerRight
-    // génère la partie droite du footer pour toutes les pages du cms
-    final protected function footerRight():string
-    {
-        $r = '';
-        $boot = static::boot();
-        $showQuid = $boot->getOption('versionQuid') ?? true;
-        $version = $boot->version(true,$showQuid,true);
-
-        $author = $this->authorLink();
-        $copyright = static::langText('footer/copyright',['version'=>$version]);
-
-        $r .= Html::span($author,'author');
-        $r .= Html::span('|','separator');
-
-        $route = PopupBoot::makeOverload($this);
-        $popup = ($route->canTrigger() && $route->isValidSegment())? true:false;
-        $attr = ['popup-trigger',(!empty($popup))? ['with-ajax','with-popup','with-icon','anchor-corner']:null];
-        $r .= Html::divOp($attr);
-
-        if($popup === true)
-        $r .= $route->a($copyright,'popup-title');
-        else
-        $r .= Html::span($copyright,'popup-title');
-
-        $r .= Html::div($popup,'popup');
-        $r .= Html::divCl();
-
-        return $r;
     }
 
 
@@ -470,7 +496,7 @@ trait _template
     {
         $r = Html::divOp('outer');
         $r .= Html::divOp('box');
-        $r .= Html::div(null,['icon','solo','close']);
+        $r .= Html::div(null,['icon-solo','close']);
         $r .= Html::divOp('inner');
         $r .= Html::divCl();
         $r .= Html::divCl();
@@ -490,11 +516,11 @@ trait _template
 
         if(!empty($comText))
         {
-            $route = Specific::makeOverload(true);
+            $route = Specific::make(true);
             $data = ['href'=>$route,'char'=>$route::getReplaceSegment()];
 
             $r .= Html::divOp(['com','data'=>$data]);
-            $r .= Html::div(null,['icon','solo','close']);
+            $r .= Html::div(null,['icon-solo','close']);
             $r .= Html::divOp('top');
             $r .= Html::div(null,'triangle');
             $r .= Html::div(Base\Date::format(4),'date');

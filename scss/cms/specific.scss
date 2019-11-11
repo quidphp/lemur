@@ -37,23 +37,13 @@
 }
 [data-group='specific'] main .inner > .container .form > .top,
 [data-group='specific'] main .inner > .container .form form > .top {
+    @include flex(space-between,flex-start,wrap);
     margin-bottom: 15px;
-
-    .left {
-        @include inbl(top);
-        width: 70%;
-    }
-
-    .right {
-        text-align: right;
-        @include inbl(top);
-        width: 30%;
-    }
 }
 [data-group='specific'] main .inner > .container .form > .top .left,
 [data-group='specific'] main .inner > .container .form form > .top .left {
     > ul {
-        @include flex();
+        @include flex(null,center,wrap);
         list-style-type: none;
 
         li a {
@@ -71,11 +61,12 @@
         font-size: 90%;
     }
 }
-[data-group='specific'] main .inner > .container .form > .top .right,
-[data-group='specific'] main .inner > .container .form form > .top .right {
-    a,
-    button[type='submit'] {
-        margin-left: 10px;
+[data-group='specific'] main .inner > .container .form > .top .right .operation-element,
+[data-group='specific'] main .inner > .container .form form > .top .right .operation-element {
+    margin-left: 10px;
+    
+    &:first-child {
+        margin-left: 0;
     }
 }
 [data-group='specific'] main .inner > .container .form > .inside,
@@ -85,6 +76,7 @@
 
 /* ELEMENT */
 [data-group='specific'] main .inner > .container .form .panel .form-element {
+    @include flex();
     background-color: $lightestGray;
     border: 1px solid $lightGray;
     margin-top: 20px;
@@ -115,20 +107,16 @@
 
 /* LEFT */
 [data-group='specific'] .form .form-element > .left {
-    @include inbl(middle, 30%);
-    padding: 10px 20px 10px 0;
+    width: 30%;
+    padding: 15px 20px 15px 0;
     position: relative;
 
     .label {
-        @include inbl();
-        position: relative;
         margin-bottom: 3px;
 
         label {
-            @include inbl();
             font-weight: bold;
             cursor: default;
-            padding: 0 5px;
 
             &:hover {
                 color: inherit;
@@ -137,12 +125,11 @@
     }
 
     .description {
-        padding: 0 5px;
         font-size: 90%;
     }
 
     .details {
-        padding: 5px;
+        padding-top: 5px;
         font-size: 90%;
 
         > ul {
@@ -163,27 +150,27 @@
 }
 
 /* RIGHT */
-[data-group='specific'] .form .form-element > .specific-component {
-    @include inbl(middle, 70%);
+[data-group='specific'] .form .form-element > .right {
+    width: 70%;
     padding: 0px 30px 0px 0;
 }
 
 /* BOTTOM */
 [data-group='specific'] main .inner > .container .form > .bottom,
 [data-group='specific'] main .inner > .container .form > form > .bottom {
-    margin-bottom: 20px;
+    @include flex(center);
     text-align: center;
 
     .left {
-        @include inbl(middle, 33%);
+        width: 33%;
         text-align: left;
     }
     .center {
-        @include inbl(middle, 34%);
+        width: 34%;
         text-align: center;
     }
     .right {
-        @include inbl(middle, 33%);
+        width: 33%;
         text-align: right;
     }
 
@@ -194,49 +181,43 @@
 
 /* RESPONSIVE */
 @media screen and (max-width: 900px), screen and (orientation: portrait) {
-    [data-group='specific'] main .inner > .container .form > .top .left,
-    [data-group='specific'] main .inner > .container .form form > .top .left,
-    [data-group='specific'] main .inner > .container .form > .top .right,
-    [data-group='specific'] main .inner > .container .form form > .top .right {
-        @include responsiveBlock();
-
-        &.left {
-            margin-bottom: 10px;
-        }
+    
+    
+    [data-group='specific'] main .inner > .container .form > .top > .right,
+    [data-group='specific'] main .inner > .container .form form > .top > .right {
+        width: 100%;
+        padding-top: 5px;
+        text-align: center;
     }
-
+    
     [data-group='specific'] main .inner > .container .form .panel .form-element {
-        padding: 10px;
-
+        @include responsiveFlex(flex-start,flex-start);
+        
+        > .left, 
+        > .right {
+            @include responsiveSize();
+            width: 100%;
+        }
+        
         > .left {
-            @include responsiveBlock();
-            margin-bottom: 5px;
+            margin-bottom: 10px;
             padding-bottom: 5px;
             border-bottom: 1px solid $lightGray;
         }
-
-        > .right {
-            @include responsiveBlock();
-            padding: 5px;
-        }
     }
-
+    
     [data-group='specific'] main .inner > .container .form > .bottom,
     [data-group='specific'] main .inner > .container .form > form > .bottom {
+        justify-content: center;
         margin: 0;
 
         .left,
         .center,
         .right {
-            @include responsiveBlock();
-            text-align: center;
+            @include responsiveSize();
 
             &.left {
                 display: none;
-            }
-
-            &.right {
-                margin-top: 10px;
             }
         }
     }
@@ -255,9 +236,5 @@
 
     [data-group='specific'] main .inner > .container .form .form-element {
         background-color: $white !important;
-
-        &:first-child {
-            margin-top: 20px !important;
-        }
     }
 }

@@ -80,10 +80,7 @@ class SpecificAddSubmit extends Core\RouteAlias
         if($post !== null)
         {
             $table = $this->table();
-            $db = $table->db();
-            $db->setExceptionClass(true); // catchable exception
-            $return = $table->insert($post,['preValidate'=>true,'com'=>true,'context'=>static::class]);
-            $db->setExceptionClass(false);
+            $return = $table->insert($post,['preValidate'=>true,'com'=>true,'catchException'=>false,'context'=>static::class]);
         }
 
         if(empty($return))

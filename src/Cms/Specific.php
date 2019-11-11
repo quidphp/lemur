@@ -71,7 +71,7 @@ class Specific extends Core\RouteAlias
 
         if($user->route()->uri() === $this->uri())
         {
-            $account = Account::makeOverload()->uri();
+            $account = Account::make()->uri();
             $return[$account] = true;
         }
 
@@ -246,7 +246,7 @@ class Specific extends Core\RouteAlias
                         if($table->hasPermission('view'))
                         {
                             $segment = ['table'=>$table,'filter'=>[$colName=>$primary]];
-                            $route = $routeClass::makeOverload($segment);
+                            $route = $routeClass::make($segment);
                             $text = $table->label().' / '.$col->label()." ($c)";
                             $html = $route->a($text);
                             $r .= Html::liCond($html);
@@ -311,7 +311,7 @@ class Specific extends Core\RouteAlias
                 $r .= $specific['last'];
 
                 if($table->hasPermission('insert','lemurInsert'))
-                $r .= SpecificAdd::makeOverload($table)->a(static::langText('specific/add'));
+                $r .= SpecificAdd::make($table)->a(static::langText('specific/add'));
 
                 if($table->hasPermission('navBack') && !empty($specific['back']))
                 $r .= $specific['back'];
@@ -336,7 +336,7 @@ class Specific extends Core\RouteAlias
 
         if($dispatch === true)
         {
-            $r .= SpecificDispatch::makeOverload($this->segments())->formOpen();
+            $r .= SpecificDispatch::make($this->segments())->formOpen();
             $r .= $this->makeFormPrimary();
             $r .= $this->makeFormSubmit('hidden');
         }
@@ -395,7 +395,7 @@ class Specific extends Core\RouteAlias
     // génère un wrap label -> field pour le formulaire
     final protected function makeFormWrap(Core\Cell $cell,array $replace):string
     {
-        return $cell->formComplexWrap($this->getFormWrap(),'%:',$this->formWrapAttr($cell),$replace,static::context());
+        return $cell->specificComponent($this->getFormWrap(),'%:',$this->formWrapAttr($cell),$replace);
     }
 
 
@@ -403,13 +403,7 @@ class Specific extends Core\RouteAlias
     // retourne les attributs par défaut pour le formWrap
     final protected function formWrapAttr(Core\Cell $cell):?array
     {
-        $return = null;
-        $table = $this->table();
-
-        if(!$this->isUpdateable() || !$cell->isEditable())
-        $return = ['tag'=>'div'];
-
-        return $return;
+        return (!$this->isUpdateable() || !$cell->isEditable())? ['tag'=>'div']:null;
     }
 
 
@@ -452,7 +446,7 @@ class Specific extends Core\RouteAlias
             $route = $row->routeSafe($key);
 
             if(!empty($route) && $route::hasPath() && $route::allowed())
-            $r .= $route->a(static::langText('specific/view'),['submit','icon','view','padLeft','target'=>false]);
+            $r .= $route->a(static::langText('specific/view'),['with-icon','view','operation-element','target'=>false]);
         }
 
         return $r;
@@ -470,7 +464,7 @@ class Specific extends Core\RouteAlias
         {
             $route = SpecificDuplicate::class;
             $data = ['confirm'=>static::langText('common/confirm')];
-            $attr = ['icon','copy','padLeft','name'=>'--duplicate--','value'=>1,'data'=>$data];
+            $attr = ['with-icon','copy','operation-element','name'=>'--duplicate--','value'=>1,'data'=>$data];
             $r .= $route::make()->submitLabel(null,$attr);
         }
 
@@ -492,7 +486,7 @@ class Specific extends Core\RouteAlias
             else
             {
                 $text = 'specific/modify'.ucfirst($type);
-                $r .= Html::submit(static::langText($text),['name'=>'--modify--','value'=>1,'icon','modify','padLeft']);
+                $r .= Html::submit(static::langText($text),['name'=>'--modify--','operation-element','value'=>1,'with-icon','modify']);
             }
         }
 
@@ -525,7 +519,7 @@ class Specific extends Core\RouteAlias
         if($this->isDeleteable())
         {
             $data = ['confirm'=>static::langText('common/confirm')];
-            $attr = ['name'=>'--delete--','value'=>1,'icon','remove','padLeft','data'=>$data];
+            $attr = ['name'=>'--delete--','value'=>1,'with-icon','remove','data'=>$data];
             $r .= Html::submit(static::langText('specific/remove'),$attr);
         }
 

@@ -12,10 +12,10 @@
 /* TOP */
 [data-route='general'] main .inner > .top .right {
     > .operation {
+        @include flex(flex-end);
         margin-bottom: 15px;
-
+        
         > .operation-element {
-            @include inbl();
             margin-left: 10px;
 
             &:first-child {
@@ -38,17 +38,17 @@
         }
     }
 }
-[data-route='general'] main .inner > .top .left .title .popup-trigger {
-    margin-left: 10px;
+[data-route='general'] main .inner > .top .left h1 {
+    margin-right: 10px;
 }
 [data-route='general'] main .inner > .top .left .search {
     padding-top: 10px;
 
     > .form {
+        @include flex();
         margin-bottom: 5px;
 
         > .input {
-            @include inbl();
             position: relative;
             margin-right: 10px;
 
@@ -75,7 +75,6 @@
 
 /* MAIN */
 [data-route='general'] main .inner > .container {
-    margin-bottom: 20px;
 
     &.empty {
         .notFound {
@@ -88,16 +87,14 @@
     }
 
     .above {
-        .left,
-        .right {
-            @include inbl();
-            width: 50%;
-        }
-
+        @include flex();
+        
         .left {
+            width: 50%;
             text-align: left;
         }
         .right {
+            width: 50%;
             text-align: right;
         }
     }
@@ -111,7 +108,7 @@
 
     .scroller {
         width: 100%;
-        padding-top: 5px;
+        padding-top: 10px;
         overflow-y: visible;
         overflow-x: auto;
         min-height: 400px;
@@ -130,18 +127,18 @@
 
 /* PAGE */
 [data-route='general'] main .inner > .container .page-input {
+    @include flex(flex-end);
+    
     a {
-        @include inbl();
         @include trianglePrevNext();
     }
     .center {
-        @include inbl(bottom);
+        @include flex();
+        
         span {
-            @include inbl(bottom);
             font-size: 90%;
         }
         input[type='text'] {
-            @include inbl(bottom);
             font-size: 90%;
             text-align: center;
             width: 40px;
@@ -174,8 +171,8 @@
     }
 
     .cell-inner {
+        @include flex();
         @include transitions(background-color 0.3s, border 0.3s);
-        display: block;
         height: 100%;
         padding: 10px;
         position: relative;
@@ -183,8 +180,6 @@
         border-right: 1px solid $darkColor;
 
         .label {
-            @include inbl();
-            vertical-align: middle;
             color: $white;
             font-size: 85%;
             text-transform: uppercase;
@@ -235,8 +230,9 @@
     }
 
     .right:hover,
+    .right.clicked,
     &.ordering .right {
-        background-color: $lightYellow;
+        background-color: $darkerColor;
 
         .label {
             color: $gray;
@@ -254,12 +250,14 @@
         @include triangle(bottom, $white, 12px, 6px);
     }
     &[data-direction='asc'] .right:hover .triangle,
+    &[data-direction='asc'] .right.clicked .triangle,
     &[data-direction='asc'].ordering .right .triangle {
-        @include triangle(top, $color, 12px, 6px);
+        @include triangle(top, $lightYellow, 12px, 6px);
     }
     &[data-direction='desc'] .right:hover .triangle,
+    &[data-direction='desc'] .right.clicked .triangle,
     &[data-direction='desc'].ordering .right .triangle {
-        @include triangle(bottom, $color, 12px, 6px);
+        @include triangle(bottom, $lightYellow, 12px, 6px);
     }
 }
 
@@ -281,21 +279,20 @@
 }
 
 /* TBODY */
-[data-route='general'] .scroller > table tbody {
-    a {
-        @include inbl();
-        color: $black;
+[data-route='general'] .scroller > table tbody a {
+    @include inbl();
+    color: $black;
 
-        &:hover {
-            color: $darkGray;
-            text-decoration: underline;
-        }
+    &:hover,
+    &.clicked {
+        color: $darkGray;
+        text-decoration: underline;
     }
 }
 [data-route='general'] main .scroller > table > tbody {
     > tr {
         &:nth-child(even) {
-            background-color: $lighterGray;
+            background-color: $lightestGray;
         }
         &.highlight {
             background-color: $lightGrayAlt !important;
@@ -361,17 +358,8 @@
 
 /* RESPONSIVE */
 @media screen and (max-width: 900px), screen and (orientation: portrait) {
-    [data-route='general'] main .inner > .container {
-        margin-bottom: 0;
-    }
-
-    [data-route='general'] main .inner > .container .above .left,
-    [data-route='general'] main .inner > .container .above .right,
-    [data-route='general'] main .inner > .container .bellow .left,
-    [data-route='general'] main .inner > .container .bellow .right {
-        @include responsiveBlock();
+    [data-route='general'] main .inner > .top .right {
         text-align: left;
-        margin-top: 5px;
     }
 }
 

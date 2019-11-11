@@ -15,6 +15,13 @@
     @include filesShowThumbnail();
 }
 
+// componentRelationMediaGeneral
+// mixin pour une cellule de relation vers la table de la médiathèque
+@mixin componentRelationMediaGeneral() {
+    @include componentRelationGeneral();
+    text-align: center;
+}
+
 // componentRelationSortableSpecific
 // mixin pour une relation sortable (checkboxes)
 @mixin componentRelationSortableSpecific() {

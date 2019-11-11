@@ -13,7 +13,11 @@
 [data-group='nobody'] body {
     @include cover();
     background-attachment: fixed;
-
+    
+    #wrapper {
+        display: block;
+    }
+    
     main {
         display: flex;
         flex-direction: column;
@@ -38,7 +42,8 @@
                 display: block;
             }
 
-            &:hover {
+            &:hover,
+            &.clicked {
                 opacity: 0.8;
             }
         }
@@ -60,7 +65,8 @@
             > a {
                 color: $white;
 
-                &:hover {
+                &:hover,
+                &.clicked {
                     color: $lightGray;
                 }
             }
@@ -127,6 +133,11 @@
 
             &:hover {
                 background-color: $darkerColor;
+            }
+            
+            &.clicked,
+            &:active {
+                background-color: $black;
             }
         }
 
@@ -200,13 +211,7 @@
     }
 
     .content {
-        a {
-            color: $darkerColor;
-
-            &:hover {
-                text-decoration: underline;
-            }
-        }
+        @include wysiwyg();
     }
 }
 
@@ -233,8 +238,7 @@
     margin-right: 10px;
 }
 [data-route='home'] main .inner > .bottom > .search {
-    @include flex(center);
-    @include wh(60%, 50vh);
+    width: 60%;
     margin: auto;
     padding: 0 20px;
     text-align: center;
@@ -251,7 +255,7 @@
             font-size: 125%;
         }
 
-        .icon {
+        .icon-solo {
             @include abs(50%, null, null, 10px);
             margin-top: -8px;
         }

@@ -51,7 +51,7 @@ abstract class AccountChangePasswordSubmit extends Core\RouteAlias
     // retourne l'objet route pour la redirection
     public function routeSuccess():Lemur\Route
     {
-        return static::makeParentOverload();
+        return static::makeParent();
     }
 
 

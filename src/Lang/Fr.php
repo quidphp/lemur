@@ -262,7 +262,7 @@ class Fr extends Core\Lang\Fr
                 'lang'=>'Langue',
                 'module'=>'Module',
                 'cli'=>'Cli',
-                'copyright'=>'Version [version]'
+                'version'=>'Version [version]'
             ],
 
             // home

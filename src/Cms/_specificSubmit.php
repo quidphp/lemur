@@ -49,7 +49,7 @@ trait _specificSubmit
     // retourne la route parent, peut retourner specific ou specificAdd
     final public function specific():Core\Route
     {
-        return static::makeParentOverload($this->segments());
+        return static::makeParent($this->segments());
     }
 }
 ?>

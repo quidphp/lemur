@@ -65,7 +65,7 @@ abstract class ResetPasswordSubmit extends Core\RouteAlias
     // route à utiliser pour la redirection en cas de succès
     public function routeSuccess():Lemur\Route
     {
-        return Login::makeOverload();
+        return Login::make();
     }
 
 
@@ -73,7 +73,7 @@ abstract class ResetPasswordSubmit extends Core\RouteAlias
     // retourne l'objet route pour la redirection en cas d'erreur
     final protected function routeFailure():Lemur\Route
     {
-        return static::makeParentOverload();
+        return static::makeParent();
     }
 
 

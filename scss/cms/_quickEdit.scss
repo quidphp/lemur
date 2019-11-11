@@ -14,19 +14,21 @@
     .tool {
         @include wh(20px);
         background-color: $lightGray;
-        border-left: 1px solid $gray;
-        border-bottom: 1px solid $gray;
 
         &:hover {
             background-color: $gray;
         }
     }
-
-    > .cell-inner > a.quick-edit {
-        @include abs(0px, 0px);
-        z-index: 3;
-        display: none;
-        border-bottom-left-radius: 3px;
+    
+    > .cell-inner {
+        padding-right: 10px;
+        
+        > a.quick-edit {
+            @include abs(0px, 0px);
+            z-index: 2;
+            display: none;
+            border-bottom-left-radius: 3px;
+        }
     }
 
     &:hover > .cell-inner > a.quick-edit,
@@ -44,7 +46,7 @@
 
     > .cell-inner .quick-edit-container {
         display: none;
-        padding: 8px 45px 8px 10px;
+        padding: 8px 35px 8px 10px;
         height: 100%;
     }
 
@@ -62,7 +64,7 @@
                 > form > .tools {
                     @include abs(0px, 0px);
                     @include flex();
-                    z-index: 3;
+                    z-index: 2;
 
                     button:first-child {
                         border-bottom-left-radius: 3px;
