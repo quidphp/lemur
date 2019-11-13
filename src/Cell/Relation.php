@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Quid\Lemur\Cell;
 use Quid\Core;
+use Quid\Base\Html;
 
 // relation
 // abstract class extended by the enum and set cells
@@ -19,7 +20,7 @@ class Relation extends Core\Cell\Relation
 
 
     // generalOutput
-    // génère le output pour général
+    // génère le output pour général dans un ul li
     final public function generalOutput(?array $option=null):?string
     {
         $return = null;
@@ -30,18 +31,19 @@ class Relation extends Core\Cell\Relation
             $col = $this->col();
             $max = $col->getAttr('generalMax');
             $total = count($relation);
-            $separator = ', ';
             $array = $col->prepareRelationPlainGeneral($relation);
-
+            
             if(!empty($array))
             {
-                $return = implode($separator,$array);
+                $return = Html::liMany(...array_values($array));
 
                 if($total > $max)
                 {
                     $diff = ($total - $max);
-                    $return .= " (+$diff)";
+                    $return .= Html::li("(+$diff)",'relation-more');
                 }
+                
+                $return = Html::ulCond($return);
             }
         }
 

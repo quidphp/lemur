@@ -42,9 +42,9 @@ class Specific extends Core\RouteAlias
     ];
 
 
-    // onBefore
+    // canTrigger
     // validation avant le lancement de la route
-    final protected function onBefore()
+    final public function canTrigger():bool
     {
         $return = false;
         $table = $this->segment('table');
@@ -71,8 +71,12 @@ class Specific extends Core\RouteAlias
 
         if($user->route()->uri() === $this->uri())
         {
-            $account = Account::make()->uri();
-            $return[$account] = true;
+            $route = Account::make();
+            if($route->canTrigger())
+            {
+                $account = $route->uri();
+                $return[$account] = true;
+            }
         }
 
         return $return;
@@ -110,7 +114,7 @@ class Specific extends Core\RouteAlias
         $return = false;
         $table = $this->table();
         $row = $this->row();
-
+        
         if($table->hasPermission('update','lemurUpdate') && $row->isUpdateable())
         $return = true;
 
@@ -178,7 +182,7 @@ class Specific extends Core\RouteAlias
     final protected function makeTitleBox():string
     {
         $r = $this->makeH1($this->makeTitle());
-        $r .= Html::divCond($this->makeRelationChilds(),['relation-childs','popup-trigger','with-icon','with-popup','anchor-corner']);
+        $r .= Html::divCond($this->makeRelationChilds(),['relation-childs','popup-trigger','with-icon','with-popup','tabindex'=>-1,'data'=>array('anchor-corner'=>true,'absolute-placeholder'=>true)]);
 
         return $r;
     }
@@ -208,7 +212,7 @@ class Specific extends Core\RouteAlias
             {
                 $count = Base\Arrs::countLevel(2,$relationChilds);
                 $text = static::langPlural($count,'specific/relationChilds',['count'=>$count]);
-                $r .= Html::div($text,['popup-title']);
+                $r .= Html::button($text,'popup-title');
                 $r .= Html::divOp('popup');
                 $r .= Html::ul($this->makeRelationChildsInner($relationChilds));
                 $r .= Html::divCl();
@@ -296,10 +300,13 @@ class Specific extends Core\RouteAlias
                 if(!empty($specific['count']))
                 {
                     $popup = $general->generalInfoPopup(true);
-                    $attr = ['popup-trigger',(!empty($popup))? ['with-popup','with-text-solo','anchor-corner']:null];
+                    
+                    $attr = ['popup-trigger'];
+                    if(!empty($popup))
+                    $attr = Base\Arr::append($attr,['with-popup','with-text-solo','tabindex'=>-1,'data'=>array('anchor-corner'=>true,'absolute-placeholder'=>true)]);
 
                     $r .= Html::divOp($attr);
-                    $r .= Html::div($specific['count'],'popup-title');
+                    $r .= Html::button($specific['count'],'popup-title');
                     $r .= Html::div($popup,'popup');
                     $r .= Html::divCl();
                 }
@@ -309,9 +316,10 @@ class Specific extends Core\RouteAlias
 
                 if(!empty($specific['last']))
                 $r .= $specific['last'];
-
-                if($table->hasPermission('insert','lemurInsert'))
-                $r .= SpecificAdd::make($table)->a(static::langText('specific/add'));
+                
+                $route = SpecificAdd::make($table);
+                if($route->canTrigger())
+                $r .= $route->a(static::langText('specific/add'));
 
                 if($table->hasPermission('navBack') && !empty($specific['back']))
                 $r .= $specific['back'];
@@ -393,15 +401,15 @@ class Specific extends Core\RouteAlias
 
     // makeFormWrap
     // génère un wrap label -> field pour le formulaire
-    final protected function makeFormWrap(Core\Cell $cell,array $replace):string
+    protected function makeFormWrap(Core\Cell $cell,array $replace):string
     {
-        return $cell->specificComponent($this->getFormWrap(),'%:',$this->formWrapAttr($cell),$replace);
+        return $cell->formComplexWrap($this->getFormWrap(),'%:',$this->formTagAttr($cell),$replace);
     }
 
 
-    // formWrapAttr
-    // retourne les attributs par défaut pour le formWrap
-    final protected function formWrapAttr(Core\Cell $cell):?array
+    // formTagAttr
+    // retourne les attributs de tag par défaut pour le component
+    final protected function formTagAttr(Core\Cell $cell):?array
     {
         return (!$this->isUpdateable() || !$cell->isEditable())? ['tag'=>'div']:null;
     }
@@ -462,10 +470,14 @@ class Specific extends Core\RouteAlias
 
         if($table->hasPermission('duplicate'))
         {
-            $route = SpecificDuplicate::class;
-            $data = ['confirm'=>static::langText('common/confirm')];
-            $attr = ['with-icon','copy','operation-element','name'=>'--duplicate--','value'=>1,'data'=>$data];
-            $r .= $route::make()->submitLabel(null,$attr);
+            $route = SpecificDuplicate::make($this->segments());
+            
+            if($route->canTrigger())
+            {
+                $data = ['confirm'=>static::langText('common/confirm')];
+                $attr = ['with-icon','copy','operation-element','name'=>'--duplicate--','value'=>1,'data'=>$data];
+                $r .= $route->submitLabel(null,$attr);
+            }
         }
 
         return $r;

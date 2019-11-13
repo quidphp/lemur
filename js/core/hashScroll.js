@@ -267,7 +267,7 @@ quid.core.hashScrollTarget = $.fn.hashScrollTarget = function()
 {
     var $this = $(this);
     
-    $(this).arrowCatch(true).on('hashScrollTarget:getHash', function(event) {
+    $(this).arrowCatch().on('hashScrollTarget:getHash', function(event) {
         return quid.base.formatHash($(this).data("id"),true);
     })
     .on('hashScrollTarget:getFragment', function(event) {

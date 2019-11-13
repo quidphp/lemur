@@ -23,12 +23,6 @@ body {
     line-height: 1.5;
     @include scrollbar();
 }
-table,
-input,
-textarea,
-select,
-button {
-}
 
 /* TITRE */
 h1 {
@@ -49,33 +43,19 @@ input[type='text'],
 input[type='password'],
 input[type='email'],
 textarea {
-    padding: 8px 10px;
-    border-radius: 5px;
-    border: 1px solid $lightGray;
-
-    &.active,
-    &:hover,
-    &:focus {
-        background-color: $lightYellow;
+    @include inputTextBase();
+    
+    &::-webkit-input-placeholder {
+        color: $darkGray;
     }
-
-    &.invalid {
-        border: 1px solid $red;
-        background-color: $red;
-        color: $white;
+    
+    &::-moz-placeholder {
+        color: $darkGray;
     }
-}
-input::-webkit-input-placeholder,
-textarea::-webkit-input-placeholder {
-    color: $gray;
-}
-input::-moz-placeholder,
-textarea::-moz-placeholder {
-    color: $darkGray;
-}
-input:-ms-input-placeholder,
-textarea:-ms-input-placeholder {
-    color: $gray !important;
+    
+    &::-ms-input-placeholder {
+        olor: $darkGray;
+    }
 }
 input[type='radio'],
 input[type='checkbox'] {
@@ -102,9 +82,11 @@ input[type='checkbox']:checked + label {
 label[for]:hover {
     color: $darkGray;
 }
-button[type='submit'],
-body .submit {
+button[type='submit'] {
     @include button();
+}
+button[type='button'] {
+    line-height: 1.5;
 }
 body a.with-icon,
 body button.with-icon,
@@ -112,24 +94,6 @@ body input[type='submit'].with-icon,
 body .trigger.with-icon {
     @include button();
     @include iconLeft();
-
-    &.no-border {
-        border: 0;
-        border-radius: 0;
-    }
-}
-button.button,
-input[type='submit'].button {
-    @include inbl();
-    @include transitions(opacity 0.3s);
-    background: transparent;
-    cursor: pointer;
-    border: 0;
-
-    &:hover,
-    &.clicked {
-        opacity: 0.8;
-    }
 }
 
 /* ICON */
@@ -161,11 +125,10 @@ body .icon-solo.close {
 }
 
 /* OPACITY */
-body .icon-solo.close,
 body .icon-solo.search,
 html body .icon-solo.move {
     &:hover,
-    &.clicked {
+    &[data-triggered='1'] {
         opacity: 0.6;
     }
 }
@@ -234,9 +197,6 @@ body .with-icon {
     &.lang {
         @include bgimg64($iconLang);
     }
-    &.lemur {
-        @include bgimg64($iconLemur);
-    }
     &.link {
         @include bgimg64($iconLink);
     }
@@ -283,6 +243,9 @@ body .with-icon {
 }
 
 /* COMPONENT */
+[data-absolute-placeholder] {
+    position: relative;
+}
 .fakeselect {
     @include fakeselect();
 }
@@ -310,8 +273,8 @@ body .with-icon {
 #wrapper [data-group='relation'][data-sortable='1'] .specific-component {
     @include componentRelationSortableSpecific();
 }
-#wrapper [data-group='relation'][data-plain='1'] .specific-component {
-    @include componentRelationPlainSpecific();
+#wrapper [data-group='relation'][data-tag='select'] .specific-component {
+    @include componentSelectSpecific();
 }
 #wrapper [data-group='relation'] .general-component {
     @include componentRelationGeneral();

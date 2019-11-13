@@ -9,23 +9,28 @@
 // keyboard
 // script with functions related to keyboard keys catching, blocking and handling
 
-// enterBlock
-// bloque la touche enter sur un événement, keypress par défaut
-// associé à l'élément
-quid.core.enterBlock = $.fn.enterBlock = function(type)
+// enterCatch
+// attrape la touche enter sur un événement, keypress par défaut
+quid.core.enterCatch = $.fn.enterCatch = function(type)
 {
-    type = type || 'keyup keypress';
+    type = type || 'keydown';
     
     $(this).on(type, function(event) {
-        $(this).trigger('enter:block',[event]);
-    })
-    .on('enter:block', function(event,keyEvent) {
-        if(keyEvent.keyCode === 10 || keyEvent.keyCode === 13)
+        if(event.keyCode === 10 || event.keyCode === 13)
         {
-            keyEvent.stopImmediatePropagation();
-            keyEvent.preventDefault();
-            $(this).trigger('enter:blocked');
+            $(this).trigger('enter:catched',[event]);
+            
+            if($(this).triggerHandler('enter:prevent',[event]) === true)
+            {
+                event.stopImmediatePropagation();
+                event.preventDefault();
+                $(this).trigger('enter:blocked',[event]);
+                return false;
+            }
         }
+    })
+    .on('enter:prevent', function(event,keyEvent) {
+        return true;
     });
     
     return this;
@@ -34,39 +39,38 @@ quid.core.enterBlock = $.fn.enterBlock = function(type)
 
 // arrowCatch
 // attrape les touches de flèche sur le clavier
-quid.core.arrowCatch = $.fn.arrowCatch = function(preventDefault) 
+quid.core.arrowCatch = $.fn.arrowCatch = function(type) 
 {
-    $(this).each(function()
-    {
-        var $this = $(this);
-        
-        $(document).keydown(function(event) {
-            if($.inArray(event.keyCode,[37,38,39,40]) !== -1)
+    type = type || 'keydown';
+    
+    $(this).on(type, function(event) {
+        if($.inArray(event.keyCode,[37,38,39,40]) !== -1)
+        {
+            $(this).trigger('arrow:catched',[event]);
+            
+            if(event.keyCode === 38)
+            $(this).trigger('arrowUp:catched',[event]);
+            
+            else if(event.keyCode === 40)
+            $(this).trigger('arrowDown:catched',[event]);
+            
+            else if(event.keyCode === 37)
+            $(this).trigger('arrowLeft:catched',[event]);
+            
+            else if(event.keyCode === 39)
+            $(this).trigger('arrowRight:catched',[event]);
+            
+            if($(this).triggerHandler('arrow:prevent',[event]) === true)
             {
-                if(event.keyCode === 38)
-                $this.trigger('arrowUp:catched',[event]);
-                
-                else if(event.keyCode === 40)
-                $this.trigger('arrowDown:catched',[event]);
-                
-                else if(event.keyCode === 37)
-                $this.trigger('arrowLeft:catched',[event]);
-                
-                else if(event.keyCode === 39)
-                $this.trigger('arrowRight:catched',[event]);
-                
-                if(preventDefault === true)
-                {
-                    event.preventDefault();
-                    return false;
-                }
+                event.stopImmediatePropagation();
+                event.preventDefault();
+                $(this).trigger('arrow:blocked',[event]);
+                return false;
             }
-        });
-        
-        $(this).find("input,textarea").keydown(function(event) {
-            if($.inArray(event.keyCode,[37,38,39,40]) !== -1)
-            event.stopImmediatePropagation();
-        });
+        }
+    })
+    .on('arrow:prevent', function(event,keyEvent) {
+        return true;
     });
     
     return this;
@@ -75,16 +79,26 @@ quid.core.arrowCatch = $.fn.arrowCatch = function(preventDefault)
 
 // escapeCatch
 // attrape la touche escape sur keyup, associé au document
-quid.core.escapeCatch = $.fn.escapeCatch = function()
+quid.core.escapeCatch = $.fn.escapeCatch = function(type)
 {
-    $(this).each(function()
-    {
-        var $this = $(this);
-        
-        $(document).keyup(function(event) {
-            if(event.keyCode === 27)
-            $this.trigger('escape:catched',[event]);
-        });
+    type = type || 'keydown';
+    
+    $(this).on(type, function(event) {
+        if(event.keyCode === 27)
+        {
+            $(this).trigger('escape:catched',[event]);
+            
+            if($(this).triggerHandler('escape:prevent',[event]) === true)
+            {
+                event.stopImmediatePropagation();
+                event.preventDefault();
+                $(this).trigger('escape:blocked',[event]);
+                return false;
+            }
+        }
+    })
+    .on('escape:prevent', function(event,keyEvent) {
+        return true;
     });
     
     return this;

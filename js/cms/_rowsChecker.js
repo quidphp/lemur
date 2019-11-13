@@ -53,16 +53,16 @@ quid.cms.rowsChecker = function()
             var separator = $(this).data("separator");
             return rowsCheckboxes.filter(":checked").valSet(separator,true);
         })
-        .on('click', function() {
-            $(this).trigger('redirect');
+        .on('click', function(event) {
+            $(this).trigger('redirect',[event]);
         })
-        .on('redirect', function() {
+        .on('redirect', function(event,clickEvent) {
             var href = $(this).dataHrefReplaceChar($(this).triggerHandler('getCheckboxSet'));
             
             if(quid.base.isStringNotEmpty(href))
             {
                 $(this).trigger('block');
-                $(document).trigger('document:go',[href]);
+                $(document).trigger('document:go',[href,clickEvent]);
             }
         });
         

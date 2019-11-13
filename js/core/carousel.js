@@ -17,40 +17,20 @@ quid.core.carousel = $.fn.carousel = function(trigger,target)
         trigger = (trigger == null)? '.trigger':trigger;
         target = (target == null)? '.target':target;
         
-        $(this).on('carousel:isClose', function(event) {
-            return $(this).triggerHandler('carousel:getTarget').is(":hidden");
+        $(this).clickOpenBase().clickOpenTrigger(trigger)
+        .on('clickOpen:getTarget', function(event) {
+            return $(this).find(target).first();
         })
-        .on('carousel:isOpen', function(event) {
-            return $(this).triggerHandler('carousel:getTarget').is(":visible");
+        .on('clickOpen:getAttr', function(event) {
+            return 'data-carousel';
         })
-        .on('carousel:isEmpty', function(event) {
-            return $(this).triggerHandler('carousel:getTarget').is(":empty");
+        .on('clickOpen:getBackgroundFrom',function(event) {
+            return 'carousel';
         })
-        .on('carousel:getTarget', function(event) {
-            return $(this).find(".target").first();
+        .on('clickOpen:allowMultiple', function(event) {
+            return true;
         })
-        .on('carousel:getTrigger', function(event) {
-            return $(this).find(trigger).first();
-        })
-        .on('carousel:setContent', function(event,html) {
-            $(this).triggerHandler('carousel:getTarget').html(html);
-        })
-        .on('carousel:toggle', function(event) {
-            $(this).trigger($(this).triggerHandler('carousel:isOpen')? 'carousel:close':'carousel:open');
-        })
-        .on('carousel:open', function(event) {
-            $(this).addClass("active");
-        })
-        .on('carousel:close', function(event) {
-            $(this).removeClass("active");
-        })
-        .on('carousel:prepare', function(event) {
-            var $this = $(this);
-            $(this).triggerHandler('carousel:getTrigger').on('click', function(event) {
-                $this.trigger('carousel:toggle');
-            });
-        })
-        .trigger('carousel:prepare');
+        .trigger('clickOpen:prepare');
     });
     
     return this;

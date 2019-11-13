@@ -30,15 +30,19 @@ quid.cms.tableRelation = function()
             return r;
         });
         
-        filters.filterGeneralFull().each(function(index, el) {
-            var clickOpen = $(this).triggerHandler('clickOpen:getPopup');
+        filters.filterGeneralFull().on('tableRelation:prepare', function(event) {
+            var clickOpen = $(this).triggerHandler('clickOpen:getTarget');
             $(this).triggerHandler('filter:getResult').on('click', '.insert', function(event) {
                 var html = $(this).data('html');
                 textarea.triggerHandler('textarea:insert',html);
                 clickOpen.trigger('clickOpen:close');
                 event.stopPropagation();
-            });
-        });
+            })
+        })
+        .on('clickOpen:getBackgroundFrom',function(event) {
+            return 'tableRelation';
+        })
+        .trigger('tableRelation:prepare');
     });
     
     return this;

@@ -244,16 +244,9 @@ class Fr extends Core\Lang\Fr
                 'submit'=>'Modifier'
             ],
 
-            // author
-            'author'=>[
-                'name'=>'QuidPHP + Lemur',
-                'uri'=>'https://quidphp.com',
-                'email'=>'emondpph@gmail.com'
-            ],
-
             // about
             'about'=>[
-                'content'=>'Le gestionnaire de contenu open-source Lemur est développé sur le framework QuidPHP. La version actuelle est [version].'
+                'content'=>"Le gestionnaire de contenu Lemur est développé sur le framework [websiteLink]. Ce logiciel est disponible via la license open-source [licenseLink]. La version actuelle est [version]. Pour toute question, contactez l'auteur [authorLink]."
             ],
 
             // footer
@@ -270,10 +263,14 @@ class Fr extends Core\Lang\Fr
                 'searchSubmit'=>'Recherche dans toutes les tables',
                 'searchIn'=>'Recherche dans',
                 'note'=>'Note',
-                'notFound'=>'Rien à afficher',
                 'searchNote'=>'Recherche insensible à la case et aux accents, [count] caractère%s% minimum.'
             ],
 
+            // search
+            'search'=>array(
+                'notFound'=>'Rien à afficher'
+            ),
+            
             // general
             'general'=>[
                 'search'=>'Recherche',
@@ -569,7 +566,7 @@ class Fr extends Core\Lang\Fr
                     'generalExportDownload'=>'Général - Exportation - Téléchargement',
                     'generalRelation'=>'Général - Relation',
                     'generalTruncate'=>'Vider la table',
-                    'homeSearch'=>'Accueil - Recherche',
+                    'search'=>'Recherche',
                     'sessionRole'=>'Rôle',
                     'sessionRoleSubmit'=>'Rôle - Soumettre',
                     'specific'=>'Spécifique',

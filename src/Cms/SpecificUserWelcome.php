@@ -41,9 +41,9 @@ class SpecificUserWelcome extends Core\RouteAlias
     ];
 
 
-    // onBefore
+    // canTrigger
     // vérifie que le user peut bien recevoir un courriel de bienvenue
-    final protected function onBefore()
+    final public function canTrigger():bool
     {
         $return = false;
         $row = $this->row();
@@ -52,7 +52,10 @@ class SpecificUserWelcome extends Core\RouteAlias
         if($table->hasPermission('view','userWelcome'))
         {
             if($row->isActive() && $row->allowWelcomeEmail() && $row->isUpdateable() && $row->canReceiveEmail())
-            $return = true;
+            {
+                if($row !== static::session()->user())
+                $return = true;
+            }
         }
 
         return $return;

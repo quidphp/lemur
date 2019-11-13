@@ -30,8 +30,9 @@ class Cols extends Base\Test
 
         // cols
         assert(strlen($cols->formComplex()['date']) === 260);
-        assert($cols->formComplexWrap('table')['userAdd'] === "<table><tr><td><label>Added by</label></td><td><div class='empty-placeholder'>NULL</div></td></tr></table>");
-
+        assert($cols->formComplexWrap('table')['userAdd'] === "<table><tr><td><label>Added by</label></td><td><div class='specific-component'><div class='empty-placeholder'>NULL</div></div></td></tr></table>");
+        assert(strlen($cols->formComplexWrap('table')['date']) === 453);
+        
         return true;
     }
 }

@@ -31,28 +31,36 @@
         font-weight: bold;
         font-size: 90%;
     }
-
-    .input {
+    
+    &.active [data-absolute-placeholder='ready'] > .input {
+        z-index: 3;
+        @include abs(0,null,null,0);
+    }
+    
+    > .input-popup {
         position: relative;
-        margin-bottom: 5px;
+        
+        .input {
+            width: 100%;
+            
+            input[type='text'] {
+                width: 80%;
+                max-width: 250px !important;
+                margin-right: 10px;
+            }
+        }
 
-        input[type='text'] {
-            width: 80%;
-            max-width: 250px !important;
-            margin-right: 10px;
+        > .popup {
+            @include enumSetPopup();
         }
     }
-
-    .input > .popup {
-        @include enumSetPopup();
+    
+    > .current {
+        padding-top: 5px;
     }
-
-    &.general-page label {
-        max-width: calc(100% - 45px);
-    }
-
+    
     @media print {
-        .input {
+        .input-popup {
             display: none !important;
         }
     }

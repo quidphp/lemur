@@ -40,7 +40,15 @@ abstract class ResetPasswordSubmit extends Core\RouteAlias
         'log'=>null
     ];
 
-
+    
+    // canTrigger
+    // retourne vrai si la route peut être lancé
+    final public function canTrigger():bool 
+    {
+        return (parent::canTrigger() && static::session()->roles(false)->isNobody() && static::session()->allowResetPasswordEmail())? true:false;
+    }
+    
+    
     // onSuccess
     // traite le succès
     final protected function onSuccess():void

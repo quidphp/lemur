@@ -25,7 +25,7 @@
 
         > a.quick-edit {
             @include abs(0px, 0px);
-            z-index: 2;
+            z-index: 1;
             display: none;
             border-bottom-left-radius: 3px;
         }
@@ -46,7 +46,7 @@
 
     > .cell-inner .quick-edit-container {
         display: none;
-        padding: 8px 35px 8px 10px;
+        padding: 8px 40px 8px 10px;
         height: 100%;
     }
 
@@ -64,7 +64,7 @@
                 > form > .tools {
                     @include abs(0px, 0px);
                     @include flex();
-                    z-index: 2;
+                    z-index: 1;
 
                     button:first-child {
                         border-bottom-left-radius: 3px;

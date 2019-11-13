@@ -40,14 +40,14 @@ class GeneralTruncate extends Core\RouteAlias
     ];
 
 
-    // onBefore
-    // vérifie que l'utilisateur a la permission pour truncate la table
-    final protected function onBefore()
+    // canTrigger
+    // retourne vrai si la route peut être triggé
+    final public function canTrigger():bool
     {
         $return = false;
         $table = $this->table();
 
-        if(!empty($table) && $table->hasPermission('view','truncate','lemurTruncate'))
+        if(parent::canTrigger() && !empty($table) && $table->hasPermission('view','truncate','lemurTruncate'))
         $return = true;
 
         return $return;

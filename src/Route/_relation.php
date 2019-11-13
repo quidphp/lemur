@@ -253,5 +253,24 @@ trait _relation
 
         return $return;
     }
+    
+    
+    // makeClickOpen
+    // génère une balise clickOpen, qui contient un container
+    // est la base pour un fakeSelect
+    final public static function makeClickOpen(?string $value=null,?string $title=null,?string $after=null,$attr=null,?array $option=null):string
+    {
+        $return = '';
+        $return .= Html::divOp($attr);
+        $return .= Html::button($title,'trigger');
+        $return .= Html::div($value,'popup');
+
+        if(is_string($after))
+        $return .= $after;
+
+        $return .= Html::divCl();
+
+        return $return;
+    }
 }
 ?>

@@ -21,6 +21,8 @@ abstract class Relation extends Core\Col\Relation
     public static $config = [
         'specificLink'=>false,
         '@cms'=>[
+            'anchorCorner'=>array(self::class,'hasAnchorCorner'),
+            'absolutePlaceholder'=>array(self::class,'hasAbsolutePlaceholder'),
             'sortable'=>null,
             'specificLink'=>true, // fait un lien vers spécifique dans cms
             'route'=>[
@@ -173,46 +175,54 @@ abstract class Relation extends Core\Col\Relation
         $lang = $this->db()->lang();
 
         $route = $this->route('specificRelation',['table'=>$this->table(),'col'=>$this,'selected'=>true]);
-        $query = $route->getSearchQuery();
+        if($route->canTrigger())
+        {
+            $query = $route->getSearchQuery();
 
-        $placeholder = $attr['placeholder'] ?? $lang->text('common/search');
-        if(is_array($attr) && array_key_exists('placeholder',$attr))
-        unset($attr['placeholder']);
+            $placeholder = $attr['placeholder'] ?? $lang->text('common/search');
+            if(is_array($attr) && array_key_exists('placeholder',$attr))
+            unset($attr['placeholder']);
 
-        if($placeholder === true)
-        $placeholder = $rel->label();
+            if($placeholder === true)
+            $placeholder = $rel->label();
 
-        if(is_string($placeholder))
-        $placeholder .= " ($size)";
+            if(is_string($placeholder))
+            $placeholder .= " ($size)";
 
-        $searchMinLength = ($rel->isRelationTable())? $rel->relationTable()->searchMinLength():$this->table()->searchMinLength();
-        $required = ($this->getAttr('relationSearchRequired') === true)? true:null;
+            $searchMinLength = ($rel->isRelationTable())? $rel->relationTable()->searchMinLength():$this->table()->searchMinLength();
+            $required = ($this->getAttr('relationSearchRequired') === true)? true:null;
 
-        $data = ['query'=>$query,'separator'=>$route::getDefaultSegment(),'required'=>$required,'char'=>$route::getReplaceSegment(),'pattern'=>['minLength'=>$searchMinLength]];
-        if($route->hasOrder())
-        $route = $route->changeSegment('order',true);
-        $data['href'] = $route;
+            $data = ['query'=>$query,'separator'=>$route::getDefaultSegment(),'required'=>$required,'char'=>$route::getReplaceSegment(),'pattern'=>['minLength'=>$searchMinLength]];
+            if($route->hasOrder())
+            $route = $route->changeSegment('order',true);
+            $data['href'] = $route;
 
-        $id = $attr['id'] ?? null;
-        if(is_array($attr) && array_key_exists('id',$attr))
-        unset($attr['id']);
-
-        $return .= Html::divOp('input');
-        $return .= Html::inputText(null,['placeholder'=>$placeholder,'name'=>true,'data'=>$data,'id'=>$id]);
-
-        if($option['button'] === true)
-        $return .= Html::button(null,['icon-solo','search']);
-
-        $return .= Html::divOp('popup');
-        $return .= $route->orderSelect();
-        $return .= Html::div(null,'results');
-        $return .= Html::divCl();
-
-        $return .= Html::divCl();
-        $return .= Html::divOp('current');
-        $return .= $this->formHidden();
-        $return .= $this->formComplexSearchChoices($value,$attr,$option);
-        $return .= Html::divCl();
+            $id = $attr['id'] ?? null;
+            if(is_array($attr) && array_key_exists('id',$attr))
+            unset($attr['id']);
+            
+            $return .= Html::divOp('input-popup');
+            
+            $return .= Html::divOp(array('data'=>array('absolute-placeholder'=>true)));
+            $return .= Html::divOp('input');
+            $return .= Html::inputText(null,['placeholder'=>$placeholder,'name'=>true,'data'=>$data,'id'=>$id]);
+            if($option['button'] === true)
+            $return .= Html::button(null,['icon-solo','search']);
+            $return .= Html::divCl();
+            $return .= Html::divCl();
+            
+            $return .= Html::divOp('popup');
+            $return .= $route->orderSelect();
+            $return .= Html::div(null,'results');
+            $return .= Html::divCl();
+            
+            $return .= Html::divCl();
+            
+            $return .= Html::divOp('current');
+            $return .= $this->formHidden();
+            $return .= $this->formComplexSearchChoices($value,$attr,$option);
+            $return .= Html::divCl();
+        }
 
         return $return;
     }
@@ -356,6 +366,28 @@ abstract class Relation extends Core\Col\Relation
 
         $return = Html::ulCond($return);
 
+        return $return;
+    }
+    
+    
+    // hasAnchorCorner
+    // retourne vrai s'il faut mettre l'attribut anchor-corner
+    final public static function hasAnchorCorner(self $col):bool
+    {
+        return (in_array($col->complexTag(),array('select','search'),true));
+    }
+    
+    
+    // hasAbsolutePlaceholder
+    // retourne vrai s'il faut mettre l'attribut absolute-placeholder
+    final public static function hasAbsolutePlaceholder(self $col):bool
+    {
+        $return = false;
+        $tag = $col->complexTag();
+        
+        if($tag === 'select')
+        $return = true;
+        
         return $return;
     }
 }

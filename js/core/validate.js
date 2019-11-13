@@ -41,10 +41,11 @@ quid.core.required = $.fn.required = function()
         r = true;
         
         $(this).each(function(index) {
+            var name = $(this).prop('name');
             var disabled = $(this).prop('disabled');
-            var required = $(this).data("required");
+            var required = $(this).attr("data-required");
             
-            if(!disabled && required && $.isNumeric(required))
+            if(!disabled && $.isNumeric(required) && required > 0)
             {
                 if($(this).is("[type='checkbox'],[type='radio']"))
                 {
@@ -81,7 +82,7 @@ quid.core.pattern = $.fn.pattern = function()
         
         $(this).each(function(index) {
             var disabled = $(this).prop('disabled');
-            var pattern = $(this).data("pattern");
+            var pattern = $(this).attr("data-pattern");
             var val = $(this).inputValue(true);
             
             if(!disabled && quid.base.isStringNotEmpty(pattern) && val.length)
@@ -102,59 +103,54 @@ quid.core.pattern = $.fn.pattern = function()
 // gère les événements relatifs à la validation d'un champ
 quid.core.fieldValidate = $.fn.fieldValidate = function() 
 {
-    $(this).on('change', function() {
-        $(this).trigger($(this).inputValue(true)? 'validate:trigger':'validate:pattern validate:empty');
+    $(this).on('change', function(event) {
+        $(this).trigger('validate:process');
     })
-    .on('focus', function() {
+    .on('focus', function(event) {
         $(this).trigger("validate:valid");
     })
-    .on('focusout', function() {
-        $(this).trigger($(this).inputValue(true)? 'validate:trigger':'validate:pattern');
+    .on('focusout', function(event) {
+        $(this).trigger('validate:process');
     })
-    .on('validate:isValid',function() {
-        return ($(this).data('invalid') === true)? false:true;
+    .on('validate:process', function(event) {
+        $(this).trigger($(this).inputValue(true)? 'validate:trigger':'validate:pattern validate:empty');
     })
-    .on('validate:isNotEmptyAndValid',function() {
-        return ($(this).inputValue(true) && $(this).validate() === true)? true:false;
+    .on('validate:binded', function(event) {
+        return true;
     })
-    .on('validate:required', function() {
+    .on('validate:isEmpty',function(event) {
+        return (!$(this).inputValue(true))? true:false;
+    })
+    .on('validate:isValid',function(event) {
+        return ($(this).validate() === true)? true:false;
+    })
+    .on('validate:isNotEmptyAndValid',function(event) {
+        return (!$(this).triggerHandler('validate:isEmpty') && $(this).triggerHandler('validate:isValid'))? true:false;
+    })
+    .on('validate:required', function(event) {
+        event.stopPropagation();
         $(this).trigger(($(this).required() === true)? 'validate:valid':'validate:invalid');
     })
-    .on('validate:pattern', function() {
+    .on('validate:pattern', function(event) {
+        event.stopPropagation();
         $(this).trigger(($(this).pattern() === true)? 'validate:valid':'validate:invalid');
     })
-    .on('validate:trigger', function() {
-        $(this).trigger(($(this).validate() === true)? 'validate:valid':'validate:invalid');
+    .on('validate:trigger', function(event) {
+        var r = $(this).validate();
+        event.stopPropagation();
+        $(this).trigger((r === true)? 'validate:valid':'validate:invalid');
+        $(this).trigger(($(this).inputValue(true))? 'validate:notEmpty':'validate:empty');
         
-        if(!$(this).inputValue(true))
-        $(this).trigger('validate:empty');
+        return r;
     })
-    .on('validate:valid', function() {
+    .on('validate:valid', function(event) {
         if($(this).is("[type='checkbox'],[type='radio']"))
-        $(this).inputGroup().not($(this)).removeData('invalid');
-        
-        $(this).removeData('invalid');
-    })
-    .on('validate:invalid', function() {
-        $(this).data('invalid',true);
-    })
-    
-    return this;
-}
+        $(this).inputGroup().not($(this)).attr('data-validate','valid');
 
-
-// fieldValidateFull
-// gère les événements relatifs à la validation d'un champ, y compris l'ajout des classes
-quid.core.fieldValidateFull = $.fn.fieldValidateFull = function() 
-{
-    $(this).fieldValidate().on('validate:invalid', function() {
-        $(this).addClass('invalid');
+        $(this).attr('data-validate','valid');
     })
-    .on('validate:valid', function() {
-        if($(this).is("[type='checkbox'],[type='radio']"))
-        $(this).inputGroup().not($(this)).removeClass('invalid');
-        
-        $(this).removeClass('invalid');
+    .on('validate:invalid', function(event) {
+        $(this).attr('data-validate','invalid');
     });
     
     return this;
@@ -164,35 +160,51 @@ quid.core.fieldValidateFull = $.fn.fieldValidateFull = function()
 // validatePrevent
 // valide l'élément ou tous les éléments contenus dans le formulaire lors d'un événement
 // bloque l'événement si la validation échoue
-quid.core.validatePrevent = $.fn.validatePrevent = function(type,fields) 
+quid.core.validatePrevent = $.fn.validatePrevent = function(type) 
 {
     $(this).on(type, function(event) {
-        if(!(fields instanceof jQuery))
+        var r = $(this).triggerHandler('validatePrevent:validate')
+        
+        if(r !== true)
         {
-            var pattern = "[data-required],[data-pattern]";
-            if($(this).is(pattern))
-            fields = $(this);
-            else
-            fields = $(this).find(pattern);
+            event.stopImmediatePropagation();
+            event.preventDefault();
+            $(this).trigger('validate:failed',[event]);
         }
-
-        if(fields.length)
-        {
-            var validate = fields.validate();
-            fields.trigger("validate:trigger");
+        
+        else
+        $(this).trigger('validate:success',[event]);
+        
+        return r;
+    })
+    .on('validatePrevent:validate', function(event) {
+        var r = true;
+        
+        $(this).triggerHandler('validatePrevent:getFields').each(function(index, el) {
+            var val = $(this).triggerHandler("validate:trigger");
             
-            if(validate !== true)
-            {
-                event.stopImmediatePropagation();
-                event.preventDefault();
-                $(this).trigger('validate:failed',[event]);
-                return false;
-            }
-            
-            else
-            $(this).trigger('validate:success',[event]);
-        }
-    });
+            if(val === false)
+            r = val;
+        });
+        
+        return r;
+    })
+    .on('validatePrevent:getFields', function(event) {
+        var r = $(this).find(":input").not("[name^='-']").filter("[data-required],[data-pattern]");
+        
+        r.each(function(index, el) {
+            if(!$(this).triggerHandler('validate:binded'))
+            $(this).fieldValidate();
+        });
+        
+        return r;
+    })
+    .on('validatePrevent:prepare', function(event) {
+        event.stopPropagation();
+        var fields = $(this).triggerHandler('validatePrevent:getFields');
+        fields.trigger("validate:pattern");
+    })
+    .trigger('validatePrevent:prepare');
     
     return this;
 }

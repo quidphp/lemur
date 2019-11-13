@@ -58,12 +58,18 @@
 
             > .close {
                 @include abs(-8px, -8px);
+                
+                &:hover,
+                &[data-triggered='1'] {
+                    opacity: 0.8;
+                }
             }
         }
     }
 
     > .in {
         display: none;
+        max-width: 450px;
         font-size: 90%;
 
         div span:first-child {
@@ -108,12 +114,15 @@
     .scroller {
         width: 100%;
         padding-top: 10px;
-        overflow-y: visible;
-        overflow-x: auto;
+        overflow: hidden;
         min-height: 400px;
-
-        &[data-status='grabbing'] {
+        
+        &[data-grabbable='1'] {
             @include disableSelection();
+            cursor: grab !important;
+        }
+        
+        &[data-status='grabbing'] {
             cursor: grabbing !important;
         }
     }
@@ -151,8 +160,8 @@
 [data-route='general'] main .scroller > table {
     @include wh();
 
-    .bottom-left .popup,
-    .bottom-right .popup {
+    [data-anchor-corner='bottom-left'] .popup,
+    [data-anchor-corner='bottom-right'] .popup {
         top: 100%;
         bottom: inherit;
     }
@@ -168,7 +177,15 @@
     &:first-child .cell-inner {
         border-left: 1px solid $darkColor;
     }
-
+    
+    .close {
+        
+        &:hover,
+        &[data-triggered='1'] {
+            opacity: 0.8;
+        }
+    }
+    
     .cell-inner {
         @include flex();
         @include transitions(background-color 0.3s, border 0.3s);
@@ -177,7 +194,7 @@
         position: relative;
         text-align: left;
         border-right: 1px solid $darkColor;
-
+        
         .label {
             color: $white;
             font-size: 85%;
@@ -193,17 +210,23 @@
 
 /* ROWS */
 [data-route='general'] main .scroller > table > thead > tr > .rows {
-    min-width: 40px;
     @include rowsCheckerToggleAll();
+    min-width: 40px;
+    width: 40px;
 }
 
 /* COLS */
 [data-route='general'] main .scroller > table > thead > tr > th.action {
     @include colsSorter();
     min-width: 40px;
+    width: 40px;
 }
-[data-route='general'] main .scroller > table > tbody > tr > td.action .cell-inner:hover {
-    background-color: $lightYellow;
+[data-route='general'] main .scroller > table > tbody > tr > td.action .cell-inner {
+    
+    &:hover,
+    &[data-triggered='1'] {
+        background-color: $lightYellow;
+    }
 }
 
 /* ORDER */
@@ -229,7 +252,7 @@
     }
 
     .right:hover,
-    .right.clicked,
+    .right[data-triggered='1'],
     &.ordering .right {
         background-color: $darkerColor;
 
@@ -249,12 +272,12 @@
         @include triangle(bottom, $white, 12px, 6px);
     }
     &[data-direction='asc'] .right:hover .triangle,
-    &[data-direction='asc'] .right.clicked .triangle,
+    &[data-direction='asc'] .right[data-triggered='1'] .triangle,
     &[data-direction='asc'].ordering .right .triangle {
         @include triangle(top, $lightYellow, 12px, 6px);
     }
     &[data-direction='desc'] .right:hover .triangle,
-    &[data-direction='desc'] .right.clicked .triangle,
+    &[data-direction='desc'] .right[data-triggered='1'] .triangle,
     &[data-direction='desc'].ordering .right .triangle {
         @include triangle(bottom, $lightYellow, 12px, 6px);
     }
@@ -262,18 +285,14 @@
 
 /* FILTER */
 [data-route='general'] main .scroller > table > thead > tr > th.filterable {
-    .left {
+    .filter-outer {
         @include abs(0, null, null, 0);
         @include wh(30px, 100%);
-        cursor: pointer;
+        @include filterTogglerOuter();
     }
 
     .label {
         padding-left: 30px;
-    }
-
-    .filter-outer {
-        @include filterTogglerOuter();
     }
 }
 
@@ -283,7 +302,7 @@
     color: $black;
 
     &:hover,
-    &.clicked {
+    &[data-triggered='1'] {
         color: $darkGray;
         text-decoration: underline;
     }
@@ -358,7 +377,7 @@
 /* RESPONSIVE */
 @media screen and (max-width: 900px), screen and (orientation: portrait) {
     [data-route='general'] main .inner > .top .right {
-        text-align: left;
+        width: 100%;
     }
 }
 

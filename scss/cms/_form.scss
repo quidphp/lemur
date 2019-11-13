@@ -43,7 +43,7 @@
         color: $black;
 
         &:hover,
-        &.clicked {
+        &[data-triggered='1'] {
             color: $darkGray;
             text-decoration: underline;
         }
@@ -140,6 +140,46 @@
     }
 }
 
+// inputTextBase
+// mixin avec des styles de base pour les inputs/textarea
+@mixin inputTextBase()
+{
+    @include inputTextEvents();
+    padding: 8px 10px;
+    border-radius: 5px;
+    border: 1px solid $lightGray;
+    height: auto;
+}
+
+// inputTextEvents
+// mixin avec des styles de base pour les events dans les inputs/textarea
+@mixin inputTextEvents()
+{
+    &.active,
+    &:hover,
+    &:focus {
+        background-color: $lightYellow;
+    }
+
+    &[data-validate='invalid'] {
+        background-color: $red !important;
+        color: $white !important;
+        border: 1px solid $black;
+        
+        &::-webkit-input-placeholder {
+            color: $lightestGray;
+        }
+        
+        &::-moz-placeholder {
+            color: $lightestGray;
+        }
+        
+        &::-ms-input-placeholder {
+            olor: $lightestGray;
+        }
+    }
+}
+
 // inputChoice
 // style utilisé pour faire un choix parmis plusieurs input radio ou checkbox
 @mixin inputChoice($paddingtb: 8px) {
@@ -202,8 +242,7 @@
         opacity: 1;
     }
 
-    &.submitted,
-    &.clicked,
+    &[data-triggered='1'],
     &:active {
         background-color: $darkerColor;
         border: 1px solid $black;
@@ -213,6 +252,11 @@
         background-color: transparent;
         border: transparent;
         padding: 0;
+        border-radius: 0;
+    }
+    
+    &.no-border {
+        border: 0;
         border-radius: 0;
     }
 }

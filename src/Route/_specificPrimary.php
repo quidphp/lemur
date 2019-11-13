@@ -14,11 +14,11 @@ use Quid\Core;
 // trait that provides most methods used for a specific route using a primary segment
 trait _specificPrimary
 {
-    // onBefore
-    // avant le lancement de la route
-    final protected function onBefore()
+    // canTrigger
+    // si la route peut être lancé
+    final public function canTrigger():bool
     {
-        return $this->row()->isVisible();
+        return (parent::canTrigger() && $this->row()->isVisible());
     }
 
 

@@ -293,9 +293,9 @@ trait _generalRelation
     }
 
 
-    // makeFilter
+    // makeGeneralRelation
     // construit un input filter
-    final public static function makeFilter(Core\Col $col,Core\Route $currentRoute,$filter,$class=null,$closeAttr=null,?string $label=null):string
+    final public static function makeGeneralRelation(Core\Col $col,Core\Route $currentRoute,$filter,array $attr,$closeAttr=null,?string $label=null):string
     {
         $r = '';
         $html = '';
@@ -311,46 +311,47 @@ trait _generalRelation
         {
             $active = true;
             $selected = $filter[$name];
-            $class[] = 'filtering';
+            $attr[] = 'filtering';
             $closeFilter = Base\Arr::unset($name,$filter);
             $closeRoute = $currentRoute->changeSegments(['filter'=>$closeFilter]);
             $after = $closeRoute->a(null,$closeAttr);
         }
 
         $route = static::make(['table'=>$table,'col'=>$col,'selected'=>$selected]);
-        $limit = $route->limit();
-        $query = $route->getSearchQuery();
-        $data = ['query'=>$query,'separator'=>static::getDefaultSegment(),'char'=>static::getReplaceSegment()];
-        if($route->hasOrder())
-        $route = $route->changeSegment('order',true);
-        $data['href'] = $route;
-        $order = $route->orderSelect();
-
-        if($size > $limit)
+        
+        if($route->canTrigger())
         {
-            $searchMinLength = $col->searchMinLength();
-            $html .= Html::divOp('top');
-            $placeholder = static::langText('common/filter')." ($size)";
-            $html .= Html::inputText(null,['name'=>true,'data-pattern'=>['minLength'=>$searchMinLength],'placeholder'=>$placeholder]);
+            $limit = $route->limit();
+            $query = $route->getSearchQuery();
+            $data = ['query'=>$query,'separator'=>static::getDefaultSegment(),'char'=>static::getReplaceSegment()];
+            if($route->hasOrder())
+            $route = $route->changeSegment('order',true);
+            $data['href'] = $route;
+            $order = $route->orderSelect();
 
-            if(!empty($order))
+            if($size > $limit)
             {
-                $html .= Html::div(null,'spacing');
-                $html .= $order;
+                $searchMinLength = $col->searchMinLength();
+                $html .= Html::divOp('top');
+                $placeholder = static::langText('common/filter')." ($size)";
+                $html .= Html::inputText(null,['name'=>true,'data-pattern'=>['minLength'=>$searchMinLength],'placeholder'=>$placeholder]);
+
+                if(!empty($order))
+                {
+                    $html .= Html::div(null,'spacing');
+                    $html .= $order;
+                }
+
+                $html .= Html::divCl();
             }
 
-            $html .= Html::divCl();
+            elseif($size > 1 && !empty($order))
+            $html .= Html::div($route->orderSelect(),'top');
+            
+            $attr = Base\Attr::append($attr,array('data'=>$data));
+            $html .= Html::div(null,'results');
+            $r .= static::makeClickOpen($html,$label,$after,$attr);
         }
-
-        elseif($size > 1 && !empty($order))
-        {
-            $html .= Html::divOp('top');
-            $html .= $route->orderSelect();
-            $html .= Html::divCl();
-        }
-
-        $html .= Html::div(null,'results');
-        $r .= Html::clickOpen($html,$label,$after,[$class,'data'=>$data]);
 
         return $r;
     }

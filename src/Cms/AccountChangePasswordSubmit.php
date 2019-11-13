@@ -20,7 +20,15 @@ class AccountChangePasswordSubmit extends Lemur\Route\AccountChangePasswordSubmi
             'role'=>['>'=>'user']]
     ];
 
-
+    
+    // canTrigger
+    // vérifie si la route peut être lancé
+    final public function canTrigger():bool
+    {
+        return (parent::canTrigger() && $this->hasPermission('accountChangePassword'))? true:false;
+    }
+    
+    
     // routeSuccess
     // route utilisé pour rediriger après le formulaire
     final public function routeSuccess():Lemur\Route

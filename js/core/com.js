@@ -31,14 +31,14 @@ quid.core.com = $.fn.com = function()
         .on('com:close', function(event) {
             $(this).stop(true,true).fadeOut("slow");
         })
-        .on('redirect', function(event,table,primary) {
+        .on('redirect', function(event,table,primary,clickEvent) {
             var href = $(this).dataHrefReplaceChar(table);
             
             if(quid.base.isStringNotEmpty(href))
             {
                 $(this).trigger('block');
                 href = href.replace($(this).data('char'),primary);
-                $(document).trigger('document:go',[href]);
+                $(document).trigger('document:go',[href,clickEvent]);
             }
         })
         .on('click', '.date', function(event) {
@@ -48,7 +48,7 @@ quid.core.com = $.fn.com = function()
             var parent = $(this).parent();
             var table = parent.data('table');
             var primary = parent.data('primary');
-            $this.trigger('redirect',[table,primary]);
+            $this.trigger('redirect',[table,primary,event]);
         });
     });
     

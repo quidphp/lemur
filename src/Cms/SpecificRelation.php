@@ -40,9 +40,9 @@ class SpecificRelation extends Core\RouteAlias
     ];
 
 
-    // onBefore
+    // canTrigger
     // validation avant le lancement de la route
-    final protected function onBefore()
+    final public function canTrigger():bool
     {
         $return = false;
         $table = $this->segment('table');

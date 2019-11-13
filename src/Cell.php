@@ -30,7 +30,8 @@ class Cell extends Core\Cell
         $value = $this->get($option);
         $col = $this->col();
         $placeholder = $col->emptyPlaceholder($value);
-
+        $attr = $this->getGeneralComponentAttr($attr);
+        
         if(is_string($placeholder))
         $value = Html::div($placeholder,'empty-placeholder');
 
@@ -43,12 +44,14 @@ class Cell extends Core\Cell
     // specificComponent
     // génère le html pour le specific component de la cellule
     // utilisé dans les formulaires spécifiques de lemur
-    final public function specificComponent(string $wrap,$pattern=null,array $attr=null,?array $replace=null,?array $option=null):string
+    final public function specificComponent(?array $attr=null,?array $option=null):string
     {
         $return = '';
+        $compAttr = $this->getSpecificComponentAttr();
         $option = Base\Arr::plus(['context'=>'cms:specific'],$option);
-        $return = $this->formComplexWrap($wrap,$pattern,$attr,$replace,$option);
-
+        $form = $this->formComplex($attr,$option);
+        $return = Html::div($form,$compAttr);
+        
         return $return;
     }
 
@@ -78,10 +81,31 @@ class Cell extends Core\Cell
 
 
     // getDataAttr
-    // retourne les dates attr pour la cellule
+    // retourne les datas attr pour la cellule
     final public function getDataAttr(array $return):array
     {
         return $this->col()->getDataAttr($return);
+    }
+    
+    
+    // getGeneralComponentAttr
+    // retourne les attr pour le general component
+    final public function getGeneralComponentAttr($return):array
+    {
+        if(!is_array($return))
+        $return = (array) $return;
+        
+        $return[] = 'general-component';
+        
+        return $return;
+    }
+    
+    
+    // getSpecificComponentAttr
+    // retourne les attr pour le specific component
+    final public function getSpecificComponentAttr($return=null):array
+    {
+        return $this->col()->getSpecificComponentAttr($return);
     }
 }
 

@@ -43,15 +43,15 @@ class GeneralRelation extends Core\RouteAlias
     ];
 
 
-    // onBefore
-    // validation avant le lancement de la route
-    final protected function onBefore()
+    // canTrigger
+    // retourne vrai si la route peut être triggé
+    final public function canTrigger():bool
     {
         $return = false;
         $table = $this->segment('table');
         $relation = $this->relation();
 
-        if($table instanceof Core\Table && $table->hasPermission('view','relation','generalRelation'))
+        if(parent::canTrigger() && $table instanceof Core\Table && $table->hasPermission('view','filter','relation','generalRelation'))
         {
             if($relation->isRelationTable())
             {

@@ -20,6 +20,8 @@ class Date extends Core\Col\Date
     // config
     public static $config = [
         '@cms'=>[
+            'anchorCorner'=>true,
+            'absolutePlaceholder'=>true,
             'onComplex'=>true,
             'route'=>['calendar'=>Lemur\Cms\SpecificCalendar::class]]
     ];

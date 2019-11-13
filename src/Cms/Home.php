@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Lemur\Cms;
 use Quid\Base\Html;
 use Quid\Core;
+use Quid\Base;
 
 // home
 // class for the home route of the CMS
@@ -25,8 +26,7 @@ class Home extends Core\Route\Home
             'role'=>['>'=>'user']],
         'popup'=>[
             'dbName','driver','serverVersion','connectionStatus','host','username',
-            'charset','collation','classFqcn','classSyntax','classSchema','classTables','importantVariables'
-        ]
+            'charset','collation','classFqcn','classSyntax','classSchema','classTables','importantVariables']
     ];
 
 
@@ -79,18 +79,20 @@ class Home extends Core\Route\Home
         $tables = $this->db()->tables();
         $total = $tables->filter(['hasPermission'=>true],'view')->total(true,true);
         $popup = $this->makeHomePopup();
-        $attr = ['popup-trigger',(!empty($popup))? ['with-popup','with-icon','anchor-corner']:null];
+        
+        $attr = ['popup-trigger'];
+        if(!empty($popup))
+        $attr = Base\Arr::append($attr,['with-popup','with-icon','tabindex'=>-1,'data'=>array('anchor-corner'=>true,'absolute-placeholder'=>true)]);
 
-        $r .= Html::divOp($attr);
-        $r .= Html::divOp('popup-title');
         $r .= Html::span($total['table'].' '.static::langPlural($total['table'],'lcf|common/table'));
         $r .= Html::span(',&nbsp;');
         $r .= Html::span($total['row'].' '.static::langPlural($total['row'],'lcf|common/row'));
         $r .= Html::span('&nbsp;'.static::langText('lcf|common/and').'&nbsp;');
         $r .= Html::span($total['col'].' '.static::langPlural($total['col'],'lcf|common/col'));
-        $r .= Html::divCl();
+        
+        $r = Html::button($r,'popup-title');
         $r .= Html::div($popup,'popup');
-        $r .= Html::divCl();
+        $r = Html::div($r,$attr);
 
         return $r;
     }
@@ -106,7 +108,7 @@ class Home extends Core\Route\Home
         {
             $values = $this->getAttr('popup');
             $closure = $this->infoPopupClosure();
-            $return = static::makeInfoPopup($values,$closure,false);
+            $return = static::makeInfoPopup($values,$closure);
         }
 
         return $return;
@@ -146,24 +148,6 @@ class Home extends Core\Route\Home
     final protected function mainTopRight():string
     {
         $r = '';
-        $r .= $this->makeAbout();
-
-        return $r;
-    }
-
-
-    // makeAbout
-    // bouton vers la page à propos
-    final protected function makeAbout():string
-    {
-        $r = '';
-        $session = static::session();
-
-        if($this->hasPermission('about'))
-        {
-            $route = About::make();
-            $r .= $route->aDialog(['with-icon','help']);
-        }
 
         return $r;
     }
@@ -174,55 +158,6 @@ class Home extends Core\Route\Home
     final protected function mainBottom():string
     {
         $r = '';
-
-        $r .= Html::divOp('search');
-        $r .= Html::divCond($this->makeSearch(),'inner-centered');
-        $r .= Html::divCl();
-
-        return $r;
-    }
-
-
-    // makeSearch
-    // génère le champ de recherche globale
-    final protected function makeSearch():string
-    {
-        $r = '';
-
-        if($this->hasPermission('homeSearch'))
-        {
-            $route = HomeSearch::make();
-            $tables = $this->db()->tables();
-            $searchable = $route->searchable();
-            $lang = static::lang();
-
-            if($searchable->isNotEmpty())
-            {
-                $minLength = $tables->searchMinLength();
-                $data = ['keyupDelay'=>800,'required'=>true,'pattern'=>['minLength'=>$minLength]];
-                $name = $route->getSearchName();
-
-                $replace = ['count'=>$minLength];
-                $note = $lang->plural($minLength,'home/searchNote',$replace);
-
-                $r .= $route->formOpen();
-                $r .= Html::inputText(null,['name'=>$name,'placeholder'=>static::langText('home/searchSubmit'),'data'=>$data]);
-                $r .= Html::submit(true,['button','icon-solo','search']);
-                $r .= Html::div(null,'popup');
-                $r .= Html::formClose();
-
-                $r .= Html::divOp('search-in');
-                $r .= Html::divOp('first');
-                $r .= Html::span($lang->text('home/note').':');
-                $r .= Html::span($note,'note');
-                $r .= Html::divCl();
-                $r .= Html::divOp('second');
-                $r .= Html::span($lang->text('home/searchIn').':');
-                $r .= Html::span(implode(', ',$searchable->pair('label')),'labels');
-                $r .= Html::divCl();
-                $r .= Html::divCl();
-            }
-        }
 
         return $r;
     }

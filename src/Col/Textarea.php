@@ -128,7 +128,11 @@ class Textarea extends Core\ColAlias
         foreach ($tables as $table)
         {
             $route = $this->route('tableRelation',['table'=>$table]);
-            $r .= $route::makeClickOpen($table,$route,['table-relation','anchor-corner']);
+            if($route->canTrigger())
+            {
+                $attr = array('data'=>array('absolute-placeholder'=>true,'anchor-corner'=>true));
+                $r .= Html::divCond($route::makeTableRelation($table,$route,['table-relation']),$attr);
+            }
         }
 
         return $r;

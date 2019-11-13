@@ -17,7 +17,6 @@ use Quid\Core;
 class About extends Core\RouteAlias
 {
     // trait
-    use _common;
     use _modal;
 
 
@@ -28,7 +27,15 @@ class About extends Core\RouteAlias
             'fr'=>'a-propos']
     ];
 
-
+    
+    // canTrigger
+    // retourne vrai si la route peut être trigger
+    final public function canTrigger():bool 
+    {
+        return (parent::canTrigger() && $this->hasPermission('about'))? true:false;
+    }
+    
+    
     // trigger
     // html pour la page à propos, qui est accessible à tous peu importe le role
     final public function trigger()
@@ -43,12 +50,12 @@ class About extends Core\RouteAlias
     {
         $return = [];
         $boot = static::boot();
-
+        $return = $boot::quidCredit(false);
         $return['bootLabel'] = $boot->label();
-        $return['version'] = $boot->version(true);
-        $return['author'] = $this->authorLink();
-        $return['supportEmail'] = $this->authorEmail();
-
+        $return['authorLink'] = Html::a($return['email'],$return['author']);
+        $return['websiteLink'] = Html::a($return['website'],$return['framework']);
+        $return['licenseLink'] = Html::a($return['licenseUrl'],$return['licenseType']);
+        
         return $return;
     }
 
@@ -65,12 +72,27 @@ class About extends Core\RouteAlias
         $r .= Html::h2($boot->label());
         $r .= Html::h3($boot->typeLabel());
         $r .= Html::divCond(static::langText('about/content',$replace),'content');
-        $r = Html::div($r,'inner-centered');
 
         return $r;
     }
 
+    
+    // framework
+    // retourne le lien web pour le framework
+    final public static function framework($attr=null):string
+    {
+        return Html::a(static::langText('about/uri'),static::langText('about/framework'),$attr);
+    }
 
+
+    // authorEmail
+    // retourne le lien email de l'auteur
+    final public static function authorEmail():string
+    {
+        return Html::a(static::langText('about/email'),true);
+    }
+    
+    
     // aDialog
     // retourne le lien dialog
     final public function aDialog(?array $attr=null):string

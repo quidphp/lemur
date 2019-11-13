@@ -33,6 +33,7 @@ $(document).ready(function() {
 		var com = $(this).find("#wrapper .com");
         var subMenu = $(this).find(".with-submenu");
         var carousel = $(this).find(".with-carousel");
+        var mainSearch = $(this).find("header .top form");
         
         // carousel
         carousel.callThis(quid.core.carousel,".trigger");
@@ -52,6 +53,9 @@ $(document).ready(function() {
 		burger.on('click', function(event) {
 			body.toggleClass('responsive-menu-open');
 		});
+        
+        // mainSearch
+        mainSearch.callThis(quid.cms.mainSearch);
 	})
     
     // document ajax progress
@@ -70,17 +74,15 @@ $(document).ready(function() {
         var popupTrigger = parent.find(".popup-trigger.with-popup:not(.with-ajax)");
         var popupTriggerAjax = parent.find(".popup-trigger.with-popup.with-ajax");
 		var modalAnchor = parent.find("a[data-modal]");
-		var anchorCorner = parent.find(".anchor-corner");
+		var anchorCorner = parent.find("[data-anchor-corner='1']");
+        var absolutePlaceholder = parent.find("[data-absolute-placeholder='1']");
 		var aConfirm = parent.find("a[data-confirm]");
 		var print = parent.find(".submit.print");
         var select = parent.find("select");
-
+        
         // modalAnchor
         modalAnchor.callThis(quid.core.modalAjax,modal);
-        
-		// anchorCorner
-		anchorCorner.callThis(quid.core.anchorCorner);
-		
+                
 		// aConfirm
 		aConfirm.callThis(quid.core.confirm,'click');
 		
@@ -88,7 +90,7 @@ $(document).ready(function() {
 		print.on('click', function(event) {
 			window.print();
 		});
-        
+
         // popupTrigger
         popupTrigger.callThis(quid.core.clickOpenWithTrigger,".popup-title");
         
@@ -97,6 +99,12 @@ $(document).ready(function() {
         
         // fakeselect
         select.callThis(quid.core.selectToFake);
+        
+        // anchorCorner
+        anchorCorner.callThis(quid.core.anchorCorner);
+        
+        // absolutePlaceholder
+        absolutePlaceholder.callThis(quid.core.absolutePlaceholder);
 	})
     
     // login
@@ -140,11 +148,6 @@ $(document).ready(function() {
     // comportement pour la page d'accueil du CMS une fois connecté
 	.on('route:home', function() {
 		
-		var form = $(this).find("main form");
-		var field = form.find("[data-required],[data-pattern]");
-		
-		if(form.length)
-		form.clickOpenInputFormAjax(field);
 	})
     
     .react();

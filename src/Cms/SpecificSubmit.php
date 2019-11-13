@@ -45,9 +45,9 @@ class SpecificSubmit extends Core\RouteAlias
     ];
 
 
-    // onBefore
+    // canTrigger
     // validation avant le lancement
-    final protected function onBefore()
+    final public function canTrigger():bool
     {
         $return = false;
         $table = $this->table();

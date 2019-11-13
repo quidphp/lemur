@@ -15,7 +15,7 @@ quid.cms.colsSorter = function()
         var colsButton = colsPopup.find("button[name='cols']");
         
         // clickOpen
-        $(this).clickOpenWithTrigger(".toggler");
+        $(this).clickOpenWithTrigger(".trigger");
         
         // colsPopup
         colsPopup.verticalSorting(".choice",'.choice-in')
@@ -59,16 +59,16 @@ quid.cms.colsSorter = function()
         .on('isCurrent',function() {
             return (colsButton.triggerHandler('getCheckboxSet') === colsButton.data('current'))? true:false;
         })
-        .on('click', function() {
-            $(this).trigger('redirect');
+        .on('click', function(event) {
+            $(this).trigger('redirect',[event]);
         })
-        .on('redirect', function() {
+        .on('redirect', function(event,clickEvent) {
             var href = $(this).dataHrefReplaceChar($(this).triggerHandler('getCheckboxSet'));
             
             if(quid.base.isStringNotEmpty(href) && href !== quid.base.currentRelativeUri())
             {
                 $(this).trigger('block');
-                $(document).trigger('document:go',[href]);
+                $(document).trigger('document:go',[href,clickEvent]);
             }
         });
     });

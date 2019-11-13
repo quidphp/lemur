@@ -13,21 +13,26 @@
 // mixin pour le toggler du filter dans general
 @mixin filterTogglerOuter() {
     @include transition(background-color);
-    height: 100%;
-
+    z-index: 2;
+    
+    .close {
+        @include abs(-8px, -8px);
+        z-index: 5;
+    }
+    
     &:hover,
     &.filtering,
     &.active {
         background-color: $darkerColor;
     }
-
-    .close {
-        @include abs(-8px, -8px);
+    
+    &.active.trigger {
+        z-index: 3;
     }
-
-    .trigger {
-        height: 100%;
-
+    
+    > .trigger {
+        @include wh();
+        
         .filter {
             @include abs(50%, null, null, 50%);
             @include transition(opacity);
@@ -134,7 +139,7 @@
                 @include filterElementBase();
 
                 &:hover,
-                &.clicked {
+                &[data-triggered='1'] {
                     color: $black;
                     background-color: $lightYellow;
                 }
@@ -149,7 +154,7 @@
                 @include wh(16px, true, null, true);
 
                 &:hover,
-                &.clicked {
+                &[data-triggered='1'] {
                     opacity: 0.5;
                 }
             }
@@ -212,7 +217,7 @@
     font-weight: bold;
 
     &:hover,
-    &.clicked {
+    &[data-triggered='1'] {
         background-color: $darkGray;
         color: $white;
     }

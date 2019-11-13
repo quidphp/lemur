@@ -33,6 +33,7 @@ $(document).ready(function() {
         var addRemove = parent.find("[data-tag='add-remove'] .specific-component");
         var tableRelation = parent.find("[data-table-relation='1'] .specific-component");
         var tinymce = parent.find("[data-group='tinymce'] .specific-component");
+        var anchorCorner = parent.find("[data-anchor-corner]");
         
         // date
         date.calendarInput();
@@ -54,6 +55,9 @@ $(document).ready(function() {
         
         // tinycme
         tinymce.callThis(quid.cms.tinymceWithTableRelation);
+        
+        // anchorCorner
+        anchorCorner.trigger('anchorCorner:refresh');
     })
     
 	// specific
@@ -89,9 +93,6 @@ $(document).ready(function() {
 		form.block('submit').on('submit', function() {
 			$(this).trigger('block');
 		});
-		
-		// fields
-		fields.fieldValidateFull();
 	})
 	
 	// specificTrigger

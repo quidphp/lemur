@@ -16,8 +16,12 @@ quid.core.modal = $.fn.modal = function()
     $(this).each(function(index, el) {
         var modal = $(this);
         
-        $(this).block('modal:get').escapeCatch().on('modal:getInner', function(event) {
-            return $(this).find(".inner");
+        $(this).block('modal:get').escapeCatch()
+        .on('modal:getBox', function(event) {
+            return $(this).find(".box").first();
+        })
+        .on('modal:getInner', function(event) {
+            return $(this).triggerHandler('modal:getBox').find(".inner").first();
         })
         .on('click', '.close', function(event) {
             modal.trigger('modal:closeIfOpen');
@@ -26,6 +30,9 @@ quid.core.modal = $.fn.modal = function()
         .on('modal:isEmpty', function(event) {
             return ($(this).triggerHandler('modal:getInner').html().length > 0)? false:true;
         })
+        .on('modal:hasText', function(event) {
+            return ($(this).triggerHandler('modal:getInner').text().length > 0)? true:false;
+        })
         .on('modal:isOpen', function(event) {
             var status = $(this).attr('data-status');
             return (status === 'loading' || status === 'ready')? true:false;
@@ -33,19 +40,19 @@ quid.core.modal = $.fn.modal = function()
         .on('modal:isReady', function(event) {
             return ($(this).attr('data-status') === 'ready')? true:false;
         })
-        .on('modal:hasText', function(event) {
-            return ($(this).triggerHandler('modal:getInner').text().length > 0)? true:false;
-        })
         .on('modal:open', function(event,route) {
             $(this).attr('data-status','loading');
             if(quid.base.isStringNotEmpty(route))
             $(this).attr('data-route',route);
             
-            $(document).trigger('document:setBackground',['modal']);
+            $(document).trigger('document:setBackground',['modal',true]);
             $(document).trigger('document:outsideClick');
         })
         .on('modal:opened', function(event) {
             $(this).attr('data-status','ready');
+            
+            if($(this).is('[tabindex]'))
+            $(this).focus();
         })
         .on('modal:html', function(event,data,callback) {
             if(!$(this).triggerHandler('modal:isOpen'))
@@ -101,7 +108,7 @@ quid.core.modal = $.fn.modal = function()
             if(quid.base.isStringNotEmpty(route))
             $(document).trigger('modal:'+route,[$(this)]);
         })
-        .on('escape:catched', function(event) {
+        .on('escape:blocked', function(event) {
             $(this).trigger('modal:closeIfOpen');
         })
         .on('click', function(event) {
@@ -109,7 +116,7 @@ quid.core.modal = $.fn.modal = function()
         });
         
         // inner
-        $(this).triggerHandler('modal:getInner').on('click', function(event) {
+        $(this).triggerHandler('modal:getBox').on('click', function(event) {
             event.stopPropagation();
         })
         .on('click', '.close', function(event) {

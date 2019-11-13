@@ -15,25 +15,24 @@
     background-attachment: fixed;
 
     #wrapper {
-        display: block;
+        flex-direction: column;
     }
 
     main {
-        display: flex;
-        flex-direction: column;
+        @include flex(center);
         padding: 0 20px;
 
         .inner {
-            @include flex(center);
-            min-height: 100vh;
             padding: 60px 0;
         }
     }
 
     header {
-        @include abs(null, 20px, 50px);
+        @include abs(null, 20px, 40px);
         z-index: 1;
-
+        background-color: transparent;
+        padding: 0;
+        
         .logo {
             display: block;
 
@@ -43,7 +42,7 @@
             }
 
             &:hover,
-            &.clicked {
+            &[data-triggered='1'] {
                 opacity: 0.8;
             }
         }
@@ -66,7 +65,7 @@
                 color: $white;
 
                 &:hover,
-                &.clicked {
+                &[data-triggered='1'] {
                     color: $lightGray;
                 }
             }
@@ -135,7 +134,7 @@
                 background-color: $darkerColor;
             }
 
-            &.clicked,
+            &[data-triggered='1'],
             &:active {
                 background-color: $black;
             }
@@ -191,7 +190,7 @@
 }
 
 /* CHANGE PASSWORD */
-.modal[data-route='accountChangePassword'] .inner-centered {
+.modal[data-route='accountChangePassword'] .inner {
     @include modalForm();
 
     .form .field input {
@@ -200,12 +199,12 @@
 }
 
 /* SESSION ROLE */
-.modal[data-route='sessionRole'] .inner-centered {
+.modal[data-route='sessionRole'] .inner {
     @include modalForm();
 }
 
 /* ABOUT */
-.modal[data-route='about'] .inner-centered {
+.modal[data-route='about'] .inner {
     h3 {
         margin-bottom: 20px;
     }
@@ -236,46 +235,6 @@
 /* HOME */
 [data-route='home'] main .inner > .top .left h1 {
     margin-right: 10px;
-}
-[data-route='home'] main .inner > .bottom > .search {
-    width: 60%;
-    margin: auto;
-    padding: 0 20px;
-    text-align: center;
-
-    form {
-        position: relative;
-        margin-bottom: 10px;
-
-        input[type='text'] {
-            display: block;
-            width: 100%;
-            padding: 10px 10px 10px 40px;
-            margin-right: 5px;
-            font-size: 125%;
-        }
-
-        .icon-solo {
-            @include abs(50%, null, null, 10px);
-            margin-top: -8px;
-        }
-
-        .popup {
-            @include popupList();
-            width: 100%;
-            max-width: inherit;
-            max-height: 225px;
-        }
-    }
-
-    .search-in {
-        font-size: 90%;
-
-        div span:first-child {
-            font-weight: bold;
-            margin-right: 3px;
-        }
-    }
 }
 
 /* GENERAL EXPORT */
@@ -352,11 +311,5 @@
                 }
             }
         }
-    }
-
-    [data-route='home'] body main .inner > .bottom > .search {
-        @include responsiveBlock();
-        height: auto;
-        margin-top: 20px;
     }
 }

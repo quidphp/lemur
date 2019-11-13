@@ -35,7 +35,7 @@ class Cells extends Base\Test
         assert($cells->description()['id'] === 'Primary and unique key. Required');
         assert($cells->description('%:')['id'] === 'Primary and unique key. Required:');
         assert(strlen($cells->formComplex()['active']) === 204);
-        assert(strlen($cells->formComplexWrap()['active']) === 225);
+        assert(strlen($cells->formComplexWrap()['active']) === 263);
         assert($row->unlink());
         assert($db->truncate($table) instanceof \PDOStatement);
 

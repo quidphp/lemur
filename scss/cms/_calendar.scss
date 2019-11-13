@@ -12,6 +12,12 @@
 // componentDateSpecific
 // style pour le component dateInput dans le formulaire
 @mixin componentDateSpecific() {
+    
+    &[data-absolute-placeholder='ready'].active > input[type='text'] {
+        @include abs(0,null,null,0);
+        z-index: 3;
+    }
+    
     > .popup {
         width: 250px;
         padding: 0;

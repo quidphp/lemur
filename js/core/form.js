@@ -19,23 +19,41 @@ quid.core.form = $.fn.form = function(validate)
         $(this).on('form:getFields', function(event) {
             return $(this).find(":input");
         })
-        .on('form:getValidateFields', function(event) {
-            return $(this).find("[data-required],[data-pattern]");
-        })
         .on('form:getSystemFields', function(event) {
 			return $(this).triggerHandler('form:getFields').filter("[name^='-']");
 		})
         .on('form:getTargetFields', function(event) {
 			return $(this).triggerHandler('form:getFields').not("[name^='-']");
 		})
+        .on('form:getValidateFields', function(event) {
+            return $(this).triggerHandler('form:getTargetFields').filter("[data-required],[data-pattern]");
+        })
+        .on('form:getValidateField', function(event) {
+            return $(this).triggerHandler('form:getValidateFields').first();
+        })
         .on('form:hasFiles', function(event) {
-            return ($(this).triggerHandler('form:getFields').filter("input[type='file']").length)? true:false;
+            return ($(this).triggerHandler('form:getTargetFields').filter("input[type='file']").length)? true:false;
         })
         .on('form:getSubmits', function(event) {
             return $(this).triggerHandler('form:getFields').filter("[type='submit'],[type='image']");
         })
+        .on('form:getSubmit', function(event) {
+            return $(this).triggerHandler('form:getSubmits').first();
+        })
         .on('form:getClickedSubmit', function(event) {
             return $(this).triggerHandler('form:getSubmits').filter("[data-submit-click]").first();
+        })
+        .on('form:getClickedSubmits', function(event) {
+            var r = $(this).triggerHandler('form:getClickedSubmit');
+            
+            if(r.length)
+            {
+                var name = r.prop('name');
+                if(quid.base.isStringNotEmpty(name))
+                r = $(this).triggerHandler('form:getSubmits').filter("[name='"+name+"']");
+            }
+            
+            return r;
         })
         .on('form:getCsrfField', function(event) {
             return $(this).triggerHandler('form:getSystemFields').filter("[data-csrf='1']").first();
@@ -81,11 +99,7 @@ quid.core.form = $.fn.form = function(validate)
         
         // validation
         if(!$(this).is("[data-validation='0']"))
-        {
-            var fields = $(this).triggerHandler('form:getValidateFields');
-            fields.fieldValidateFull();
-            $(this).validatePrevent('submit',fields);
-        }
+        $(this).validatePrevent('submit');
     });
     
     return this;

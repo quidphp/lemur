@@ -13,7 +13,7 @@
 // gère les comportements pour un input numérique comme page ou limit
 quid.core.inputNumeric = $.fn.inputNumeric = function()
 {
-    $(this).block('change').timeout('keyup').fieldValidateFull()
+    $(this).block('change').timeout('keyup').fieldValidate()
     .on('focus', function() {
         $(this).val("");
     })

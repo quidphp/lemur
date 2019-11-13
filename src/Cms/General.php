@@ -54,14 +54,22 @@ class General extends Core\RouteAlias
             'classFqcn','classRow','classRows','classCols','classCells','sql']
     ];
 
-
+    
+    // canTrigger
+    // si la route peut être lancé
+    final public function canTrigger():bool 
+    {
+        return (parent::canTrigger() && $this->hasTable() && $this->hasTablePermission('view'))? true:false;
+    }
+    
+    
     // onBefore
     // validation avant le lancement de la route
     final protected function onBefore()
     {
         $return = false;
 
-        if($this->hasTablePermission('view'))
+        if($this->canTrigger())
         {
             $table = $this->table();
             $sql = $this->sql();
@@ -396,10 +404,13 @@ class General extends Core\RouteAlias
         if($this->hasTablePermission('generalCount'))
         {
             $popup = $this->generalInfoPopup();
-            $attr = ['popup-trigger',(!empty($popup))? ['with-popup','with-icon','anchor-corner']:null];
+            
+            $attr = ['popup-trigger'];
+            if(!empty($popup))
+            $attr = Base\Arr::append($attr,['with-popup','with-icon','tabindex'=>-1,'data'=>array('anchor-corner'=>true,'absolute-placeholder'=>true)]);
 
             $r .= Html::divOp($attr);
-            $r .= Html::div($this->makeCount(),['popup-title']);
+            $r .= Html::button($this->makeCount(),'popup-title');
             $r .= Html::div($popup,'popup');
             $r .= Html::divCl();
         }
@@ -419,7 +430,7 @@ class General extends Core\RouteAlias
         {
             $values = $this->infoPopupValues();
             $closure = $this->infoPopupClosure();
-            $return = static::makeInfoPopup($values,$closure,false);
+            $return = static::makeInfoPopup($values,$closure);
         }
 
         return $return;
@@ -545,9 +556,10 @@ class General extends Core\RouteAlias
     {
         $r = '';
         $table = $this->table();
-
-        if($this->hasTablePermission('insert','lemurInsert'))
-        $r .= SpecificAdd::make($table)->a(static::langText('general/add'),['with-icon','add','operation-element']);
+        $route = SpecificAdd::make($table);
+        
+        if($route->canTrigger())
+        $r .= $route->a(static::langText('general/add'),['with-icon','add','operation-element']);
 
         return $r;
     }
@@ -558,14 +570,9 @@ class General extends Core\RouteAlias
     final protected function makeExport():string
     {
         $r = '';
-        $sql = $this->sql();
-
-        if($this->hasTablePermission('export') && !$sql->isTriggerCountEmpty())
-        {
-            $segment = $this->segments();
-            $route = GeneralExport::make($segment);
-            $r .= $route->aDialog();
-        }
+        $route = GeneralExport::make($this->segments());
+        if($route->canTrigger())
+        $r .= $route->aDialog();
 
         return $r;
     }
@@ -577,12 +584,11 @@ class General extends Core\RouteAlias
     {
         $r = '';
         $table = $this->table();
-
-        if($this->hasTablePermission('truncate','lemurTruncate') && !empty($table->rowsCount(true,true)))
+        $route = GeneralTruncate::make($table);
+        
+        if($route->canTrigger() && !empty($table->rowsCount(true,true)))
         {
             $data = ['confirm'=>static::langText('common/confirm')];
-            $route = GeneralTruncate::make($table);
-
             $r .= Html::divOp(['truncate','operation-element']);
             $r .= $route->formOpen(['data'=>$data]);
             $r .= $this->tableHiddenInput();
@@ -636,11 +642,11 @@ class General extends Core\RouteAlias
     final protected function makeGeneralDelete():string
     {
         $r = '';
-
-        if($this->hasTablePermission('delete','lemurDelete','multiDelete'))
+        $table = $this->table();
+        $route = GeneralDelete::make(['table'=>$table,'primaries'=>true]);
+        
+        if($route->canTrigger())
         {
-            $table = $this->table();
-            $route = GeneralDelete::make(['table'=>$table,'primaries'=>true]);
             $defaultSegment = static::getDefaultSegment();
             $data = ['confirm'=>static::langText('common/confirm'),'separator'=>$defaultSegment];
 
@@ -664,9 +670,11 @@ class General extends Core\RouteAlias
         $r = '';
         $hasInNotIn = $this->hasInNotIn();
 
-        $r .= Html::div(null,['icon-solo','check','center']);
-        $r .= Html::div(null,['icon-solo','uncheck','center']);
-        $r = Html::div($r,['cell-inner','toggle-all',($hasInNotIn === true)? 'selected':null]);
+        $r .= Html::span(null,['icon-solo','check','center']);
+        $r .= Html::span(null,['icon-solo','uncheck','center']);
+        $r = Html::button($r,['toggle-all',($hasInNotIn === true)? 'selected':null]);
+        $r = Html::div($r,'cell-inner');
+        
         if($hasInNotIn === true)
         {
             $route = $this->changeSegments(['in'=>null,'notIn'=>null]);
@@ -686,7 +694,7 @@ class General extends Core\RouteAlias
         $cols = $table->cols();
         $currentCols = $this->getCurrentCols();
         $hasSpecificCols = $this->hasSpecificCols();
-        $inAttr = ['cell-inner','toggler',($hasSpecificCols === true)? 'selected':null];
+        $inAttr = ['cell-inner'];
 
         if($this->hasTablePermission('view','cols') && $cols->isNotEmpty() && $currentCols->isNotEmpty())
         {
@@ -698,7 +706,7 @@ class General extends Core\RouteAlias
             $route = $this->changeSegment('cols',true);
             $current = implode($defaultSegment,$currentCols->names());
             $data = ['href'=>$route,'char'=>static::getReplaceSegment(),'current'=>$current,'separator'=>$defaultSegment];
-            $inAttr[] = 'anchor-corner';
+            $inAttr = Base\Attr::append($inAttr,array('data'=>array('anchor-corner'=>true,'absolute-placeholder'=>true)));
             $session = static::session();
 
             $checkbox = [];
@@ -720,25 +728,27 @@ class General extends Core\RouteAlias
                     $option['value'][] = $key;
                 }
             }
-
-            $r .= Html::div(null,['icon-solo','cols','center']);
-
-            if($hasSpecificCols === true)
-            {
-                $reset = $this->changeSegment('cols',null);
-                $r .= $reset->a(null,['icon-solo','close']);
-            }
-
-            $r .= Html::divOp('popup');
+            
+            $r .= Html::buttonOp(array('trigger',($hasSpecificCols === true)? 'selected':null));
+            $r .= Html::span(null,['icon-solo','cols','center']);
+            $r .= Html::buttonCl();
+            
+            $r .= Html::divOp(array('popup'));
             $r .= Html::divOp('inside');
             $r .= Html::checkbox($checkbox,$attr,$option);
             $r .= Html::divCl();
-            $r .= Html::button(null,['name'=>'cols','icon-solo','check','top-right','data'=>$data]);
+            $r .= Html::button(null,['name'=>'cols','icon-solo','check','data'=>$data]);
             $r .= Html::divCl();
         }
 
         $r = Html::div($r,$inAttr);
-
+        
+        if($hasSpecificCols === true)
+        {
+            $reset = $this->changeSegment('cols',null);
+            $r .= $reset->a(null,['icon-solo','close']);
+        }
+        
         return $r;
     }
 
@@ -814,7 +824,6 @@ class General extends Core\RouteAlias
         if($cols->isNotEmpty())
         {
             $ths = [];
-            $permission['filter'] = $this->hasTablePermission('filter');
             $permission['order'] = $this->hasTablePermission('order','direction');
             $count = $cols->count();
 
@@ -827,7 +836,7 @@ class General extends Core\RouteAlias
             if($this->hasTablePermission('action'))
             {
                 $html = $this->makeCols();
-                $ths[] = [$html,'action'];
+                $ths[] = [$html,array('action','tabindex'=>-1)];
             }
 
             foreach ($cols as $col)
@@ -835,7 +844,9 @@ class General extends Core\RouteAlias
                 $data = ['name'=>$col->name(),'col'=>$col::className(true),'group'=>$col->group()];
                 $data = $col->getDataAttr($data);
                 $thAttr = ['data'=>$data];
-
+                $filter = '';
+                [$filter,$thAttr] = $this->makeTableHeaderFilter($col,[$filter,$thAttr]);
+                
                 $label = Html::div($col->label(),'label');
                 $in = $label;
 
@@ -845,13 +856,8 @@ class General extends Core\RouteAlias
                     [$in,$thAttr] = $this->makeTableHeaderOrder($col,[$in,$thAttr],$icon);
                 }
 
-                $in = Html::div($in,'cell-inner');
-                $array = [$in,$thAttr];
-
-                if($permission['filter'] === true && $col->isFilterable() && $col->relation()->size() > 0)
-                $array = $this->makeTableHeaderFilter($col,$array);
-
-                $ths[] = $array;
+                $in = $filter.Html::div($in,'cell-inner');
+                $ths[] = [$in,$thAttr];
             }
 
             $r = Html::thead($ths);
@@ -900,18 +906,24 @@ class General extends Core\RouteAlias
     {
         $html = $array[0];
         $thAttr = $array[1];
-        $thAttr[] = ['filterable'];
-        $filter = $this->segment('filter');
+        
+        if($this->hasTablePermission('filter') && $col->isFilterable() && $col->relation()->size() > 0)
+        {
+            $filter = $this->segment('filter');
 
-        $html .= Html::divOp('left');
-        $class = ['filter-outer','click-open','anchor-corner'];
-        $close = ['icon-solo','close'];
-        $label = Html::div(null,['filter','icon-solo']);
+            $class = ['filter-outer','tabindex'=>-1,'data'=>array('anchor-corner'=>true)];
+            $close = ['icon-solo','close'];
+            $label = Html::span(null,['filter','icon-solo']);
 
-        $route = GeneralRelation::getOverloadClass();
-        $html .= $route::makeFilter($col,$this,$filter,$class,$close,$label);
-
-        $html .= Html::divCl();
+            $route = GeneralRelation::getOverloadClass();
+            $relHtml = $route::makeGeneralRelation($col,$this,$filter,$class,$close,$label);
+            
+            if(!empty($relHtml))
+            {
+                $html .= $relHtml;
+                $thAttr[] = ['filterable'];
+            }
+        }
 
         return [$html,$thAttr];
     }
@@ -934,13 +946,13 @@ class General extends Core\RouteAlias
             $actionPermission = $this->hasTablePermission('action');
             $specificPermission = $this->hasTablePermission('specific');
             $modify = $this->hasTablePermission('update','lemurUpdate');
-
+            $option = array();
+            
             foreach ($rows as $row)
             {
                 $array = [];
-                $specific = Specific::make($row)->uri();
                 $cells = $row->cells($cols);
-
+                
                 $rowAttr = ['data'=>['id'=>$row->primary(),'row'=>$row::className(true)]];
                 if(!empty($highlight) && in_array($row->primary(),$highlight,true))
                 $rowAttr[] = 'highlight';
@@ -958,6 +970,8 @@ class General extends Core\RouteAlias
 
                     if($specificPermission === true)
                     {
+                        $specific = Specific::make($row)->uri();
+                        $option = ['specific'=>$specific];
                         $action = ($modify === true && $row->isUpdateable())? 'modify':'view';
                         $html = Html::a($specific,Html::div(null,['icon-solo',$action,'center']),'cell-inner');
                     }
@@ -967,7 +981,6 @@ class General extends Core\RouteAlias
 
                 foreach ($cells as $cell)
                 {
-                    $option = ['specific'=>$specific];
                     $array[] = $this->makeTableBodyCell($cell,$option);
                 }
 
@@ -991,18 +1004,15 @@ class General extends Core\RouteAlias
 
         $data = ['name'=>$cell->name(),'cell'=>$cell::className(true),'group'=>$cell->group()];
         $table = $this->table();
-        if($table->hasPermission('quickEdit'))
+        $generalEdit = GeneralEdit::make($cell);
+        if($generalEdit->canTrigger())
         {
-            $generalEdit = GeneralEdit::make($cell);
-            if($generalEdit->canTrigger())
-            {
-                $data['quick-edit'] = true;
-                $quickEdit = $generalEdit->a(null,['icon-solo','modify','quick-edit','tool']);
-            }
+            $data['quick-edit'] = true;
+            $quickEdit = $generalEdit->a(null,['icon-solo','modify','quick-edit','tool']);
         }
         $data = $cell->getDataAttr($data);
         $attr = ['data'=>$data];
-        $html = $cell->generalComponent('general-component',$option);
+        $html = $cell->generalComponent(null,$option);
 
         if(!empty($quickEdit))
         {

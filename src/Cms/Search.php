@@ -14,9 +14,9 @@ use Quid\Core;
 use Quid\Lemur;
 use Quid\Orm;
 
-// homeSearch
-// class for the global search route accessible from the homepage of the CMS
-class HomeSearch extends Core\RouteAlias
+// search
+// class for the global search route of the CMS
+class Search extends Core\RouteAlias
 {
     // trait
     use _common;
@@ -26,8 +26,8 @@ class HomeSearch extends Core\RouteAlias
     // config
     public static $config = [
         'path'=>[
-            'en'=>'home/search',
-            'fr'=>'accueil/recherche'],
+            'en'=>'search',
+            'fr'=>'recherche'],
         'match'=>[
             'role'=>['>'=>'user'],
             'method'=>'post',
@@ -35,7 +35,6 @@ class HomeSearch extends Core\RouteAlias
             'csrf'=>false,
             'genuine'=>true,
             'post'=>['search'=>true]],
-        'parent'=>Home::class,
         'group'=>'submit',
         'history'=>false
     ];
@@ -47,7 +46,7 @@ class HomeSearch extends Core\RouteAlias
     {
         $return = false;
 
-        if($this->hasPermission('homeSearch'))
+        if(parent::onBefore())
         {
             $search = $this->getSearchValue();
 
@@ -58,7 +57,15 @@ class HomeSearch extends Core\RouteAlias
         return $return;
     }
 
-
+    
+    // canTrigger
+    // la route peut être triggé
+    final public function canTrigger():bool 
+    {
+        return $this->hasPermission('search');
+    }
+    
+    
     // isSearchValueValid
     // retourne vrai si le terme de recherche est valide
     final protected function isSearchValueValid(string $value):bool
@@ -74,7 +81,7 @@ class HomeSearch extends Core\RouteAlias
 
 
     // trigger
-    // lance la route homeSearch
+    // lance la route search
     final public function trigger():string
     {
         $r = '';
@@ -84,7 +91,7 @@ class HomeSearch extends Core\RouteAlias
         $r .= $this->makeResults($results);
 
         if(empty($r))
-        $r = Html::h3(static::langText('home/notFound'));
+        $r = Html::h3(static::langText('search/notFound'));
 
         return $r;
     }
@@ -125,10 +132,60 @@ class HomeSearch extends Core\RouteAlias
         return $r;
     }
 
-
+    
+    // makeForm
+    // génère le form pour le formulaire de recherche
+    final public function makeForm():string 
+    {
+        $r = '';
+        $tables = $this->db()->tables()->searchable();
+        
+        if($tables->isNotEmpty())
+        {
+            $lang = static::lang();
+            $minLength = $tables->searchMinLength();
+            $name = $this->getSearchName();
+            $data = ['keyupDelay'=>800,'required'=>true,'pattern'=>['minLength'=>$minLength]];
+            
+            $r .= $this->formOpen();
+            $r .= Html::divOp(array('data'=>array('absolute-placeholder'=>true,'absolute-placeholder-height'=>true)));
+            $r .= Html::inputText(null,['name'=>$name,'placeholder'=>$lang->text('home/searchSubmit'),'data'=>$data]);
+            $r .= Html::submit(true,['button','icon-solo','search']);
+            $r .= Html::divCl();
+            $r .= Html::div(null,'popup');
+            $r .= Html::div($this->makeSearchIn($minLength,$tables),'search-in');
+            $r .= Html::formClose();
+        }
+        
+        return $r;
+    }
+    
+    
+    // makeSearchIn
+    // génère le html pour le searchIn
+    final protected function makeSearchIn(int $minLength,Orm\Tables $tables):string
+    {
+        $r = '';
+        $lang = static::lang();
+        $replace = ['count'=>$minLength];
+        $note = $lang->plural($minLength,'home/searchNote',$replace);
+        
+        $r .= Html::divOp('first');
+        $r .= Html::span($lang->text('home/note').':');
+        $r .= Html::span($note,'note');
+        $r .= Html::divCl();
+        $r .= Html::divOp('second');
+        $r .= Html::span($lang->text('home/searchIn').':');
+        $r .= Html::span(implode(', ',$tables->pair('label')),'labels');
+        $r .= Html::divCl();
+        
+        return $r;
+    }
+    
+    
     // searchable
     // retourne les tables cherchables et ayant les permission
-    // est public car utilisé dans home
+    // est public car utilisé dans template
     final public function searchable():Orm\Tables
     {
         return $this->db()->tables()->searchable()->hasPermission('search','view');
@@ -136,5 +193,5 @@ class HomeSearch extends Core\RouteAlias
 }
 
 // init
-HomeSearch::__init();
+Search::__init();
 ?>

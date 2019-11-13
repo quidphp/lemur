@@ -41,14 +41,6 @@ class GeneralEdit extends Core\RouteAlias
     ];
 
 
-    // onBefore
-    // validation avant le lancement de la route
-    final protected function onBefore()
-    {
-        return $this->canTrigger();
-    }
-
-
     // canTrigger
     // retourne vrai si la route peut être trigger
     final public function canTrigger():bool
@@ -58,7 +50,7 @@ class GeneralEdit extends Core\RouteAlias
         $row = $this->row();
         $col = $this->segment('col');
 
-        if($table instanceof Core\Table && $table->hasPermission('view','update','lemurUpdate','quickEdit'))
+        if($table instanceof Core\Table && $table->hasPermission('view','lemurUpdate','quickEdit'))
         {
             if($row->isUpdateable() && $col->isQuickEditable())
             $return = true;
@@ -99,15 +91,14 @@ class GeneralEdit extends Core\RouteAlias
         $r = '';
         $route = $this->submitRoute();
         $col = $this->segment('col');
-        $data = $col->getComplexDataAttr();
-        $attr = ['anchor-corner','form-element','data'=>$data];
+        $attr = $col->getFormElementAttr();
 
         $r .= $route->formOpen();
         $r .= $this->makeFormPrimary();
         $r .= $this->tableHiddenInput();
         $r .= Html::divCond($this->makeTools(),'tools');
 
-        $r .= Html::div($this->makeComponent(),$attr);
+        $r .= Html::div($this->makeFormComponent(),$attr);
         $r .= Html::formCl();
 
         return $r;
@@ -126,15 +117,15 @@ class GeneralEdit extends Core\RouteAlias
         return $r;
     }
 
-
-    // makeComponent
-    // génère le champ pour la cellule
-    final protected function makeComponent():string
+    
+    // makeFormComponent
+    // génère le specific component pour la form
+    final protected function makeFormComponent():string
     {
-        return Html::div($this->cell()->specificComponent('form'),['specific-component','general-page']);
+        return $this->cell()->specificComponent();
     }
-
-
+    
+    
     // makeTools
     // génère les outils, soit les boutons submit et revert
     final protected function makeTools():string

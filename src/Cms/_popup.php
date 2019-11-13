@@ -27,14 +27,6 @@ trait _popup
     ];
 
 
-    // onBefore
-    // vérifie que la permission est la
-    final protected function onBefore()
-    {
-        return $this->canTrigger();
-    }
-
-
     // triger
     // lance la route
     final public function trigger():string
@@ -50,7 +42,7 @@ trait _popup
         $return = null;
         $values = $this->getAttr('popup');
         $closure = $this->popupClosure();
-        $return = static::makeInfoPopup($values,$closure,false);
+        $return = static::makeInfoPopup($values,$closure);
 
         return $return;
     }

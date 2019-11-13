@@ -13,6 +13,19 @@
 // mixin pour une cellule de relation dans le tableau general
 @mixin componentRelationGeneral() {
     @include filesShowThumbnail();
+    
+    > ul,
+    > ol {
+        list-style-type: none;
+
+        > li {
+            padding: 2px 0;
+            
+            &.relation-more {
+                font-style: italic;
+            }
+        }
+    }
 }
 
 // componentRelationMediaGeneral
@@ -20,6 +33,16 @@
 @mixin componentRelationMediaGeneral() {
     @include componentRelationGeneral();
     text-align: center;
+}
+
+// componentSelectSpecific
+// mixin pour une relation avec une fakeselect
+@mixin componentSelectSpecific()
+{
+    &[data-absolute-placeholder='ready'] > .fakeselect.active {
+        z-index: 3;
+        @include abs(0,null,null,0);
+    }
 }
 
 // componentRelationSortableSpecific
@@ -32,26 +55,6 @@
     @media print {
         .move {
             display: none !important;
-        }
-    }
-}
-
-// componentRelationPlainSpecific
-// mixin pour une relation plain dans le formulaire spécifique
-@mixin componentRelationPlainSpecific() {
-    .relation-plain {
-        margin-bottom: 5px;
-
-        a {
-            @include inbl();
-        }
-
-        .legend {
-            font-size: 80%;
-        }
-
-        &:last-child {
-            margin-bottom: 0;
         }
     }
 }

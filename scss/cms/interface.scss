@@ -24,13 +24,6 @@ body .loading-fixed {
     z-index: 9;
     display: none;
 
-    > .loading-icon {
-        @include wh(20px);
-        background-position: center;
-        background-color: $white;
-        border-bottom-left-radius: 50%;
-    }
-
     > .loading-progress {
         > .percent {
             @include wh(40px, 16px);
@@ -41,6 +34,13 @@ body .loading-fixed {
             border-bottom-left-radius: 5px;
             border-bottom-right-radius: 5px;
         }
+    }
+    
+    > .loading-icon {
+        @include wh(20px);
+        background-position: center;
+        background-color: $white;
+        border-bottom-left-radius: 50%;
     }
 }
 body.responsive-menu-open #wrapper {
@@ -69,24 +69,30 @@ body > #wrapper {
     > .main-wrap {
         width: calc(100% - 200px);
         position: relative;
+        display: flex;
+        flex-direction: column;
     }
 }
 body > .background {
     @include fixed(0, null, null, 0);
     @include transitions(opacity 1.5s);
     @include wh(100%);
-    z-index: 1;
-    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 0.15);
     display: none;
 
     &[data-from='modal'],
-    &[data-from='clickOpen'] {
+    &[data-from='clickOpen'],
+    &[data-from='calendar'],
+    &[data-from='fakeselect'],
+    &[data-from='enumSet'],
+    &[data-from='tableRelation'] {
         display: block;
         @include fadeIn(0.3s);
     }
 
-    &[data-from='clickOpen'] {
-        background-color: rgba(0, 0, 0, 0.2);
+    &[data-from='modal'] {
+        background-color: rgba(0, 0, 0, 0.25);
     }
 }
 
@@ -98,29 +104,32 @@ body > .background {
     background: $darkColor;
     overflow-y: scroll;
     overflow-x: hidden;
-    z-index: 9;
+    z-index: 1;
 
     > .nav-top {
         background-color: $white;
         min-height: 25px;
-        border-bottom: 5px solid $color;
-        text-align: center;
         position: relative;
 
         > .nav-close {
-            @include abs(20px, null, null, 15px);
+            @include abs(15px, null, null, 15px);
             @include fixedNavButton();
             display: none;
         }
-
-        > .logo {
-            @include inbl();
-            padding: 10px;
-
-            img {
-                @include transitions(opacity 0.3s);
-                display: block;
+        
+        > a {
+            display: block;
+            padding: 10px 15px;
+            font-size: 110%;
+            font-weight: bold;
+            
+            &:hover {
+                background-color: $lighterGray;
             }
+        }
+        
+        > .logo img {
+            display: block;
         }
     }
 
@@ -130,36 +139,60 @@ body > .background {
 }
 
 /* HEADER */
-header > .top {
-    @include flex(space-between, center, wrap);
-    position: relative;
+header {
     background-color: $color;
-
+    position: relative;
+    
     .burger-menu {
-        @include abs(20px, null, null, 15px);
+        @include abs(15px, null, null, 15px);
         @include fixedNavButton();
         display: none;
     }
-
-    .right {
-        @include flex(flex-end, center, wrap);
-
-        > a.clicked {
-            background-color: $darkColor;
+    
+    .boot-label {
+        width: 100%;
+        font-size: 140%;
+        text-align: center;
+        font-weight: bold;
+        color: $white;
+        display: none;
+    }
+    
+    > .top {
+        @include flex(space-between, center, wrap);
+        
+        .left {
+            flex-grow: 2;
+            
+            > form {
+                @include mainSearch();
+            }
         }
+        
+        .right {
+            padding: 0 15px 0 10px;
+            @include flex(center, center, wrap);
 
-        .popup-trigger > .popup-title {
-            color: $lightGray;
+            > a[data-triggered='1'],
+            > a.active {
+                background-color: $darkColor;
+            }
+
+            .popup-trigger > .popup-title {
+                color: $lightGray;
+            }
         }
     }
 }
 
 /* MAIN */
 main {
-    padding: 15px 0 55px 0;
-
+    padding: 15px 0;
+    flex-grow: 1;
+    
     .inner {
         padding: 0 15px;
+        min-height: 200px;
         position: relative;
     }
 }
@@ -180,7 +213,7 @@ main .inner > .top {
         display: block;
 
         &:hover,
-        &.clicked {
+        &[data-triggered='1'] {
             color: $darkGray;
         }
     }
@@ -197,12 +230,11 @@ main .inner > .top {
 
 /* FOOTER */
 footer {
-    @include abs(null, null, 0, 0);
     @include flex(flex-end);
-    z-index: 2;
     width: 100%;
     background-color: $color;
-
+    padding: 0 15px;
+    
     .with-submenu {
         position: relative;
 
@@ -253,6 +285,7 @@ footer {
 
                 .logo {
                     max-width: 180px;
+                    margin: auto;
                 }
             }
         }
@@ -262,11 +295,20 @@ footer {
         }
     }
 
-    header > .top {
+    header {
         padding: 10px 60px;
-
+        
+        .boot-label {
+            display: block;
+        }
+        
+        .left {
+            width: 100%;
+            padding: 5px 0;
+        }
+        
         .right {
-            justify-content: center;
+            width: 100%;
         }
 
         .burger-menu {
@@ -274,14 +316,9 @@ footer {
         }
     }
 
-    main {
-        padding-bottom: 25px;
-    }
-
     footer {
         justify-content: center;
         flex-wrap: wrap;
-        position: static;
     }
 }
 

@@ -58,25 +58,9 @@ trait _common
     }
 
 
-    // authorLink
-    // retourne le lien web pour l'auteur
-    final public static function authorLink($attr=null):string
-    {
-        return Html::a(static::langText('author/uri'),static::langText('author/name'),$attr);
-    }
-
-
-    // authorEmail
-    // retourne le lien email pour l'auteur
-    final public static function authorEmail():string
-    {
-        return Html::a(static::langText('author/email'),true);
-    }
-
-
     // makeInfoPopup
     // génère un popup d'informations
-    final public static function makeInfoPopup(array $values,\Closure $closure,bool $icon):string
+    final public static function makeInfoPopup(array $values,\Closure $closure):string
     {
         $r = '';
 
@@ -117,12 +101,7 @@ trait _common
         }
 
         if(strlen($r))
-        {
-            $r = Html::ul($r);
-
-            if($icon === true)
-            $r = Html::div(null,['icon-solo','top-right','info']).$r;
-        }
+        $r = Html::ul($r);
 
         return $r;
     }

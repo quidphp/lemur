@@ -51,22 +51,14 @@ class User extends Core\Row\User
     final public static function specificOperation(self $row):string
     {
         $r = '';
-        $route = $row->routeClass('userWelcome');
+        $route = $row->routeSafe('userWelcome');
 
-        if($row->table()->hasPermission('userWelcome'))
+        if(!empty($route) && $route->canTrigger())
         {
-            if($row->isActive() && $row->allowWelcomeEmail() && $row->isUpdateable() && $row->canReceiveEmail())
-            {
-                $route = $row->routeClass('userWelcome');
-
-                if(!empty($route))
-                {
-                    $route = $route::make($row);
-                    $data = ['confirm'=>static::langText('common/confirm')];
-                    $attr = ['name'=>'--userWelcome--','value'=>1,'with-icon','email','data'=>$data];
-                    $r .= $route->submitTitle(null,$attr);
-                }
-            }
+            $route = $route::make($row);
+            $data = ['confirm'=>static::langText('common/confirm')];
+            $attr = ['name'=>'--userWelcome--','value'=>1,'with-icon','email','data'=>$data];
+            $r .= $route->submitTitle(null,$attr);
         }
 
         return $r;

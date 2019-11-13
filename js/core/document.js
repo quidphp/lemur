@@ -32,15 +32,16 @@ quid.core.document = $.fn.document = function(option)
     
     // applyBindings
     // applique les bindings sur les clicks et popstate
+    // ceci est binder de façon permanente
     function applyBindings()
     {
         // sur le premier isTouch
         $(this).one('touchstart', function(event) {
             $(this).data('isTouch',true);
-        });
+        })
         
-        // click
-        $(this).on('click', $settings.anchor, function(event) { 
+        // anchor click
+        .on('click', $settings.anchor, function(event) { 
             var r = true;
             $target.triggerHandler('document:clickEvent',[event]);
             
@@ -48,10 +49,10 @@ quid.core.document = $.fn.document = function(option)
             r = false;
             
             return r;
-        });
+        })
         
         // submit
-        $(this).on('submit', $settings.form, function(event) { 
+        .on('submit', $settings.form, function(event) { 
             var r = true;
             $target.triggerHandler('document:submitEvent',[event]);
             
@@ -59,6 +60,11 @@ quid.core.document = $.fn.document = function(option)
             r = false;
             
             return r;
+        })
+        
+        // docClick, ferme le background
+        .on('click', function(event) {
+            $(this).trigger('document:unsetBackground');
         });
         
         // popstate
@@ -83,6 +89,15 @@ quid.core.document = $.fn.document = function(option)
                 $(this).trigger('hashchange',[event]);
             }
         });
+    }
+    
+    
+    // documentBindings
+    // applique les bindings au document mounted dans le bon ordre
+    function documentBindings()
+    {
+        $(this).trigger('document:commonBindings',[$(this)]);
+        $(this).trigger('document:mount');
     }
     
     
@@ -310,11 +325,9 @@ quid.core.document = $.fn.document = function(option)
     {
         var state = $(this).triggerHandler('document:getCurrentState');
 
-        // scrollTop
         $(this).find("html,body").stop(true,true).scrollTop(0);
         
-        // trigger
-        $(this).trigger('document:mount');
+        documentBindings.call(this);
     }
     
     
@@ -457,18 +470,12 @@ quid.core.document = $.fn.document = function(option)
         
         if(click.target && !(click.which > 1 || click.metaKey || click.ctrlKey || click.shiftKey || click.altKey))
         {
-            var target = $(click.target);
-
-            if(target.tagName() !== 'a')
-            target = target.closest("a");
+            var target = $(click.currentTarget);
             
             if(target.is($settings.anchor))
             {
                 var uri = target.prop('href');
                 r = $(this).triggerHandler('document:go',[uri,click]);
-                
-                if(click.isDefaultPrevented())
-                target.addClass('clicked');
             }
         }
         
@@ -486,13 +493,6 @@ quid.core.document = $.fn.document = function(option)
         {
             var uri = target.prop('action');
             r = $(this).triggerHandler('document:go',[uri,submit]);
-            
-            if(submit.isDefaultPrevented())
-            {
-                var clickedSubmit = target.triggerHandler('form:getClickedSubmit');
-                if(clickedSubmit != null)
-                clickedSubmit.addClass('submitted');
-            }
         }
         
         return r;
@@ -538,7 +538,24 @@ quid.core.document = $.fn.document = function(option)
         }
         
         if(r === true && sourceEvent != null)
-        sourceEvent.preventDefault();
+        {
+            sourceEvent.preventDefault();
+            var target = $(sourceEvent.currentTarget);
+            
+            if(target)
+            {
+                if(sourceEvent.type === 'click')
+                target.attr('data-triggered',1);
+                
+                else if(sourceEvent.type === 'submit')
+                {
+                    var clickedSubmit = target.triggerHandler('form:getClickedSubmits');
+                    
+                    if(clickedSubmit != null)
+                    clickedSubmit.attr('data-triggered',1);
+                }
+            }
+        }
         
         return r;
     })
@@ -547,7 +564,7 @@ quid.core.document = $.fn.document = function(option)
     // outsideClick
     // permet de lancer tous les évenements liés aux outside clicks
     .on('document:outsideClick', function(event) {
-        $(this).trigger('click.outside');
+        $(this).trigger('click.document-mount');
     })
     
     
@@ -557,17 +574,18 @@ quid.core.document = $.fn.document = function(option)
         var route = $(this).find("html").attr("data-route");
         $(this).trigger('document:statusReady');
         
-        $(this).trigger('document:commonBindings',[$(this)]);
-        
         if(quid.base.isStringNotEmpty(route))
         $(this).trigger('route:'+route);
     })
     
     
     // unmount
-    // sur unmount de la page
+    // sur unmount de la page efface tous les événements qui ont le namespace document-mount
     .on('document:unmount', function(event) {
-        $(this).off('.outside');
+        $(this).off('.document-mount');
+        $(window).off('.document-mount');
+        $("html").off('.document-mount');
+        $("body").off('.document-mount');
     })
     
     
@@ -594,9 +612,15 @@ quid.core.document = $.fn.document = function(option)
     
     
     // isBackgroundActive
-    // retourne la node du background
+    // retourne vrai si le background existe et est présentement actif
     .on('document:isBackgroundActive', function(event) {
-        return ($(this).triggerHandler('document:getBackground').attr('data-from') != null)? true:false;
+        var r = false;
+        var background = $(this).triggerHandler('document:getBackground');
+        
+        if(background.length && background.attr('data-from') != null)
+        r = true;
+        
+        return r;
     })
     
     
@@ -609,10 +633,12 @@ quid.core.document = $.fn.document = function(option)
     
     // setBackground
     // permet d'ajouter une attribut data au background
-    .on('document:setBackground', function(event,value) {
+    .on('document:setBackground', function(event,value,replace) {
         if(quid.base.isStringNotEmpty(value))
         {
             var background = $(this).triggerHandler('document:getBackground');
+            
+            if(replace === true || background.attr('data-from') == null)
             background.attr('data-from',value);
         }
     })
@@ -621,10 +647,13 @@ quid.core.document = $.fn.document = function(option)
     // unsetBackground
     // enlève les attributs du background
     .on('document:unsetBackground', function(event,value) {
-        var background = $(this).triggerHandler('document:getBackground');
-        
-        if(value == null || value === background.attr('data-from'))
-        background.removeAttr('data-from');
+        if($(this).triggerHandler('document:isBackgroundActive'))
+        {
+            var background = $(this).triggerHandler('document:getBackground');
+            
+            if(value == null || value === background.attr('data-from'))
+            background.removeAttr('data-from');
+        }
     });
     
     
@@ -637,7 +666,7 @@ quid.core.document = $.fn.document = function(option)
         applyBindings.call(this);
     }
     
-    $(this).trigger('document:mount');
+    documentBindings.call(this);    
     
     return this;
 }

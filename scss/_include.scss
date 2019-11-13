@@ -117,6 +117,12 @@ $media: $uriMedia;
         word-wrap: break-word;
         overflow-wrap: break-word;
     }
+    td,
+    th,
+    div,
+    span {
+        outline: 0;
+    }
     h1,
     h2,
     h3,
@@ -181,6 +187,9 @@ $media: $uriMedia;
         font-size: 100%;
         line-height: normal;
         margin: 0;
+    }
+    input,
+    textarea {
         outline: 0;
     }
     button,
@@ -247,9 +256,6 @@ $media: $uriMedia;
         -webkit-appearance: button;
         font: inherit;
     }
-    button {
-        -webkit-appearance: none;
-    }
     button,
     input,
     select,
@@ -280,6 +286,11 @@ $media: $uriMedia;
         background: transparent;
         border: 0;
         cursor: pointer;
+    }
+    button[type='button'] {
+        line-height: 1.4;
+        text-align: left;
+        padding: 0;
     }
 }
 

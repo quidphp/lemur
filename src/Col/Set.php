@@ -60,10 +60,7 @@ class Set extends Core\Col\Set
     final protected function onGet($return,array $option)
     {
         if($return instanceof Core\Cell\Relation && !$return->isNull() && !empty($option['context']) && is_string($option['context']) && strpos($option['context'],':general') !== false)
-        {
-            $output = $return->generalOutput($option);
-            $return = Html::divCond($output,'relation');
-        }
+        $return = $return->generalOutput($option);
 
         else
         $return = parent::onGet($return,$option);

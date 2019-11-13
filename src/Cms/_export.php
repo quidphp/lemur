@@ -17,14 +17,14 @@ trait _export
     use _general;
 
 
-    // onBefore
+    // canTrigger
     // vérifie que l'utilisateur a la permission pour exporter la table et qu'il y a des rows à exporter
-    final protected function onBefore()
+    final public function canTrigger():bool
     {
         $return = false;
         $table = $this->table();
 
-        if(!empty($table) && $table->hasPermission('export'))
+        if(parent::canTrigger() && !empty($table) && $table->hasPermission('export'))
         {
             $sql = $this->sql();
             $total = $sql->triggerRowCount();

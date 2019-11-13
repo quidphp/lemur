@@ -13,29 +13,22 @@
 // mixin avec quelques styles de base pour un widget clickOpen avec popup
 // le trigger ouvre le clickOpen, un click sur le body le ferme
 @mixin clickOpen() {
-    .top-left .popup {
-        border-top-left-radius: 0;
-    }
-    .top-right .popup {
+    [data-anchor-corner='top-right'] .popup {
         border-top-right-radius: 0;
         left: auto;
         right: 0;
     }
-    .bottom-left .popup {
+    [data-anchor-corner='bottom-left'] .popup {
         border-bottom-left-radius: 0;
         top: auto;
         bottom: 100%;
     }
-    .bottom-right .popup {
+    [data-anchor-corner='bottom-right'] .popup {
         border-bottom-right-radius: 0;
         top: auto;
         left: auto;
         right: 0;
         bottom: 100%;
-    }
-    .popup {
-        @include abs(100%, null, null, 0px);
-        display: none;
     }
 
     body .active.popup,
@@ -52,46 +45,60 @@
         }
     }
     .popup {
-        z-index: 3;
-        box-shadow: 2px 2px 6px -4px $gray;
-        font-size: 1.3rem;
-        width: 450px;
-        max-width: 450px;
-        background-color: $lightestGray;
-        border: 1px solid $lightGray;
-        color: $black;
-        text-align: left;
-        min-height: 20px;
-        max-height: 300px;
-        overflow-y: auto;
-        padding: 0;
-        box-sizing: border-box;
-        border-radius: 5px;
-        cursor: default;
-    }
-    .popup .popup {
-        background: $lightGray;
-        border: 1px solid $gray;
-    }
-
-    /* PRINT */
-    @media print {
-        .popup {
-            display: none !important;
-        }
+        @include popupBase();
     }
 }
 
-// popup
+// popupBase
+// mixin de base pour un popup
+@mixin popupBase()
+{
+    @include abs(100%, null, null, 0px);
+    border-top-left-radius: 0;
+    display: none;
+    z-index: 3;
+    box-shadow: 2px 2px 6px -4px $gray;
+    font-size: 1.3rem;
+    width: 450px;
+    max-width: 450px;
+    background-color: $lightestGray;
+    border: 1px solid $lightGray;
+    color: $black;
+    text-align: left;
+    min-height: 20px;
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 0;
+    box-sizing: border-box;
+    border-radius: 5px;
+    cursor: default;
+    
+    .popup {
+        background: $lightGray;
+        border: 1px solid $gray;
+    }
+    
+    @media print {
+        display: none !important;
+    }
+}
+
+// popupTrigger
 // mixin avec les styles pour le popup-trigger
 @mixin popupTrigger() {
     position: relative;
-
+    
     .popup-title {
         display: block;
         padding: 5px;
     }
-
+    
+    &[data-absolute-placeholder='ready'].active .popup-title {
+        z-index: 3;
+        @include abs(0,null,null,0);
+        white-space: nowrap;
+    }
+    
     &.with-icon {
         .popup-title {
             padding: 5px 10px 5px 25px;
@@ -160,8 +167,8 @@
         color: $black;
 
         &:hover,
-        &.clicked {
-            color: gray;
+        &[data-triggered='1'] {
+            color: $color;
         }
     }
 

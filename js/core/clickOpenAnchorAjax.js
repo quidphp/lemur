@@ -11,15 +11,16 @@
 
 // clickOpenAnchorAjax
 // génère un lien en ajax dont le contenu s'affiche dans un clickOpen
-quid.core.clickOpenAnchorAjax = $.fn.clickOpenAnchorAjax = function() 
+quid.core.clickOpenAnchorAjax = $.fn.clickOpenAnchorAjax = function(trigger,target) 
 {
     $(this).each(function(index, el) {
         var anchor = $(this).find("a");
+        trigger = trigger || 'a';
         
         $(this).on('ajax:getHref', function(event) {
             return $(this).triggerHandler('clickOpen:getTrigger').prop('href');
         })
-        .clickOpenAjax('click',true).clickOpenTrigger('a','click')
+        .clickOpenAjax('click',true,target).clickOpenTrigger(trigger,'click')
         
         anchor.on('click', function(event) {
             event.preventDefault();

@@ -130,7 +130,7 @@ quid.core.outsideClick = $.fn.outsideClick = function(value,parent)
         parent = (parent instanceof jQuery && parent.length === 1)? parent:$(document);
         var $this = $(this);
         
-        parent.on('click.outside', function(event) {
+        parent.on('click.document-mount', function(event) {
             $this.trigger(value);
         });
     }

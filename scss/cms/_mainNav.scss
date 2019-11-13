@@ -8,9 +8,6 @@
 
 // mainNav
 // stylesheet for the main navigation component
-
-// mainNav
-// mixin avec les styles pour la navigation principale
 @mixin mainNav() {
     > ul {
         padding: 0;
@@ -20,18 +17,23 @@
             > a {
                 display: block;
             }
-
+            
+            > .trigger {
+                width: 100%;
+            }
+            
             > a,
             > .trigger {
+                display: block;
                 @include transitions(background-color 0.3s);
-                padding: 8px 10px;
+                padding: 8px 15px;
                 color: $white;
                 border-top: 1px solid $color;
             }
 
             &:hover > a,
             &:hover > .trigger,
-            & > a.clicked {
+            > a[data-triggered='1'] {
                 background-color: $color;
             }
 
@@ -98,7 +100,7 @@
 
                     &:hover,
                     &.selected,
-                    &.clicked {
+                    &[data-triggered='1'] {
                         background-color: $color;
                     }
 

@@ -18,11 +18,10 @@ trait _specific
 {
     //  configSpecific
     public static $configCmsSpecific = [
-        'formWrap'=>"<div class='left'><div class='label'>%label%</div>%description%%details%</div><div class='right'><div class='specific-component anchor-corner specific-page'>%form%</div></div>%popup%",
+        'formWrap'=>"<div class='left'><div class='label'>%label%</div>%description%%details%</div><div class='right'>%form%</div>%popup%",
         'popup'=>[
             'name','isRequired','shouldBeUnique','isEditable','priority','pattern','preValidate','validate','compare','type','length','unsigned',
-            'default','acceptsNull','collation','isRelation','isOrderable','isFilterable','isSearchable','isExportable','classFqcn','classCell'
-        ]
+            'default','acceptsNull','collation','isRelation','isOrderable','isFilterable','isSearchable','isExportable','classFqcn','classCell']
     ];
 
 
@@ -186,7 +185,7 @@ trait _specific
         {
             $values = $this->getAttr('popup');
             $closure = $this->colInfoPopupClosure($col);
-            $return = static::makeInfoPopup($values,$closure,false);
+            $return = static::makeInfoPopup($values,$closure);
         }
 
         return $return;
@@ -290,33 +289,28 @@ trait _specific
 
         if(!empty($colCell))
         {
+            $formWrap = '';
             $description = $colCell->description();
             $details = $colCell->details();
-            $formWrap = '';
-
-            $class = [];
-            $class[] = ($col->isRequired())? 'required':null;
-            $class[] = ($colCell->hasFormLabelId($this->formWrapAttr($colCell),true))? 'cursor-pointer':null;
-            $data = $col->getComplexDataAttr();
-            $attr = ['form-element',$class,'data'=>$data];
-
             $detailsHtml = Html::liMany(...$details);
             $detailsHtml = Html::ulCond($detailsHtml);
-
+            $attr = $col->getFormElementAttr();
             $colPopup = $this->makeColPopup($col);
+            
             if(!empty($colPopup))
             {
-                $popup = Html::divOp(['popup-trigger','with-popup','with-icon-solo','anchor-corner']);
-                $popup .= Html::div(null,'popup-title');
+                $popup = Html::divOp(['popup-trigger','with-popup','with-icon-solo','tabindex'=>-1,'data'=>array('anchor-corner'=>true,'absolute-placeholder'=>true)]);
+                $popup .= Html::button(null,'popup-title');
                 $popup .= Html::div($colPopup,'popup');
                 $popup .= Html::divCl();
+                $attr['data']['col-popup'] = true;
             }
-
+            
             $replace = [];
             $replace['description'] = (!empty($description))? Html::div($description,'description'):'';
             $replace['details'] = (!empty($details))? Html::divCond($detailsHtml,'details'):'';
             $replace['popup'] = (!empty($popup))? $popup:'';
-
+            
             try
             {
                 $formWrap = $this->makeFormWrap($colCell,$replace);

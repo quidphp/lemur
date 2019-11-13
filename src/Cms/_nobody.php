@@ -104,13 +104,10 @@ trait _nobody
     final protected function makeAbout():string
     {
         $r = '';
-        $session = static::session();
-
-        if($this->hasPermission('about'))
-        {
-            $route = About::make();
-            $r .= $route->aDialog();
-        }
+        
+        $route = About::make();
+        if($route->canTrigger())
+        $r .= $route->aDialog();
 
         return $r;
     }
@@ -121,13 +118,10 @@ trait _nobody
     final protected function makeRegister():string
     {
         $r = '';
-        $session = static::session();
-
-        if($session->allowRegister())
-        {
-            $route = Register::make();
-            $r .= $route->aTitle();
-        }
+        
+        $route = Register::make();
+        if($route->canTrigger())
+        $r .= $route->aTitle();
 
         return $r;
     }
@@ -138,7 +132,9 @@ trait _nobody
     final protected function makeLogin():string
     {
         $r = '';
+        
         $route = Login::make();
+        if($route->canTrigger())
         $r .= $route->aTitle();
 
         return $r;
@@ -150,13 +146,10 @@ trait _nobody
     final protected function makeResetPassword():string
     {
         $r = '';
-        $session = static::session();
-
-        if($session->allowResetPasswordEmail())
-        {
-            $route = ResetPassword::make();
-            $r .= $route->a(static::langText('resetPassword/forgot'));
-        }
+        
+        $route = ResetPassword::make();
+        if($route->canTrigger())
+        $r .= $route->a(static::langText('resetPassword/forgot'));
 
         return $r;
     }

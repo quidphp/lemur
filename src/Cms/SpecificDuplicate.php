@@ -46,9 +46,9 @@ class SpecificDuplicate extends Core\RouteAlias
     protected $duplicate = null; // garde une copie de la nouvelle ligne
 
 
-    // onBefore
+    // canTrigger
     // validation avant le lancement
-    final protected function onBefore()
+    final public function canTrigger():bool
     {
         $return = false;
         $table = $this->table();
@@ -112,9 +112,8 @@ class SpecificDuplicate extends Core\RouteAlias
         $return = null;
         $row = $this->row();
         $table = $row->table();
-        $context = static::context();
         $com = static::sessionCom();
-        $option = ['com'=>true,'context'=>$context];
+        $option = ['com'=>true];
         $post = $this->post();
         $post = $this->onBeforeCommit($post);
 

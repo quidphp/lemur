@@ -156,7 +156,6 @@ class Route extends Base\Test
         // _static
         assert(!$route::isIgnored());
         assert(!$route::inMenu('test'));
-        assert($route::isActive());
         assert($route::isGroup('error') === true);
         assert($sitemap::isGroup('seo'));
         assert(!$route::isGroup('default'));
@@ -649,9 +648,9 @@ class Route extends Base\Test
         assert($app->count() === 45);
         assert($routes->type() === 'cms');
         assert($routes->keyParent()[Lemur\Cms\LoginSubmit::class] === Lemur\Cms\Login::class);
-        assert(count($routes->hierarchy()) === 16);
+        assert(count($routes->hierarchy()) === 17);
         assert(count($routes->childsRecursive($login)) === 5);
-        assert($routes->tops()->isCount(16));
+        assert($routes->tops()->isCount(17));
         assert($routes->tops() !== $routes);
         assert($routes->top($loginSubmit) === $login);
         assert($routes->parents($loginSubmit)->isCount(1));
@@ -661,7 +660,7 @@ class Route extends Base\Test
         assert($routes->childs($login)->isCount(5));
         assert($routes->withSegment()->count() > 5);
         assert($routes->withoutSegment()->count() > 5);
-        assert($routes->active()->count() !== $routes->count());
+        assert($routes->allowed()->count() !== $routes->count());
         assert($routes::makeBreadcrumbs('/',null,$login::make(),$loginSubmit::make()) === "<a href='/'>Login</a>/<a href='/en/login/submit' hreflang='en'>Login - Submit</a>");
         assert($routes::makeBreadcrumbs('/',5,$login::make(),$loginSubmit::make()) === "<a href='/'>Login</a>/<a href='/en/login/submit' hreflang='en'>Lo...</a>");
 

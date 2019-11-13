@@ -42,18 +42,18 @@ class SpecificAdd extends Core\RouteAlias
     // dynamique
     protected $flash = null; // garde une copie des données flash
 
-
+    
     // onBefore
     // validation avant le lancement de la route
     final protected function onBefore()
     {
         $return = false;
-        $table = $this->segment('table');
 
-        if($table instanceof Core\Table && $table->hasPermission('view','insert','lemurInsert'))
+        if(parent::onBefore())
         {
+            $table = $this->table();
             $flash = $this->session()->flash();
-            $route = SpecificAddSubmit::make($this->table());
+            $route = SpecificAddSubmit::make($table);
             $this->flash = $flash->get($route);
             $return = $this;
         }
@@ -61,7 +61,21 @@ class SpecificAdd extends Core\RouteAlias
         return $return;
     }
 
+    
+    // canTrigger
+    // validation avant le lancement de la route
+    final public function canTrigger():bool
+    {
+        $return = false;
+        $table = $this->segment('table');
 
+        if($table instanceof Core\Table && $table->hasPermission('view','insert','lemurInsert'))
+        $return = true;
+
+        return $return;
+    }
+    
+    
     // selectedUri
     // retourne les uri sélectionnés pour la route
     final public function selectedUri():array
@@ -279,23 +293,15 @@ class SpecificAdd extends Core\RouteAlias
     // génère un wrap label -> field pour le formulaire
     final protected function makeFormWrap(Core\Col $col,array $replace):string
     {
-        $return = '';
-        $value = true;
-
-        if(!empty($this->flash))
-        $value = $this->flash($col);
-
-        $return .= $col->specificComponent($this->getFormWrap(),'%:',$value,null,$replace);
-
-        return $return;
-    }
-
-
-    // formWrapAttr
-    // retourne les attributs par défaut pour le formWrap
-    final protected function formWrapAttr(Core\Col $col):?array
-    {
-        return null;
+       $return = '';
+       $value = true;
+       
+       if(!empty($this->flash))
+       $value = $this->flash($col);
+       
+       $return .= $col->formComplexWrap($this->getFormWrap(),'%:',$value,null,$replace);
+       
+       return $return;
     }
 
 

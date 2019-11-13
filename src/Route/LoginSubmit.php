@@ -38,12 +38,20 @@ abstract class LoginSubmit extends Core\RouteAlias
         'log'=>null
     ];
 
-
+    
     // routeSuccessDefault
     // retourne la route vers laquelle redirigé en cas de succès par défaut, si rien dans la mémoire
     abstract public function routeSuccessDefault():Lemur\Route;
 
-
+    
+    // canTrigger
+    // s'assure que le rôle réel (non fake) est bien nobody
+    final public function canTrigger():bool 
+    {
+        return (parent::canTrigger() && static::session()->roles(false)->isNobody())? true:false;
+    }
+    
+    
     // onSuccess
     // callback appelé lors d'un login réussi
     protected function onSuccess():void

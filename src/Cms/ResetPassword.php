@@ -22,7 +22,7 @@ class ResetPassword extends Lemur\Route\ResetPassword
     // config
     public static $config = [];
 
-
+    
     // submitRoute
     // route pour soumettre le formulaire
     final public function submitRoute():Lemur\Route\ResetPasswordSubmit

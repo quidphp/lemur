@@ -35,14 +35,6 @@ class SessionRoleSubmit extends Core\RouteAlias
     ];
 
 
-    // onBefore
-    // avant le trigger, vérifie que l'utilisateur peut accéder à lar oute
-    final protected function onBefore()
-    {
-        return $this->canTrigger();
-    }
-
-
     // onFailure
     // callback appelé lors d'une erreur dans l'attribution
     final protected function onFailure():void

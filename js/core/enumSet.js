@@ -17,7 +17,7 @@ quid.core.enumSet = $.fn.enumSet = function()
         return $(this).find(".current");
     })
     .on('enumSet:getResult', function(event) {
-        return $(this).triggerHandler('clickOpen:getPopup').find(".results");
+        return $(this).triggerHandler('clickOpen:getTarget').find(".results");
     })
     .on('enumSet:getChoice', function(event) {
         return $(this).triggerHandler('getCurrent').find('.choice');
@@ -26,7 +26,7 @@ quid.core.enumSet = $.fn.enumSet = function()
         return $(this).find(".input input[type='text']");
     })
     .on('enumSet:getOrder', function(event) {
-        return $(this).triggerHandler('clickOpen:getPopup').find(".order :input").first();
+        return $(this).triggerHandler('clickOpen:getTarget').find(".order :input").last();
     })
     .on('enumSet:getRadioCheckbox', function(event) {
         return $(this).triggerHandler('enumSet:getChoice').find("input[type='checkbox'],input[type='radio']");
@@ -53,7 +53,7 @@ quid.core.enumSet = $.fn.enumSet = function()
         
         if(quid.base.isStringNotEmpty(html) && quid.base.isScalar(value) && quid.base.isStringNotEmpty(mode))
         {
-            var ele = $(this).triggerHandler('clickOpen:getPopup').find("li[data-value='"+value+"']");
+            var ele = $(this).triggerHandler('clickOpen:getTarget').find("li[data-value='"+value+"']");
             if($(this).triggerHandler('enumSet:isChoiceIn',[value]))
             ele.addClass('already-in');
             
@@ -71,7 +71,7 @@ quid.core.enumSet = $.fn.enumSet = function()
     })
     .on('choice:empty', function(event) {
         $(this).triggerHandler('enumSet:getChoice').remove();
-        $(this).triggerHandler('clickOpen:getPopup').find("li.already-in").removeClass('already-in');
+        $(this).triggerHandler('clickOpen:getTarget').find("li.already-in").removeClass('already-in');
     })
     .on('click', "input[type='radio']", function(event) {
         $(this).prop('checked',false);
@@ -90,9 +90,10 @@ quid.core.enumSet = $.fn.enumSet = function()
 // gère les comportements pour champ enumSet avec recherche de relation
 quid.core.enumSetInput = $.fn.enumSetInput = function()
 {
-    $(this).enterBlock().validatePrevent('ajax:init').block('ajax:init').timeout('keyup',500).ajax('ajax:init')
-    .on('enter:blocked', function(event) {
-        $(this).trigger('ajax:beforeInit',[true]);
+    $(this).enterCatch('keyup keydown').validatePrevent('ajax:init').block('ajax:init').timeout('keyup',500).ajax('ajax:init')
+    .on('enter:blocked', function(event,keyEvent) {
+        if(keyEvent.type === 'keyup')
+        $(this).trigger('ajax:beforeInit',[false]);
     })
     .on('keyup:onTimeout', function(event) {
         if($(this).is(":focus"))
@@ -115,7 +116,7 @@ quid.core.enumSetInput = $.fn.enumSetInput = function()
     })
     .on('ajax:beforeInit', function(event,validate) {
         var val = $(this).inputValue(true);            
-        $(this).removeClass('invalid');
+        $(this).trigger('validate:valid');
         
         if(validate !== true || quid.base.isStringNotEmpty(val))
         {
@@ -129,13 +130,13 @@ quid.core.enumSetInput = $.fn.enumSetInput = function()
         $(this).data('valueLast',val);
     })
     .on('validate:failed', function(event) {
-        $(this).triggerHandler('getPopup').trigger('clickOpen:close');
+        $(this).triggerHandler('enumSetInput:getTarget').trigger('clickOpen:close');
     })
     .on('enumSetInput:getParent', function(event) {
         return $(this).parents(".specific-component");
     })
-    .on('enumSetInput:getPopup', function(event) {
-        return $(this).triggerHandler('enumSetInput:getParent').triggerHandler('clickOpen:getPopup');
+    .on('enumSetInput:getTarget', function(event) {
+        return $(this).triggerHandler('enumSetInput:getParent').triggerHandler('clickOpen:getTarget');
     })
     .on('enumSetInput:getResult', function(event) {
         return $(this).triggerHandler('enumSetInput:getParent').triggerHandler('enumSet:getResult');
@@ -163,10 +164,10 @@ quid.core.enumSetInput = $.fn.enumSetInput = function()
         $(this).triggerHandler('enumSetInput:getParent').trigger('clickOpen:open');
     })
     .on('ajax:success', function(event,data,textStatus,jqXHR) {
-        var popup = $(this).triggerHandler('enumSetInput:getPopup');
+        var target = $(this).triggerHandler('enumSetInput:getTarget');
         var result = $(this).triggerHandler('enumSetInput:getResult');
         result.html(data);
-        popup.trigger('clickOpen:ready');
+        target.trigger('clickOpen:ready');
     })
     .on('ajax:error', function(event,jqXHR,textStatus,errorThrown) {
         $(this).triggerHandler('enumSetInput:getResult').html(quid.core.parseError(jqXHR,textStatus));
@@ -195,13 +196,13 @@ quid.core.enumSetFull = $.fn.enumSetFull = function()
             return $(this).parents(".form-element").data('mode');
         })
         .on('clickOpen:ready', function(event) {
-            $(this).triggerHandler('clickOpen:getPopup').trigger('feed:bind');
+            $(this).triggerHandler('clickOpen:getTarget').trigger('feed:bind');
         }).on('clickOpen:getBackgroundFrom', function(event) {
             return 'enumSet';
         })
         
-        // popup
-        $(this).triggerHandler('clickOpen:getPopup').appendContainer().on('feed:target', function(event) {
+        // target
+        $(this).triggerHandler('clickOpen:getTarget').appendContainer().on('feed:target', function(event) {
             return $(this).find(".results ul:first-child");
         })
         .on('feed:parseData', function(event,data) {
@@ -215,9 +216,7 @@ quid.core.enumSetFull = $.fn.enumSetFull = function()
         // input
         $(this).triggerHandler('enumSet:getInput').enumSetInput();
         $(this).triggerHandler('enumSet:getOrder').on('change', function(event) {
-            setTimeout(function() {
-                enumSet.triggerHandler('enumSet:getInput').trigger('ajax:beforeInit',[false]);
-            },50);
+            enumSet.triggerHandler('enumSet:getInput').trigger('ajax:beforeInit',[false]);
         });
         
         // button

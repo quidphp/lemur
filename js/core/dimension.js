@@ -35,18 +35,49 @@ quid.core.offsetCorner = $.fn.offsetCorner = function()
 
 // anchorCorner
 // applique une clase à l'élément, sert à identifier le coin de l'écran dans lequel se trouve l'élément
-quid.core.anchorCorner = $.fn.anchorCorner = function(type)
+quid.core.anchorCorner = $.fn.anchorCorner = function()
 {
-    type = type || 'mouseenter';
+    $(this).resizeChange().on('mouseenter', function(event) {
+        event.stopPropagation();
+        $(this).trigger('anchorCorner:refresh')
+    })
+    .on('anchorCorner:refresh', function(event) {
+        event.stopPropagation();
+        var offset = $(this).offsetCorner();
+        $(this).attr('data-anchor-corner',offset.corner);
+    })
+    .on('resize:change', function(event) {
+        $(this).trigger('anchorCorner:refresh');
+    })
+    .trigger('anchorCorner:refresh');
     
-    if(quid.base.isStringNotEmpty(type))
-    {
-        $(this).on(type, function(event) {
-            var offset = $(this).offsetCorner();
-            $(this).removeClass("top-left top-right bottom-left bottom-right");
-            $(this).addClass(offset.corner);
-        });
-    }
+    return this;
+}
+
+
+// absolutePlaceholder
+// permet d'attribuer au placeholder la dimension de son enfant qui est absolut
+quid.core.absolutePlaceholder = $.fn.absolutePlaceholder = function()
+{
+    $(this).resizeChange().on('absolutePlaceholder:refresh', function(event) {
+        event.stopPropagation();
+
+        var child = $(this).children().first();
+        if(child.length)
+        {
+            if(!$(this).is('[data-absolute-placeholder-height]'))
+            $(this).width(child.outerWidth());
+            
+            if(!$(this).is('[data-absolute-placeholder-width]'))
+            $(this).height(child.outerHeight());
+            
+            $(this).attr('data-absolute-placeholder','ready');
+        }
+    })
+    .on('resize:change', function(event) {
+        $(this).trigger('absolutePlaceholder:refresh');
+    })
+    .trigger('absolutePlaceholder:refresh');
     
     return this;
 }

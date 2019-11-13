@@ -43,15 +43,18 @@
         background-color: $white;
         border: 1px solid $gray;
         border-radius: 5px;
-
+        width: 100%;
+        
         > .title {
             text-align: left;
             font-size: 90%;
+            display: block;
         }
 
         > .ico {
             @include abs(50%, 10px);
             @include triangle(bottom, $color, 9px, 6px);
+            display: block;
             background-size: contain;
             margin-top: -4px;
         }
@@ -79,17 +82,22 @@
         list-style-type: none;
 
         > li {
-            @include transitions(background-color 0.3s);
-            padding: 5px 10px;
-            border-top: 1px solid $lighterGray;
-            cursor: pointer;
+            
+            > button {
+                @include transitions(background-color 0.3s);
+                width: 100%;
+                padding: 5px 10px;
+                border-top: 1px solid $lighterGray;
+                color: $black;
+                cursor: pointer;
 
-            &:hover {
-                background-color: $lightYellow;
-            }
+                &:hover {
+                    background-color: $lightYellow;
+                }
 
-            &.selected {
-                background-color: $lightYellow;
+                &.selected {
+                    background-color: $lightYellow;
+                }
             }
         }
     }

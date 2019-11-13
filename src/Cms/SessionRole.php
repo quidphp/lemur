@@ -32,14 +32,6 @@ class SessionRole extends Core\RouteAlias
     ];
 
 
-    // onBefore
-    // avant le trigger, vérifie que l'utilisateur peut accéder à lar oute
-    final protected function onBefore()
-    {
-        return $this->canTrigger();
-    }
-
-
     // canTrigger
     // retourne vrai si la route peut être trigger
     final public function canTrigger():bool
@@ -75,7 +67,6 @@ class SessionRole extends Core\RouteAlias
         $r .= Html::h1(static::langText('sessionRole/title'));
         $r .= Html::divCond(static::langText('sessionRole/info'),'info');
         $r .= Html::divCond($this->makeForm(),'form');
-        $r = Html::div($r,'inner-centered');
 
         return $r;
     }

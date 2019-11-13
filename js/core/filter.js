@@ -21,12 +21,12 @@ quid.core.filterGeneral = $.fn.filterGeneral = function()
         return $(this).find("input[type='text']");
     })
     .on('filter:getOrder', function(event) {
-        return $(this).find(".order :input").first();
+        return $(this).find(".order :input").last();
     })
     .on('filter:prepare', function(event) {
         var filter = $(this);
         
-        $(this).triggerHandler('filter:getInput').validatePrevent('ajax:input').fieldValidateFull().timeout('keyup',500)
+        $(this).triggerHandler('filter:getInput').validatePrevent('ajax:input').timeout('keyup',500)
         .on('keyup:onTimeout', function(event) {
             $(this).trigger('ajax:input');
         })
@@ -35,9 +35,7 @@ quid.core.filterGeneral = $.fn.filterGeneral = function()
         });
         
         $(this).triggerHandler('filter:getOrder').on('change',function(event) {
-            setTimeout(function() {
-                filter.trigger('ajax:init');
-            },50);
+            filter.trigger('ajax:init');
         });
     })
     .on('ajax:getHref', function(event) {
@@ -82,9 +80,9 @@ quid.core.filterGeneralFull = $.fn.filterGeneralFull = function()
             
     $(this).each(function(index, el) {
         $(this).on('ajax:complete', function(event) {
-            $(this).triggerHandler('clickOpen:getPopup').trigger('feed:bind');
+            $(this).triggerHandler('clickOpen:getTarget').trigger('feed:bind');
         })
-        .triggerHandler('clickOpen:getPopup').appendContainer().on('feed:target', function(event) {
+        .triggerHandler('clickOpen:getTarget').appendContainer().on('feed:target', function(event) {
             return $(this).find("ul:last-child");
         })
         .on('feed:parseData', function(event,data) {

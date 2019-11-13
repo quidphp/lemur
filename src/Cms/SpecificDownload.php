@@ -40,9 +40,9 @@ class SpecificDownload extends Core\RouteAlias
     ];
 
 
-    // onBefore
+    // canTrigger
     // vérifie qu'il y a une colonne et que c'est un média
-    final protected function onBefore()
+    final public function canTrigger():bool
     {
         $return = false;
         $table = $this->segment('table');
@@ -50,6 +50,7 @@ class SpecificDownload extends Core\RouteAlias
         if($table instanceof Core\Table && $table->hasPermission('mediaDownload'))
         {
             $col = $this->segment('col');
+            
             if(!empty($col) && $col->isMedia())
             $return = true;
         }

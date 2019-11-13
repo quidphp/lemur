@@ -36,7 +36,15 @@ abstract class ActivatePassword extends Core\RouteAlias
         'row'=>Lemur\Row\User::class
     ];
 
-
+    
+    // canTrigger
+    // s'assure que le rôle réel (non fake) est bien nobody
+    final public function canTrigger():bool 
+    {
+        return (parent::canTrigger() && static::session()->roles(false)->isNobody())? true:false;
+    }
+    
+    
     // trigger
     // lance la route activatePassword
     final public function trigger()

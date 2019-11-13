@@ -44,7 +44,7 @@ quid.core.smallWindow = $.fn.smallWindow = function()
 quid.core.resizeChange = $.fn.resizeChange = function()
 {
     var $this = $(this);
-    $(window).on('scroll', function(event) {
+    $(window).on('resize.document-mount', function(event) {
         $this.trigger('resize:change');
     });
     
@@ -57,7 +57,7 @@ quid.core.resizeChange = $.fn.resizeChange = function()
 quid.core.scrollChange = $.fn.scrollChange = function()
 {
     var $this = $(this);
-    $(window).on('scroll', function(event) {
+    $(window).on('scroll.document-mount', function(event) {
         $this.trigger('scroll:change');
     });
     
@@ -70,7 +70,7 @@ quid.core.scrollChange = $.fn.scrollChange = function()
 quid.core.hashchange = $.fn.hashchange = function()
 {
     var $this = $(this);
-    $(window).on('hashchange', function(event,sourceEvent) {
+    $(window).on('hashchange.document-mount', function(event,sourceEvent) {
         $this.trigger('hash:change',[quid.base.fragment(),sourceEvent]);
     });
     

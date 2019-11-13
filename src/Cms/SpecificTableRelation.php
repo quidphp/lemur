@@ -12,6 +12,7 @@ use Quid\Base\Html;
 use Quid\Core;
 use Quid\Lemur;
 use Quid\Orm;
+use Quid\Base;
 
 // SpecificTableRelation
 // class for the route which manages table relation, used by some inputs in the CMS
@@ -38,9 +39,9 @@ class SpecificTableRelation extends Core\RouteAlias
     ];
 
 
-    // onBefore
-    // validation avant le lancement de la route
-    final protected function onBefore()
+    // canTrigger
+    // validation pour le lancement de la route
+    final public function canTrigger():bool
     {
         $return = false;
         $table = $this->segment('table');
@@ -127,15 +128,16 @@ class SpecificTableRelation extends Core\RouteAlias
     }
 
 
-    // makeClickOpen
+    // makeTableRelation
     // génère le html pour le clickOpen
-    final public static function makeClickOpen(Core\Table $table,Core\Route $route,$class=null):string
+    final public static function makeTableRelation(Core\Table $table,Core\Route $route,$attr=null):string
     {
         $r = '';
         $html = '';
         $relation = $table->relation();
         $size = $relation->size();
-        $label = $table->label();
+        $title = Html::span($table->label(),'title');
+        $title .= Html::span(null,'ico');
         $after = null;
 
         $limit = $route->limit();
@@ -162,9 +164,10 @@ class SpecificTableRelation extends Core\RouteAlias
 
             $html .= Html::divCl();
         }
-
+        
+        $attr = Base\Attr::append($attr,array('data'=>$data));
         $html .= Html::div(null,'results');
-        $r .= Html::clickOpen($html,$label,$after,[$class,'data'=>$data]);
+        $r .= static::makeClickOpen($html,$title,$after,$attr);
 
         return $r;
     }

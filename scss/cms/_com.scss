@@ -24,7 +24,12 @@
     .close {
         @include abs(8px, 8px);
         z-index: 3;
+        
+        &:hover {
+            opacity: 0.8;
+        }
     }
+    
     .top {
         @include flex();
 
@@ -61,10 +66,11 @@
         .row.insert,
         .row.update {
             > span {
+                @include transitions(color 0.3s);
                 cursor: pointer;
 
                 &:hover,
-                &.clicked {
+                &[data-triggered='1'] {
                     color: $darkGray;
                 }
             }

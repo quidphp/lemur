@@ -132,7 +132,7 @@ $.fn.calendarInput = function()
         return 'calendar';
     })
     .on('calendarInput:getCalendar', function(event) {
-        return $(this).triggerHandler('clickOpen:getPopup').find(".calendar");
+        return $(this).triggerHandler('clickOpen:getTarget').find(".calendar");
     })
     .on('clickOpen:open', function(event) {
         var input = $(this).triggerHandler('calendarInput:getInput');
@@ -151,7 +151,7 @@ $.fn.calendarInput = function()
     .on('calendarInput:bind', function(event) {
         var $this = $(this);
         var input = $(this).triggerHandler('calendarInput:getInput');
-        var popup = $(this).triggerHandler('clickOpen:getPopup');
+        var target = $(this).triggerHandler('clickOpen:getTarget');
         var calendar = $(this).triggerHandler('calendarInput:getCalendar');
         
         input.timeout('keyup',600).on('click', function(event) {
@@ -177,10 +177,10 @@ $.fn.calendarInput = function()
             $(this).trigger('calendar:select',[quid.base.strFirst(input.inputValue(true)," ")]);
         })
         .on('calendar:loading', function(event) {
-            popup.attr('data-status','loading');
+            target.attr('data-status','loading');
         })
         .on('calendar:loaded', function(event) {
-            popup.removeAttr('data-status');
+            target.removeAttr('data-status');
         });
         
     }).trigger('calendarInput:bind');

@@ -244,16 +244,9 @@ class En extends Core\Lang\En
                 'submit'=>'Modify'
             ],
 
-            // author
-            'author'=>[
-                'name'=>'QuidPHP + Lemur',
-                'uri'=>'https://quidphp.com',
-                'email'=>'emondpph@gmail.com'
-            ],
-
             // about
             'about'=>[
-                'content'=>'The Lemur open-source Content Management System is based on the QuidPHP framework. The current version is: [version].'
+                'content'=>'The Lemur open-source Content Management System is based on the [websiteLink] framework. This software is available under the open-source license [licenseLink]. The current version is: [version]. For any questions, please contact the author [authorLink].'
             ],
 
             // footer
@@ -270,10 +263,14 @@ class En extends Core\Lang\En
                 'searchSubmit'=>'Search in all tables',
                 'searchIn'=>'Search in',
                 'note'=>'Note',
-                'notFound'=>'Nothing',
                 'searchNote'=>'Search insensitive to case and accents, [count] character%s% minimum.'
             ],
 
+            // search
+            'search'=>array(
+                'notFound'=>'Rien à afficher'
+            ),
+            
             // general
             'general'=>[
                 'search'=>'Search',
@@ -569,7 +566,7 @@ class En extends Core\Lang\En
                     'generalExportDownload'=>'General - Export - Download',
                     'generalRelation'=>'General - Relation',
                     'generalTruncate'=>'Empty the table',
-                    'homeSearch'=>'Home - Search',
+                    'search'=>'Search',
                     'sessionRole'=>'Role',
                     'sessionRoleSubmit'=>'Role - Submit',
                     'specific'=>'Specific',

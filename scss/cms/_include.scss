@@ -57,7 +57,8 @@ $red: #8d1e2d;
     padding: 2px 5px;
     border-radius: 5px;
     box-shadow: 2px 2px 6px -4px $gray;
-
+    min-height: 40px;
+    
     > a {
         color: $black;
         font-weight: bold;
@@ -65,7 +66,7 @@ $red: #8d1e2d;
         font-size: 90%;
 
         &:hover,
-        &.clicked {
+        &[data-triggered='1'] {
             color: $darkGray;
         }
     }
@@ -132,7 +133,7 @@ $red: #8d1e2d;
         color: $color;
 
         &:hover,
-        &.clicked {
+        &[data-triggered='1'] {
             text-decoration: underline;
         }
     }
@@ -186,7 +187,6 @@ $red: #8d1e2d;
 @mixin fixedNavButton() {
     @include transitions(background-color 0.3s);
     @include wh(32px);
-    margin-top: -14px;
     background-color: $white;
     border: 1px solid $darkColor;
     border-radius: 3px;
