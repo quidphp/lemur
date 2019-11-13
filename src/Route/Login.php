@@ -30,15 +30,15 @@ abstract class Login extends Core\RouteAlias
         'group'=>'nobody'
     ];
 
-    
+
     // canTrigger
     // s'assure que le rôle réel (non fake) est bien nobody
-    final public function canTrigger():bool 
+    final public function canTrigger():bool
     {
         return (parent::canTrigger() && static::session()->roles(false)->isNobody())? true:false;
     }
-    
-    
+
+
     // submitRoute
     // route pour soumettre le formulaire
     abstract public function submitRoute():LoginSubmit;

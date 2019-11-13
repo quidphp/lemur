@@ -12,19 +12,19 @@
     .relations-container {
         @include flex(center, center, wrap);
         padding-top: 3px;
-        
+
         [data-absolute-placeholder] {
             margin: 3px;
-            
+
             &[data-absolute-placeholder='ready'] .table-relation.active {
                 z-index: 3;
-                @include abs(0,null,null,0);
+                @include abs(0, null, null, 0);
             }
         }
-        
+
         .table-relation {
             @include fakeselectTrigger();
-            
+
             > .popup {
                 @include tableRelationPopup();
             }

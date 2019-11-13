@@ -114,7 +114,7 @@ class Specific extends Core\RouteAlias
         $return = false;
         $table = $this->table();
         $row = $this->row();
-        
+
         if($table->hasPermission('update','lemurUpdate') && $row->isUpdateable())
         $return = true;
 
@@ -182,7 +182,7 @@ class Specific extends Core\RouteAlias
     final protected function makeTitleBox():string
     {
         $r = $this->makeH1($this->makeTitle());
-        $r .= Html::divCond($this->makeRelationChilds(),['relation-childs','popup-trigger','with-icon','with-popup','tabindex'=>-1,'data'=>array('anchor-corner'=>true,'absolute-placeholder'=>true)]);
+        $r .= Html::divCond($this->makeRelationChilds(),['relation-childs','popup-trigger','with-icon','with-popup','tabindex'=>-1,'data'=>['anchor-corner'=>true,'absolute-placeholder'=>true]]);
 
         return $r;
     }
@@ -300,10 +300,10 @@ class Specific extends Core\RouteAlias
                 if(!empty($specific['count']))
                 {
                     $popup = $general->generalInfoPopup(true);
-                    
+
                     $attr = ['popup-trigger'];
                     if(!empty($popup))
-                    $attr = Base\Arr::append($attr,['with-popup','with-text-solo','tabindex'=>-1,'data'=>array('anchor-corner'=>true,'absolute-placeholder'=>true)]);
+                    $attr = Base\Arr::append($attr,['with-popup','with-text-solo','tabindex'=>-1,'data'=>['anchor-corner'=>true,'absolute-placeholder'=>true]]);
 
                     $r .= Html::divOp($attr);
                     $r .= Html::button($specific['count'],'popup-title');
@@ -316,7 +316,7 @@ class Specific extends Core\RouteAlias
 
                 if(!empty($specific['last']))
                 $r .= $specific['last'];
-                
+
                 $route = SpecificAdd::make($table);
                 if($route->canTrigger())
                 $r .= $route->a(static::langText('specific/add'));
@@ -471,7 +471,7 @@ class Specific extends Core\RouteAlias
         if($table->hasPermission('duplicate'))
         {
             $route = SpecificDuplicate::make($this->segments());
-            
+
             if($route->canTrigger())
             {
                 $data = ['confirm'=>static::langText('common/confirm')];

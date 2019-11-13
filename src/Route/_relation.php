@@ -253,8 +253,8 @@ trait _relation
 
         return $return;
     }
-    
-    
+
+
     // makeClickOpen
     // génère une balise clickOpen, qui contient un container
     // est la base pour un fakeSelect

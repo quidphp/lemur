@@ -119,7 +119,7 @@
 
             .close {
                 margin-left: 4px;
-                
+
                 &:hover {
                     opacity: 0.8;
                 }
@@ -230,7 +230,7 @@
             @include transitions(opacity 0.3s);
             text-align: center;
         }
-        
+
         &:hover,
         &[data-triggered='1'] {
             .thumbnail,

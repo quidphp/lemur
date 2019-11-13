@@ -13,14 +13,14 @@
 // mixin pour une cellule de relation dans le tableau general
 @mixin componentRelationGeneral() {
     @include filesShowThumbnail();
-    
+
     > ul,
     > ol {
         list-style-type: none;
 
         > li {
             padding: 2px 0;
-            
+
             &.relation-more {
                 font-style: italic;
             }
@@ -37,11 +37,10 @@
 
 // componentSelectSpecific
 // mixin pour une relation avec une fakeselect
-@mixin componentSelectSpecific()
-{
+@mixin componentSelectSpecific() {
     &[data-absolute-placeholder='ready'] > .fakeselect.active {
         z-index: 3;
-        @include abs(0,null,null,0);
+        @include abs(0, null, null, 0);
     }
 }
 

@@ -8,8 +8,8 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Cell;
-use Quid\Core;
 use Quid\Base\Html;
+use Quid\Core;
 
 // relation
 // abstract class extended by the enum and set cells
@@ -32,7 +32,7 @@ class Relation extends Core\Cell\Relation
             $max = $col->getAttr('generalMax');
             $total = count($relation);
             $array = $col->prepareRelationPlainGeneral($relation);
-            
+
             if(!empty($array))
             {
                 $return = Html::liMany(...array_values($array));
@@ -42,7 +42,7 @@ class Relation extends Core\Cell\Relation
                     $diff = ($total - $max);
                     $return .= Html::li("(+$diff)",'relation-more');
                 }
-                
+
                 $return = Html::ulCond($return);
             }
         }

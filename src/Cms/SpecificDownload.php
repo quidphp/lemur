@@ -50,7 +50,7 @@ class SpecificDownload extends Core\RouteAlias
         if($table instanceof Core\Table && $table->hasPermission('mediaDownload'))
         {
             $col = $this->segment('col');
-            
+
             if(!empty($col) && $col->isMedia())
             $return = true;
         }

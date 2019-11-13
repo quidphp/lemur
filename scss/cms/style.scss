@@ -44,15 +44,15 @@ input[type='password'],
 input[type='email'],
 textarea {
     @include inputTextBase();
-    
+
     &::-webkit-input-placeholder {
         color: $darkGray;
     }
-    
+
     &::-moz-placeholder {
         color: $darkGray;
     }
-    
+
     &::-ms-input-placeholder {
         olor: $darkGray;
     }

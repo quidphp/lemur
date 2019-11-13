@@ -44,15 +44,15 @@ class GeneralDelete extends Core\RouteAlias
     // dynamique
     protected $ids = null; // conserve les ids à effacer
 
-    
+
     // canTrigger
     // si la route peut être lancé
-    final public function canTrigger():bool 
+    final public function canTrigger():bool
     {
         return (parent::canTrigger() && $this->hasTable() && $this->table()->hasPermission('view','delete','lemurDelete','multiDelete'))? true:false;
     }
-    
-    
+
+
     // onBefore
     // validation des permissions avant de lancer la route
     // les ids à effacer sont conservé

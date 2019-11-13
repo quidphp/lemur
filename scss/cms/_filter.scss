@@ -14,25 +14,25 @@
 @mixin filterTogglerOuter() {
     @include transition(background-color);
     z-index: 2;
-    
+
     .close {
         @include abs(-8px, -8px);
         z-index: 5;
     }
-    
+
     &:hover,
     &.filtering,
     &.active {
         background-color: $darkerColor;
     }
-    
+
     &.active.trigger {
         z-index: 3;
     }
-    
+
     > .trigger {
         @include wh();
-        
+
         .filter {
             @include abs(50%, null, null, 50%);
             @include transition(opacity);

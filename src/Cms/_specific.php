@@ -296,21 +296,21 @@ trait _specific
             $detailsHtml = Html::ulCond($detailsHtml);
             $attr = $col->getFormElementAttr();
             $colPopup = $this->makeColPopup($col);
-            
+
             if(!empty($colPopup))
             {
-                $popup = Html::divOp(['popup-trigger','with-popup','with-icon-solo','tabindex'=>-1,'data'=>array('anchor-corner'=>true,'absolute-placeholder'=>true)]);
+                $popup = Html::divOp(['popup-trigger','with-popup','with-icon-solo','tabindex'=>-1,'data'=>['anchor-corner'=>true,'absolute-placeholder'=>true]]);
                 $popup .= Html::button(null,'popup-title');
                 $popup .= Html::div($colPopup,'popup');
                 $popup .= Html::divCl();
                 $attr['data']['col-popup'] = true;
             }
-            
+
             $replace = [];
             $replace['description'] = (!empty($description))? Html::div($description,'description'):'';
             $replace['details'] = (!empty($details))? Html::divCond($detailsHtml,'details'):'';
             $replace['popup'] = (!empty($popup))? $popup:'';
-            
+
             try
             {
                 $formWrap = $this->makeFormWrap($colCell,$replace);

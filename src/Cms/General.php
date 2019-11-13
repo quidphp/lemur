@@ -54,15 +54,15 @@ class General extends Core\RouteAlias
             'classFqcn','classRow','classRows','classCols','classCells','sql']
     ];
 
-    
+
     // canTrigger
     // si la route peut être lancé
-    final public function canTrigger():bool 
+    final public function canTrigger():bool
     {
         return (parent::canTrigger() && $this->hasTable() && $this->hasTablePermission('view'))? true:false;
     }
-    
-    
+
+
     // onBefore
     // validation avant le lancement de la route
     final protected function onBefore()
@@ -404,10 +404,10 @@ class General extends Core\RouteAlias
         if($this->hasTablePermission('generalCount'))
         {
             $popup = $this->generalInfoPopup();
-            
+
             $attr = ['popup-trigger'];
             if(!empty($popup))
-            $attr = Base\Arr::append($attr,['with-popup','with-icon','tabindex'=>-1,'data'=>array('anchor-corner'=>true,'absolute-placeholder'=>true)]);
+            $attr = Base\Arr::append($attr,['with-popup','with-icon','tabindex'=>-1,'data'=>['anchor-corner'=>true,'absolute-placeholder'=>true]]);
 
             $r .= Html::divOp($attr);
             $r .= Html::button($this->makeCount(),'popup-title');
@@ -557,7 +557,7 @@ class General extends Core\RouteAlias
         $r = '';
         $table = $this->table();
         $route = SpecificAdd::make($table);
-        
+
         if($route->canTrigger())
         $r .= $route->a(static::langText('general/add'),['with-icon','add','operation-element']);
 
@@ -585,7 +585,7 @@ class General extends Core\RouteAlias
         $r = '';
         $table = $this->table();
         $route = GeneralTruncate::make($table);
-        
+
         if($route->canTrigger() && !empty($table->rowsCount(true,true)))
         {
             $data = ['confirm'=>static::langText('common/confirm')];
@@ -644,7 +644,7 @@ class General extends Core\RouteAlias
         $r = '';
         $table = $this->table();
         $route = GeneralDelete::make(['table'=>$table,'primaries'=>true]);
-        
+
         if($route->canTrigger())
         {
             $defaultSegment = static::getDefaultSegment();
@@ -674,7 +674,7 @@ class General extends Core\RouteAlias
         $r .= Html::span(null,['icon-solo','uncheck','center']);
         $r = Html::button($r,['toggle-all',($hasInNotIn === true)? 'selected':null]);
         $r = Html::div($r,'cell-inner');
-        
+
         if($hasInNotIn === true)
         {
             $route = $this->changeSegments(['in'=>null,'notIn'=>null]);
@@ -706,7 +706,7 @@ class General extends Core\RouteAlias
             $route = $this->changeSegment('cols',true);
             $current = implode($defaultSegment,$currentCols->names());
             $data = ['href'=>$route,'char'=>static::getReplaceSegment(),'current'=>$current,'separator'=>$defaultSegment];
-            $inAttr = Base\Attr::append($inAttr,array('data'=>array('anchor-corner'=>true,'absolute-placeholder'=>true)));
+            $inAttr = Base\Attr::append($inAttr,['data'=>['anchor-corner'=>true,'absolute-placeholder'=>true]]);
             $session = static::session();
 
             $checkbox = [];
@@ -728,12 +728,12 @@ class General extends Core\RouteAlias
                     $option['value'][] = $key;
                 }
             }
-            
-            $r .= Html::buttonOp(array('trigger',($hasSpecificCols === true)? 'selected':null));
+
+            $r .= Html::buttonOp(['trigger',($hasSpecificCols === true)? 'selected':null]);
             $r .= Html::span(null,['icon-solo','cols','center']);
             $r .= Html::buttonCl();
-            
-            $r .= Html::divOp(array('popup'));
+
+            $r .= Html::divOp(['popup']);
             $r .= Html::divOp('inside');
             $r .= Html::checkbox($checkbox,$attr,$option);
             $r .= Html::divCl();
@@ -742,13 +742,13 @@ class General extends Core\RouteAlias
         }
 
         $r = Html::div($r,$inAttr);
-        
+
         if($hasSpecificCols === true)
         {
             $reset = $this->changeSegment('cols',null);
             $r .= $reset->a(null,['icon-solo','close']);
         }
-        
+
         return $r;
     }
 
@@ -836,7 +836,7 @@ class General extends Core\RouteAlias
             if($this->hasTablePermission('action'))
             {
                 $html = $this->makeCols();
-                $ths[] = [$html,array('action','tabindex'=>-1)];
+                $ths[] = [$html,['action','tabindex'=>-1]];
             }
 
             foreach ($cols as $col)
@@ -846,7 +846,7 @@ class General extends Core\RouteAlias
                 $thAttr = ['data'=>$data];
                 $filter = '';
                 [$filter,$thAttr] = $this->makeTableHeaderFilter($col,[$filter,$thAttr]);
-                
+
                 $label = Html::div($col->label(),'label');
                 $in = $label;
 
@@ -906,18 +906,18 @@ class General extends Core\RouteAlias
     {
         $html = $array[0];
         $thAttr = $array[1];
-        
+
         if($this->hasTablePermission('filter') && $col->isFilterable() && $col->relation()->size() > 0)
         {
             $filter = $this->segment('filter');
 
-            $class = ['filter-outer','tabindex'=>-1,'data'=>array('anchor-corner'=>true)];
+            $class = ['filter-outer','tabindex'=>-1,'data'=>['anchor-corner'=>true]];
             $close = ['icon-solo','close'];
             $label = Html::span(null,['filter','icon-solo']);
 
             $route = GeneralRelation::getOverloadClass();
             $relHtml = $route::makeGeneralRelation($col,$this,$filter,$class,$close,$label);
-            
+
             if(!empty($relHtml))
             {
                 $html .= $relHtml;
@@ -946,13 +946,13 @@ class General extends Core\RouteAlias
             $actionPermission = $this->hasTablePermission('action');
             $specificPermission = $this->hasTablePermission('specific');
             $modify = $this->hasTablePermission('update','lemurUpdate');
-            $option = array();
-            
+            $option = [];
+
             foreach ($rows as $row)
             {
                 $array = [];
                 $cells = $row->cells($cols);
-                
+
                 $rowAttr = ['data'=>['id'=>$row->primary(),'row'=>$row::className(true)]];
                 if(!empty($highlight) && in_array($row->primary(),$highlight,true))
                 $rowAttr[] = 'highlight';

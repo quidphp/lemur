@@ -142,8 +142,7 @@
 
 // inputTextBase
 // mixin avec des styles de base pour les inputs/textarea
-@mixin inputTextBase()
-{
+@mixin inputTextBase() {
     @include inputTextEvents();
     padding: 8px 10px;
     border-radius: 5px;
@@ -153,8 +152,7 @@
 
 // inputTextEvents
 // mixin avec des styles de base pour les events dans les inputs/textarea
-@mixin inputTextEvents()
-{
+@mixin inputTextEvents() {
     &.active,
     &:hover,
     &:focus {
@@ -165,15 +163,15 @@
         background-color: $red !important;
         color: $white !important;
         border: 1px solid $black;
-        
+
         &::-webkit-input-placeholder {
             color: $lightestGray;
         }
-        
+
         &::-moz-placeholder {
             color: $lightestGray;
         }
-        
+
         &::-ms-input-placeholder {
             olor: $lightestGray;
         }
@@ -254,7 +252,7 @@
         padding: 0;
         border-radius: 0;
     }
-    
+
     &.no-border {
         border: 0;
         border-radius: 0;

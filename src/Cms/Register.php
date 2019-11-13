@@ -21,7 +21,7 @@ class Register extends Lemur\Route\Register
     // config
     public static $config = [];
 
-    
+
     // submitClass
     // classe de la route pour soumettre le formulaire
     final public static function submitClass():string

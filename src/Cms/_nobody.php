@@ -104,7 +104,7 @@ trait _nobody
     final protected function makeAbout():string
     {
         $r = '';
-        
+
         $route = About::make();
         if($route->canTrigger())
         $r .= $route->aDialog();
@@ -118,7 +118,7 @@ trait _nobody
     final protected function makeRegister():string
     {
         $r = '';
-        
+
         $route = Register::make();
         if($route->canTrigger())
         $r .= $route->aTitle();
@@ -132,7 +132,7 @@ trait _nobody
     final protected function makeLogin():string
     {
         $r = '';
-        
+
         $route = Login::make();
         if($route->canTrigger())
         $r .= $route->aTitle();
@@ -146,7 +146,7 @@ trait _nobody
     final protected function makeResetPassword():string
     {
         $r = '';
-        
+
         $route = ResetPassword::make();
         if($route->canTrigger())
         $r .= $route->a(static::langText('resetPassword/forgot'));

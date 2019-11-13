@@ -86,7 +86,7 @@ class GeneralExport extends Core\RouteAlias
         foreach (static::getTypes() as $value)
         {
             $route = $route->changeSegment('type',$value);
-            
+
             if($route->canTrigger())
             {
                 $label = static::langText(['export',$value]);

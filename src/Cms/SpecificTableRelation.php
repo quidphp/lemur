@@ -8,11 +8,11 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Cms;
+use Quid\Base;
 use Quid\Base\Html;
 use Quid\Core;
 use Quid\Lemur;
 use Quid\Orm;
-use Quid\Base;
 
 // SpecificTableRelation
 // class for the route which manages table relation, used by some inputs in the CMS
@@ -164,8 +164,8 @@ class SpecificTableRelation extends Core\RouteAlias
 
             $html .= Html::divCl();
         }
-        
-        $attr = Base\Attr::append($attr,array('data'=>$data));
+
+        $attr = Base\Attr::append($attr,['data'=>$data]);
         $html .= Html::div(null,'results');
         $r .= static::makeClickOpen($html,$title,$after,$attr);
 

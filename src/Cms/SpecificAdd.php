@@ -42,7 +42,7 @@ class SpecificAdd extends Core\RouteAlias
     // dynamique
     protected $flash = null; // garde une copie des données flash
 
-    
+
     // onBefore
     // validation avant le lancement de la route
     final protected function onBefore()
@@ -61,7 +61,7 @@ class SpecificAdd extends Core\RouteAlias
         return $return;
     }
 
-    
+
     // canTrigger
     // validation avant le lancement de la route
     final public function canTrigger():bool
@@ -74,8 +74,8 @@ class SpecificAdd extends Core\RouteAlias
 
         return $return;
     }
-    
-    
+
+
     // selectedUri
     // retourne les uri sélectionnés pour la route
     final public function selectedUri():array
@@ -295,12 +295,12 @@ class SpecificAdd extends Core\RouteAlias
     {
        $return = '';
        $value = true;
-       
+
        if(!empty($this->flash))
        $value = $this->flash($col);
-       
+
        $return .= $col->formComplexWrap($this->getFormWrap(),'%:',$value,null,$replace);
-       
+
        return $return;
     }
 

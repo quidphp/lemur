@@ -11,7 +11,6 @@ namespace Quid\Lemur\Cms;
 use Quid\Base;
 use Quid\Base\Html;
 use Quid\Lemur;
-use Quid\Orm;
 
 // _template
 // trait that grants the methods to generate the CMS HTML template
@@ -44,7 +43,7 @@ trait _template
 
         $flush .= Html::div($this->loader(),'loading-fixed');
         $flush .= Html::div(null,'background');
-        $flush .= Html::divCond($this->makeModal(),array('modal','tabindex'=>-1));
+        $flush .= Html::divCond($this->makeModal(),['modal','tabindex'=>-1]);
 
         $flush .= Html::divOp('#wrapper');
 
@@ -89,7 +88,7 @@ trait _template
     {
         $r = Html::div(null,'loading-progress');
         $r .= Html::div(null,'loading-icon');
-        
+
         return $r;
     }
 
@@ -100,10 +99,10 @@ trait _template
     {
         $r = '';
         $boot = static::boot();
-        
+
         $r .= Html::div($boot->label(),'boot-label');
         $r .= Html::div(null,['burger-menu','icon-solo','burger']);
-        
+
         $r .= Html::divOp('top');
         $r .= Html::div($this->headerLeft(),'left');
         $r .= Html::div($this->headerRight(),'right');
@@ -119,15 +118,15 @@ trait _template
     final protected function headerLeft():string
     {
         $r = '';
-        
+
         $route = Search::make();
         if($route->canTrigger())
         $r .= $route->makeForm();
-        
+
         return $r;
     }
 
-    
+
     // headerRight
     // génère le header droite pour toutes les pages du cms
     final protected function headerRight():string
@@ -146,11 +145,11 @@ trait _template
             {
                 $route = PopupSession::make();
                 $popup = ($route->canTrigger())? true:false;
-                
+
                 $attr = ['popup-trigger'];
                 if(!empty($popup))
-                $attr = Base\Arr::append($attr,['with-ajax','with-popup','with-icon','tabindex'=>-1,'data'=>array('anchor-corner'=>true,'absolute-placeholder'=>true)]);
-                
+                $attr = Base\Arr::append($attr,['with-ajax','with-popup','with-icon','tabindex'=>-1,'data'=>['anchor-corner'=>true,'absolute-placeholder'=>true]]);
+
                 $r .= Html::divOp($attr);
 
                 if($popup === true)
@@ -161,7 +160,7 @@ trait _template
                 $r .= Html::div(null,'popup');
                 $r .= Html::divCl();
             }
-            
+
             $route = Account::make();
             if($route->canTrigger())
             $r .= $route->aTitle(null,['with-icon','no-border','account']);
@@ -176,7 +175,7 @@ trait _template
                 $active = ($session->hasFakeRoles())? 'active':null;
                 $r .= $route->aDialog(['with-icon','no-border','mask',$active]);
             }
-            
+
             $route = Logout::make();
             if($route->canTrigger())
             $r .= $route->aTitle(null,['with-icon','no-border','logout']);
@@ -203,24 +202,24 @@ trait _template
         $logo = $boot->getOption('logo');
         $label = $boot->label();
         $schemeHost = $boot->schemeHost();
-        
+
         $r .= Html::divOp('nav-fixed');
 
         $r .= Html::divOp('nav-top');
         $r .= Html::div(null,['nav-close','icon-solo','close']);
-        
+
         if(!empty($logo))
         {
             $img = Html::imgCond($logo,$label);
             $r .= Html::a($schemeHost,$img,'logo');
         }
-        
+
         else
         {
             $label = Html::span($label);
             $r .= Html::a($schemeHost,$label,'boot-label');
         }
-        
+
         $r .= Html::divCl();
 
         $r .= Html::navCond($this->nav());
@@ -238,7 +237,7 @@ trait _template
         $tables = $this->db()->tables();
         $tables = $tables->hasPermission('view');
         $hierarchy = $tables->hierarchy(false,true);
-        
+
         $r .= Html::ulCond($this->navMenu($hierarchy));
 
         return $r;
@@ -302,7 +301,7 @@ trait _template
                             $html .= Html::span(null,['triangle']);
                             $html .= Html::span($label);
                             $html .= Html::buttonCl();
-                            
+
                             $html .= Html::divOp('target');
                             $html .= Html::ulOp();
                             $html .= $routeHtml;
@@ -365,7 +364,7 @@ trait _template
 
         if($this->hasPermission('footerCli'))
         $r .= $this->footerElement('cli',$this->footerCli());
-        
+
         $route = About::make();
         if($route->canTrigger())
         $r .= $route->aDialog(['with-icon','help','no-border']);
@@ -373,10 +372,10 @@ trait _template
         $copyright = static::langText('footer/version',['version'=>$version]);
         $route = PopupBoot::make($this);
         $popup = ($route->canTrigger() && $route->isValidSegment())? true:false;
-        
+
         $attr = ['popup-trigger'];
         if(!empty($popup))
-        $attr = Base\Arr::append($attr,['with-ajax','with-popup','with-icon','tabindex'=>-1,'data'=>array('anchor-corner'=>true,'absolute-placeholder'=>true)]);
+        $attr = Base\Arr::append($attr,['with-ajax','with-popup','with-icon','tabindex'=>-1,'data'=>['anchor-corner'=>true,'absolute-placeholder'=>true]]);
 
         $r .= Html::divOp($attr);
 
@@ -413,7 +412,7 @@ trait _template
 
         if(!empty($popup))
         {
-            $attr = [$top,'with-submenu','data'=>array('anchor-corner'=>true)];
+            $attr = [$top,'with-submenu','data'=>['anchor-corner'=>true]];
             $r .= Html::divOp($attr);
             $r .= Html::button($label,['with-icon','no-border','trigger',$type]);
             $r .= Html::divCond($popup,'popup');
@@ -515,7 +514,7 @@ trait _template
             foreach ($routes as $route)
             {
                 $route = $route::make();
-                
+
                 if($route->canTrigger())
                 $return[] = $route;
             }

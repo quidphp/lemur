@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Quid\Lemur;
 use Quid\Base;
-use Quid\Core;
 use Quid\Base\Html;
+use Quid\Core;
 
 // col
 // extended class to represent an existing column within a table, adds cms config
@@ -37,7 +37,7 @@ class Col extends Core\Col
         return $this->getAttr('quickEdit') === true && !$this->isPlainTag(null,true);
     }
 
-    
+
     // specificComponent
     // génère le html pour le specific component de la colonne
     // utilisé dans les formulaires spécifiques de lemur
@@ -47,11 +47,11 @@ class Col extends Core\Col
         $compAttr = $this->getSpecificComponentAttr();
         $option = Base\Arr::plus(['context'=>'cms:specific'],$option);
         $return = Html::div($this->formComplex($value,$attr,$option),$compAttr);
-        
+
         return $return;
     }
-    
-    
+
+
     // onComplex
     // permet de formater une valeur simple vers un type plus complexe
     // utilisé lors de la génération d'un élément de formulaire, si onComplex est true renvoie à onGet
@@ -172,41 +172,41 @@ class Col extends Core\Col
         return $return;
     }
 
-    
+
     // getFormElementAttr
     // retourne les data attr complet pour le form element
     final public function getFormElementAttr($attr=null):array
     {
-        $return = array('form-element');
+        $return = ['form-element'];
         $data = ['name'=>$this,'group'=>$this->group(),'col'=>$this::className(true),'tag'=>$this->complexTag()];
 
         if($this->isRequired())
         $return[] = 'required';
-        
+
         if($this->hasFormLabelId($attr,true))
         $return[] = 'cursor-pointer';
-        
+
         $return['data'] = $this->getDataAttr($data);
 
         return $return;
     }
-    
-    
+
+
     // getSpecificComponentAttr
     // retourne les attr pour le specific component
     final public function getSpecificComponentAttr($return=null):array
     {
         if(!is_array($return))
         $return = (array) $return;
-        
+
         $return[] = 'specific-component';
-        
+
         if($this->getAttr('anchorCorner',true))
         $return['data-anchor-corner'] = true;
-        
+
         if($this->getAttr('absolutePlaceholder',true))
         $return['data-absolute-placeholder'] = true;
-        
+
         return $return;
     }
 }

@@ -26,15 +26,15 @@ trait _general
         return $return;
     }
 
-    
+
     // hasTable
     // retouren vrai si la route est lié à une table
     final public function hasTable():bool
     {
         return ($this->segment('table') instanceof Core\Table)? true:false;
     }
-    
-    
+
+
     // general
     // retourne la route general a utilisé pour rediriger
     final public function general(bool $nav=true):General

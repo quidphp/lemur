@@ -318,7 +318,7 @@ trait _generalRelation
         }
 
         $route = static::make(['table'=>$table,'col'=>$col,'selected'=>$selected]);
-        
+
         if($route->canTrigger())
         {
             $limit = $route->limit();
@@ -347,8 +347,8 @@ trait _generalRelation
 
             elseif($size > 1 && !empty($order))
             $html .= Html::div($route->orderSelect(),'top');
-            
-            $attr = Base\Attr::append($attr,array('data'=>$data));
+
+            $attr = Base\Attr::append($attr,['data'=>$data]);
             $html .= Html::div(null,'results');
             $r .= static::makeClickOpen($html,$label,$after,$attr);
         }

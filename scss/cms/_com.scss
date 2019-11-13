@@ -24,12 +24,12 @@
     .close {
         @include abs(8px, 8px);
         z-index: 3;
-        
+
         &:hover {
             opacity: 0.8;
         }
     }
-    
+
     .top {
         @include flex();
 

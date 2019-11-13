@@ -47,15 +47,15 @@ abstract class RegisterSubmit extends Core\RouteAlias
         'log'=>null
     ];
 
-    
+
     // canTrigger
     // retourne vrai si la route peut être lancé
-    final public function canTrigger():bool 
+    final public function canTrigger():bool
     {
         return (parent::canTrigger() && static::session()->roles(false)->isNobody() && static::session()->allowRegister())? true:false;
     }
-    
-    
+
+
     // onSuccess
     // traite le succès
     final protected function onSuccess():void

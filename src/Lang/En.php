@@ -267,10 +267,10 @@ class En extends Core\Lang\En
             ],
 
             // search
-            'search'=>array(
+            'search'=>[
                 'notFound'=>'Rien à afficher'
-            ),
-            
+            ],
+
             // general
             'general'=>[
                 'search'=>'Search',

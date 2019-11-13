@@ -31,7 +31,7 @@ class Cell extends Core\Cell
         $col = $this->col();
         $placeholder = $col->emptyPlaceholder($value);
         $attr = $this->getGeneralComponentAttr($attr);
-        
+
         if(is_string($placeholder))
         $value = Html::div($placeholder,'empty-placeholder');
 
@@ -51,7 +51,7 @@ class Cell extends Core\Cell
         $option = Base\Arr::plus(['context'=>'cms:specific'],$option);
         $form = $this->formComplex($attr,$option);
         $return = Html::div($form,$compAttr);
-        
+
         return $return;
     }
 
@@ -86,21 +86,21 @@ class Cell extends Core\Cell
     {
         return $this->col()->getDataAttr($return);
     }
-    
-    
+
+
     // getGeneralComponentAttr
     // retourne les attr pour le general component
     final public function getGeneralComponentAttr($return):array
     {
         if(!is_array($return))
         $return = (array) $return;
-        
+
         $return[] = 'general-component';
-        
+
         return $return;
     }
-    
-    
+
+
     // getSpecificComponentAttr
     // retourne les attr pour le specific component
     final public function getSpecificComponentAttr($return=null):array

@@ -130,7 +130,7 @@ class Textarea extends Core\ColAlias
             $route = $this->route('tableRelation',['table'=>$table]);
             if($route->canTrigger())
             {
-                $attr = array('data'=>array('absolute-placeholder'=>true,'anchor-corner'=>true));
+                $attr = ['data'=>['absolute-placeholder'=>true,'anchor-corner'=>true]];
                 $r .= Html::divCond($route::makeTableRelation($table,$route,['table-relation']),$attr);
             }
         }

@@ -267,10 +267,10 @@ class Fr extends Core\Lang\Fr
             ],
 
             // search
-            'search'=>array(
+            'search'=>[
                 'notFound'=>'Rien à afficher'
-            ),
-            
+            ],
+
             // general
             'general'=>[
                 'search'=>'Recherche',

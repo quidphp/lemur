@@ -11,7 +11,7 @@
 @mixin mainSearch() {
     margin: auto;
     position: relative;
-    
+
     input[type='text'] {
         @include inputTextEvents();
         display: block;
@@ -25,18 +25,18 @@
         margin: auto;
         border-bottom: 2px solid $color;
     }
-    
+
     &.active-search-in [data-absolute-placeholder='ready'] input[type='text'],
     &.active [data-absolute-placeholder='ready'] input[type='text'] {
         z-index: 3;
-        @include abs(0,null,null,0);
+        @include abs(0, null, null, 0);
     }
-    
+
     &.active-search-in input[type='text'],
     &.active input[type='text'] {
         background-color: $lightYellow;
     }
-    
+
     .icon-solo {
         @include abs(50%, null, null, 15px);
         margin-top: -8px;
@@ -46,16 +46,16 @@
     .popup {
         @include popupList();
     }
-    
+
     .search-in {
         @include popupBase();
         padding: 15px;
         font-size: 90%;
-        
+
         > .first {
             margin-bottom: 5px;
         }
-        
+
         > .first,
         > .second {
             span:first-child {
@@ -68,18 +68,18 @@
             display: block;
         }
     }
-    
+
     .popup,
     .search-in {
         width: 100%;
         max-width: inherit;
         max-height: 225px;
     }
-    
+
     // responsive
     @media screen and (max-width: 900px), screen and (orientation: portrait) {
         max-width: 450px;
-        
+
         input[type='text'] {
             @include inputTextBase();
             padding-left: 40px;

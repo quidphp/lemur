@@ -57,15 +57,15 @@ class Search extends Core\RouteAlias
         return $return;
     }
 
-    
+
     // canTrigger
     // la route peut être triggé
-    final public function canTrigger():bool 
+    final public function canTrigger():bool
     {
         return $this->hasPermission('search');
     }
-    
-    
+
+
     // isSearchValueValid
     // retourne vrai si le terme de recherche est valide
     final protected function isSearchValueValid(string $value):bool
@@ -132,23 +132,23 @@ class Search extends Core\RouteAlias
         return $r;
     }
 
-    
+
     // makeForm
     // génère le form pour le formulaire de recherche
-    final public function makeForm():string 
+    final public function makeForm():string
     {
         $r = '';
         $tables = $this->db()->tables()->searchable();
-        
+
         if($tables->isNotEmpty())
         {
             $lang = static::lang();
             $minLength = $tables->searchMinLength();
             $name = $this->getSearchName();
             $data = ['keyupDelay'=>800,'required'=>true,'pattern'=>['minLength'=>$minLength]];
-            
+
             $r .= $this->formOpen();
-            $r .= Html::divOp(array('data'=>array('absolute-placeholder'=>true,'absolute-placeholder-height'=>true)));
+            $r .= Html::divOp(['data'=>['absolute-placeholder'=>true,'absolute-placeholder-height'=>true]]);
             $r .= Html::inputText(null,['name'=>$name,'placeholder'=>$lang->text('home/searchSubmit'),'data'=>$data]);
             $r .= Html::submit(true,['button','icon-solo','search']);
             $r .= Html::divCl();
@@ -156,11 +156,11 @@ class Search extends Core\RouteAlias
             $r .= Html::div($this->makeSearchIn($minLength,$tables),'search-in');
             $r .= Html::formClose();
         }
-        
+
         return $r;
     }
-    
-    
+
+
     // makeSearchIn
     // génère le html pour le searchIn
     final protected function makeSearchIn(int $minLength,Orm\Tables $tables):string
@@ -169,7 +169,7 @@ class Search extends Core\RouteAlias
         $lang = static::lang();
         $replace = ['count'=>$minLength];
         $note = $lang->plural($minLength,'home/searchNote',$replace);
-        
+
         $r .= Html::divOp('first');
         $r .= Html::span($lang->text('home/note').':');
         $r .= Html::span($note,'note');
@@ -178,11 +178,11 @@ class Search extends Core\RouteAlias
         $r .= Html::span($lang->text('home/searchIn').':');
         $r .= Html::span(implode(', ',$tables->pair('label')),'labels');
         $r .= Html::divCl();
-        
+
         return $r;
     }
-    
-    
+
+
     // searchable
     // retourne les tables cherchables et ayant les permission
     // est public car utilisé dans template

@@ -21,8 +21,8 @@ abstract class Relation extends Core\Col\Relation
     public static $config = [
         'specificLink'=>false,
         '@cms'=>[
-            'anchorCorner'=>array(self::class,'hasAnchorCorner'),
-            'absolutePlaceholder'=>array(self::class,'hasAbsolutePlaceholder'),
+            'anchorCorner'=>[self::class,'hasAnchorCorner'],
+            'absolutePlaceholder'=>[self::class,'hasAbsolutePlaceholder'],
             'sortable'=>null,
             'specificLink'=>true, // fait un lien vers spécifique dans cms
             'route'=>[
@@ -200,24 +200,24 @@ abstract class Relation extends Core\Col\Relation
             $id = $attr['id'] ?? null;
             if(is_array($attr) && array_key_exists('id',$attr))
             unset($attr['id']);
-            
+
             $return .= Html::divOp('input-popup');
-            
-            $return .= Html::divOp(array('data'=>array('absolute-placeholder'=>true)));
+
+            $return .= Html::divOp(['data'=>['absolute-placeholder'=>true]]);
             $return .= Html::divOp('input');
             $return .= Html::inputText(null,['placeholder'=>$placeholder,'name'=>true,'data'=>$data,'id'=>$id]);
             if($option['button'] === true)
             $return .= Html::button(null,['icon-solo','search']);
             $return .= Html::divCl();
             $return .= Html::divCl();
-            
+
             $return .= Html::divOp('popup');
             $return .= $route->orderSelect();
             $return .= Html::div(null,'results');
             $return .= Html::divCl();
-            
+
             $return .= Html::divCl();
-            
+
             $return .= Html::divOp('current');
             $return .= $this->formHidden();
             $return .= $this->formComplexSearchChoices($value,$attr,$option);
@@ -368,26 +368,26 @@ abstract class Relation extends Core\Col\Relation
 
         return $return;
     }
-    
-    
+
+
     // hasAnchorCorner
     // retourne vrai s'il faut mettre l'attribut anchor-corner
     final public static function hasAnchorCorner(self $col):bool
     {
-        return (in_array($col->complexTag(),array('select','search'),true));
+        return in_array($col->complexTag(),['select','search'],true);
     }
-    
-    
+
+
     // hasAbsolutePlaceholder
     // retourne vrai s'il faut mettre l'attribut absolute-placeholder
     final public static function hasAbsolutePlaceholder(self $col):bool
     {
         $return = false;
         $tag = $col->complexTag();
-        
+
         if($tag === 'select')
         $return = true;
-        
+
         return $return;
     }
 }

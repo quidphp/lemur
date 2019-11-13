@@ -27,15 +27,15 @@ class About extends Core\RouteAlias
             'fr'=>'a-propos']
     ];
 
-    
+
     // canTrigger
     // retourne vrai si la route peut être trigger
-    final public function canTrigger():bool 
+    final public function canTrigger():bool
     {
         return (parent::canTrigger() && $this->hasPermission('about'))? true:false;
     }
-    
-    
+
+
     // trigger
     // html pour la page à propos, qui est accessible à tous peu importe le role
     final public function trigger()
@@ -55,7 +55,7 @@ class About extends Core\RouteAlias
         $return['authorLink'] = Html::a($return['email'],$return['author']);
         $return['websiteLink'] = Html::a($return['website'],$return['framework']);
         $return['licenseLink'] = Html::a($return['licenseUrl'],$return['licenseType']);
-        
+
         return $return;
     }
 
@@ -76,7 +76,7 @@ class About extends Core\RouteAlias
         return $r;
     }
 
-    
+
     // framework
     // retourne le lien web pour le framework
     final public static function framework($attr=null):string
@@ -91,8 +91,8 @@ class About extends Core\RouteAlias
     {
         return Html::a(static::langText('about/email'),true);
     }
-    
-    
+
+
     // aDialog
     // retourne le lien dialog
     final public function aDialog(?array $attr=null):string

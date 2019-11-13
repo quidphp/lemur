@@ -27,15 +27,15 @@ class AccountChangePassword extends Lemur\Route\AccountChangePassword
             'ajax'=>true]
     ];
 
-    
+
     // canTrigger
     // vérifie si la route peut être lancé
     final public function canTrigger():bool
     {
         return (parent::canTrigger() && $this->hasPermission('accountChangePassword'))? true:false;
     }
-    
-    
+
+
     // submitRoute
     // route à utiliser pour submit
     final public function submitRoute():Lemur\Route\AccountChangePasswordSubmit

@@ -51,8 +51,7 @@
 
 // popupBase
 // mixin de base pour un popup
-@mixin popupBase()
-{
+@mixin popupBase() {
     @include abs(100%, null, null, 0px);
     border-top-left-radius: 0;
     display: none;
@@ -72,12 +71,12 @@
     box-sizing: border-box;
     border-radius: 5px;
     cursor: default;
-    
+
     .popup {
         background: $lightGray;
         border: 1px solid $gray;
     }
-    
+
     @media print {
         display: none !important;
     }
@@ -87,18 +86,18 @@
 // mixin avec les styles pour le popup-trigger
 @mixin popupTrigger() {
     position: relative;
-    
+
     .popup-title {
         display: block;
         padding: 5px;
     }
-    
+
     &[data-absolute-placeholder='ready'].active .popup-title {
         z-index: 3;
-        @include abs(0,null,null,0);
+        @include abs(0, null, null, 0);
         white-space: nowrap;
     }
-    
+
     &.with-icon {
         .popup-title {
             padding: 5px 10px 5px 25px;

@@ -117,15 +117,15 @@ class GeneralEdit extends Core\RouteAlias
         return $r;
     }
 
-    
+
     // makeFormComponent
     // génère le specific component pour la form
     final protected function makeFormComponent():string
     {
         return $this->cell()->specificComponent();
     }
-    
-    
+
+
     // makeTools
     // génère les outils, soit les boutons submit et revert
     final protected function makeTools():string

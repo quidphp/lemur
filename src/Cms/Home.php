@@ -8,9 +8,9 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Cms;
+use Quid\Base;
 use Quid\Base\Html;
 use Quid\Core;
-use Quid\Base;
 
 // home
 // class for the home route of the CMS
@@ -79,17 +79,17 @@ class Home extends Core\Route\Home
         $tables = $this->db()->tables();
         $total = $tables->filter(['hasPermission'=>true],'view')->total(true,true);
         $popup = $this->makeHomePopup();
-        
+
         $attr = ['popup-trigger'];
         if(!empty($popup))
-        $attr = Base\Arr::append($attr,['with-popup','with-icon','tabindex'=>-1,'data'=>array('anchor-corner'=>true,'absolute-placeholder'=>true)]);
+        $attr = Base\Arr::append($attr,['with-popup','with-icon','tabindex'=>-1,'data'=>['anchor-corner'=>true,'absolute-placeholder'=>true]]);
 
         $r .= Html::span($total['table'].' '.static::langPlural($total['table'],'lcf|common/table'));
         $r .= Html::span(',&nbsp;');
         $r .= Html::span($total['row'].' '.static::langPlural($total['row'],'lcf|common/row'));
         $r .= Html::span('&nbsp;'.static::langText('lcf|common/and').'&nbsp;');
         $r .= Html::span($total['col'].' '.static::langPlural($total['col'],'lcf|common/col'));
-        
+
         $r = Html::button($r,'popup-title');
         $r .= Html::div($popup,'popup');
         $r = Html::div($r,$attr);
