@@ -8,50 +8,53 @@
  
 // obj
 // script with a set of helper functions related to objects
-
-// isObject
-// retourne vrai si c'est un objet
-quid.base.isObject = function(value)
-{
-    return typeof(value) === 'object';
-}
-
-
-// isPlain
-// retourne vrai si c'est un objet plain
-quid.base.isPlainObject = function(value)
-{
-    return $.isPlainObject(value);
-}
-
-
-// objectHasProperty
-// retourne vrai si l'objet a la propriété
-quid.base.objectHasProperty = function(prop,value)
-{
-    return (quid.base.isString(prop) && quid.base.isObject(value))? value.hasOwnProperty(prop):false
-}
-
-
-// objClimb
-// permet de grimper dans un objet à partir d'un tableau
-quid.base.objClimb = function(array,r) 
-{
-    if(quid.base.isArray(array) && quid.base.isObject(r))
+quid.base.obj = new function() {
+    var base = quid.base;
+    
+    // is
+    // retourne vrai si c'est un objet
+    this.is = function(value)
     {
-        for (var i = 0; i < array.length; i++) {
-            var value = array[i];
-            
-            if(quid.base.objectHasProperty(value,r))
-            r = r[value];
-            
-            else
-            {
-                r = null;
-                break;
+        return typeof(value) === 'object';
+    }
+
+
+    // isPlain
+    // retourne vrai si c'est un objet plain
+    this.isPlain = function(value)
+    {
+        return $.isPlainObject(value);
+    }
+
+
+    // hasProperty
+    // retourne vrai si l'objet a la propriété
+    this.hasProperty = function(prop,value)
+    {
+        return (base.str.is(prop) && this.is(value))? value.hasOwnProperty(prop):false
+    }
+
+
+    // climb
+    // permet de grimper dans un objet à partir d'un tableau
+    this.climb = function(array,r) 
+    {
+        if(base.arr.is(array) && this.is(r))
+        {
+            for (var i = 0; i < array.length; i++) {
+                var value = array[i];
+                
+                if(this.hasProperty(value,r))
+                r = r[value];
+                
+                else
+                {
+                    r = null;
+                    break;
+                }
             }
         }
+        
+        return r;
     }
-    
-    return r;
-}
+};

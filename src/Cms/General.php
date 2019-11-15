@@ -12,6 +12,7 @@ use Quid\Base;
 use Quid\Base\Html;
 use Quid\Core;
 use Quid\Lemur;
+use Quid\Routing;
 
 // general
 // class for the general navigation route of the CMS
@@ -64,24 +65,19 @@ class General extends Core\RouteAlias
 
 
     // onBefore
-    // validation avant le lancement de la route
-    final protected function onBefore()
+    // au début de la route, store dans nav
+    final protected function onBefore() 
     {
-        $return = false;
-
-        if($this->canTrigger())
-        {
-            $table = $this->table();
-            $sql = $this->sql();
-            $nav = $this->session()->nav();
-            $nav->set([static::class,$table],$this->uriRelative());
-            $return = true;
-        }
-
-        return $return;
+        $table = $this->table();
+        $nav = $this->session()->nav();
+        $highlight = $this->getHighlight();
+        $route = (!empty($highlight))? $this->changeSegment('highlight',null):$this;
+        $nav->set([static::class,$table],$route->uri());
+        
+        return true;
     }
-
-
+    
+    
     // onFallback
     // sur fallback, efface la version de la route dans nav/session
     final protected function onFallback($context=null)
@@ -145,7 +141,7 @@ class General extends Core\RouteAlias
         return $return;
     }
 
-
+    
     // generalSegments
     // retourne les segments à utiliser pour la création de l'objet sql
     final protected function generalSegments():array
@@ -366,7 +362,7 @@ class General extends Core\RouteAlias
         $table = $this->table();
         $callback = $table->getAttr('generalOperation');
 
-        if(static::classIsCallable($callback) && $table->hasPermission('generalOperation'))
+        if(static::isCallable($callback) && $table->hasPermission('generalOperation'))
         $r .= $callback($table);
 
         $r .= $this->makeReset();
@@ -384,7 +380,7 @@ class General extends Core\RouteAlias
     {
         $r = '';
 
-        if($this->hasTablePermission('reset') && $this->canReset($this->getSearchValue(),'table'))
+        if($this->hasTablePermission('reset') && $this->canReset($this->getSearchValue(),array('table','highlight')))
         {
             $option = ['query'=>false];
             $route = $this->keepSegments('table');
@@ -404,15 +400,20 @@ class General extends Core\RouteAlias
         if($this->hasTablePermission('generalCount'))
         {
             $popup = $this->generalInfoPopup();
-
             $attr = ['popup-trigger'];
+            $title = $this->makeCount();
+            
             if(!empty($popup))
-            $attr = Base\Arr::append($attr,['with-popup','with-icon','tabindex'=>-1,'data'=>['anchor-corner'=>true,'absolute-placeholder'=>true]]);
-
-            $r .= Html::divOp($attr);
-            $r .= Html::button($this->makeCount(),'popup-title');
-            $r .= Html::div($popup,'popup');
-            $r .= Html::divCl();
+            {
+                $attr = Base\Arr::append($attr,['with-popup','with-icon','data'=>['anchor-corner'=>true,'absolute-placeholder'=>true]]);
+                $r .= Html::button($title,'popup-title');
+                $r .= static::makeDivPopup($popup);
+            }
+            
+            else
+            $r .= Html::div($title,'popup-title');
+            
+            $r = Html::div($r,$attr);
         }
 
         return $r;
@@ -572,7 +573,7 @@ class General extends Core\RouteAlias
         $r = '';
         $route = GeneralExport::make($this->segments());
         if($route->canTrigger())
-        $r .= $route->aDialog();
+        $r .= $route->aDialog(null,['operation-element','with-icon','download']);
 
         return $r;
     }
@@ -609,7 +610,7 @@ class General extends Core\RouteAlias
 
         if($this->hasTablePermission('rows'))
         {
-            $r .= Html::divOp('tool');
+            $table = $this->table();
             $char = static::getReplaceSegment();
             $defaultSegment = static::getDefaultSegment();
 
@@ -617,7 +618,7 @@ class General extends Core\RouteAlias
             {
                 $route = $this->changeSegments(['page'=>1,'in'=>true]);
                 $data = ['href'=>$route,'char'=>$char,'separator'=>$defaultSegment];
-                $r .= Html::div(null,['icon-solo','plus','data'=>$data]);
+                $r .= Html::button(null,['tool-element','icon-solo','plus','data'=>$data]);
             }
 
             if($this->hasTablePermission('notIn'))
@@ -626,11 +627,19 @@ class General extends Core\RouteAlias
                 $notIn[] = $char;
                 $route = $this->changeSegments(['page'=>1,'notIn'=>$notIn]);
                 $data = ['href'=>$route,'char'=>$char,'separator'=>$defaultSegment];
-                $r .= Html::div(null,['icon-solo','minus','data'=>$data]);
+                $r .= Html::button(null,['tool-element','icon-solo','minus','data'=>$data]);
             }
 
+            $route = SpecificMulti::make(['table'=>$table,'primaries'=>true]);
+            if($route->canTrigger())
+            {
+                $data = ['href'=>$route,'char'=>$char,'separator'=>$defaultSegment];
+                $r .= Html::button(null,['tool-element','icon-solo','multi-modify','data'=>$data]);
+            }
+            
             $r .= $this->makeGeneralDelete();
-            $r .= Html::divCl();
+            
+            $r = Html::divCond($r,'tools-container');
         }
 
         return $r;
@@ -650,19 +659,17 @@ class General extends Core\RouteAlias
             $defaultSegment = static::getDefaultSegment();
             $data = ['confirm'=>static::langText('common/confirm'),'separator'=>$defaultSegment];
 
-            $r .= Html::divOp('multi-delete');
-            $r .= $route->formOpen(['data'=>$data]);
+            $r .= $route->formOpen(['tool-element','data'=>$data]);
             $r .= $this->tableHiddenInput();
             $r .= Html::inputHidden(null,'primaries');
-            $r .= Html::submit(' ',['icon-solo','multi-delete']);
+            $r .= Html::submit(null,['icon-solo','multi-delete']);
             $r .= Html::formCl();
-            $r .= Html::divCl();
         }
 
         return $r;
     }
 
-
+    
     // makeRows
     // génère l'outil pour sélectionner une ou plusieurs lignes dans la table
     final protected function makeRows():string
@@ -712,7 +719,7 @@ class General extends Core\RouteAlias
             $checkbox = [];
             $htmlWrap = Html::divOp('choice');
             $htmlWrap .= Html::divOp('choice-in');
-            $htmlWrap .= Html::div(null,['icon-solo','move']);
+            $htmlWrap .= Html::button(null,['icon-solo','move']);
             $htmlWrap .= '%';
             $htmlWrap .= Html::divCl();
             $htmlWrap .= Html::divCl();
@@ -733,12 +740,10 @@ class General extends Core\RouteAlias
             $r .= Html::span(null,['icon-solo','cols','center']);
             $r .= Html::buttonCl();
 
-            $r .= Html::divOp(['popup']);
-            $r .= Html::divOp('inside');
-            $r .= Html::checkbox($checkbox,$attr,$option);
-            $r .= Html::divCl();
-            $r .= Html::button(null,['name'=>'cols','icon-solo','check','data'=>$data]);
-            $r .= Html::divCl();
+            $html = Html::checkbox($checkbox,$attr,$option);
+            $html = Html::div($html,'scroller');
+            $html .= Html::button(null,['name'=>'cols','icon-solo','check','data'=>$data]);
+            $r .= static::makeDivPopup($html,array('popup','no-scroll'));
         }
 
         $r = Html::div($r,$inAttr);
@@ -767,7 +772,7 @@ class General extends Core\RouteAlias
 
             $tableIsEmpty = $table->isRowsEmpty(true);
             $isEmpty = $sql->isTriggerCountEmpty();
-            $class = ($isEmpty === true)? 'empty':'notEmpty';
+            $class = ($isEmpty === true)? 'empty':'not-empty';
 
             $r .= Html::divOp(['container',$class]);
 
@@ -836,7 +841,7 @@ class General extends Core\RouteAlias
             if($this->hasTablePermission('action'))
             {
                 $html = $this->makeCols();
-                $ths[] = [$html,['action','tabindex'=>-1]];
+                $ths[] = [$html,'action'];
             }
 
             foreach ($cols as $col)
@@ -911,7 +916,7 @@ class General extends Core\RouteAlias
         {
             $filter = $this->segment('filter');
 
-            $class = ['filter-outer','tabindex'=>-1,'data'=>['anchor-corner'=>true]];
+            $class = ['filter-outer','data'=>['anchor-corner'=>true]];
             $close = ['icon-solo','close'];
             $label = Html::span(null,['filter','icon-solo']);
 
@@ -959,9 +964,11 @@ class General extends Core\RouteAlias
 
                 if($rowsPermission === true)
                 {
-                    $checkbox = Html::inputCheckbox($row,'row');
-                    $label = Html::label($checkbox,['cell-inner']);
-                    $array[] = [$label,'rows'];
+                    $id = Base\Attr::randomId('name');
+                    $checkbox = Html::inputCheckbox($row,array('row','id'=>$id));
+                    $checkbox .= Html::label(null,array('for'=>$id));
+                    $html = Html::div($checkbox,'cell-inner');
+                    $array[] = [$html,'rows'];
                 }
 
                 if($actionPermission === true)

@@ -36,10 +36,10 @@ $(document).ready(function() {
         var anchorCorner = parent.find("[data-anchor-corner]");
         
         // date
-        date.calendarInput();
+        date.callThis(quid.core.calendarInput);
         
         // enumSet
-        enumSet.enumSetFull();
+        enumSet.callThis(quid.core.enumSetFull);
         
         // checkboxSortable
         checkboxSortable.verticalSorting(".choice",'.choice-in');
@@ -48,7 +48,7 @@ $(document).ready(function() {
         files.callThis(quid.cms.inputFiles);
         
         // addRemove
-        addRemove.addRemove();
+        addRemove.callThis(quid.core.addRemove);
         
         // tableRelation
         tableRelation.callThis(quid.cms.tableRelation);
@@ -74,20 +74,51 @@ $(document).ready(function() {
 		$(this).trigger('route:specificTrigger');
 	})
 	
+    // specificMulti
+    // comportement pour la page de modification multiple
+	.on('route:specificMulti', function(event) {
+		$(this).trigger('route:specificCommon');
+		$(this).trigger('route:specificTrigger');
+        
+        var form = $(this).find("main .inner > form.specific-form");
+        var formElement = form.find(".form-element");
+        
+        formElement.on('specificMulti:isActive', function(event) {
+            return $(this).triggerHandler('specificMulti:getCheckbox').is(':checked');
+        })
+        .on('specificMulti:getCheckbox',function(event) {
+            return $(this).find(".disabler input[type='checkbox']");
+        })
+        .on('specificMulti:getInputs', function(event) {
+            return $(this).find("> .right :input").filter("[name]").not("[name^='-']");
+        })
+        .on('specificMulti:refresh', function(event) {
+            var isActive = $(this).triggerHandler('specificMulti:isActive');
+            var inputs = $(this).triggerHandler('specificMulti:getInputs');
+            $(this).attr('data-disabled',(isActive === true)? 0:1);
+            inputs.prop('disabled',(isActive === true)? false:true);
+        })
+        .on('specificMulti:prepare', function(event) {
+            var $this = $(this);
+            var checkbox = $(this).triggerHandler('specificMulti:getCheckbox');
+            checkbox.on('change', function(event) {
+                $this.trigger('specificMulti:refresh');
+            });
+            $(this).trigger('specificMulti:refresh');
+        })
+        .trigger('specificMulti:prepare');
+        
+        form.trigger('form:prepare');
+	})
+    
 	// specificCommon
     // comportements communs pour toutes les pages spécifiques
 	.on('route:specificCommon', function(event) {
-		var formWrapper = $("main .container > .form");
-		var panel = formWrapper.find(".panel");
-		var form = formWrapper.find("form");
-		var fields = form.find(".element input,.element textarea");
-		
+		var form = $(this).find("main .inner > form.specific-form");
+        
 		// submitConfirm
 		var submitConfirm = form.find("button[type='submit'][data-confirm]");
 		submitConfirm.confirm('click');
-		
-		// unload
-		form.formUnload();
 		
 		// block
 		form.block('submit').on('submit', function() {
@@ -98,95 +129,23 @@ $(document).ready(function() {
 	// specificTrigger
     // comportements communs pour la préparation des différents inputs du formulaire
 	.on('route:specificTrigger', function(event) {
-		var formWrapper = $("main .container > .form");
-		var form = formWrapper.find("form");
-		var panel = form.find(".panel");
-		
+		var form = $(this).find("main .inner > .specific-form");
+		var panel = form.find("> .form-inner > .panel");
+        
         // champs simples
-        $(this).trigger('specific:formPrepareSimple',[formWrapper]);
+        $(this).trigger('specific:formPrepareSimple',[form]);
         
 		// avec panel
 		if(panel.length > 1)
-		$(this).trigger('route:specificCommon:panel',[formWrapper,panel])
+		form.callThis(quid.cms.specificPanel);
 		
 		else
-		$(this).trigger('specific:formPrepareViewable',[formWrapper]);
+		$(this).trigger('specific:formPrepareViewable',[form]);
 	})
 	
 	// route:specificCommon:panel
     // comportements communs pour la préparation des panneaux du formulaire
-	.on('route:specificCommon:panel', function(event,form,panel) {
-		var panelNav = $("main .form .top .left ul li a");
-		var panelDescription = $("main .form .top .left .description");
+	.on('route:specificCommon:panel', function(event,form,panel,panelNav,panelDescription) {
 		
-		// panel
-		panel.tabNav(panelNav).fragment().on('tab:init', function(event) {
-			$(this).trigger('specific:formPrepareViewable',[$(this)]);
-		})
-		.on('tab:open', function() {
-			var nav = $(this).triggerHandler('link:getNav');
-			var description = nav.data('description') || '';
-			var fragment = $(this).triggerHandler('fragment:get');
-			var current = quid.base.fragment();
-			
-			panelNav.removeClass('selected');
-			nav.addClass('selected');
-			
-			if(panelDescription.length)
-			panelDescription.text(description);
-			
-			$(this).show();
-			
-            if($(this).is("[data-current-panel='1']") === true && !current)
-            {
-                $(this).removeAttr('data-current-panel');
-                $(this).trigger('fragment:update',[true]);
-            }
-            
-			else if(quid.base.isStringNotEmpty(current))
-			$(this).trigger('fragment:update');
-			
-			$("a.hashFollow").hrefChangeHash(fragment);
-			form.triggerHandler('tab:getInput').val((quid.base.isStringNotEmpty(fragment))? fragment:'');
-            
-            $(document).trigger('document:outsideClick');
-		})
-		.on('tab:close', function() {
-			panelNav.trigger('unselected');
-			panel.hide();
-		})
-		.on('fragment:updated', function(event,fragment) {
-			form.trigger('hash:change',[fragment]);
-		});
-		
-		// form
-		form.hashchange().on('tab:getTarget', function() {
-			return panel;
-		})
-		.on('tab:getInput', function(event) {
-			return $(this).find("input[name='-panel-']");
-		})
-		.on('tab:findHash', function(event,fragment) {
-            var r = panel.filter("[data-current-panel='1']");
-            
-            if(quid.base.isStringNotEmpty(fragment))
-            r = panel.filter("[data-fragment='"+fragment+"']");
-            
-            if(!r.length)
-            r = panel.first();
-            
-			return r;
-		})
-		.on('hash:change', function(event,fragment) {
-			var target = $(this).triggerHandler('tab:findHash',[fragment]);
-			
-			if(target.length === 1 && !$(this).triggerHandler('tab:isCurrent',[target]))
-			target.trigger('tab:change');
-		})
-        .on('tab:showFirst', function(event) {
-            var target = $(this).triggerHandler('tab:findHash',[quid.base.fragment()]);
-            $(this).trigger('tab:changeOrFirst',[target]);
-        })
-		.tab().trigger('tab:closeAll').trigger('tab:showFirst');
 	});
 });

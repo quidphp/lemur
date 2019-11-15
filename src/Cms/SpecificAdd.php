@@ -20,7 +20,7 @@ class SpecificAdd extends Core\RouteAlias
     // trait
     use _templateAlias;
     use _general;
-    use _specific;
+    use _specificAddMulti;
     use Lemur\Segment\_table;
 
 
@@ -69,7 +69,7 @@ class SpecificAdd extends Core\RouteAlias
         $return = false;
         $table = $this->segment('table');
 
-        if($table instanceof Core\Table && $table->hasPermission('view','insert','lemurInsert'))
+        if(parent::canTrigger() && $table instanceof Core\Table && $table->hasPermission('view','insert','lemurInsert'))
         $return = true;
 
         return $return;
@@ -93,7 +93,15 @@ class SpecificAdd extends Core\RouteAlias
         return $return;
     }
 
-
+    
+    // routeSubmit
+    // retourne la route pour submit
+    final protected function routeSubmit():SpecificAddSubmit 
+    {
+        return SpecificAddSubmit::make($this->segments());
+    }
+    
+    
     // hasSpecificAddNavLink
     // retourne vrai si la route doit apparaître sur sa propre ligne dans le menu
     final public function hasSpecificAddNavLink():bool
@@ -101,31 +109,15 @@ class SpecificAdd extends Core\RouteAlias
         return ($this->table()->getAttr('specificAddNavLink') === true)? true:false;
     }
 
-
-    // isPanelVisible
-    // retourne vrai si le panneau est visible
-    final protected function isPanelVisible(Core\Cols $cols):bool
-    {
-        return ($cols->isHidden(static::session()))? false:true;
-    }
-
-
+    
     // flash
     // retourne la valeur flash à partir d'une colonne
     final protected function flash(?Core\Col $key=null)
     {
         return Base\Arr::getSafe((!empty($key))? $key->name():$key,$this->flash);
     }
-
-
-    // makeTitleBox
-    // génère le titre pour la page specificAdd
-    final protected function makeTitleBox():string
-    {
-        return $this->makeH1($this->makeTitle());
-    }
-
-
+    
+    
     // makeNavLink
     // fait le lien ajout pour le menu
     final public function makeNavLink():string
@@ -191,18 +183,7 @@ class SpecificAdd extends Core\RouteAlias
         return $return;
     }
 
-
-    // main
-    // fait main pour specificAdd
-    final public function main():string
-    {
-        $r = $this->makeTop();
-        $r .= $this->makeForm();
-
-        return $r;
-    }
-
-
+    
     // makeNav
     // génère la nav pour la page, en haut à droite
     final protected function makeNav():string
@@ -213,82 +194,21 @@ class SpecificAdd extends Core\RouteAlias
         if($table->hasPermission('nav','navBack'))
         {
             $general = $this->general();
-
-            $r .= Html::divOp('nav');
-            $r .= $general->a(static::langText('specific/back'));
-            $r .= Html::divCl();
+            $r .= Html::div($general->a(static::langText('specific/back')),'nav');
         }
 
         return $r;
     }
-
-
-    // makeForm
-    // génère le formulaire pour la page
-    final protected function makeForm():string
+    
+    
+    // makeFormSubmit
+    // génère le submit pour le formulaire d'ajout
+    final protected function makeFormSubmit(string $type):string
     {
-        $r = '';
-
-        $r .= Html::divOp('container');
-        $r .= Html::divOp('form');
-        $r .= SpecificAddSubmit::make($this->segments())->formOpen();
-        $r .= $this->makeFormTop();
-        $r .= $this->makeFormInner();
-        $r .= $this->makeFormBottom();
-        $r .= Html::formCl();
-        $r .= Html::divCl();
-        $r .= Html::divCl();
-
-        return $r;
+        return Html::submit(static::langText('specific/add'),['with-icon','add']);
     }
-
-
-    // makeFormBottom
-    // génère la partie inférieure du formulaire
-    final protected function makeFormBottom():string
-    {
-        $r = '';
-
-        $r .= Html::divOp('bottom');
-        $r .= $this->makeFormSubmit('bottom');
-        $r .= Html::divCl();
-
-        return $r;
-    }
-
-
-    // colCell
-    // retourne la colonne
-    final protected function colCell(Core\Col $col):Core\Col
-    {
-        return $col;
-    }
-
-
-    // colCellVisible
-    // retourne la colonne si elle est visible
-    final protected function colCellVisible(Core\Col $col):?Core\Col
-    {
-        $return = null;
-
-        $col = $this->colCell($col);
-        $session = static::session();
-        if($col->isVisible(true,null,$session))
-        $return = $col;
-
-        return $return;
-    }
-
-
-    // makeOperation
-    // fait le bloc opération en haut à doite
-    // pour add seulement le bouton submit
-    final protected function makeOperation():string
-    {
-        return $this->makeFormSubmit('top');
-    }
-
-
+    
+    
     // makeFormWrap
     // génère un wrap label -> field pour le formulaire
     final protected function makeFormWrap(Core\Col $col,array $replace):string
@@ -302,14 +222,6 @@ class SpecificAdd extends Core\RouteAlias
        $return .= $col->formComplexWrap($this->getFormWrap(),'%:',$value,null,$replace);
 
        return $return;
-    }
-
-
-    // makeFormSubmit
-    // génère le submit pour le formulaire d'ajout
-    final protected function makeFormSubmit(string $type):string
-    {
-        return Html::submit(static::langText('specific/add'),['with-icon','add']);
     }
 }
 

@@ -100,7 +100,7 @@
                 position: relative;
                 padding: 0px;
 
-                &.load-more {
+                > .load-more {
                     @include loadMore();
                 }
             }
@@ -140,10 +140,13 @@
 
                 &:hover,
                 &[data-triggered='1'] {
-                    color: $black;
                     background-color: $lightYellow;
                 }
-
+                
+                &:active {
+                    background-color: $lightGray;
+                }
+                
                 &.selected {
                     background-color: $lightYellow;
                 }
@@ -172,27 +175,16 @@
     position: relative;
     border-top: 1px solid $lightGray;
     padding: 5px 10px;
-
+    width: 100%;
+    
     .label-content {
+        @include imageLegend();
+        display: block;
         max-width: 80%;
-
-        .thumbnail {
-            margin-bottom: 3px;
-            text-align: center;
-
-            img {
-                max-width: 100px;
-            }
-        }
-
-        .legend {
-            text-align: center;
-            font-size: 90%;
-            word-break: break-all;
-        }
     }
 
     .label-count {
+        display: block;
         height: 16px;
         min-width: 16px;
         padding: 0 3px;
@@ -202,32 +194,6 @@
         line-height: 16px;
         color: $white;
         margin-left: 10px;
-        font-size: 80%;
-    }
-}
-
-// loadMore
-// mixin avec les styles pour le bouton loadMore utilisé dans les champs de relation enumSet
-@mixin loadMore() {
-    @include transitions(color 0.3s);
-    text-align: center;
-    padding: 5px;
-    cursor: pointer;
-    background-color: $gray;
-    font-weight: bold;
-
-    &:hover,
-    &[data-triggered='1'] {
-        background-color: $darkGray;
-        color: $white;
-    }
-
-    &[data-status='loading'] {
-        background-position: center;
-        background-color: $white;
-
-        .text {
-            visibility: hidden;
-        }
+        font-size: 90%;
     }
 }

@@ -25,8 +25,8 @@ class SpecificUserWelcome extends Core\RouteAlias
     // config
     public static $config = [
         'path'=>[
-            'fr'=>'table/user/[primary]/courriel-bienvenue',
-            'en'=>'table/user/[primary]/welcome-emeail'],
+            'en'=>'table/user/[primary]/welcome-email',
+            'fr'=>'table/user/[primary]/courriel-bienvenue'],
         'segment'=>[
             'primary'=>'structureSegmentPrimary'],
         'row'=>Core\Row\User::class,
@@ -49,7 +49,7 @@ class SpecificUserWelcome extends Core\RouteAlias
         $row = $this->row();
         $table = $row->table();
 
-        if($table->hasPermission('view','userWelcome'))
+        if(parent::canTrigger() && $table->hasPermission('view','userWelcome'))
         {
             if($row->isActive() && $row->allowWelcomeEmail() && $row->isUpdateable() && $row->canReceiveEmail())
             {

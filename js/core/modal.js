@@ -11,7 +11,7 @@
 
 // modal
 // gère les comportents pour une l'ouverture et la fermeture d'un overlay modal
-quid.core.modal = $.fn.modal = function()
+quid.core.modal = function()
 {
     $(this).each(function(index, el) {
         var modal = $(this);
@@ -42,7 +42,7 @@ quid.core.modal = $.fn.modal = function()
         })
         .on('modal:open', function(event,route) {
             $(this).attr('data-status','loading');
-            if(quid.base.isStringNotEmpty(route))
+            if(quid.base.str.isNotEmpty(route))
             $(this).attr('data-route',route);
             
             $(document).trigger('document:setBackground',['modal',true]);
@@ -51,8 +51,9 @@ quid.core.modal = $.fn.modal = function()
         .on('modal:opened', function(event) {
             $(this).attr('data-status','ready');
             
-            if($(this).is('[tabindex]'))
-            $(this).focus();
+            var box = $(this).triggerHandler('modal:getBox');
+            if(box.is('[tabindex]'))
+            box.focus();
         })
         .on('modal:html', function(event,data,callback) {
             if(!$(this).triggerHandler('modal:isOpen'))
@@ -61,7 +62,7 @@ quid.core.modal = $.fn.modal = function()
             $(this).trigger('modal:opened');
             $(this).triggerHandler('modal:getInner').html(data);
             
-            if($.isFunction(callback))
+            if(quid.base.func.is(callback))
             callback.call();
         })
         .on('modal:closeIfOpen', function(event) {
@@ -94,18 +95,18 @@ quid.core.modal = $.fn.modal = function()
                     modal.trigger('unblock');
                 },
                 error: function(data,textStatus,jqXHR) {
-                    modal.trigger('modal:html', [quid.core.parseError(jqXHR,textStatus)]);
+                    modal.trigger('modal:html', [quid.main.ajax.parseError(jqXHR,textStatus)]);
                     modal.trigger('unblock');
                 }
             };
-            quid.core.ajaxTrigger.call(this,config);
+            quid.main.ajax.trigger.call(this,config);
         })
         .on('modal:route', function(event) {
             var route = $(this).attr('data-route');
             $(document).trigger('document:commonBindings',[$(this)]);
             $(document).trigger('modal:common',[$(this)]);
             
-            if(quid.base.isStringNotEmpty(route))
+            if(quid.base.str.isNotEmpty(route))
             $(document).trigger('modal:'+route,[$(this)]);
         })
         .on('escape:blocked', function(event) {
@@ -131,7 +132,7 @@ quid.core.modal = $.fn.modal = function()
 
 // modalAjax
 // gère les comportements pour les éléments qui ouvre le modal et y injecte du contenu via ajax
-quid.core.modalAjax = $.fn.modalAjax = function(modal)
+quid.core.modalAjax = function(modal)
 {
     $(this).block('click').ajax('click')
     .on('ajax:beforeSend', function() {
@@ -147,9 +148,6 @@ quid.core.modalAjax = $.fn.modalAjax = function(modal)
         };
         modal.trigger('modal:html',[data,callback]);
     })
-    .on('ajax:confirm', function(event) {
-        return ($(document).triggerHandler('document:isLoading') === true)? false:true;
-    })
     .on('modal:success', function(event,modal) {
         $(this).trigger('unblock');
     })
@@ -157,7 +155,7 @@ quid.core.modalAjax = $.fn.modalAjax = function(modal)
         $(this).removeClass('selected');
     })
     .on('ajax:error', function(event,jqXHR,textStatus,errorThrown) {
-        modal.trigger('modal:html', [quid.core.parseError(jqXHR,textStatus)]);
+        modal.trigger('modal:html', [quid.main.ajax.parseError(jqXHR,textStatus)]);
         $(this).trigger('unblock');
     })
     .on('modalAjax:prepare', function(event) {
@@ -174,9 +172,9 @@ quid.core.modalAjax = $.fn.modalAjax = function(modal)
 
 // modalExternal
 // permet de gérer l'ouverture du modal lors du clique sur un lien externe
-quid.core.modalExternal = $.fn.modalExternal = function(modal,href,route)
+quid.core.modalExternal = function(modal,href,route)
 {
-    if(quid.base.isStringNotEmpty(href))
+    if(quid.base.str.isNotEmpty(href))
     {
         $(this).find("a:external:not(.external)").off('click').on('click', function(event) {
             event.preventDefault();
@@ -191,13 +189,13 @@ quid.core.modalExternal = $.fn.modalExternal = function(modal,href,route)
 
 // modalMailto
 // permet de gérer l'ouverture du modal lors du clique sur un lien mailto
-quid.core.modalMailto = $.fn.modalMailto = function(modal,href,route)
+quid.core.modalMailto = function(modal,href,route)
 {
-    if(quid.base.isStringNotEmpty(href))
+    if(quid.base.str.isNotEmpty(href))
     {
         $(this).find("a[href^='mailto:']:not(.mailto)").off('click').on('click', function(event) {
             event.preventDefault();
-            var email = quid.base.mailto($(this).attr('href'));
+            var email = quid.base.email.fromHref($(this).attr('href'));
             modal.trigger('modal:get',[href,{v: email},route])
         });
     }

@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Quid\Lemur;
 use Quid\Core;
+use Quid\Base\Html;
 
 // row
 // extended class to represent a row within a table, adds cms config
@@ -58,6 +59,7 @@ class Row extends Core\Row
                     'notIn'=>true, // accès à l'outil filterOut avec les checkboxes
                     'highlight'=>true, // ligne avec couleur bleu lors du retour
                     'reset'=>true, // bouton pour la réinitialisation
+                    'multiModify'=>true, // permettre d'effacer plusieurs lignes à la fois
                     'multiDelete'=>true, // permettre d'effacer plusieurs lignes à la fois
                     'export'=>false, // pouvoir exporter les données en CSV
                     'relation'=>true, // relatif aux relations, ne pas changer
@@ -78,7 +80,9 @@ class Row extends Core\Row
                     'colInfoPopup'=>false, // popup d'informations pour la colonne
                     'specificRelation'=>true, // relatif aux relations, ne pas changer
                     'tableRelation'=>true, // relatif aux relations, ne pas changer
-                    'quickEdit'=>true], // active ou désactive l'edit rapide par la page générale
+                    'quickEdit'=>true, // active ou désactive l'edit rapide par la page générale
+                    'homeOverview'=>true, // active ou désactive la présence de la table dans homeOverview
+                    'homeFeed'=>true], // active ou désactive la présence de la table dans  homeFeed
                 'nobody'=>[
                     'view'=>false,
                     'lemurInsert'=>false,
@@ -122,6 +126,49 @@ class Row extends Core\Row
                     'colInfoPopup'=>true]]
             ]
     ];
+    
+    
+    // homeFeedOutput
+    // génère le rendu html pour la route homeFeed du CMS
+    final public function homeFeedOutput(string $dateCol):string 
+    {
+        $r = '';
+        $route = $this->route();
+        $table = $this->table();
+        $isUpdateable = ($table->hasPermission('view','lemurUpdate') && $this->isUpdateable())? true:false;
+        $icon = ($isUpdateable === true)? 'modify':'view';
+        $commit = $this->cellsDateCommit()[$dateCol] ?? null;
+        
+        $r .= Html::h3($this->label());
+        
+        if(!empty($commit))
+        {
+            $html = '';
+            ['user'=>$user,'date'=>$date] = $commit;
+            
+            if(!empty($user))
+            {
+                $userRow = $user->relationRow();
+                
+                if(!empty($userRow))
+                {
+                    $html = Html::span($user->label(),'label').":";
+                    $html .= Html::span($userRow->cellName(),'user');
+                    $html .= Html::span('-','separator');
+                    $html .= Html::span($date->get(),'date');
+                }
+            }
+            
+            $r .= Html::divCond($html,'commit');
+        }
+        
+        $icon = Html::div(null,array('icon-solo',$icon));
+        $r .= Html::div($icon,'tools');
+        
+        $r = $route->a($r);
+        
+        return $r;
+    }
 }
 
 // init

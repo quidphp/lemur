@@ -60,7 +60,7 @@ quid.core.windowHashScroll = function(type)
         var r = null;
         var target = $(this).triggerHandler('windowHashScroll:getTarget');
         var attr = $(this).triggerHandler('windowHashScroll:getTargetAttr');
-        if(target instanceof jQuery && quid.base.isStringNotEmpty(hash) && quid.base.isStringNotEmpty(attr))
+        if(target instanceof jQuery && quid.base.str.isNotEmpty(hash) && quid.base.str.isNotEmpty(attr))
         {
             var find = target.filter("["+attr+"='"+hash+"']");
             if(find.length === 1)
@@ -122,18 +122,18 @@ quid.core.windowHashScroll = function(type)
             {
                 var isFirst = currentTarget.triggerHandler('hashScrollTarget:isFirst');
                 var hash = currentTarget.triggerHandler('hashScrollTarget:getHash');
-                hash = (quid.base.isStringNotEmpty(hash))? hash:'';
+                hash = (quid.base.str.isNotEmpty(hash))? hash:'';
                 
                 if(hash !== location.hash)
                 {
                     $(this).removeData('windowHashScroll:noScroll');
-                    var oldHash = quid.base.formatHash(location.hash,false);
+                    var oldHash = quid.base.uri.makeHash(location.hash,false);
                     var old = $(this).triggerHandler('windowHashScroll:findTarget',[oldHash]);
                     
                     if(old !== null && old.triggerHandler('hashScrollTarget:isCurrent'))
                     old.trigger('hashScrollTarget:leave');
                     
-                    if(fromScroll === true && (quid.base.isTouch() || quid.base.isResponsive()))
+                    if(fromScroll === true && (quid.base.browser.isTouch() || quid.base.browser.isResponsive()))
                     $(this).data('windowHashScroll:noScroll',true);
                     
                     if(isFirst === false || location.hash !== '')
@@ -173,7 +173,7 @@ quid.core.windowScrollToHash = function(hash,event)
     
     if(win.triggerHandler('windowHashScroll:canScroll'))
     {
-        hash = quid.base.formatHash(hash,false);
+        hash = quid.base.uri.makeHash(hash,false);
         var scrollTop = win.scrollTop();
         var top = null;
         var target = null;
@@ -196,7 +196,7 @@ quid.core.windowScrollToHash = function(hash,event)
             target.trigger('hashScrollTarget:enter');
         }
         
-        if(quid.base.isStringNotEmpty(hash))
+        if(quid.base.str.isNotEmpty(hash))
         {
             target = win.triggerHandler('windowHashScroll:findTarget',[hash]);
             if(target !== null)
@@ -213,7 +213,7 @@ quid.core.windowScrollToHash = function(hash,event)
             newHash = "";
         }
         
-        if($.isNumeric(top) && top !== scrollTop && quid.base.isString(newHash) && target)
+        if(quid.base.number.is(top) && top !== scrollTop && quid.base.str.is(newHash) && target)
         {
             r = true;
             var isFirst = target.triggerHandler('hashScrollTarget:isFirst');
@@ -238,10 +238,10 @@ quid.core.windowScrollToHash = function(hash,event)
 
 // anchorScroll
 // gère les liens avec ancrage (changement de hash)
-quid.core.anchorScroll = $.fn.anchorScroll = function()
+quid.core.anchorScroll = function()
 {
     $(this).on('click', function(event) {
-        if(quid.base.isSamePathQuery($(this).prop('href')))
+        if(quid.base.uri.isSamePathQuery($(this).prop('href')))
         {
             var hash = this.hash;
             quid.core.windowScrollToHash(hash,event);
@@ -263,15 +263,15 @@ quid.core.anchorScroll = $.fn.anchorScroll = function()
 
 // hashScrollTarget
 // gère un block comme target pour un hash scroll, chaque bloc est lié à un hash
-quid.core.hashScrollTarget = $.fn.hashScrollTarget = function()
+quid.core.hashScrollTarget = function()
 {
     var $this = $(this);
     
     $(this).arrowCatch().on('hashScrollTarget:getHash', function(event) {
-        return quid.base.formatHash($(this).data("id"),true);
+        return quid.base.uri.makeHash($(this).data("id"),true);
     })
     .on('hashScrollTarget:getFragment', function(event) {
-        return quid.base.formatHash($(this).data("id"),false);
+        return quid.base.uri.makeHash($(this).data("id"),false);
     })
     .on('hashScrollTarget:getIndex', function(event) {
         return $this.index($(this));
@@ -283,13 +283,13 @@ quid.core.hashScrollTarget = $.fn.hashScrollTarget = function()
         return ($(this).hasClass('current'))? true:false;
     })
     .on('hashScrollTarget:getPrev', function(event) {
-        var index = quid.base.indexer('prev',$(this),$this,false);
-        if($.isNumeric(index))
+        var index = quid.base.nav.index('prev',$(this),$this,false);
+        if(quid.base.number.is(index))
         return $this.eq(index);
     })
     .on('hashScrollTarget:getNext', function(event) {
-        var index = quid.base.indexer('next',$(this),$this,false);
-        if($.isNumeric(index))
+        var index = quid.base.nav.index('next',$(this),$this,false);
+        if(quid.base.number.is(index))
         return $this.eq(index);
     })
     .on('hashScrollTarget:enter',function(event) {

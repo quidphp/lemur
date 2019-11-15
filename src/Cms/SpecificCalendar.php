@@ -11,6 +11,7 @@ namespace Quid\Lemur\Cms;
 use Quid\Core;
 use Quid\Lemur;
 use Quid\Main;
+use Quid\Base\Html;
 
 // specificCalendar
 // class for the calendar route of the CMS
@@ -27,8 +28,8 @@ class SpecificCalendar extends Core\RouteAlias
     // config
     public static $config = [
         'path'=>[
-            'fr'=>'specifique/calendrier/[timestamp]/[format]/[selected]',
-            'en'=>'specific/calendar/[timestamp]/[format]/[selected]'],
+            'en'=>'specific/calendar/[timestamp]/[format]/[selected]',
+            'fr'=>'specifique/calendrier/[timestamp]/[format]/[selected]'],
         'segment'=>[
             'timestamp'=>'structureSegmentTimestampMonth',
             'format'=>'structureSegmentStr',
@@ -37,6 +38,7 @@ class SpecificCalendar extends Core\RouteAlias
         'match'=>[
             'ajax'=>true,
             'role'=>['>'=>'user']],
+        'parent'=>Specific::class,
         'group'=>'specific'
     ];
 
@@ -48,10 +50,13 @@ class SpecificCalendar extends Core\RouteAlias
         $return->setCallback('prev',function(int $value) {
             $route = $this->changeSegments(['timestamp'=>$value]);
             return $route->a(null,['ajax','prev']);
-        });
-        $return->setCallback('next',function(int $value) {
+        })
+        ->setCallback('next',function(int $value) {
             $route = $this->changeSegments(['timestamp'=>$value]);
             return $route->a(null,['ajax','next']);
+        })
+        ->setCallback('day',function(int $value,int $timestamp,array $attr) {
+            return Html::button($value);
         });
 
         return $return;

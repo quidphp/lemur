@@ -18,8 +18,8 @@ class About extends Core\RouteAlias
 {
     // trait
     use _modal;
-
-
+    
+    
     // config
     public static $config = [
         'path'=>[
@@ -90,14 +90,6 @@ class About extends Core\RouteAlias
     final public static function authorEmail():string
     {
         return Html::a(static::langText('about/email'),true);
-    }
-
-
-    // aDialog
-    // retourne le lien dialog
-    final public function aDialog(?array $attr=null):string
-    {
-        return $this->aTitle(null,Base\Attr::append($attr,['data'=>['modal'=>static::name()]]));
     }
 }
 

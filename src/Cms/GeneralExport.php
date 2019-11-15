@@ -98,14 +98,6 @@ class GeneralExport extends Core\RouteAlias
     }
 
 
-    // aDialog
-    // retourne le lien dialog
-    final public function aDialog():string
-    {
-        return $this->aTitle(null,['operation-element','with-icon','download','data'=>['modal'=>static::name()]]);
-    }
-
-
     // longExport
     // retourne le nombre de ligne pour considérer que c'est une longue exportation
     final public function longExport():int

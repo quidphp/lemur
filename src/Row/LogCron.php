@@ -20,10 +20,8 @@ class LogCron extends Core\Row\LogCron
         'cols'=>[
             'json'=>['class'=>Lemur\Col\JsonExport::class]],
         'permission'=>[
-            'shared'=>['insert'=>true],
-            'user'=>['insert'=>true],
-            'contributor'=>['insert'=>true,'update'=>false,'delete'=>false],
-            'editor'=>['insert'=>true,'update'=>false,'delete'=>false],
+            'contributor'=>['update'=>false,'delete'=>false],
+            'editor'=>['update'=>false,'delete'=>false],
             'subAdmin'=>['update'=>false]],
         '@cms'=>[
             'permission'=>[

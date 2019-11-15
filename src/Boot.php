@@ -21,7 +21,7 @@ abstract class Boot extends Core\Boot
         'finderShortcut'=>[ // shortcut pour finder
             'vendorLemur'=>'[vendor]/quidphp/lemur'],
         'symlink'=>[
-            '[vendorLemur]/js/vendor'=>'[publicJs]/vendor'],
+            '[vendorLemur]/vendor'=>'[publicJs]/vendor'],
         'concatenatePhp'=>[ // ajoute le namespace pour le concatenator php
             'quid'=>[
                 'option'=>[
@@ -31,6 +31,7 @@ abstract class Boot extends Core\Boot
         'concatenateJs'=>[
             '[publicJs]/include.js'=>[
                 0=>'[vendorLemur]/js/base',
+                1=>'[vendorLemur]/js/main',
                 2=>'[vendorLemur]/js/core',
                 10=>'[js]/include']],
         'roles'=>[

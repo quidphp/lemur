@@ -48,6 +48,76 @@ $red: #8d1e2d;
     }
 }
 
+// block
+// styles utilisés pour des blocs comme sur la page d'accueil
+// avec un header et un body
+@mixin block()
+{
+    .block-head {
+        background-color: $color;
+        border: 1px solid $darkerColor;
+        position: relative;
+        padding: 10px 20px;
+        color: $white;
+        border-radius: 5px 5px 0 0;
+    }
+    
+    .block-body {
+        position: relative;
+        background-color: $lightestGray;
+        border: 1px solid $lightGray;
+        
+        &[data-status='loading'] {
+            height: 80px;
+            
+            > * {
+                display: none !important;
+            }
+        }
+    }
+}
+
+// blockFeedElement
+// mixin pour un élément de flux de bloc, comme présent sur la page d'accueil
+@mixin blockFeedElement()
+{
+    position: relative;
+    
+    > a {
+        display: block;
+        padding: 10px 50px 10px 20px;
+        border-bottom: 1px solid $lightGray;
+        text-align: left;
+        
+        .count {
+            font-size: 90%;
+        }
+    }
+    
+    .tools {
+        @include abs(0px,0px);
+        @include toolBox();
+        border-bottom-left-radius: 5px;
+        
+        > .icon-solo {
+            margin-left: 5px;
+            
+            &:first-child {
+                margin-left: 0;
+            }
+        }
+    }
+    
+    &:hover > a {
+        background-color: $lightGray;
+    }
+    
+    &:active > a,
+    > a[data-triggered='1'] {
+        background-color: $lightYellow;
+    }
+}
+
 // specificNav
 // styles utilisés pour la navigation de la page spécifique
 @mixin specificNav() {
@@ -68,15 +138,6 @@ $red: #8d1e2d;
         &:hover,
         &[data-triggered='1'] {
             color: $darkGray;
-        }
-    }
-
-    > .count {
-        position: relative;
-        padding: 0px 8px;
-
-        > span.count {
-            font-size: 90%;
         }
     }
 }
@@ -156,29 +217,57 @@ $red: #8d1e2d;
     margin-left: 1.7rem;
 }
 
-// panelButton
-// mixin pour les styles des boutons de panneaux
-@mixin panelButton() {
+// bigButton
+// mixin pour les styles de base pour gros boutons
+@mixin bigButton() {
     display: block;
     padding: 5px 15px;
-    margin: 0 5px 5px 0;
-    background-color: $gray;
-    border: 1px solid $lightGray;
     border-radius: 5px;
     text-transform: uppercase;
     cursor: pointer;
     @include transitions(color 0.3s, background-color 0.3s, border 0.3s);
+    font-weight: bold;
+}
 
+// bigButtonDark
+// mixin pour les styles de base pour gros boutons avec hover sombre
+@mixin bigButtonDark() {
+    @include bigButton();
+    background-color: $gray;
+    border: 1px solid $lightGray;
+    
     &:hover,
     &.selected {
         background-color: $color;
         border: 1px solid $darkColor;
         color: $white;
     }
-
+    
+    &.selected {
+        text-decoration: underline;
+    }
+    
     &:active {
         background-color: $black;
         border: 1px solid $color;
+        color: $white;
+    }
+}
+
+// bigButtonLight
+// mixin pour les styles de base pour gros boutons avec hover clair
+@mixin bigButtonLight() {
+    @include bigButton();
+    background-color: $white;
+    border: 1px solid $lightGray;
+    
+    &:hover,
+    &.selected {
+        background-color: $lightYellow;
+    }
+    
+    &:active {
+        background-color: $lightGray;
     }
 }
 
@@ -224,6 +313,31 @@ $red: #8d1e2d;
     }
 }
 
+// imageLegend
+// style commun pour des image avec une legend
+@mixin imageLegend()
+{
+    img {
+        max-width: 100px;
+        min-width: 50px;
+        max-height: 100px;
+        display: block;
+        margin: auto;
+    }
+    
+    .legend {
+        display: block;
+        text-align: center;
+        font-size: 90%;
+    }
+    
+    .thumbnail {
+        display: block;
+        margin-bottom: 3px;
+        text-align: center;
+    }
+}
+
 // trianglePrevNext
 // mixin pour génèrer un triangle de couleur du cms
 @mixin trianglePrevNext($color1: $color, $color2: $darkColor, $color3: $darkerColor) {
@@ -252,6 +366,60 @@ $red: #8d1e2d;
 
         &:active {
             @include triangle(right, $color3, 10px, 6px);
+        }
+    }
+}
+
+// toolBox
+// mixin pour les styles de l'espace outil lorsqu'une row est checked
+@mixin toolBox() {
+    @include iflex(null, flex-end);
+    padding: 5px;
+    line-height: 1;
+    background-color: $lighterGray;
+    
+    > .tool-element {
+        margin-left: 10px;
+        
+        &:first-child {
+            margin-left: 0;
+        }
+    }
+
+    .icon-solo {
+        &:hover,
+        &[data-triggered='1'] {
+            opacity: 0.6 !important;
+        }
+    }
+}
+
+// loadMore
+// mixin avec les styles pour le bouton loadMore utilisé dans les champs de relation enumSet
+@mixin loadMore() {
+    text-align: center;
+    padding: 5px;
+    background-color: $gray;
+    font-weight: bold;
+    display: block;
+    text-decoration: none;
+    
+    &:hover,
+    &[data-triggered='1'] {
+        background-color: $darkGray;
+        color: $white;
+    }
+    
+    &:active {
+        background-color: $black;
+    }
+    
+    &[data-status='loading'] {
+        background-position: center;
+        background-color: $lightYellow;
+
+        .text {
+            visibility: hidden;
         }
     }
 }

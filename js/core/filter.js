@@ -11,7 +11,7 @@
 
 // filterGeneral
 // gère les comportements pour un filtre avec popup
-quid.core.filterGeneral = $.fn.filterGeneral = function()
+quid.core.filterGeneral = function()
 {
     $(this).block('ajax:init').ajax('ajax:init')
     .on('filter:getResult', function(event) {
@@ -59,7 +59,7 @@ quid.core.filterGeneral = $.fn.filterGeneral = function()
         $(this).triggerHandler('filter:getResult').html(data);
     })
     .on('ajax:error', function(event,jqXHR,textStatus,errorThrown) {
-        $(this).triggerHandler('filter:getResult').html(quid.core.parseError(jqXHR,textStatus));
+        $(this).triggerHandler('filter:getResult').html(quid.main.ajax.parseError(jqXHR,textStatus));
     })
     .on('ajax:complete', function() {
         $(this).trigger('unblock');
@@ -74,19 +74,26 @@ quid.core.filterGeneral = $.fn.filterGeneral = function()
 // filterGeneralFull
 // gère les comportements complets pour un filtre general avec popup
 // appendContainer et vide tout on close
-quid.core.filterGeneralFull = $.fn.filterGeneralFull = function()
+quid.core.filterGeneralFull = function()
 {
-    $(this).clickOpenWithTrigger("> .trigger").filterGeneral();
+    $(this)
+    .callThis(quid.core.clickOpenWithTrigger,"> .trigger")
+    .callThis(quid.core.filterGeneral);
             
     $(this).each(function(index, el) {
         $(this).on('ajax:complete', function(event) {
             $(this).triggerHandler('clickOpen:getTarget').trigger('feed:bind');
         })
-        .triggerHandler('clickOpen:getTarget').appendContainer().on('feed:target', function(event) {
+        .triggerHandler('clickOpen:getTarget')
+        .callThis(quid.core.appendContainer)
+        .on('feed:loadMoreRemove', function(event,loadMore) {
+            return loadMore.parent('li');
+        })
+        .on('feed:target', function(event) {
             return $(this).find("ul:last-child");
         })
         .on('feed:parseData', function(event,data) {
-            return quid.core.parseHtmlDocument(data).find("ul:last-child li");
+            return quid.main.dom.parseHtml(data).find("ul:last-child li");
         });
     });
     

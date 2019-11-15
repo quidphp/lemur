@@ -25,7 +25,7 @@ class Route extends Base\Test
         // prepare
         $boot = $data['boot'];
         $type = $boot->type();
-        $contact = Suite\Assert\Contact::class;
+        $priority = Suite\Assert\Priority::class;
         $route = Lemur\Cms\Error::class;
         $login = Lemur\Cms\Login::class;
         $sitemap = Lemur\Cms\Sitemap::class;
@@ -83,10 +83,10 @@ class Route extends Base\Test
 
         // rowClass
         assert($route::rowClass() === null);
-        assert($contact::rowClass() === Suite\Row\OrmCol::class);
+        assert($priority::rowClass() === Suite\Row\OrmCol::class);
 
         // tableFromRowClass
-        assert($contact::tableFromRowClass() instanceof Core\Table);
+        assert($priority::tableFromRowClass() instanceof Core\Table);
 
         // routeBaseClasses
         assert(count($route::routeBaseClasses()) === 2);
@@ -161,7 +161,7 @@ class Route extends Base\Test
         assert(!$route::isGroup('default'));
         assert(!$route::inSitemap());
         assert(!$login::inSitemap());
-        assert($contact::inSitemap());
+        assert($priority::inSitemap());
         assert(!$loginSubmit::inSitemap());
         assert($route::allowNavigation());
         assert($loginSubmit::allowNavigation());
@@ -179,9 +179,9 @@ class Route extends Base\Test
         assert(!$route::isMethod('post'));
         assert(!$loginSubmit::isRedirectable());
         assert(!$route::isRedirectable());
-        assert($contact::isRedirectable());
+        assert($priority::isRedirectable());
         assert(!$sitemap::isRedirectable());
-        assert($contact::shouldKeepInHistory());
+        assert($priority::shouldKeepInHistory());
         assert($loginSubmit::shouldKeepInHistory());
         assert(!$route::hasMatch('captcha'));
         assert($route::timeout() === []);
@@ -645,12 +645,12 @@ class Route extends Base\Test
         $routes->init('cms');
 
         // routing
-        assert($app->count() === 45);
+        assert($app->count() === 50);
         assert($routes->type() === 'cms');
         assert($routes->keyParent()[Lemur\Cms\LoginSubmit::class] === Lemur\Cms\Login::class);
-        assert(count($routes->hierarchy()) === 17);
+        assert(count($routes->hierarchy()) === 18);
         assert(count($routes->childsRecursive($login)) === 5);
-        assert($routes->tops()->isCount(17));
+        assert($routes->tops()->isCount(18));
         assert($routes->tops() !== $routes);
         assert($routes->top($loginSubmit) === $login);
         assert($routes->parents($loginSubmit)->isCount(1));
@@ -673,7 +673,7 @@ class Route extends Base\Test
         assert($routes->pair('priority')['Home'] === 1);
         assert(is_numeric($routes->pairStr('priority')));
         assert($routes->pair('label','%:',null,['error'=>false])['Home'] === 'Home:');
-        assert($routes->filter(['group'=>'home'])->isCount(1));
+        assert($routes->filter(['group'=>'home'])->isCount(2));
         assert($routes->first(['group'=>'home']) === Lemur\Cms\Home::class);
         assert($routes->filter(['group'=>'error','priority'=>992])->isEmpty());
         assert($routes->filter(['group'=>'error','priority'=>999])->isCount(1));
@@ -684,15 +684,15 @@ class Route extends Base\Test
         assert($routes->sortDefault() === $routes);
 
         // map
-        assert($routes->isCount(45));
+        assert($routes->isCount(50));
         assert($routes->get('Sitemap') === Lemur\Cms\Sitemap::class);
         assert($routes->get(Lemur\Cms\Sitemap::class) === Lemur\Cms\Sitemap::class);
         assert(!$routes->in('Sitemap'));
         assert($routes->in(Lemur\Cms\Sitemap::class));
         assert($routes->exists('Sitemap'));
         assert($routes->exists(Lemur\Cms\Sitemap::class));
-        assert($routes->unset('Sitemap')->isCount(44));
-        assert($routes->add(Lemur\Cms\Sitemap::class)->isCount(45));
+        assert($routes->unset('Sitemap')->isCount(49));
+        assert($routes->add(Lemur\Cms\Sitemap::class)->isCount(50));
 
         return true;
     }

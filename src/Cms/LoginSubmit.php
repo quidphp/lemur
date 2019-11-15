@@ -19,7 +19,9 @@ class LoginSubmit extends Lemur\Route\LoginSubmit
 
 
     // config
-    public static $config = [];
+    public static $config = [
+        'parent'=>Login::class
+    ];
 
 
     // routeSuccess

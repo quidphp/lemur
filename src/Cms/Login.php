@@ -137,7 +137,6 @@ class Login extends Lemur\Route\Login
         $return = [];
         $return['register'] = $this->makeRegister();
         $return['resetPassword'] = $this->makeResetPassword();
-        $return['about'] = $this->makeAbout();
 
         return $return;
     }

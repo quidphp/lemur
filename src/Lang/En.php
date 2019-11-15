@@ -16,7 +16,33 @@ class En extends Core\Lang\En
 {
     // config
     public static $config = [
+        
+        // com
+        'com'=>[
 
+            // neg
+            'neg'=>[
+
+                // insert
+                'insert'=>[
+                    'contact'=>[
+                        'failure'=>'Error sending the message.'
+                    ]
+                ]
+            ],
+
+            // pos
+            'pos'=>[
+
+                // insert
+                'insert'=>[
+                    'contact'=>[
+                        'success'=>'Thank you, the message was sent !'
+                    ]
+                ]
+            ]
+        ],
+        
         // role
         'role'=>[
 
@@ -34,6 +60,13 @@ class En extends Core\Lang\En
                 'cms'=>'Content management system'
             ]
         ],
+        
+        // browscap
+        'browscap'=>[
+            'noscript'=>'JavaScript is disabled on your browser.',
+            'cookie'=>'Your browser does not accept cookies.',
+            'unsupported'=>'Your browser is unsupported.'
+        ],
 
         // route
         'route'=>[
@@ -45,6 +78,8 @@ class En extends Core\Lang\En
                 'accountChangePassword'=>'Change my password',
                 'accountChangePasswordSubmit'=>'Change my password - Submit',
                 'activatePassword'=>'Activate password',
+                'contact'=>'Contact',
+                'contactSubmit'=>'Contact - Submit',
                 'login'=>'Login',
                 'loginSubmit'=>'Login - Submit',
                 'logout'=>'Logout',
@@ -54,14 +89,33 @@ class En extends Core\Lang\En
                 'resetPasswordSubmit'=>'Reset password - Submit'
             ]
         ],
+        
+        // table
+        'table'=>array(
+            
+            // label
+            'label'=>array(
+                'contact'=>'Contact'
+            )
+        ),
+        
+        // col
+        'col'=>[
 
+            // label
+            'label'=>[
+
+                // contact
+                'contact'=>[
+                    'email'=>'Email',
+                    'name'=>'Full name',
+                    'phone'=>'Phone number'
+                ]
+            ]
+        ],
+        
         // cms
         '@cms'=>[
-
-            // common
-            'common'=>[
-                'loadMore'=>'Load [from] to [to] on [total]'
-            ],
 
             // com
             'com'=>[
@@ -78,7 +132,7 @@ class En extends Core\Lang\En
 
                 // neg
                 'neg'=>[
-
+                    
                     // sessionRole
                     'sessionRole'=>[
                         'failure'=>'Error assigning temporary roles.'
@@ -96,7 +150,12 @@ class En extends Core\Lang\En
                     // duplicate
                     'duplicate'=>[
                         'failure'=>'Duplicate has failed'
-                    ]
+                    ],
+                    
+                    // multiModify
+                    'multiModify'=>array(
+                        'emptyPost'=>"The submitted form was empty."
+                    )
                 ]
             ],
 
@@ -249,6 +308,11 @@ class En extends Core\Lang\En
                 'content'=>'The Lemur open-source Content Management System is based on the [websiteLink] framework. This software is available under the open-source license [licenseLink]. The current version is: [version]. For any questions, please contact the author [authorLink].'
             ],
 
+            // relationFeed
+            'relationFeed'=>[
+                'loadMore'=>'Load [from] to [to] on [total]'
+            ],
+            
             // footer
             'footer'=>[
                 'link'=>'Link',
@@ -260,14 +324,22 @@ class En extends Core\Lang\En
 
             // home
             'home'=>[
-                'searchSubmit'=>'Search in all tables',
-                'searchIn'=>'Search in',
-                'note'=>'Note',
-                'searchNote'=>'Search insensitive to case and accents, [count] character%s% minimum.'
+                'feed'=>'Recent activities',
+                'overview'=>'Overview',
             ],
-
+            
+            // homeFeed
+            'homeFeed'=>array(
+                'all'=>'Everybody',
+                'me'=>'Only me'
+            ),
+            
             // search
             'search'=>[
+                'submit'=>'Search in all tables',
+                'in'=>'Search in',
+                'note'=>'Note',
+                'config'=>'Search insensitive to case and accents, [count] character%s% minimum.',
                 'notFound'=>'Rien à afficher'
             ],
 
@@ -301,7 +373,8 @@ class En extends Core\Lang\En
                 'relationChilds'=>'[count] direct child%s%',
                 'relationChildsNoAccess'=>'Not accessible',
                 'modifyTop'=>'Modify',
-                'modifyBottom'=>'Modify'
+                'modifyBottom'=>'Modify',
+                'activateField'=>'Modify field'
             ],
 
             // table
@@ -312,6 +385,7 @@ class En extends Core\Lang\En
 
                 // description
                 'description'=>[
+                    'contact'=>'Archive messages sent via the contact page form',
                     'email'=>'Email content sent by the app',
                     'lang'=>'All other text content in the application and CMS',
                     'redirection'=>'Specifies the redirection from one URL to another',
@@ -509,6 +583,11 @@ class En extends Core\Lang\En
                         'email_id'=>'Link to the email template used',
                         'json'=>'Email header data',
                         'content'=>'Content of the email'
+                    ],
+                    
+                    // contact
+                    'contact'=>[
+                        'message'=>'Content of the message'
                     ]
                 ]
             ],
@@ -558,6 +637,7 @@ class En extends Core\Lang\En
                 'label'=>[
                     'about'=>'About',
                     'cliClearCache'=>'Empty caches',
+                    'homeFeed'=>'Home - Feed',
                     'general'=>'General',
                     'generalDelete'=>'General - Delete',
                     'generalEdit'=>'General - Quick Edit',
@@ -577,6 +657,8 @@ class En extends Core\Lang\En
                     'specificDispatch'=>'Specific - Dispatch',
                     'specificDownload'=>'Specific - Download',
                     'specificDuplicate'=>'Dupliquer',
+                    'specificMulti'=>'Specific - Multiple',
+                    'specificMultiSubmit'=>'Specific - Multiple - Submit',
                     'specificRelation'=>'Specific - Relation',
                     'specificSubmit'=>'Specific - Submit',
                     'specificTableRelation'=>'Specific - Table Relation',

@@ -17,10 +17,8 @@ class LogError extends Core\Row\LogError
     // config
     public static $config = [
         'permission'=>[
-            'shared'=>['insert'=>true],
-            'user'=>['insert'=>true],
-            'contributor'=>['insert'=>true,'update'=>false,'delete'=>false],
-            'editor'=>['insert'=>true,'update'=>false,'delete'=>false],
+            'contributor'=>['update'=>false,'delete'=>false],
+            'editor'=>['update'=>false,'delete'=>false],
             'subAdmin'=>['update'=>false]],
         '@cms'=>[
             'permission'=>[

@@ -20,7 +20,9 @@ class ResetPassword extends Lemur\Route\ResetPassword
 
 
     // config
-    public static $config = [];
+    public static $config = [
+        'parent'=>Login::class
+    ];
 
 
     // submitRoute
@@ -71,7 +73,6 @@ class ResetPassword extends Lemur\Route\ResetPassword
         $return = [];
         $return['login'] = $this->makeLogin();
         $return['register'] = $this->makeRegister();
-        $return['about'] = $this->makeAbout();
 
         return $return;
     }

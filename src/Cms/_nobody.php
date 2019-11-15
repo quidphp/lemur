@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Lemur\Cms;
 use Quid\Base;
 use Quid\Base\Html;
+use Quid\Lemur;
 
 // _nobody
 // trait which provides commonly used methods for routes where the user is not logged in the CMS
@@ -17,6 +18,7 @@ trait _nobody
 {
     // trait
     use _templateAlias;
+    use Lemur\Route\_browscap;
 
 
     // config
@@ -94,20 +96,6 @@ trait _nobody
         }
 
         $r .= Html::divCl();
-
-        return $r;
-    }
-
-
-    // makeAbout
-    // bouton vers la page à propos
-    final protected function makeAbout():string
-    {
-        $r = '';
-
-        $route = About::make();
-        if($route->canTrigger())
-        $r .= $route->aDialog();
 
         return $r;
     }

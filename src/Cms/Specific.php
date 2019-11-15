@@ -49,7 +49,7 @@ class Specific extends Core\RouteAlias
         $return = false;
         $table = $this->segment('table');
 
-        if($table instanceof Core\Table && $table->hasPermission('view','specific'))
+        if(parent::canTrigger() && $table instanceof Core\Table && $table->hasPermission('view','specific'))
         $return = true;
 
         return $return;
@@ -166,23 +166,12 @@ class Specific extends Core\RouteAlias
     }
 
 
-    // main
-    // fait main pour specific
-    final public function main():string
-    {
-        $r = $this->makeTop();
-        $r .= $this->makeForm();
-
-        return $r;
-    }
-
-
     // makeTitleBox
     // génère le titre pour la page specific
     final protected function makeTitleBox():string
     {
         $r = $this->makeH1($this->makeTitle());
-        $r .= Html::divCond($this->makeRelationChilds(),['relation-childs','popup-trigger','with-icon','with-popup','tabindex'=>-1,'data'=>['anchor-corner'=>true,'absolute-placeholder'=>true]]);
+        $r .= Html::divCond($this->makeRelationChilds(),['relation-childs','popup-trigger','with-icon','with-popup','data'=>['anchor-corner'=>true,'absolute-placeholder'=>true]]);
 
         return $r;
     }
@@ -213,9 +202,9 @@ class Specific extends Core\RouteAlias
                 $count = Base\Arrs::countLevel(2,$relationChilds);
                 $text = static::langPlural($count,'specific/relationChilds',['count'=>$count]);
                 $r .= Html::button($text,'popup-title');
-                $r .= Html::divOp('popup');
-                $r .= Html::ul($this->makeRelationChildsInner($relationChilds));
-                $r .= Html::divCl();
+
+                $html = Html::ul($this->makeRelationChildsInner($relationChilds));
+                $r .= static::makeDivPopup($html);
             }
         }
 
@@ -300,15 +289,20 @@ class Specific extends Core\RouteAlias
                 if(!empty($specific['count']))
                 {
                     $popup = $general->generalInfoPopup(true);
-
                     $attr = ['popup-trigger'];
+                    $html = '';
+                    
                     if(!empty($popup))
-                    $attr = Base\Arr::append($attr,['with-popup','with-text-solo','tabindex'=>-1,'data'=>['anchor-corner'=>true,'absolute-placeholder'=>true]]);
-
-                    $r .= Html::divOp($attr);
-                    $r .= Html::button($specific['count'],'popup-title');
-                    $r .= Html::div($popup,'popup');
-                    $r .= Html::divCl();
+                    {
+                        $attr = Base\Arr::append($attr,['with-popup','with-text-solo','data'=>['anchor-corner'=>true,'absolute-placeholder'=>true]]);
+                        $html .= Html::button($specific['count'],'popup-title');
+                        $html .= static::makeDivPopup($popup);
+                    }
+                    
+                    else
+                    $html .= Html::div($specific['count'],'popup-title');
+                    
+                    $r .= Html::div($html,$attr);
                 }
 
                 if(!empty($specific['next']))
@@ -339,30 +333,30 @@ class Specific extends Core\RouteAlias
         $r = '';
         $dispatch = $this->isUpdateableOrDeleteable();
 
-        $r .= Html::divOp('container');
-        $r .= Html::divOp('form');
-
         if($dispatch === true)
         {
-            $r .= SpecificDispatch::make($this->segments())->formOpen();
+            $r .= SpecificDispatch::make($this->segments())->formOpen('specific-form');
+            $r .= $this->makeFormHidden();
             $r .= $this->makeFormPrimary();
             $r .= $this->makeFormSubmit('hidden');
         }
-
-        $r .= $this->makeFormTop();
-        $r .= $this->makeFormInner();
-        $r .= $this->makeFormBottom();
+        
+        else
+        $r .= Html::divOp('specific-form');
+        
+        $r .= Html::div($this->makeFormTop(),'form-top');
+        $r .= Html::div($this->makeFormInner(),'form-inner');
+        $r .= Html::div($this->makeFormBottom(),'form-bottom');
 
         if($dispatch === true)
         $r .= Html::formCl();
-
-        $r .= Html::divCl();
+        else
         $r .= Html::divCl();
 
         return $r;
     }
 
-
+    
     // makeFormPrimary
     // génère le input hidden pour la colonne primaire
     final protected function makeFormPrimary():string
@@ -425,7 +419,7 @@ class Specific extends Core\RouteAlias
         $table = $row->table();
         $callback = $row->table()->getAttr('specificOperation');
 
-        if(static::classIsCallable($callback) && $table->hasPermission('specificOperation'))
+        if(static::isCallable($callback) && $table->hasPermission('specificOperation'))
         $r .= $callback($row);
 
         $r .= $this->makeViewRoute();
@@ -512,11 +506,9 @@ class Specific extends Core\RouteAlias
     {
         $r = '';
 
-        $r .= Html::divOp('bottom');
         $r .= Html::div(null,'left');
         $r .= Html::div($this->makeFormSubmit('bottom'),'center');
         $r .= Html::div($this->makeFormDelete(),'right');
-        $r .= Html::divCl();
 
         return $r;
     }

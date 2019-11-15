@@ -56,8 +56,20 @@ trait _common
     {
         return '-panel-';
     }
+    
 
-
+    // makeDivPopup
+    // génère la balise pour le popup avec le tabindex
+    final public static function makeDivPopup($value=null,$attr='popup',int $tabindex=0) 
+    {
+        $attr = (array) $attr;
+        $attr['tabindex'] = $tabindex;
+        $return = Html::div($value,$attr);
+        
+        return $return;
+    }
+    
+    
     // makeInfoPopup
     // génère un popup d'informations
     final public static function makeInfoPopup(array $values,\Closure $closure):string

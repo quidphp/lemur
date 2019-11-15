@@ -43,27 +43,22 @@ class JsonArrayRelation extends Core\ColAlias
 
 
     // formComplex
-    // génère le formComplex pour jsonArrayRelation
-    final public function formComplex($value=true,?array $attr=null,?array $option=null):string
+    // génère le formComplex pour jsonArrayRelation avec le relation export
+    final public function formComplex($input=true,?array $attr=null,?array $option=null):string
     {
         $return = '';
         $tag = $this->complexTag($attr);
-        $value = $this->valueComplex($value,$option);
-
+        $value = $this->valueComplex($input,$option);
+        
         if(Html::isFormTag($tag,true))
         {
-            $cell = ($value instanceof Core\Cell)? $value:null;
+            $cell = ($input instanceof Core\Cell)? $input:null;
             $return .= parent::formComplex($value,$attr,$option);
-
+            
             if(is_int($value) && !empty($cell))
             {
-                $lang = $this->db()->lang();
-
-                $label = $cell->relationIndex($value);
-                if(is_string($label))
-                $return .= Html::div($label,'under-input');
-                else
-                $return .= Html::div($lang->text('common/nothing'),['under-input','nothing']);
+                $answer = $cell->relationIndex($value);
+                $return .= Html::div(Base\Debug::export($answer),'relation-export');
             }
         }
 

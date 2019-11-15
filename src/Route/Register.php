@@ -16,21 +16,17 @@ use Quid\Lemur;
 // abstract class for a register route
 abstract class Register extends Core\RouteAlias
 {
-    // trait
-    use Lemur\Route\_nobody;
-
-
     // config
     public static $config = [
         'path'=>[
-            'fr'=>'enregistrement',
-            'en'=>'register'],
+            'en'=>'register',
+            'fr'=>'enregistrement'],
         'match'=>[
             'role'=>'nobody',
             'session'=>'allowRegister'],
         'parent'=>Login::class,
         'row'=>Lemur\Row\User::class,
-        'group'=>'nobody',
+        'group'=>'nobody'
     ];
 
 

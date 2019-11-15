@@ -8,6 +8,7 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Cms;
+use quid\Base;
 
 // _modal
 // trait that provides some initial configuration for CMS modal routes
@@ -19,5 +20,13 @@ trait _modal
         'sitemap'=>false,
         'history'=>false
     ];
+    
+    
+    // aDialog
+    // retourne le lien dialog
+    final public function aDialog($value=null,?array $attr=null):string
+    {
+        return $this->a(($value === null)? $this->title():$value,Base\Attr::append($attr,['data'=>['modal'=>static::name()]]));
+    }
 }
 ?>

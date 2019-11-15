@@ -12,38 +12,32 @@
 // modalBase
 // mixin avec les styles de base pour le modal
 @mixin modalBase() {
-    .modal {
-        @include fixed(0, null, null, 0);
-        @include wh(100%);
-        z-index: 999;
-        display: none;
+    @include fixed(0, null, null, 0);
+    @include wh(100%);
+    z-index: 999;
+    display: none;
 
-        &[data-status='loading'] .inner {
-            background-position: center;
-        }
-
-        &[data-status='loading'],
-        &[data-status='ready'] {
-            display: block;
-        }
+    &[data-status='loading'] .inner {
+        background-position: center;
     }
-    .modal .outer {
+
+    &[data-status='loading'],
+    &[data-status='ready'] {
+        display: block;
+    }
+    
+    > .box {
         @include abs(20%, null, null, 20%);
         @include wh(60%);
+        background-color: $white;
+        
+        > .close {
+            z-index: 10;
+        }
 
-        > .box {
-            height: 100%;
-            background-color: $white;
-            position: relative;
-
-            > .close {
-                z-index: 10;
-            }
-
-            > .inner {
-                max-height: 100%;
-                overflow-y: auto;
-            }
+        > .inner {
+            max-height: 100%;
+            overflow-y: auto;
         }
     }
 }
@@ -53,9 +47,8 @@
 @mixin modal() {
     @include modalBase();
 
-    .modal .box {
+    > .box {
         border-radius: 10px;
-        background-color: $lighterGray;
         @include flex(center);
 
         > .close {
@@ -78,21 +71,18 @@
 
     /* PRINT */
     @media print {
-        .modal .outer {
+        > .box {
             left: 0;
             top: 0;
             @include wh(100%);
-
-            > .box {
-                background-color: $white;
-                border-radius: 0;
-            }
+            background-color: $white;
+            border-radius: 0;
         }
     }
 
     /* RESPONSIVE */
     @media screen and (max-width: 900px), screen and (orientation: portrait) {
-        .modal .outer {
+        > .box {
             @include wh(80% !important);
             top: 10% !important;
             left: 10% !important;
@@ -104,7 +94,6 @@
 // mixin pour un formulaire de base dans le modal
 @mixin modalForm() {
     .info {
-        font-size: 90%;
         margin-bottom: 20px;
     }
 

@@ -24,7 +24,8 @@ class AccountChangePassword extends Lemur\Route\AccountChangePassword
     public static $config = [
         'match'=>[
             'role'=>['>'=>'user'],
-            'ajax'=>true]
+            'ajax'=>true],
+        'parent'=>Account::class
     ];
 
 
@@ -63,14 +64,6 @@ class AccountChangePassword extends Lemur\Route\AccountChangePassword
         $r .= Html::divCond($this->makeForm(),'form');
 
         return $r;
-    }
-
-
-    // aDialog
-    // retourne le lien dialog pour ouvrir la formulaire dans une box
-    final public function aDialog($attr=null):string
-    {
-        return $this->a(static::langText('accountChangePassword/link'),Base\Attr::append($attr,['data'=>['modal'=>static::name()]]));
     }
 }
 

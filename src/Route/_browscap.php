@@ -10,9 +10,9 @@ declare(strict_types=1);
 namespace Quid\Lemur\Route;
 use Quid\Base\Html;
 
-// _nobody
-// trait that provides a common method for a route when the user is not logged in
-trait _nobody
+// _browscap
+// trait that provides a method for generating text for the browser capabilities 
+trait _browscap
 {
     // browscap
     // génère le html pour les capacités du browser (noscript et cookie)
@@ -20,8 +20,9 @@ trait _nobody
     {
         $r = '';
         $r .= Html::noscript(static::langText('browscap/noscript'));
-        $r .= Html::div(static::langText('browscap/cookie'),'cookie');
-
+        $r .= Html::div(static::langText('browscap/cookie'),'cookie-disabled');
+        $r .= Html::div(static::langText('browscap/unsupported'),'unsupported-browser');
+        
         return $r;
     }
 }

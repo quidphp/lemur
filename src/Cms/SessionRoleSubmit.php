@@ -30,6 +30,7 @@ class SessionRoleSubmit extends Core\RouteAlias
             'post'=>['role'],
             'genuine'=>true,
             'csrf'=>true],
+        'parent'=>SessionRole::class,
         'row'=>Lemur\Row\User::class,
         'group'=>'submit'
     ];

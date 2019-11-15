@@ -24,21 +24,22 @@ $(document).ready(function() {
 		var colsSorter = table.find("th.action");
 		var filesSlider = table.find("td[data-group='media'] .slider");
         var quickEdit = table.find("td[data-quick-edit='1'] a.quick-edit");
+        var highlight = table.find("tr.highlight");
         
         // dragScroll
-        scroller.dragScroll('div');
+        scroller.dragScroll('tbody','div');
         
         // page + limit
-		pageLimit.inputNumeric();
+		pageLimit.callThis(quid.core.inputNumeric);
 		
         // rowsChecker
         main.callThis(quid.cms.rowsChecker);
         
 		// colsSorter
-		colsSorter.callThis(quid.cms.colsSorter);
+		colsSorter.callThisEach(quid.cms.colsSorter);
 		
         // filter
-		filter.filterGeneralFull();
+		filter.callThis(quid.core.filterGeneralFull);
         
 		// search
 		if(search.length)
@@ -46,7 +47,8 @@ $(document).ready(function() {
 			var searchInput = search.find(".form input[type='text']");
 			var searchButton = search.find(".form button");
 			var searchSlide = search.find(".in");
-			searchInput.inputSearch(searchButton).focusSlide(searchSlide);
+			searchInput.callThis(quid.core.inputSearch,searchButton)
+            .focusSlide(searchSlide);
 		}
 		
 		// formTruncate
@@ -58,9 +60,14 @@ $(document).ready(function() {
 		}
         
         // filesSlider
-        filesSlider.slider(null,null,'.slider-element',false);
+        filesSlider.callThis(quid.core.slider,null,null,'.slider-element',false);
         
         // quickEdit
         quickEdit.callThis(quid.cms.quickEdit);
+        
+        // highlight 
+        highlight.on('mouseover', function(event) {
+            $(this).removeClass('highlight');
+        });
 	});
 });

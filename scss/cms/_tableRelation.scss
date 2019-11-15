@@ -50,37 +50,31 @@
 
         .insert {
             @include transitions(background-color 0.3s);
+            @include imageLegend();
             padding: 5px 10px;
-            cursor: pointer;
             text-align: center;
-
+            width: 100%;
+            
             .big-icon {
                 @include wh(64px);
+                display: block;
                 margin: auto;
                 margin-bottom: 3px;
                 background-size: contain;
             }
 
-            img {
-                margin-bottom: 3px;
-                @include inbl();
-                max-width: 100px;
-            }
-
-            .legend {
-                font-style: italic;
-                font-size: 80%;
-            }
-
             &:hover {
                 background-color: $lightYellow;
+            }
+            
+            &:active {
+                background-color: $lightGray;
             }
         }
 
         > .medias > .legend {
             background-color: $lightGray;
             text-align: center;
-            font-size: 90%;
             font-weight: bold;
             padding: 5px 0;
             border-top: 1px solid $gray;

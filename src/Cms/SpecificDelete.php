@@ -51,7 +51,7 @@ class SpecificDelete extends Core\RouteAlias
         $table = $this->table();
         $row = $this->segment('primary');
 
-        if(!empty($table) && $table->hasPermission('view','delete','lemurDelete') && !empty($row) && $row->isDeleteable())
+        if(parent::canTrigger() && !empty($table) && $table->hasPermission('view','delete','lemurDelete') && !empty($row) && $row->isDeleteable())
         $return = true;
 
         return $return;

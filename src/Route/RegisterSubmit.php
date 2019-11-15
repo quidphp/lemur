@@ -23,8 +23,8 @@ abstract class RegisterSubmit extends Core\RouteAlias
     // config
     public static $config = [
         'path'=>[
-            'fr'=>'enregistrement/soumettre',
-            'en'=>'register/submit'],
+            'en'=>'register/submit',
+            'fr'=>'enregistrement/soumettre'],
         'match'=>[
             'method'=>'post',
             'role'=>'nobody',
@@ -157,7 +157,7 @@ abstract class RegisterSubmit extends Core\RouteAlias
 
         foreach ($return as $key => $value)
         {
-            if(is_array($value) && static::classIsCallable($value))
+            if(is_array($value) && static::isCallable($value))
             $return[$key] = $value($data);
         }
 

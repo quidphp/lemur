@@ -14,18 +14,13 @@
         list-style-type: none;
 
         > li {
+            
             > a {
                 display: block;
             }
-
-            > .trigger {
-                width: 100%;
-            }
-
+            
             > a,
             > .trigger {
-                display: block;
-                @include transitions(background-color 0.3s);
                 padding: 8px 15px;
                 color: $white;
                 border-top: 1px solid $color;
@@ -36,7 +31,12 @@
             > a[data-triggered='1'] {
                 background-color: $color;
             }
-
+            
+            &:active > a,
+            &:active > .trigger {
+                background-color: $darkColor;
+            }
+            
             &:last-child > a,
             &:last-child > .trigger {
                 border-bottom: 0;
@@ -56,12 +56,12 @@
     }
 
     > ul > li.with-carousel {
-        position: relative;
 
-        .trigger {
+        > .trigger {
             @include flex();
             cursor: pointer;
-
+            width: 100%;
+            
             .triangle {
                 @include triangle(right, $white, 9px, 6px);
                 margin-right: 8px;
@@ -72,7 +72,7 @@
             }
         }
 
-        &.active .trigger {
+        &.active > .trigger {
             background-color: $darkerColor;
 
             .triangle {
@@ -93,9 +93,9 @@
 
                 > a:first-child {
                     display: block;
-                    padding: 4px 15px 4px 28px;
+                    padding: 4px 15px 4px 32px;
                     color: $white;
-                    font-size: 1.2rem;
+                    font-size: 90%;
                     border-top: 1px solid $color;
 
                     &:hover,
@@ -132,7 +132,7 @@
     @media screen and (max-width: 900px), screen and (orientation: portrait) {
         text-align: center;
 
-        > ul > li.with-carousel .trigger {
+        > ul > li.with-carousel > .trigger {
             justify-content: center;
         }
     }

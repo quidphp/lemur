@@ -8,16 +8,19 @@
  
 // validate
 // script with behaviours related to basic validation
-
-// isRegexNumericDash
-// retourne vrai si la valeur contient seulement des caractères numérique ou -
-quid.base.isRegexNumericDash = function(value)
-{
-    var r = false;
-    var regex = new RegExp("^[0-9\-]+$");
+quid.base.validate = new function() {
+    var base = quid.base;
     
-    if(quid.base.isString(value) && regex.test(value))
-    r = true;
-    
-    return r;
-}
+    // isNumericDash
+    // retourne vrai si la valeur contient seulement des caractères numérique ou -
+    this.isNumericDash = function(value)
+    {
+        var r = false;
+        var regex = new RegExp("^[0-9\-]+$");
+        
+        if(base.str.is(value) && regex.test(value))
+        r = true;
+        
+        return r;
+    }
+};

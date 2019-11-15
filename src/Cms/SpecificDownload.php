@@ -27,8 +27,8 @@ class SpecificDownload extends Core\RouteAlias
     // config
     public static $config = [
         'path'=>[
-            'fr'=>'specifique/telechargement/[table]/[primary]/[col]/[index]',
-            'en'=>'specific/download/[table]/[primary]/[col]/[index]'],
+            'en'=>'specific/download/[table]/[primary]/[col]/[index]',
+            'fr'=>'specifique/telechargement/[table]/[primary]/[col]/[index]'],
         'segment'=>[
             'table'=>'structureSegmentTable',
             'primary'=>'structureSegmentPrimary',
@@ -36,6 +36,7 @@ class SpecificDownload extends Core\RouteAlias
             'index'=>'structureSegmentInt'],
         'match'=>[
             'role'=>['>'=>'user']],
+        'parent'=>Specific::class,
         'group'=>'specific'
     ];
 
@@ -47,7 +48,7 @@ class SpecificDownload extends Core\RouteAlias
         $return = false;
         $table = $this->segment('table');
 
-        if($table instanceof Core\Table && $table->hasPermission('mediaDownload'))
+        if(parent::canTrigger() && $table instanceof Core\Table && $table->hasPermission('mediaDownload'))
         {
             $col = $this->segment('col');
 

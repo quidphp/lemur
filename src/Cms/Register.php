@@ -19,7 +19,9 @@ class Register extends Lemur\Route\Register
 
 
     // config
-    public static $config = [];
+    public static $config = [
+        'parent'=>Login::class
+    ];
 
 
     // submitClass
@@ -45,7 +47,6 @@ class Register extends Lemur\Route\Register
         $return = [];
         $return['login'] = $this->makeLogin();
         $return['resetPassword'] = $this->makeResetPassword();
-        $return['about'] = $this->makeAbout();
 
         return $return;
     }

@@ -29,9 +29,8 @@ class GeneralRelation extends Core\RouteAlias
     // config
     public static $config = [
         'path'=>[
-            'fr'=>'general/relation/[table]/[col]/[selected]/[order]/[page]',
-            'en'=>'general/relation/[table]/[col]/[selected]/[order]/[page]'],
-            'encoding'=>'structureSegmentEncoding',
+            'en'=>'general/relation/[table]/[col]/[selected]/[order]/[page]',
+            'fr'=>'general/relation/[table]/[col]/[selected]/[order]/[page]'],
         'segment'=>[
             'table'=>'structureSegmentTable',
             'col'=>'structureSegmentColRelation',
@@ -39,7 +38,8 @@ class GeneralRelation extends Core\RouteAlias
             'order'=>'structureSegmentOrderColRelation',
             'page'=>'structureSegmentPage'],
         'showCount'=>true,
-        'showEmptyNotEmpty'=>true
+        'showEmptyNotEmpty'=>true,
+        'parent'=>General::class
     ];
 
 

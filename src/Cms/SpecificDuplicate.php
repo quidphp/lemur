@@ -54,7 +54,7 @@ class SpecificDuplicate extends Core\RouteAlias
         $table = $this->table();
         $row = $this->segment('primary');
 
-        if(!empty($table) && $table->hasPermission('view','insert','lemurInsert','duplicate') && !empty($row))
+        if(parent::canTrigger() && !empty($table) && $table->hasPermission('view','insert','lemurInsert','duplicate') && !empty($row))
         $return = true;
 
         return $return;

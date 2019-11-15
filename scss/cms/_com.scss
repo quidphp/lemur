@@ -10,94 +10,96 @@
 // stylesheet for the communication component
 @mixin com() {
     @include fixed(null, 15px, 10px);
-    background-color: rgba(249, 253, 216, 0.95);
     width: 35%;
     z-index: 3;
-    border: 2px solid $black;
-    padding: 10px;
-    border-radius: 5px;
-    overflow-x: hidden;
-    overflow-y: auto;
-    max-height: 50vh;
-    text-align: left;
 
     .close {
-        @include abs(8px, 8px);
+        @include abs(10px, 15px);
         z-index: 3;
 
         &:hover {
             opacity: 0.8;
         }
     }
+    
+    > .scroller {
+        @include scrollbar();
+        background-color: rgba(249, 253, 216, 0.95);
+        border: 2px solid $black;
+        padding: 10px;
+        border-radius: 5px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        text-align: left;
+        max-height: 50vh;
+        
+        .top {
+            @include flex();
 
-    .top {
-        @include flex();
-
-        .triangle {
-            @include triangle(bottom, $darkColor, 10px, 6px);
-        }
-
-        .date {
-            cursor: pointer;
-            font-size: 90%;
-            margin-left: 7px;
-
-            &:hover {
-                color: $darkGray;
+            .triangle {
+                @include triangle(bottom, $darkColor, 10px, 6px);
             }
-        }
-    }
 
-    &.slide-close .top .triangle {
-        @include triangle(right, $darkColor, 10px, 6px);
-    }
-
-    .spacer {
-        padding-bottom: 3px;
-        border-bottom: 1px solid $gray;
-    }
-
-    .bottom {
-        .table > span,
-        .row > span {
-            font-weight: bold;
-        }
-
-        .row.insert,
-        .row.update {
-            > span {
-                @include transitions(color 0.3s);
+            .date {
                 cursor: pointer;
+                margin-left: 7px;
 
-                &:hover,
-                &[data-triggered='1'] {
+                &:hover {
                     color: $darkGray;
                 }
             }
         }
 
-        ul {
-            @include ulOlMargin();
-
-            li {
-                padding-top: 3px;
-            }
+        &.slide-close .top .triangle {
+            @include triangle(right, $darkColor, 10px, 6px);
         }
 
-        > ul {
-            font-size: 90%;
-            margin-left: 2rem;
+        .spacer {
+            padding-bottom: 3px;
+            border-bottom: 1px solid $gray;
+        }
 
-            > li {
-                padding-top: 8px;
+        .bottom {
+            .table > span,
+            .row > span {
+                font-weight: bold;
+            }
+
+            .row.insert,
+            .row.update {
+                > span {
+                    @include transitions(color 0.3s);
+                    cursor: pointer;
+
+                    &:hover,
+                    &[data-triggered='1'] {
+                        color: $darkGray;
+                    }
+                }
+            }
+
+            ul {
+                @include ulOlMargin();
+
+                li {
+                    padding-top: 3px;
+                }
+            }
+
+            > ul {
+                margin-left: 2rem;
+
+                > li {
+                    padding-top: 8px;
+                }
             }
         }
-    }
-    .pos {
-        color: $green;
-    }
-    .neg {
-        color: $red;
+        .pos {
+            color: $green;
+        }
+        .neg {
+            color: $red;
+        }
     }
 
     @media screen and (max-width: 900px), screen and (orientation: portrait) {

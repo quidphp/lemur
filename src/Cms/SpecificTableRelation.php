@@ -29,13 +29,14 @@ class SpecificTableRelation extends Core\RouteAlias
     // config
     public static $config = [
         'path'=>[
-            'fr'=>'table/relation/[table]/[order]/[page]',
-            'en'=>'table/relation/[table]/[order]/[page]'],
+            'en'=>'table/relation/[table]/[order]/[page]',
+            'fr'=>'table/relation/[table]/[order]/[page]'],
         'segment'=>[
             'table'=>'structureSegmentTable',
             'order'=>'structureSegmentOrderTableRelation',
             'page'=>'structureSegmentPage'],
-        'method'=>'tableRelationOutput'
+        'method'=>'tableRelationOutput',
+        'parent'=>Specific::class
     ];
 
 
@@ -46,7 +47,7 @@ class SpecificTableRelation extends Core\RouteAlias
         $return = false;
         $table = $this->segment('table');
 
-        if($table instanceof Core\Table && $table->hasPermission('view','relation','tableRelation'))
+        if(parent::canTrigger() && $table instanceof Core\Table && $table->hasPermission('view','relation','tableRelation'))
         $return = true;
 
         return $return;
@@ -75,8 +76,6 @@ class SpecificTableRelation extends Core\RouteAlias
             if(is_array($results) && !empty($results))
             $r .= $this->makeResults($results,null,$count);
         }
-
-        $r = Html::divCond($r,'relationWrap');
 
         if(empty($r))
         $r .= Html::h3(static::langText('common/nothing'));

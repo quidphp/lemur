@@ -30,7 +30,7 @@ class User extends Core\Row\User
                 '*'=>['userWelcome'=>false],
                 'contributor'=>['insert'=>false],
                 'editor'=>['insert'=>false],
-                'subAdmin'=>['userWelcome'=>true],
+                'subAdmin'=>['userWelcome'=>true,'fakeRoles'=>true],
                 'admin'=>['userWelcome'=>true,'fakeRoles'=>true]],
             'route'=>[
                 'userWelcome'=>Lemur\Cms\SpecificUserWelcome::class],

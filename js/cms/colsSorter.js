@@ -13,9 +13,9 @@ quid.cms.colsSorter = function()
     $(this).each(function(index, el) {
         var colsPopup = $(this).find(".popup");
         var colsButton = colsPopup.find("button[name='cols']");
-        
+
         // clickOpen
-        $(this).clickOpenWithTrigger(".trigger");
+        $(this).callThis(quid.core.clickOpenWithTrigger,".trigger");
         
         // colsPopup
         colsPopup.verticalSorting(".choice",'.choice-in')
@@ -29,16 +29,16 @@ quid.cms.colsSorter = function()
             $(this).triggerHandler('cols:getCheckboxes').trigger('change');
         })
         .on('cols:isValid', function(event) {
-            return $(this).triggerHandler('cols:getCheckboxes').triggerHandlerFalse('validate:isValid');
+            return $(this).triggerHandler('cols:getCheckboxes').triggerHandlerEqual(true,'validate:isValid');
         })
         .on('cols:invalid', function() {
-            $(this).removeClass("valid invalid").addClass('invalid');
+            $(this).attr('data-validate','invalid');
         })
         .on('cols:valid', function() {
-            $(this).removeClass("valid invalid");
+            $(this).removeAttr("data-validate");
             
-            if(!colsButton.triggerHandler('isCurrent'))
-            $(this).addClass('valid');
+            if(!colsButton.triggerHandler('colsButton:isCurrent'))
+            $(this).attr('data-validate','valid');
         });
         
         // colsCheckboxes
@@ -51,21 +51,21 @@ quid.cms.colsSorter = function()
         });
         
         // colsButton
-        colsButton.block('click').on('getCheckboxSet',function() {
+        colsButton.block('click').on('click', function(event) {
+            $(this).trigger('colsButton:redirect',[event]);
+        })
+        .on('colsButton:getCheckboxSet',function() {
             var checkboxes = colsPopup.triggerHandler('cols:getCheckboxes');
             if(colsPopup.triggerHandler('cols:isValid'))
             return checkboxes.filter(":checked").valSet(colsButton.data("separator"),true);
         })
-        .on('isCurrent',function() {
-            return (colsButton.triggerHandler('getCheckboxSet') === colsButton.data('current'))? true:false;
+        .on('colsButton:isCurrent',function() {
+            return (colsButton.triggerHandler('colsButton:getCheckboxSet') === colsButton.data('current'))? true:false;
         })
-        .on('click', function(event) {
-            $(this).trigger('redirect',[event]);
-        })
-        .on('redirect', function(event,clickEvent) {
-            var href = $(this).dataHrefReplaceChar($(this).triggerHandler('getCheckboxSet'));
+        .on('colsButton:redirect', function(event,clickEvent) {
+            var href = $(this).dataHrefReplaceChar($(this).triggerHandler('colsButton:getCheckboxSet'));
             
-            if(quid.base.isStringNotEmpty(href) && href !== quid.base.currentRelativeUri())
+            if(quid.base.str.isNotEmpty(href) && href !== quid.base.request.relative())
             {
                 $(this).trigger('block');
                 $(document).trigger('document:go',[href,clickEvent]);

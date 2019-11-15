@@ -20,7 +20,7 @@ quid.cms.tableRelation = function()
         textarea.on('textarea:insert', function(event,html) {
             var r = false;
             
-            if(quid.base.isStringNotEmpty(html))
+            if(quid.base.str.isNotEmpty(html))
             {
                 r = true;
                 var current = $(this).val();
@@ -30,7 +30,8 @@ quid.cms.tableRelation = function()
             return r;
         });
         
-        filters.filterGeneralFull().on('tableRelation:prepare', function(event) {
+        filters.callThis(quid.core.filterGeneralFull)
+        .on('tableRelation:prepare', function(event) {
             var clickOpen = $(this).triggerHandler('clickOpen:getTarget');
             $(this).triggerHandler('filter:getResult').on('click', '.insert', function(event) {
                 var html = $(this).data('html');
@@ -43,6 +44,12 @@ quid.cms.tableRelation = function()
             return 'tableRelation';
         })
         .trigger('tableRelation:prepare');
+        
+        filters.each(function(index, el) {
+            $(this).triggerHandler('clickOpen:getTarget').on('feed:parseData', function(event,data) {
+                return quid.main.dom.parseHtml(data).find("li");
+            })
+        });
     });
     
     return this;
@@ -72,7 +79,7 @@ quid.cms.tinymceWithTableRelation = function()
                 var r = false;
                 var editor = $(this).data('editor');
                 
-                if(quid.base.isStringNotEmpty(html) && editor)
+                if(quid.base.str.isNotEmpty(html) && editor)
                 editor.execCommand('mceInsertContent',false,html);
                 
                 return r;

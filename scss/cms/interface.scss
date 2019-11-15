@@ -23,13 +23,12 @@ body .loading-fixed {
     @include fixed(0, 0);
     z-index: 9;
     display: none;
-
+    
     > .loading-progress {
         > .percent {
-            @include wh(40px, 16px);
-            font-size: 80%;
             text-align: center;
             color: $white;
+            padding: 3px;
             background-color: $darkColor;
             border-bottom-left-radius: 5px;
             border-bottom-right-radius: 5px;
@@ -95,17 +94,22 @@ body > .background {
         background-color: rgba(0, 0, 0, 0.25);
     }
 }
+body > code,
+body > pre {
+    display: block;
+    padding-left: 200px;
+}
 
 /* NAV */
 .nav-wrap .nav-fixed {
     @include fixed(0, null, null, 0);
     @include wh(200px, 100vh);
     @include scrollbar();
-    background: $darkColor;
     overflow-y: scroll;
     overflow-x: hidden;
     z-index: 1;
-
+    background: $darkColor;
+    
     > .nav-top {
         background-color: $white;
         min-height: 25px;
@@ -120,11 +124,16 @@ body > .background {
         > a {
             display: block;
             padding: 10px 15px;
-            font-size: 110%;
+            font-size: 120%;
             font-weight: bold;
 
             &:hover {
                 background-color: $lighterGray;
+            }
+            
+            &:active,
+            &[data-triggered='1'] {
+                background-color: $lightYellow;
             }
         }
 
@@ -151,11 +160,16 @@ header {
 
     .boot-label {
         width: 100%;
-        font-size: 140%;
+        font-size: 2.2rem;
         text-align: center;
         font-weight: bold;
         color: $white;
         display: none;
+        
+        &:hover,
+        &[data-triggered='1'] {
+            color: $lightGray;
+        }
     }
 
     > .top {
@@ -197,7 +211,7 @@ main {
     }
 }
 main .inner > .top {
-    @include flex(space-between, flex-start, wrap);
+    @include flex(space-between, flex-start);
     margin-bottom: 20px;
 
     .title {
@@ -219,6 +233,7 @@ main .inner > .top {
     }
 
     .right {
+        padding-left: 20px;
         text-align: right;
     }
 }
@@ -257,8 +272,7 @@ footer {
     }
 
     .popup-trigger {
-        > a,
-        > span {
+        > .popup-title {
             color: $white;
         }
     }
@@ -315,7 +329,15 @@ footer {
             display: block;
         }
     }
-
+    
+    main .inner > .top {
+        flex-wrap: wrap;
+        
+        .right {
+            padding-left: 0;
+        }
+    }
+    
     footer {
         justify-content: center;
         flex-wrap: wrap;

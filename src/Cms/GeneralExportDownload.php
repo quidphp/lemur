@@ -47,7 +47,7 @@ class GeneralExportDownload extends Core\RouteAlias
         'response'=>[
             'timeLimit'=>300],
         'query'=>['s'],
-        'parent'=>General::class,
+        'parent'=>GeneralExport::class,
         'group'=>'submit',
         'navigation'=>false,
         'latin1'=>false

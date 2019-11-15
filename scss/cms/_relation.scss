@@ -57,3 +57,11 @@
         }
     }
 }
+
+// componentJsonArrayRelationSpecific
+// mixin pour le champ jsonArrayRelation dans le formulaire
+@mixin componentJsonArrayRelationSpecific() {
+    .relation-export {
+        padding-top: 10px;
+    }
+}

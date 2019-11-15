@@ -15,16 +15,13 @@ quid.cms.quickEdit = function()
     // setForm
     function setForm(data) 
     {
-        if(quid.base.isStringNotEmpty(data))
+        if(quid.base.str.isNotEmpty(data))
         {
             var td = $(this).triggerHandler('quickEdit:getTd');
             td.attr('data-editing',1);
             var editContainer = $(this).triggerHandler('quickEdit:getEditContainer');
             editContainer.html(data);
             $(document).trigger('document:commonBindings',[editContainer]).trigger('specific:formPrepare',[editContainer]);
-            
-            var form = editContainer.find("form");
-            form.formUnload();
             
             $all.not($(this)).trigger('quickEdit:revert');
         }

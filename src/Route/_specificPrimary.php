@@ -18,7 +18,7 @@ trait _specificPrimary
     // si la route peut être lancé
     final public function canTrigger():bool
     {
-        return parent::canTrigger() && $this->row()->isVisible();
+        return (parent::canTrigger() && $this->row()->isVisible())? true:false;
     }
 
 

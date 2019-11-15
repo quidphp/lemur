@@ -12,6 +12,7 @@ use Quid\Base;
 use Quid\Base\Html;
 use Quid\Core;
 use Quid\Lemur;
+use Quid\Main;
 
 // sessionRole
 // class for the route with the popup to apply a fake role to the current session
@@ -39,7 +40,7 @@ class SessionRole extends Core\RouteAlias
         $return = false;
         $session = static::session();
 
-        if($session->allowFakeRoles())
+        if(parent::canTrigger() && $session->allowFakeRoles())
         {
             $roles = $session->roles(false);
             if($this->rolesHasPermission('sessionFakeRole',$roles))
@@ -71,22 +72,52 @@ class SessionRole extends Core\RouteAlias
         return $r;
     }
 
-
-    // makeForm
-    final protected function makeForm():string
+    
+    // roles
+    // retourne les roles à utiliser pour le formulaire
+    final protected function roles():Main\Roles
     {
-        $r = '';
-        $route = $this->submitRoute();
+        $return = null;
+        $session = static::session();
+        $current = $session->role(false)->permission();
+        $roles = static::boot()->roles();
+        
+        $return = $roles->filter(function(Main\Role $role) use ($current) {
+            return ($role->permission() <= $current)? true:false;
+        });
+        
+        return $return;
+    }
+    
+    
+    // rolesForm
+    // génère le formulaire des rôles
+    final protected function rolesForm():string 
+    {
+        $return = null;
         $table = static::tableFromRowClass();
         $col = $table->col('role');
         $session = static::session();
         $fakeRoles = $session->getFakeRoles();
         $value = (!empty($fakeRoles))? $fakeRoles->keys():null;
-        $role = $col->formComplex($value,['data-required'=>false]);
+        $roles = $this->roles()->pair('label');
+        $wrap = "<div class='choice'>%</div>";
+        $return = Base\Html::checkboxesWithHidden($roles,$col->name(),array('checked'=>$value,'html'=>$wrap));
+
+        return $return;
+    }
+    
+    
+    // makeForm
+    final protected function makeForm():string
+    {
+        $r = '';
+        $route = $this->submitRoute();
+        $session = static::session();
 
         $r .= $route->formOpen();
         $r .= Html::divOp('fields');
-        $r .= Html::divCond($role,'field');
+        $r .= Html::divCond($this->rolesForm(),'field');
         $r .= Html::divCl();
 
         $r .= Html::divOp('action');
@@ -101,14 +132,6 @@ class SessionRole extends Core\RouteAlias
         $r .= Html::formClose();
 
         return $r;
-    }
-
-
-    // aDialog
-    // retourne le lien dialog pour ouvrir la formulaire dans une box
-    final public function aDialog($attr=null):string
-    {
-        return $this->a(static::label(),Base\Attr::append($attr,['data'=>['modal'=>static::name()]]));
     }
 }
 

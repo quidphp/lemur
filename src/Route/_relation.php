@@ -115,12 +115,11 @@ trait _relation
 
             $replace = ['from'=>$from,'to'=>$to,'total'=>$total];
             $route = $this->changeSegment('page',$pageNext);
-            $data = ['href'=>$route];
-            $text = static::langText('common/loadMore',$replace);
-
-            $r .= Html::liOp(['load-more','data'=>$data]);
-            $r .= Html::div($text,'text');
-            $r .= Html::liCl();
+            $text = static::langText('relationFeed/loadMore',$replace);
+            
+            $text = Html::span($text,'text');
+            $r .= Html::a($route,$text,'load-more');
+            $r = Html::li($r);
         }
 
         return $r;
@@ -263,7 +262,7 @@ trait _relation
         $return = '';
         $return .= Html::divOp($attr);
         $return .= Html::button($title,'trigger');
-        $return .= Html::div($value,'popup');
+        $return .= Html::div($value,array('popup','tabindex'=>0));
 
         if(is_string($after))
         $return .= $after;

@@ -8,279 +8,231 @@
  
 // uri
 // script with a set of helper functions related to uri management
-
-// currentRelativeUri
-// retourne l'uri relative courante
-quid.base.currentRelativeUri = function() 
-{
-    return window.location.pathname + window.location.search;
-}
-
-
-// currentScheme
-// retourne le scheme courant
-quid.base.currentScheme = function()
-{
-    return location.protocol.substr(0, location.protocol.indexOf(':'));
-}
-
-
-// fragment
-// retourne le fragment de l'uri sans le hash
-quid.base.fragment = function() 
-{
-    return quid.base.formatHash(window.location.hash);
-}
-
-
-// formatHash
-// permet de faire une hash avec ou sans le hash
-quid.base.formatHash = function(value,symbol)
-{
-    var r = null;
+quid.base.uri = new function() {
+    var base = quid.base;
     
-    if(quid.base.isStringNotEmpty(value))
+    // isInternal
+    // retourne vrai si l'uri et la comparaison ont le même scheme et host
+    this.isInternal = function(uri,compare)
     {
-        r = value;
-        var hasHash = (r.charAt(0) === "#")? true:false;
+        var r = false;
         
-        if(symbol === true && !hasHash)
-        r = "#"+r;
-        
-        else if(hasHash)
-        r = r.substring(1);
-    }
-    
-    return r;
-}
-
-
-// relativeUri
-// retourne une uri relative à partir d'une uri absolut
-quid.base.relativeUri = function(uri,hash)
-{
-    var r = null;
-    
-    if(quid.base.isString(uri))
-    {
-        var parse = quid.base.parseUri(uri);
-        r = parse.path;
-        
-        if(parse.query)
-        r += "?"+parse.query;
-        
-        if(parse.hash && hash === true)
-        r += "#"+parse.hash;
-    }
-    
-    return r;
-}
-
-
-// isUriInternal
-// retourne vrai si l'uri et la comparaison ont le même scheme et host
-quid.base.isUriInternal = function(uri,compare)
-{
-    var r = false;
-    
-    if(quid.base.isString(uri))
-    {
-        compare = (quid.base.isString(compare))? quid.base.parseUri(compare):quid.base.parseCurrentUri();			
-        var parse = quid.base.parseUri(uri);
-        
-        if(parse.scheme === compare.scheme && parse.host === compare.host)
-        r = true;
-    }
-    
-    return r;
-}
-
-
-// isUriExternal
-// retourne vrai si l'uri et la comparaison n'ont pas le même scheme et host
-quid.base.isUriExternal = function(uri,compare)
-{
-    return (quid.base.isUriInternal(uri,compare))? false:true;
-}
-
-
-// isSamePathQuery
-// retourne vrai si l'uri est la même que la comparaison
-// compare path et query
-quid.base.isSamePathQuery = function(uri,compare)
-{
-    var r = false;
-    
-    if(quid.base.isString(uri))
-    {
-        compare = (quid.base.isString(compare))? quid.base.parseUri(compare):quid.base.parseCurrentUri();			
-        var parse = quid.base.parseUri(uri);
-        
-        if(parse.path === compare.path && parse.query === compare.query)
-        r = true;
-    }
-    
-    return r;
-}
-
-
-// isSamePathQueryHash
-// retourne vrai si l'uri est la même que la comparaison
-// compare path, query et hash
-quid.base.isSamePathQueryHash = function(uri,compare)
-{
-    var r = false;
-    
-    if(quid.base.isString(uri))
-    {
-        compare = (quid.base.isString(compare))? quid.base.parseUri(compare):quid.base.parseCurrentUri();			
-        var parse = quid.base.parseUri(uri);
-        
-        if(parse.path === compare.path && parse.query === compare.query && parse.hash === compare.hash)
-        r = true;
-    }
-    
-    return r;
-}
-
-
-// isHashChange
-// retourne vrai si l'uri est la même que la comparaison mais que le hash change
-quid.base.isHashChange = function(uri,compare)
-{
-    var r = false;
-    
-    if(quid.base.isString(uri))
-    {
-        compare = (quid.base.isString(compare))? quid.base.parseUri(compare):quid.base.parseCurrentUri();
-        var parse = quid.base.parseUri(uri);
-        
-        if(parse.scheme === compare.scheme && parse.host === compare.host && parse.path === compare.path && parse.query === compare.query)
+        if(base.str.is(uri))
         {
-            if(quid.base.isStringNotEmpty(parse.hash) && parse.hash !== compare.hash)
+            compare = (base.str.is(compare))? this.parse(compare):base.request.parse();			
+            var parse = this.parse(uri);
+            
+            if(parse.scheme === compare.scheme && parse.host === compare.host)
             r = true;
         }
-    }
-    
-    return r;
-}
-
-
-// isHashSame
-// retourne vrai si l'uri est la même que la comparaison, que l'uri a un hash et que le hash est identique
-quid.base.isHashSame = function(uri,compare)
-{
-    var r = false;
-    
-    if(quid.base.isString(uri))
-    {
-        compare = (quid.base.isString(compare))? quid.base.parseUri(compare):quid.base.parseCurrentUri();
-        var parse = quid.base.parseUri(uri);
         
-        if(parse.scheme === compare.scheme && parse.host === compare.host && parse.path === compare.path && parse.query === compare.query)
+        return r;
+    }
+
+
+    // isExternal
+    // retourne vrai si l'uri et la comparaison n'ont pas le même scheme et host
+    this.isExternal = function(uri,compare)
+    {
+        return (this.isInternal(uri,compare))? false:true;
+    }
+
+
+    // isExtension
+    // retourne vrai si l'uri a une extension
+    this.isExtension = function(uri)
+    {
+        return (this.extension(uri) != null)? true:false;
+    }
+
+
+    // hasFragment
+    // retourne vrai si l'uri a un hash
+    this.hasFragment = function(uri)
+    {
+        var r = false;
+        
+        if(base.str.is(uri))
         {
-            if(quid.base.isStringNotEmpty(parse.hash) && parse.hash === compare.hash)
+            var parse = this.parse(uri);
+            
+            if(base.str.isNotEmpty(parse.hash))
             r = true;
         }
+        
+        return r;
     }
-    
-    return r;
-}
 
 
-// uriExtension
-// retourne l'extension du path de l'uri
-quid.base.uriExtension = function(uri)
-{
-    var r = null;
-    
-    if(quid.base.isString(uri))
+    // isSamePathQuery
+    // retourne vrai si l'uri est la même que la comparaison
+    // compare path et query
+    this.isSamePathQuery = function(uri,compare)
     {
-        var regex = /(?:\.([^.]+))?$/;
-        var parse = quid.base.parseUri(uri);
-        var result = regex.exec(parse.path);
+        var r = false;
         
-        if($.isArray(result) && result.length === 2)
-        r = result[1];
+        if(base.str.is(uri))
+        {
+            compare = (base.str.is(compare))? this.parse(compare):base.request.parse();			
+            var parse = this.parse(uri);
+            
+            if(parse.path === compare.path && parse.query === compare.query)
+            r = true;
+        }
+        
+        return r;
     }
-    
-    return r;
-}
 
 
-// isUriHash
-// retourne vrai si l'uri a un hash
-quid.base.isUriHash = function(uri)
-{
-    var r = false;
-    
-    if(quid.base.isString(uri))
+    // isSamePathQueryHash
+    // retourne vrai si l'uri est la même que la comparaison
+    // compare path, query et hash
+    this.isSamePathQueryHash = function(uri,compare)
     {
-        var parse = quid.base.parseUri(uri);
+        var r = false;
         
-        if(quid.base.isStringNotEmpty(parse.hash))
-        r = true;
+        if(base.str.is(uri))
+        {
+            compare = (base.str.is(compare))? this.parse(compare):base.request.parse();			
+            var parse = this.parse(uri);
+            
+            if(parse.path === compare.path && parse.query === compare.query && parse.hash === compare.hash)
+            r = true;
+        }
+        
+        return r;
     }
-    
-    return r;
-}
 
 
-// isUriExtension
-// retourne vrai si l'uri a une extension
-quid.base.isUriExtension = function(uri)
-{
-    return (quid.base.uriExtension(uri) != null)? true:false;
-}
-
-
-// parseCurrentUri
-// retourne un objet avec les différentes parties de l'uri courante séparés
-quid.base.parseCurrentUri = function()
-{
-    return {
-        scheme: quid.base.currentScheme(), 
-        host: location.hostname, 
-        path: location.path, 
-        query: location.query, 
-        hash: location.hash
-    };
-}
-
-
-// parseUri
-// retourne un objet avec les différentes parties d'une uri séparés
-quid.base.parseUri = function(uri)
-{
-    var r = {};
-    
-    if(quid.base.isString(uri))
+    // isHashChange
+    // retourne vrai si l'uri est la même que la comparaison mais que le hash change
+    this.isHashChange = function(uri,compare)
     {
-        var $dom = document.createElement('a');
-        $dom.href = uri;
+        var r = false;
         
-        r.scheme = $dom.protocol.substr(0, $dom.protocol.indexOf(':')) || quid.base.currentScheme();
-        r.host = $dom.hostname || location.hostname;
-        r.port = $dom.port;
-        r.path = $dom.pathname;
-        r.query = $dom.search.substr($dom.search.indexOf('?') + 1);
-        r.hash = $dom.hash.substr($dom.hash.indexOf('#'));
+        if(base.str.is(uri))
+        {
+            compare = (base.str.is(compare))? this.parse(compare):base.request.parse();
+            var parse = this.parse(uri);
+            
+            if(parse.scheme === compare.scheme && parse.host === compare.host && parse.path === compare.path && parse.query === compare.query)
+            {
+                if(base.str.isNotEmpty(parse.hash) && parse.hash !== compare.hash)
+                r = true;
+            }
+        }
         
-        $dom = null;
+        return r;
     }
-    
-    return r;
-}
 
 
-// mailto
-// permet d'obtenir un email à partir d'un mailto (comme dans un href)
-quid.base.mailto = function(value)
-{
-    var r = null;
-    
-    if(quid.base.isStringNotEmpty(value))
-    r = value.replace(/mailto:/,'');
-    
-    return r;
-}
+    // isHashSame
+    // retourne vrai si l'uri est la même que la comparaison, que l'uri a un hash et que le hash est identique
+    this.isHashSame = function(uri,compare)
+    {
+        var r = false;
+        
+        if(base.str.is(uri))
+        {
+            compare = (base.str.is(compare))? this.parse(compare):base.request.parse();
+            var parse = this.parse(uri);
+            
+            if(parse.scheme === compare.scheme && parse.host === compare.host && parse.path === compare.path && parse.query === compare.query)
+            {
+                if(base.str.isNotEmpty(parse.hash) && parse.hash === compare.hash)
+                r = true;
+            }
+        }
+        
+        return r;
+    }
+
+
+    // relative
+    // retourne une uri relative à partir d'une uri absolut
+    this.relative = function(uri,hash)
+    {
+        var r = null;
+        
+        if(base.str.is(uri))
+        {
+            var parse = this.parse(uri);
+            r = parse.path;
+            
+            if(parse.query)
+            r += "?"+parse.query;
+            
+            if(parse.hash && hash === true)
+            r += "#"+parse.hash;
+        }
+        
+        return r;
+    }
+
+
+    // extension
+    // retourne l'extension du path de l'uri
+    this.extension = function(uri)
+    {
+        var r = null;
+        
+        if(base.str.is(uri))
+        {
+            var regex = /(?:\.([^.]+))?$/;
+            var parse = this.parse(uri);
+            var result = regex.exec(parse.path);
+            
+            if(base.arr.is(result) && result.length === 2)
+            r = result[1];
+        }
+        
+        return r;
+    }
+
+
+    // parse
+    // retourne un objet avec les différentes parties d'une uri séparés
+    this.parse = function(uri)
+    {
+        var r = {};
+        
+        if(base.str.is(uri))
+        {
+            var $dom = document.createElement('a');
+            $dom.href = uri;
+            
+            r.scheme = $dom.protocol.substr(0, $dom.protocol.indexOf(':')) || base.request.scheme();
+            r.host = $dom.hostname;
+            r.port = $dom.port;
+            r.path = $dom.pathname;
+            r.query = $dom.search.substr($dom.search.indexOf('?') + 1);
+            r.hash = $dom.hash.substr($dom.hash.indexOf('#'));
+            
+            $dom = null;
+        }
+        
+        return r;
+    }
+
+
+    // makeHash
+    // permet de faire une hash avec ou sans le hash
+    this.makeHash = function(value,symbol)
+    {
+        var r = null;
+        
+        if(base.str.isNotEmpty(value))
+        {
+            r = value;
+            var hasHash = (r.charAt(0) === "#")? true:false;
+            
+            if(symbol === true && !hasHash)
+            r = "#"+r;
+            
+            else if(hasHash)
+            r = r.substring(1);
+        }
+        
+        return r;
+    }
+};

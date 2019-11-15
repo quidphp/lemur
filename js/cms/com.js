@@ -7,18 +7,31 @@
  */
  
 // com
-// script of behaviours for a communication component
-
-// com
-// génère un block de communication
-quid.core.com = $.fn.com = function()
+// script of behaviours for the communication component of the CMS
+quid.cms.com = function()
 {
     $(this).each(function(index, el) {
 
         var $this = $(this);
         
-        $(this).block('click').on('click', '.close', function() {
+        // redirect
+        function redirect(table,primary,clickEvent)
+        {
+            var href = $(this).dataHrefReplaceChar(table);
+            
+            if(quid.base.str.isNotEmpty(href))
+            {
+                $(this).trigger('block');
+                href = href.replace($(this).data('char'),primary);
+                $(document).trigger('document:go',[href,clickEvent]);
+            }
+        }
+        
+        $(this).block('click').escapeCatch().on('click', '.close', function() {
             $this.trigger('com:close');
+        })
+        .on('escape:blocked', function(event) {
+            $(this).trigger('com:close');
         })
         .on('com:slideUp', function(event) {
             $(this).addClass('slide-close');
@@ -31,15 +44,9 @@ quid.core.com = $.fn.com = function()
         .on('com:close', function(event) {
             $(this).stop(true,true).fadeOut("slow");
         })
-        .on('redirect', function(event,table,primary,clickEvent) {
-            var href = $(this).dataHrefReplaceChar(table);
-            
-            if(quid.base.isStringNotEmpty(href))
-            {
-                $(this).trigger('block');
-                href = href.replace($(this).data('char'),primary);
-                $(document).trigger('document:go',[href,clickEvent]);
-            }
+        .on('com:prepare', function(event) {
+            if($(this).is('[tabindex]'))
+            $(this).focus();
         })
         .on('click', '.date', function(event) {
             $this.trigger($this.hasClass('slide-close')? 'com:slideDown':'com:slideUp');
@@ -48,8 +55,9 @@ quid.core.com = $.fn.com = function()
             var parent = $(this).parent();
             var table = parent.data('table');
             var primary = parent.data('primary');
-            $this.trigger('redirect',[table,primary,event]);
-        });
+            redirect.call($this,table,primary,event);
+        })
+        .trigger('com:prepare');
     });
     
     return this;

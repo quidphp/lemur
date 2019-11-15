@@ -11,14 +11,14 @@
 
 // tab
 // s'occupe de l'ouverture et la fermeture de tab
-quid.core.tab = $.fn.tab = function()
+quid.core.tab = function()
 {
     $(this).on('tab:getIndex', function(event,value,loop) {
-        return quid.base.indexer(value,$(this).triggerHandler('tab:getCurrent'),$(this).triggerHandler('tab:getTarget'),loop);
+        return quid.base.nav.index(value,$(this).triggerHandler('tab:getCurrent'),$(this).triggerHandler('tab:getTarget'),loop);
     })
     .on('tab:indexer', function(event,value,loop) {
         var index = $(this).triggerHandler('tab:getIndex',[value,loop]);
-        if($.isNumeric(index))
+        if(quid.base.number.is(index))
         $(this).trigger('tab:change',[index]);
     })
     .on('tab:first', function() {
@@ -50,8 +50,8 @@ quid.core.tab = $.fn.tab = function()
     })
     .on('tab:isCurrent', function(event,value) {
         var current = $(this).triggerHandler('tab:getCurrent');
-        var index = ($.isNumeric(value))? value:$(this).triggerHandler('tab:getTarget').index(value);
-        return ($.isNumeric(current) && index === current)? true:false;
+        var index = (quid.base.number.is(value))? value:$(this).triggerHandler('tab:getTarget').index(value);
+        return (quid.base.number.is(current) && index === current)? true:false;
     })
     .on('tab:closeAll', function() {
         var target = $(this).triggerHandler('tab:getTarget');
@@ -64,12 +64,12 @@ quid.core.tab = $.fn.tab = function()
         var target = $(this).triggerHandler('tab:getTarget');
         var current = $(this).triggerHandler('tab:getCurrent');
         
-        if(target.length && $.isNumeric(index))
+        if(target.length && quid.base.number.is(index))
         {
             if(index !== current)
             {
                 var indexTarget = target.eq(index);
-                var currentTarget = ($.isNumeric(current))? target.eq(current):null;
+                var currentTarget = (quid.base.number.is(current))? target.eq(current):null;
                 
                 if(indexTarget.length)
                 {
@@ -131,7 +131,7 @@ quid.core.tab = $.fn.tab = function()
 
 // tabNav
 // lie des target de tab à des éléments de nav, via index
-quid.core.tabNav = $.fn.tabNav = function(navs)
+quid.core.tabNav = function(navs)
 {
     if(navs instanceof jQuery && navs.length === $(this).length)
     {

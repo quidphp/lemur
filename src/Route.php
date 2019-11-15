@@ -18,7 +18,7 @@ abstract class Route extends Core\Route
     public static $config = [
         '@cms'=>[
             'metaTitle'=>['typeLabel'=>true],
-            'jsInit'=>'$(document).ready(function() { quid.core.document.call(this); });',
+            'jsInit'=>'$(document).ready(function() { quid.main.document.bind.call(this); });',
             'docOpen'=>[
                 'head'=>[
                     'css'=>[
@@ -30,6 +30,7 @@ abstract class Route extends Core\Route
                 '*'=>[
                     'popup'=>false,
                     'account'=>true,
+                    'contact'=>true,
                     'search'=>true,
                     'accountChangePassword'=>true,
                     'sessionInfo'=>true,
@@ -45,11 +46,13 @@ abstract class Route extends Core\Route
                     'bootPopup'=>true,
                     'about'=>true,
                     'homeInfo'=>true,
-                    'homePopup'=>true],
-                'nobody'=>['search'=>false,'logout'=>false],
+                    'homePopup'=>true,
+                    'homeFeed'=>true,
+                    'homeOverview'=>true],
+                'nobody'=>['search'=>false,'logout'=>false,'contact'=>false],
                 'shared'=>['access'=>false],
                 'user'=>['access'=>false],
-                'subAdmin'=>['popup'=>true],
+                'subAdmin'=>['popup'=>true,'sessionFakeRole'=>true],
                 'admin'=>['popup'=>true,'sessionFakeRole'=>true]
             ]]
     ];

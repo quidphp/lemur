@@ -17,21 +17,23 @@
     text-align: center;
 
     .cell-inner {
-        padding: 0 10px;
-        cursor: pointer;
-
-        &:hover {
-            background-color: $lightYellow;
+        
+        input[type='checkbox'] {
+            @include abs(50%,50%);
+            z-index: 1;
         }
-    }
-
-    input[type='checkbox'] {
-        @include inbl();
-        @include abs(50%, null, null, 50%);
-        @include wh(12px);
-        margin-top: -6px;
-        margin-left: -6px;
-        text-align: center;
+        
+        > label {
+            @include wh();
+            @include abs(0,0);
+            z-index: 2;
+            padding: 0;
+            background-position: center;
+            
+            &:hover {
+                background-color: $lightYellow;
+            }
+        }
     }
 }
 
@@ -48,7 +50,6 @@
 
         button {
             @include wh();
-            @include transitions(background-color 0.3s);
 
             &.selected,
             &:hover {
@@ -75,17 +76,16 @@
 // rowsCheckerTools
 // mixin pour les styles de l'espace outil lorsqu'une row est checked
 @mixin rowsCheckerTools() {
-    @include flex(null, flex-end);
+    @include toolBox();
     visibility: hidden;
-
-    > .icon-solo {
-        margin-right: 5px;
-    }
-
-    .icon-solo {
-        &:hover,
-        &[data-triggered='1'] {
-            opacity: 0.6 !important;
+    border: 1px solid $lightGray;
+    border-radius: 5px;
+    
+    > .tool-element.multi-modify {
+        display: none;
+        
+        &.active {
+            display: block;
         }
     }
 }

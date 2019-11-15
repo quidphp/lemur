@@ -11,7 +11,7 @@
 
 // addRemove
 // génère un input add remove, comme jsonArray
-quid.core.addRemove = $.fn.addRemove = function()
+quid.core.addRemove = function()
 {
     $(this).on('addRemove:getInsert', function(event) {
         return $(this).find(".insert");
@@ -32,7 +32,7 @@ quid.core.addRemove = $.fn.addRemove = function()
         var container = $(this).triggerHandler('addRemove:getPlayground');
         var html = insert.data('html');
         
-        if(quid.base.isStringNotEmpty(html))
+        if(quid.base.str.isNotEmpty(html))
         {
             container.append(html);
             var elements = $(this).triggerHandler('addRemove:getElements');
@@ -57,7 +57,7 @@ quid.core.addRemove = $.fn.addRemove = function()
         });
     })
     .on('addRemove:remove', function(event,index) {
-        if($.isNumeric(index))
+        if(quid.base.number.is(index))
         {
             var elements = $(this).triggerHandler('addRemove:getElements');
             var ele = elements.eq(index);

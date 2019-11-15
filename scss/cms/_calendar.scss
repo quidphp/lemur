@@ -57,7 +57,7 @@
 
         .current {
             text-align: center;
-            font-size: 110%;
+            font-size: 120%;
             color: $white;
         }
     }
@@ -80,25 +80,28 @@
 
         tbody {
             td {
-                padding: 3px;
-                text-align: center;
-                color: $black;
-                border: 1px solid $lightGray;
-                cursor: pointer;
-
-                &.out {
+                > button {
+                    box-sizing: border-box;
+                    color: $black;
+                    border: 1px solid $lightGray;
+                    text-align: center;
+                    padding: 3px;
+                    width: 100%;
+                    
+                    &:hover {
+                        background-color: $lightYellow;
+                    }
+                }
+                
+                &.out > button {
                     color: $lightGray;
                 }
 
-                &.today {
+                &.today > button {
                     background-color: $lightGray;
                 }
 
-                &:hover {
-                    background-color: $lightYellow;
-                }
-
-                &.selected {
+                &.selected > button {
                     background-color: $lightYellow !important;
                 }
             }

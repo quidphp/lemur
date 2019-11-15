@@ -28,14 +28,15 @@ class SpecificRelation extends Core\RouteAlias
     // config
     public static $config = [
         'path'=>[
-            'fr'=>'specifique/relation/[table]/[col]/[selected]/[order]/[page]',
-            'en'=>'specific/relation/[table]/[col]/[selected]/[order]/[page]'],
+            'en'=>'specific/relation/[table]/[col]/[selected]/[order]/[page]',
+            'fr'=>'specifique/relation/[table]/[col]/[selected]/[order]/[page]'],
         'segment'=>[
             'table'=>'structureSegmentTable',
             'col'=>'structureSegmentColRelation',
             'selected'=>'structureSegmentSelected',
             'order'=>'structureSegmentOrderColRelation',
             'page'=>'structureSegmentPage'],
+        'parent'=>Specific::class,
         'showCount'=>true
     ];
 
@@ -48,7 +49,7 @@ class SpecificRelation extends Core\RouteAlias
         $table = $this->segment('table');
         $relation = $this->relation();
 
-        if($table instanceof Core\Table && $table->hasPermission('view','relation','specificRelation'))
+        if(parent::canTrigger() && $table instanceof Core\Table && $table->hasPermission('view','relation','specificRelation'))
         {
             if($relation->isRelationTable())
             {

@@ -11,15 +11,17 @@
 
 // calendar
 // gère les comportements javascript pour un calendrier
-quid.core.calendar = $.fn.calendar = function()
+quid.core.calendar = function()
 {
-    $(this).block('calendar:load').ajax('calendar:load')
+    $(this)
+    .block('calendar:load')
+    .ajax('calendar:load')
     .on('calendar:prepareValue', function(event,value) {
         var r = null;
         
-        if(quid.base.isStringNotEmpty(value))
+        if(quid.base.str.isNotEmpty(value))
         {
-            value = quid.base.strFirst(value," ");
+            value = quid.base.str.explodeIndex(0," ",value);
             var split = value.split('-');
             for (var i = 0; i < split.length; i++) 
             {
@@ -34,7 +36,7 @@ quid.core.calendar = $.fn.calendar = function()
     .on('calendar:isValueValid', function(event,value) {
         var r = false;
         
-        if(quid.base.isStringNotEmpty(value) && !$.isNumeric(value) && quid.base.isRegexNumericDash(value))
+        if(quid.base.str.isNotEmpty(value) && !quid.base.number.is(value) && quid.base.validate.isNumericDash(value))
         {
             var format = $(this).data('format');
             if(value.length == format.length)
@@ -61,7 +63,7 @@ quid.core.calendar = $.fn.calendar = function()
         $(this).trigger('calendar:refresh');
     })
     .on('ajax:error', function(event,jqXHR,textStatus,errorThrown) {
-        $(this).html(quid.core.parseError(jqXHR,textStatus));
+        $(this).html(quid.main.ajax.parseError(jqXHR,textStatus));
         $(this).trigger('calendar:removeSelected');
         $(this).trigger('calendar:loaded');
         $(this).trigger('unblock');
@@ -84,10 +86,10 @@ quid.core.calendar = $.fn.calendar = function()
         
         if($(this).triggerHandler('calendar:isValueValid',[value]))
         {
-            if($.isNumeric(value))
+            if(quid.base.number.is(value))
             td = tds.filter("[data-timestamp='"+value+"']").not(".out");
             
-            else if(quid.base.isStringNotEmpty(value))
+            else if(quid.base.str.isNotEmpty(value))
             td = tds.filter("[data-format^='"+value+"']").not(".out");
             
             if(td != null && td.length)
@@ -123,9 +125,11 @@ quid.core.calendar = $.fn.calendar = function()
 // calendarInput
 // gère les comportement pour un input de date qui ouvre un calendrier
 // utilise clickOpen
-$.fn.calendarInput = function()
+quid.core.calendarInput = function()
 {
-    $(this).clickOpenWithTrigger("input[type='text']",'focus').on('calendarInput:getInput', function(event) {
+    $(this)
+    .callThis(quid.core.clickOpenWithTrigger,"input[type='text']",'focus')
+    .on('calendarInput:getInput', function(event) {
         return $(this).find("input[type='text']");
     })
     .on('clickOpen:getBackgroundFrom', function(event) {
@@ -167,14 +171,16 @@ $.fn.calendarInput = function()
             calendar.trigger('calendar:select',[$(this).inputValue(true),reload]);
         });
         
-        calendar.calendar().on('click', 'td', function(event) {
+        calendar
+        .callThis(quid.core.calendar)
+        .on('click', 'td', function(event) {
             var format = $(this).data('format');
             calendar.trigger('calendar:select',$(this).data("timestamp"));
             input.val(format);
             $this.trigger("clickOpen:close");
         })
         .on('calendar:refresh', function(event) {
-            $(this).trigger('calendar:select',[quid.base.strFirst(input.inputValue(true)," ")]);
+            $(this).trigger('calendar:select',[quid.base.str.explodeIndex(0," ",input.inputValue(true))]);
         })
         .on('calendar:loading', function(event) {
             target.attr('data-status','loading');

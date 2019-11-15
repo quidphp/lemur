@@ -40,65 +40,72 @@ class GeneralDelete extends Core\RouteAlias
         'group'=>'submit'
     ];
 
-
+    
     // dynamique
-    protected $ids = null; // conserve les ids à effacer
+    protected $ids = null; // conserve les ids pour la route
 
-
-    // canTrigger
-    // si la route peut être lancé
-    final public function canTrigger():bool
-    {
-        return (parent::canTrigger() && $this->hasTable() && $this->table()->hasPermission('view','delete','lemurDelete','multiDelete'))? true:false;
-    }
-
-
+    
     // onBefore
     // validation des permissions avant de lancer la route
     // les ids à effacer sont conservé
     final protected function onBefore()
     {
         $return = false;
-        $table = $this->table();
 
-        if($this->canTrigger())
+        if(parent::onBefore())
         {
-            $request = $this->request();
-            $ids = $request->get('primaries');
-
-            if(is_scalar($ids) && !empty($ids))
-            {
-                $ids = (string) $ids;
-                $ids = Base\Str::explodeTrimClean(static::getDefaultSegment(),$ids);
-
-                if(Base\Arr::onlyNumeric($ids))
-                {
-                    $this->ids = Base\Arr::cast($ids);
-                    $return = true;
-                }
-            }
+            $ids = $this->request()->get('primaries');
+            $this->makeIds((string) $ids);
+            
+            if(!empty($this->ids))
+            $return = true;
         }
 
         return $return;
     }
 
 
+    // canTrigger
+    // si la route peut être lancé
+    final public function canTrigger():bool
+    {
+        return (parent::canTrigger() && $this->hasTable() && $this->table()->hasPermission('view','delete','rows','lemurDelete','multiDelete'))? true:false;
+    }
+    
+
+    // makeIds
+    // prend une valeur et store la propriété ids
+    final protected function makeIds(string $ids):void 
+    {
+        if(!empty($ids))
+        {
+            $default = static::getDefaultSegment();
+            $ids = Base\Str::explodeTrimClean($default,$ids);
+            
+            if(is_array($ids) && !empty($ids) && Base\Arr::onlyNumeric($ids))
+            $this->ids = Base\Arr::cast($ids);
+        }
+        
+        return;
+    }
+    
+    
     // ids
-    // retourne le tableau des ids à effacer
+    // retourne le tableau des ids
     final protected function ids():array
     {
         return $this->ids;
     }
 
-
+    
     // rows
-    // retourne les rows à effacer
+    // retourne l'objet rows
     final protected function rows():Core\Rows
     {
         return $this->table()->rows(...$this->ids());
     }
-
-
+    
+    
     // routeSuccess
     // retourne la route en cas de succès ou échec de la suppression
     final public function routeSuccess():Core\Route

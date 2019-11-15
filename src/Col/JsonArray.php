@@ -108,10 +108,10 @@ class JsonArray extends Core\Col\JsonAlias
         $lang = $this->db()->lang();
 
         if($this->getAttr('sortable'))
-        $return .= Html::div(null,['icon-solo','move']);
+        $return .= Html::button(null,['icon-solo','move']);
 
         $data = ['confirm'=>$lang->text('common/confirm')];
-        $return .= Html::div(null,['icon-solo','remove','data'=>$data]);
+        $return .= Html::button(null,['icon-solo','remove','data'=>$data]);
         $return .= Html::divCl();
 
         return $return;
@@ -128,7 +128,7 @@ class JsonArray extends Core\Col\JsonAlias
 
     // formComplex
     // génère le formComplex pour jsonArray
-    final public function formComplex($value=true,?array $attr=null,?array $option=null):string
+    public function formComplex($value=true,?array $attr=null,?array $option=null):string
     {
         $return = '';
         $tag = $this->complexTag($attr);
@@ -153,10 +153,10 @@ class JsonArray extends Core\Col\JsonAlias
 
             $return .= Html::divCl();
 
-            $return .= Html::divOp(['insert','data'=>$data]);
+            $return .= Html::buttonOp(['insert','data'=>$data]);
             $return .= Html::span($lang->text('common/insert'));
-            $return .= Html::div(null,['icon-solo','add']);
-            $return .= Html::divCl();
+            $return .= Html::span(null,['icon-solo','add']);
+            $return .= Html::buttonCl();
         }
 
         else

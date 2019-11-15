@@ -27,6 +27,9 @@ $media: $uriMedia;
 // mixin utilisé pour normalizer des styles à travers les browsers
 // inspiré en partie de normalize.css
 @mixin resetHtml() {
+    * {
+        outline-offset: -5px;
+    }
     html {
         -webkit-text-size-adjust: 100%;
     }
@@ -117,12 +120,6 @@ $media: $uriMedia;
         word-wrap: break-word;
         overflow-wrap: break-word;
     }
-    td,
-    th,
-    div,
-    span {
-        outline: 0;
-    }
     h1,
     h2,
     h3,
@@ -187,10 +184,6 @@ $media: $uriMedia;
         font-size: 100%;
         line-height: normal;
         margin: 0;
-    }
-    input,
-    textarea {
-        outline: 0;
     }
     button,
     input {
@@ -278,7 +271,7 @@ $media: $uriMedia;
         @include inbl();
     }
     label[for] {
-        @include transition(color);
+        @include transitions(color 0.3s, background-color 0.3s, opacity 0.3s, border 0.3s);
         cursor: pointer;
     }
     button,
@@ -288,9 +281,11 @@ $media: $uriMedia;
         cursor: pointer;
     }
     button[type='button'] {
+        @include transitions(color 0.3s, background-color 0.3s, opacity 0.3s, border 0.3s);
         line-height: 1.4;
         text-align: left;
         padding: 0;
+        color: $black;
     }
 }
 

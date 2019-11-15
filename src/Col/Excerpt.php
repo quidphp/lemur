@@ -47,7 +47,7 @@ class Excerpt extends Core\ColAlias
                 $col = $attr['col'];
                 $opt = $attr['option'] ?? null;
 
-                if(static::classIsCallable($method) && is_int($length) && is_string($col))
+                if(static::isCallable($method) && is_int($length) && is_string($col))
                 {
                     if(is_string($lang))
                     $col = Base\Lang::field($col,$lang);

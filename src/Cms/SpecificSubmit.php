@@ -53,7 +53,7 @@ class SpecificSubmit extends Core\RouteAlias
         $table = $this->table();
         $row = $this->segment('primary');
 
-        if(!empty($table) && $table->hasPermission('view','update','lemurUpdate') && !empty($row) && $row->isUpdateable())
+        if(parent::canTrigger() && !empty($table) && $table->hasPermission('view','update','lemurUpdate') && !empty($row) && $row->isUpdateable())
         $return = true;
 
         return $return;

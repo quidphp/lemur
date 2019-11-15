@@ -19,8 +19,8 @@ abstract class AccountChangePassword extends Core\RouteAlias
     // config
     public static $config = [
         'path'=>[
-            'fr'=>'mon-compte/mot-de-passe',
-            'en'=>'my-account/change-password'],
+            'en'=>'my-account/change-password',
+            'fr'=>'mon-compte/mot-de-passe'],
         'match'=>[
             'role'=>['>='=>'user']],
         'group'=>'submit',

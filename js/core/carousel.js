@@ -11,13 +11,15 @@
 
 // carousel
 // crée un carousel qui slide up ou down
-quid.core.carousel = $.fn.carousel = function(trigger,target)
+quid.core.carousel = function(trigger,target)
 {
     $(this).each(function(index, el) {
         trigger = (trigger == null)? '.trigger':trigger;
         target = (target == null)? '.target':target;
         
-        $(this).clickOpenBase().clickOpenTrigger(trigger)
+        $(this)
+        .callThis(quid.core.clickOpenBase)
+        .callThis(quid.core.clickOpenTrigger,trigger)
         .on('clickOpen:getTarget', function(event) {
             return $(this).find(target).first();
         })

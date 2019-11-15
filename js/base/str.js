@@ -8,75 +8,71 @@
  
 // str
 // script with a set of helper functions related to strings
-
-// isScalar
-// retourne vrai si la valeur est scalar
-quid.base.isScalar = function(value) 
-{
-    return (/boolean|number|string/).test(typeof value);
-}
-
-
-// isString
-// retourne vrai si la valeur est une string
-quid.base.isString = function(value) 
-{
-    return ($.type(value) === 'string')? true:false;
-};
-
-
-// isStringNotEmpty
-// retourne vrai si la valeur est une string non vide
-quid.base.isStringNotEmpty = function(value) 
-{
-    return (quid.base.isString(value) && value)? true:false;
-};
-
-
-// isStringStart
-// retourne vrai si la string commence par needle
-quid.base.isStringStart = function(needle,value)
-{
-    return (quid.base.isString(needle) && quid.base.isString(value))? (value.slice(0,needle.length) == needle):false;
-};
-
-
-// isStringEnd
-// retourne vrai si la string finit par needle
-quid.base.isStringEnd = function(needle,value)
-{
-    return (quid.base.isString(needle) && quid.base.isString(value))? (value.slice(-needle.length) == needle):false;
-};
-
-
-// ucfirst
-// met la première lettre de la string uppercase
-quid.base.ucfirst = function(value)
-{
-    return (quid.base.isStringNotEmpty(value))? value.charAt(0).toUpperCase() + value.slice(1):null;
-}
-
-
-// lcfirst
-// met la première lettre de la string lowercase
-quid.base.lcfirst = function(value)
-{
-    return (quid.base.isStringNotEmpty(value))? value.charAt(0).toLowerCase() + value.slice(1):null;
-}
-
-
-// strFirst
-// split une string et retourne le premier élément du split
-quid.base.strFirst = function(value,delimiter)
-{
-    var r = null;
+quid.base.str = new function() {
+    var base = quid.base;
     
-    if(quid.base.isStringNotEmpty(value) && quid.base.isStringNotEmpty(delimiter))
+    // is
+    // retourne vrai si la valeur est une string
+    this.is = function(value) 
     {
-        value = value.split(delimiter);
-        if(quid.base.isStringNotEmpty(value[0]))
-        r = value[0];
+        return ($.type(value) === 'string')? true:false;
+    };
+
+
+    // isNotEmpty
+    // retourne vrai si la valeur est une string non vide
+    this.isNotEmpty = function(value) 
+    {
+        return (this.is(value) && value)? true:false;
+    };
+
+
+    // isStart
+    // retourne vrai si la string commence par needle
+    this.isStart = function(needle,value)
+    {
+        return (this.is(needle) && this.is(value))? (value.slice(0,needle.length) == needle):false;
+    };
+
+
+    // isEnd
+    // retourne vrai si la string finit par needle
+    this.isEnd = function(needle,value)
+    {
+        return (this.is(needle) && this.is(value))? (value.slice(-needle.length) == needle):false;
+    };
+
+
+    // upperFirst
+    // met la première lettre de la string uppercase
+    this.upperFirst = function(value)
+    {
+        return (this.isNotEmpty(value))? value.charAt(0).toUpperCase() + value.slice(1):null;
     }
-    
-    return r;
-}
+
+
+    // lowerFirst
+    // met la première lettre de la string lowercase
+    this.lowerFirst = function(value)
+    {
+        return (this.isNotEmpty(value))? value.charAt(0).toLowerCase() + value.slice(1):null;
+    }
+
+
+    // explodeIndex
+    // split une string et retourne l'index demandé en premier argument
+    this.explodeIndex = function(index,delimiter,value)
+    {
+        var r = null;
+        
+        if(base.number.is(index) && this.isNotEmpty(value) && this.isNotEmpty(delimiter))
+        {
+            value = value.split(delimiter);
+            
+            if(this.isNotEmpty(value[index]))
+            r = value[index];
+        }
+        
+        return r;
+    }
+};

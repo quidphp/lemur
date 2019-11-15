@@ -84,11 +84,6 @@
         display: block;
         max-width: 1000px;
     }
-
-    .under-input {
-        padding-top: 10px;
-        font-size: 90%;
-    }
 }
 
 // tableForm
@@ -127,10 +122,10 @@
         width: 100%;
 
         .table-cell {
-            padding: 10px 0 5px;
+            padding: 8px 0;
 
             &.label-cell {
-                padding-right: 10px;
+                padding-right: 15px;
             }
         }
 

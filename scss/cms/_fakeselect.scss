@@ -14,7 +14,6 @@
 @mixin fakeselect() {
     @include fakeselectTrigger();
     @include inbl();
-    font-size: 1.4rem;
 
     > .popup {
         @include fakeselectPopup();
@@ -36,18 +35,15 @@
     }
 
     > .trigger {
-        @include transitions(background-color 0.3s, color 0.3s);
         position: relative;
         padding: 5px 40px 5px 12px;
-        cursor: pointer;
         background-color: $white;
         border: 1px solid $gray;
         border-radius: 5px;
         width: 100%;
-
+        
         > .title {
             text-align: left;
-            font-size: 90%;
             display: block;
         }
 
@@ -62,8 +58,7 @@
 
     &.active > .trigger,
     > .trigger:hover {
-        color: $black !important;
-        background-color: $lightYellow !important;
+        background-color: $lightYellow;
     }
 }
 
@@ -82,20 +77,19 @@
         list-style-type: none;
 
         > li {
+            
             > button {
-                @include transitions(background-color 0.3s);
-                width: 100%;
                 padding: 5px 10px;
                 border-top: 1px solid $lighterGray;
-                color: $black;
-                cursor: pointer;
-
-                &:hover {
-                    background-color: $lightYellow;
-                }
-
+                width: 100%;
+                
+                &:hover,
                 &.selected {
                     background-color: $lightYellow;
+                }
+                
+                &:active {
+                    background-color: $lightGray;
                 }
             }
         }

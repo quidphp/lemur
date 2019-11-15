@@ -11,7 +11,7 @@
 
 // appendContainer
 // génère un container qui append avec un bouton loadMore
-quid.core.appendContainer = $.fn.appendContainer = function()
+quid.core.appendContainer = function()
 {
     $(this).block('ajax:init').ajax('ajax:init')
     .on('feed:target', function() {
@@ -33,7 +33,7 @@ quid.core.appendContainer = $.fn.appendContainer = function()
         $(this).trigger('feed:changed');
     })
     .on('feed:reload', function(event,uri) {
-        if(quid.base.isStringNotEmpty(uri))
+        if(quid.base.str.isNotEmpty(uri))
         {
             $(this).data("href",uri);
             $(this).trigger('ajax:init');
@@ -41,7 +41,13 @@ quid.core.appendContainer = $.fn.appendContainer = function()
     })
     .on('feed:error', function(event,jqXHR,textStatus) {
         $(this).attr('data-status','error');
-        $(this).triggerHandler('feed:target').html(quid.core.parseError(jqXHR,textStatus));
+        $(this).triggerHandler('feed:target').html(quid.main.ajax.parseError(jqXHR,textStatus));
+    })
+    .on('feed:loadMore', function(event) {
+        return $(this).find(".load-more");
+    })
+    .on('feed:loadMoreRemove', function(event,loadMore) {
+        return loadMore;
     })
     .on('ajax:before', function(event) {
         $(this).attr('data-status','loading');
@@ -57,25 +63,30 @@ quid.core.appendContainer = $.fn.appendContainer = function()
         $(this).removeAttr('data-status');
     })
     .on('feed:bind', function(event) {
-        var parent = $(this);
+        var $this = $(this);
+        var loadMore = $(this).triggerHandler('feed:loadMore');
         
-        $(this).find('.load-more').off('click').on('click', function(event) {
+        loadMore.off('click').on('click', function(event) {
             event.stopPropagation();
+            event.preventDefault();
+            var remove = $this.triggerHandler('feed:loadMoreRemove',[$(this)]) || $(this);
             
             $(this).block('ajax:init').ajax('ajax:init').on('ajax:before', function(event) {
                 $(this).attr('data-status','loading');
                 $(this).block();
             })
             .on('ajax:success', function(event,data,textStatus,jqXHR) {
-                parent.trigger('feed:append',[data]);
-                $(this).remove();
+                remove.remove();
+                $this.trigger('feed:append',[data]);
             })
             .on('ajax:error', function(event,jqXHR,textStatus,errorThrown) {
-                parent.trigger('feed:error',[jqXHR,textStatus]);
-                $(this).remove();
-            }).trigger('ajax:init');
+                remove.remove();
+                $this.trigger('feed:error',[jqXHR,textStatus]);
+            })
+            .trigger('ajax:init');
         });
-    }).trigger('feed:bind');
+    })
+    .trigger('feed:bind');
     
     return this;
 }

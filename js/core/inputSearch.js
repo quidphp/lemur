@@ -11,7 +11,7 @@
 
 // inputSearch
 // gère les comportements pour un input search
-quid.core.inputSearch = $.fn.inputSearch = function(button)
+quid.core.inputSearch = function(button)
 {
     $(this).block('change').enterCatch().timeout('keyup').fieldValidate()
     .on('change', function() {
@@ -35,7 +35,7 @@ quid.core.inputSearch = $.fn.inputSearch = function(button)
         {
             $(this).trigger('block');
             
-            if(quid.base.isStringNotEmpty(val))
+            if(quid.base.str.isNotEmpty(val))
             {
                 var char = $(this).attr("data-char");
                 val = encodeURIComponent(val);

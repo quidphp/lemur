@@ -48,9 +48,9 @@
         padding: 5px;
         text-align: center;
         background-color: $lightGray;
-        cursor: pointer;
         border-radius: 3px;
-
+        width: 100%;
+        
         > span {
             @include inbl();
             font-weight: bold;

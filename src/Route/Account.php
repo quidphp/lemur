@@ -17,8 +17,8 @@ abstract class Account extends Core\RouteAlias
     // config
     public static $config = [
         'path'=>[
-            'fr'=>'mon-compte',
-            'en'=>'my-account'],
+            'en'=>'my-account',
+            'fr'=>'mon-compte'],
         'match'=>[
             'role'=>['>='=>'user']],
         'sitemap'=>false,

@@ -62,7 +62,7 @@ class Search extends Core\RouteAlias
     // la route peut être triggé
     final public function canTrigger():bool
     {
-        return $this->hasPermission('search');
+        return (parent::canTrigger() && $this->hasPermission('search'))? true:false;
     }
 
 
@@ -149,7 +149,7 @@ class Search extends Core\RouteAlias
 
             $r .= $this->formOpen();
             $r .= Html::divOp(['data'=>['absolute-placeholder'=>true,'absolute-placeholder-height'=>true]]);
-            $r .= Html::inputText(null,['name'=>$name,'placeholder'=>$lang->text('home/searchSubmit'),'data'=>$data]);
+            $r .= Html::inputText(null,['name'=>$name,'placeholder'=>$lang->text('search/submit'),'data'=>$data]);
             $r .= Html::submit(true,['button','icon-solo','search']);
             $r .= Html::divCl();
             $r .= Html::div(null,'popup');
@@ -168,14 +168,14 @@ class Search extends Core\RouteAlias
         $r = '';
         $lang = static::lang();
         $replace = ['count'=>$minLength];
-        $note = $lang->plural($minLength,'home/searchNote',$replace);
+        $note = $lang->plural($minLength,'search/config',$replace);
 
         $r .= Html::divOp('first');
-        $r .= Html::span($lang->text('home/note').':');
+        $r .= Html::span($lang->text('search/note').':');
         $r .= Html::span($note,'note');
         $r .= Html::divCl();
         $r .= Html::divOp('second');
-        $r .= Html::span($lang->text('home/searchIn').':');
+        $r .= Html::span($lang->text('search/in').':');
         $r .= Html::span(implode(', ',$tables->pair('label')),'labels');
         $r .= Html::divCl();
 

@@ -12,7 +12,7 @@
 // fakeselect
 // crée les comportements pour un input fakeSelect, pouvant avoir un inputHidden lié
 // fakeselect étend clickOpen
-quid.core.fakeselect = $.fn.fakeselect = function()
+quid.core.fakeselect = function()
 {
     // choose
     function choose(selected)
@@ -36,7 +36,9 @@ quid.core.fakeselect = $.fn.fakeselect = function()
         }
     }
     
-    $(this).clickOpenWithTrigger("> .trigger").enterCatch()
+    $(this)
+    .callThis(quid.core.clickOpenWithTrigger,"> .trigger")
+    .enterCatch()
     .on('enter:blocked', function(event) {
         $(this).trigger('clickOpen:toggle');
     })
@@ -89,7 +91,7 @@ quid.core.fakeselect = $.fn.fakeselect = function()
 
 // selectToFake
 // transforme des tags select en fakeselect
-quid.core.selectToFake = $.fn.selectToFake = function()
+quid.core.selectToFake = function()
 {
     $(this).each(function(index, el) {
         if($(this).tagName() === 'select')

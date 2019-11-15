@@ -54,7 +54,7 @@ class SpecificAddSubmit extends Core\RouteAlias
         $return = false;
         $table = $this->table();
 
-        if(!empty($table) && $table->hasPermission('view','insert','lemurInsert'))
+        if(parent::canTrigger() && !empty($table) && $table->hasPermission('view','insert','lemurInsert'))
         $return = true;
 
         return $return;

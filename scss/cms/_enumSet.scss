@@ -13,15 +13,7 @@
 // mixin pour un component enumSet dans le formulaire
 @mixin componentEnumSetSpecific() {
     @include enumSet();
-
-    .thumbnail {
-        margin-bottom: 3px;
-
-        img {
-            max-width: 100px;
-            pointer-events: none;
-        }
-    }
+    @include imageLegend();
 }
 
 // enumSet
@@ -29,7 +21,6 @@
 @mixin enumSet() {
     .nothing {
         font-weight: bold;
-        font-size: 90%;
     }
 
     &.active [data-absolute-placeholder='ready'] > .input {
@@ -77,22 +68,27 @@
     }
 
     .results ul li {
-        &:first-child > .ele {
+        
+        &:first-child > button {
             border-top: 0;
         }
-
-        &.already-in > .ele {
-            background-color: $red !important;
-            color: $white;
-        }
-
-        &.selected > .ele,
-        &:hover > .ele {
-            background-color: $lightYellow;
-        }
-
-        > .ele {
+        
+        > button {
             @include filterElementBase();
+            
+            &.already-in {
+                background-color: $red !important;
+                color: $white;
+            }
+
+            &.selected,
+            &:hover {
+                background-color: $lightYellow;
+            }
+            
+            &:active {
+                background-color: $lightGray;
+            }
         }
     }
 }

@@ -6,7 +6,7 @@
  * License: https://github.com/quidphp/lemur/blob/master/LICENSE
  */
 
-// cms
+// init
 // script of common behaviours for all pages of the CMS
 
 // globale 
@@ -40,20 +40,20 @@ $(document).ready(function() {
         
         // subMenu
         subMenu.callThis(quid.core.clickOpenWithTrigger,".trigger").on('clickOpen:getBackgroundFrom', function(event) {
-            return false;
+            return 'submenu';
         });
         
 		// modal
-		modal.modal();
+		modal.callThis(quid.core.modal);
 		
         // com
-		com.com();
+		com.callThis(quid.cms.com);
         
         // burger
 		burger.on('click', function(event) {
 			body.toggleClass('responsive-menu-open');
 		});
-        
+
         // mainSearch
         mainSearch.callThis(quid.cms.mainSearch);
 	})
@@ -84,7 +84,7 @@ $(document).ready(function() {
         modalAnchor.callThis(quid.core.modalAjax,modal);
                 
 		// aConfirm
-		aConfirm.callThis(quid.core.confirm,'click');
+		aConfirm.callThis(quid.main.window.confirm,'click');
 		
 		// print
 		print.on('click', function(event) {
@@ -101,10 +101,10 @@ $(document).ready(function() {
         select.callThis(quid.core.selectToFake);
         
         // anchorCorner
-        anchorCorner.callThis(quid.core.anchorCorner);
+        anchorCorner.callThis(quid.main.dimension.anchorCorner);
         
         // absolutePlaceholder
-        absolutePlaceholder.callThis(quid.core.absolutePlaceholder);
+        absolutePlaceholder.callThis(quid.main.dimension.absolutePlaceholder);
 	})
     
     // login
@@ -130,11 +130,14 @@ $(document).ready(function() {
 	.on('route:nobodyCommon', function(event) {
 		var browscap = $(this).find("main .browscap");
 		var form = $(this).find("main form");
-		
+
 		form.triggerHandler("form:getValidateFields").focusFirst();
 		
-		if(!quid.base.areCookiesEnabled())
-		browscap.find(".cookie").show();
+		if(!quid.base.browser.allowsCookie())
+		browscap.find(".cookie-disabled").show();
+        
+        if(quid.base.browser.isUnsupported())
+		browscap.find(".unsupported-browser").show();
 	})
     
     // changePassword
@@ -147,7 +150,25 @@ $(document).ready(function() {
     // home
     // comportement pour la page d'accueil du CMS une fois connecté
 	.on('route:home', function() {
-		
+		var feed = $(this).find("main .home-feed");
+        var feedTogglers = feed.find(".block-head .feed-togglers > a");
+        var feedBody = feed.find(".block-body");
+        feedBody.callThis(quid.core.appendContainer);
+        
+        feedTogglers.ajaxBlock()
+        .on('ajaxBlock:getStatusNode', function(event) {
+            return feedBody;
+        })
+        .on('ajax:before', function(event) {
+            feedTogglers.removeClass('selected');
+            $(this).addClass('selected');
+        })
+        .on('ajax:success', function(event,data,textStatus,jqXHR) {
+            feedBody.trigger('feed:overwrite',[data]);
+        })
+        .on('ajax:error', function(event,jqXHR,textStatus,errorThrown) {
+            feedBody.html(quid.main.ajax.parseError(jqXHR,textStatus));
+        });
 	})
     
     .react();

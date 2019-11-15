@@ -15,10 +15,6 @@ use Quid\Lemur;
 // abstract class for a login route
 abstract class Login extends Core\RouteAlias
 {
-    // trait
-    use Lemur\Route\_nobody;
-
-
     // config
     public static $config = [
         'path'=>[

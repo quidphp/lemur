@@ -11,7 +11,7 @@
 
 // inputNumeric
 // gère les comportements pour un input numérique comme page ou limit
-quid.core.inputNumeric = $.fn.inputNumeric = function()
+quid.core.inputNumeric = function()
 {
     $(this).block('change').timeout('keyup').fieldValidate()
     .on('focus', function() {
@@ -44,11 +44,11 @@ quid.core.inputNumeric = $.fn.inputNumeric = function()
         
         if($(this).triggerHandler('validate:isValid') && val !== current)
         {
-            if($.isNumeric(max) && val > max)
+            if(quid.base.number.is(max) && val > max)
             val = max;
             
             var href = $(this).dataHrefReplaceChar(val);
-            if(quid.base.isStringNotEmpty(href))
+            if(quid.base.str.isNotEmpty(href))
             {
                 $(this).trigger('block');
                 $(document).trigger('document:go',[href])

@@ -11,10 +11,10 @@
 
 // slider
 // génère un slider complet avec bouton next et previous
-quid.core.slider = $.fn.slider = function(timeout,navs,className,showIfOne)
+quid.core.slider = function(timeout,navs,className,showIfOne)
 {
     var func = function() {
-        className = (quid.base.isStringNotEmpty(className))? className:".slide";
+        className = (quid.base.str.isNotEmpty(className))? className:".slide";
         var tab = $(this);
         var prev = $(this).find(".prev");
         var next = $(this).find(".next");
@@ -57,7 +57,7 @@ quid.core.slider = $.fn.slider = function(timeout,navs,className,showIfOne)
                 });
             }
             
-            if($.isNumeric(timeout))
+            if(quid.base.number.is(timeout))
             {
                 $(this).timeout('tab:change',timeout)
                 .on('tab:change:onTimeout', function(event) {
@@ -99,7 +99,7 @@ quid.core.slider = $.fn.slider = function(timeout,navs,className,showIfOne)
 
 // mediaSlider
 // gère le js pour un media slider
-quid.core.mediaSlider = $.fn.mediaSlider = function(timeout)
+quid.core.mediaSlider = function(timeout)
 {
     $(this).slider(timeout).find(".slide").on('tab:close', function(event) {
         var iframe = $(this).find("iframe");

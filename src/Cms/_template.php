@@ -41,9 +41,9 @@ trait _template
         $flush = $this->docOpen();
         $hasNav = $this->hasNav();
 
-        $flush .= Html::div($this->loader(),'loading-fixed');
+        $flush .= Html::div($this->makeLoader(),'loading-fixed');
         $flush .= Html::div(null,'background');
-        $flush .= Html::divCond($this->makeModal(),['modal','tabindex'=>-1]);
+        $flush .= Html::divCond($this->makeModal(),['modal']);
 
         $flush .= Html::divOp('#wrapper');
 
@@ -82,9 +82,9 @@ trait _template
     }
 
 
-    // loader
-    // génère le html pour le loader
-    final protected function loader():string
+    // makeLoader
+    // génère le html pour le makeLoader
+    final protected function makeLoader():string
     {
         $r = Html::div(null,'loading-progress');
         $r .= Html::div(null,'loading-icon');
@@ -99,8 +99,9 @@ trait _template
     {
         $r = '';
         $boot = static::boot();
-
-        $r .= Html::div($boot->label(),'boot-label');
+        $home = Home::make();
+        
+        $r .= $home->a($boot->label(),'boot-label');
         $r .= Html::div(null,['burger-menu','icon-solo','burger']);
 
         $r .= Html::divOp('top');
@@ -145,20 +146,20 @@ trait _template
             {
                 $route = PopupSession::make();
                 $popup = ($route->canTrigger())? true:false;
-
                 $attr = ['popup-trigger'];
-                if(!empty($popup))
-                $attr = Base\Arr::append($attr,['with-ajax','with-popup','with-icon','tabindex'=>-1,'data'=>['anchor-corner'=>true,'absolute-placeholder'=>true]]);
-
-                $r .= Html::divOp($attr);
-
+                $html = '';
+                
                 if($popup === true)
-                $r .= $route->a($username,'popup-title');
-                else
-                $r .= Html::span($username,'popup-title');
+                {
+                    $attr = Base\Arr::append($attr,['with-ajax','with-popup','with-icon','data'=>['anchor-corner'=>true,'absolute-placeholder'=>true]]);
+                    $html .= $route->a($username,'popup-title');
+                    $html .= static::makeDivPopup();
+                }
 
-                $r .= Html::div(null,'popup');
-                $r .= Html::divCl();
+                else
+                $html .= Html::div($username,'popup-title');
+
+                $r .= Html::div($html,$attr);
             }
 
             $route = Account::make();
@@ -167,13 +168,13 @@ trait _template
 
             $route = AccountChangePassword::make();
             if($route->canTrigger())
-            $r .= $route->aDialog(['with-icon','no-border','password']);
+            $r .= $route->aDialog(static::langText('accountChangePassword/link'),['with-icon','no-border','password']);
 
             $route = SessionRole::make();
             if($route->canTrigger())
             {
                 $active = ($session->hasFakeRoles())? 'active':null;
-                $r .= $route->aDialog(['with-icon','no-border','mask',$active]);
+                $r .= $route->aDialog(null,['with-icon','no-border','mask',$active]);
             }
 
             $route = Logout::make();
@@ -236,7 +237,7 @@ trait _template
         $r = '';
         $tables = $this->db()->tables();
         $tables = $tables->hasPermission('view');
-        $hierarchy = $tables->hierarchy(false,true);
+        $hierarchy = $tables->hierarchy(false);
 
         $r .= Html::ulCond($this->navMenu($hierarchy));
 
@@ -246,6 +247,8 @@ trait _template
 
     // navMenu
     // génère un niveau de menu pour la navigation principale
+    // une exception est envoyé si le niveau est plus grand que 2
+    // si un menu n'a qu'un élément, que ce n'est pas une table et que l'enfant n'a pas les permissions navAdd, alors n'affiche pas le menu
     final protected function navMenu(array $array,int $i=0):string
     {
         $r = '';
@@ -253,7 +256,8 @@ trait _template
         $tables = $this->db()->tables();
         $lang = $this->lang();
         $specificAdd = SpecificAdd::getOverloadClass();
-
+        $navAdd = array('insert','lemurInsert','mainNavAdd');
+        
         if($i >= 2)
         static::throw('tooDeep',$array);
 
@@ -265,20 +269,33 @@ trait _template
             {
                 if(is_string($key) && !empty($key))
                 {
+                    $table = $tables->get($key);
+                    
+                    if(empty($table) && is_array($value) && count($value) === 1)
+                    {
+                        $newKey = key($value);
+                        $newTable = $tables->get($newKey);
+                        if(!empty($newTable) && !$newTable->hasPermission(...$navAdd))
+                        {
+                            $key = $newKey;
+                            $value = null;
+                            $table = $newTable;
+                        }
+                    }
+                    
                     $html = '';
                     $routeHtml = '';
-                    $table = $tables->get($key);
-                    $class = [];
-
+                    $attr = array();
+                    
                     if(!empty($table))
                     {
                         $route = static::session()->routeTableGeneral($table,true);
                         $option = ($route->routeRequest()->isSegmentParsedFromValue())? ['query'=>false]:null;
                         $routeHtml .= $route->aTitle(null,null,null,$option);
 
-                        if($i > 0 && $table->hasPermission('insert','lemurInsert','mainNavAdd'))
+                        if($i > 0 && $table->hasPermission(...$navAdd))
                         {
-                            $class[] = 'with-specific-add';
+                            $attr[] = 'with-specific-add';
                             $route = $specificAdd::make($table);
                             $routeHtml .= $route->makeNavLink();
                         }
@@ -286,11 +303,11 @@ trait _template
 
                     if(is_array($value))
                     {
-                        $class[] = 'with-carousel';
+                        $attr[] = 'with-carousel';
                         $keys = array_keys($value);
 
                         if($this->isTableTop($keys))
-                        $class[] = ['active','top'];
+                        $attr[] = ['active','top'];
 
                         $label = $lang->tableLabel($key);
                         $subNav = $this->navMenu($value,$ii);
@@ -301,20 +318,16 @@ trait _template
                             $html .= Html::span(null,['triangle']);
                             $html .= Html::span($label);
                             $html .= Html::buttonCl();
-
-                            $html .= Html::divOp('target');
-                            $html .= Html::ulOp();
-                            $html .= $routeHtml;
-                            $html .= $subNav;
-                            $html .= Html::ulCl();
-                            $html .= Html::divCl();
+                            
+                            $targetHtml = Html::ul($routeHtml.$subNav);
+                            $html .= static::makeDivPopup($targetHtml,'target');
                         }
                     }
 
                     else
                     $html = $routeHtml;
 
-                    $r .= Html::liCond($html,$class);
+                    $r .= Html::liCond($html,$attr);
                 }
             }
         }
@@ -367,25 +380,30 @@ trait _template
 
         $route = About::make();
         if($route->canTrigger())
-        $r .= $route->aDialog(['with-icon','help','no-border']);
+        $r .= $route->aDialog(null,['with-icon','help','no-border']);
+        
+        $route = Contact::make();
+        if($route->canTrigger())
+        $r .= $route->aDialog(null,['with-icon','email','no-border']);
 
         $copyright = static::langText('footer/version',['version'=>$version]);
         $route = PopupBoot::make($this);
         $popup = ($route->canTrigger() && $route->isValidSegment())? true:false;
 
         $attr = ['popup-trigger'];
-        if(!empty($popup))
-        $attr = Base\Arr::append($attr,['with-ajax','with-popup','with-icon','tabindex'=>-1,'data'=>['anchor-corner'=>true,'absolute-placeholder'=>true]]);
-
-        $r .= Html::divOp($attr);
-
+        $html = '';
+        
         if($popup === true)
-        $r .= $route->a($copyright,'popup-title');
+        {
+            $html .= $route->a($copyright,'popup-title');
+            $html .= static::makeDivPopup();
+            $attr = Base\Arr::append($attr,['with-ajax','with-popup','with-icon','data'=>['anchor-corner'=>true,'absolute-placeholder'=>true]]);
+        }
+        
         else
-        $r .= Html::span($copyright,'popup-title');
+        $html .= Html::div($copyright,'popup-title');
 
-        $r .= Html::divCond($popup,'popup');
-        $r .= Html::divCl();
+        $r .= Html::div($html,$attr);
 
         return $r;
     }
@@ -415,7 +433,7 @@ trait _template
             $attr = [$top,'with-submenu','data'=>['anchor-corner'=>true]];
             $r .= Html::divOp($attr);
             $r .= Html::button($label,['with-icon','no-border','trigger',$type]);
-            $r .= Html::divCond($popup,'popup');
+            $r .= static::makeDivPopup($popup);
             $r .= Html::divCl();
         }
 
@@ -528,13 +546,10 @@ trait _template
     // génère le html pour le modal
     final protected function makeModal():string
     {
-        $r = Html::divOp('outer');
-        $r .= Html::divOp('box');
-        $r .= Html::button(null,['icon-solo','close']);
+        $r = Html::button(null,['icon-solo','close']);
         $r .= Html::divOp('inner');
         $r .= Html::divCl();
-        $r .= Html::divCl();
-        $r .= Html::divCl();
+        $r = static::makeDivPopup($r,'box');
 
         return $r;
     }
@@ -552,16 +567,19 @@ trait _template
         {
             $route = Specific::make(true);
             $data = ['href'=>$route,'char'=>$route::getReplaceSegment()];
-
-            $r .= Html::divOp(['com','data'=>$data]);
-            $r .= Html::button(null,['icon-solo','close']);
-            $r .= Html::divOp('top');
+            $attr = array('com','data'=>$data);
+            
+            $r = Html::divOp('top');
             $r .= Html::div(null,'triangle');
             $r .= Html::div(Base\Date::format(4),'date');
             $r .= Html::divCl();
             $r .= Html::div(null,'spacer');
             $r .= Html::div($comText,'bottom');
-            $r .= Html::divCl();
+            
+            $r = Html::div($r,'scroller');
+            $r .= Html::button(null,['icon-solo','close']);
+            
+            $r = static::makeDivPopup($r,$attr);
         }
 
         return $r;

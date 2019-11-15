@@ -29,12 +29,12 @@ class Row extends Base\Test
         $row2 = $tb->row(2);
 
         // row
-        assert($row2->routeAttr('contact') === Suite\Assert\Contact::class);
+        assert($row2->routeAttr('priority') === Suite\Assert\Priority::class);
         assert($row2->routeSafe() instanceof Core\Route);
         assert($row2->route() instanceof Core\Route);
         assert($row2->route() !== $row2->route());
-        assert($row2->route('contact')->uriRelative() === '/en/contact');
-        assert($row2->routeClass('contact') === Suite\Assert\Contact::class);
+        assert($row2->route('priority')->uriRelative() === '/en/priority');
+        assert($row2->routeClass('priority') === Suite\Assert\Priority::class);
         assert($row2->unlink());
         assert($db->truncate($table) instanceof \PDOStatement);
 

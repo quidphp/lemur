@@ -14,7 +14,7 @@ quid.cms.mainSearch = function()
         var $this = $(this);
         var searchIn = $(this).find(".search-in");
 
-        searchIn.clickOpen(true)
+        searchIn.callThis(quid.core.clickOpen,true)
         .on('clickOpen:open', function(event) {
             $this.addClass('active-search-in');
         })
@@ -22,7 +22,7 @@ quid.cms.mainSearch = function()
             $this.removeClass('active-search-in');
         });
         
-        $(this).clickOpenInputFormAjax()
+        $(this).callThis(quid.core.clickOpenInputFormAjax)
         .on('inputForm:empty', function(event) {
             searchIn.trigger('clickOpen:open');
         })

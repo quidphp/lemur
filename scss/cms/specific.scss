@@ -27,55 +27,53 @@
     @include specificNav();
 }
 
-/* CONTAINER */
-[data-group='specific'] main .inner > .container {
+/* FORM */
+[data-group='specific'] main .inner > .specific-form {
     position: relative;
 }
-[data-group='specific'] main .inner > .container .form form button.hidden {
+[data-group='specific'] main .inner > .specific-form button.hidden {
     visibility: hidden;
     @include abs(-100%, null, null, -100%);
 }
-[data-group='specific'] main .inner > .container .form > .top,
-[data-group='specific'] main .inner > .container .form form > .top {
+[data-group='specific'] main .inner > .specific-form > .form-top {
     @include flex(space-between, flex-start, wrap);
     margin-bottom: 15px;
-}
-[data-group='specific'] main .inner > .container .form > .top .left,
-[data-group='specific'] main .inner > .container .form form > .top .left {
-    > ul {
-        @include flex(null, center, wrap);
-        list-style-type: none;
+    
+    > .left {
+        > ul {
+            @include flex(null, center, wrap);
+            list-style-type: none;
 
-        li a {
-            @include panelButton();
-
-            h3 {
-                font-size: 90%;
-                font-weight: bold;
+            li a {
+                @include bigButtonDark();
+                margin: 0 5px 5px 0;
+                
+                h3 {
+                    font-size: 100%;
+                }
             }
         }
-    }
 
-    .description {
-        padding-top: 10px;
-        font-size: 90%;
+        .description {
+            padding-top: 10px;
+            font-size: 90%;
+        }
+    }
+    
+    > .right .operation-element {
+        margin-left: 10px;
+
+        &:first-child {
+            margin-left: 0;
+        }
     }
 }
-[data-group='specific'] main .inner > .container .form > .top .right .operation-element,
-[data-group='specific'] main .inner > .container .form form > .top .right .operation-element {
-    margin-left: 10px;
-
-    &:first-child {
-        margin-left: 0;
-    }
-}
-[data-group='specific'] main .inner > .container .form > .inside,
-[data-group='specific'] main .inner > .container .form form > .inside {
+[data-group='specific'] main .inner > .specific-form > .form-inner {
     margin-bottom: 20px;
 }
 
 /* ELEMENT */
-[data-group='specific'] main .inner > .container .form .panel .form-element {
+[data-group='specific'] main .inner > .specific-form .form-element {
     @include flex();
     background-color: $lightestGray;
     border: 1px solid $lightGray;
@@ -101,12 +99,12 @@
     text-align: center;
     font-weight: bold;
 }
-[data-group='specific'] main .inner > .container .form .form-element .popup-trigger {
+[data-group='specific'] main .inner > .specific-form .form-element .popup-trigger {
     @include abs(5px, 10px);
 }
 
 /* LEFT */
-[data-group='specific'] .form .form-element > .left {
+[data-group='specific'] .specific-form .form-element > .left {
     width: 30%;
     padding: 15px 20px 15px 0;
     position: relative;
@@ -124,10 +122,6 @@
         }
     }
 
-    .description {
-        font-size: 90%;
-    }
-
     .details {
         padding-top: 5px;
         font-size: 90%;
@@ -141,7 +135,7 @@
         }
     }
 }
-[data-group='specific'] main .inner > .container .form .panel .form-element.cursor-pointer > .left label {
+[data-group='specific'] main .inner > .specific-form .form-element.cursor-pointer > .left label {
     cursor: pointer;
 
     &:hover {
@@ -150,7 +144,7 @@
 }
 
 /* RIGHT */
-[data-group='specific'] .form .form-element {
+[data-group='specific'] .specific-form .form-element {
     > .right {
         width: 70%;
     }
@@ -161,8 +155,7 @@
 }
 
 /* BOTTOM */
-[data-group='specific'] main .inner > .container .form > .bottom,
-[data-group='specific'] main .inner > .container .form > form > .bottom {
+[data-group='specific'] main .inner > .specific-form > .form-bottom {
     @include flex(center);
     text-align: center;
 
@@ -184,16 +177,60 @@
     }
 }
 
+/* SPECIFIC MULTI */
+[data-route='specificMulti'] main .inner > .specific-form .form-element {
+    padding-top: 20px;
+    
+    > .left,
+    > .right {
+        @include transition(opacity);
+    }
+    
+    &[data-disabled='1'] {
+        > .left,
+        > .right {
+            opacity: 0.3;
+            pointer-events: none;
+        }
+    }
+    
+    > .disabler {
+        @include abs(0px,null,null,0px);
+        z-index: 1;
+        
+        > input[type='checkbox'] {
+            @include abs(null,0,0);
+        }
+        
+        > label {
+            display: block;
+            padding: 6px 8px 6px 25px;
+            background-position: 5px 50%;
+            background-color: $gray;
+            border-bottom-right-radius: 5px;
+            line-height: 1;
+            
+            &:hover {
+                background-color: $lightYellow;
+                color: $black;
+            }
+        }
+        
+        > input[type='checkbox']:checked + label {
+            background-color: $lightYellow;
+        }
+    }
+}
+
 /* RESPONSIVE */
 @media screen and (max-width: 900px), screen and (orientation: portrait) {
-    [data-group='specific'] main .inner > .container .form > .top > .right,
-    [data-group='specific'] main .inner > .container .form form > .top > .right {
+    [data-group='specific'] main .inner > .specific-form > .form-top > .right {
         width: 100%;
         padding-top: 5px;
         text-align: center;
     }
 
-    [data-group='specific'] main .inner > .container .form .panel .form-element {
+    [data-group='specific'] main .inner > .specific-form .form-element {
         @include responsiveFlex(flex-start, flex-start);
 
         > .left,
@@ -204,13 +241,10 @@
 
         > .left {
             margin-bottom: 10px;
-            padding-bottom: 5px;
-            border-bottom: 1px solid $lightGray;
         }
     }
 
-    [data-group='specific'] main .inner > .container .form > .bottom,
-    [data-group='specific'] main .inner > .container .form > form > .bottom {
+    [data-group='specific'] main .inner > .specific-form > .form-bottom {
         justify-content: center;
         margin: 0;
 
@@ -224,20 +258,24 @@
             }
         }
     }
+    
+    [data-route='specificMulti'] main .inner > .specific-form .form-element {
+        padding-top: 30px;
+    }
 }
 
 /* PRINT */
 @media print {
-    [data-group='specific'] main .inner > .container .top,
-    [data-group='specific'] main .inner > .container .bottom {
+    [data-group='specific'] main .inner > .specific-form .form-top,
+    [data-group='specific'] main .inner > .specific-form .form-bottom {
         display: none !important;
     }
 
-    [data-group='specific'] main .inner > .container .panel {
+    [data-group='specific'] main .inner > .specific-form .panel {
         display: block !important;
     }
 
-    [data-group='specific'] main .inner > .container .form .form-element {
+    [data-group='specific'] main .inner > .specific-form .form-element {
         background-color: $white !important;
     }
 }

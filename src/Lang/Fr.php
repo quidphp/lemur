@@ -16,6 +16,32 @@ class Fr extends Core\Lang\Fr
 {
     // config
     public static $config = [
+        
+        // com
+        'com'=>[
+
+            // neg
+            'neg'=>[
+
+                // insert
+                'insert'=>[
+                    'contact'=>[
+                        'failure'=>"Erreur lors de l'envoie du message."
+                    ]
+                ]
+            ],
+
+            // pos
+            'pos'=>[
+
+                // insert
+                'insert'=>[
+                    'contact'=>[
+                        'success'=>'Merci, le message a été envoyé !'
+                    ]
+                ]
+            ]
+        ],
 
         // role
         'role'=>[
@@ -34,6 +60,13 @@ class Fr extends Core\Lang\Fr
                 'cms'=>'Gestionnaire de contenu'
             ]
         ],
+        
+        // browscap
+        'browscap'=>[
+            'noscript'=>'JavaScript est désactivé sur votre navigateur.',
+            'cookie'=>"Votre navigateur n'accepte pas les cookies.",
+            'unsupported'=>"Votre navigateur n'est pas supporté."
+        ],
 
         // route
         'route'=>[
@@ -45,6 +78,8 @@ class Fr extends Core\Lang\Fr
                 'accountChangePassword'=>'Changer mon mot de passe',
                 'accountChangePasswordSubmit'=>'Changer mon mot de passe - Soumettre',
                 'activatePassword'=>'Activer le mot de passe',
+                'contact'=>'Contact',
+                'contactSubmit'=>'Contact - Soumettre',
                 'login'=>'Connexion',
                 'loginSubmit'=>'Connexion - Soumettre',
                 'logout'=>'Déconnexion',
@@ -55,13 +90,32 @@ class Fr extends Core\Lang\Fr
             ]
         ],
 
+        // table
+        'table'=>array(
+            
+            // label
+            'label'=>array(
+                'contact'=>'Contact'
+            )
+        ),
+        
+        // col
+        'col'=>[
+
+            // label
+            'label'=>[
+
+                // contact
+                'contact'=>[
+                    'email'=>'Adresse courriel',
+                    'name'=>'Prénom et nom',
+                    'phone'=>'Numéro de téléphone'
+                ]
+            ]
+        ],
+        
         // cms
         '@cms'=>[
-
-            // common
-            'common'=>[
-                'loadMore'=>'Charger de [from] à [to] sur [total]'
-            ],
 
             // com
             'com'=>[
@@ -96,7 +150,12 @@ class Fr extends Core\Lang\Fr
                     // duplicate
                     'duplicate'=>[
                         'failure'=>'La duplication a échouée'
-                    ]
+                    ],
+                    
+                    // multiModify
+                    'multiModify'=>array(
+                        'emptyPost'=>"Le formulaire soumis est vide."
+                    )
                 ]
             ],
 
@@ -249,6 +308,11 @@ class Fr extends Core\Lang\Fr
                 'content'=>"Le gestionnaire de contenu Lemur est développé sur le framework [websiteLink]. Ce logiciel est disponible via la license open-source [licenseLink]. La version actuelle est [version]. Pour toute question, contactez l'auteur [authorLink]."
             ],
 
+            // relationFeed
+            'relationFeed'=>[
+                'loadMore'=>'Charger de [from] à [to] sur [total]'
+            ],
+
             // footer
             'footer'=>[
                 'link'=>'Lien',
@@ -260,14 +324,22 @@ class Fr extends Core\Lang\Fr
 
             // home
             'home'=>[
-                'searchSubmit'=>'Recherche dans toutes les tables',
-                'searchIn'=>'Recherche dans',
-                'note'=>'Note',
-                'searchNote'=>'Recherche insensible à la case et aux accents, [count] caractère%s% minimum.'
+                'feed'=>'Dernières activitées',
+                'overview'=>'Survol'
             ],
 
+            // homeFeed
+            'homeFeed'=>array(
+                'all'=>'Tous',
+                'me'=>'Seulement moi'
+            ),
+            
             // search
             'search'=>[
+                'submit'=>'Recherche dans toutes les tables',
+                'in'=>'Recherche dans',
+                'note'=>'Note',
+                'config'=>'Recherche insensible à la case et aux accents, [count] caractère%s% minimum.',
                 'notFound'=>'Rien à afficher'
             ],
 
@@ -301,7 +373,8 @@ class Fr extends Core\Lang\Fr
                 'relationChilds'=>'[count] enfant%s% direct%s%',
                 'relationChildsNoAccess'=>'Inaccessible',
                 'modifyTop'=>'Modifier',
-                'modifyBottom'=>'Modifier'
+                'modifyBottom'=>'Modifier',
+                'activateField'=>'Modifier le champ'
             ],
 
             // table
@@ -312,6 +385,7 @@ class Fr extends Core\Lang\Fr
 
                 // description
                 'description'=>[
+                    'contact'=>'Archive des messages envoyés via le formulaire de la page de contact',
                     'email'=>"Contenu relatif aux courriels envoyés par l'application",
                     'lang'=>"Tous les autres contenus textes présents dans l'application et le CMS",
                     'redirection'=>"Spécifie les redirections d'une URL à une autre",
@@ -509,6 +583,11 @@ class Fr extends Core\Lang\Fr
                         'email_id'=>'Lien vers le modèle courriel utilisé',
                         'json'=>"Données d'en-tête de l'envoie courriel",
                         'content'=>'Contenu du courriel'
+                    ],
+                    
+                    // contact
+                    'contact'=>[
+                        'message'=>'Contenu du message'
                     ]
                 ]
             ],
@@ -558,6 +637,7 @@ class Fr extends Core\Lang\Fr
                 'label'=>[
                     'about'=>'À propos',
                     'cliClearCache'=>'Vider les caches',
+                    'homeFeed'=>'Accueil - Flux',
                     'general'=>'Général',
                     'generalDelete'=>'Général - Suppression',
                     'generalEdit'=>'General - Édition rapide',
@@ -577,6 +657,8 @@ class Fr extends Core\Lang\Fr
                     'specificDispatch'=>'Spécifique - Envoi',
                     'specificDownload'=>'Spécifique - Téléchargement',
                     'specificDuplicate'=>'Dupliquer',
+                    'specificMulti'=>'Spécifique - Multiple',
+                    'specificMultiSubmit'=>'Spécifique - Multiple - Soumettre',
                     'specificRelation'=>'Spécifique - Relation',
                     'specificSubmit'=>'Spécifique - Soumettre',
                     'specificTableRelation'=>'Spécifique - Relation de table',

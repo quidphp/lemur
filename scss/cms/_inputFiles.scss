@@ -59,7 +59,7 @@
 // filesBlock
 // mixin avec les styles pour un bloc du champ de chargement de fichiers
 @mixin filesBlock() {
-    width: 480px;
+    width: 500px;
     background-color: $white;
     border-radius: 5px;
     position: relative;
@@ -114,7 +114,6 @@
 
         .message {
             display: none;
-            font-size: 90%;
             font-weight: bold;
 
             .close {
@@ -128,8 +127,8 @@
     }
 
     .info {
+        @include imageLegend();
         padding: 10px;
-        font-size: 90%;
         text-align: left;
         text-align: center;
 
@@ -148,13 +147,6 @@
 
         .media-placeholder {
             @include wh(64px);
-            margin: auto;
-        }
-
-        img {
-            max-width: 100px;
-            min-width: 50px;
-            display: block;
             margin: auto;
         }
 
@@ -224,11 +216,14 @@
 // filesShowThumbnail
 // mixin pour afficher une image dans une cellule du tableau general
 @mixin filesShowThumbnail() {
+    @include imageLegend();
+    
     a {
         .thumbnail,
         .media-placeholder {
             @include transitions(opacity 0.3s);
             text-align: center;
+            display: block;
         }
 
         &:hover,
@@ -240,18 +235,9 @@
         }
     }
 
-    .legend {
-        font-size: 80%;
-        text-align: center;
-    }
-
     .media-placeholder {
         @include wh(64px);
         margin: auto;
         margin-bottom: 3px;
-    }
-
-    img {
-        max-width: 100px;
     }
 }

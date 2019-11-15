@@ -11,7 +11,7 @@
 
 // tinymce
 // génère un éditeur de texte à partir de tinycme
-quid.core.tinycme = $.fn.tinymce = function(data)
+quid.core.tinycme = function(data)
 {
     var r = null;
     

@@ -16,15 +16,11 @@ use Quid\Lemur;
 // abstract class for a reset password route
 abstract class ResetPassword extends Core\RouteAlias
 {
-    // trait
-    use Lemur\Route\_nobody;
-
-
     // config
     public static $config = [
         'path'=>[
-            'fr'=>'mot-de-passe/reinitialisation',
-            'en'=>'password/reset'],
+            'en'=>'password/reset',
+            'fr'=>'mot-de-passe/reinitialisation'],
         'match'=>[
             'role'=>'nobody',
             'session'=>'allowResetPasswordEmail'],

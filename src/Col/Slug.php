@@ -46,7 +46,7 @@ class Slug extends Core\ColAlias
         $slug = $this->slugAttr(true);
         $keep = $return;
 
-        if(is_array($slug) && !empty($slug) && !static::classIsCallable($slug))
+        if(is_array($slug) && !empty($slug) && !static::isCallable($slug))
         {
             foreach ($slug as $v => $type)
             {
@@ -83,7 +83,7 @@ class Slug extends Core\ColAlias
         {
             $slug = $this->slugAttr();
 
-            if(static::classIsCallable($slug))
+            if(static::isCallable($slug))
             $return = $slug($this,$row,$cell,$option);
 
             else

@@ -71,16 +71,16 @@ trait _specificRelation
                 $class = (in_array($key,$selected,true))? 'selected':null;
                 $data = ['value'=>$key,'html'=>$html];
                 $value = $col->valueExcerpt($value);
-                $value = Html::div($value,'label-content');
+                $value = Html::span($value,'label-content');
 
                 if($this->showCount())
                 {
                     $count = $this->getCount($key);
-                    $value .= Html::divCond($count,'label-count');
+                    $value .= Html::spanCond($count,'label-count');
                 }
 
-                $value = Html::div($value,'ele');
-                $r .= Html::li($value,[$class,'data'=>$data]);
+                $value = Html::button($value,[$class,'data'=>$data]);
+                $r .= Html::li($value);
             }
 
             if(!empty($r) && is_int($loadMore))
