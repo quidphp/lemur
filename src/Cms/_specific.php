@@ -35,7 +35,7 @@ trait _specific
         return $return;
     }
 
-    
+
     // main
     // fait main pour specificAdd
     final public function main():string
@@ -45,8 +45,8 @@ trait _specific
 
         return $r;
     }
-    
-    
+
+
     // panel
     // retourne le tableau des panneaux
     final protected function panel():array
@@ -142,15 +142,15 @@ trait _specific
         return $r;
     }
 
-    
+
     // makeFormHidden
     // génère les input hiddens du formulaire
-    final protected function makeFormHidden():string 
+    final protected function makeFormHidden():string
     {
         return $this->makeFormHiddenTablePanel();
     }
-    
-    
+
+
     // makeFormPanel
     // crée le conteneur des panneaux
     final protected function makeFormPanel():string
@@ -292,23 +292,23 @@ trait _specific
         return $r;
     }
 
-    
+
     // makeFormOneReplace
     // permet de changer le tableau de remplacement pour un élément du formulaire
-    protected function makeFormOneReplace(Core\Col $col,array $return):array 
+    protected function makeFormOneReplace(Core\Col $col,array $return):array
     {
         return $return;
     }
-    
-    
+
+
     // makeFormOneAttr
     // retourne les attributs pour la balise parent form-element
     protected function makeFormOneAttr(Core\Col $col):array
     {
         return $col->getFormElementAttr();
     }
-    
-    
+
+
     // makeFormOne
     // génère un champ du formulaire
     final protected function makeFormOne(Core\Col $col):string
@@ -321,15 +321,15 @@ trait _specific
             $formWrap = '';
             $attr = $this->makeFormOneAttr($col);
             $colPopup = $this->makeColPopup($col);
-            
+
             $description = $col->description();
             $replace['description'] = (!empty($description))? Html::div($description,'description'):'';
-            
+
             $details = $col->details();
             $detailsHtml = Html::liMany(...$details);
             $detailsHtml = Html::ulCond($detailsHtml);
             $replace['details'] = (!empty($details))? Html::divCond($detailsHtml,'details'):'';
-            
+
             if(!empty($colPopup))
             {
                 $popup = Html::divOp(['popup-trigger','with-popup','with-icon-solo','data'=>['anchor-corner'=>true,'absolute-placeholder'=>true]]);
@@ -339,9 +339,9 @@ trait _specific
                 $attr['data']['col-popup'] = true;
                 $replace['popup'] = $popup;
             }
-            
+
             $replace = $this->makeFormOneReplace($col,$replace);
-            
+
             try
             {
                 $formWrap = $this->makeFormWrap($colCell,$replace);

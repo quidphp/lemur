@@ -12,7 +12,6 @@ use Quid\Base;
 use Quid\Base\Html;
 use Quid\Core;
 use Quid\Lemur;
-use Quid\Routing;
 
 // general
 // class for the general navigation route of the CMS
@@ -66,18 +65,18 @@ class General extends Core\RouteAlias
 
     // onBefore
     // au début de la route, store dans nav
-    final protected function onBefore() 
+    final protected function onBefore()
     {
         $table = $this->table();
         $nav = $this->session()->nav();
         $highlight = $this->getHighlight();
         $route = (!empty($highlight))? $this->changeSegment('highlight',null):$this;
         $nav->set([static::class,$table],$route->uri());
-        
+
         return true;
     }
-    
-    
+
+
     // onFallback
     // sur fallback, efface la version de la route dans nav/session
     final protected function onFallback($context=null)
@@ -141,7 +140,7 @@ class General extends Core\RouteAlias
         return $return;
     }
 
-    
+
     // generalSegments
     // retourne les segments à utiliser pour la création de l'objet sql
     final protected function generalSegments():array
@@ -380,7 +379,7 @@ class General extends Core\RouteAlias
     {
         $r = '';
 
-        if($this->hasTablePermission('reset') && $this->canReset($this->getSearchValue(),array('table','highlight')))
+        if($this->hasTablePermission('reset') && $this->canReset($this->getSearchValue(),['table','highlight']))
         {
             $option = ['query'=>false];
             $route = $this->keepSegments('table');
@@ -402,17 +401,17 @@ class General extends Core\RouteAlias
             $popup = $this->generalInfoPopup();
             $attr = ['popup-trigger'];
             $title = $this->makeCount();
-            
+
             if(!empty($popup))
             {
                 $attr = Base\Arr::append($attr,['with-popup','with-icon','data'=>['anchor-corner'=>true,'absolute-placeholder'=>true]]);
                 $r .= Html::button($title,'popup-title');
                 $r .= static::makeDivPopup($popup);
             }
-            
+
             else
             $r .= Html::div($title,'popup-title');
-            
+
             $r = Html::div($r,$attr);
         }
 
@@ -636,9 +635,9 @@ class General extends Core\RouteAlias
                 $data = ['href'=>$route,'char'=>$char,'separator'=>$defaultSegment];
                 $r .= Html::button(null,['tool-element','icon-solo','multi-modify','data'=>$data]);
             }
-            
+
             $r .= $this->makeGeneralDelete();
-            
+
             $r = Html::divCond($r,'tools-container');
         }
 
@@ -669,7 +668,7 @@ class General extends Core\RouteAlias
         return $r;
     }
 
-    
+
     // makeRows
     // génère l'outil pour sélectionner une ou plusieurs lignes dans la table
     final protected function makeRows():string
@@ -743,7 +742,7 @@ class General extends Core\RouteAlias
             $html = Html::checkbox($checkbox,$attr,$option);
             $html = Html::div($html,'scroller');
             $html .= Html::button(null,['name'=>'cols','icon-solo','check','data'=>$data]);
-            $r .= static::makeDivPopup($html,array('popup','no-scroll'));
+            $r .= static::makeDivPopup($html,['popup','no-scroll']);
         }
 
         $r = Html::div($r,$inAttr);
@@ -965,8 +964,8 @@ class General extends Core\RouteAlias
                 if($rowsPermission === true)
                 {
                     $id = Base\Attr::randomId('name');
-                    $checkbox = Html::inputCheckbox($row,array('row','id'=>$id));
-                    $checkbox .= Html::label(null,array('for'=>$id));
+                    $checkbox = Html::inputCheckbox($row,['row','id'=>$id]);
+                    $checkbox .= Html::label(null,['for'=>$id]);
                     $html = Html::div($checkbox,'cell-inner');
                     $array[] = [$html,'rows'];
                 }

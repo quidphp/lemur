@@ -19,7 +19,7 @@ class UserRole extends Core\Col\UserRole
     public static $config = [
         'sortable'=>false,
         'complex'=>'radio', // ici possible de mettre checkbox pour multiples roles
-        'preValidate'=>array('setMaxCount'=>1)
+        'preValidate'=>['setMaxCount'=>1]
     ];
 
 

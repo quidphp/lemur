@@ -8,9 +8,9 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Cms;
-use Quid\Core;
-use Quid\Base\Html;
 use Quid\Base;
+use Quid\Base\Html;
+use Quid\Core;
 use Quid\Lemur;
 
 // homeFeed
@@ -22,13 +22,13 @@ class HomeFeed extends Core\RouteAlias
     use Lemur\Segment\_boolean;
     use Lemur\Route\_rowsFeed;
     use _common;
-    
-    
+
+
     // config
     public static $config = [
-        'path'=>array(
+        'path'=>[
             'en'=>'home/feed/[page]/[type]',
-            'fr'=>'accueil/flux/[page]/[type]'),
+            'fr'=>'accueil/flux/[page]/[type]'],
         'segment'=>[
             'page'=>'structureSegmentPage',
             'type'=>'structureSegmentBoolean'],
@@ -40,24 +40,24 @@ class HomeFeed extends Core\RouteAlias
         'limit'=>25,
         'feed'=>['all','me']
     ];
-    
-    
+
+
     // canTrigger
     // retourne vrai si la route peut être triggé
-    final public function canTrigger():bool 
+    final public function canTrigger():bool
     {
         return (parent::canTrigger() && $this->hasPermission('homeFeed'))? true:false;
     }
-    
-    
+
+
     // trigger
     // lance la route homeFeed
-    final public function trigger() 
+    final public function trigger()
     {
         return $this->makeFeed();
     }
-    
-    
+
+
     // makeFeed
     // génère le html pour le feed
     final protected function makeFeed():string
@@ -65,7 +65,7 @@ class HomeFeed extends Core\RouteAlias
         $r = '';
         $ids = $this->pageSlice();
         $tables = $this->db()->tables();
-        
+
         if(!empty($ids))
         {
             foreach ($ids as $array)
@@ -73,7 +73,7 @@ class HomeFeed extends Core\RouteAlias
                 ['id'=>$id,'-table-'=>$table,'-dateCol'=>$dateCol] = $array;
                 $table = $tables->get($table);
                 $row = $table->row($id);
-                
+
                 if(!empty($row))
                 $r .= Html::divCond($row->homeFeedOutput($dateCol),'row-element');
             }
@@ -84,11 +84,11 @@ class HomeFeed extends Core\RouteAlias
 
         else
         $r .= Html::div(static::langText('common/nothing'),'nothing');
-        
+
         return $r;
     }
-    
-    
+
+
     // makeIds
     // génère les ids pour le feed
     protected function makeIds():array
@@ -99,36 +99,36 @@ class HomeFeed extends Core\RouteAlias
         $currentUser = $session->user();
         $db = $this->db();
         $tables = $db->tables()->filter(['hasPermission'=>true],'view','homeFeed');
-        
+
         if($tables->isNotEmpty())
         {
             $ids = [];
             foreach ($tables as $table)
             {
-                foreach ($table->colsDateCommit() as $array) 
+                foreach ($table->colsDateCommit() as $array)
                 {
                     ['date'=>$date,'user'=>$user] = $array;
-                    
+
                     if(empty($user))
                     continue;
-                    
+
                     $ids = $this->makeIdsTable($date,$user,$currentUser,$table,$ids);
                 }
             }
-            
+
             if(!empty($ids))
             $return = Base\Column::sort('date',false,$ids);
         }
 
         $this->ids = $return;
-        
+
         return $return;
     }
-    
-    
+
+
     // makeIdsTable
     // méthode utilisé pour faire la requête et aller chercher les ids pour une table
-    final protected function makeIdsTable(Lemur\Col $date,Lemur\Col $user,Lemur\Row\User $currentUser,Core\Table $table,array $return):array 
+    final protected function makeIdsTable(Lemur\Col $date,Lemur\Col $user,Lemur\Row\User $currentUser,Core\Table $table,array $return):array
     {
         $type = $this->segment('type');
         $name = $table->name();
@@ -138,28 +138,28 @@ class HomeFeed extends Core\RouteAlias
 
         // me
         if($type === 1)
-        $where[] = array($user,'=',$currentUser);
-        
+        $where[] = [$user,'=',$currentUser];
+
         $array = [];
         $array['what'] = [$primary,[$date,'date']];
         $array['where'] = $where;
         $array['order'] = $date;
         $array['direction'] = 'desc';
         $array['limit'] = 40;
-        
+
         $sql = $table->sql($array);
         $ids = $sql->trigger('assocs');
-        
+
         if(!empty($ids))
         {
             $ids = Base\Column::replace($ids,['-table-'=>$name,'-dateCol'=>$date->name()]);
             $return = Base\Arr::append($return,$ids);
         }
-        
+
         return $return;
     }
-    
-    
+
+
     // getFeedTypes
     // retourn les types possibles pour le feed
     public static function getFeedTypes():array

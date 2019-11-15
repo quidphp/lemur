@@ -164,81 +164,81 @@ class Home extends Core\Route\Home
         $r = '';
         $r .= Html::divCond($this->mainBottomLeft(),'left');
         $r .= Html::divCond($this->mainBottomRight(),'right');
-        
+
         return $r;
     }
-    
-    
+
+
     // mainBottomLeft
     // génère la partie en bas à gauche de la page d'accueil
     final protected function mainBottomLeft():string
     {
-        return Html::divCond($this->makeHomeFeed(),array('home-feed','block'));
+        return Html::divCond($this->makeHomeFeed(),['home-feed','block']);
     }
-    
-    
+
+
     // mainBottomRight
     // génère la partie en bas à droite de la page d'accueil
     final protected function mainBottomRight():string
     {
         $r = '';
-        
+
         if($this->hasPermission('homeOverview'))
-        $r .= Html::divCond($this->makeHomeOverview(),array('home-overview','block'));
-        
+        $r .= Html::divCond($this->makeHomeOverview(),['home-overview','block']);
+
         return $r;
     }
-    
-    
+
+
     // makeHomeFeed
     // génère le html pour le feed de la page d'accueil
-    final protected function makeHomeFeed():string 
+    final protected function makeHomeFeed():string
     {
         $r = '';
-        $segment = array('type'=>$this->getAttr('feedType'));
+        $segment = ['type'=>$this->getAttr('feedType')];
         $homeFeed = HomeFeed::make($segment);
-        
+
         if($homeFeed->canTrigger())
         {
             $head = Html::h2(static::langText('home/feed'));
             $body = $homeFeed->trigger();
             $currentType = $homeFeed->segment('type');
-            
+
             $toggler = '';
-            foreach ($homeFeed::getFeedTypesRelation() as $type => $label) 
+            foreach ($homeFeed::getFeedTypesRelation() as $type => $label)
             {
                 $route = $homeFeed->changeSegment('type',$type);
                 $selected = ($type === $currentType)? 'selected':null;
-                $toggler .= $route->a($label,array($selected,'toggler-element','data'=>array('type'=>$type)));
+                $toggler .= $route->a($label,[$selected,'toggler-element','data'=>['type'=>$type]]);
             }
-            
+
             $head .= Html::div($toggler,'feed-togglers');
-            
+
             $r .= Html::div($head,'block-head');
             $r .= Html::div($body,'block-body');
         }
-        
+
         return $r;
     }
-    
-    
+
+
     // makeHomeOverview
     // génère le html pour le survol des tables
-    final protected function makeHomeOverview():string 
+    final protected function makeHomeOverview():string
     {
         $r = '';
         $tables = $this->db()->tables();
-        $tables = $tables->filter(array('hasPermission'=>true),'view','homeOverview');
+        $tables = $tables->filter(['hasPermission'=>true],'view','homeOverview');
         $tables = $tables->sortBy('label');
-        
+
         if($tables->isNotEmpty())
         {
             $body = '';
-            foreach ($tables as $table) 
+            foreach ($tables as $table)
             {
                 $body .= Html::divCond($this->makeHomeOverviewTable($table),'table-element');
             }
-            
+
             if(!empty($body))
             {
                 $title = Html::h2(static::langText('home/overview'));
@@ -246,11 +246,11 @@ class Home extends Core\Route\Home
                 $r .= Html::div($body,'block-body');
             }
         }
-        
+
         return $r;
     }
-    
-    
+
+
     // makeHomeOverviewTable
     // génère le html pour une table
     final protected function makeHomeOverviewTable(Core\Table $table):string
@@ -258,27 +258,27 @@ class Home extends Core\Route\Home
         $r = '';
         $session = static::session();
         $route = $session->routeTableGeneral($table);
-        
+
         $r .= Html::h3($table->label());
-        
+
         $total = $table->total(true,true);
         $count = Html::span($total['row'].' '.static::langPlural($total['row'],'lcf|common/row'));
         $count .= Html::span('&nbsp;'.static::langText('lcf|common/and').'&nbsp;');
         $count .= Html::span($total['col'].' '.static::langPlural($total['col'],'lcf|common/col'));
         $r .= Html::divCond($count,'count');
-        
+
         $r = $route->a($r);
-        
+
         $tools = '';
         $add = SpecificAdd::make($table);
         if($add->canTrigger())
-        $tools .= $add->a(null,array('icon-solo','add'));
-        
+        $tools .= $add->a(null,['icon-solo','add']);
+
         $icon = ($table->hasPermission('update','lemurUpdate'))? 'modify':'view';
-        $tools .= $route->a(null,array('icon-solo',$icon));
-        
+        $tools .= $route->a(null,['icon-solo',$icon]);
+
         $r .= Html::divCond($tools,'tools');
-        
+
         return $r;
     }
 }

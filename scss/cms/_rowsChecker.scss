@@ -17,19 +17,18 @@
     text-align: center;
 
     .cell-inner {
-        
         input[type='checkbox'] {
-            @include abs(50%,50%);
+            @include abs(50%, 50%);
             z-index: 1;
         }
-        
+
         > label {
             @include wh();
-            @include abs(0,0);
+            @include abs(0, 0);
             z-index: 2;
             padding: 0;
             background-position: center;
-            
+
             &:hover {
                 background-color: $lightYellow;
             }
@@ -80,10 +79,10 @@
     visibility: hidden;
     border: 1px solid $lightGray;
     border-radius: 5px;
-    
+
     > .tool-element.multi-modify {
         display: none;
-        
+
         &.active {
             display: block;
         }

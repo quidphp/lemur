@@ -201,7 +201,7 @@ abstract class Relation extends Core\Col\Relation
             if(is_array($attr) && array_key_exists('id',$attr))
             unset($attr['id']);
 
-            $return .= Html::divOp(array('input-popup'));
+            $return .= Html::divOp(['input-popup']);
 
             $return .= Html::divOp(['data'=>['absolute-placeholder'=>true]]);
             $return .= Html::divOp('input');
@@ -211,7 +211,7 @@ abstract class Relation extends Core\Col\Relation
             $return .= Html::divCl();
             $return .= Html::divCl();
 
-            $return .= Html::divOp(array('popup','tabindex'=>0));
+            $return .= Html::divOp(['popup','tabindex'=>0]);
             $return .= $route->orderSelect();
             $return .= Html::div(null,'results');
             $return .= Html::divCl();

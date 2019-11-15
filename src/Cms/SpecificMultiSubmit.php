@@ -46,19 +46,19 @@ class SpecificMultiSubmit extends Core\RouteAlias
                 'data-validation'=>false]],
         'group'=>'submit'
     ];
-    
-    
+
+
     // onBefore
     // validation que les rows sont updateables, il doit y en avoir au moins 2
     final protected function onBefore()
     {
         $return = false;
-        
+
         if(parent::onBefore())
         {
             $primaries = $this->request()->get('-primaries-');
             $rows = $this->rows();
-            
+
             if(is_array($primaries) && !empty($primaries) && $rows->count() === count($primaries) && $rows->isMinCount(2) && $rows->exists(...$primaries))
             {
                 if($rows->pairEqual(true,'isUpdateable'))
@@ -67,11 +67,11 @@ class SpecificMultiSubmit extends Core\RouteAlias
 
             $return = true;
         }
-        
+
         return $return;
     }
-    
-    
+
+
     // onFailure
     // callback appelé lors d'un échec
     protected function onFailure():void
@@ -79,11 +79,11 @@ class SpecificMultiSubmit extends Core\RouteAlias
         $post = $this->post();
         if(empty($post))
         static::sessionCom()->neg('multiModify/emptyPost');
-        
+
         return;
     }
-    
-    
+
+
     // canTrigger
     // si la route peut être lancé
     final public function canTrigger():bool
@@ -91,7 +91,7 @@ class SpecificMultiSubmit extends Core\RouteAlias
         return (parent::canTrigger() && $this->hasTable() && $this->table()->hasPermission('view','update','rows','lemurUpdate','multiModify'))? true:false;
     }
 
-    
+
     // rows
     // retourne l'objet rows
     final protected function rows():Core\Rows
@@ -100,8 +100,8 @@ class SpecificMultiSubmit extends Core\RouteAlias
             return $this->table()->rows(...$this->segment('primaries'));
         });
     }
-    
-    
+
+
     // routeSuccess
     // retourne la route en cas de succès ou échec de la modification multiple
     // met toutes les lignes dans le highlight
@@ -109,16 +109,16 @@ class SpecificMultiSubmit extends Core\RouteAlias
     {
         return $this->general()->changeSegment('highlight',$this->rows());
     }
-    
-    
+
+
     // routeFailure
     // retourne l'objet à la route de multi modification en cas d'échec (par exemple post vide)
     final protected function routeFailure():SpecificMulti
     {
         return static::makeParent($this->segments());
     }
-    
-    
+
+
     // proceed
     // fait la mise à jour sur la ligne
     final public function proceed():?array
@@ -129,11 +129,11 @@ class SpecificMultiSubmit extends Core\RouteAlias
 
         if(is_array($post) && !empty($post))
         {
-            $return = array();
+            $return = [];
             $rows = $this->rows();
             $last = $rows->last();
-            
-            foreach ($rows as $key => $row) 
+
+            foreach ($rows as $key => $row)
             {
                 $deleteSource = ($row === $last)? true:false;
                 $option = ['uploadDeleteSource'=>$deleteSource,'preValidate'=>true,'com'=>true,'catchException'=>true,'context'=>static::class];

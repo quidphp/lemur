@@ -20,8 +20,8 @@ trait _modal
         'sitemap'=>false,
         'history'=>false
     ];
-    
-    
+
+
     // aDialog
     // retourne le lien dialog
     final public function aDialog($value=null,?array $attr=null):string

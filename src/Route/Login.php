@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Quid\Lemur\Route;
 use Quid\Core;
-use Quid\Lemur;
 
 // login
 // abstract class for a login route

@@ -40,11 +40,11 @@ class GeneralDelete extends Core\RouteAlias
         'group'=>'submit'
     ];
 
-    
+
     // dynamique
     protected $ids = null; // conserve les ids pour la route
 
-    
+
     // onBefore
     // validation des permissions avant de lancer la route
     // les ids à effacer sont conservé
@@ -56,7 +56,7 @@ class GeneralDelete extends Core\RouteAlias
         {
             $ids = $this->request()->get('primaries');
             $this->makeIds((string) $ids);
-            
+
             if(!empty($this->ids))
             $return = true;
         }
@@ -71,25 +71,25 @@ class GeneralDelete extends Core\RouteAlias
     {
         return (parent::canTrigger() && $this->hasTable() && $this->table()->hasPermission('view','delete','rows','lemurDelete','multiDelete'))? true:false;
     }
-    
+
 
     // makeIds
     // prend une valeur et store la propriété ids
-    final protected function makeIds(string $ids):void 
+    final protected function makeIds(string $ids):void
     {
         if(!empty($ids))
         {
             $default = static::getDefaultSegment();
             $ids = Base\Str::explodeTrimClean($default,$ids);
-            
+
             if(is_array($ids) && !empty($ids) && Base\Arr::onlyNumeric($ids))
             $this->ids = Base\Arr::cast($ids);
         }
-        
+
         return;
     }
-    
-    
+
+
     // ids
     // retourne le tableau des ids
     final protected function ids():array
@@ -97,15 +97,15 @@ class GeneralDelete extends Core\RouteAlias
         return $this->ids;
     }
 
-    
+
     // rows
     // retourne l'objet rows
     final protected function rows():Core\Rows
     {
         return $this->table()->rows(...$this->ids());
     }
-    
-    
+
+
     // routeSuccess
     // retourne la route en cas de succès ou échec de la suppression
     final public function routeSuccess():Core\Route

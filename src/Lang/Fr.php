@@ -16,7 +16,7 @@ class Fr extends Core\Lang\Fr
 {
     // config
     public static $config = [
-        
+
         // com
         'com'=>[
 
@@ -60,7 +60,7 @@ class Fr extends Core\Lang\Fr
                 'cms'=>'Gestionnaire de contenu'
             ]
         ],
-        
+
         // browscap
         'browscap'=>[
             'noscript'=>'JavaScript est désactivé sur votre navigateur.',
@@ -91,14 +91,14 @@ class Fr extends Core\Lang\Fr
         ],
 
         // table
-        'table'=>array(
-            
+        'table'=>[
+
             // label
-            'label'=>array(
+            'label'=>[
                 'contact'=>'Contact'
-            )
-        ),
-        
+            ]
+        ],
+
         // col
         'col'=>[
 
@@ -113,7 +113,7 @@ class Fr extends Core\Lang\Fr
                 ]
             ]
         ],
-        
+
         // cms
         '@cms'=>[
 
@@ -151,11 +151,11 @@ class Fr extends Core\Lang\Fr
                     'duplicate'=>[
                         'failure'=>'La duplication a échouée'
                     ],
-                    
+
                     // multiModify
-                    'multiModify'=>array(
-                        'emptyPost'=>"Le formulaire soumis est vide."
-                    )
+                    'multiModify'=>[
+                        'emptyPost'=>'Le formulaire soumis est vide.'
+                    ]
                 ]
             ],
 
@@ -329,11 +329,11 @@ class Fr extends Core\Lang\Fr
             ],
 
             // homeFeed
-            'homeFeed'=>array(
+            'homeFeed'=>[
                 'all'=>'Tous',
                 'me'=>'Seulement moi'
-            ),
-            
+            ],
+
             // search
             'search'=>[
                 'submit'=>'Recherche dans toutes les tables',
@@ -584,7 +584,7 @@ class Fr extends Core\Lang\Fr
                         'json'=>"Données d'en-tête de l'envoie courriel",
                         'content'=>'Contenu du courriel'
                     ],
-                    
+
                     // contact
                     'contact'=>[
                         'message'=>'Contenu du message'

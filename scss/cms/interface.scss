@@ -23,7 +23,7 @@ body .loading-fixed {
     @include fixed(0, 0);
     z-index: 9;
     display: none;
-    
+
     > .loading-progress {
         > .percent {
             text-align: center;
@@ -109,7 +109,7 @@ body > pre {
     overflow-x: hidden;
     z-index: 1;
     background: $darkColor;
-    
+
     > .nav-top {
         background-color: $white;
         min-height: 25px;
@@ -130,7 +130,7 @@ body > pre {
             &:hover {
                 background-color: $lighterGray;
             }
-            
+
             &:active,
             &[data-triggered='1'] {
                 background-color: $lightYellow;
@@ -165,7 +165,7 @@ header {
         font-weight: bold;
         color: $white;
         display: none;
-        
+
         &:hover,
         &[data-triggered='1'] {
             color: $lightGray;
@@ -329,15 +329,15 @@ footer {
             display: block;
         }
     }
-    
+
     main .inner > .top {
         flex-wrap: wrap;
-        
+
         .right {
             padding-left: 0;
         }
     }
-    
+
     footer {
         justify-content: center;
         flex-wrap: wrap;

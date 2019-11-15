@@ -16,7 +16,7 @@ class En extends Core\Lang\En
 {
     // config
     public static $config = [
-        
+
         // com
         'com'=>[
 
@@ -42,7 +42,7 @@ class En extends Core\Lang\En
                 ]
             ]
         ],
-        
+
         // role
         'role'=>[
 
@@ -60,7 +60,7 @@ class En extends Core\Lang\En
                 'cms'=>'Content management system'
             ]
         ],
-        
+
         // browscap
         'browscap'=>[
             'noscript'=>'JavaScript is disabled on your browser.',
@@ -89,16 +89,16 @@ class En extends Core\Lang\En
                 'resetPasswordSubmit'=>'Reset password - Submit'
             ]
         ],
-        
+
         // table
-        'table'=>array(
-            
+        'table'=>[
+
             // label
-            'label'=>array(
+            'label'=>[
                 'contact'=>'Contact'
-            )
-        ),
-        
+            ]
+        ],
+
         // col
         'col'=>[
 
@@ -113,7 +113,7 @@ class En extends Core\Lang\En
                 ]
             ]
         ],
-        
+
         // cms
         '@cms'=>[
 
@@ -132,7 +132,7 @@ class En extends Core\Lang\En
 
                 // neg
                 'neg'=>[
-                    
+
                     // sessionRole
                     'sessionRole'=>[
                         'failure'=>'Error assigning temporary roles.'
@@ -151,11 +151,11 @@ class En extends Core\Lang\En
                     'duplicate'=>[
                         'failure'=>'Duplicate has failed'
                     ],
-                    
+
                     // multiModify
-                    'multiModify'=>array(
-                        'emptyPost'=>"The submitted form was empty."
-                    )
+                    'multiModify'=>[
+                        'emptyPost'=>'The submitted form was empty.'
+                    ]
                 ]
             ],
 
@@ -312,7 +312,7 @@ class En extends Core\Lang\En
             'relationFeed'=>[
                 'loadMore'=>'Load [from] to [to] on [total]'
             ],
-            
+
             // footer
             'footer'=>[
                 'link'=>'Link',
@@ -327,13 +327,13 @@ class En extends Core\Lang\En
                 'feed'=>'Recent activities',
                 'overview'=>'Overview',
             ],
-            
+
             // homeFeed
-            'homeFeed'=>array(
+            'homeFeed'=>[
                 'all'=>'Everybody',
                 'me'=>'Only me'
-            ),
-            
+            ],
+
             // search
             'search'=>[
                 'submit'=>'Search in all tables',
@@ -584,7 +584,7 @@ class En extends Core\Lang\En
                         'json'=>'Email header data',
                         'content'=>'Content of the email'
                     ],
-                    
+
                     // contact
                     'contact'=>[
                         'message'=>'Content of the message'

@@ -4,7 +4,7 @@ declare(strict_types=1);
 /*
  * This file is part of the QuidPHP package.
  * Website: https://quidphp.com
- * License: https://github.com/quidphp/site/blob/master/LICENSE
+ * License: https://github.com/quidphp/lemur/blob/master/LICENSE
  */
 
 namespace Quid\Lemur\Route;
@@ -19,12 +19,12 @@ trait _rowsFeed
     // rows
     protected $ids = null;
 
-    
+
     // makeIds
     // méthode pour créer le tableau des ids à charger dans le feed
     abstract protected function makeIds():array;
-    
-    
+
+
     // pageSlice
     // permet de slice les entrées dans une page
     final protected function pageSlice():array
@@ -54,10 +54,10 @@ trait _rowsFeed
     final protected function ids():array
     {
         $return = $this->ids;
-        
+
         if($this->ids === null)
         $return = $this->makeIds();
-        
+
         return $return;
     }
 

@@ -93,15 +93,15 @@ class SpecificAdd extends Core\RouteAlias
         return $return;
     }
 
-    
+
     // routeSubmit
     // retourne la route pour submit
-    final protected function routeSubmit():SpecificAddSubmit 
+    final protected function routeSubmit():SpecificAddSubmit
     {
         return SpecificAddSubmit::make($this->segments());
     }
-    
-    
+
+
     // hasSpecificAddNavLink
     // retourne vrai si la route doit apparaître sur sa propre ligne dans le menu
     final public function hasSpecificAddNavLink():bool
@@ -109,15 +109,15 @@ class SpecificAdd extends Core\RouteAlias
         return ($this->table()->getAttr('specificAddNavLink') === true)? true:false;
     }
 
-    
+
     // flash
     // retourne la valeur flash à partir d'une colonne
     final protected function flash(?Core\Col $key=null)
     {
         return Base\Arr::getSafe((!empty($key))? $key->name():$key,$this->flash);
     }
-    
-    
+
+
     // makeNavLink
     // fait le lien ajout pour le menu
     final public function makeNavLink():string
@@ -183,7 +183,7 @@ class SpecificAdd extends Core\RouteAlias
         return $return;
     }
 
-    
+
     // makeNav
     // génère la nav pour la page, en haut à droite
     final protected function makeNav():string
@@ -199,16 +199,16 @@ class SpecificAdd extends Core\RouteAlias
 
         return $r;
     }
-    
-    
+
+
     // makeFormSubmit
     // génère le submit pour le formulaire d'ajout
     final protected function makeFormSubmit(string $type):string
     {
         return Html::submit(static::langText('specific/add'),['with-icon','add']);
     }
-    
-    
+
+
     // makeFormWrap
     // génère un wrap label -> field pour le formulaire
     final protected function makeFormWrap(Core\Col $col,array $replace):string

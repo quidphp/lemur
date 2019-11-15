@@ -291,17 +291,17 @@ class Specific extends Core\RouteAlias
                     $popup = $general->generalInfoPopup(true);
                     $attr = ['popup-trigger'];
                     $html = '';
-                    
+
                     if(!empty($popup))
                     {
                         $attr = Base\Arr::append($attr,['with-popup','with-text-solo','data'=>['anchor-corner'=>true,'absolute-placeholder'=>true]]);
                         $html .= Html::button($specific['count'],'popup-title');
                         $html .= static::makeDivPopup($popup);
                     }
-                    
+
                     else
                     $html .= Html::div($specific['count'],'popup-title');
-                    
+
                     $r .= Html::div($html,$attr);
                 }
 
@@ -340,10 +340,10 @@ class Specific extends Core\RouteAlias
             $r .= $this->makeFormPrimary();
             $r .= $this->makeFormSubmit('hidden');
         }
-        
+
         else
         $r .= Html::divOp('specific-form');
-        
+
         $r .= Html::div($this->makeFormTop(),'form-top');
         $r .= Html::div($this->makeFormInner(),'form-inner');
         $r .= Html::div($this->makeFormBottom(),'form-bottom');
@@ -356,7 +356,7 @@ class Specific extends Core\RouteAlias
         return $r;
     }
 
-    
+
     // makeFormPrimary
     // génère le input hidden pour la colonne primaire
     final protected function makeFormPrimary():string

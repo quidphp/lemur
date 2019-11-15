@@ -87,12 +87,12 @@
                     text-align: center;
                     padding: 3px;
                     width: 100%;
-                    
+
                     &:hover {
                         background-color: $lightYellow;
                     }
                 }
-                
+
                 &.out > button {
                     color: $lightGray;
                 }

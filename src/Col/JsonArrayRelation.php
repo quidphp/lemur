@@ -49,12 +49,12 @@ class JsonArrayRelation extends Core\ColAlias
         $return = '';
         $tag = $this->complexTag($attr);
         $value = $this->valueComplex($input,$option);
-        
+
         if(Html::isFormTag($tag,true))
         {
             $cell = ($input instanceof Core\Cell)? $input:null;
             $return .= parent::formComplex($value,$attr,$option);
-            
+
             if(is_int($value) && !empty($cell))
             {
                 $answer = $cell->relationIndex($value);

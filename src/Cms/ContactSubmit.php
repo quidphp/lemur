@@ -18,8 +18,8 @@ class ContactSubmit extends Lemur\Route\ContactSubmit
     public static $config = [
         'parent'=>Contact::class
     ];
-    
-    
+
+
     // canTrigger
     // retourne vrai si la route peut être trigger
     final public function canTrigger():bool

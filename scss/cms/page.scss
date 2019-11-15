@@ -83,7 +83,7 @@
 }
 [data-group='nobody'] main .box .browscap {
     padding: 0 25px;
-    
+
     > noscript,
     > .cookie-disabled,
     > .unsupported-browser {
@@ -237,87 +237,82 @@
     margin-right: 10px;
 }
 [data-route='home'] main .inner > .bottom {
-    @include flex(flex-start,flex-start,wrap);
-    
+    @include flex(flex-start, flex-start, wrap);
+
     > .left {
         flex-grow: 1;
         margin-right: 20px;
     }
-    
+
     > .right {
-    
     }
-    
+
     .block {
         @include block();
     }
 }
-[data-route='home'] main .inner > .bottom .home-feed  {
-    
+[data-route='home'] main .inner > .bottom .home-feed {
     > .block-head {
-        @include flex(space-between,center,wrap);
-        
+        @include flex(space-between, center, wrap);
+
         > .feed-togglers {
             @include flex(center);
-            
+
             > .toggler-element {
                 @include bigButtonLight();
                 margin-left: 10px;
-                
+
                 &:first-child {
                     margin-left: 0;
                 }
             }
         }
     }
-    
+
     > .block-body {
         .nothing {
             @include nothing(true);
             padding: 20px;
         }
-        
+
         .row-element {
             @include blockFeedElement();
-            
+
             > a {
                 .commit {
                     font-size: 90%;
-                    
+
                     > .label {
                         text-decoration: underline;
                     }
-                    
+
                     > .user {
                         margin-left: 3px;
                     }
-                    
+
                     > .separator {
                         margin: 0 5px;
                     }
                 }
             }
         }
-        
+
         .load-more {
             @include loadMore();
         }
     }
 }
 [data-route='home'] main .inner > .bottom .home-overview {
-    
     .block-body {
-        
         > .table-element {
             @include blockFeedElement();
-            
+
             > a .count {
                 font-size: 90%;
             }
         }
     }
 }
-
 
 /* GENERAL EXPORT */
 .modal[data-route='generalExport'] .inner {
@@ -332,7 +327,7 @@
     .choices > a {
         margin: 0 5px;
     }
-    
+
     .note {
         padding-top: 15px;
     }

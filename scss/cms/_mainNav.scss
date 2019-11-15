@@ -14,11 +14,10 @@
         list-style-type: none;
 
         > li {
-            
             > a {
                 display: block;
             }
-            
+
             > a,
             > .trigger {
                 padding: 8px 15px;
@@ -31,12 +30,12 @@
             > a[data-triggered='1'] {
                 background-color: $color;
             }
-            
+
             &:active > a,
             &:active > .trigger {
                 background-color: $darkColor;
             }
-            
+
             &:last-child > a,
             &:last-child > .trigger {
                 border-bottom: 0;
@@ -56,12 +55,11 @@
     }
 
     > ul > li.with-carousel {
-
         > .trigger {
             @include flex();
             cursor: pointer;
             width: 100%;
-            
+
             .triangle {
                 @include triangle(right, $white, 9px, 6px);
                 margin-right: 8px;

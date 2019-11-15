@@ -217,7 +217,7 @@
 // mixin pour afficher une image dans une cellule du tableau general
 @mixin filesShowThumbnail() {
     @include imageLegend();
-    
+
     a {
         .thumbnail,
         .media-placeholder {

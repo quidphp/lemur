@@ -8,8 +8,8 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Cms;
-use Quid\Core;
 use Quid\Base\Html;
+use Quid\Core;
 
 // _specificAddMulti
 // trait that provides common methods between the specificAdd and specificMulti routes
@@ -17,24 +17,24 @@ trait _specificAddMulti
 {
     // trait
     use _specific;
-    
-    
+
+
     // isPanelVisible
     // retourne vrai si le panneau est visible
     final protected function isPanelVisible(Core\Cols $cols):bool
     {
         return ($cols->isHidden(static::session()))? false:true;
     }
-    
-    
+
+
     // makeTitleBox
     // génère le titre pour la page
     final protected function makeTitleBox():string
     {
         return $this->makeH1($this->makeTitle());
     }
-    
-    
+
+
     // colCell
     // retourne la colonne
     final protected function colCell(Core\Col $col):Core\Col
@@ -56,15 +56,15 @@ trait _specificAddMulti
 
         return $return;
     }
-    
-    
+
+
     // makeForm
     // génère le formulaire pour la page
     final protected function makeForm():string
     {
         $r = '';
         $route = $this->routeSubmit();
-        
+
         $r .= $route->formOpen('specific-form');
         $r .= $this->makeFormHidden();
         $r .= Html::div($this->makeFormTop(),'form-top');
@@ -74,16 +74,16 @@ trait _specificAddMulti
 
         return $r;
     }
-    
-    
+
+
     // makeOperation
     // fait le bloc opération en haut à doite
     final protected function makeOperation():string
     {
         return $this->makeFormSubmit('top');
     }
-    
-    
+
+
     // makeFormBottom
     // génère la partie inférieure du formulaire
     final protected function makeFormBottom():string

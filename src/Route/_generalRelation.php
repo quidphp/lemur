@@ -67,9 +67,9 @@ trait _generalRelation
                 $r .= $this->makeResults($results,null,$count);
             }
         }
-        
+
         $r = Html::divCond($r,'relation-wrap');
-        
+
         if(empty($r))
         $r .= Base\Html::h3(static::langText('common/nothing'));
 

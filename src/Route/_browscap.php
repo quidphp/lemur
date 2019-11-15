@@ -11,7 +11,7 @@ namespace Quid\Lemur\Route;
 use Quid\Base\Html;
 
 // _browscap
-// trait that provides a method for generating text for the browser capabilities 
+// trait that provides a method for generating text for the browser capabilities
 trait _browscap
 {
     // browscap
@@ -22,7 +22,7 @@ trait _browscap
         $r .= Html::noscript(static::langText('browscap/noscript'));
         $r .= Html::div(static::langText('browscap/cookie'),'cookie-disabled');
         $r .= Html::div(static::langText('browscap/unsupported'),'unsupported-browser');
-        
+
         return $r;
     }
 }

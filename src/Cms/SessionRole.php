@@ -72,7 +72,7 @@ class SessionRole extends Core\RouteAlias
         return $r;
     }
 
-    
+
     // roles
     // retourne les roles à utiliser pour le formulaire
     final protected function roles():Main\Roles
@@ -81,18 +81,18 @@ class SessionRole extends Core\RouteAlias
         $session = static::session();
         $current = $session->role(false)->permission();
         $roles = static::boot()->roles();
-        
+
         $return = $roles->filter(function(Main\Role $role) use ($current) {
             return ($role->permission() <= $current)? true:false;
         });
-        
+
         return $return;
     }
-    
-    
+
+
     // rolesForm
     // génère le formulaire des rôles
-    final protected function rolesForm():string 
+    final protected function rolesForm():string
     {
         $return = null;
         $table = static::tableFromRowClass();
@@ -102,12 +102,12 @@ class SessionRole extends Core\RouteAlias
         $value = (!empty($fakeRoles))? $fakeRoles->keys():null;
         $roles = $this->roles()->pair('label');
         $wrap = "<div class='choice'>%</div>";
-        $return = Base\Html::checkboxesWithHidden($roles,$col->name(),array('checked'=>$value,'html'=>$wrap));
+        $return = Base\Html::checkboxesWithHidden($roles,$col->name(),['checked'=>$value,'html'=>$wrap]);
 
         return $return;
     }
-    
-    
+
+
     // makeForm
     final protected function makeForm():string
     {

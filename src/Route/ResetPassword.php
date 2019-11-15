@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace Quid\Lemur\Route;
 use Quid\Base\Html;
 use Quid\Core;
-use Quid\Lemur;
 
 // resetPassword
 // abstract class for a reset password route

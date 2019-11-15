@@ -100,7 +100,7 @@ trait _template
         $r = '';
         $boot = static::boot();
         $home = Home::make();
-        
+
         $r .= $home->a($boot->label(),'boot-label');
         $r .= Html::div(null,['burger-menu','icon-solo','burger']);
 
@@ -148,7 +148,7 @@ trait _template
                 $popup = ($route->canTrigger())? true:false;
                 $attr = ['popup-trigger'];
                 $html = '';
-                
+
                 if($popup === true)
                 {
                     $attr = Base\Arr::append($attr,['with-ajax','with-popup','with-icon','data'=>['anchor-corner'=>true,'absolute-placeholder'=>true]]);
@@ -256,8 +256,8 @@ trait _template
         $tables = $this->db()->tables();
         $lang = $this->lang();
         $specificAdd = SpecificAdd::getOverloadClass();
-        $navAdd = array('insert','lemurInsert','mainNavAdd');
-        
+        $navAdd = ['insert','lemurInsert','mainNavAdd'];
+
         if($i >= 2)
         static::throw('tooDeep',$array);
 
@@ -270,7 +270,7 @@ trait _template
                 if(is_string($key) && !empty($key))
                 {
                     $table = $tables->get($key);
-                    
+
                     if(empty($table) && is_array($value) && count($value) === 1)
                     {
                         $newKey = key($value);
@@ -282,11 +282,11 @@ trait _template
                             $table = $newTable;
                         }
                     }
-                    
+
                     $html = '';
                     $routeHtml = '';
-                    $attr = array();
-                    
+                    $attr = [];
+
                     if(!empty($table))
                     {
                         $route = static::session()->routeTableGeneral($table,true);
@@ -318,7 +318,7 @@ trait _template
                             $html .= Html::span(null,['triangle']);
                             $html .= Html::span($label);
                             $html .= Html::buttonCl();
-                            
+
                             $targetHtml = Html::ul($routeHtml.$subNav);
                             $html .= static::makeDivPopup($targetHtml,'target');
                         }
@@ -381,7 +381,7 @@ trait _template
         $route = About::make();
         if($route->canTrigger())
         $r .= $route->aDialog(null,['with-icon','help','no-border']);
-        
+
         $route = Contact::make();
         if($route->canTrigger())
         $r .= $route->aDialog(null,['with-icon','email','no-border']);
@@ -392,14 +392,14 @@ trait _template
 
         $attr = ['popup-trigger'];
         $html = '';
-        
+
         if($popup === true)
         {
             $html .= $route->a($copyright,'popup-title');
             $html .= static::makeDivPopup();
             $attr = Base\Arr::append($attr,['with-ajax','with-popup','with-icon','data'=>['anchor-corner'=>true,'absolute-placeholder'=>true]]);
         }
-        
+
         else
         $html .= Html::div($copyright,'popup-title');
 
@@ -567,18 +567,18 @@ trait _template
         {
             $route = Specific::make(true);
             $data = ['href'=>$route,'char'=>$route::getReplaceSegment()];
-            $attr = array('com','data'=>$data);
-            
+            $attr = ['com','data'=>$data];
+
             $r = Html::divOp('top');
             $r .= Html::div(null,'triangle');
             $r .= Html::div(Base\Date::format(4),'date');
             $r .= Html::divCl();
             $r .= Html::div(null,'spacer');
             $r .= Html::div($comText,'bottom');
-            
+
             $r = Html::div($r,'scroller');
             $r .= Html::button(null,['icon-solo','close']);
-            
+
             $r = static::makeDivPopup($r,$attr);
         }
 

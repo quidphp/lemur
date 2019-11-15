@@ -70,17 +70,17 @@
     box-sizing: border-box;
     cursor: default;
     border-radius: 0 0 10px 10px;
-    
+
     .popup {
         background: $lightGray;
         border: 1px solid $gray;
     }
-    
+
     &.no-scroll {
         padding: 0;
         overflow: hidden;
     }
-    
+
     @media print {
         display: none !important;
     }

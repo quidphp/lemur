@@ -8,7 +8,6 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Cms;
-use Quid\Base;
 use Quid\Base\Html;
 use Quid\Core;
 
@@ -18,8 +17,8 @@ class About extends Core\RouteAlias
 {
     // trait
     use _modal;
-    
-    
+
+
     // config
     public static $config = [
         'path'=>[

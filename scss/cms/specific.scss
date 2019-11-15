@@ -38,7 +38,7 @@
 [data-group='specific'] main .inner > .specific-form > .form-top {
     @include flex(space-between, flex-start, wrap);
     margin-bottom: 15px;
-    
+
     > .left {
         > ul {
             @include flex(null, center, wrap);
@@ -47,7 +47,7 @@
             li a {
                 @include bigButtonDark();
                 margin: 0 5px 5px 0;
-                
+
                 h3 {
                     font-size: 100%;
                 }
@@ -59,7 +59,7 @@
             font-size: 90%;
         }
     }
-    
+
     > .right .operation-element {
         margin-left: 10px;
 
@@ -180,12 +180,12 @@
 /* SPECIFIC MULTI */
 [data-route='specificMulti'] main .inner > .specific-form .form-element {
     padding-top: 20px;
-    
+
     > .left,
     > .right {
         @include transition(opacity);
     }
-    
+
     &[data-disabled='1'] {
         > .left,
         > .right {
@@ -193,15 +193,15 @@
             pointer-events: none;
         }
     }
-    
+
     > .disabler {
-        @include abs(0px,null,null,0px);
+        @include abs(0px, null, null, 0px);
         z-index: 1;
-        
+
         > input[type='checkbox'] {
-            @include abs(null,0,0);
+            @include abs(null, 0, 0);
         }
-        
+
         > label {
             display: block;
             padding: 6px 8px 6px 25px;
@@ -209,13 +209,13 @@
             background-color: $gray;
             border-bottom-right-radius: 5px;
             line-height: 1;
-            
+
             &:hover {
                 background-color: $lightYellow;
                 color: $black;
             }
         }
-        
+
         > input[type='checkbox']:checked + label {
             background-color: $lightYellow;
         }
@@ -258,7 +258,7 @@
             }
         }
     }
-    
+
     [data-route='specificMulti'] main .inner > .specific-form .form-element {
         padding-top: 30px;
     }

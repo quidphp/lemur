@@ -8,8 +8,8 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur;
-use Quid\Core;
 use Quid\Base\Html;
+use Quid\Core;
 
 // row
 // extended class to represent a row within a table, adds cms config
@@ -126,11 +126,11 @@ class Row extends Core\Row
                     'colInfoPopup'=>true]]
             ]
     ];
-    
-    
+
+
     // homeFeedOutput
     // génère le rendu html pour la route homeFeed du CMS
-    final public function homeFeedOutput(string $dateCol):string 
+    final public function homeFeedOutput(string $dateCol):string
     {
         $r = '';
         $route = $this->route();
@@ -138,35 +138,35 @@ class Row extends Core\Row
         $isUpdateable = ($table->hasPermission('view','lemurUpdate') && $this->isUpdateable())? true:false;
         $icon = ($isUpdateable === true)? 'modify':'view';
         $commit = $this->cellsDateCommit()[$dateCol] ?? null;
-        
+
         $r .= Html::h3($this->label());
-        
+
         if(!empty($commit))
         {
             $html = '';
             ['user'=>$user,'date'=>$date] = $commit;
-            
+
             if(!empty($user))
             {
                 $userRow = $user->relationRow();
-                
+
                 if(!empty($userRow))
                 {
-                    $html = Html::span($user->label(),'label').":";
+                    $html = Html::span($user->label(),'label').':';
                     $html .= Html::span($userRow->cellName(),'user');
                     $html .= Html::span('-','separator');
                     $html .= Html::span($date->get(),'date');
                 }
             }
-            
+
             $r .= Html::divCond($html,'commit');
         }
-        
-        $icon = Html::div(null,array('icon-solo',$icon));
+
+        $icon = Html::div(null,['icon-solo',$icon]);
         $r .= Html::div($icon,'tools');
-        
+
         $r = $route->a($r);
-        
+
         return $r;
     }
 }
