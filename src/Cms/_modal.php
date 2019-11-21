@@ -18,8 +18,8 @@ trait _modal
 {
     // config
     public static $configModal = [
-        'match'=>array(
-            'ajax'=>true),
+        'match'=>[
+            'ajax'=>true],
         'group'=>'modal',
         'sitemap'=>false,
         'history'=>false

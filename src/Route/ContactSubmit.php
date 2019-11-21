@@ -41,15 +41,15 @@ abstract class ContactSubmit extends Core\RouteAlias
         'flashPost'=>true
     ];
 
-    
+
     // canTrigger
     // retourne vrai si la route peut trigger
     public function canTrigger():bool
     {
         return (parent::canTrigger() && static::db()->hasTable(static::rowClass()) && static::rowClass()::canSendEmail())? true:false;
     }
-    
-    
+
+
     // onSuccess
     // traite le succès
     final protected function onSuccess():void

@@ -44,19 +44,19 @@
         max-width: 450px;
         font-size: 90%;
         margin: auto;
-        
+
         div span:first-child {
             font-weight: bold;
             margin-right: 3px;
         }
     }
-    
+
     @include responsive() {
         > .form {
             justify-content: center;
         }
     }
-    
+
     @include print() {
         display: none;
     }
@@ -83,12 +83,12 @@
             text-align: center;
         }
     }
-    
+
     @include responsive() {
         > .operation {
             justify-content: center;
         }
-        
+
         > .limit {
             text-align: center;
         }
@@ -142,7 +142,7 @@
             cursor: grabbing !important;
         }
     }
-    
+
     @include print() {
         .above,
         .bellow {
@@ -369,11 +369,11 @@
             }
         }
     }
-    
+
     // ie edge
-    @supports (-ms-ime-align: auto) { 
+    @supports (-ms-ime-align: auto) {
         > tr,
-        > tr > td {
+        > tr  > td {
             box-sizing: border-box;
         }
     }

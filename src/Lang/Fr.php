@@ -310,13 +310,13 @@ class Fr extends Core\Lang\Fr
             'about'=>[
                 'content'=>"Le gestionnaire de contenu Lemur est développé sur le framework [websiteLink]. Ce logiciel est disponible via la license open-source [licenseLink]. La version actuelle est [version]. Pour toute question, contactez l'auteur [authorLink]."
             ],
-            
+
             // contact
-            'contact'=>array(
+            'contact'=>[
                 'info'=>"Utilisez ce formulaire pour envoyer un message à l'administrateur: [name] &lt;[email]&gt;.",
                 'submit'=>'Envoyer'
-            ),
-            
+            ],
+
             // relationFeed
             'relationFeed'=>[
                 'loadMore'=>'Charger de [from] à [to] sur [total]'

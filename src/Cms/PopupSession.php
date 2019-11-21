@@ -79,7 +79,7 @@ class PopupSession extends Core\RouteAlias
                 elseif($value->isDate())
                 $value = $value->format(1);
             }
-            
+
             elseif($key === 'classSession')
             $value = $session::classFqcn();
 

@@ -959,15 +959,15 @@ class General extends Core\RouteAlias
                 $deleteable = false;
                 $array = [];
                 $cells = $row->cells($cols);
-                
+
                 if($specificPermission === true)
                 {
                     $specificRoute = Specific::make($row);
                     $updateable = $specificRoute->isUpdateable();
-                    $deleteable = $specificRoute->isDeleteable(array('relationChilds'=>false));
+                    $deleteable = $specificRoute->isDeleteable(['relationChilds'=>false]);
                     $option = ['specific'=>$specificRoute];
                 }
-                
+
                 $data = ['id'=>$row->primary(),'row'=>$row::className(true),'updateable'=>$updateable,'deleteable'=>$deleteable];
                 $rowAttr = ['data'=>$data];
                 if(!empty($highlight) && in_array($row->primary(),$highlight,true))

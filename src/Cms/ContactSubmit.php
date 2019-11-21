@@ -28,8 +28,8 @@ class ContactSubmit extends Lemur\Route\ContactSubmit
     {
         return (parent::canTrigger() && $this->hasPermission('contact'))? true:false;
     }
-    
-    
+
+
     // routeSuccess
     // route utilisé pour rediriger après le formulaire
     final public function routeSuccess():Lemur\Route

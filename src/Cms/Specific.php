@@ -271,7 +271,7 @@ class Specific extends Core\RouteAlias
     {
         $r = '';
         $table = $this->table();
-        
+
         if($table->hasPermission('nav'))
         {
             $row = $this->row();

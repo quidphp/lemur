@@ -117,21 +117,21 @@ class Search extends Core\RouteAlias
                 {
                     $table = $tables->get($key);
                     $count = count($value);
-                    
+
                     if($count === 1)
                     {
                         $primary = current($value);
-                        $route = Specific::make(array('table'=>$table,'primary'=>$primary));
+                        $route = Specific::make(['table'=>$table,'primary'=>$primary]);
                         $uri = $route->uri();
                     }
-                    
+
                     else
                     {
                         $route = General::make(['table'=>$table]);
                         $searchQuery = $route->getSearchQuery();
                         $uri = Base\Uri::changeQuery([$searchQuery=>$search],$route->uri());
                     }
-                    
+
                     $title = $route->title("% ($count)");
 
                     $r .= Html::liOp();

@@ -310,13 +310,13 @@ class En extends Core\Lang\En
             'about'=>[
                 'content'=>'The Lemur open-source Content Management System is based on the [websiteLink] framework. This software is available under the open-source license [licenseLink]. The current version is: [version]. For any questions, please contact the author [authorLink].'
             ],
-            
+
             // contact
-            'contact'=>array(
-                'info'=>"Use this form to send a message to the administrator: [name] &lt;[email]&gt;.",
+            'contact'=>[
+                'info'=>'Use this form to send a message to the administrator: [name] &lt;[email]&gt;.',
                 'submit'=>'Send'
-            ),
-            
+            ],
+
             // relationFeed
             'relationFeed'=>[
                 'loadMore'=>'Load [from] to [to] on [total]'

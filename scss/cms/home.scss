@@ -24,14 +24,14 @@
     .block {
         @include block();
     }
-    
+
     @include responsive(500px) {
         @include responsiveFlex();
-        
+
         > .left {
             margin: 0 0 20px;
         }
-        
+
         > .left,
         > .right {
             width: 100%;
@@ -45,11 +45,11 @@
 
         > .feed-togglers {
             @include flex(center);
-            
+
             > .toggler-element {
                 @include bigButtonLight();
                 margin-left: 5px;
-                
+
                 &:first-child {
                     margin-left: 0;
                 }

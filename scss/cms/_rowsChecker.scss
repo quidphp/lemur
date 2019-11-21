@@ -79,9 +79,8 @@
     visibility: hidden;
     border: 1px solid $lightGray;
     border-radius: 5px;
-    
+
     > .tool-element {
-        
         &.multi-modify,
         &.multi-delete-form {
             display: none;

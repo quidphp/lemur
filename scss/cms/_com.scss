@@ -25,7 +25,7 @@
     &.slide-close > .scroller .top .triangle {
         @include triangle(right, $darkColor, 10px, 10px);
     }
-    
+
     > .scroller {
         @include scrollbar();
         background-color: rgba(249, 253, 216, 0.95);
@@ -36,7 +36,7 @@
         overflow-y: auto;
         text-align: left;
         max-height: 50vh;
-        
+
         .top {
             @include flex();
 
@@ -101,7 +101,7 @@
             color: $red;
         }
     }
-    
+
     @include responsive() {
         max-height: inherit;
         display: block;

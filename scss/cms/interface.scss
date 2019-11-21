@@ -96,7 +96,7 @@ body > #wrapper {
         display: flex;
         flex-direction: column;
     }
-    
+
     @include responsive() {
         .nav-wrap {
             width: 0;
@@ -115,7 +115,7 @@ body > #wrapper {
             width: 100%;
         }
     }
-    
+
     @include print() {
         > .nav-wrap {
             display: none;
@@ -220,7 +220,7 @@ header {
             }
         }
     }
-    
+
     @include responsive() {
         padding: 10px 60px;
 
@@ -241,7 +241,7 @@ header {
             display: block;
         }
     }
-    
+
     @include print() {
         display: none;
     }
@@ -284,25 +284,25 @@ main .inner > .top {
         padding-left: 20px;
         text-align: right;
     }
-    
+
     @include responsive() {
         @include responsiveFlex(center);
-        
+
         .title {
             justify-content: center;
         }
-        
+
         .left,
         .right {
             width: 100%;
             text-align: center;
         }
-        
+
         .right {
             padding: 10px 0 0;
         }
     }
-    
+
     @include print() {
         .right {
             display: none;
@@ -356,12 +356,12 @@ footer {
             margin-left: 0;
         }
     }
-    
+
     @include responsive() {
         justify-content: center;
         flex-wrap: wrap;
     }
-    
+
     @include print() {
         display: none;
     }
