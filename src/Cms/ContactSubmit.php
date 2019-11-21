@@ -3,8 +3,10 @@ declare(strict_types=1);
 
 /*
  * This file is part of the QuidPHP package.
+ * Author: Pierre-Philippe Emond <emondpph@gmail.com>
  * Website: https://quidphp.com
  * License: https://github.com/quidphp/lemur/blob/master/LICENSE
+ * Readme: https://github.com/quidphp/lemur/blob/master/README.md
  */
 
 namespace Quid\Lemur\Cms;
@@ -26,8 +28,8 @@ class ContactSubmit extends Lemur\Route\ContactSubmit
     {
         return (parent::canTrigger() && $this->hasPermission('contact'))? true:false;
     }
-    
-    
+
+
     // routeSuccess
     // route utilisé pour rediriger après le formulaire
     final public function routeSuccess():Lemur\Route

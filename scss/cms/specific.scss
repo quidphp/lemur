@@ -85,23 +85,23 @@
             margin-left: 0;
         }
     }
-    
+
     @include responsive() {
         > .left,
         > .right {
             width: 100%;
             text-align: center;
         }
-        
+
         > .left > ul {
             justify-content: center;
         }
-        
+
         > .right {
             padding-top: 5px;
         }
     }
-    
+
     @include print() {
         display: none;
     }
@@ -135,7 +135,7 @@
             text-decoration: underline;
         }
     }
-    
+
     @include responsive() {
         @include responsiveFlex(flex-start, flex-start);
 
@@ -149,7 +149,7 @@
             margin-bottom: 10px;
         }
     }
-    
+
     @include print() {
         background-color: $white !important;
     }
@@ -236,7 +236,7 @@
     button[type='submit'] {
         margin: 0 5px;
     }
-    
+
     @include responsive() {
         justify-content: center;
         margin: 0;
@@ -251,7 +251,7 @@
             }
         }
     }
-    
+
     @include print() {
         display: none;
     }
@@ -300,7 +300,7 @@
             background-color: $lightYellow;
         }
     }
-    
+
     @include responsive() {
         padding-top: 30px;
     }

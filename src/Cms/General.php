@@ -3,8 +3,10 @@ declare(strict_types=1);
 
 /*
  * This file is part of the QuidPHP package.
+ * Author: Pierre-Philippe Emond <emondpph@gmail.com>
  * Website: https://quidphp.com
  * License: https://github.com/quidphp/lemur/blob/master/LICENSE
+ * Readme: https://github.com/quidphp/lemur/blob/master/README.md
  */
 
 namespace Quid\Lemur\Cms;
@@ -957,15 +959,15 @@ class General extends Core\RouteAlias
                 $deleteable = false;
                 $array = [];
                 $cells = $row->cells($cols);
-                
+
                 if($specificPermission === true)
                 {
                     $specificRoute = Specific::make($row);
                     $updateable = $specificRoute->isUpdateable();
-                    $deleteable = $specificRoute->isDeleteable(array('relationChilds'=>false));
+                    $deleteable = $specificRoute->isDeleteable(['relationChilds'=>false]);
                     $option = ['specific'=>$specificRoute];
                 }
-                
+
                 $data = ['id'=>$row->primary(),'row'=>$row::className(true),'updateable'=>$updateable,'deleteable'=>$deleteable];
                 $rowAttr = ['data'=>$data];
                 if(!empty($highlight) && in_array($row->primary(),$highlight,true))

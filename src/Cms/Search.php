@@ -3,8 +3,10 @@ declare(strict_types=1);
 
 /*
  * This file is part of the QuidPHP package.
+ * Author: Pierre-Philippe Emond <emondpph@gmail.com>
  * Website: https://quidphp.com
  * License: https://github.com/quidphp/lemur/blob/master/LICENSE
+ * Readme: https://github.com/quidphp/lemur/blob/master/README.md
  */
 
 namespace Quid\Lemur\Cms;
@@ -115,21 +117,21 @@ class Search extends Core\RouteAlias
                 {
                     $table = $tables->get($key);
                     $count = count($value);
-                    
+
                     if($count === 1)
                     {
                         $primary = current($value);
-                        $route = Specific::make(array('table'=>$table,'primary'=>$primary));
+                        $route = Specific::make(['table'=>$table,'primary'=>$primary]);
                         $uri = $route->uri();
                     }
-                    
+
                     else
                     {
                         $route = General::make(['table'=>$table]);
                         $searchQuery = $route->getSearchQuery();
                         $uri = Base\Uri::changeQuery([$searchQuery=>$search],$route->uri());
                     }
-                    
+
                     $title = $route->title("% ($count)");
 
                     $r .= Html::liOp();

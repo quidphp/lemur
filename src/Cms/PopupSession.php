@@ -3,8 +3,10 @@ declare(strict_types=1);
 
 /*
  * This file is part of the QuidPHP package.
+ * Author: Pierre-Philippe Emond <emondpph@gmail.com>
  * Website: https://quidphp.com
  * License: https://github.com/quidphp/lemur/blob/master/LICENSE
+ * Readme: https://github.com/quidphp/lemur/blob/master/README.md
  */
 
 namespace Quid\Lemur\Cms;
@@ -77,7 +79,7 @@ class PopupSession extends Core\RouteAlias
                 elseif($value->isDate())
                 $value = $value->format(1);
             }
-            
+
             elseif($key === 'classSession')
             $value = $session::classFqcn();
 

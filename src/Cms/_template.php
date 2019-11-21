@@ -3,15 +3,17 @@ declare(strict_types=1);
 
 /*
  * This file is part of the QuidPHP package.
+ * Author: Pierre-Philippe Emond <emondpph@gmail.com>
  * Website: https://quidphp.com
  * License: https://github.com/quidphp/lemur/blob/master/LICENSE
+ * Readme: https://github.com/quidphp/lemur/blob/master/README.md
  */
 
 namespace Quid\Lemur\Cms;
 use Quid\Base;
 use Quid\Base\Html;
-use Quid\Lemur;
 use Quid\Core;
+use Quid\Lemur;
 
 // _template
 // trait that grants the methods to generate the CMS HTML template
@@ -257,14 +259,14 @@ trait _template
         $tables = $this->db()->tables();
         $lang = $this->lang();
         $navAdd = ['insert','lemurInsert','mainNavAdd'];
-        
+
         if($i >= 2)
         static::throw('tooDeep',$array);
 
         if(!empty($array))
         {
             $ii = $i + 1;
-            
+
             foreach ($array as $key => $value)
             {
                 if(is_string($key) && !empty($key))
@@ -293,8 +295,7 @@ trait _template
                         $option = ($route->routeRequest()->isSegmentParsedFromValue())? ['query'=>false]:null;
                         $routeHtml .= $route->aTitle(null,null,null,$option);
 
-                        if($i > 0)
-                        ['html'=>$routeHtml,'attr'=>$attr] = $this->navMenuSpecificAdd($routeHtml,$attr,$navAdd,$table);
+                        if($i > 0)['html'=>$routeHtml,'attr'=>$attr] = $this->navMenuSpecificAdd($routeHtml,$attr,$navAdd,$table);
                     }
 
                     if(is_array($value))
@@ -311,18 +312,18 @@ trait _template
                             $html .= Html::span(null,['triangle']);
                             $html .= Html::span($label);
                             $html .= Html::buttonCl();
-                            
+
                             if(!empty($table))
                             {
                                 $keys[] = $table->name();
-                                ['html'=>$routeHtml,'attr'=>$liAttr] = $this->navMenuSpecificAdd($routeHtml,array(),$navAdd,$table);
+                                ['html'=>$routeHtml,'attr'=>$liAttr] = $this->navMenuSpecificAdd($routeHtml,[],$navAdd,$table);
                                 $routeHtml = Html::liCond($routeHtml,$liAttr);
                             }
-                            
+
                             $targetHtml = Html::ul($routeHtml.$subNav);
                             $html .= static::makeDivPopup($targetHtml,'target');
                         }
-                        
+
                         if($this->isTableTop($keys))
                         $attr[] = ['active','top'];
                     }
@@ -338,10 +339,10 @@ trait _template
         return $r;
     }
 
-    
+
     // navMenuSpecificAdd
     // utiliser pour générer le lien d'ajout en lien avec un menu
-    final protected function navMenuSpecificAdd(string $html,array $attr,array $navAdd,Core\Table $table):array 
+    final protected function navMenuSpecificAdd(string $html,array $attr,array $navAdd,Core\Table $table):array
     {
         if($table->hasPermission(...$navAdd))
         {
@@ -350,11 +351,11 @@ trait _template
             $route = $specificAdd::make($table);
             $html .= $route->makeNavLink();
         }
-        
-        return array('html'=>$html,'attr'=>$attr);
+
+        return ['html'=>$html,'attr'=>$attr];
     }
-    
-    
+
+
     // flushBeforeMain
     // active ou désactive le flush du contenu avant main
     final protected function flushBeforeMain():bool

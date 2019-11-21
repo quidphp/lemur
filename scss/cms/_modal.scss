@@ -94,7 +94,7 @@
 // mixin pour un formulaire de base dans le modal
 @mixin modalForm() {
     @include formBase();
-    
+
     .info {
         margin-bottom: 20px;
     }
@@ -113,15 +113,15 @@
             }
         }
     }
-    
+
     .form .fields > .field {
         margin-bottom: 20px;
-        
+
         > .table {
             width: 100%;
             text-align: left;
-            
-            .table-cell.label-cell  {
+
+            .table-cell.label-cell {
                 padding-right: 15px;
             }
 
