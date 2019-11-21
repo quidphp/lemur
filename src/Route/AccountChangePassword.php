@@ -22,7 +22,7 @@ abstract class AccountChangePassword extends Core\RouteAlias
             'en'=>'my-account/change-password',
             'fr'=>'mon-compte/mot-de-passe'],
         'match'=>[
-            'role'=>['>='=>'user']],
+            'session'=>'canLogin'],
         'group'=>'submit',
         'parent'=>Account::class,
         'row'=>Lemur\Row\User::class,
@@ -33,7 +33,10 @@ abstract class AccountChangePassword extends Core\RouteAlias
 
     // submitRoute
     // retourne la route pour soumettre le formulaire
-    abstract public function submitRoute():AccountChangePasswordSubmit;
+    public function submitRoute():AccountChangePasswordSubmit
+    {
+        return AccountChangePasswordSubmit::make();
+    }
 
 
     // submitAttr

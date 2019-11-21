@@ -60,6 +60,7 @@
         }
 
         > .inner {
+            width: 100%;
             text-align: center;
             padding: 20px;
         }
@@ -70,7 +71,7 @@
     }
 
     /* PRINT */
-    @media print {
+    @include print() {
         > .box {
             left: 0;
             top: 0;
@@ -80,8 +81,7 @@
         }
     }
 
-    /* RESPONSIVE */
-    @media screen and (max-width: 900px), screen and (orientation: portrait) {
+    @include responsive() {
         > .box {
             @include wh(80% !important);
             top: 10% !important;
@@ -93,6 +93,8 @@
 // modalForm
 // mixin pour un formulaire de base dans le modal
 @mixin modalForm() {
+    @include formBase();
+    
     .info {
         margin-bottom: 20px;
     }
@@ -103,15 +105,28 @@
 
         .fields {
             padding-bottom: 10px;
-
-            .field {
-                margin-bottom: 20px;
-            }
         }
 
         .action {
             button {
                 margin: 0 5px;
+            }
+        }
+    }
+    
+    .form .fields > .field {
+        margin-bottom: 20px;
+        
+        > .table {
+            width: 100%;
+            text-align: left;
+            
+            .table-cell.label-cell  {
+                padding-right: 15px;
+            }
+
+            .table-cell:first-child {
+                width: 30%;
             }
         }
     }

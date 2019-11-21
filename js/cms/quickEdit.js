@@ -22,6 +22,7 @@ quid.cms.quickEdit = function()
             var editContainer = $(this).triggerHandler('quickEdit:getEditContainer');
             editContainer.html(data);
             $(document).trigger('document:commonBindings',[editContainer]).trigger('specific:formPrepare',[editContainer]);
+            $(this).trigger('dragScroll:refresh');
             
             $all.not($(this)).trigger('quickEdit:revert');
         }
@@ -51,6 +52,7 @@ quid.cms.quickEdit = function()
         var editContainer = $(this).triggerHandler('quickEdit:getEditContainer');
         editContainer.html("");
         td.removeAttr('data-editing');
+        $(this).trigger('dragScroll:refresh');
     })
     .on('quickEdit:bind', function(event) {
         var $this = $(this);

@@ -36,7 +36,10 @@ abstract class Login extends Core\RouteAlias
 
     // submitRoute
     // route pour soumettre le formulaire
-    abstract public function submitRoute():LoginSubmit;
+    public function submitRoute():LoginSubmit
+    {
+        return LoginSubmit::make();
+    }
 
 
     // onReplace

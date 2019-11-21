@@ -23,6 +23,20 @@ quid.main.attr = new function() {
     }
     
     
+    // isAll
+    // retourne vrai si toutes les entrées retournent vrai à is
+    this.isAll = $.fn.isAll = function(value)
+    {
+        var r = false;
+        
+        $(this).each(function() {
+            return r = $(this).is(value);
+        });
+        
+        return r;
+    }
+    
+    
     // get
     // retourne un objet contenant tous les attributs d'une balise
     this.get = $.fn.getAttributes = function(start)

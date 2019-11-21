@@ -16,7 +16,7 @@ quid.core.modal = function()
     $(this).each(function(index, el) {
         var modal = $(this);
         
-        $(this).block('modal:get').escapeCatch()
+        $(this).block('modal:get').escapeCatch(true)
         .on('modal:getBox', function(event) {
             return $(this).find(".box").first();
         })
@@ -154,8 +154,8 @@ quid.core.modalAjax = function(modal)
     .on('modal:close', function(event) {
         $(this).removeClass('selected');
     })
-    .on('ajax:error', function(event,jqXHR,textStatus,errorThrown) {
-        modal.trigger('modal:html', [quid.main.ajax.parseError(jqXHR,textStatus)]);
+    .on('ajax:error', function(event,parsedError,jqXHR,textStatus,errorThrown) {
+        modal.trigger('modal:html',[parsedError]);
         $(this).trigger('unblock');
     })
     .on('modalAjax:prepare', function(event) {

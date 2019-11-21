@@ -21,7 +21,7 @@ quid.core.clickOpen = function(target)
         var $this = $(this);
         var container = $(this).triggerHandler('clickOpen:getTarget');
         
-        container.enterCatch()
+        container.enterCatch(true)
         .on('click', 'a', function(event) {
             event.stopPropagation();
             $(document).trigger('document:clickEvent',[event]);
@@ -47,7 +47,7 @@ quid.core.clickOpen = function(target)
 // gère les comportements basique pour un élément clickOpen
 quid.core.clickOpenBase = function(target)
 {
-    $(this).escapeCatch()
+    $(this).escapeCatch(true)
     .on('clickOpen:isInit', function(event) {
         return ($(this).data('clickOpen:init') === true)? true:false;
     })
@@ -239,9 +239,9 @@ quid.core.clickOpenAjax = function(triggerEvent,closeOnOpen,target)
         $(this).triggerHandler('clickOpen:setTargetContent',[data]);
         $(this).trigger('clickOpen:ready');
     })
-    .on('ajax:error', function(event,jqXHR,textStatus,errorThrown) {
+    .on('ajax:error', function(event,parsedError,jqXHR,textStatus,errorThrown) {
         event.stopPropagation();
-        $(this).triggerHandler('clickOpen:setTargetContent',[quid.main.ajax.parseError(jqXHR,textStatus)]);
+        $(this).triggerHandler('clickOpen:setTargetContent',[parsedError]);
     })
     .on('ajax:complete', function(event) {
         event.stopPropagation();
@@ -293,58 +293,55 @@ quid.core.clickOpenAnchorAjax = function(trigger,target)
 // gère un formulaire à un champ qui s'envoie via ajax et dont le résultat s'affiche dans un clickOpen
 quid.core.clickOpenInputFormAjax = function(target)
 {
-    $(this).each(function(index, el) {
+    $(this)
+    .callThis(quid.core.clickOpenAjax,'submit',false,target)
+    .on('ajax:complete', function(event) {
+        var field = $(this).triggerHandler('form:getValidateField');
+        field.trigger('keyup:clearTimeout');
+    })
+    .on('clickOpenForm:prepare', function(event) {
+        var form = $(this);
+        var field = $(this).triggerHandler('form:getValidateField');
+        var submit = $(this).triggerHandler('form:getSubmit');
         
-        $(this)
-        .callThis(quid.core.clickOpenAjax,'submit',false,target)
-        .on('ajax:complete', function(event) {
-            var field = $(this).triggerHandler('form:getValidateField');
-            field.trigger('keyup:clearTimeout');
+        field.enterCatch(true,'keyup').escapeCatch(true,'keyup').timeout('keyup')
+        .on('validate:invalid', function(event) {
+            form.trigger('clickOpen:close');
         })
-        .on('clickOpenForm:prepare', function(event) {
-            var form = $(this);
-            var field = $(this).triggerHandler('form:getValidateField');
-            var submit = $(this).triggerHandler('form:getSubmit');
-            
-            field.enterCatch('keyup').escapeCatch('keyup').timeout('keyup')
-            .on('validate:invalid', function(event) {
-                form.trigger('clickOpen:close');
-            })
-            .on('validate:empty', function(event) {
-                form.triggerHandler('inputForm:empty');
-            })
-            .on('validate:notEmpty', function(event) {
-                form.triggerHandler('inputForm:notEmpty');
-            })
-            .on('click', function(event) {
-                event.stopPropagation();
-                form.trigger('clickOpen:closeOthers');
-                
-                if($(this).triggerHandler('validate:isEmpty'))
-                form.triggerHandler('inputForm:empty');
-                
-                else if($(this).triggerHandler('validate:isNotEmptyAndValid') && !form.triggerHandler('clickOpen:isOpen'))
-                form.trigger('submit');
-            })
-            .on('keyup:onTimeout', function() {
-                $(this).trigger('validate:trigger');
-                
-                if(!$(this).val())
-                $(this).trigger('validate:valid');
-                
-                else if($(this).is(":focus"))
-                form.trigger('submit');
-            })
-            .on('escape:blocked', function(event) {
-                form.trigger('clickOpen:close');
-            });
-            
-            submit.on('click', function(event) {
-                event.stopPropagation();
-            });
+        .on('validate:empty', function(event) {
+            form.triggerHandler('inputForm:empty');
         })
-        .trigger('clickOpenForm:prepare');
-    });
+        .on('validate:notEmpty', function(event) {
+            form.triggerHandler('inputForm:notEmpty');
+        })
+        .on('click', function(event) {
+            event.stopPropagation();
+            form.trigger('clickOpen:closeOthers');
+            
+            if($(this).triggerHandler('validate:isEmpty'))
+            form.triggerHandler('inputForm:empty');
+            
+            else if($(this).triggerHandler('validate:isNotEmptyAndValid') && !form.triggerHandler('clickOpen:isOpen'))
+            form.trigger('submit');
+        })
+        .on('keyup:onTimeout', function() {
+            $(this).trigger('validate:trigger');
+            
+            if(!$(this).val())
+            $(this).trigger('validate:valid');
+            
+            else if($(this).is(":focus"))
+            form.trigger('submit');
+        })
+        .on('escape:blocked', function(event) {
+            form.trigger('clickOpen:close');
+        });
+        
+        submit.on('click', function(event) {
+            event.stopPropagation();
+        });
+    })
+    .trigger('clickOpenForm:prepare');
     
     return this;
 }

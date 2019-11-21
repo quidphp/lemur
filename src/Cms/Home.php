@@ -23,7 +23,7 @@ class Home extends Core\Route\Home
     // config
     public static $config = [
         'match'=>[
-            'role'=>['>'=>'user']],
+            'session'=>'canLogin'],
         'popup'=>[
             'dbName','driver','serverVersion','connectionStatus','host','username',
             'charset','collation','classFqcn','classSyntax','classSchema','classTables','importantVariables'],

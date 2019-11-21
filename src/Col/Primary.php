@@ -24,7 +24,7 @@ class Primary extends Core\Col\Primary
     // affichage d'un lien si le contexte est cms:general
     protected function onGet($return,array $option)
     {
-        if($return instanceof Core\Cell && !$return->isNull() && !empty($option['context']) && $option['context'] === 'cms:general' && is_string($option['specific']))
+        if($return instanceof Core\Cell && !$return->isNull() && !empty($option['context']) && $option['context'] === 'cms:general' && !empty($option['specific']))
         $return = Html::a($option['specific'],$return);
 
         else

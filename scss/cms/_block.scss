@@ -1,0 +1,78 @@
+// compileOnSave: false
+
+/*
+ * This file is part of the QuidPHP package.
+ * Website: https://quidphp.com
+ * License: https://github.com/quidphp/lemur/blob/master/LICENSE
+ */
+
+// block
+// stylesheet for the block component
+
+// block
+// styles utilisés pour des blocs comme sur la page d'accueil
+// avec un header et un body
+@mixin block() {
+    .block-head {
+        background-color: $color;
+        border: 1px solid $darkerColor;
+        position: relative;
+        padding: 10px 20px;
+        color: $white;
+        border-radius: 5px 5px 0 0;
+    }
+
+    .block-body {
+        position: relative;
+        background-color: $lightestGray;
+        border: 1px solid $lightGray;
+
+        &[data-status='loading'] {
+            height: 80px;
+
+            > * {
+                display: none !important;
+            }
+        }
+    }
+}
+
+// blockFeedElement
+// mixin pour un élément de flux de bloc, comme présent sur la page d'accueil
+@mixin blockFeedElement() {
+    position: relative;
+
+    > a {
+        display: block;
+        padding: 10px 60px 10px 20px;
+        border-bottom: 1px solid $lightGray;
+        text-align: left;
+
+        .count {
+            font-size: 90%;
+        }
+    }
+
+    .tools {
+        @include abs(0px, 0px);
+        @include toolBox();
+        border-bottom-left-radius: 5px;
+
+        > .icon-solo {
+            margin-left: 5px;
+
+            &:first-child {
+                margin-left: 0;
+            }
+        }
+    }
+
+    &:hover > a {
+        background-color: $lightGray;
+    }
+
+    &:active > a,
+    > a[data-triggered='1'] {
+        background-color: $lightYellow;
+    }
+}

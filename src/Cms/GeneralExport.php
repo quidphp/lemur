@@ -41,8 +41,7 @@ class GeneralExport extends Core\RouteAlias
             'in'=>'structureSegmentPrimaries',
             'notIn'=>'structureSegmentPrimaries'],
         'match'=>[
-            'ajax'=>true,
-            'role'=>['>'=>'user']],
+            'session'=>'canLogin'],
         'longExport'=>1500,
         'query'=>['s'],
         'parent'=>General::class

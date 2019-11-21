@@ -16,15 +16,23 @@ quid.base.str = new function() {
     this.is = function(value) 
     {
         return ($.type(value) === 'string')? true:false;
-    };
+    }
 
-
+    
+    // isEmpty
+    // retourne vrai si la valeur est une string vide
+    this.isEmpty = function(value) 
+    {
+        return (this.is(value) && !value.length)? true:false;
+    }
+    
+    
     // isNotEmpty
     // retourne vrai si la valeur est une string non vide
     this.isNotEmpty = function(value) 
     {
-        return (this.is(value) && value)? true:false;
-    };
+        return (this.is(value) && value.length)? true:false;
+    }
 
 
     // isStart
@@ -32,7 +40,7 @@ quid.base.str = new function() {
     this.isStart = function(needle,value)
     {
         return (this.is(needle) && this.is(value))? (value.slice(0,needle.length) == needle):false;
-    };
+    }
 
 
     // isEnd
@@ -40,7 +48,7 @@ quid.base.str = new function() {
     this.isEnd = function(needle,value)
     {
         return (this.is(needle) && this.is(value))? (value.slice(-needle.length) == needle):false;
-    };
+    }
 
 
     // upperFirst

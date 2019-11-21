@@ -25,7 +25,7 @@ class PopupSession extends Core\RouteAlias
             'en'=>'popup/session',
             'fr'=>'popup/session'],
         'popup'=>[
-            'id','username','email','fullName','roles','fakeRoles','timezone','dateLogin','dateAdd',
+            'id','primary','username','email','fullName','roles','fakeRoles','timezone','dateLogin','dateAdd',
             'requestCount','ip','lang','name','getLoginLifetime','getLifetime','expire','getCookieParams','getGarbageCollect',
             'classSession','classFqcn','classRole','userAgent'],
     ];
@@ -64,7 +64,7 @@ class PopupSession extends Core\RouteAlias
             $value = null;
             $session = static::session();
             $user = $session->user();
-            $sessionKeys = ['requestCount','ip','lang','userAgent','name','getLifetime','expire','getCookieParams','getLoginLifetime','getGarbageCollect'];
+            $sessionKeys = ['primary','requestCount','ip','lang','userAgent','name','getLifetime','expire','getCookieParams','getLoginLifetime','getGarbageCollect'];
 
             if($user->hasCell($key))
             {
@@ -77,7 +77,7 @@ class PopupSession extends Core\RouteAlias
                 elseif($value->isDate())
                 $value = $value->format(1);
             }
-
+            
             elseif($key === 'classSession')
             $value = $session::classFqcn();
 
@@ -115,7 +115,7 @@ class PopupSession extends Core\RouteAlias
             $value = $user->$key();
 
             if($label === null)
-            $label = static::langText(['popup','user',$key]);
+            $label = static::langText(['popup','session',$key]);
 
             $return = [$label,$value];
 

@@ -127,7 +127,7 @@
     }
 
     // responsive
-    @media screen and (max-width: 900px), screen and (orientation: portrait) {
+    @include responsive() {
         text-align: center;
 
         > ul > li.with-carousel > .trigger {

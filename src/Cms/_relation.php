@@ -22,7 +22,7 @@ trait _relation
         'history'=>false,
         'match'=>[
             'ajax'=>true,
-            'role'=>['>'=>'user']],
+            'session'=>'canLogin'],
         'group'=>'relation',
         'order'=>true
     ];

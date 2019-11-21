@@ -198,13 +198,12 @@
         }
     }
 
-    /* RESPONSIVE */
-    @media screen and (max-width: 900px), screen and (orientation: portrait) {
+    @include responsive() {
         width: 100%;
     }
 
     /* PRINT */
-    @media print {
+    @include print() {
         .actions,
         .form,
         &.empty {

@@ -15,7 +15,7 @@ quid.cms.colsSorter = function()
         var colsButton = colsPopup.find("button[name='cols']");
 
         // clickOpen
-        $(this).callThis(quid.core.clickOpenWithTrigger,".trigger");
+        quid.core.clickOpenWithTrigger.call(this,".trigger");
         
         // colsPopup
         colsPopup.verticalSorting(".choice",'.choice-in')

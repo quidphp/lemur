@@ -81,7 +81,7 @@
         overflow: hidden;
     }
 
-    @media print {
+    @include print() {
         display: none !important;
     }
 }
@@ -149,8 +149,7 @@
         @include popupList();
     }
 
-    /* PRINT */
-    @media print {
+    @include print() {
         display: none !important;
     }
 }

@@ -100,7 +100,7 @@ body .trigger.with-icon {
 body .icon-solo {
     @include iconSolo();
 
-    &.center {
+    &.icon-center {
         @include abs(50%, null, null, 50%);
         margin-left: -8px;
         margin-top: -8px;
@@ -148,15 +148,33 @@ form [data-table-relation='1'] .right .table-relation .popup .big-icon.video {
 
 /* INFO */
 body .icon-solo.info,
+body .with-icon.info,
 body .popup-trigger.with-icon .popup-title,
 body .popup-trigger.with-icon-solo .popup-title {
     @include bgimg64($iconInfo);
 }
 
 /* MOVE */
-html body .icon-solo.move {
+body .icon-solo.move,
+body .with-icon.move {
     @include bgimg64($iconMove);
     cursor: move;
+}
+
+/* MODIFY */
+body .icon-solo.modify,
+body .with-icon.modify,
+body .icon-solo.multi-modify,
+body .with-icon.multi-modify,
+[data-updateable='1'] .icon-solo.view-modify {
+    @include bgimg64($iconModify);
+}
+
+/* VIEW */
+body .icon-solo.view,
+body .with-icon.view,
+[data-updateable='0'] .icon-solo.view-modify {
+    @include bgimg64($iconView);
 }
 
 /* ICON */
@@ -211,10 +229,6 @@ body .with-icon {
     &.minus {
         @include bgimg64($iconMinus);
     }
-    &.modify,
-    &.multi-modify {
-        @include bgimg64($iconModify);
-    }
     &.module {
         @include bgimg64($iconModule);
     }
@@ -239,8 +253,23 @@ body .with-icon {
     &.uncheck {
         @include bgimg64($iconUncheck);
     }
-    &.view {
-        @include bgimg64($iconView);
+}
+
+/* ERROR */
+[data-route='error'] main .inner {
+    text-align: center;
+
+    h1,
+    h2 {
+        margin-bottom: 5px;
+    }
+
+    h3 {
+        margin-bottom: 10px;
+    }
+
+    .back {
+        @include wysiwyg();
     }
 }
 

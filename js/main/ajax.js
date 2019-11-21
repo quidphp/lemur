@@ -39,7 +39,7 @@ quid.main.ajax = new function() {
                 }
             }
         }
-        
+
         return r;
     }
 
@@ -136,7 +136,8 @@ quid.main.ajax = new function() {
                 $this.trigger('ajax:success',[data,textStatus,jqXHR]);
             },
             error: function(jqXHR,textStatus,errorThrown) {
-                $this.trigger('ajax:error',[jqXHR,textStatus,errorThrown]);
+                var parsedError = $that.parseError(jqXHR,textStatus);
+                $this.trigger('ajax:error',[parsedError,jqXHR,textStatus,errorThrown]);
             },
             complete: function(jqXHR,textStatus) {
                 $this.trigger('ajax:complete',[jqXHR,textStatus]);
@@ -147,11 +148,12 @@ quid.main.ajax = new function() {
         
         if(tag === true)
         $that.configFromTag.call(this,config);
-        
+
         if(quid.base.str.isNotEmpty(config.url) && $(this).triggerHandler('ajax:confirm') !== false)
         {
             if(config.method == null)
             config.method = 'get';
+            
             config.method = config.method.toUpperCase();
             
             if(config.data instanceof FormData)
@@ -176,10 +178,10 @@ quid.main.ajax = new function() {
         var tagName = $(this).tagName();
 
         if(r.url == null)
-        r.url = (tagName === 'form')? $(this).prop("action"):($(this).prop("href") || $(this).data('href'));
-        
+        r.url = (tagName === 'form')? $(this).attr("action"):($(this).prop("href") || $(this).data('href'));
+
         if(r.method == null)
-        r.method = (tagName === 'form')? $(this).prop("method"):$(this).data("method");
+        r.method = (tagName === 'form')? $(this).attr("method"):$(this).data("method");
         
         if(r.data == null)
         {
@@ -216,7 +218,7 @@ quid.main.ajax = new function() {
             $(this).triggerHandler('ajaxBlock:getStatusNode').attr('data-status','loading');
             $(this).trigger('block');
         })
-        .on('ajax:error', function(event,jqXHR,textStatus,errorThrown) {
+        .on('ajax:error', function(event,parsedError,jqXHR,textStatus,errorThrown) {
             $(this).triggerHandler('ajaxBlock:getStatusNode').attr("data-status",'error');
         })
         .on('ajax:success', function(event,data,textStatus,jqXHR) {

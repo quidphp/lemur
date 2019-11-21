@@ -27,8 +27,6 @@ class SessionRole extends Core\RouteAlias
         'path'=>[
             'en'=>'session/exploration',
             'fr'=>'session/exploration'],
-        'match'=>[
-            'ajax'=>true],
         'row'=>Lemur\Row\User::class
     ];
 

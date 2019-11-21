@@ -25,7 +25,7 @@ quid.main.drag = new function() {
             $(this).resizeChange()
             
             .on('resize:change', function(event) {
-                $(this).trigger('dragScroll:prepare');
+                $(this).trigger('dragScroll:refresh');
             })
             
             .on('dragScroll:can', function(event) {
@@ -36,7 +36,7 @@ quid.main.drag = new function() {
                 return (($(this).children().width() - $(this).width()) > 0)? true:false;
             })
             
-            .on('dragScroll:prepare', function(event) {
+            .on('dragScroll:refresh', function(event) {
                 if($(this).triggerHandler('dragScroll:required'))
                 $(this).attr('data-grabbable',1);
                 else
@@ -84,7 +84,7 @@ quid.main.drag = new function() {
                 event.stopPropagation();
             })
             
-            .trigger('dragScroll:prepare');
+            .trigger('dragScroll:refresh');
             
             $(document).on('mouseout.document-mount', function(event) {
                 $this.trigger('dragScroll:stop');

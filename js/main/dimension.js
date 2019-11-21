@@ -67,10 +67,16 @@ quid.main.dimension = new function() {
             if(child.length)
             {
                 if(!$(this).is('[data-absolute-placeholder-height]'))
-                $(this).width(child.outerWidth());
+                {
+                    $(this).width('auto');
+                    $(this).width(child.outerWidth());
+                }
                 
                 if(!$(this).is('[data-absolute-placeholder-width]'))
-                $(this).height(child.outerHeight());
+                {
+                    $(this).height('auto');
+                    $(this).height(child.outerHeight());
+                }
                 
                 $(this).attr('data-absolute-placeholder','ready');
             }

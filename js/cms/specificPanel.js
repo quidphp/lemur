@@ -59,7 +59,7 @@ quid.cms.specificPanel = function()
         });
         
         // form
-        $(this).arrowCatch().hashchange().on('tab:getTarget', function() {
+        $(this).hashchange().on('tab:getTarget', function() {
             return panel;
         })
         .on('tab:getInput', function(event) {

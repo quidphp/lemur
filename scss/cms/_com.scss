@@ -22,6 +22,10 @@
         }
     }
 
+    &.slide-close > .scroller .top .triangle {
+        @include triangle(right, $darkColor, 10px, 10px);
+    }
+    
     > .scroller {
         @include scrollbar();
         background-color: rgba(249, 253, 216, 0.95);
@@ -32,26 +36,22 @@
         overflow-y: auto;
         text-align: left;
         max-height: 50vh;
-
+        
         .top {
             @include flex();
 
             .triangle {
-                @include triangle(bottom, $darkColor, 10px, 6px);
+                @include triangle(bottom, $darkColor, 10px, 10px);
             }
 
             .date {
                 cursor: pointer;
-                margin-left: 7px;
+                margin-left: 8px;
 
                 &:hover {
                     color: $darkGray;
                 }
             }
-        }
-
-        &.slide-close .top .triangle {
-            @include triangle(right, $darkColor, 10px, 6px);
         }
 
         .spacer {
@@ -101,8 +101,8 @@
             color: $red;
         }
     }
-
-    @media screen and (max-width: 900px), screen and (orientation: portrait) {
+    
+    @include responsive() {
         max-height: inherit;
         display: block;
         width: 100%;
@@ -113,7 +113,7 @@
         margin-bottom: 10px;
     }
 
-    @media print {
+    @include print() {
         display: none !important;
     }
 }

@@ -30,11 +30,6 @@ abstract class Register extends Core\RouteAlias
     ];
 
 
-    // submitClass
-    // classe de la route pour soumettre le formulaire
-    abstract public static function submitClass():string;
-
-
     // canTrigger
     // retourne vrai si la route peut être lancé
     final public function canTrigger():bool
@@ -45,9 +40,9 @@ abstract class Register extends Core\RouteAlias
 
     // submitRoute
     // route pour soumettre le formulaire
-    final public function submitRoute():RegisterSubmit
+    public function submitRoute():RegisterSubmit
     {
-        return static::submitClass()::make();
+        return RegisterSubmit::make();
     }
 
 

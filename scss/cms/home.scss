@@ -1,0 +1,103 @@
+// compileOnSave: false
+
+/*
+ * This file is part of the QuidPHP package.
+ * Website: https://quidphp.com
+ * License: https://github.com/quidphp/lemur/blob/master/LICENSE
+ */
+
+// home
+// stylesheet for the home route
+
+/* HOME */
+[data-route='home'] main .inner > .top .left h1 {
+    margin-right: 10px;
+}
+[data-route='home'] main .inner > .bottom {
+    @include flex(center, flex-start);
+
+    > .left {
+        flex-grow: 1;
+        margin-right: 20px;
+    }
+
+    .block {
+        @include block();
+    }
+    
+    @include responsive(500px) {
+        @include responsiveFlex();
+        
+        > .left {
+            margin: 0 0 20px;
+        }
+        
+        > .left,
+        > .right {
+            width: 100%;
+        }
+    }
+}
+[data-route='home'] main .inner > .bottom .home-feed {
+    > .block-head {
+        padding-right: 10px;
+        @include flex(space-between, center, wrap);
+
+        > .feed-togglers {
+            @include flex(center);
+            
+            > .toggler-element {
+                @include bigButtonLight();
+                margin-left: 5px;
+                
+                &:first-child {
+                    margin-left: 0;
+                }
+            }
+        }
+    }
+
+    > .block-body {
+        .nothing {
+            @include nothing(true);
+            padding: 20px;
+        }
+
+        .row-element {
+            @include blockFeedElement();
+
+            > a {
+                .commit {
+                    font-size: 90%;
+
+                    > .label {
+                        text-decoration: underline;
+                    }
+
+                    > .user {
+                        margin-left: 3px;
+                    }
+
+                    > .separator {
+                        margin: 0 5px;
+                    }
+                }
+            }
+        }
+
+        .load-more {
+            @include loadMore();
+        }
+    }
+}
+[data-route='home'] main .inner > .bottom .home-overview {
+    .block-body {
+        > .table-element {
+            @include blockFeedElement();
+
+            > a .count {
+                font-size: 90%;
+            }
+        }
+    }
+}

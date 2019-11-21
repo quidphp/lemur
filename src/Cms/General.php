@@ -47,7 +47,7 @@ class General extends Core\RouteAlias
             'notIn'=>'structureSegmentPrimaries',
             'highlight'=>'structureSegmentPrimaries'],
         'match'=>[
-            'role'=>['>'=>'user']],
+            'session'=>'canLogin'],
         'sitemap'=>true,
         'popup'=>[
             'search','primary','priority','engine','collation','autoIncrement','updateTime',
@@ -658,7 +658,7 @@ class General extends Core\RouteAlias
             $defaultSegment = static::getDefaultSegment();
             $data = ['confirm'=>static::langText('common/confirm'),'separator'=>$defaultSegment];
 
-            $r .= $route->formOpen(['tool-element','data'=>$data]);
+            $r .= $route->formOpen(['tool-element','multi-delete-form','data'=>$data]);
             $r .= $this->tableHiddenInput();
             $r .= Html::inputHidden(null,'primaries');
             $r .= Html::submit(null,['icon-solo','multi-delete']);
@@ -676,8 +676,8 @@ class General extends Core\RouteAlias
         $r = '';
         $hasInNotIn = $this->hasInNotIn();
 
-        $r .= Html::span(null,['icon-solo','check','center']);
-        $r .= Html::span(null,['icon-solo','uncheck','center']);
+        $r .= Html::span(null,['icon-solo','icon-center','check']);
+        $r .= Html::span(null,['icon-solo','icon-center','uncheck']);
         $r = Html::button($r,['toggle-all',($hasInNotIn === true)? 'selected':null]);
         $r = Html::div($r,'cell-inner');
 
@@ -712,7 +712,7 @@ class General extends Core\RouteAlias
             $route = $this->changeSegment('cols',true);
             $current = implode($defaultSegment,$currentCols->names());
             $data = ['href'=>$route,'char'=>static::getReplaceSegment(),'current'=>$current,'separator'=>$defaultSegment];
-            $inAttr = Base\Attr::append($inAttr,['data'=>['anchor-corner'=>true,'absolute-placeholder'=>true]]);
+            $inAttr = Base\Attr::append($inAttr,['data'=>['anchor-corner'=>true]]);
             $session = static::session();
 
             $checkbox = [];
@@ -736,7 +736,7 @@ class General extends Core\RouteAlias
             }
 
             $r .= Html::buttonOp(['trigger',($hasSpecificCols === true)? 'selected':null]);
-            $r .= Html::span(null,['icon-solo','cols','center']);
+            $r .= Html::span(null,['icon-solo','icon-center','cols']);
             $r .= Html::buttonCl();
 
             $html = Html::checkbox($checkbox,$attr,$option);
@@ -949,15 +949,25 @@ class General extends Core\RouteAlias
             $rowsPermission = $this->hasTablePermission('rows');
             $actionPermission = $this->hasTablePermission('action');
             $specificPermission = $this->hasTablePermission('specific');
-            $modify = $this->hasTablePermission('update','lemurUpdate');
-            $option = [];
 
             foreach ($rows as $row)
             {
+                $specificRoute = null;
+                $updateable = false;
+                $deleteable = false;
                 $array = [];
                 $cells = $row->cells($cols);
-
-                $rowAttr = ['data'=>['id'=>$row->primary(),'row'=>$row::className(true)]];
+                
+                if($specificPermission === true)
+                {
+                    $specificRoute = Specific::make($row);
+                    $updateable = $specificRoute->isUpdateable();
+                    $deleteable = $specificRoute->isDeleteable(array('relationChilds'=>false));
+                    $option = ['specific'=>$specificRoute];
+                }
+                
+                $data = ['id'=>$row->primary(),'row'=>$row::className(true),'updateable'=>$updateable,'deleteable'=>$deleteable];
+                $rowAttr = ['data'=>$data];
                 if(!empty($highlight) && in_array($row->primary(),$highlight,true))
                 $rowAttr[] = 'highlight';
 
@@ -974,12 +984,10 @@ class General extends Core\RouteAlias
                 {
                     $html = '';
 
-                    if($specificPermission === true)
+                    if(!empty($specificRoute))
                     {
-                        $specific = Specific::make($row)->uri();
-                        $option = ['specific'=>$specific];
-                        $action = ($modify === true && $row->isUpdateable())? 'modify':'view';
-                        $html = Html::a($specific,Html::div(null,['icon-solo',$action,'center']),'cell-inner');
+                        $div = Html::div(null,['icon-solo','icon-center','view-modify']);
+                        $html = Html::a($specificRoute,$div,'cell-inner');
                     }
 
                     $array[] = [$html,'action'];

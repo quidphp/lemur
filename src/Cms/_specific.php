@@ -329,7 +329,8 @@ trait _specific
             $detailsHtml = Html::liMany(...$details);
             $detailsHtml = Html::ulCond($detailsHtml);
             $replace['details'] = (!empty($details))? Html::divCond($detailsHtml,'details'):'';
-
+            $replace['popup'] = null;
+            
             if(!empty($colPopup))
             {
                 $popup = Html::divOp(['popup-trigger','with-popup','with-icon-solo','data'=>['anchor-corner'=>true,'absolute-placeholder'=>true]]);

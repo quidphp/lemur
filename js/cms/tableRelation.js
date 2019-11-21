@@ -13,10 +13,16 @@
 // génère un componennt pour insérer du contenu dans un textarea
 quid.cms.tableRelation = function()
 {
-    $(this).each(function(index, el) {
-        var filters = $(this).find(".table-relation");
-        var textarea = $(this).find("textarea").first();
-        
+    $(this).on('tableRelation:getFilters', function(event) {
+        return $(this).find(".table-relation")
+    })
+    .on('tableRelation:getTextarea', function(event) {
+        return $(this).find("textarea").first();
+    })
+    .on('tableRelation:bind', function(event) {
+        var textarea = $(this).triggerHandler('tableRelation:getTextarea');;
+        var filters = $(this).triggerHandler('tableRelation:getFilters');
+
         textarea.on('textarea:insert', function(event,html) {
             var r = false;
             
@@ -30,8 +36,10 @@ quid.cms.tableRelation = function()
             return r;
         });
         
-        filters.callThis(quid.core.filterGeneralFull)
-        .on('tableRelation:prepare', function(event) {
+        quid.core.filterGeneralFull.call(filters);
+        filters.on('tableRelationFilter:bind', function(event) {
+            $(this).trigger('filterGeneralFull:bind');
+            
             var clickOpen = $(this).triggerHandler('clickOpen:getTarget');
             $(this).triggerHandler('filter:getResult').on('click', '.insert', function(event) {
                 var html = $(this).data('html');
@@ -43,13 +51,14 @@ quid.cms.tableRelation = function()
         .on('clickOpen:getBackgroundFrom',function(event) {
             return 'tableRelation';
         })
-        .trigger('tableRelation:prepare');
-        
-        filters.each(function(index, el) {
-            $(this).triggerHandler('clickOpen:getTarget').on('feed:parseData', function(event,data) {
+        .on('feed:bind', function(event) {
+            var target = $(this).triggerHandler('clickOpen:getTarget');
+            
+            target.on('feed:parseData', function(event,data) {
                 return quid.main.dom.parseHtml(data).find("li");
             })
-        });
+        })
+        .trigger('tableRelationFilter:bind');
     });
     
     return this;

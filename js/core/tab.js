@@ -73,7 +73,7 @@ quid.core.tab = function()
                 
                 if(indexTarget.length)
                 {
-                    if(currentTarget !== null)
+                    if(currentTarget != null)
                     currentTarget.trigger('tab:close');
                     
                     $(this).data('tab-current',index);

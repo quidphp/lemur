@@ -341,14 +341,29 @@ $media: $uriMedia;
     }
 }
 
-// wrapper
-// mixin pour le css contenu dans la première div sous le body
-@mixin wrapper() {
+// bodyWrapper
+// mixin pour le css contenu dans la div de contenu sous le body
+@mixin bodyWrapper() {
     margin: auto;
     min-height: 100%;
     height: auto;
     position: relative;
     min-width: 900px;
+    
+    @include responsive() {
+        min-width: auto;
+    }
+}
+
+// bodyBackground
+// mixin pour le css contenu dans la div background sous le body
+@mixin bodyBackground($zindex:2,$opacity:0.20) {
+    @include fixed(0, null, null, 0);
+    @include transitions(opacity 1.5s);
+    @include wh(100%);
+    z-index: $zindex;
+    background-color: rgba(0, 0, 0, $opacity);
+    display: none;
 }
 
 // abs
@@ -600,6 +615,22 @@ $media: $uriMedia;
     }
 }
 
+// responsive
+// mixin utilisé pour mettre des règles responsives
+@mixin responsive($maxWidth: 900px) {
+    @media screen and (max-width: $maxWidth), screen and (orientation: portrait) {
+        @content;
+    }
+}
+
+// print
+// mixin utilisé pour mettre des règles pour l'impression
+@mixin print() {
+    @media print {
+        @content;
+    }
+}
+
 // responsiveSize
 // mixin utilisé pour annuler les styles width, padding et margin
 @mixin responsiveSize($important: null) {
@@ -679,24 +710,28 @@ $media: $uriMedia;
     }
 
     @if ($side == 'top') {
+        border-top: 0;
         border-left: $transparent solid transparent;
         border-right: $transparent solid transparent;
         border-bottom: $dimension solid $color;
     }
 
     @if ($side == 'bottom') {
+        border-bottom: 0;
         border-left: $transparent solid transparent;
         border-right: $transparent solid transparent;
         border-top: $dimension solid $color;
     }
 
     @if ($side == 'left') {
+        border-left: 0;
         border-top: $transparent solid transparent;
         border-bottom: $transparent solid transparent;
         border-right: $dimension solid $color;
     }
 
     @if ($side == 'right') {
+        border-right: 0;
         border-top: $transparent solid transparent;
         border-bottom: $transparent solid transparent;
         border-left: $dimension solid $color;

@@ -37,7 +37,7 @@ class SpecificCalendar extends Core\RouteAlias
         'history'=>false,
         'match'=>[
             'ajax'=>true,
-            'role'=>['>'=>'user']],
+            'session'=>'canLogin'],
         'parent'=>Specific::class,
         'group'=>'specific'
     ];

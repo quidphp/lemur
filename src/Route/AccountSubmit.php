@@ -27,7 +27,7 @@ abstract class AccountSubmit extends Core\RouteAlias
             'fr'=>'mon-compte/soumettre'],
         'match'=>[
             'method'=>'post',
-            'role'=>['>='=>'user'],
+            'session'=>'canLogin',
             'post'=>['email'],
             'timeout'=>true,
             'genuine'=>true,

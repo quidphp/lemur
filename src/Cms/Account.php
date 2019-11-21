@@ -21,7 +21,7 @@ class Account extends Lemur\Route\Account
     // config
     public static $config = [
         'match'=>[
-            'role'=>['>'=>'user']]
+            'session'=>'canLogin']
     ];
 
 

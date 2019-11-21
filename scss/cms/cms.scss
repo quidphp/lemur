@@ -11,6 +11,7 @@
 
 // component
 @import '_addRemove';
+@import '_block';
 @import '_calendar';
 @import '_clickOpen';
 @import '_colsSorter';
@@ -33,6 +34,8 @@
 // import
 @import 'style';
 @import 'interface';
-@import 'page';
+@import 'nobody';
+@import 'home';
 @import 'general';
 @import 'specific';
+@import 'modal';

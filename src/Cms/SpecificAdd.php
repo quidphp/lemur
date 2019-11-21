@@ -32,7 +32,7 @@ class SpecificAdd extends Core\RouteAlias
         'segment'=>[
             'table'=>'structureSegmentTable'],
         'match'=>[
-            'role'=>['>'=>'user']],
+            'session'=>'canLogin'],
         'parent'=>Specific::class,
         'group'=>'specific',
         'sitemap'=>true

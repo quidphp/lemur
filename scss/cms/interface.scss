@@ -10,6 +10,11 @@
 // stylesheet for the main interface of the CMS
 
 /* WRAPPER */
+body {
+    @include print() {
+        background-image: none !important;
+    }
+}
 [data-status='loading'] body {
     * {
         cursor: wait !important;
@@ -19,7 +24,40 @@
         @include flex(null, flex-start);
     }
 }
-body .loading-fixed {
+[data-burger='open'] body > #wrapper {
+    @include responsive() {
+        .nav-wrap .nav-fixed {
+            width: 100%;
+
+            .nav-close {
+                display: block;
+            }
+        }
+
+        .main-wrap {
+            display: none;
+        }
+    }
+}
+body > .background {
+    @include bodyBackground();
+
+    &[data-from='modal'],
+    &[data-from='clickOpen'],
+    &[data-from='calendar'],
+    &[data-from='fakeselect'],
+    &[data-from='enumSet'],
+    &[data-from='tableRelation'] {
+        display: block;
+        @include fadeIn(0.3s);
+    }
+}
+body > code,
+body > pre {
+    display: block;
+    padding-left: 200px;
+}
+body > .loading-fixed {
     @include fixed(0, 0);
     z-index: 9;
     display: none;
@@ -42,22 +80,9 @@ body .loading-fixed {
         border-bottom-left-radius: 50%;
     }
 }
-body.responsive-menu-open #wrapper {
-    .nav-wrap .nav-fixed {
-        width: 100%;
-
-        .nav-close {
-            display: block;
-        }
-    }
-
-    .main-wrap {
-        display: none;
-    }
-}
 body > #wrapper {
+    @include bodyWrapper();
     @include flex(flex-start, stretch);
-    @include wrapper();
     @include transitions(opacity 0.3s);
     opacity: 1;
 
@@ -71,33 +96,31 @@ body > #wrapper {
         display: flex;
         flex-direction: column;
     }
-}
-body > .background {
-    @include fixed(0, null, null, 0);
-    @include transitions(opacity 1.5s);
-    @include wh(100%);
-    z-index: 2;
-    background-color: rgba(0, 0, 0, 0.15);
-    display: none;
+    
+    @include responsive() {
+        .nav-wrap {
+            width: 0;
 
-    &[data-from='modal'],
-    &[data-from='clickOpen'],
-    &[data-from='calendar'],
-    &[data-from='fakeselect'],
-    &[data-from='enumSet'],
-    &[data-from='tableRelation'] {
-        display: block;
-        @include fadeIn(0.3s);
-    }
+            .nav-fixed {
+                width: 0;
 
-    &[data-from='modal'] {
-        background-color: rgba(0, 0, 0, 0.25);
+                .logo {
+                    max-width: 180px;
+                    margin: auto;
+                }
+            }
+        }
+
+        .main-wrap {
+            width: 100%;
+        }
     }
-}
-body > code,
-body > pre {
-    display: block;
-    padding-left: 200px;
+    
+    @include print() {
+        > .nav-wrap {
+            display: none;
+        }
+    }
 }
 
 /* NAV */
@@ -197,11 +220,36 @@ header {
             }
         }
     }
+    
+    @include responsive() {
+        padding: 10px 60px;
+
+        .boot-label {
+            display: block;
+        }
+
+        .left {
+            width: 100%;
+            padding: 5px 0;
+        }
+
+        .right {
+            width: 100%;
+        }
+
+        .burger-menu {
+            display: block;
+        }
+    }
+    
+    @include print() {
+        display: none;
+    }
 }
 
 /* MAIN */
 main {
-    padding: 15px 0;
+    padding: 20px 0;
     flex-grow: 1;
 
     .inner {
@@ -235,6 +283,30 @@ main .inner > .top {
     .right {
         padding-left: 20px;
         text-align: right;
+    }
+    
+    @include responsive() {
+        @include responsiveFlex(center);
+        
+        .title {
+            justify-content: center;
+        }
+        
+        .left,
+        .right {
+            width: 100%;
+            text-align: center;
+        }
+        
+        .right {
+            padding: 10px 0 0;
+        }
+    }
+    
+    @include print() {
+        .right {
+            display: none;
+        }
     }
 }
 
@@ -284,90 +356,25 @@ footer {
             margin-left: 0;
         }
     }
-}
-
-/* RESPONSIVE */
-@media screen and (max-width: 900px), screen and (orientation: portrait) {
-    body > #wrapper {
-        min-width: inherit;
-
-        .nav-wrap {
-            width: 0;
-
-            .nav-fixed {
-                width: 0;
-
-                .logo {
-                    max-width: 180px;
-                    margin: auto;
-                }
-            }
-        }
-
-        .main-wrap {
-            width: 100%;
-        }
-    }
-
-    header {
-        padding: 10px 60px;
-
-        .boot-label {
-            display: block;
-        }
-
-        .left {
-            width: 100%;
-            padding: 5px 0;
-        }
-
-        .right {
-            width: 100%;
-        }
-
-        .burger-menu {
-            display: block;
-        }
-    }
-
-    main .inner > .top {
-        flex-wrap: wrap;
-
-        .right {
-            padding-left: 0;
-        }
-    }
-
-    footer {
+    
+    @include responsive() {
         justify-content: center;
         flex-wrap: wrap;
+    }
+    
+    @include print() {
+        display: none;
     }
 }
 
 /* PRINT */
-@media print {
+@include print() {
     * {
         page-break-after: avoid;
     }
 
-    body {
-        background-image: none !important;
-    }
-
-    header,
-    .nav-wrap,
-    footer,
-    main .inner > .top .right,
     .submit,
     .close {
         display: none !important;
-    }
-
-    main .inner {
-        padding: 0;
-
-        > .top .left {
-            width: 100%;
-        }
     }
 }

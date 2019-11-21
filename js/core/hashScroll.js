@@ -11,11 +11,12 @@
 
 // windowHashScroll
 // gère le scroll sur window dans un contexte ou la page est composé de blocs liés à des hash
-quid.core.windowHashScroll = function(type)
+quid.core.windowHashScroll = function(type,persistent)
 {
     type = type || 'scroll';
     
-    $(window).hashchange().on(type,function(event) {
+    $(this).hashchange(persistent)
+    .on(type,function(event) {
         $(this).trigger('windowHashScroll:change',[true]);
     })
     .on('mousewheel DOMMouseScroll wheel MozMousePixelScroll', function(event) {
@@ -45,6 +46,9 @@ quid.core.windowHashScroll = function(type)
     .on('windowHashScroll:getTarget', function(event,target) {
         return $(this).data('windowHashScroll:target');
     })
+    .on('windowHashScroll:getFirstTarget', function(event,target) {
+        return $(this).triggerHandler('windowHashScroll:getTarget').first();
+    })
     .on('windowHashScroll:getCurrentTarget', function(event,target) {
         var r = null;
         var current = $(this).triggerHandler('windowHashScroll:getTarget').filter(function() {
@@ -60,7 +64,7 @@ quid.core.windowHashScroll = function(type)
         var r = null;
         var target = $(this).triggerHandler('windowHashScroll:getTarget');
         var attr = $(this).triggerHandler('windowHashScroll:getTargetAttr');
-        if(target instanceof jQuery && quid.base.str.isNotEmpty(hash) && quid.base.str.isNotEmpty(attr))
+        if(target != null && quid.base.str.isNotEmpty(hash) && quid.base.str.isNotEmpty(attr))
         {
             var find = target.filter("["+attr+"='"+hash+"']");
             if(find.length === 1)
@@ -77,7 +81,7 @@ quid.core.windowHashScroll = function(type)
         var windowHeightRatio = (windowHeight / 2);
         var target = $(this).triggerHandler('windowHashScroll:getTarget');
         
-        if(target instanceof jQuery && target.length)
+        if(target != null && target.length)
         {
             if(scrollTop <= windowHeightRatio)
             r = target.first();
@@ -113,12 +117,11 @@ quid.core.windowHashScroll = function(type)
         return r;
     })
     .on('windowHashScroll:change', function(event,fromScroll) {
-
         if($(this).triggerHandler('windowHashScroll:canScroll'))
         {
             var currentTarget = $(this).triggerHandler('windowHashScroll:getScrollTarget');
             
-            if(currentTarget instanceof jQuery)
+            if(currentTarget != null)
             {
                 var isFirst = currentTarget.triggerHandler('hashScrollTarget:isFirst');
                 var hash = currentTarget.triggerHandler('hashScrollTarget:getHash');
@@ -127,34 +130,60 @@ quid.core.windowHashScroll = function(type)
                 if(hash !== location.hash)
                 {
                     $(this).removeData('windowHashScroll:noScroll');
+                    
+                    if(fromScroll === true)
+                    $(this).data('windowHashScroll:noScroll',true);
+                                        
                     var oldHash = quid.base.uri.makeHash(location.hash,false);
                     var old = $(this).triggerHandler('windowHashScroll:findTarget',[oldHash]);
                     
-                    if(old !== null && old.triggerHandler('hashScrollTarget:isCurrent'))
+                    if(old != null && old.triggerHandler('hashScrollTarget:isCurrent'))
                     old.trigger('hashScrollTarget:leave');
-                    
-                    if(fromScroll === true && (quid.base.browser.isTouch() || quid.base.browser.isResponsive()))
-                    $(this).data('windowHashScroll:noScroll',true);
                     
                     if(isFirst === false || location.hash !== '')
                     location.hash = hash;
                     
                     if(!currentTarget.triggerHandler('hashScrollTarget:isCurrent'))
                     currentTarget.trigger('hashScrollTarget:enter');
-                    
-                    return false;
                 }
             }
         }
     });
-            
-    $(document).on('click', "a[href*='#']", function(event) {
-        if(!$(window).triggerHandler('windowHashScroll:canScroll'))
+    
+    return this;
+}
+
+
+// documentArrowScroll
+// permet d'activer la navigation via clavier (les flèches)
+quid.core.documentArrowScroll = function() {
+    
+    function arrowScroll(type,keyEvent,isInput) 
+    {
+        var targets = $(window).triggerHandler('windowHashScroll:getTarget');
+        
+        if(targets != null && targets.length > 1 && isInput === false)
         {
-            event.preventDefault();
-            event.stopImmediatePropagation();
-            return false;
+            var target = $(window).triggerHandler('windowHashScroll:getScrollTarget');
+            if(target != null)
+            {
+                var eventName = 'hashScrollTarget:'+type;
+                var value = target.triggerHandler(eventName);
+                
+                if(value != null)
+                quid.core.windowScrollToHash(value);
+            }
+            
+            keyEvent.preventDefault();
+            keyEvent.stopImmediatePropagation();
         }
+    }
+    
+    $(this).arrowCatch().on('arrowUp:catched', function(event,keyEvent,isInput) {
+        arrowScroll.call(this,'getPrev',keyEvent,isInput);
+    })
+    .on('arrowDown:catched', function(event,keyEvent,isInput) {
+        arrowScroll.call(this,'getNext',keyEvent,isInput);
     });
     
     return this;
@@ -199,7 +228,7 @@ quid.core.windowScrollToHash = function(hash,event)
         if(quid.base.str.isNotEmpty(hash))
         {
             target = win.triggerHandler('windowHashScroll:findTarget',[hash]);
-            if(target !== null)
+            if(target != null)
             {
                 top = target.offset().top;
                 newHash = hash;
@@ -208,7 +237,7 @@ quid.core.windowScrollToHash = function(hash,event)
         
         else
         {
-            target = source.first();
+            target = win.triggerHandler('windowHashScroll:getFirstTarget');
             top = 0;
             newHash = "";
         }
@@ -223,11 +252,14 @@ quid.core.windowScrollToHash = function(hash,event)
             
             if(noScroll === true || (isFirst === true && scrollTop === 0))
             callback.call(this);
+            
             else
             {
                 win.data('hashScroll:animate',true);
                 source.stop(true,true).animate({scrollTop: top}, 1000).promise().done(callback).done(function() {
-                    win.removeData('hashScroll:animate');
+                    setTimeout(function() {
+                        win.removeData('hashScroll:animate');
+                    },100);
                 });
             }
         }
@@ -235,6 +267,7 @@ quid.core.windowScrollToHash = function(hash,event)
     
     return r;
 }
+
 
 // anchorScroll
 // gère les liens avec ancrage (changement de hash)
@@ -247,6 +280,7 @@ quid.core.anchorScroll = function()
             quid.core.windowScrollToHash(hash,event);
             
             event.preventDefault();
+            event.stopImmediatePropagation();
             return false;
         }
     })
@@ -256,7 +290,7 @@ quid.core.anchorScroll = function()
         else
         $(this).removeClass('selected');
     });
-    
+
     return this;
 }
 
@@ -267,7 +301,7 @@ quid.core.hashScrollTarget = function()
 {
     var $this = $(this);
     
-    $(this).arrowCatch().on('hashScrollTarget:getHash', function(event) {
+    $(this).on('hashScrollTarget:getHash', function(event) {
         return quid.base.uri.makeHash($(this).data("id"),true);
     })
     .on('hashScrollTarget:getFragment', function(event) {
@@ -296,22 +330,6 @@ quid.core.hashScrollTarget = function()
         $this.removeClass('current').removeData('hashScrollTarget:current');
         $(this).addClass('current').data('hashScrollTarget:current',true);
     })
-    .on('arrowUp:catched', function(event) {
-        if($(this).triggerHandler('hashScrollTarget:isCurrent'))
-        {
-            var prev = $(this).triggerHandler('hashScrollTarget:getPrev');
-            if(prev != null)
-            quid.core.windowScrollToHash(prev);
-        }
-    })
-    .on('arrowDown:catched', function(event) {
-        if($(this).triggerHandler('hashScrollTarget:isCurrent'))
-        {
-            var next = $(this).triggerHandler('hashScrollTarget:getNext');
-            if(next != null)
-            quid.core.windowScrollToHash(next);
-        }
-    });
     
     return this;
 }

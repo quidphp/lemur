@@ -42,10 +42,11 @@ quid.main.window = new function() {
 
     // resizeChange
     // permet de notifier un objet jQuery du redimensionnement de l'écran
-    this.resizeChange = $.fn.resizeChange = function()
+    this.resizeChange = $.fn.resizeChange = function(persistent)
     {
         var $this = $(this);
-        $(window).on('resize.document-mount', function(event) {
+        var type = (persistent === true)? 'resize':'resize.document-mount';
+        $(window).on(type, function(event) {
             $this.trigger('resize:change');
         });
         
@@ -55,10 +56,11 @@ quid.main.window = new function() {
 
     // scrollChange
     // permet de notifier un objet jQuery du changement de scroll
-    this.scrollChange = $.fn.scrollChange = function()
+    this.scrollChange = $.fn.scrollChange = function(persistent)
     {
         var $this = $(this);
-        $(window).on('scroll.document-mount', function(event) {
+        var type = (persistent === true)? 'scroll':'scroll.document-mount';
+        $(window).on(type, function(event) {
             $this.trigger('scroll:change');
         });
         
@@ -68,10 +70,11 @@ quid.main.window = new function() {
 
     // hashchange
     // renvoie l'événement haschange aux objets jquerys
-    this.hashchange = $.fn.hashchange = function()
+    this.hashchange = $.fn.hashchange = function(persistent)
     {
         var $this = $(this);
-        $(window).on('hashchange.document-mount', function(event,sourceEvent) {
+        var type = (persistent === true)? 'hashchange':'hashchange.document-mount';
+        $(window).on(type, function(event,sourceEvent) {
             $this.trigger('hash:change',[quid.base.request.fragment(),sourceEvent]);
         });
         

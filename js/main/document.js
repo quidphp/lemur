@@ -95,10 +95,16 @@ quid.main.document = new function() {
         
         // documentBindings
         // applique les bindings au document mounted dans le bon ordre
-        function documentBindings()
+        function documentBindings(initial)
         {
+            var $this = $(this);
+            
+            if(initial === true)
+            $(this).trigger('document:initialMount');
+            
             $(this).trigger('document:commonBindings',[$(this)]);
             $(this).trigger('document:mount');
+            $(this).trigger('document:mounted');
         }
         
         
@@ -201,7 +207,7 @@ quid.main.document = new function() {
                 var type = makeHistoryType(config,sourceEvent);
                 r = quid.main.ajax.trigger.call(this,config);
                 
-                if(r !== null)
+                if(r != null)
                 $(this).data('document:ajax',r);
             }
             
@@ -242,13 +248,16 @@ quid.main.document = new function() {
                     {
                         state = makeHistoryState(state.url,doc.title);
                         
-                        if(state.url !== current.url && !quid.base.uri.isSamePathQuery(current.url,currentUri))
-                        $history.pushState(state,state.title,state.url);
+                        if(state.url !== current.url)
+                        {
+                            if(type === 'push' || !quid.base.uri.isSamePathQuery(current.url,currentUri))
+                            $history.pushState(state,state.title,state.url);
+                        }
                     }
                     
                     if(state.url !== currentUri)
                     {
-                        if(quid.base.uri.isInternal(state.url,currentUri) === false || quid.base.uri.isSamePathQuery(state.url,currentUri) === false)
+                        if(!quid.base.uri.isInternal(state.url,currentUri) || !quid.base.uri.isSamePathQuery(state.url,currentUri))
                         state = $(this).triggerHandler('document:replaceState',[currentUri,state.title]);
                     }	
                         
@@ -530,6 +539,7 @@ quid.main.document = new function() {
                     // hash change
                     else if(quid.base.uri.isHashChange(state.url,current.url))
                     {
+                        
                         r = true;
                         $history.pushState(state,state.title,state.url);
                         $previous = state;
@@ -569,6 +579,13 @@ quid.main.document = new function() {
         })
         
         
+        // initialMount
+        // seulement au chargement initial de la page
+        .on('document:initialMount', function(event) {
+            
+        })
+        
+        
         // mount
         // sur le mount d'une nouvelle page
         .on('document:mount', function(event) {
@@ -577,6 +594,13 @@ quid.main.document = new function() {
             
             if(quid.base.str.isNotEmpty(route))
             $(this).trigger('route:'+route);
+        })
+        
+        
+        // mounted
+        // callback après avoir monté la nouvelle page
+        .on('document:mounted', function(event) {
+            
         })
         
         
@@ -667,7 +691,7 @@ quid.main.document = new function() {
             applyBindings.call(this);
         }
         
-        documentBindings.call(this);    
+        documentBindings.call(this,true);    
         
         return this;
     }

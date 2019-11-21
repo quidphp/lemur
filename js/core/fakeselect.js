@@ -36,9 +36,8 @@ quid.core.fakeselect = function()
         }
     }
     
-    $(this)
-    .callThis(quid.core.clickOpenWithTrigger,"> .trigger")
-    .enterCatch()
+    quid.core.clickOpenWithTrigger.call(this,"> .trigger");
+    $(this).enterCatch(true)
     .on('enter:blocked', function(event) {
         $(this).trigger('clickOpen:toggle');
     })
@@ -72,7 +71,7 @@ quid.core.fakeselect = function()
         var choices = $(this).triggerHandler('fakeselect:getChoices');
         var selected = $(this).triggerHandler('fakeselect:getSelected');
         
-        choices.enterCatch().on('click enter:blocked', function(event) {
+        choices.enterCatch(true).on('click enter:blocked', function(event) {
             event.stopPropagation();
             choose.call($this,$(this));
         });

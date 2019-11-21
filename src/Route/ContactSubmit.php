@@ -28,9 +28,8 @@ abstract class ContactSubmit extends Core\RouteAlias
             'method'=>'post',
             'post'=>['name','phone','email','message'],
             'csrf'=>true,
-            'captcha'=>true,
             'genuine'=>true,
-            'timeout'=>true],
+            'timeout'=>false],
         'timeout'=>[
             'failure'=>['max'=>8,'timeout'=>600],
             'success'=>['max'=>2,'timeout'=>600]],
@@ -40,7 +39,15 @@ abstract class ContactSubmit extends Core\RouteAlias
         'flashPost'=>true
     ];
 
-
+    
+    // canTrigger
+    // retourne vrai si la route peut trigger
+    public function canTrigger():bool
+    {
+        return (parent::canTrigger() && static::db()->hasTable(static::rowClass()) && static::rowClass()::canSendEmail())? true:false;
+    }
+    
+    
     // onSuccess
     // traite le succès
     final protected function onSuccess():void
@@ -65,9 +72,9 @@ abstract class ContactSubmit extends Core\RouteAlias
 
     // routeSuccess
     // retourne la route vers laquelle redirigé, home par défaut
-    final public function routeSuccess():Core\Route
+    public function routeSuccess():Lemur\Route
     {
-        return Home::make();
+        return static::makeParent();
     }
 
 
@@ -90,7 +97,7 @@ abstract class ContactSubmit extends Core\RouteAlias
 
     // proceed
     // lance le processus pour le contact
-    final protected function proceed():?Core\Row
+    final protected function proceed():?Lemur\Row
     {
         $return = null;
         $session = static::session();

@@ -27,7 +27,7 @@ $(document).ready(function() {
 	// document mount
     // comportements utilisés pour toutes les pages du CMS
 	$(this).on('document:mount', function(event) {
-		var body = $(this).find("body");
+		var html = $(this).find("html");
 		var modal = $(this).find(".modal");
 		var burger = $(this).find("header .burger-menu, .nav-fixed .nav-close");
 		var com = $(this).find("#wrapper .com");
@@ -36,26 +36,29 @@ $(document).ready(function() {
         var mainSearch = $(this).find("header .top form");
         
         // carousel
-        carousel.callThis(quid.core.carousel,".trigger");
+        quid.core.carousel.call(carousel,".trigger");
         
         // subMenu
-        subMenu.callThis(quid.core.clickOpenWithTrigger,".trigger").on('clickOpen:getBackgroundFrom', function(event) {
+        quid.core.clickOpenWithTrigger.call(subMenu,".trigger");
+        subMenu.on('clickOpen:getBackgroundFrom', function(event) {
             return 'submenu';
         });
         
 		// modal
-		modal.callThis(quid.core.modal);
+		quid.core.modal.call(modal);
 		
         // com
-		com.callThis(quid.cms.com);
+		quid.cms.com.call(com).trigger('component:bind');
         
         // burger
 		burger.on('click', function(event) {
-			body.toggleClass('responsive-menu-open');
+            var value = (html.attr('data-burger') === 'open')? 'close':'open';
+			html.attr('data-burger',value)
+            $(window).trigger('resize');
 		});
 
         // mainSearch
-        mainSearch.callThis(quid.cms.mainSearch);
+        quid.cms.mainSearch.call(mainSearch);
 	})
     
     // document ajax progress
@@ -81,10 +84,10 @@ $(document).ready(function() {
         var select = parent.find("select");
         
         // modalAnchor
-        modalAnchor.callThis(quid.core.modalAjax,modal);
+        quid.core.modalAjax.call(modalAnchor,modal);
                 
 		// aConfirm
-		aConfirm.callThis(quid.main.window.confirm,'click');
+		quid.main.window.confirm.call(aConfirm,'click');
 		
 		// print
 		print.on('click', function(event) {
@@ -92,19 +95,19 @@ $(document).ready(function() {
 		});
 
         // popupTrigger
-        popupTrigger.callThis(quid.core.clickOpenWithTrigger,".popup-title");
+        quid.core.clickOpenWithTrigger.call(popupTrigger,".popup-title");
         
         // popupTriggerAjax
-        popupTriggerAjax.callThis(quid.core.clickOpenAnchorAjax,".popup-title");
+        quid.core.clickOpenAnchorAjax.call(popupTriggerAjax,".popup-title");
         
         // fakeselect
-        select.callThis(quid.core.selectToFake);
+        quid.core.selectToFake.call(select);
         
         // anchorCorner
-        anchorCorner.callThis(quid.main.dimension.anchorCorner);
+        quid.main.dimension.anchorCorner.call(anchorCorner);
         
         // absolutePlaceholder
-        absolutePlaceholder.callThis(quid.main.dimension.absolutePlaceholder);
+        quid.main.dimension.absolutePlaceholder.call(absolutePlaceholder);
 	})
     
     // login
@@ -153,7 +156,7 @@ $(document).ready(function() {
 		var feed = $(this).find("main .home-feed");
         var feedTogglers = feed.find(".block-head .feed-togglers > a");
         var feedBody = feed.find(".block-body");
-        feedBody.callThis(quid.core.appendContainer);
+        quid.core.appendContainer.call(feedBody).trigger('feed:bind');
         
         feedTogglers.ajaxBlock()
         .on('ajaxBlock:getStatusNode', function(event) {
@@ -166,8 +169,8 @@ $(document).ready(function() {
         .on('ajax:success', function(event,data,textStatus,jqXHR) {
             feedBody.trigger('feed:overwrite',[data]);
         })
-        .on('ajax:error', function(event,jqXHR,textStatus,errorThrown) {
-            feedBody.html(quid.main.ajax.parseError(jqXHR,textStatus));
+        .on('ajax:error', function(event,parsedError,jqXHR,textStatus,errorThrown) {
+            feedBody.html(parsedError);
         });
 	})
     

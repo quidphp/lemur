@@ -14,16 +14,16 @@ quid.cms.mainSearch = function()
         var $this = $(this);
         var searchIn = $(this).find(".search-in");
 
-        searchIn.callThis(quid.core.clickOpen,true)
-        .on('clickOpen:open', function(event) {
+        quid.core.clickOpen.call(searchIn,true);
+        searchIn.on('clickOpen:open', function(event) {
             $this.addClass('active-search-in');
         })
         .on('clickOpen:close', function(event) {
             $this.removeClass('active-search-in');
         });
         
-        $(this).callThis(quid.core.clickOpenInputFormAjax)
-        .on('inputForm:empty', function(event) {
+        quid.core.clickOpenInputFormAjax.call(this);
+        $(this).on('inputForm:empty', function(event) {
             searchIn.trigger('clickOpen:open');
         })
         .on('inputForm:notEmpty escape:blocked', function(event) {

@@ -86,23 +86,11 @@
     }
 }
 
-// tableForm
-// mixin avec les styles pour un formulaire dans une table, comme la page de connexion
-@mixin tableForm($color, $labelHover) {
-    label {
-        color: $color;
-
-        &[for]:hover {
-            color: $labelHover;
-        }
-    }
-
-    .required label:before {
-        content: '* ';
-    }
-
+// formBase
+// défini quelques styles par défaut pour les inputs de formulaire
+@mixin formBase()
+{
     textarea,
-    select,
     input[type='text'],
     input[type='email'],
     input[type='password'] {
@@ -113,14 +101,45 @@
     textarea {
         height: 100px;
     }
+}
 
+// labelBase
+// applique une couleur au label et au hover du label s'il y a un for
+@mixin labelBase($label:null, $labelHover:null)
+{
+    @if ($label) {
+        label {
+            color: $label;
+        }
+    }
+    
+    @if ($labelHover) {
+        label[for]:hover {
+            color: $labelHover;
+        }
+    }
+    
+    .required label:before {
+        content: '* ';
+    }
+}
+
+
+// tableForm
+// mixin avec les styles pour un formulaire dans une table, comme la page de connexion
+@mixin tableForm($label:null, $labelHover:null) {
+    
+    @include formBase();
+    @include labelBase($label,$labelHover);
+    
     .choice {
         @include inputChoice();
     }
-
+    
     .table {
         width: 100%;
-
+        text-align: left;
+        
         .table-cell {
             padding: 8px 0;
 

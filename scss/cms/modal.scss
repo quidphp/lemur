@@ -1,0 +1,55 @@
+// compileOnSave: false
+
+/*
+ * This file is part of the QuidPHP package.
+ * Website: https://quidphp.com
+ * License: https://github.com/quidphp/lemur/blob/master/LICENSE
+ */
+
+// modal
+// stylesheet for the modal routes
+
+/* CHANGE PASSWORD */
+.modal[data-route='accountChangePassword'] .inner {
+    @include modalForm();
+}
+
+/* CONTACT */
+.modal[data-route='contact'] .inner {
+    @include modalForm();
+}
+
+/* SESSION ROLE */
+.modal[data-route='sessionRole'] .inner {
+    @include modalForm();
+}
+
+/* ABOUT */
+.modal[data-route='about'] .inner {
+    h3 {
+        margin-bottom: 20px;
+    }
+
+    .content {
+        @include wysiwyg();
+    }
+}
+
+/* GENERAL EXPORT */
+.modal[data-route='generalExport'] .inner {
+    .count {
+        margin-bottom: 20px;
+    }
+
+    h3 {
+        margin-bottom: 10px;
+    }
+
+    .choices > a {
+        margin: 0 5px;
+    }
+
+    .note {
+        padding-top: 15px;
+    }
+}

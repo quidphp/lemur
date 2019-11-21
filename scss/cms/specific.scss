@@ -24,7 +24,25 @@
     }
 }
 [data-group='specific'] main .inner > .top .right .nav {
-    @include specificNav();
+    @include iflex(center, center, wrap);
+    background-color: $lightestGray;
+    border: 1px solid $lightGray;
+    padding: 2px 5px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 6px -4px $gray;
+    min-height: 40px;
+
+    > a {
+        color: $black;
+        font-weight: bold;
+        margin: 0 8px;
+        font-size: 90%;
+
+        &:hover,
+        &[data-triggered='1'] {
+            color: $darkGray;
+        }
+    }
 }
 
 /* FORM */
@@ -67,9 +85,34 @@
             margin-left: 0;
         }
     }
+    
+    @include responsive() {
+        > .left,
+        > .right {
+            width: 100%;
+            text-align: center;
+        }
+        
+        > .left > ul {
+            justify-content: center;
+        }
+        
+        > .right {
+            padding-top: 5px;
+        }
+    }
+    
+    @include print() {
+        display: none;
+    }
 }
 [data-group='specific'] main .inner > .specific-form > .form-inner {
     margin-bottom: 20px;
+}
+[data-group='specific'] main .inner > .specific-form .panel {
+    @include print() {
+        display: block !important;
+    }
 }
 
 /* ELEMENT */
@@ -91,6 +134,24 @@
         .left label {
             text-decoration: underline;
         }
+    }
+    
+    @include responsive() {
+        @include responsiveFlex(flex-start, flex-start);
+
+        > .left,
+        > .right {
+            @include responsiveSize();
+            width: 100%;
+        }
+
+        > .left {
+            margin-bottom: 10px;
+        }
+    }
+    
+    @include print() {
+        background-color: $white !important;
     }
 }
 [data-group='specific'] #wrapper main .form-element.exception {
@@ -175,6 +236,25 @@
     button[type='submit'] {
         margin: 0 5px;
     }
+    
+    @include responsive() {
+        justify-content: center;
+        margin: 0;
+
+        .left,
+        .center,
+        .right {
+            @include responsiveSize();
+
+            &.left {
+                display: none;
+            }
+        }
+    }
+    
+    @include print() {
+        display: none;
+    }
 }
 
 /* SPECIFIC MULTI */
@@ -220,62 +300,8 @@
             background-color: $lightYellow;
         }
     }
-}
-
-/* RESPONSIVE */
-@media screen and (max-width: 900px), screen and (orientation: portrait) {
-    [data-group='specific'] main .inner > .specific-form > .form-top > .right {
-        width: 100%;
-        padding-top: 5px;
-        text-align: center;
-    }
-
-    [data-group='specific'] main .inner > .specific-form .form-element {
-        @include responsiveFlex(flex-start, flex-start);
-
-        > .left,
-        > .right {
-            @include responsiveSize();
-            width: 100%;
-        }
-
-        > .left {
-            margin-bottom: 10px;
-        }
-    }
-
-    [data-group='specific'] main .inner > .specific-form > .form-bottom {
-        justify-content: center;
-        margin: 0;
-
-        .left,
-        .center,
-        .right {
-            @include responsiveSize();
-
-            &.left {
-                display: none;
-            }
-        }
-    }
-
-    [data-route='specificMulti'] main .inner > .specific-form .form-element {
+    
+    @include responsive() {
         padding-top: 30px;
-    }
-}
-
-/* PRINT */
-@media print {
-    [data-group='specific'] main .inner > .specific-form .form-top,
-    [data-group='specific'] main .inner > .specific-form .form-bottom {
-        display: none !important;
-    }
-
-    [data-group='specific'] main .inner > .specific-form .panel {
-        display: block !important;
-    }
-
-    [data-group='specific'] main .inner > .specific-form .form-element {
-        background-color: $white !important;
     }
 }

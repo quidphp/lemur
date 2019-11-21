@@ -33,13 +33,13 @@ $(document).ready(function() {
 		pageLimit.callThis(quid.core.inputNumeric);
 		
         // rowsChecker
-        main.callThis(quid.cms.rowsChecker);
+        main.callThis(quid.cms.rowsChecker).trigger('component:bind');
         
 		// colsSorter
 		colsSorter.callThisEach(quid.cms.colsSorter);
 		
         // filter
-		filter.callThis(quid.core.filterGeneralFull);
+		filter.callThis(quid.core.filterGeneralFull).trigger('filterGeneralFull:bind');
         
 		// search
 		if(search.length)

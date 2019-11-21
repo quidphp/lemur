@@ -31,7 +31,7 @@ class SpecificAddSubmit extends Core\RouteAlias
             'table'=>'structureSegmentTable'],
         'match'=>[
             'method'=>'post',
-            'role'=>['>'=>'user'],
+            'session'=>'canLogin',
             'csrf'=>false,
             'genuine'=>true,
             'post'=>['-table-'=>['='=>'[table]']]],

@@ -180,8 +180,9 @@ quid.main.validate = new function() {
         })
         .on('validatePrevent:validate', function(event) {
             var r = true;
+            var fields = $(this).triggerHandler('validatePrevent:getFields');
             
-            $(this).triggerHandler('validatePrevent:getFields').each(function(index, el) {
+            fields.each(function(index, el) {
                 var val = $(this).triggerHandler("validate:trigger");
                 
                 if(val === false)
@@ -191,7 +192,12 @@ quid.main.validate = new function() {
             return r;
         })
         .on('validatePrevent:getFields', function(event) {
-            var r = $(this).find(":input").not("[name^='-']").filter("[data-required],[data-pattern]");
+            var r = null;
+            
+            if($(this).is(":input"))
+            r = $(this);
+            else
+            r = $(this).find(":input").filter("[data-required],[data-pattern]").not("[name^='-']");
             
             r.each(function(index, el) {
                 if(!$(this).triggerHandler('validate:binded'))

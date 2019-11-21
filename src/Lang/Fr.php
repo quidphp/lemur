@@ -162,8 +162,8 @@ class Fr extends Core\Lang\Fr
             // popup
             'popup'=>[
 
-                // user
-                'user'=>[
+                // session
+                'session'=>[
                     'rolePermission'=>'Rôle',
                     'classSession'=>'Classe Session',
                     'classFqcn'=>'Classe Utilisateur',
@@ -180,7 +180,8 @@ class Fr extends Core\Lang\Fr
                     'getGarbageCollect'=>'Nettoyage des sessions',
                     'userAgent'=>'Agent utilisateur',
                     'roles'=>'Rôles',
-                    'fakeRoles'=>'Rôles temporaires'
+                    'fakeRoles'=>'Rôles temporaires',
+                    'primary'=>'Id session'
                 ],
 
                 // boot
@@ -307,7 +308,13 @@ class Fr extends Core\Lang\Fr
             'about'=>[
                 'content'=>"Le gestionnaire de contenu Lemur est développé sur le framework [websiteLink]. Ce logiciel est disponible via la license open-source [licenseLink]. La version actuelle est [version]. Pour toute question, contactez l'auteur [authorLink]."
             ],
-
+            
+            // contact
+            'contact'=>array(
+                'info'=>"Utilisez ce formulaire pour envoyer un message à l'administrateur: [name] &lt;[email]&gt;.",
+                'submit'=>'Envoyer'
+            ),
+            
             // relationFeed
             'relationFeed'=>[
                 'loadMore'=>'Charger de [from] à [to] sur [total]'
@@ -409,11 +416,6 @@ class Fr extends Core\Lang\Fr
                     // *
                     '*'=>[],
 
-                    // lang
-                    'lang'=>[
-                        'type'=>'Environnement'
-                    ],
-
                     // redirection
                     'redirection'=>[
                         'key'=>'De',
@@ -437,7 +439,8 @@ class Fr extends Core\Lang\Fr
                     // *
                     '*'=>[
                         'id'=>'Clé primaire et unique. Obligatoire',
-                        'context'=>"Défini le contexte de création de l'élément, pour administrateur.",
+                        'context'=>"Défini le contexte lors de la création de l'élément, pour administrateur.",
+                        'envType'=>"Défini l'environnement et le type lors de la création de l'élément, pour administrateur.",
                         'metaKeywords_fr'=>'Mots clefs séparés par des virgules, champ facultatif',
                         'metaKeywords_en'=>'Mots clefs séparés par des virgules, champ facultatif',
                         'metaDescription_fr'=>'Aucune balise HTML, champ facultatif',
@@ -514,14 +517,14 @@ class Fr extends Core\Lang\Fr
                     // lang
                     'lang'=>[
                         'key'=>"Clé unique de l'élément texte. Pour administrateur",
-                        'type'=>"L'élément texte est accessible dans ces environnements. Pour administrateur"
+                        'type'=>"L'élément texte est accessible dans ces types. Pour administrateur"
                     ],
 
                     // redirection
                     'redirection'=>[
                         'key'=>'URL à rediriger',
                         'value'=>'Destination de la redirection',
-                        'type'=>'La redirection est active dans ces environnements'
+                        'type'=>'La redirection est active dans ces types.'
                     ],
 
                     // user
@@ -636,7 +639,6 @@ class Fr extends Core\Lang\Fr
                 // label
                 'label'=>[
                     'about'=>'À propos',
-                    'cliClearCache'=>'Vider les caches',
                     'homeFeed'=>'Accueil - Flux',
                     'general'=>'Général',
                     'generalDelete'=>'Général - Suppression',

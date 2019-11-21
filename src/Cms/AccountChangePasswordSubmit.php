@@ -17,7 +17,7 @@ class AccountChangePasswordSubmit extends Lemur\Route\AccountChangePasswordSubmi
     // config
     public static $config = [
         'match'=>[
-            'role'=>['>'=>'user']],
+            'session'=>'canLogin'],
         'parent'=>AccountChangePassword::class
     ];
 

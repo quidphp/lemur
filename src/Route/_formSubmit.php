@@ -44,7 +44,7 @@ trait _formSubmit
 
     // fallbackRouteRedirect
     // permet de spécifier une route de redirection en cas de fallback
-    final protected function fallbackRouteRedirect($context=null)
+    protected function fallbackRouteRedirect($context=null)
     {
         return;
     }

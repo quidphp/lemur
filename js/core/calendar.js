@@ -13,8 +13,7 @@
 // gère les comportements javascript pour un calendrier
 quid.core.calendar = function()
 {
-    $(this)
-    .block('calendar:load')
+    $(this).block('calendar:load')
     .ajax('calendar:load')
     .on('calendar:prepareValue', function(event,value) {
         var r = null;
@@ -62,8 +61,8 @@ quid.core.calendar = function()
         $(this).trigger('calendar:bind');
         $(this).trigger('calendar:refresh');
     })
-    .on('ajax:error', function(event,jqXHR,textStatus,errorThrown) {
-        $(this).html(quid.main.ajax.parseError(jqXHR,textStatus));
+    .on('ajax:error', function(event,parsedError,jqXHR,textStatus,errorThrown) {
+        $(this).html(parsedError);
         $(this).trigger('calendar:removeSelected');
         $(this).trigger('calendar:loaded');
         $(this).trigger('unblock');
@@ -113,8 +112,8 @@ quid.core.calendar = function()
             $calendar.trigger('ajax:success',[data,textStatus,jqXHR]);
             $(this).trigger('unblock');
         })
-        .on('ajax:error', function(event,jqXHR,textStatus,errorThrown) {
-            $calendar.trigger('ajax:error',[jqXHR,textStatus,errorThrown]);
+        .on('ajax:error', function(event,parsedError,jqXHR,textStatus,errorThrown) {
+            $calendar.trigger('ajax:error',[parsedError,jqXHR,textStatus,errorThrown]);
         });
     });
     
@@ -158,7 +157,8 @@ quid.core.calendarInput = function()
         var target = $(this).triggerHandler('clickOpen:getTarget');
         var calendar = $(this).triggerHandler('calendarInput:getCalendar');
         
-        input.timeout('keyup',600).on('click', function(event) {
+        input.timeout('keyup',600)
+        .on('click', function(event) {
             event.stopPropagation();
         })
         .on('change', function(event) {
@@ -171,8 +171,7 @@ quid.core.calendarInput = function()
             calendar.trigger('calendar:select',[$(this).inputValue(true),reload]);
         });
         
-        calendar
-        .callThis(quid.core.calendar)
+        calendar.callThis(quid.core.calendar)
         .on('click', 'td', function(event) {
             var format = $(this).data('format');
             calendar.trigger('calendar:select',$(this).data("timestamp"));
@@ -188,8 +187,8 @@ quid.core.calendarInput = function()
         .on('calendar:loaded', function(event) {
             target.removeAttr('data-status');
         });
-        
-    }).trigger('calendarInput:bind');
+    })
+    .trigger('calendarInput:bind');
     
     return this;
 }

@@ -15,27 +15,28 @@ use Quid\Main;
 
 // contact
 // class to work with a row of the contact table, stores contact messages
-abstract class Contact extends Core\RowAlias
+class Contact extends Core\RowAlias
 {
     // config
     public static $config = [
         'cols'=>[
-            'context'=>true,
+            'context'=>array('class'=>Core\Col\Context::class),
             'name'=>['required'=>true],
             'phone'=>['required'=>true,'general'=>true],
             'email'=>['required'=>true],
             'message'=>['required'=>true,'validate'=>['strLatin']]],
-        'emailModel'=>[ // custom, modele de courriel
-            'contactAdmin'=>null,
-            'contactConfirm'=>null],
-        'formWrap'=>'br', // utilisé comme séparateur de form
-        'fields'=>['name','phone','email','message'] // colonnes à afficher pour le formulaire
+        'colsForm'=>array('name','phone','email','message'),
+        'emailModel'=>[ // custom modèle de courriel
+            'contactAdmin'=>'contactAdmin',
+            'contactConfirm'=>'contactConfirm'],
+        'fields'=>['name','phone','email','message'], // colonnes à afficher pour le formulaire
+        'permission'=>array(
+            '*'=>array('insert'=>true)),
+        '@cms'=>[
+            'permission'=>[
+                'contributor'=>['view'=>false],
+                'editor'=>['view'=>false]]]
     ];
-
-
-    // getAdminEmail
-    // retourne le email de l'administrateur
-    abstract public function getAdminEmail():array;
 
 
     // contactAdminEmailModel
@@ -114,7 +115,7 @@ abstract class Contact extends Core\RowAlias
     final protected function sendEmail(?array $option=null):int
     {
         $return = 0;
-        $option = Base\Arr::plus(['method'=>'dispatch'],$option);
+        $option = Base\Arr::plus(['mailer'=>null,'method'=>'dispatch'],$option);
 
         $replace = $this->getReplaceEmail();
         $method = $option['method'];
@@ -124,7 +125,7 @@ abstract class Contact extends Core\RowAlias
 
         if(!empty($contactConfirm))
         {
-            $send = $contactConfirm->$method(null,$this,$replace);
+            $send = $contactConfirm->$method($option['mailer'],$this,$replace);
 
             if($send === true)
             $return++;
@@ -132,7 +133,7 @@ abstract class Contact extends Core\RowAlias
 
         if(!empty($contactAdmin) && !empty($adminEmail))
         {
-            $send = $contactAdmin->$method(null,$adminEmail,$replace);
+            $send = $contactAdmin->$method($option['mailer'],$adminEmail,$replace);
 
             if($send === true)
             $return++;
@@ -149,11 +150,11 @@ abstract class Contact extends Core\RowAlias
         $return = [];
         $boot = static::boot();
         $option = ['context'=>'noHtml'];
-        $cells = $this->cells()->gets(...static::getCols());
+        $cells = $this->cells()->gets(...static::getColsForm());
         $model = '%label%: %get%';
 
         $return['name'] = $boot->label();
-        $return['host'] = $boot->schemeHost(true,'app');
+        $return['host'] = $boot->schemeHost(true);
         $return['link'] = $this->route('cms')->uriAbsolute();
         $return['data'] = implode(PHP_EOL,$cells->htmlStr($model,false,$option));
 
@@ -163,19 +164,18 @@ abstract class Contact extends Core\RowAlias
 
     // makeForm
     // génère le formulaire de contact
-    final public static function makeForm(?array $flash=null):string
+    final public static function makeForm(string $formWrap,$pattern=null,?array $flash=null):string
     {
         $r = '';
         $table = static::tableFromFqcn();
-        $formWrap = static::$config['formWrap'];
 
-        foreach($table->cols(...static::getCols()) as $col)
+        foreach($table->cols(...static::getColsForm()) as $col)
         {
             $name = $col->name();
             $value = (is_array($flash) && array_key_exists($name,$flash))? $flash[$name]:null;
 
             $r .= Html::divOp(['field',$col]);
-            $r .= $col->formWrap($formWrap,null,$value);
+            $r .= $col->formWrap($formWrap,$pattern,$value);
             $r .= Html::divCl();
         }
 
@@ -185,9 +185,61 @@ abstract class Contact extends Core\RowAlias
 
     // getCols
     // retourne les colonnes à mettre dans le formulaire
-    final protected static function getCols():array
+    final protected static function getColsForm():array
     {
-        return static::$config['fields'];
+        return static::$config['colsForm'];
+    }
+    
+    
+    // hasEmailModel
+    // retourne vrai si les modèles de courriels existents
+    final public static function hasEmailModel():bool
+    {
+        $return = false;
+        $boot = static::boot();
+        $db = $boot->db();
+        $class = Core\Row\Email::class;
+        
+        if($db->hasTable($class))
+        {
+            foreach (static::$config['emailModel'] as $value) 
+            {
+                $model = $class::find($value);
+                $return = (empty($model))? false:true;
+                
+                if($return === false)
+                break;
+            }
+        }
+        
+        return $return;
+    }
+    
+    
+    // getAdminEmail
+    // retourne le email du premier utilisateur administrateur
+    public static function getAdminEmail():?array
+    {
+        $return = null;
+        $roles = static::boot()->roles();
+        $role = $roles->first(array('isAdmin'=>true));
+        
+        if(!empty($role))
+        {
+            $user = User::findByRole($role);
+            if(!empty($user))
+            $return = $user->toEmail();
+        }
+        
+        return $return;
+    }
+    
+    
+    // canSendEmail
+    // retourne vrai s'il est possible d'envoyer le email de contact
+    final public static function canSendEmail():bool
+    {
+        return (static::hasEmailModel() && !empty(static::getAdminEmail()))? true:false;
     }
 }
 

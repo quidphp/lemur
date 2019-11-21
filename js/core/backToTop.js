@@ -13,7 +13,8 @@
 // element qui ramene en haut de page
 quid.core.backToTop = function()
 {
-    $(this).scrollChange().on('click', function(event) {
+    $(this).scrollChange()
+    .on('click', function(event) {
         $("html,body").stop(true,true).animate({scrollTop: 0}, 500);
     })
     .on('backToTop:show', function(event) {

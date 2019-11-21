@@ -33,8 +33,9 @@ class Login extends Lemur\Route\Login
     final protected function onBefore()
     {
         $return = parent::onBefore();
-
-        if(!$this->request()->isPathMatchEmpty())
+        $request = $this->request();
+        
+        if(!$request->isPathMatchEmpty())
         {
             $session = static::session();
             $flash = $session->flash();
@@ -49,7 +50,7 @@ class Login extends Lemur\Route\Login
 
     // onFallback
     // retourne la route login pour la redirection
-    // seulement si l'url n'est pas celle de la requête courante
+    // seulement si la requête n'est pas ajax et l'url n'est pas celle de la requête courante
     final protected function onFallback($context=null)
     {
         $return = null;
@@ -57,10 +58,14 @@ class Login extends Lemur\Route\Login
         if($context === 'onBefore')
         {
             $request = $this->request();
-            $route = static::make();
+            
+            if(!$request->isAjax())
+            {
+                $route = static::make();
 
-            if($route->uriRelative() !== $request->relative())
-            $return = $route;
+                if($route->uriRelative() !== $request->relative())
+                $return = $route;
+            }
         }
 
         return $return;

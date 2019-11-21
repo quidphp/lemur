@@ -36,7 +36,7 @@ class SpecificDuplicate extends Core\RouteAlias
             'method'=>'post',
             'csrf'=>true,
             'genuine'=>true,
-            'role'=>['>'=>'user']],
+            'session'=>'canLogin'],
         'parent'=>Specific::class,
         'group'=>'specific'
     ];

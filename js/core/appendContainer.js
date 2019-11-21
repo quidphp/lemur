@@ -39,10 +39,6 @@ quid.core.appendContainer = function()
             $(this).trigger('ajax:init');
         }
     })
-    .on('feed:error', function(event,jqXHR,textStatus) {
-        $(this).attr('data-status','error');
-        $(this).triggerHandler('feed:target').html(quid.main.ajax.parseError(jqXHR,textStatus));
-    })
     .on('feed:loadMore', function(event) {
         return $(this).find(".load-more");
     })
@@ -56,8 +52,9 @@ quid.core.appendContainer = function()
     .on('ajax:success', function(event,data,textStatus,jqXHR) {
         $(this).trigger('feed:overwrite',[data]);
     })
-    .on('ajax:error', function(event,jqXHR,textStatus,errorThrown) {
-        $(this).trigger('feed:error',[jqXHR,textStatus]);
+    .on('ajax:error', function(event,parsedError,jqXHR,textStatus,errorThrown) {
+        $(this).attr('data-status','error');
+        $(this).triggerHandler('feed:target').html(parsedError);
     })
     .on('ajax:complete', function(event) {
         $(this).removeAttr('data-status');
@@ -69,7 +66,7 @@ quid.core.appendContainer = function()
         loadMore.off('click').on('click', function(event) {
             event.stopPropagation();
             event.preventDefault();
-            var remove = $this.triggerHandler('feed:loadMoreRemove',[$(this)]) || $(this);
+            var remove = $this.triggerHandler('feed:loadMoreRemove',[$(this)]);
             
             $(this).block('ajax:init').ajax('ajax:init').on('ajax:before', function(event) {
                 $(this).attr('data-status','loading');
@@ -79,14 +76,13 @@ quid.core.appendContainer = function()
                 remove.remove();
                 $this.trigger('feed:append',[data]);
             })
-            .on('ajax:error', function(event,jqXHR,textStatus,errorThrown) {
+            .on('ajax:error', function(event,parsedError,jqXHR,textStatus,errorThrown) {
                 remove.remove();
-                $this.trigger('feed:error',[jqXHR,textStatus]);
+                $this.trigger('ajax:error',[parsedError,jqXHR,textStatus]);
             })
             .trigger('ajax:init');
         });
-    })
-    .trigger('feed:bind');
+    });
     
     return this;
 }

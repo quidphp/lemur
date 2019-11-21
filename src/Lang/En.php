@@ -162,8 +162,8 @@ class En extends Core\Lang\En
             // popup
             'popup'=>[
 
-                // user
-                'user'=>[
+                // session
+                'session'=>[
                     'permission'=>'Permission',
                     'classSession'=>'Class Session',
                     'classFqcn'=>'Class User',
@@ -180,7 +180,8 @@ class En extends Core\Lang\En
                     'getGarbageCollect'=>'Session garbage collect',
                     'userAgent'=>'User agent',
                     'roles'=>'Roles',
-                    'fakeRoles'=>'Temporary roles'
+                    'fakeRoles'=>'Temporary roles',
+                    'primary'=>'Id session'
                 ],
 
                 // boot
@@ -307,7 +308,13 @@ class En extends Core\Lang\En
             'about'=>[
                 'content'=>'The Lemur open-source Content Management System is based on the [websiteLink] framework. This software is available under the open-source license [licenseLink]. The current version is: [version]. For any questions, please contact the author [authorLink].'
             ],
-
+            
+            // contact
+            'contact'=>array(
+                'info'=>"Use this form to send a message to the administrator: [name] &lt;[email]&gt;.",
+                'submit'=>'Send'
+            ),
+            
             // relationFeed
             'relationFeed'=>[
                 'loadMore'=>'Load [from] to [to] on [total]'
@@ -409,11 +416,6 @@ class En extends Core\Lang\En
                     // *
                     '*'=>[],
 
-                    // lang
-                    'lang'=>[
-                        'type'=>'Environment'
-                    ],
-
                     // redirection
                     'redirection'=>[
                         'key'=>'From',
@@ -437,7 +439,8 @@ class En extends Core\Lang\En
                     // *
                     '*'=>[
                         'id'=>'Primary and unique key. Required',
-                        'context'=>'Defines the creation context of the element, for administrator.',
+                        'context'=>'Defines the context when creating the element, for administrator.',
+                        'envType'=>'Defines the environment and type when creating the element, for administrator.',
                         'metaKeywords_fr'=>'Keywords separated by commas, optional field',
                         'metaKeywords_en'=>'Keywords separated by commas, optional field',
                         'metaDescription_fr'=>'No HTML tags, optional field',
@@ -514,14 +517,14 @@ class En extends Core\Lang\En
                     // lang
                     'lang'=>[
                         'key'=>'Unique key of the text element',
-                        'type'=>'The text element is accessible within these environments'
+                        'type'=>'The text element is accessible within these types.'
                     ],
 
                     // redirection
                     'redirection'=>[
                         'key'=>'URL to redirect',
                         'value'=>'Destination of the redirection',
-                        'type'=>'The redirection is active within these environments'
+                        'type'=>'The redirection is active within these types.'
                     ],
 
                     // user
@@ -636,7 +639,6 @@ class En extends Core\Lang\En
                 // label
                 'label'=>[
                     'about'=>'About',
-                    'cliClearCache'=>'Empty caches',
                     'homeFeed'=>'Home - Feed',
                     'general'=>'General',
                     'generalDelete'=>'General - Delete',

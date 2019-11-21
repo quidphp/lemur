@@ -42,8 +42,8 @@ quid.base.request = new function() {
         return {
             scheme: this.scheme(), 
             host: location.hostname, 
-            path: location.path, 
-            query: location.query, 
+            path: location.pathname, 
+            query: location.search, 
             hash: location.hash
         };
     }

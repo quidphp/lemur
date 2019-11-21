@@ -35,7 +35,7 @@ class SpecificMulti extends Core\RouteAlias
             'primaries'=>'structureSegmentPrimaries'],
         'group'=>'specific',
         'match'=>[
-            'role'=>['>'=>'user']],
+            'session'=>'canLogin'],
         'parent'=>Specific::class,
         'sitemap'=>false,
         'formWrap'=>"<div class='disabler'>%disabler%</div><div class='left'><div class='label'>%label%</div>%description%%details%</div><div class='right'>%form%</div>%popup%"

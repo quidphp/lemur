@@ -11,6 +11,7 @@ namespace Quid\Lemur\Cms;
 use Quid\Base;
 use Quid\Base\Html;
 use Quid\Lemur;
+use Quid\Core;
 
 // _template
 // trait that grants the methods to generate the CMS HTML template
@@ -255,16 +256,15 @@ trait _template
         $session = $this->session();
         $tables = $this->db()->tables();
         $lang = $this->lang();
-        $specificAdd = SpecificAdd::getOverloadClass();
         $navAdd = ['insert','lemurInsert','mainNavAdd'];
-
+        
         if($i >= 2)
         static::throw('tooDeep',$array);
 
         if(!empty($array))
         {
             $ii = $i + 1;
-
+            
             foreach ($array as $key => $value)
             {
                 if(is_string($key) && !empty($key))
@@ -289,25 +289,18 @@ trait _template
 
                     if(!empty($table))
                     {
-                        $route = static::session()->routeTableGeneral($table,true);
+                        $route = $session->routeTableGeneral($table,true);
                         $option = ($route->routeRequest()->isSegmentParsedFromValue())? ['query'=>false]:null;
                         $routeHtml .= $route->aTitle(null,null,null,$option);
 
-                        if($i > 0 && $table->hasPermission(...$navAdd))
-                        {
-                            $attr[] = 'with-specific-add';
-                            $route = $specificAdd::make($table);
-                            $routeHtml .= $route->makeNavLink();
-                        }
+                        if($i > 0)
+                        ['html'=>$routeHtml,'attr'=>$attr] = $this->navMenuSpecificAdd($routeHtml,$attr,$navAdd,$table);
                     }
 
                     if(is_array($value))
                     {
                         $attr[] = 'with-carousel';
                         $keys = array_keys($value);
-
-                        if($this->isTableTop($keys))
-                        $attr[] = ['active','top'];
 
                         $label = $lang->tableLabel($key);
                         $subNav = $this->navMenu($value,$ii);
@@ -318,10 +311,20 @@ trait _template
                             $html .= Html::span(null,['triangle']);
                             $html .= Html::span($label);
                             $html .= Html::buttonCl();
-
+                            
+                            if(!empty($table))
+                            {
+                                $keys[] = $table->name();
+                                ['html'=>$routeHtml,'attr'=>$liAttr] = $this->navMenuSpecificAdd($routeHtml,array(),$navAdd,$table);
+                                $routeHtml = Html::liCond($routeHtml,$liAttr);
+                            }
+                            
                             $targetHtml = Html::ul($routeHtml.$subNav);
                             $html .= static::makeDivPopup($targetHtml,'target');
                         }
+                        
+                        if($this->isTableTop($keys))
+                        $attr[] = ['active','top'];
                     }
 
                     else
@@ -335,7 +338,23 @@ trait _template
         return $r;
     }
 
-
+    
+    // navMenuSpecificAdd
+    // utiliser pour générer le lien d'ajout en lien avec un menu
+    final protected function navMenuSpecificAdd(string $html,array $attr,array $navAdd,Core\Table $table):array 
+    {
+        if($table->hasPermission(...$navAdd))
+        {
+            $specificAdd = SpecificAdd::getOverloadClass();
+            $attr[] = 'with-specific-add';
+            $route = $specificAdd::make($table);
+            $html .= $route->makeNavLink();
+        }
+        
+        return array('html'=>$html,'attr'=>$attr);
+    }
+    
+    
     // flushBeforeMain
     // active ou désactive le flush du contenu avant main
     final protected function flushBeforeMain():bool

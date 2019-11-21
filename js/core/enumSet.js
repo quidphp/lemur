@@ -93,7 +93,7 @@ quid.core.enumSet = function()
 // gère les comportements pour champ enumSet avec recherche de relation
 quid.core.enumSetInput = function()
 {
-    $(this).enterCatch('keyup keydown').validatePrevent('ajax:init').block('ajax:init').timeout('keyup',500).ajax('ajax:init')
+    $(this).enterCatch(true,'keyup keydown').validatePrevent('ajax:init').block('ajax:init').timeout('keyup',500).ajax('ajax:init')
     .on('enter:blocked', function(event,keyEvent) {
         if(keyEvent.type === 'keyup')
         $(this).trigger('ajax:beforeInit',[false]);
@@ -172,8 +172,8 @@ quid.core.enumSetInput = function()
         result.html(data);
         target.trigger('clickOpen:ready');
     })
-    .on('ajax:error', function(event,jqXHR,textStatus,errorThrown) {
-        $(this).triggerHandler('enumSetInput:getResult').html(quid.main.ajax.parseError(jqXHR,textStatus));
+    .on('ajax:error', function(event,parsedError,jqXHR,textStatus,errorThrown) {
+        $(this).triggerHandler('enumSetInput:getResult').html(parsedError);
     })
     .on('ajax:complete', function() {
         $(this).triggerHandler('enumSetInput:getParent').removeAttr('data-status');

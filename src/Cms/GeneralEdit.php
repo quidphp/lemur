@@ -36,9 +36,11 @@ class GeneralEdit extends Core\RouteAlias
             'col'=>'structureSegmentCol'],
         'group'=>'general',
         'match'=>[
-            'role'=>['>'=>'user']],
+            'ajax'=>true,
+            'session'=>'canLogin'],
         'parent'=>General::class,
-        'sitemap'=>false
+        'sitemap'=>false,
+        'history'=>false
     ];
 
 

@@ -16,7 +16,24 @@ quid.base.arr = new function() {
     {
         return $.isArray(value);
     }
-
+    
+    
+    // isEmpty
+    // retourne vrai si la valeur est un array vide
+    this.isEmpty = function(value) 
+    {
+        return (this.is(value) && !value.length)? true:false;
+    }
+    
+    
+    // isNotEmpty
+    // retourne vrai si la valeur est un array non vide
+    this.isNotEmpty = function(value) 
+    {
+        return (this.is(value) && value.length)? true:false;
+    }
+    
+    
     // in
     // retourne vrai si la valeur est dans le tableau
     // retourne un boolean

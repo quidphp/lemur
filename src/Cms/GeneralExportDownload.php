@@ -43,7 +43,7 @@ class GeneralExportDownload extends Core\RouteAlias
             'in'=>'structureSegmentPrimaries',
             'notIn'=>'structureSegmentPrimaries'],
         'match'=>[
-            'role'=>['>'=>'user']],
+            'session'=>'canLogin'],
         'response'=>[
             'timeLimit'=>300],
         'query'=>['s'],

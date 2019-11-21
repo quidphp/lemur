@@ -36,7 +36,7 @@ class SpecificUserWelcome extends Core\RouteAlias
             'csrf'=>true,
             'post'=>['id'=>['='=>'[primary]'],'-table-'=>['='=>'[table]']],
             'genuine'=>true,
-            'role'=>['>'=>'user']],
+            'session'=>'canLogin'],
         'group'=>'specific'
     ];
 

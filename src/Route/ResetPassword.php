@@ -31,7 +31,10 @@ abstract class ResetPassword extends Core\RouteAlias
 
     // submitRoute
     // route pour soumettre le formulaire
-    abstract public function submitRoute():ResetPasswordSubmit;
+    public function submitRoute():ResetPasswordSubmit
+    {
+        return ResetPasswordSubmit::make();
+    }
 
 
     // canTrigger

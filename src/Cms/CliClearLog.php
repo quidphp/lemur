@@ -12,18 +12,20 @@ use Quid\Base;
 use Quid\Base\Cli;
 use Quid\Core;
 
-// cliClearCache
-// class for the cli route to remove all cached data
-class CliClearCache extends Core\Route\CliClearCache
+// cliClearLog
+// class for the cli route to remove all log data
+class CliClearLog extends Core\Route\CliClearLog
 {
     // trait
     use _cli;
 
 
     // config
-    public static $config = [];
+    public static $config = [
+        'logCron'=>null
+    ];
 }
 
 // init
-CliClearCache::__init();
+CliClearLog::__init();
 ?>

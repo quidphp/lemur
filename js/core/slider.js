@@ -45,7 +45,7 @@ quid.core.slider = function(timeout,navs,className,showIfOne)
             
             if(navs instanceof jQuery && navs.length)
             {
-                target.tabNav(navs);
+                quid.core.tabNav.call(target,navs);
                 target.on('tab:open', function(event) {
                     var nav = $(this).triggerHandler('link:getNav');
                     navs.removeClass('active');
@@ -86,7 +86,9 @@ quid.core.slider = function(timeout,navs,className,showIfOne)
         
         $(this).on('tab:getTarget', function(event) {
             return target;
-        }).tab().trigger('tab:changeOrFirst');
+        });
+        quid.core.tab.call(this);
+        $(this).trigger('tab:changeOrFirst');
     };
     
     $(this).each(function(index, el) {

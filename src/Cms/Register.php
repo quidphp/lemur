@@ -24,11 +24,11 @@ class Register extends Lemur\Route\Register
     ];
 
 
-    // submitClass
-    // classe de la route pour soumettre le formulaire
-    final public static function submitClass():string
+    // submitRoute
+    // route pour soumettre le formulaire
+    final public function submitRoute():Lemur\Route\RegisterSubmit
     {
-        return RegisterSubmit::getOverloadClass();
+        return RegisterSubmit::make();
     }
 
 

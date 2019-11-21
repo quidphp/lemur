@@ -13,7 +13,7 @@
 // gère les comportements pour un input search
 quid.core.inputSearch = function(button)
 {
-    $(this).block('change').enterCatch().timeout('keyup').fieldValidate()
+    $(this).block('change').enterCatch(true,'keyup').timeout('keyup').fieldValidate()
     .on('change', function() {
         $(this).trigger('inputSearch:redirect');
     })

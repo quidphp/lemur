@@ -112,8 +112,8 @@ class Route extends Base\Test
         assert($obj->getMetaKeywords() === null);
         assert($obj->getMetaDescription() === null);
         assert($obj->getMetaImage() === null);
-        assert($obj->getBodyClass() === null);
-        assert($obj->getBodyStyle() === null);
+        assert($obj->getHtmlAttr() === null);
+        assert($obj->getBodyAttr() === null);
         assert($route::label() === 'Error');
         assert($route::label('%:') === 'Error:');
         assert($route::description() === null);
@@ -645,12 +645,12 @@ class Route extends Base\Test
         $routes->init('cms');
 
         // routing
-        assert($app->count() === 50);
+        assert($app->count() === 51);
         assert($routes->type() === 'cms');
         assert($routes->keyParent()[Lemur\Cms\LoginSubmit::class] === Lemur\Cms\Login::class);
-        assert(count($routes->hierarchy()) === 18);
+        assert(count($routes->hierarchy()) === 19);
         assert(count($routes->childsRecursive($login)) === 5);
-        assert($routes->tops()->isCount(18));
+        assert($routes->tops()->isCount(19));
         assert($routes->tops() !== $routes);
         assert($routes->top($loginSubmit) === $login);
         assert($routes->parents($loginSubmit)->isCount(1));
@@ -684,15 +684,15 @@ class Route extends Base\Test
         assert($routes->sortDefault() === $routes);
 
         // map
-        assert($routes->isCount(50));
+        assert($routes->isCount(51));
         assert($routes->get('Sitemap') === Lemur\Cms\Sitemap::class);
         assert($routes->get(Lemur\Cms\Sitemap::class) === Lemur\Cms\Sitemap::class);
         assert(!$routes->in('Sitemap'));
         assert($routes->in(Lemur\Cms\Sitemap::class));
         assert($routes->exists('Sitemap'));
         assert($routes->exists(Lemur\Cms\Sitemap::class));
-        assert($routes->unset('Sitemap')->isCount(49));
-        assert($routes->add(Lemur\Cms\Sitemap::class)->isCount(50));
+        assert($routes->unset('Sitemap')->isCount(50));
+        assert($routes->add(Lemur\Cms\Sitemap::class)->isCount(51));
 
         return true;
     }

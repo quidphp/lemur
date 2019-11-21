@@ -20,7 +20,7 @@ abstract class Account extends Core\RouteAlias
             'en'=>'my-account',
             'fr'=>'mon-compte'],
         'match'=>[
-            'role'=>['>='=>'user']],
+            'session'=>'canLogin'],
         'sitemap'=>false,
         'group'=>'account'
     ];

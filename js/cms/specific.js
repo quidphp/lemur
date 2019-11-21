@@ -51,7 +51,7 @@ $(document).ready(function() {
         addRemove.callThis(quid.core.addRemove);
         
         // tableRelation
-        tableRelation.callThis(quid.cms.tableRelation);
+        tableRelation.callThis(quid.cms.tableRelation).trigger('tableRelation:bind');
         
         // tinycme
         tinymce.callThis(quid.cms.tinymceWithTableRelation);

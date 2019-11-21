@@ -39,7 +39,7 @@ class GeneralEditSubmit extends Core\RouteAlias
             'csrf'=>true,
             'genuine'=>true,
             'post'=>['-primary-'=>['='=>'[primary]'],'-table-'=>['='=>'[table]']],
-            'role'=>['>'=>'user']],
+            'session'=>'canLogin'],
         'response'=>[
             'timeLimit'=>60],
         'parent'=>GeneralEdit::class,

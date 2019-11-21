@@ -35,7 +35,7 @@ class SpecificMultiSubmit extends Core\RouteAlias
             'csrf'=>true,
             'post'=>['-table-'=>['='=>'[table]']],
             'genuine'=>true,
-            'role'=>['>'=>'user']],
+            'session'=>'canLogin'],
         'response'=>[
             'timeLimit'=>120],
         'parent'=>SpecificMulti::class,

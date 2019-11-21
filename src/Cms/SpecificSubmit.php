@@ -37,7 +37,7 @@ class SpecificSubmit extends Core\RouteAlias
             'csrf'=>true,
             'post'=>['-primary-'=>['='=>'[primary]'],'-table-'=>['='=>'[table]']],
             'genuine'=>true,
-            'role'=>['>'=>'user']],
+            'session'=>'canLogin'],
         'response'=>[
             'timeLimit'=>60],
         'parent'=>Specific::class,

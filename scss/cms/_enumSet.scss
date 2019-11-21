@@ -50,7 +50,7 @@
         padding-top: 5px;
     }
 
-    @media print {
+    @include print() {
         .input-popup {
             display: none !important;
         }

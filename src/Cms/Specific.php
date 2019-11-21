@@ -37,7 +37,7 @@ class Specific extends Core\RouteAlias
             'primary'=>'structureSegmentPrimary'],
         'group'=>'specific',
         'match'=>[
-            'role'=>['>'=>'user']],
+            'session'=>'canLogin'],
         'sitemap'=>true
     ];
 
@@ -109,13 +109,13 @@ class Specific extends Core\RouteAlias
 
     // isUpdateable
     // retourne vrai si la row peut être modifié
-    final public function isUpdateable():bool
+    final public function isUpdateable(?array $option=null):bool
     {
         $return = false;
         $table = $this->table();
         $row = $this->row();
 
-        if($table->hasPermission('update','lemurUpdate') && $row->isUpdateable())
+        if($table->hasPermission('update','lemurUpdate') && $row->isUpdateable($option))
         $return = true;
 
         return $return;
@@ -124,13 +124,13 @@ class Specific extends Core\RouteAlias
 
     // isDeleteable
     // retourne vrai si la row peut être effacé
-    final public function isDeleteable():bool
+    final public function isDeleteable(?array $option=null):bool
     {
         $return = false;
         $table = $this->table();
         $row = $this->row();
 
-        if($table->hasPermission('delete','lemurDelete') && $row->isDeleteable())
+        if($table->hasPermission('delete','lemurDelete') && $row->isDeleteable($option))
         $return = true;
 
         return $return;
@@ -269,7 +269,7 @@ class Specific extends Core\RouteAlias
     {
         $r = '';
         $table = $this->table();
-
+        
         if($table->hasPermission('nav'))
         {
             $row = $this->row();

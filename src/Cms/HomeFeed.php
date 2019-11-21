@@ -33,7 +33,8 @@ class HomeFeed extends Core\RouteAlias
             'page'=>'structureSegmentPage',
             'type'=>'structureSegmentBoolean'],
         'match'=>[
-            'role'=>['>'=>'user']],
+            'ajax'=>true,
+            'session'=>'canLogin'],
         'group'=>'home',
         'parent'=>Home::class,
         'history'=>false,
