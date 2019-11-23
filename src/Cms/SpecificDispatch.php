@@ -60,7 +60,7 @@ class SpecificDispatch extends Core\RouteAlias
     {
         $return = false;
         $route = $this->getRouteLaunch();
-        
+
         if(!empty($route) && $route->canTrigger())
         {
             $route->start();
@@ -70,7 +70,7 @@ class SpecificDispatch extends Core\RouteAlias
         return $return;
     }
 
-    
+
     // canTrigger
     // validation avant le lancement de la route
     final public function canTrigger():bool
@@ -83,8 +83,8 @@ class SpecificDispatch extends Core\RouteAlias
 
         return $return;
     }
-    
-    
+
+
     // getRouteLaunch
     // retourne la route a lancé
     final protected function getRouteLaunch():?Core\Route

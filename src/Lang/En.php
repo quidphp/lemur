@@ -18,7 +18,7 @@ class En extends Core\Lang\En
 {
     // config
     public static $config = [
-        
+
         // login
         'login'=>[
             'usernameEmail'=>'Username or email',
@@ -35,7 +35,7 @@ class En extends Core\Lang\En
         'register'=>[
             'confirmPassword'=>'Password confirmation'
         ],
-        
+
         // accountChangePassword
         'accountChangePassword'=>[
             'oldPassword'=>'Current password',
@@ -73,7 +73,7 @@ class En extends Core\Lang\En
 
             // pos
             'pos'=>[
-                
+
                 // slug
                 'slug'=>[
                     'updated'=>'[count] other%s% line%s% updated'
@@ -92,7 +92,7 @@ class En extends Core\Lang\En
                 'duplicate'=>[
                     'success'=>'Duplicate success'
                 ],
-                
+
                 // insert
                 'insert'=>[
                     'contact'=>[
@@ -163,9 +163,9 @@ class En extends Core\Lang\En
 
         // col
         'col'=>[
-            
+
             // *
-            '*'=>array(
+            '*'=>[
                 'featured'=>'Featured',
                 'category'=>'Category',
                 'lang'=>'Language',
@@ -262,8 +262,8 @@ class En extends Core\Lang\En
                 'price'=>'Price',
                 'total'=>'Total',
                 'host'=>'Host'
-            ),
-            
+            ],
+
             // label
             'label'=>[
 

@@ -166,7 +166,7 @@ body > pre {
 
         > .logo {
             margin: auto;
-            
+
             > img {
                 display: block;
                 max-height: 100px;
@@ -219,7 +219,7 @@ header {
         .right {
             padding: 0 15px 0 10px;
             @include flex(center, center, wrap);
-            
+
             > a[data-triggered='1'],
             > a.active {
                 background-color: $darkColor;
@@ -283,17 +283,17 @@ main .inner > .top {
 
     .left h1 {
         margin-right: 10px;
-        
+
         > a {
             @include inbl();
-            
+
             &:hover,
             &[data-triggered='1'] {
                 color: $darkGray;
             }
         }
     }
-    
+
     .right {
         padding-left: 20px;
         text-align: right;

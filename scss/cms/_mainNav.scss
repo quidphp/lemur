@@ -52,10 +52,10 @@
                 text-decoration: underline;
             }
         }
-        
+
         li.with-specific-add {
             position: relative;
-            
+
             > a:first-child {
                 padding-right: 30px !important;
             }
@@ -105,7 +105,6 @@
             display: none;
 
             > ul > li {
-
                 > a:first-child {
                     display: block;
                     padding: 4px 15px 4px 32px;
@@ -134,7 +133,7 @@
         > ul > li.with-carousel > .trigger {
             justify-content: center;
         }
-        
+
         li > a:first-child {
             padding-left: 30px !important;
         }

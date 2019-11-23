@@ -18,7 +18,7 @@ class Fr extends Core\Lang\Fr
 {
     // config
     public static $config = [
-        
+
         // login
         'login'=>[
             'usernameEmail'=>"Nom d'utilisateur ou courriel",
@@ -43,7 +43,7 @@ class Fr extends Core\Lang\Fr
             'newPasswordConfirm'=>'Confirmation du nouveau mot de passe',
             'submit'=>'Modifier mon mot de passe'
         ],
-        
+
         // relationOrder
         'relationOrder'=>[
             'key'=>[
@@ -73,7 +73,7 @@ class Fr extends Core\Lang\Fr
 
             // pos
             'pos'=>[
-                
+
                 // slug
                 'slug'=>[
                     'updated'=>'[count] autre%s% ligne%s% mise%s% à jour'
@@ -92,7 +92,7 @@ class Fr extends Core\Lang\Fr
                 'duplicate'=>[
                     'success'=>'La duplication a réussie'
                 ],
-                
+
                 // insert
                 'insert'=>[
                     'contact'=>[
@@ -166,9 +166,9 @@ class Fr extends Core\Lang\Fr
 
             // label
             'label'=>[
-                
+
                 // *
-                '*'=>array(
+                '*'=>[
                     'featured'=>'En vedette',
                     'category'=>'Catégorie',
                     'lang'=>'Langue',
@@ -265,8 +265,8 @@ class Fr extends Core\Lang\Fr
                     'price'=>'Prix',
                     'total'=>'Total',
                     'host'=>'Hôte'
-                ),
-                
+                ],
+
                 // contact
                 'contact'=>[
                     'email'=>'Adresse courriel',

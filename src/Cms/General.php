@@ -70,7 +70,7 @@ class General extends Core\RouteAlias
     final protected function onBefore()
     {
         $return = false;
-        
+
         if(parent::onBefore())
         {
             $table = $this->table();
@@ -957,8 +957,8 @@ class General extends Core\RouteAlias
             $rowsPermission = $this->hasTablePermission('rows');
             $actionPermission = $this->hasTablePermission('action');
             $specificPermission = $this->hasTablePermission('specific');
-            $option = array();
-            
+            $option = [];
+
             foreach ($rows as $row)
             {
                 $specificRoute = null;

@@ -143,7 +143,7 @@ class Row extends Core\Row
         $icon = ($isUpdateable === true)? 'modify':'view';
         $commit = $this->cellsDateCommit()[$dateCol] ?? null;
         $label = $this->label(null,100);
-        
+
         $r .= Html::h3($label);
 
         if(!empty($commit))

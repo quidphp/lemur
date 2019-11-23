@@ -27,7 +27,7 @@ class Log extends Core\Row\Log
             'subAdmin'=>['update'=>false]],
         '@cms'=>[
             'permission'=>[
-                '*'=>array('homeFeed'=>false),
+                '*'=>['homeFeed'=>false],
                 'contributor'=>['view'=>false],
                 'editor'=>['view'=>false],
                 'subAdmin'=>['lemurInsert'=>false],

@@ -28,7 +28,7 @@ class Session extends Core\Session
     {
         $return = null;
         $routeClass = $table->routeClass($key,true);
-        
+
         if($nav === true)
         {
             $nav = $this->nav();

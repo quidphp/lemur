@@ -38,10 +38,10 @@ class Contact extends Core\RowAlias
             '*'=>['insert'=>true]],
         '@cms'=>[
             'permission'=>[
-                '*'=>array('lemurInsert'=>false),
+                '*'=>['lemurInsert'=>false],
                 'contributor'=>['view'=>false],
                 'editor'=>['view'=>false],
-                'admin'=>array('truncate'=>true,'lemurTruncate'=>true)]]
+                'admin'=>['truncate'=>true,'lemurTruncate'=>true]]]
     ];
 
 

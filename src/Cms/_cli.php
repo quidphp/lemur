@@ -29,15 +29,15 @@ trait _cli
         'history'=>false
     ];
 
-    
+
     // canTrigger
     // retourne vrai si la route peut être trigger
-    final public function canTrigger():bool 
+    final public function canTrigger():bool
     {
         return (parent::canTrigger() && $this->hasPermission('cli'))? true:false;
     }
-    
-    
+
+
     // trigger
     // génère le cli ou le template
     final public function trigger()

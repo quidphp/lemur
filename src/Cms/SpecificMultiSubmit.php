@@ -80,8 +80,8 @@ class SpecificMultiSubmit extends Core\RouteAlias
     {
         return (parent::canTrigger() && $this->hasTable() && $this->table()->hasPermission('view','specific','update','rows','lemurUpdate','multiModify'))? true:false;
     }
-    
-    
+
+
     // onFailure
     // callback appelé lors d'un échec
     protected function onFailure():void

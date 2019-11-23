@@ -17,8 +17,8 @@ trait _module
 {
     // trait
     use _page;
-    
-    
+
+
     // config
     public static $configModule = [
         'match'=>[
@@ -30,11 +30,11 @@ trait _module
         'navigation'=>false,
         'ignore'=>false
     ];
-    
-    
+
+
     // canTrigger
     // retourne vrai si la route peut être trigger
-    final public function canTrigger():bool 
+    final public function canTrigger():bool
     {
         return (parent::canTrigger() && $this->hasPermission('module'))? true:false;
     }

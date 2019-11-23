@@ -62,7 +62,7 @@ class Home extends Core\Route\Home
     final protected function mainTopLeft():string
     {
         $r = '';
-        
+
         $r .= Html::divOp('title');
         $r .= $this->makeH1(static::boot()->typeLabel());
 

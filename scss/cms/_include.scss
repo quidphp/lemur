@@ -350,7 +350,7 @@ $red: #8d1e2d;
             color: $darkGray;
         }
     }
-    
+
     @include responsive() {
         justify-content: center;
     }

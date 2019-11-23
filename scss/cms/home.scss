@@ -16,12 +16,12 @@
     > .left {
         flex-grow: 1;
     }
-    
+
     > .right {
         margin-left: 20px;
         width: 33%;
     }
-    
+
     .block {
         @include block();
     }
@@ -33,7 +33,7 @@
             width: 100%;
             margin: 0 0 20px;
         }
-        
+
         > .right {
             width: 100%;
             margin: 0;
@@ -93,7 +93,6 @@
     }
 }
 [data-route='home'] main .inner > .bottom .home-overview {
-    
     .block-body {
         > .table-element {
             @include blockFeedElement();

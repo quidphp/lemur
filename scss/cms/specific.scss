@@ -11,7 +11,6 @@
 
 /* TOP */
 [data-group='specific'] main .inner > .top .left {
-    
     .relation-childs .not-accessible {
         font-style: italic;
     }
@@ -114,18 +113,18 @@
             text-decoration: underline;
         }
     }
-    
+
     &.exception {
         background-color: $red;
         color: $white;
         text-align: center;
         font-weight: bold;
     }
-    
+
     .popup-trigger {
         @include abs(5px, 10px);
     }
-    
+
     > .left {
         width: 30%;
         padding: 15px 20px 15px 0;
@@ -157,7 +156,7 @@
             }
         }
     }
-    
+
     &.cursor-pointer > .left label {
         cursor: pointer;
 
@@ -165,7 +164,7 @@
             color: $darkGray;
         }
     }
-    
+
     > .right {
         width: 70%;
     }
@@ -173,7 +172,7 @@
     &[data-col-popup='1'] > .right {
         padding: 0px 30px 0px 0;
     }
-    
+
     @include responsive() {
         @include responsiveFlex(flex-start, flex-start);
 
