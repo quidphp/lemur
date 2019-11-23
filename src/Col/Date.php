@@ -25,7 +25,7 @@ class Date extends Core\Col\Date
             'anchorCorner'=>true,
             'absolutePlaceholder'=>true,
             'onComplex'=>true,
-            'route'=>['calendar'=>Lemur\Cms\SpecificCalendar::class]]
+            'route'=>['calendar'=>Lemur\Cms\Calendar::class]]
     ];
 
 

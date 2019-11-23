@@ -36,7 +36,7 @@ class GeneralTruncate extends Core\RouteAlias
             'genuine'=>true,
             'method'=>'post',
             'post'=>['-table-'=>['='=>'[table]']],
-            'session'=>'canLogin'],
+            'session'=>'canAccess'],
         'parent'=>General::class,
         'group'=>'submit'
     ];
@@ -49,7 +49,7 @@ class GeneralTruncate extends Core\RouteAlias
         $return = false;
         $table = $this->table();
 
-        if(parent::canTrigger() && !empty($table) && $table->hasPermission('view','truncate','lemurTruncate'))
+        if(parent::canTrigger() && !empty($table) && $table->hasPermission('view','general','truncate','lemurTruncate'))
         $return = true;
 
         return $return;

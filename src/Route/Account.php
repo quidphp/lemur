@@ -22,7 +22,7 @@ abstract class Account extends Core\RouteAlias
             'en'=>'my-account',
             'fr'=>'mon-compte'],
         'match'=>[
-            'session'=>'canLogin'],
+            'session'=>'canAccess'],
         'sitemap'=>false,
         'group'=>'account'
     ];
@@ -46,7 +46,7 @@ abstract class Account extends Core\RouteAlias
 
     // submitAttr
     // retourne les attributs pour le bouton submit
-    final public function submitAttr()
+    public function submitAttr()
     {
         return;
     }

@@ -24,7 +24,7 @@ abstract class AccountChangePassword extends Core\RouteAlias
             'en'=>'my-account/change-password',
             'fr'=>'mon-compte/mot-de-passe'],
         'match'=>[
-            'session'=>'canLogin'],
+            'session'=>'canAccess'],
         'group'=>'submit',
         'parent'=>Account::class,
         'row'=>Lemur\Row\User::class,

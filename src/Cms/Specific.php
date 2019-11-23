@@ -39,7 +39,7 @@ class Specific extends Core\RouteAlias
             'primary'=>'structureSegmentPrimary'],
         'group'=>'specific',
         'match'=>[
-            'session'=>'canLogin'],
+            'session'=>'canAccess'],
         'sitemap'=>true
     ];
 
@@ -66,7 +66,6 @@ class Specific extends Core\RouteAlias
         $return = [];
         $table = $this->table();
         $user = static::sessionUser();
-
         $root = static::session()->routeTableGeneral($table);
         $uri = $root->uri();
         $return[$uri] = true;
@@ -183,7 +182,7 @@ class Specific extends Core\RouteAlias
     // génère le titre pour la route
     final protected function makeTitle(?string $lang=null):string
     {
-        return $this->row()->label(null,$lang);
+        return $this->row()->label(null,100,$lang);
     }
 
 

@@ -24,7 +24,7 @@ trait _relation
         'history'=>false,
         'match'=>[
             'ajax'=>true,
-            'session'=>'canLogin'],
+            'session'=>'canAccess'],
         'group'=>'relation',
         'order'=>true
     ];

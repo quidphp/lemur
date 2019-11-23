@@ -17,8 +17,9 @@ quid.main.document = new function() {
         var $settings = {
             anchor: "a:internal:not([target='_blank']):not([data-navigation='0']):not([data-modal]):not([href^='mailto:'])",
             form: "form:not([data-navigation='0'])",
-            background: "body > .background",
-            timeout: 10000
+            timeout: 10000,
+            routeWrap: "> .route-wrap", // target, descendant de body
+            background: "> .background" // background, descendant de body
         };
         
         if(option && typeof(option) == 'object')
@@ -93,18 +94,67 @@ quid.main.document = new function() {
         }
         
         
-        // documentBindings
-        // applique les bindings au document mounted dans le bon ordre
-        function documentBindings(initial)
+        // documentMount
+        // lance les évènements pour monter le document dans le bon order
+        function documentMount(initial)
         {
             var $this = $(this);
+            var html = $(this).triggerHandler('document:getHtml');
+            var routeWrap = $(this).triggerHandler('document:getRouteWrap');
             
             if(initial === true)
-            $(this).trigger('document:initialMount');
+            {
+                var body = $(this).triggerHandler('document:getBody');
+                $(this).trigger('document:initialMount',[body]);
+                $(this).trigger('document:commonBindings',[body]);
+            }
             
-            $(this).trigger('document:commonBindings',[$(this)]);
-            $(this).trigger('document:mount');
-            $(this).trigger('document:mounted');
+            else
+            $(this).trigger('document:commonBindings',[routeWrap]);
+            
+            $(this).trigger('document:mount',[routeWrap]);
+            
+            var group = html.attr("data-group");
+            if(quid.base.str.isNotEmpty(group))
+            $(this).trigger('group:'+group,[routeWrap]);
+            
+            var route = html.attr("data-route");
+            if(quid.base.str.isNotEmpty(route))
+            $(this).trigger('route:'+route,[routeWrap]);
+            
+            $(this).trigger('document:mounted',[routeWrap]);
+            
+            setTimeout(function() {
+                html.attr('data-status','ready');
+            }, 100);
+        }
+        
+        
+        // documentUnmount
+        // lance les évènements pour démonter le document dans le bon order
+        function documentUnmount()
+        {
+            var html = $(this).triggerHandler('document:getHtml');
+            var body = $(this).triggerHandler('document:getBody');
+            var routeWrap = $(this).triggerHandler('document:getRouteWrap');
+            
+            $(this).trigger('document:unmount',[routeWrap]);
+            
+            var group = html.attr("data-group");
+            if(quid.base.str.isNotEmpty(group))
+            $(this).trigger('group:'+group+':unmount',[routeWrap]);
+            
+            var route = html.attr("data-route");
+            if(quid.base.str.isNotEmpty(route))
+            $(this).trigger('route:'+route+':unmount',[routeWrap]);
+            
+            $(this).off('.document-mount');
+            $(window).off('.document-mount');
+            html.off('.document-mount');
+            body.off('.document-mount');
+            
+            $(this).trigger('document:unsetBackground');
+            $(this).trigger('document:unmounted',[routeWrap]);
         }
         
         
@@ -184,6 +234,7 @@ quid.main.document = new function() {
             if(isHistoryState(state))
             {
                 var $this = $(this);
+                var html = $(this).triggerHandler('document:getHtml');
                 $(this).triggerHandler('document:cancelAjax');
                 beforeAjax.call(this);
                 
@@ -222,7 +273,7 @@ quid.main.document = new function() {
             $(this).data('document:active',true);
             
             // loading
-            $(this).trigger('document:statusLoading');
+            $(this).triggerHandler('document:getHtml').attr('data-status','loading');
             
             // beforeUnload
             $(window).off('beforeunload');
@@ -261,7 +312,7 @@ quid.main.document = new function() {
                         state = $(this).triggerHandler('document:replaceState',[currentUri,state.title]);
                     }	
                         
-                    $(this).trigger('document:unmount');
+                    documentUnmount.call(this);
                     makeDocument.call(this,doc);
                     doc.doc.remove();
                     $previous = state;
@@ -281,13 +332,14 @@ quid.main.document = new function() {
                 r = true;
                 
                 // html
-                var html = $("html");
+                // les attributs de html sont remplacés (les attributs existants ne sont pas effacés)
+                var html = $(this).triggerHandler('document:getHtml');
                 doc.html.removeAttr('data-tag');
                 var htmlAttributes = doc.html.getAttributes();
-                html.replaceAttributes(htmlAttributes,true);
+                html.replaceAttributes(htmlAttributes);
                 
                 // head
-                var head = html.find("head");
+                var head = html.find("head").first();
                 
                 // title
                 var title = head.find("meta");
@@ -315,11 +367,29 @@ quid.main.document = new function() {
                 }
                 
                 // body
-                var body = html.find("body");
+                // les attributs de body sont effacés et remplacés
+                var body = $(this).triggerHandler('document:getBody');
                 doc.body.removeAttr('data-tag');
                 var bodyAttributes = doc.body.getAttributes();
                 body.replaceAttributes(bodyAttributes,true);
-                body.html(doc.body.html());
+                
+                // routeWrap
+                // les attributs de routeWrap sont effacés et remplacés seulement si routeWrap n'est pas body
+                var routeWrap = $(this).triggerHandler('document:getRouteWrap');
+                var contentTarget = doc.body;
+                if($settings.routeWrap && !routeWrap.is("body"))
+                {
+                    contentTarget = contentTarget.find($settings.routeWrap);
+                    if(contentTarget.length)
+                    {
+                        var routeWrapAttributes = contentTarget.getAttributes();
+                        routeWrap.replaceAttributes(routeWrapAttributes,true);
+                    }
+                    
+                    else
+                    contentTarget = doc.body;
+                }
+                routeWrap.html(contentTarget.html());
                 
                 // after
                 afterMakeDocument.call(this);
@@ -337,7 +407,7 @@ quid.main.document = new function() {
 
             $(this).find("html,body").stop(true,true).scrollTop(0);
             
-            documentBindings.call(this);
+            documentMount.call(this);
         }
         
         
@@ -581,58 +651,71 @@ quid.main.document = new function() {
         
         // initialMount
         // seulement au chargement initial de la page
-        .on('document:initialMount', function(event) {
+        .on('document:initialMount', function(event,body) {
             
         })
         
         
         // mount
-        // sur le mount d'une nouvelle page
-        .on('document:mount', function(event) {
-            var route = $(this).find("html").attr("data-route");
-            $(this).trigger('document:statusReady');
+        // callback au début du montage d'une nouvelle page
+        .on('document:mount', function(event,routeWrap) {
             
-            if(quid.base.str.isNotEmpty(route))
-            $(this).trigger('route:'+route);
         })
         
         
         // mounted
         // callback après avoir monté la nouvelle page
-        .on('document:mounted', function(event) {
+        .on('document:mounted', function(event,routeWrap) {
             
         })
         
         
         // unmount
-        // sur unmount de la page efface tous les événements qui ont le namespace document-mount
-        .on('document:unmount', function(event) {
-            $(this).off('.document-mount');
-            $(window).off('.document-mount');
-            $("html").off('.document-mount');
-            $("body").off('.document-mount');
+        // callback au début du démontage d'une page
+        .on('document:unmount', function(event,routeWrap) {
+            
+        })
+        
+        
+        // unmounted
+        // callback après avoir démonté la page
+        .on('document:unmounted', function(event,routeWrap) {
+            
         })
         
         
         // commonBindings
         // permet d'appliquer des bindings courants sur un parent
         // par exemple pour binder des customs events sur des balises
-        .on('document:commonBindings', function(event,parent) {
-            parent.find("form").form();
+        .on('document:commonBindings', function(event,node) {
+            node.find("form").form();
         })
         
         
-        // statusLoading
-        // place la balise html en état de loading
-        .on('document:statusLoading', function(event) {
-            $("html").attr('data-status','loading');
+        // getHtml
+        // retourne la node html
+        .on('document:getHtml', function(event) {
+            return $(this).find("html").first();
         })
         
         
-        // statusReady
-        // place la balise html en état ready
-        .on('document:statusReady', function(event) {
-            $("html").attr('data-status','ready');
+        // getBody
+        // retourne la node body
+        .on('document:getBody', function(event) {
+            return $(this).find("body").first();
+        })
+        
+        
+        // getRouteWrap
+        // retourne la node du route wrap
+        // seul le contenu dans cette node est remplacé au chargement d'une nouvelle page
+        .on('document:getRouteWrap', function(event) {
+            var r = $(this).triggerHandler('document:getBody');
+
+            if($settings.routeWrap)
+            r = r.find($settings.routeWrap).first();
+            
+            return r;
         })
         
         
@@ -652,7 +735,7 @@ quid.main.document = new function() {
         // getBackground
         // retourne la node du background
         .on('document:getBackground', function(event) {
-            return $(this).find($settings.background).first();
+            return $(this).triggerHandler('document:getBody').find($settings.background).first();
         })
         
         
@@ -691,7 +774,7 @@ quid.main.document = new function() {
             applyBindings.call(this);
         }
         
-        documentBindings.call(this,true);    
+        documentMount.call(this,true);    
         
         return this;
     }

@@ -9,6 +9,107 @@
 // component
 // stylesheet for various simple componentns
 
+// generalComponent
+@mixin generalComponent() {
+    padding: 8px 10px;
+    height: 100%;
+    display: block;
+
+    .empty-placeholder {
+        font-style: italic;
+        color: $darkGray;
+        text-align: left;
+    }
+    
+    a {
+        @include inbl();
+        color: $black;
+
+        &:hover,
+        &[data-triggered='1'] {
+            color: $darkGray;
+            text-decoration: underline;
+        }
+    }
+}
+
+// specificComponent
+// mixin de base pour les éléments de formulaire complexe
+@mixin specificComponent() {
+    position: relative;
+
+    > div.nothing {
+        @include nothing();
+    }
+
+    > .empty-placeholder {
+        font-style: italic;
+        color: $gray;
+    }
+
+    > iframe {
+        width: 100%;
+        height: 350px;
+        border: 1px solid $gray;
+        background-color: $white;
+    }
+
+    > ul,
+    > ol {
+        list-style-type: none;
+
+        > li {
+            padding: 2px 0;
+        }
+    }
+
+    a {
+        color: $black;
+
+        &:hover,
+        &[data-triggered='1'] {
+            color: $darkGray;
+            text-decoration: underline;
+        }
+    }
+
+    .fakeselect {
+        min-width: 250px;
+    }
+
+    .choice {
+        @include inputChoice();
+
+        &:hover .choice-in > span {
+            visibility: visible;
+        }
+
+        .choice-in {
+            > span {
+                visibility: hidden;
+                margin-left: 5px;
+
+                a {
+                    display: block;
+                }
+            }
+        }
+    }
+
+    input[type='text'],
+    input[type='email'],
+    input[type='password'] {
+        width: 100%;
+        max-width: 1000px;
+    }
+
+    textarea {
+        @include wh(100%, 200px);
+        display: block;
+        max-width: 1000px;
+    }
+}
+
 // componentPrimaryGeneral
 // mixin pour le champ primary dans général
 @mixin componentPrimaryGeneral() {

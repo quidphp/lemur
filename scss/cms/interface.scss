@@ -24,7 +24,7 @@ body {
         @include flex(null, flex-start);
     }
 }
-[data-burger='open'] body > #wrapper {
+[data-burger='open'] body > .route-wrap {
     @include responsive() {
         .nav-wrap .nav-fixed {
             width: 100%;
@@ -52,11 +52,6 @@ body > .background {
         @include fadeIn(0.3s);
     }
 }
-body > code,
-body > pre {
-    display: block;
-    padding-left: 200px;
-}
 body > .loading-fixed {
     @include fixed(0, 0);
     z-index: 9;
@@ -80,18 +75,18 @@ body > .loading-fixed {
         border-bottom-left-radius: 50%;
     }
 }
-body > #wrapper {
+body > .route-wrap {
     @include bodyWrapper();
     @include flex(flex-start, stretch);
     @include transitions(opacity 0.3s);
     opacity: 1;
 
     > .nav-wrap {
-        width: 200px;
+        width: 220px;
     }
 
     > .main-wrap {
-        width: calc(100% - 200px);
+        width: calc(100% - 220px);
         position: relative;
         display: flex;
         flex-direction: column;
@@ -106,7 +101,6 @@ body > #wrapper {
 
                 .logo {
                     max-width: 180px;
-                    margin: auto;
                 }
             }
         }
@@ -122,11 +116,21 @@ body > #wrapper {
         }
     }
 }
+body > code,
+body > pre {
+    display: block;
+    padding-left: 220px;
+}
+[data-error='fatal'] body > .route-wrap {
+    display: block;
+    padding: 10px;
+    border: 10px solid $red;
+}
 
 /* NAV */
 .nav-wrap .nav-fixed {
     @include fixed(0, null, null, 0);
-    @include wh(200px, 100vh);
+    @include wh(220px, 100vh);
     @include scrollbar();
     overflow-y: scroll;
     overflow-x: hidden;
@@ -160,8 +164,14 @@ body > #wrapper {
             }
         }
 
-        > .logo img {
-            display: block;
+        > .logo {
+            margin: auto;
+            
+            > img {
+                display: block;
+                max-height: 100px;
+                margin: auto;
+            }
         }
     }
 
@@ -209,7 +219,7 @@ header {
         .right {
             padding: 0 15px 0 10px;
             @include flex(center, center, wrap);
-
+            
             > a[data-triggered='1'],
             > a.active {
                 background-color: $darkColor;
@@ -271,18 +281,23 @@ main .inner > .top {
         font-size: 90%;
     }
 
-    .left h1 > a {
-        display: block;
-
-        &:hover,
-        &[data-triggered='1'] {
-            color: $darkGray;
+    .left h1 {
+        margin-right: 10px;
+        
+        > a {
+            @include inbl();
+            
+            &:hover,
+            &[data-triggered='1'] {
+                color: $darkGray;
+            }
         }
     }
-
+    
     .right {
         padding-left: 20px;
         text-align: right;
+        min-width: 33%;
     }
 
     @include responsive() {

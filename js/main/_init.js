@@ -22,15 +22,3 @@ Object.defineProperty(Object.prototype, 'callThis', {value: function(callable) {
     }
     return callable.apply(this,args);
 }});
-
-// callThisEach
-// appele une méthode pour chaque propriété de l'objet 
-// retourne this
-Object.defineProperty(Object.prototype, 'callThisEach', {value: function() {
-    var args = Array.prototype.slice.call(arguments);
-    $(this).each(function(index, el) {
-        this.callThis.apply(this,args);
-    });
-    
-    return this;
-}});

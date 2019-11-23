@@ -14,9 +14,9 @@ use Quid\Base\Html;
 use Quid\Core;
 use Quid\Lemur;
 
-// generalExport
-// class for the general export popup route of the CMS
-class GeneralExport extends Core\RouteAlias
+// export
+// class for the export popup route of the CMS
+class Export extends Core\RouteAlias
 {
     // trait
     use _common;
@@ -33,8 +33,8 @@ class GeneralExport extends Core\RouteAlias
     // config
     public static $config = [
         'path'=>[
-            'en'=>'dialog/export/[table]/[order]/[direction]/[filter]/[in]/[notIn]',
-            'fr'=>'dialogue/exportation/[table]/[order]/[direction]/[filter]/[in]/[notIn]'],
+            'en'=>'popup/export/[table]/[order]/[direction]/[filter]/[in]/[notIn]',
+            'fr'=>'popup/exportation/[table]/[order]/[direction]/[filter]/[in]/[notIn]'],
         'segment'=>[
             'table'=>'structureSegmentTable',
             'order'=>'structureSegmentOrder',
@@ -43,10 +43,9 @@ class GeneralExport extends Core\RouteAlias
             'in'=>'structureSegmentPrimaries',
             'notIn'=>'structureSegmentPrimaries'],
         'match'=>[
-            'session'=>'canLogin'],
+            'session'=>'canAccess'],
         'longExport'=>1500,
-        'query'=>['s'],
-        'parent'=>General::class
+        'query'=>['s']
     ];
 
 
@@ -82,7 +81,7 @@ class GeneralExport extends Core\RouteAlias
     {
         $r = '';
         $segment = $this->segments();
-        $route = GeneralExportDownload::make($segment);
+        $route = ExportDownload::make($segment);
 
         foreach (static::getTypes() as $value)
         {
@@ -108,5 +107,5 @@ class GeneralExport extends Core\RouteAlias
 }
 
 // init
-GeneralExport::__init();
+Export::__init();
 ?>

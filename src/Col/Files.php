@@ -24,7 +24,7 @@ abstract class Files extends Core\Col\Files
     public static $config = [
         'complex'=>'inputFile',
         '@cms'=>[
-            'route'=>['download'=>Lemur\Cms\SpecificDownload::class]]
+            'route'=>['download'=>Lemur\Cms\Download::class]]
     ];
 
 
@@ -173,7 +173,7 @@ abstract class Files extends Core\Col\Files
                 $return .= $this->formHidden($hidden,Base\Arr::plus($attr,['disabled'=>true]),$option);
 
                 $return .= Html::divOp('message');
-                $return .= Html::div(null,'actionText');
+                $return .= Html::div(null,'action-text');
                 $return .= Html::div(null,['icon-solo','close']);
                 $return .= Html::divCl();
 
@@ -199,7 +199,7 @@ abstract class Files extends Core\Col\Files
         $exists = (!empty($file))? $file->isReadable():false;
         $isImage = ($exists === true && $file instanceof Main\File\Image)? true:false;
         $basename = ($exists === true)? $file->basename():false;
-        $download = $table->hasPermission('mediaDownload');
+        $download = $table->hasPermission('download');
 
         if(is_string($basename))
         $basename = Base\Str::excerpt(50,$basename);

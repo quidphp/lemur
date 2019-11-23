@@ -34,7 +34,7 @@ class SpecificAdd extends Core\RouteAlias
         'segment'=>[
             'table'=>'structureSegmentTable'],
         'match'=>[
-            'session'=>'canLogin'],
+            'session'=>'canAccess'],
         'parent'=>Specific::class,
         'group'=>'specific',
         'sitemap'=>true
@@ -57,7 +57,7 @@ class SpecificAdd extends Core\RouteAlias
             $flash = $this->session()->flash();
             $route = SpecificAddSubmit::make($table);
             $this->flash = $flash->get($route);
-            $return = $this;
+            $return = true;
         }
 
         return $return;
@@ -71,7 +71,7 @@ class SpecificAdd extends Core\RouteAlias
         $return = false;
         $table = $this->segment('table');
 
-        if(parent::canTrigger() && $table instanceof Core\Table && $table->hasPermission('view','insert','lemurInsert'))
+        if(parent::canTrigger() && $table instanceof Core\Table && $table->hasPermission('view','specific','insert','lemurInsert'))
         $return = true;
 
         return $return;

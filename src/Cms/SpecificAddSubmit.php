@@ -33,7 +33,7 @@ class SpecificAddSubmit extends Core\RouteAlias
             'table'=>'structureSegmentTable'],
         'match'=>[
             'method'=>'post',
-            'session'=>'canLogin',
+            'session'=>'canAccess',
             'csrf'=>false,
             'genuine'=>true,
             'post'=>['-table-'=>['='=>'[table]']]],
@@ -56,7 +56,7 @@ class SpecificAddSubmit extends Core\RouteAlias
         $return = false;
         $table = $this->table();
 
-        if(parent::canTrigger() && !empty($table) && $table->hasPermission('view','insert','lemurInsert'))
+        if(parent::canTrigger() && !empty($table) && $table->hasPermission('view','specific','insert','lemurInsert'))
         $return = true;
 
         return $return;

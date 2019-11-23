@@ -140,7 +140,7 @@ abstract class Register extends Core\RouteAlias
 
     // makeFormOther
     // génère la troisième partie du formulaire d'enregistrement
-    final protected function makeFormOther():string
+    protected function makeFormOther():string
     {
         return '';
     }

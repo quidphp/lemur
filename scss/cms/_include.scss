@@ -328,3 +328,30 @@ $red: #8d1e2d;
         }
     }
 }
+
+// navSpace
+// mixin pour un bloc avec liens de navigation
+@mixin navSpace() {
+    @include iflex(flex-end, center, wrap);
+    background-color: $lightestGray;
+    border: 1px solid $lightGray;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 6px -4px $gray;
+
+    > a {
+        color: $black;
+        font-weight: bold;
+        margin: 0 8px;
+        font-size: 90%;
+
+        &:hover,
+        &[data-triggered='1'] {
+            color: $darkGray;
+        }
+    }
+    
+    @include responsive() {
+        justify-content: center;
+    }
+}

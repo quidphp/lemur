@@ -16,9 +16,9 @@ use Quid\Lemur;
 use Quid\Main;
 use Quid\Orm;
 
-// generalExportDownload
+// exportDownload
 // class for the route to generate and download the CSV export for the CMS
-class GeneralExportDownload extends Core\RouteAlias
+class ExportDownload extends Core\RouteAlias
 {
     // trait
     use _common;
@@ -34,8 +34,8 @@ class GeneralExportDownload extends Core\RouteAlias
     // config
     public static $config = [
         'path'=>[
-            'en'=>'table/export/[type]/[table]/[order]/[direction]/[filter]/[in]/[notIn]',
-            'fr'=>'table/exportation/[type]/[table]/[order]/[direction]/[filter]/[in]/[notIn]'],
+            'en'=>'export/[type]/[table]/[order]/[direction]/[filter]/[in]/[notIn]',
+            'fr'=>'exportation/[type]/[table]/[order]/[direction]/[filter]/[in]/[notIn]'],
         'segment'=>[
             'type'=>'structureSegmentType',
             'table'=>'structureSegmentTable',
@@ -45,11 +45,11 @@ class GeneralExportDownload extends Core\RouteAlias
             'in'=>'structureSegmentPrimaries',
             'notIn'=>'structureSegmentPrimaries'],
         'match'=>[
-            'session'=>'canLogin'],
+            'session'=>'canAccess'],
         'response'=>[
             'timeLimit'=>300],
         'query'=>['s'],
-        'parent'=>GeneralExport::class,
+        'parent'=>Export::class,
         'group'=>'submit',
         'navigation'=>false,
         'latin1'=>false
@@ -134,7 +134,7 @@ class GeneralExportDownload extends Core\RouteAlias
 
 
     // trigger
-    // lance la route generalExport
+    // lance la route export
     final public function trigger()
     {
         $sql = $this->sql();
@@ -145,5 +145,5 @@ class GeneralExportDownload extends Core\RouteAlias
 }
 
 // init
-GeneralExportDownload::__init();
+ExportDownload::__init();
 ?>

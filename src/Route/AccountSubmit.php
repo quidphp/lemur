@@ -29,7 +29,7 @@ abstract class AccountSubmit extends Core\RouteAlias
             'fr'=>'mon-compte/soumettre'],
         'match'=>[
             'method'=>'post',
-            'session'=>'canLogin',
+            'session'=>'canAccess',
             'post'=>['email'],
             'timeout'=>true,
             'genuine'=>true,
@@ -82,7 +82,7 @@ abstract class AccountSubmit extends Core\RouteAlias
 
     // post
     // retourne le tableau post pour la modification du compte
-    final public function post():array
+    public function post():array
     {
         $return = [];
         $request = $this->request();

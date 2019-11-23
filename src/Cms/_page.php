@@ -48,7 +48,7 @@ trait _page
     {
         $r = '';
         $r .= Html::divOp('title');
-        $r .= Html::h1($this->getTitle());
+        $r .= Html::h1($this->title());
         $r .= Html::divCl();
         $r .= Html::divCond($this->getSubTitle(),'sub-title');
 
@@ -61,14 +61,6 @@ trait _page
     final protected function mainTopRight():string
     {
         return '';
-    }
-
-
-    // getTitle
-    // retourne le titre à afficher pour la page, par défaut le label
-    final public function getTitle()
-    {
-        return static::label();
     }
 
 

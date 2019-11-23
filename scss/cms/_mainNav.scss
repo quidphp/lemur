@@ -14,42 +14,60 @@
         list-style-type: none;
 
         > li {
-            > a {
+            > a:first-child {
                 display: block;
             }
 
-            > a,
+            > a:first-child,
             > .trigger {
                 padding: 8px 15px;
                 color: $white;
                 border-top: 1px solid $color;
             }
 
-            &:hover > a,
+            &:hover > a:first-child,
             &:hover > .trigger,
-            > a[data-triggered='1'] {
+            > a:first-child[data-triggered='1'] {
                 background-color: $color;
             }
 
-            &:active > a,
+            &:active > a:first-child,
             &:active > .trigger {
                 background-color: $darkColor;
             }
 
-            &:last-child > a,
+            &:last-child > a:first-child,
             &:last-child > .trigger {
                 border-bottom: 0;
             }
 
-            &.active > a,
-            > a.selected {
+            &.active > a:first-child,
+            > a:first-child.selected {
                 background-color: $color;
                 text-decoration: underline;
             }
 
-            &.top > a,
+            &.top > a:first-child,
             &.top > .trigger {
                 text-decoration: underline;
+            }
+        }
+        
+        li.with-specific-add {
+            position: relative;
+            
+            > a:first-child {
+                padding-right: 30px !important;
+            }
+
+            > .specific-add {
+                @include abs(50%, 10px);
+                margin-top: -8px;
+                z-index: 3;
+
+                &:hover {
+                    opacity: 0.6;
+                }
             }
         }
     }
@@ -87,7 +105,6 @@
             display: none;
 
             > ul > li {
-                position: relative;
 
                 > a:first-child {
                     display: block;
@@ -106,22 +123,6 @@
                         text-decoration: underline;
                     }
                 }
-
-                &.with-specific-add {
-                    > a:first-child {
-                        padding-right: 25px;
-                    }
-
-                    > .specific-add {
-                        @include abs(50%, 10px);
-                        margin-top: -8px;
-                        z-index: 3;
-
-                        &:hover {
-                            opacity: 0.6;
-                        }
-                    }
-                }
             }
         }
     }
@@ -132,6 +133,10 @@
 
         > ul > li.with-carousel > .trigger {
             justify-content: center;
+        }
+        
+        li > a:first-child {
+            padding-left: 30px !important;
         }
     }
 }

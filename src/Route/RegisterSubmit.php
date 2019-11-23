@@ -98,7 +98,7 @@ abstract class RegisterSubmit extends Core\RouteAlias
 
     // post
     // retourne le tableau post pour l'enregistrement
-    final public function post():array
+    public function post():array
     {
         $return = [];
         $request = $this->request();

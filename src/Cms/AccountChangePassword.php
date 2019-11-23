@@ -24,7 +24,7 @@ class AccountChangePassword extends Lemur\Route\AccountChangePassword
     // config
     public static $config = [
         'match'=>[
-            'session'=>'canLogin'],
+            'session'=>'canAccess'],
         'parent'=>Account::class
     ];
 

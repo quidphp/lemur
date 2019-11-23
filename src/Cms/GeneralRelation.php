@@ -53,7 +53,7 @@ class GeneralRelation extends Core\RouteAlias
         $table = $this->segment('table');
         $relation = $this->relation();
 
-        if(parent::canTrigger() && $table instanceof Core\Table && $table->hasPermission('view','filter','relation','generalRelation'))
+        if(parent::canTrigger() && $table instanceof Core\Table && $table->hasPermission('view','general','filter','relation','generalRelation'))
         {
             if($relation->isRelationTable())
             {

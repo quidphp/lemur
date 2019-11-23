@@ -13,9 +13,9 @@ namespace Quid\Lemur\Cms;
 use Quid\Core;
 use Quid\Lemur;
 
-// specificUserWelcome
-// class for the specific user welcome route which can send a welcome email to the user
-class SpecificUserWelcome extends Core\RouteAlias
+// uerWelcome
+// class for the user welcome route which can send a welcome email to the user
+class UserWelcome extends Core\RouteAlias
 {
     // trait
     use _common;
@@ -27,19 +27,18 @@ class SpecificUserWelcome extends Core\RouteAlias
     // config
     public static $config = [
         'path'=>[
-            'en'=>'table/user/[primary]/welcome-email',
-            'fr'=>'table/user/[primary]/courriel-bienvenue'],
+            'en'=>'user/[primary]/welcome-email',
+            'fr'=>'utilisateur/[primary]/courriel-bienvenue'],
         'segment'=>[
             'primary'=>'structureSegmentPrimary'],
         'row'=>Core\Row\User::class,
-        'parent'=>Specific::class,
         'match'=>[
             'method'=>'post',
             'csrf'=>true,
             'post'=>['id'=>['='=>'[primary]'],'-table-'=>['='=>'[table]']],
             'genuine'=>true,
-            'session'=>'canLogin'],
-        'group'=>'specific'
+            'session'=>'canAccess'],
+        'group'=>'submit'
     ];
 
 
@@ -133,5 +132,5 @@ class SpecificUserWelcome extends Core\RouteAlias
 }
 
 // init
-SpecificUserWelcome::__init();
+UserWelcome::__init();
 ?>

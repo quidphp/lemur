@@ -8,9 +8,6 @@
  
 // backToTop
 // script for a component which brings back to the top of the page
-
-// backToTop
-// element qui ramene en haut de page
 quid.core.backToTop = function()
 {
     $(this).scrollChange()

@@ -38,7 +38,7 @@ class SpecificDuplicate extends Core\RouteAlias
             'method'=>'post',
             'csrf'=>true,
             'genuine'=>true,
-            'session'=>'canLogin'],
+            'session'=>'canAccess'],
         'parent'=>Specific::class,
         'group'=>'specific'
     ];
@@ -56,7 +56,7 @@ class SpecificDuplicate extends Core\RouteAlias
         $table = $this->table();
         $row = $this->segment('primary');
 
-        if(parent::canTrigger() && !empty($table) && $table->hasPermission('view','insert','lemurInsert','duplicate') && !empty($row))
+        if(parent::canTrigger() && !empty($table) && $table->hasPermission('view','specific','insert','lemurInsert','duplicate') && !empty($row))
         $return = true;
 
         return $return;

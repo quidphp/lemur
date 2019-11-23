@@ -28,7 +28,7 @@ abstract class AccountChangePasswordSubmit extends Core\RouteAlias
             'fr'=>'mon-compte/mot-de-passe/soumettre'],
         'match'=>[
             'method'=>'post',
-            'session'=>'canLogin',
+            'session'=>'canAccess',
             'post'=>['oldPassword','newPassword','newPasswordConfirm'],
             'genuine'=>true,
             'csrf'=>true],

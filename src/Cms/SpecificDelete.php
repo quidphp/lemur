@@ -39,7 +39,7 @@ class SpecificDelete extends Core\RouteAlias
             'genuine'=>true,
             'method'=>'post',
             'post'=>['-primary-'=>['='=>'[primary]'],'-table-'=>['='=>'[table]']],
-            'session'=>'canLogin'],
+            'session'=>'canAccess'],
         'parent'=>Specific::class,
         'group'=>'submit'
     ];
@@ -53,7 +53,7 @@ class SpecificDelete extends Core\RouteAlias
         $table = $this->table();
         $row = $this->segment('primary');
 
-        if(parent::canTrigger() && !empty($table) && $table->hasPermission('view','delete','lemurDelete') && !empty($row) && $row->isDeleteable())
+        if(parent::canTrigger() && !empty($table) && $table->hasPermission('view','specific','delete','lemurDelete') && !empty($row) && $row->isDeleteable())
         $return = true;
 
         return $return;

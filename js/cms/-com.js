@@ -10,6 +10,7 @@
 // script of behaviours for the communication component of the CMS
 quid.cms.com = function()
 {
+    // main
     quid.main.event.block.call(this,'click');
     quid.main.keyboard.escape.call(this,true);
     
@@ -34,7 +35,7 @@ quid.cms.com = function()
         $(this).stop(true,true).fadeOut("slow");
     })
     
-    // deletegate
+    // delegate
     .on('click', '.close', function(event) {
         var $this = $(event.delegateTarget);
         $this.trigger('com:close');
@@ -52,7 +53,7 @@ quid.cms.com = function()
     })
     
     // bind
-    .on('component:bind', function(event) {
+    .one('component:setup', function(event) {
         if($(this).is('[tabindex]'))
         $(this).focus();
     });

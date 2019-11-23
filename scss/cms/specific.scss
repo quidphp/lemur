@@ -11,10 +11,7 @@
 
 /* TOP */
 [data-group='specific'] main .inner > .top .left {
-    .popup-trigger {
-        margin-left: 10px;
-    }
-
+    
     .relation-childs .not-accessible {
         font-style: italic;
     }
@@ -24,25 +21,7 @@
     }
 }
 [data-group='specific'] main .inner > .top .right .nav {
-    @include iflex(center, center, wrap);
-    background-color: $lightestGray;
-    border: 1px solid $lightGray;
-    padding: 2px 5px;
-    border-radius: 5px;
-    box-shadow: 2px 2px 6px -4px $gray;
-    min-height: 40px;
-
-    > a {
-        color: $black;
-        font-weight: bold;
-        margin: 0 8px;
-        font-size: 90%;
-
-        &:hover,
-        &[data-triggered='1'] {
-            color: $darkGray;
-        }
-    }
+    @include navSpace();
 }
 
 /* FORM */
@@ -135,7 +114,66 @@
             text-decoration: underline;
         }
     }
+    
+    &.exception {
+        background-color: $red;
+        color: $white;
+        text-align: center;
+        font-weight: bold;
+    }
+    
+    .popup-trigger {
+        @include abs(5px, 10px);
+    }
+    
+    > .left {
+        width: 30%;
+        padding: 15px 20px 15px 0;
+        position: relative;
 
+        .label {
+            margin-bottom: 3px;
+
+            label {
+                font-weight: bold;
+                cursor: default;
+
+                &:hover {
+                    color: inherit;
+                }
+            }
+        }
+
+        .details {
+            padding-top: 5px;
+            font-size: 90%;
+
+            > ul {
+                @include ulOlMargin();
+
+                li {
+                    padding: 1px 0;
+                }
+            }
+        }
+    }
+    
+    &.cursor-pointer > .left label {
+        cursor: pointer;
+
+        &:hover {
+            color: $darkGray;
+        }
+    }
+    
+    > .right {
+        width: 70%;
+    }
+
+    &[data-col-popup='1'] > .right {
+        padding: 0px 30px 0px 0;
+    }
+    
     @include responsive() {
         @include responsiveFlex(flex-start, flex-start);
 
@@ -152,66 +190,6 @@
 
     @include print() {
         background-color: $white !important;
-    }
-}
-[data-group='specific'] #wrapper main .form-element.exception {
-    background-color: $red;
-    color: $white;
-    text-align: center;
-    font-weight: bold;
-}
-[data-group='specific'] main .inner > .specific-form .form-element .popup-trigger {
-    @include abs(5px, 10px);
-}
-
-/* LEFT */
-[data-group='specific'] .specific-form .form-element > .left {
-    width: 30%;
-    padding: 15px 20px 15px 0;
-    position: relative;
-
-    .label {
-        margin-bottom: 3px;
-
-        label {
-            font-weight: bold;
-            cursor: default;
-
-            &:hover {
-                color: inherit;
-            }
-        }
-    }
-
-    .details {
-        padding-top: 5px;
-        font-size: 90%;
-
-        > ul {
-            @include ulOlMargin();
-
-            li {
-                padding: 1px 0;
-            }
-        }
-    }
-}
-[data-group='specific'] main .inner > .specific-form .form-element.cursor-pointer > .left label {
-    cursor: pointer;
-
-    &:hover {
-        color: $darkGray;
-    }
-}
-
-/* RIGHT */
-[data-group='specific'] .specific-form .form-element {
-    > .right {
-        width: 70%;
-    }
-
-    &[data-col-popup='1'] > .right {
-        padding: 0px 30px 0px 0;
     }
 }
 

@@ -39,7 +39,7 @@ class SpecificSubmit extends Core\RouteAlias
             'csrf'=>true,
             'post'=>['-primary-'=>['='=>'[primary]'],'-table-'=>['='=>'[table]']],
             'genuine'=>true,
-            'session'=>'canLogin'],
+            'session'=>'canAccess'],
         'response'=>[
             'timeLimit'=>60],
         'parent'=>Specific::class,
@@ -55,7 +55,7 @@ class SpecificSubmit extends Core\RouteAlias
         $table = $this->table();
         $row = $this->segment('primary');
 
-        if(parent::canTrigger() && !empty($table) && $table->hasPermission('view','update','lemurUpdate') && !empty($row) && $row->isUpdateable())
+        if(parent::canTrigger() && !empty($table) && $table->hasPermission('view','specific','update','lemurUpdate') && !empty($row) && $row->isUpdateable())
         $return = true;
 
         return $return;

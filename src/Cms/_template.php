@@ -48,7 +48,7 @@ trait _template
         $flush .= Html::div(null,'background');
         $flush .= Html::divCond($this->makeModal(),['modal']);
 
-        $flush .= Html::divOp('#wrapper');
+        $flush .= Html::divOp('route-wrap');
 
         if($hasNav === true)
         {
@@ -239,7 +239,7 @@ trait _template
     {
         $r = '';
         $tables = $this->db()->tables();
-        $tables = $tables->hasPermission('view');
+        $tables = $tables->hasPermission('view','mainNav','general');
         $hierarchy = $tables->hierarchy(false);
 
         $r .= Html::ulCond($this->navMenu($hierarchy));
@@ -295,7 +295,7 @@ trait _template
                         $option = ($route->routeRequest()->isSegmentParsedFromValue())? ['query'=>false]:null;
                         $routeHtml .= $route->aTitle(null,null,null,$option);
 
-                        if($i > 0)['html'=>$routeHtml,'attr'=>$attr] = $this->navMenuSpecificAdd($routeHtml,$attr,$navAdd,$table);
+                        ['html'=>$routeHtml,'attr'=>$attr] = $this->navMenuSpecificAdd($routeHtml,$attr,$navAdd,$table);
                     }
 
                     if(is_array($value))
@@ -386,16 +386,16 @@ trait _template
         $showQuid = $boot->getOption('versionQuid') ?? true;
         $version = $boot->version(true,$showQuid,true);
 
-        if($this->hasPermission('footerLink'))
+        if($this->hasPermission('link'))
         $r .= $this->footerElement('link',$this->footerLink());
 
-        if($this->hasPermission('footerLang'))
+        if($this->hasPermission('lang'))
         $r .= $this->footerElement('lang',$this->footerLang());
 
-        if($this->hasPermission('footerModule'))
+        if($this->hasPermission('module'))
         $r .= $this->footerElement('module',$this->footerModule());
 
-        if($this->hasPermission('footerCli'))
+        if($this->hasPermission('cli'))
         $r .= $this->footerElement('cli',$this->footerCli());
 
         $route = About::make();
@@ -467,7 +467,7 @@ trait _template
     {
         $return = [];
 
-        if($this->hasPermission('footerLinkType'))
+        if($this->hasPermission('linkType'))
         $return = $this->footerLinkType();
 
         $return = Base\Arr::append($return,$this->footerRouteGroup('link'));
@@ -490,7 +490,7 @@ trait _template
 
         foreach ($schemeHosts as $key => $uri)
         {
-            if($key === 'cms' && !$this->hasPermission('footerLinkTypeCms'))
+            if($key === 'cms' && !$this->hasPermission('linkTypeCms'))
             continue;
 
             if($key !== $type)

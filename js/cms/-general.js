@@ -12,9 +12,9 @@ $(document).ready(function() {
 	
 	// general
     // comportement pour la page de navigation
-	$(this).on('route:general', function() {
+	$(this).on('route:general', function(event,routeWrap) {
 		
-        var main = $(this).find("main");
+        var main = routeWrap.find("main");
         var scroller = main.find(".scroller");
 		var search = main.find(".left > .search");
         var formTruncate = main.find(".truncate form");
@@ -27,19 +27,19 @@ $(document).ready(function() {
         var highlight = table.find("tr.highlight");
         
         // dragScroll
-        scroller.dragScroll('tbody','div');
+        quid.main.drag.scroll.call(scroller,'tbody','div');
         
         // page + limit
-		pageLimit.callThis(quid.core.inputNumeric);
+        quid.core.inputNumeric.call(pageLimit);
 		
         // rowsChecker
-        main.callThis(quid.cms.rowsChecker).trigger('component:bind');
+        quid.cms.rowsChecker.call(main).trigger('component:setup');
         
 		// colsSorter
-		colsSorter.callThisEach(quid.cms.colsSorter);
+		quid.cms.colsSorter.call(colsSorter);
 		
         // filter
-		filter.callThis(quid.core.filterGeneralFull).trigger('filterGeneralFull:bind');
+		quid.core.filterGeneralFull.call(filter).trigger('filterGeneralFull:bind');
         
 		// search
 		if(search.length)
@@ -47,27 +47,38 @@ $(document).ready(function() {
 			var searchInput = search.find(".form input[type='text']");
 			var searchButton = search.find(".form button");
 			var searchSlide = search.find(".in");
-			searchInput.callThis(quid.core.inputSearch,searchButton)
-            .focusSlide(searchSlide);
+			quid.core.inputSearch.call(searchInput,searchButton);
+            quid.main.input.focusSlide.call(searchInput,searchSlide);
 		}
 		
 		// formTruncate
 		if(formTruncate.length)
 		{
-			formTruncate.block('submit').confirm('submit').on('confirmed', function() {
+            quid.main.event.block.call(formTruncate,'submit');
+            quid.main.window.confirm.call(formTruncate,'submit');
+			formTruncate.on('confirmed', function() {
 				$(this).trigger('block');
 			});
 		}
         
         // filesSlider
-        filesSlider.callThis(quid.core.slider,null,null,'.slider-element',false);
+        quid.core.slider.call(filesSlider,null,null,'.slider-element',false);
         
         // quickEdit
-        quickEdit.callThis(quid.cms.quickEdit);
+        quid.cms.quickEdit.call(quickEdit).trigger('component:setup');
         
         // highlight 
         highlight.on('mouseover', function(event) {
             $(this).removeClass('highlight');
         });
-	});
+	})
+    
+    // unmount
+    .on('route:general:unmount', function(event,routeWrap) {
+        var table = routeWrap.find("main .scroller table").first();
+        var quickEdit = table.find("td[data-quick-edit='1'] a.quick-edit");
+        
+        // quickEdit
+        quickEdit.trigger('quickEdit:revert');
+    });
 });

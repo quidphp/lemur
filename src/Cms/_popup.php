@@ -23,7 +23,7 @@ trait _popup
     public static $configPopup = [
         'match'=>[
             'ajax'=>true,
-            'session'=>'canLogin'],
+            'session'=>'canAccess'],
         'group'=>'popup',
         'history'=>false
     ];

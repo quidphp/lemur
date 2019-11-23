@@ -51,7 +51,7 @@ class SpecificRelation extends Core\RouteAlias
         $table = $this->segment('table');
         $relation = $this->relation();
 
-        if(parent::canTrigger() && $table instanceof Core\Table && $table->hasPermission('view','relation','specificRelation'))
+        if(parent::canTrigger() && $table instanceof Core\Table && $table->hasPermission('view','specific','relation','specificRelation'))
         {
             if($relation->isRelationTable())
             {

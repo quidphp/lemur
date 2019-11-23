@@ -10,17 +10,18 @@
 // stylesheet for the home route
 
 /* HOME */
-[data-route='home'] main .inner > .top .left h1 {
-    margin-right: 10px;
-}
 [data-route='home'] main .inner > .bottom {
     @include flex(center, flex-start);
 
     > .left {
         flex-grow: 1;
-        margin-right: 20px;
     }
-
+    
+    > .right {
+        margin-left: 20px;
+        width: 33%;
+    }
+    
     .block {
         @include block();
     }
@@ -29,12 +30,13 @@
         @include responsiveFlex();
 
         > .left {
+            width: 100%;
             margin: 0 0 20px;
         }
-
-        > .left,
+        
         > .right {
             width: 100%;
+            margin: 0;
         }
     }
 }
@@ -91,6 +93,7 @@
     }
 }
 [data-route='home'] main .inner > .bottom .home-overview {
+    
     .block-body {
         > .table-element {
             @include blockFeedElement();

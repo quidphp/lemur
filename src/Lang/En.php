@@ -18,6 +18,44 @@ class En extends Core\Lang\En
 {
     // config
     public static $config = [
+        
+        // login
+        'login'=>[
+            'usernameEmail'=>'Username or email',
+            'remember'=>'Remember me ?',
+        ],
+
+        // resetPassword
+        'resetPassword'=>[
+            'forgot'=>'Forgot your password ?',
+            'submit'=>'Submit'
+        ],
+
+        // register
+        'register'=>[
+            'confirmPassword'=>'Password confirmation'
+        ],
+        
+        // accountChangePassword
+        'accountChangePassword'=>[
+            'oldPassword'=>'Current password',
+            'newPassword'=>'New password',
+            'newPasswordConfirm'=>'New password confirmation',
+            'submit'=>'Change my password'
+        ],
+
+        // relationOrder
+        'relationOrder'=>[
+            'key'=>[
+                1=>'Oldest first',
+                2=>'Newest first',
+            ],
+
+            'value'=>[
+                3=>'Alphabetical order',
+                4=>'Inverted alphabetical order'
+            ]
+        ],
 
         // com
         'com'=>[
@@ -35,7 +73,26 @@ class En extends Core\Lang\En
 
             // pos
             'pos'=>[
+                
+                // slug
+                'slug'=>[
+                    'updated'=>'[count] other%s% line%s% updated'
+                ],
 
+                // user
+                'user'=>[
+
+                    // welcome
+                    'welcome'=>[
+                        'success'=>'The welcome email was sent.'
+                    ],
+                ],
+
+                // duplicate
+                'duplicate'=>[
+                    'success'=>'Duplicate success'
+                ],
+                
                 // insert
                 'insert'=>[
                     'contact'=>[
@@ -50,7 +107,9 @@ class En extends Core\Lang\En
 
             // label
             'label'=>[
-                60=>'Editor'
+                50=>'Contributor',
+                60=>'Editor',
+                70=>'Sub-admin'
             ]
         ],
 
@@ -97,13 +156,114 @@ class En extends Core\Lang\En
 
             // label
             'label'=>[
-                'contact'=>'Contact'
+                'contact'=>'Contact',
+                'admin'=>'Admin'
             ]
         ],
 
         // col
         'col'=>[
-
+            
+            // *
+            '*'=>array(
+                'featured'=>'Featured',
+                'category'=>'Category',
+                'lang'=>'Language',
+                'index'=>'index',
+                'subject'=>'Subject',
+                'message'=>'Message',
+                'method'=>'Method',
+                'option'=>'Option',
+                'menu'=>'In menu',
+                'priority'=>'Priority',
+                'body'=>'Body',
+                'header'=>'Header',
+                'phone'=>'Phone number',
+                'company'=>'Company',
+                'amount'=>'Amount',
+                'year'=>'Year',
+                'month'=>'Month',
+                'day'=>'Day',
+                'url'=>'Url',
+                'uri'=>'Uri',
+                'media_fr'=>'French media',
+                'media_en'=>'English media',
+                'video'=>'Video',
+                'icon'=>'Icon',
+                'icons'=>'Icons',
+                'thumbnail'=>'Thumbnail',
+                'storage_fr'=>'French file',
+                'storage_en'=>'English file',
+                'background'=>'Background',
+                'title'=>'Title',
+                'firstName'=>'First Name',
+                'lastName'=>'Last Name',
+                'fullName'=>'Full name',
+                'country'=>'Country',
+                'state'=>'State',
+                'province'=>'Province',
+                'city'=>'City',
+                'zipCode'=>'Zip code',
+                'postalCode'=>'Postal code',
+                'key_fr'=>'French key',
+                'key_en'=>'English key',
+                'slug'=>'Slug',
+                'slug_fr'=>'French slug',
+                'slug_en'=>'English slug',
+                'slugPath'=>'Slug path',
+                'slugPath_fr'=>'French slug path',
+                'slugPath_en'=>'English slug path',
+                'fragment'=>'Fragment',
+                'fragment_fr'=>'French fragment',
+                'fragment_en'=>'English fragment',
+                'name_fr'=>'French name',
+                'name_en'=>'English name',
+                'title_fr'=>'French title',
+                'title_en'=>'English title',
+                'content_fr'=>'French content',
+                'content_en'=>'English content',
+                'uri_fr'=>'French Uri',
+                'uri_en'=>'English Uri',
+                'metaTitle_fr'=>'French meta title',
+                'metaTitle_en'=>'English meta title',
+                'metaDescription_fr'=>'French meta description',
+                'metaDescription_en'=>'English meta description',
+                'metaKeywords_fr'=>'French meta keywords',
+                'metaKeywords_en'=>'English meta keywords',
+                'metaImage_fr'=>'French meta image',
+                'metaImage_en'=>'English meta image',
+                'metaSearch_fr'=>'French meta search',
+                'metaSearch_en'=>'English meta search',
+                'media_fr'=>'French media',
+                'media_en'=>'English media',
+                'video_fr'=>'French video',
+                'video_en'=>'English video',
+                'json_fr'=>'French json',
+                'json_en'=>'English json',
+                'timestamp'=>'Timestamp',
+                'time'=>'Time',
+                'timeStart'=>'Start time',
+                'timeEnd'=>'End time',
+                'dateExpire'=>'Expiration date',
+                'dateBirth'=>'Birth date',
+                'dateSent'=>'Sent date',
+                'excerpt_fr'=>'French excerpt',
+                'excerpt_en'=>'English excerpt',
+                'info_fr'=>'French info',
+                'info_en'=>'English info',
+                'role_fr'=>'French role',
+                'role_en'=>'English role',
+                'fax'=>'Fax',
+                'address'=>'Address',
+                'color'=>'Color code',
+                'attr'=>'Attribute',
+                'visible'=>'Visible',
+                'author'=>'Author',
+                'price'=>'Price',
+                'total'=>'Total',
+                'host'=>'Host'
+            ),
+            
             // label
             'label'=>[
 
@@ -641,34 +801,34 @@ class En extends Core\Lang\En
                 // label
                 'label'=>[
                     'about'=>'About',
+                    'calendar'=>'Calendar',
+                    'download'=>'Download',
+                    'export'=>'Export',
+                    'exportDownload'=>'Export - Download',
                     'homeFeed'=>'Home - Feed',
                     'general'=>'General',
                     'generalDelete'=>'General - Delete',
                     'generalEdit'=>'General - Quick Edit',
                     'generalEditSubmit'=>'General - Quick Edit - Submit',
-                    'generalExport'=>'Export',
-                    'generalExportDownload'=>'General - Export - Download',
                     'generalRelation'=>'General - Relation',
                     'generalTruncate'=>'Empty the table',
+                    'popupBoot'=>'Popup - Boot',
+                    'popupSession'=>'Popup - Session',
                     'search'=>'Search',
                     'sessionRole'=>'Role',
                     'sessionRoleSubmit'=>'Role - Submit',
                     'specific'=>'Specific',
                     'specificAdd'=>'Specific - Add',
                     'specificAddSubmit'=>'Specific - Add - Submit',
-                    'specificCalendar'=>'Specific - Calendar',
                     'specificDelete'=>'Specific - Delete',
                     'specificDispatch'=>'Specific - Dispatch',
-                    'specificDownload'=>'Specific - Download',
                     'specificDuplicate'=>'Dupliquer',
                     'specificMulti'=>'Specific - Multiple',
                     'specificMultiSubmit'=>'Specific - Multiple - Submit',
                     'specificRelation'=>'Specific - Relation',
                     'specificSubmit'=>'Specific - Submit',
-                    'specificTableRelation'=>'Specific - Table Relation',
-                    'specificUserWelcome'=>'Welcome',
-                    'popupBoot'=>'Popup - Boot',
-                    'popupSession'=>'Popup - Session'
+                    'tableRelation'=>'Table Relation',
+                    'userWelcome'=>'Welcome'
                 ],
 
                 // description

@@ -37,7 +37,7 @@ class SpecificMultiSubmit extends Core\RouteAlias
             'csrf'=>true,
             'post'=>['-table-'=>['='=>'[table]']],
             'genuine'=>true,
-            'session'=>'canLogin'],
+            'session'=>'canAccess'],
         'response'=>[
             'timeLimit'=>120],
         'parent'=>SpecificMulti::class,
@@ -74,6 +74,14 @@ class SpecificMultiSubmit extends Core\RouteAlias
     }
 
 
+    // canTrigger
+    // si la route peut être lancé
+    final public function canTrigger():bool
+    {
+        return (parent::canTrigger() && $this->hasTable() && $this->table()->hasPermission('view','specific','update','rows','lemurUpdate','multiModify'))? true:false;
+    }
+    
+    
     // onFailure
     // callback appelé lors d'un échec
     protected function onFailure():void
@@ -83,14 +91,6 @@ class SpecificMultiSubmit extends Core\RouteAlias
         static::sessionCom()->neg('multiModify/emptyPost');
 
         return;
-    }
-
-
-    // canTrigger
-    // si la route peut être lancé
-    final public function canTrigger():bool
-    {
-        return (parent::canTrigger() && $this->hasTable() && $this->table()->hasPermission('view','update','rows','lemurUpdate','multiModify'))? true:false;
     }
 
 

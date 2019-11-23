@@ -45,7 +45,9 @@ class Row extends Core\Row
                     'lemurUpdate'=>true, // pouvoir modifier
                     'lemurDelete'=>true, // pouvoir effacer
                     'lemurTruncate'=>false, // afficher le bouton pour vider la table
+                    'mainNav'=>true, // si le lien s'affiche dans le menu de navigation
                     'mainNavAdd'=>true, // ajouter le lien + dans le menu de navigation
+                    'general'=>true, // accès à la page de navigation générale
                     'limit'=>true, // accès à l'outil limite par page
                     'perPage'=>true, // accès à l'outil limite par page
                     'page'=>true, // accès à l'outil pour changer de page
@@ -140,8 +142,9 @@ class Row extends Core\Row
         $isUpdateable = ($table->hasPermission('view','lemurUpdate') && $this->isUpdateable())? true:false;
         $icon = ($isUpdateable === true)? 'modify':'view';
         $commit = $this->cellsDateCommit()[$dateCol] ?? null;
-
-        $r .= Html::h3($this->label());
+        $label = $this->label(null,100);
+        
+        $r .= Html::h3($label);
 
         if(!empty($commit))
         {

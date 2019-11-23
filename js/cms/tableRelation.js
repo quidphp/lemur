@@ -68,7 +68,7 @@ quid.cms.tableRelation = function()
 // génère un éditeur de texte tinycme avec les binding pour les table relation
 quid.cms.tinymceWithTableRelation = function()
 {
-    $(this).each(function(index, el) {
+    $(this).one('component:setup', function(event) {
         var target = $(this).find("textarea");
         var data = target.data('tinymce') || { };
         var hasTableRelation = $(this).parents(".form-element").is("[data-table-relation='1']");
@@ -94,6 +94,13 @@ quid.cms.tinymceWithTableRelation = function()
                 return r;
             });
         }
+    })
+    .one('component:teardown', function(event) {
+        var target = $(this).find("textarea");
+        var editor = target.data('editor');
+        
+        if(editor != null)
+        editor.remove();
     });
     
     return this;

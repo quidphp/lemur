@@ -68,14 +68,14 @@ quid.main.form = new function() {
                 var serialize = target.serialize();
                 var original = $(this).data('form:serialize');
                 
-                if(serialize !== original)
+                if(original && serialize !== original)
                 r = true;
                 
                 return r;
             })
             .on('form:prepare', function(event) {
                 $(this).trigger('form:prepareGenuine');
-                $(this).trigger('form:preparehasChanged')
+                $(this).trigger('form:preparehasChanged');
             })
             .on('form:prepareGenuine', function(event) {
                 var genuine = $(this).triggerHandler('form:getGenuineField');

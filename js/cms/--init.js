@@ -23,17 +23,24 @@ $(document).ready(function() {
 	    window.location.href = window.location.href;
 	});
 	
+    // initial mount
+    // comportements bindés une seule fois
+    $(this).on('document:initialMount', function(event,body) {
+        var modal = body.find("> .modal").first();
+        
+        // modal
+        quid.core.modal.call(modal).trigger('modal:setup');
+    })
     
 	// document mount
     // comportements utilisés pour toutes les pages du CMS
-	$(this).on('document:mount', function(event) {
-		var html = $(this).find("html");
-		var modal = $(this).find(".modal");
-		var burger = $(this).find("header .burger-menu, .nav-fixed .nav-close");
-		var com = $(this).find("#wrapper .com");
-        var subMenu = $(this).find(".with-submenu");
-        var carousel = $(this).find(".with-carousel");
-        var mainSearch = $(this).find("header .top form");
+	$(this).on('document:mount', function(event,routeWrap) {
+		var html = $(this).triggerHandler('document:getHtml');
+		var burger = routeWrap.find("header .burger-menu, .nav-fixed .nav-close");
+		var com = routeWrap.find("main > .inner > .com");
+        var subMenu = routeWrap.find(".with-submenu");
+        var carousel = routeWrap.find(".with-carousel");
+        var mainSearch = routeWrap.find("header .top form");
         
         // carousel
         quid.core.carousel.call(carousel,".trigger");
@@ -44,18 +51,11 @@ $(document).ready(function() {
             return 'submenu';
         });
         
-		// modal
-		quid.core.modal.call(modal);
-		
         // com
-		quid.cms.com.call(com).trigger('component:bind');
+		quid.cms.com.call(com).trigger('component:setup');
         
         // burger
-		burger.on('click', function(event) {
-            var value = (html.attr('data-burger') === 'open')? 'close':'open';
-			html.attr('data-burger',value)
-            $(window).trigger('resize');
-		});
+        quid.core.burger.call(burger);
 
         // mainSearch
         quid.cms.mainSearch.call(mainSearch);
@@ -72,16 +72,15 @@ $(document).ready(function() {
     // document:commonBindings
     // événement appelé pour faire les bindings globaux
     // après le chargement d'une page ou d'un modal
-    .on('document:commonBindings', function(event,parent) {
-        var modal = $(this).find(".modal");
-        var popupTrigger = parent.find(".popup-trigger.with-popup:not(.with-ajax)");
-        var popupTriggerAjax = parent.find(".popup-trigger.with-popup.with-ajax");
-		var modalAnchor = parent.find("a[data-modal]");
-		var anchorCorner = parent.find("[data-anchor-corner='1']");
-        var absolutePlaceholder = parent.find("[data-absolute-placeholder='1']");
-		var aConfirm = parent.find("a[data-confirm]");
-		var print = parent.find(".submit.print");
-        var select = parent.find("select");
+    .on('document:commonBindings', function(event,node) {
+        var modal = $(this).find("body > .modal").first();
+        var popupTrigger = node.find(".popup-trigger.with-popup:not(.with-ajax)");
+        var popupTriggerAjax = node.find(".popup-trigger.with-popup.with-ajax");
+		var modalAnchor = node.find("a[data-modal]");
+		var anchorCorner = node.find("[data-anchor-corner='1']");
+        var absolutePlaceholder = node.find("[data-absolute-placeholder='1']");
+		var aConfirm = node.find("a[data-confirm]");
+        var select = node.find("select");
         
         // modalAnchor
         quid.core.modalAjax.call(modalAnchor,modal);
@@ -89,11 +88,6 @@ $(document).ready(function() {
 		// aConfirm
 		quid.main.window.confirm.call(aConfirm,'click');
 		
-		// print
-		print.on('click', function(event) {
-			window.print();
-		});
-
         // popupTrigger
         quid.core.clickOpenWithTrigger.call(popupTrigger,".popup-title");
         
@@ -112,54 +106,40 @@ $(document).ready(function() {
     
     // login
     // comportement pour la page login
-	.on('route:login', function() {
-		$(this).trigger('route:nobodyCommon');
+	.on('route:login', function(event,routeWrap) {
+		nobodyCommon.call(routeWrap);
 	})
 	
 	// resetPassword
     // comportement pour la page regénérer mon mot de passe
-	.on('route:resetPassword', function(event) {
-		$(this).trigger('route:nobodyCommon');
+	.on('route:resetPassword', function(event,routeWrap) {
+		nobodyCommon.call(routeWrap);
 	})
 	
 	// register
     // comportement pour la page enregistrement
-	.on('route:register', function(event) {
-		$(this).trigger('route:nobodyCommon');
+	.on('route:register', function(event,routeWrap) {
+		nobodyCommon.call(routeWrap);
 	})
 	
-    // nobodyCommon
-    // comportements commun pour toutes les pages ou l'utilisateur n'est pas connecté
-	.on('route:nobodyCommon', function(event) {
-		var browscap = $(this).find("main .browscap");
-		var form = $(this).find("main form");
-
-		form.triggerHandler("form:getValidateFields").focusFirst();
-		
-		if(!quid.base.browser.allowsCookie())
-		browscap.find(".cookie-disabled").show();
-        
-        if(quid.base.browser.isUnsupported())
-		browscap.find(".unsupported-browser").show();
-	})
-    
     // changePassword
     // comportement pour le popup changer mon mot de passe
 	.on('modal:accountChangePassword', function(event,modal) {
 		var form = modal.find("form");
-		form.triggerHandler("form:getValidateFields").focusFirst();
+        var fields = form.triggerHandler("form:getValidateFields");
+		quid.main.input.focusFirst.call(fields);
 	})
     
     // home
     // comportement pour la page d'accueil du CMS une fois connecté
-	.on('route:home', function() {
-		var feed = $(this).find("main .home-feed");
+	.on('route:home', function(event,routeWrap) {
+		var feed = routeWrap.find("main .home-feed");
         var feedTogglers = feed.find(".block-head .feed-togglers > a");
         var feedBody = feed.find(".block-body");
         quid.core.appendContainer.call(feedBody).trigger('feed:bind');
         
-        feedTogglers.ajaxBlock()
-        .on('ajaxBlock:getStatusNode', function(event) {
+        quid.main.ajax.block.call(feedTogglers);
+        feedTogglers.on('ajaxBlock:getStatusNode', function(event) {
             return feedBody;
         })
         .on('ajax:before', function(event) {
@@ -172,7 +152,23 @@ $(document).ready(function() {
         .on('ajax:error', function(event,parsedError,jqXHR,textStatus,errorThrown) {
             feedBody.html(parsedError);
         });
-	})
+	});
     
-    .react();
+    // nobodyCommon
+    var nobodyCommon = function() {
+        var browscap = $(this).find("main .browscap");
+		var form = $(this).find("main form");
+        var fields = form.triggerHandler("form:getValidateFields");
+        
+		quid.main.input.focusFirst.call(fields);
+		
+		if(!quid.base.browser.allowsCookie())
+		browscap.find(".cookie-disabled").show();
+        
+        if(quid.base.browser.isUnsupported())
+		browscap.find(".unsupported-browser").show();
+    };
+    
+    // react
+    quid.core.react.document.call(this);
 });

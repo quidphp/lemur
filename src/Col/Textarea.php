@@ -27,7 +27,7 @@ class Textarea extends Core\ColAlias
         'check'=>['kind'=>'text'],
         'relative'=>null, // custom, type pour absoluteReplace, utilise ceci pour ramener les liens absoluts dans leur version relative
         '@cms'=>[
-            'route'=>['tableRelation'=>Lemur\Cms\SpecificTableRelation::class]]
+            'route'=>['tableRelation'=>Lemur\Cms\TableRelation::class]]
     ];
 
 

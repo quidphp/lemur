@@ -21,6 +21,8 @@ class Contact extends Core\RowAlias
 {
     // config
     public static $config = [
+        'parent'=>'system',
+        'priority'=>953,
         'cols'=>[
             'context'=>['class'=>Core\Col\Context::class],
             'name'=>['required'=>true],
@@ -36,8 +38,10 @@ class Contact extends Core\RowAlias
             '*'=>['insert'=>true]],
         '@cms'=>[
             'permission'=>[
+                '*'=>array('lemurInsert'=>false),
                 'contributor'=>['view'=>false],
-                'editor'=>['view'=>false]]]
+                'editor'=>['view'=>false],
+                'admin'=>array('truncate'=>true,'lemurTruncate'=>true)]]
     ];
 
 

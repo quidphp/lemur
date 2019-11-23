@@ -20,7 +20,7 @@ quid.cms.specificPanel = function()
         // panel
         panel.callThis(quid.core.tabNav,panelNav)
         .fragment().on('tab:init', function(event) {
-            $(this).trigger('specific:formPrepareViewable',[$(this)]);
+            $(this).trigger('specificForm:bindView',[$(this)]);
         })
         .on('tab:open', function() {
             var nav = $(this).triggerHandler('link:getNav');

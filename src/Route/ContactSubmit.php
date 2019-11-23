@@ -31,7 +31,7 @@ abstract class ContactSubmit extends Core\RouteAlias
             'post'=>['name','phone','email','message'],
             'csrf'=>true,
             'genuine'=>true,
-            'timeout'=>false],
+            'timeout'=>true],
         'timeout'=>[
             'failure'=>['max'=>8,'timeout'=>600],
             'success'=>['max'=>2,'timeout'=>600]],

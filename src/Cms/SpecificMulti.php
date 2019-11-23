@@ -37,7 +37,7 @@ class SpecificMulti extends Core\RouteAlias
             'primaries'=>'structureSegmentPrimaries'],
         'group'=>'specific',
         'match'=>[
-            'session'=>'canLogin'],
+            'session'=>'canAccess'],
         'parent'=>Specific::class,
         'sitemap'=>false,
         'formWrap'=>"<div class='disabler'>%disabler%</div><div class='left'><div class='label'>%label%</div>%description%%details%</div><div class='right'>%form%</div>%popup%"
@@ -66,7 +66,7 @@ class SpecificMulti extends Core\RouteAlias
     // si la route peut être lancé
     final public function canTrigger():bool
     {
-        return (parent::canTrigger() && $this->hasTable() && $this->table()->hasPermission('view','update','rows','lemurUpdate','multiModify'))? true:false;
+        return (parent::canTrigger() && $this->hasTable() && $this->table()->hasPermission('view','specific','update','rows','lemurUpdate','multiModify'))? true:false;
     }
 
 

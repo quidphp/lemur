@@ -16,9 +16,9 @@ use Quid\Core;
 use Quid\Lemur;
 use Quid\Orm;
 
-// SpecificTableRelation
+// TableRelation
 // class for the route which manages table relation, used by some inputs in the CMS
-class SpecificTableRelation extends Core\RouteAlias
+class TableRelation extends Core\RouteAlias
 {
     // trait
     use _relation;
@@ -37,8 +37,7 @@ class SpecificTableRelation extends Core\RouteAlias
             'table'=>'structureSegmentTable',
             'order'=>'structureSegmentOrderTableRelation',
             'page'=>'structureSegmentPage'],
-        'method'=>'tableRelationOutput',
-        'parent'=>Specific::class
+        'method'=>'tableRelationOutput'
     ];
 
 
@@ -175,5 +174,5 @@ class SpecificTableRelation extends Core\RouteAlias
 }
 
 // init
-SpecificTableRelation::__init();
+TableRelation::__init();
 ?>

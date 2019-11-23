@@ -18,6 +18,44 @@ class Fr extends Core\Lang\Fr
 {
     // config
     public static $config = [
+        
+        // login
+        'login'=>[
+            'usernameEmail'=>"Nom d'utilisateur ou courriel",
+            'remember'=>'Se souvenir de moi?'
+        ],
+
+        // resetPassword
+        'resetPassword'=>[
+            'forgot'=>'Mot de passe oublié ?',
+            'submit'=>'Soumettre'
+        ],
+
+        // register
+        'register'=>[
+            'confirmPassword'=>'Confirmation du mot de passe'
+        ],
+
+        // accountChangePassword
+        'accountChangePassword'=>[
+            'oldPassword'=>'Mot de passe actuel',
+            'newPassword'=>'Nouveau mot de passe',
+            'newPasswordConfirm'=>'Confirmation du nouveau mot de passe',
+            'submit'=>'Modifier mon mot de passe'
+        ],
+        
+        // relationOrder
+        'relationOrder'=>[
+            'key'=>[
+                1=>'Plus ancien en premier',
+                2=>'Plus récent en premier',
+            ],
+
+            'value'=>[
+                3=>'Ordre alphabétique',
+                4=>'Ordre alphabétique inversé'
+            ]
+        ],
 
         // com
         'com'=>[
@@ -35,7 +73,26 @@ class Fr extends Core\Lang\Fr
 
             // pos
             'pos'=>[
+                
+                // slug
+                'slug'=>[
+                    'updated'=>'[count] autre%s% ligne%s% mise%s% à jour'
+                ],
 
+                // user
+                'user'=>[
+
+                    // welcome
+                    'welcome'=>[
+                        'success'=>'Le courriel de bienvenue a été envoyé.'
+                    ],
+                ],
+
+                // duplicate
+                'duplicate'=>[
+                    'success'=>'La duplication a réussie'
+                ],
+                
                 // insert
                 'insert'=>[
                     'contact'=>[
@@ -50,7 +107,9 @@ class Fr extends Core\Lang\Fr
 
             // label
             'label'=>[
-                60=>'Éditeur'
+                50=>'Contributeur',
+                60=>'Éditeur',
+                70=>'Sous-administrateur'
             ]
         ],
 
@@ -97,7 +156,8 @@ class Fr extends Core\Lang\Fr
 
             // label
             'label'=>[
-                'contact'=>'Contact'
+                'contact'=>'Contact',
+                'admin'=>'Administration'
             ]
         ],
 
@@ -106,7 +166,107 @@ class Fr extends Core\Lang\Fr
 
             // label
             'label'=>[
-
+                
+                // *
+                '*'=>array(
+                    'featured'=>'En vedette',
+                    'category'=>'Catégorie',
+                    'lang'=>'Langue',
+                    'index'=>'index',
+                    'subject'=>'Sujet',
+                    'message'=>'Message',
+                    'method'=>'Méthode',
+                    'option'=>'Option',
+                    'menu'=>'Dans le menu',
+                    'priority'=>'Priorité',
+                    'body'=>'Corps',
+                    'header'=>'En-tête',
+                    'phone'=>'Téléphone',
+                    'company'=>'Compagnie',
+                    'amount'=>'Montant',
+                    'year'=>'Année',
+                    'month'=>'Mois',
+                    'day'=>'Jour',
+                    'url'=>'Url',
+                    'uri'=>'Uri',
+                    'thumbnail'=>'Miniature',
+                    'media_fr'=>'Média français',
+                    'media_en'=>'Média anglais',
+                    'video'=>'Vidéo',
+                    'icon'=>'Icône',
+                    'icons'=>'Icônes',
+                    'storage_fr'=>'Fichier français',
+                    'storage_en'=>'Fichier anglais',
+                    'background'=>'Arrière-plan',
+                    'title'=>'Titre',
+                    'firstName'=>'Prénom',
+                    'lastName'=>'Nom de famille',
+                    'fullName'=>'Nom complet',
+                    'country'=>'Pays',
+                    'state'=>'État',
+                    'province'=>'Province',
+                    'city'=>'Ville',
+                    'zipCode'=>'Zip code',
+                    'postalCode'=>'Code postal',
+                    'key_fr'=>'Clé française',
+                    'key_en'=>'Clé anglaise',
+                    'slug'=>'Slug',
+                    'slug_fr'=>'Slug français',
+                    'slug_en'=>'Slug anglais',
+                    'slugPath'=>'Slug-chemin',
+                    'slugPath_fr'=>'Slug-chemin français',
+                    'slugPath_en'=>'Slug-chemin anglais',
+                    'fragment'=>'Fragment',
+                    'fragment_fr'=>'Fragment français',
+                    'fragment_en'=>'Fragment anglais',
+                    'name_fr'=>'Nom français',
+                    'name_en'=>'Nom anglais',
+                    'title_fr'=>'Titre français',
+                    'title_en'=>'Titre anglais',
+                    'content_fr'=>'Contenu français',
+                    'content_en'=>'Contenu anglais',
+                    'uri_fr'=>'Uri française',
+                    'uri_en'=>'Uri anglaise',
+                    'metaTitle_fr'=>'Meta titre français',
+                    'metaTitle_en'=>'Meta titre anglais',
+                    'metaDescription_fr'=>'Meta description française',
+                    'metaDescription_en'=>'Meta description anglaise',
+                    'metaKeywords_fr'=>'Meta mots clefs français',
+                    'metaKeywords_en'=>'Meta mots clefs anglais',
+                    'metaImage_fr'=>'Meta image français',
+                    'metaImage_en'=>'Meta image anglais',
+                    'metaSearch_fr'=>'Meta recherche français',
+                    'metaSearch_en'=>'Meta recherche anglais',
+                    'media_fr'=>'Média français',
+                    'media_en'=>'Média anglais',
+                    'video_fr'=>'Vidéo français',
+                    'video_en'=>'Vidéo anglais',
+                    'json_fr'=>'Json français',
+                    'json_en'=>'Json anglais',
+                    'timestamp'=>'Code temps',
+                    'dateBirth'=>'Date de naissance',
+                    'dateSent'=>"Date d'envoie",
+                    'dateExpire'=>"Date d'expiration",
+                    'time'=>'Heure',
+                    'timeStart'=>'Heure de début',
+                    'timeEnd'=>'Heure de fin',
+                    'excerpt_fr'=>'Résumé français',
+                    'excerpt_en'=>'Résumé anglais',
+                    'info_fr'=>'Information française',
+                    'info_en'=>'Information anglaise',
+                    'role_fr'=>'Rôle français',
+                    'role_en'=>'Rôle anglais',
+                    'fax'=>'Fax',
+                    'address'=>'Adresse',
+                    'color'=>'Code couleur',
+                    'attr'=>'Attribut',
+                    'visible'=>'Visible',
+                    'author'=>'Auteur',
+                    'price'=>'Prix',
+                    'total'=>'Total',
+                    'host'=>'Hôte'
+                ),
+                
                 // contact
                 'contact'=>[
                     'email'=>'Adresse courriel',
@@ -641,34 +801,34 @@ class Fr extends Core\Lang\Fr
                 // label
                 'label'=>[
                     'about'=>'À propos',
+                    'calendar'=>'Calendrier',
+                    'download'=>'Téléchargement',
+                    'export'=>'Exportation',
+                    'exportDownload'=>'Exportation - Téléchargement',
                     'homeFeed'=>'Accueil - Flux',
                     'general'=>'Général',
                     'generalDelete'=>'Général - Suppression',
                     'generalEdit'=>'General - Édition rapide',
                     'generalEditSubmit'=>'General - Édition rapide - Soumettre',
-                    'generalExport'=>'Exportation',
-                    'generalExportDownload'=>'Général - Exportation - Téléchargement',
                     'generalRelation'=>'Général - Relation',
                     'generalTruncate'=>'Vider la table',
+                    'popupBoot'=>'Popup - Boot',
+                    'popupSession'=>'Popup - Session',
                     'search'=>'Recherche',
                     'sessionRole'=>'Rôle',
                     'sessionRoleSubmit'=>'Rôle - Soumettre',
                     'specific'=>'Spécifique',
                     'specificAdd'=>'Spécifique - Ajout',
                     'specificAddSubmit'=>'Spécifique - Ajout - Soumettre',
-                    'specificCalendar'=>'Spécifique - Calendrier',
                     'specificDelete'=>'Spécifique - Suppression',
                     'specificDispatch'=>'Spécifique - Envoi',
-                    'specificDownload'=>'Spécifique - Téléchargement',
                     'specificDuplicate'=>'Dupliquer',
                     'specificMulti'=>'Spécifique - Multiple',
                     'specificMultiSubmit'=>'Spécifique - Multiple - Soumettre',
                     'specificRelation'=>'Spécifique - Relation',
                     'specificSubmit'=>'Spécifique - Soumettre',
-                    'specificTableRelation'=>'Spécifique - Relation de table',
-                    'specificUserWelcome'=>'Bienvenue',
-                    'popupBoot'=>'Popup - Boot',
-                    'popupSession'=>'Popup - Session'
+                    'tableRelation'=>'Relation de table',
+                    'userWelcome'=>'Bienvenue'
                 ],
 
                 // description

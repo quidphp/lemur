@@ -25,7 +25,7 @@ class Home extends Core\Route\Home
     // config
     public static $config = [
         'match'=>[
-            'session'=>'canLogin'],
+            'session'=>'canAccess'],
         'popup'=>[
             'dbName','driver','serverVersion','connectionStatus','host','username',
             'charset','collation','classFqcn','classSyntax','classSchema','classTables','importantVariables'],
@@ -62,7 +62,7 @@ class Home extends Core\Route\Home
     final protected function mainTopLeft():string
     {
         $r = '';
-
+        
         $r .= Html::divOp('title');
         $r .= $this->makeH1(static::boot()->typeLabel());
 
@@ -161,7 +161,7 @@ class Home extends Core\Route\Home
 
     // mainBottom
     // génère la partie bottom de main
-    final protected function mainBottom():string
+    protected function mainBottom():string
     {
         $r = '';
         $r .= Html::divCond($this->mainBottomLeft(),'left');
@@ -173,7 +173,7 @@ class Home extends Core\Route\Home
 
     // mainBottomLeft
     // génère la partie en bas à gauche de la page d'accueil
-    final protected function mainBottomLeft():string
+    protected function mainBottomLeft():string
     {
         return Html::divCond($this->makeHomeFeed(),['home-feed','block']);
     }
@@ -181,7 +181,7 @@ class Home extends Core\Route\Home
 
     // mainBottomRight
     // génère la partie en bas à droite de la page d'accueil
-    final protected function mainBottomRight():string
+    protected function mainBottomRight():string
     {
         $r = '';
 

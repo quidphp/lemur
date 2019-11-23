@@ -10,9 +10,6 @@
 // stylesheet for the general navigation page of the CMS
 
 /* TOP */
-[data-route='general'] main .inner > .top .left h1 {
-    margin-right: 10px;
-}
 [data-route='general'] main .inner > .top .left .search {
     padding-top: 5px;
 
@@ -314,16 +311,6 @@
 }
 
 /* TBODY */
-[data-route='general'] .container > .scroller > table tbody a {
-    @include inbl();
-    color: $black;
-
-    &:hover,
-    &[data-triggered='1'] {
-        color: $darkGray;
-        text-decoration: underline;
-    }
-}
 [data-route='general'] main .container > .scroller > table > tbody {
     > tr {
         &:nth-child(even) {
@@ -351,18 +338,6 @@
             color: $black;
             position: relative;
             display: block;
-
-            > .general-component {
-                padding: 8px 10px;
-                height: 100%;
-                display: block;
-
-                .empty-placeholder {
-                    font-style: italic;
-                    color: $darkGray;
-                    text-align: left;
-                }
-            }
 
             > * {
                 box-sizing: border-box;

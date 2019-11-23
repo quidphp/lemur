@@ -20,6 +20,7 @@ class Session extends Core\Row\Session
     public static $config = [
         '@cms'=>[
             'permission'=>[
+                '*'=>array('homeFeed'=>false),
                 'contributor'=>['view'=>false],
                 'editor'=>['view'=>false],
                 'subAdmin'=>['lemurInsert'=>false,'lemurUpdate'=>false,'lemurDelete'=>false],

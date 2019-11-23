@@ -18,6 +18,7 @@ use Quid\Lemur;
 class SpecificDispatch extends Core\RouteAlias
 {
     // trait
+    use _general;
     use Lemur\Route\_specificPrimary;
     use Lemur\Segment\_table;
     use Lemur\Segment\_primary;
@@ -33,7 +34,7 @@ class SpecificDispatch extends Core\RouteAlias
             'primary'=>'structureSegmentPrimary'],
         'match'=>[
             'method'=>'post',
-            'session'=>'canLogin',
+            'session'=>'canAccess',
             'csrf'=>false,
             'genuine'=>true,
             'post'=>['-primary-'=>['='=>'[primary]'],'-table-'=>['='=>'[table]']]],
@@ -41,7 +42,7 @@ class SpecificDispatch extends Core\RouteAlias
             '--modify--'=>SpecificSubmit::class,
             '--duplicate--'=>SpecificDuplicate::class,
             '--delete--'=>SpecificDelete::class,
-            '--userWelcome--'=>SpecificUserWelcome::class],
+            '--userWelcome--'=>UserWelcome::class],
         'response'=>[
             'timeLimit'=>60],
         'parent'=>Specific::class,
@@ -53,22 +54,40 @@ class SpecificDispatch extends Core\RouteAlias
     ];
 
 
-    // onBefore
+    // trigger
     // lance la route
-    // comme les routes redirigent toujours, on ne devrait jamais se rendre à routeException
-    final protected function onBefore()
+    final public function trigger()
     {
+        $return = false;
         $route = $this->getRouteLaunch();
-        $route->start();
-        static::routeException(null,'specificDispatchFailed');
+        
+        if(!empty($route) && $route->canTrigger())
+        {
+            $route->start();
+            $return = true;
+        }
 
-        return;
+        return $return;
     }
 
+    
+    // canTrigger
+    // validation avant le lancement de la route
+    final public function canTrigger():bool
+    {
+        $return = false;
+        $table = $this->table();
 
+        if(parent::canTrigger() && !empty($table) && $table->hasPermission('view','specific'))
+        $return = true;
+
+        return $return;
+    }
+    
+    
     // getRouteLaunch
     // retourne la route a lancé
-    final protected function getRouteLaunch():Core\Route
+    final protected function getRouteLaunch():?Core\Route
     {
         $return = null;
         $request = $this->request();
@@ -80,9 +99,6 @@ class SpecificDispatch extends Core\RouteAlias
             if(array_key_exists($key,$post) && $post[$key] === 1)
             $return = $value::make($segment);
         }
-
-        if(empty($return))
-        static::catchable(null,'noRedirectRoute');
 
         return $return;
     }

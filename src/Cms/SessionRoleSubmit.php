@@ -53,7 +53,7 @@ class SessionRoleSubmit extends Core\RouteAlias
     // retourne vrai si la route peut être trigger
     final public function canTrigger():bool
     {
-        return static::makeParent()->canTrigger();
+        return (parent::canTrigger() && static::makeParent()->canTrigger())? true:false;
     }
 
 

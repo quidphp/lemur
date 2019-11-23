@@ -103,7 +103,8 @@ quid.core.slider = function(timeout,navs,className,showIfOne)
 // gère le js pour un media slider
 quid.core.mediaSlider = function(timeout)
 {
-    $(this).slider(timeout).find(".slide").on('tab:close', function(event) {
+    quid.core.slider.call(this,timeout);
+    $(this).find(".slide").on('tab:close', function(event) {
         var iframe = $(this).find("iframe");
         if(iframe.length)
         iframe.attr('src',iframe.attr('src'));

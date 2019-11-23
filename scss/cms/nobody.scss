@@ -13,7 +13,7 @@
     @include cover();
     background-attachment: fixed;
 
-    #wrapper {
+    .route-wrap {
         flex-direction: column;
     }
 

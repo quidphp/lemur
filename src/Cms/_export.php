@@ -40,7 +40,7 @@ trait _export
 
 
     // generalSegments
-    // retourne les segments à utiliser pour la création de l'objet sql de generalExport
+    // retourne les segments à utiliser pour la création de l'objet sql de export
     final protected function generalSegments():array
     {
         return $this->segment(['order','direction','filter','in','notIn']);

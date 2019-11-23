@@ -10,30 +10,30 @@
 // script of behaviours for the specific form page of the CMS
 $(document).ready(function() {
 	
-    // formPrepare
+    // specificForm mount
     // permet de faire tous les bindings des champs (simples et complexes)
-    $(this).on('specific:formPrepare', function(event,parent) {
-        $(this).trigger('specific:formPrepareSimple',[parent]);
-        $(this).trigger('specific:formPrepareViewable',[parent]);
+    $(this).on('specificForm:mount', function(event,node) {
+        $(this).trigger('specificForm:bindMount',[node]);
+        $(this).trigger('specificForm:bindView',[node]);
     })
     
-    // formPrepareSimple
-    // permet de faire les bindings des champs simples
+    // bindMount
+    // permet de faire les bindings des champs
     // ces champs sont bindés dès que le formulaire s'affiche
-    .on('specific:formPrepareSimple', function(event,parent) { })
+    .on('specificForm:bindMount', function(event,node) { })
     
-    // formPrepareViewable
+    // bindView
     // permet de faire les bindings de champs
     // ces champs seront bindés à l'initialisation du panneau, lorsqu'ils sont visibles
-    .on('specific:formPrepareViewable', function(event,parent) {
-        var date = parent.find("[data-group='date'] .specific-component");
-        var enumSet = parent.find("[data-tag='search'] .specific-component");
-        var checkboxSortable = parent.find("[data-group='relation'][data-sortable='1'] .specific-component");
-        var files = parent.find("[data-group='media'] .specific-component");
-        var addRemove = parent.find("[data-tag='add-remove'] .specific-component");
-        var tableRelation = parent.find("[data-table-relation='1'] .specific-component");
-        var tinymce = parent.find("[data-group='tinymce'] .specific-component");
-        var anchorCorner = parent.find("[data-anchor-corner]");
+    .on('specificForm:bindView', function(event,node) {
+        var date = node.find("[data-group='date'] .specific-component");
+        var enumSet = node.find("[data-tag='search'] .specific-component");
+        var checkboxSortable = node.find("[data-group='relation'][data-sortable='1'] .specific-component");
+        var files = node.find("[data-group='media'] .specific-component");
+        var addRemove = node.find("[data-tag='add-remove'] .specific-component");
+        var tableRelation = node.find("[data-table-relation='1'] .specific-component");
+        var tinymce = node.find("[data-group='tinymce'] .specific-component");
+        var anchorCorner = node.find("[data-anchor-corner]");
         
         // date
         date.callThis(quid.core.calendarInput);
@@ -45,7 +45,7 @@ $(document).ready(function() {
         checkboxSortable.verticalSorting(".choice",'.choice-in');
         
         // files
-        files.callThis(quid.cms.inputFiles);
+        files.callThis(quid.cms.inputFiles).trigger('component:setup');
         
         // addRemove
         addRemove.callThis(quid.core.addRemove);
@@ -54,32 +54,55 @@ $(document).ready(function() {
         tableRelation.callThis(quid.cms.tableRelation).trigger('tableRelation:bind');
         
         // tinycme
-        tinymce.callThis(quid.cms.tinymceWithTableRelation);
+        tinymce.callThis(quid.cms.tinymceWithTableRelation).trigger('component:setup');
         
         // anchorCorner
         anchorCorner.trigger('anchorCorner:refresh');
     })
     
+    // specificForm unmount
+    // permet démonter les champs du formulaire
+    $(this).on('specificForm:unmount', function(event,node) {
+        var tinymce = node.find("[data-group='tinymce'] .specific-component");
+        tinymce.trigger('component:teardown');
+    })
+    
 	// specific
-    // comportement pour la page de modification spécifique
-	.on('route:specific', function() {
-		$(this).trigger('route:specificCommon');
-		$(this).trigger('route:specificTrigger');
+    // comportement communs pour les pages spécifiques
+	.on('group:specific', function(event,routeWrap) {
+        var form = routeWrap.find("main .inner > form.specific-form");
+        var panel = form.find("> .form-inner > .panel");
+        
+		// submitConfirm
+		var submitConfirm = form.find("button[type='submit'][data-confirm]");
+		submitConfirm.confirm('click');
+		
+		// block
+		form.block('submit').on('submit', function() {
+			$(this).trigger('block');
+		});
+        
+        // champs simples
+        $(this).trigger('specificForm:bindMount',[form]);
+        
+        // avec panel
+        if(panel.length > 1)
+        form.callThis(quid.cms.specificPanel);
+        
+        else
+        $(this).trigger('specificForm:bindView',[form]);
 	})
 	
-	// specificAdd
-    // comportement pour la page d'ajout spécifique
-	.on('route:specificAdd', function(event) {
-		$(this).trigger('route:specificCommon');
-		$(this).trigger('route:specificTrigger');
-	})
-	
+    // unmount
+    // comportements communs pour démonter la page spécifique
+    .on('group:specific:unmount', function(event,routeWrap) {
+        var form = routeWrap.find("main .inner > form.specific-form");
+        $(this).trigger('specificForm:unmount',[form]);
+    })
+    
     // specificMulti
     // comportement pour la page de modification multiple
 	.on('route:specificMulti', function(event) {
-		$(this).trigger('route:specificCommon');
-		$(this).trigger('route:specificTrigger');
-        
         var form = $(this).find("main .inner > form.specific-form");
         var formElement = form.find(".form-element");
         
@@ -109,43 +132,5 @@ $(document).ready(function() {
         .trigger('specificMulti:prepare');
         
         form.trigger('form:prepare');
-	})
-    
-	// specificCommon
-    // comportements communs pour toutes les pages spécifiques
-	.on('route:specificCommon', function(event) {
-		var form = $(this).find("main .inner > form.specific-form");
-        
-		// submitConfirm
-		var submitConfirm = form.find("button[type='submit'][data-confirm]");
-		submitConfirm.confirm('click');
-		
-		// block
-		form.block('submit').on('submit', function() {
-			$(this).trigger('block');
-		});
-	})
-	
-	// specificTrigger
-    // comportements communs pour la préparation des différents inputs du formulaire
-	.on('route:specificTrigger', function(event) {
-		var form = $(this).find("main .inner > .specific-form");
-		var panel = form.find("> .form-inner > .panel");
-        
-        // champs simples
-        $(this).trigger('specific:formPrepareSimple',[form]);
-        
-		// avec panel
-		if(panel.length > 1)
-		form.callThis(quid.cms.specificPanel);
-		
-		else
-		$(this).trigger('specific:formPrepareViewable',[form]);
-	})
-	
-	// route:specificCommon:panel
-    // comportements communs pour la préparation des panneaux du formulaire
-	.on('route:specificCommon:panel', function(event,form,panel,panelNav,panelDescription) {
-		
 	});
 });

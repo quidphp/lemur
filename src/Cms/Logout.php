@@ -23,7 +23,7 @@ class Logout extends Lemur\Route\Logout
     // config
     public static $config = [
         'match'=>[
-            'session'=>'canLogin'],
+            'session'=>'canAccess'],
         'parent'=>Login::class
     ];
 

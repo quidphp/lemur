@@ -36,7 +36,7 @@ quid.cms.rowsChecker = function()
         return $(this).find("table").first();
     })
     .on('rowsChecker:getToggleAll', function(event) {
-        return $(this).triggerHandler('rowsChecker:getTable').find("th.rows .toggle-all")
+        return $(this).triggerHandler('rowsChecker:getTable').find("th.rows .toggle-all").first();
     })
     .on('rowsChecker:getRows', function(event) {
         return $(this).triggerHandler('rowsChecker:getTable').find("tbody tr");
@@ -92,13 +92,13 @@ quid.cms.rowsChecker = function()
         var showDelete = (oneChecked === true && $(this).triggerHandler('rowsChecker:areAllDeleteable'))? true:false;
         
         toolsContainer.trigger((oneChecked === true)? 'toolsContainer:show':'toolsContainer:hide');
-        toggleAll.trigger((allChecked === true)? 'toggleAll:allChecked':'toggleAll:notAllChecked');
+        toggleAll.toggleClass('all-checked',allChecked);
         multiModify.trigger((showMulti === true)? 'toolMulti:show':'toolMulti:hide');
         multiDelete.trigger((showDelete === true)? 'toolMulti:show':'toolMulti:hide')
     })
     
     // bind
-    .on('component:bind', function(event) {
+    .one('component:setup', function(event) {
         bindToggleAll.call(this);
         bindCheckboxes.call(this);
         bindToolsContainer.call(this);
@@ -117,12 +117,6 @@ quid.cms.rowsChecker = function()
         })
         .on('toggleAll:toggle', function() {
             $(this).trigger(($this.triggerHandler('rowsChecker:areAllChecked'))? 'toggleAll:uncheck':'toggleAll:check');
-        })
-        .on('toggleAll:allChecked', function() {
-            $(this).addClass('all-checked');
-        })
-        .on('toggleAll:notAllChecked', function() {
-            $(this).removeClass('all-checked');
         })
         .on('toggleAll:check', function() {
             $this.triggerHandler('rowsChecker:getCheckboxes').trigger('checkbox:check');

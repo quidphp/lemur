@@ -54,7 +54,7 @@ class Route extends Base\Test
         assert($obj2->type() === $type);
 
         // getBaseReplace
-        assert(count($obj->getBaseReplace()) === 15);
+        assert(count($obj->getBaseReplace()) === 17);
 
         // prepareTitle
 
@@ -122,7 +122,7 @@ class Route extends Base\Test
         assert($obj2->title() === 'Login - Submit');
         assert($obj2->title(3) === 'Log');
         assert(!empty($obj->docOpen()));
-        assert(count($obj->getReplace()) === 15);
+        assert(count($obj->getReplace()) === 17);
         assert(!$obj2->isSelected());
         assert($obj2->hasUri());
         assert(!$route::make()->hasUri());
@@ -650,9 +650,9 @@ class Route extends Base\Test
         assert($app->count() === 51);
         assert($routes->type() === 'cms');
         assert($routes->keyParent()[Lemur\Cms\LoginSubmit::class] === Lemur\Cms\Login::class);
-        assert(count($routes->hierarchy()) === 19);
+        assert(count($routes->hierarchy()) === 24);
         assert(count($routes->childsRecursive($login)) === 5);
-        assert($routes->tops()->isCount(19));
+        assert($routes->tops()->isCount(24));
         assert($routes->tops() !== $routes);
         assert($routes->top($loginSubmit) === $login);
         assert($routes->parents($loginSubmit)->isCount(1));
@@ -679,8 +679,8 @@ class Route extends Base\Test
         assert($routes->first(['group'=>'home']) === Lemur\Cms\Home::class);
         assert($routes->filter(['group'=>'error','priority'=>992])->isEmpty());
         assert($routes->filter(['group'=>'error','priority'=>999])->isCount(1));
-        assert(count($routes->group('group')) === 13);
-        assert($routes->sortBy('name',false)->index(1) === Lemur\Cms\SpecificUserWelcome::class);
+        assert(count($routes->group('group')) === 14);
+        assert($routes->sortBy('name',false)->index(1) === Lemur\Cms\TableRelation::class);
         assert($routes->sortBy('name',false) !== $routes);
         assert($routes->sortDefault()->index(0) === Lemur\Cms\Home::class);
         assert($routes->sortDefault() === $routes);

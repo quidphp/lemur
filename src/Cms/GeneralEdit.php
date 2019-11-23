@@ -39,7 +39,7 @@ class GeneralEdit extends Core\RouteAlias
         'group'=>'general',
         'match'=>[
             'ajax'=>true,
-            'session'=>'canLogin'],
+            'session'=>'canAccess'],
         'parent'=>General::class,
         'sitemap'=>false,
         'history'=>false
@@ -55,7 +55,7 @@ class GeneralEdit extends Core\RouteAlias
         $row = $this->row();
         $col = $this->segment('col');
 
-        if(parent::canTrigger() && $table instanceof Core\Table && $table->hasPermission('view','lemurUpdate','quickEdit'))
+        if(parent::canTrigger() && $table instanceof Core\Table && $table->hasPermission('view','general','lemurUpdate','quickEdit'))
         {
             if($row->isUpdateable() && $col->isQuickEditable())
             $return = true;

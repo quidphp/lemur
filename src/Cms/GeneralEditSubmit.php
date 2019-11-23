@@ -41,22 +41,23 @@ class GeneralEditSubmit extends Core\RouteAlias
             'csrf'=>true,
             'genuine'=>true,
             'post'=>['-primary-'=>['='=>'[primary]'],'-table-'=>['='=>'[table]']],
-            'session'=>'canLogin'],
+            'session'=>'canAccess'],
         'response'=>[
             'timeLimit'=>60],
         'parent'=>GeneralEdit::class,
         'group'=>'submit',
         'form'=>[
             'attr'=>[
-                'data-unload'=>'common/unload']]
+                'data-unload'=>'common/unload',
+                'data-validation'=>false]]
     ];
 
 
-    // onBefore
-    // validation avant le lancement de la route
-    final protected function onBefore()
+    // canTrigger
+    // validation si la route peut être lancé
+    final public function canTrigger():bool
     {
-        return static::makeParent($this->segments())->canTrigger();
+        return (parent::canTrigger() && static::makeParent($this->segments())->canTrigger())? true:false;
     }
 
 

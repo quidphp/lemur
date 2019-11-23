@@ -36,7 +36,7 @@ class HomeFeed extends Core\RouteAlias
             'type'=>'structureSegmentBoolean'],
         'match'=>[
             'ajax'=>true,
-            'session'=>'canLogin'],
+            'session'=>'canAccess'],
         'group'=>'home',
         'parent'=>Home::class,
         'history'=>false,

@@ -16,14 +16,10 @@ use Quid\Lemur;
 // class for the account route of the CMS, by default redirects to the user's specific route
 class Account extends Lemur\Route\Account
 {
-    // trait
-    use _common;
-
-
     // config
     public static $config = [
         'match'=>[
-            'session'=>'canLogin']
+            'session'=>'canAccess']
     ];
 
 
@@ -37,7 +33,7 @@ class Account extends Lemur\Route\Account
 
     // trigger
     // ne fait rien
-    final public function trigger()
+    public function trigger()
     {
         return;
     }
@@ -45,7 +41,7 @@ class Account extends Lemur\Route\Account
 
     // onAfter
     // après trigger renvoie vers la page specifique du user
-    final protected function onAfter()
+    protected function onAfter()
     {
         return static::sessionUser()->route();
     }

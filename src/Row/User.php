@@ -21,10 +21,8 @@ class User extends Core\Row\User
     public static $config = [
         'permission'=>[
             '*'=>['cmsLogin'=>false],
-            'shared'=>['update'=>true],
-            'user'=>['update'=>true],
             'contributor'=>['cmsLogin'=>true],
-            'editor'=>['update'=>true,'cmsLogin'=>true],
+            'editor'=>['cmsLogin'=>true],
             'subAdmin'=>['cmsLogin'=>true],
             'admin'=>['cmsLogin'=>true]],
         '@cms'=>[
@@ -35,7 +33,7 @@ class User extends Core\Row\User
                 'subAdmin'=>['userWelcome'=>true,'fakeRoles'=>true],
                 'admin'=>['userWelcome'=>true,'fakeRoles'=>true]],
             'route'=>[
-                'userWelcome'=>Lemur\Cms\SpecificUserWelcome::class],
+                'userWelcome'=>Lemur\Cms\UserWelcome::class],
             'specificOperation'=>[self::class,'specificOperation']],
     ];
 

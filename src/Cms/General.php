@@ -49,7 +49,7 @@ class General extends Core\RouteAlias
             'notIn'=>'structureSegmentPrimaries',
             'highlight'=>'structureSegmentPrimaries'],
         'match'=>[
-            'session'=>'canLogin'],
+            'session'=>'canAccess'],
         'sitemap'=>true,
         'popup'=>[
             'search','primary','priority','engine','collation','autoIncrement','updateTime',
@@ -61,7 +61,7 @@ class General extends Core\RouteAlias
     // si la route peut être lancé
     final public function canTrigger():bool
     {
-        return (parent::canTrigger() && $this->hasTable() && $this->hasTablePermission('view'))? true:false;
+        return (parent::canTrigger() && $this->hasTable() && $this->hasTablePermission('view','general'))? true:false;
     }
 
 
@@ -69,13 +69,19 @@ class General extends Core\RouteAlias
     // au début de la route, store dans nav
     final protected function onBefore()
     {
-        $table = $this->table();
-        $nav = $this->session()->nav();
-        $highlight = $this->getHighlight();
-        $route = (!empty($highlight))? $this->changeSegment('highlight',null):$this;
-        $nav->set([static::class,$table],$route->uri());
+        $return = false;
+        
+        if(parent::onBefore())
+        {
+            $table = $this->table();
+            $nav = $this->session()->nav();
+            $highlight = $this->getHighlight();
+            $route = (!empty($highlight))? $this->changeSegment('highlight',null):$this;
+            $nav->set([static::class,$table],$route->uri());
+            $return = true;
+        }
 
-        return true;
+        return $return;
     }
 
 
@@ -572,7 +578,7 @@ class General extends Core\RouteAlias
     final protected function makeExport():string
     {
         $r = '';
-        $route = GeneralExport::make($this->segments());
+        $route = Export::make($this->segments());
         if($route->canTrigger())
         $r .= $route->aDialog(null,['operation-element','with-icon','download']);
 
@@ -951,7 +957,8 @@ class General extends Core\RouteAlias
             $rowsPermission = $this->hasTablePermission('rows');
             $actionPermission = $this->hasTablePermission('action');
             $specificPermission = $this->hasTablePermission('specific');
-
+            $option = array();
+            
             foreach ($rows as $row)
             {
                 $specificRoute = null;

@@ -10,10 +10,10 @@
 // script containing logic related to window and scrolling
 quid.main.window = new function() {
     
-    // openSmall
+    // small
     // permet l'ouverture d'une smallWindow
     // tous les paramètres de la window sont dans la balise
-    this.openSmall = $.fn.smallWindow = function()
+    this.small = $.fn.smallWindow = function()
     {
         $(this).addIds('smallWindow');
         $(this).on('click', function(event) {
@@ -162,6 +162,18 @@ quid.main.window = new function() {
             $(document).triggerHandler('document:replaceState',quid.base.request.relative());
             else
             window.location.hash = '';
+        });
+        
+        return this;
+    }
+    
+    
+    // clickPrint
+    // sur clique de l'élément, imprime la page
+    this.clickPrint = $.fn.clickPrint = function() 
+    {
+        $(this).on('click', function(event) {
+            window.print();
         });
         
         return this;

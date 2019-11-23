@@ -31,7 +31,7 @@ class Search extends Core\RouteAlias
             'en'=>'search',
             'fr'=>'recherche'],
         'match'=>[
-            'session'=>'canLogin',
+            'session'=>'canAccess',
             'method'=>'post',
             'ajax'=>true,
             'csrf'=>false,
@@ -123,6 +123,7 @@ class Search extends Core\RouteAlias
                         $primary = current($value);
                         $route = Specific::make(['table'=>$table,'primary'=>$primary]);
                         $uri = $route->uri();
+                        $title = $route->title();
                     }
 
                     else
@@ -130,9 +131,8 @@ class Search extends Core\RouteAlias
                         $route = General::make(['table'=>$table]);
                         $searchQuery = $route->getSearchQuery();
                         $uri = Base\Uri::changeQuery([$searchQuery=>$search],$route->uri());
+                        $title = $route->title("% ($count)");
                     }
-
-                    $title = $route->title("% ($count)");
 
                     $r .= Html::liOp();
                     $r .= Html::a($uri,$title);

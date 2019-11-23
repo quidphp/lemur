@@ -31,9 +31,9 @@ class Cols extends Base\Test
         // formComplexWrap
 
         // cols
-        assert(strlen($cols->formComplex()['date']) === 260);
+        assert(strlen($cols->formComplex()['date']) === 251);
         assert($cols->formComplexWrap('table')['userAdd'] === "<table><tr><td><label>Added by</label></td><td><div class='specific-component'><div class='empty-placeholder'>NULL</div></div></td></tr></table>");
-        assert(strlen($cols->formComplexWrap('table')['date']) === 453);
+        assert(strlen($cols->formComplexWrap('table')['date']) === 444);
 
         return true;
     }

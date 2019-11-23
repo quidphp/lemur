@@ -136,7 +136,7 @@ html body .icon-solo.move {
 
 /* MEDIA */
 [data-route='general'] main table td[data-group='media'] .media-placeholder,
-form [data-group='media'] .right .block .info .media-placeholder,
+form [data-group='media'] .right .file-block .info .media-placeholder,
 form [data-table-relation='1'] .right .table-relation .popup .big-icon.storage {
     @include bgimg64($iconMedia);
 }
@@ -286,71 +286,74 @@ body .with-icon {
 .popup-trigger {
     @include popupTrigger();
 }
+.general-component {
+    @include generalComponent();
+}
 .specific-component {
     @include specificComponent();
 }
 
 // primary
-#wrapper [data-cell='primary'] .general-component {
+[data-cell='primary'] .general-component {
     @include componentPrimaryGeneral();
 }
 
 // date
-#wrapper [data-group='date'] .specific-component {
+[data-group='date'] .specific-component {
     @include componentDateSpecific();
 }
 
 // relation
-#wrapper [data-group='relation'][data-tag='search'] .specific-component {
+[data-group='relation'][data-tag='search'] .specific-component {
     @include componentEnumSetSpecific();
 }
-#wrapper [data-group='relation'][data-sortable='1'] .specific-component {
+[data-group='relation'][data-sortable='1'] .specific-component {
     @include componentRelationSortableSpecific();
 }
-#wrapper [data-group='relation'][data-tag='select'] .specific-component {
+[data-group='relation'][data-tag='select'] .specific-component {
     @include componentSelectSpecific();
 }
-#wrapper [data-group='relation'] .general-component {
+[data-group='relation'] .general-component {
     @include componentRelationGeneral();
 }
-#wrapper [data-group='relation'][data-relation-table='media'] .general-component {
+[data-group='relation'][data-relation-table='media'] .general-component {
     @include componentRelationMediaGeneral();
 }
 
 // files
-#wrapper [data-group='media'] .specific-component {
+[data-group='media'] .specific-component {
     @include componentFilesSpecific();
 }
-#wrapper [data-group='media'] .general-component {
+[data-group='media'] .general-component {
     @include componentFilesGeneral();
 }
 
 // addRemove
-#wrapper [data-tag='add-remove'] .specific-component {
+[data-tag='add-remove'] .specific-component {
     @include componentAddRemoveSpecific();
 }
 
 // jsonArrayRelation
-#wrapper [data-col='jsonArrayRelation'] .specific-component {
+[data-col='jsonArrayRelation'] .specific-component {
     @include componentJsonArrayRelationSpecific();
 }
 
 // tableRelation
-#wrapper [data-table-relation='1'] .specific-component {
+[data-table-relation='1'] .specific-component {
     @include componentTableRelationSpecific();
 }
 
 /* userPassword */
-#wrapper [data-col='userPassword'] .specific-component {
+[data-col='userPassword'] .specific-component {
     @include componentUserPasswordSpecific();
 }
 
 // video
-#wrapper [data-group='video'] .specific-component {
+[data-group='video'] .specific-component {
     @include componentVideoSpecific();
 }
 
 // tinymce
-#wrapper [data-group='tinymce'] .specific-component {
+[data-group='tinymce'] .specific-component {
     @include componentTinymceSpecific();
 }

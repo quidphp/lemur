@@ -15,9 +15,9 @@ use Quid\Core;
 use Quid\Lemur;
 use Quid\Main;
 
-// specificCalendar
+// calendar
 // class for the calendar route of the CMS
-class SpecificCalendar extends Core\RouteAlias
+class Calendar extends Core\RouteAlias
 {
     // trait
     use _common;
@@ -30,8 +30,8 @@ class SpecificCalendar extends Core\RouteAlias
     // config
     public static $config = [
         'path'=>[
-            'en'=>'specific/calendar/[timestamp]/[format]/[selected]',
-            'fr'=>'specifique/calendrier/[timestamp]/[format]/[selected]'],
+            'en'=>'calendar/[timestamp]/[format]/[selected]',
+            'fr'=>'calendrier/[timestamp]/[format]/[selected]'],
         'segment'=>[
             'timestamp'=>'structureSegmentTimestampMonth',
             'format'=>'structureSegmentStr',
@@ -39,14 +39,13 @@ class SpecificCalendar extends Core\RouteAlias
         'history'=>false,
         'match'=>[
             'ajax'=>true,
-            'session'=>'canLogin'],
-        'parent'=>Specific::class,
-        'group'=>'specific'
+            'session'=>'canAccess'],
+        'group'=>'popup'
     ];
 
 
     // setCallback
-    // change les callback pour le calendrier de specific
+    // change les callback pour le calendrier
     final public function setCallback(Main\Calendar $return):Main\Calendar
     {
         $return->setCallback('prev',function(int $value) {
@@ -66,5 +65,5 @@ class SpecificCalendar extends Core\RouteAlias
 }
 
 // init
-SpecificCalendar::__init();
+Calendar::__init();
 ?>
