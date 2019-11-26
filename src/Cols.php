@@ -19,7 +19,7 @@ class Cols extends Core\Cols
     // config
     public static $config = [];
 
-    
+
     // general
     // retourne un objet cols avec toutes les colonnes dans general
     final public function general():self
@@ -44,8 +44,8 @@ class Cols extends Core\Cols
         $return = $this->pair('formComplexWrap',$wrap,$pattern);
         return ($str === true)? implode($return):$return;
     }
-    
-    
+
+
     // specificComponentWrap
     // génère les éléments specificComponentWrap pour toutes les colonnes
     final public function specificComponentWrap(?string $wrap=null,$pattern=null,bool $str=false)

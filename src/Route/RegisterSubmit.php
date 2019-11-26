@@ -112,7 +112,7 @@ abstract class RegisterSubmit extends Core\RouteAlias
         $return['data'] = Base\Arr::gets($keep,$post);
         $return['data'] = Base\Arr::replace($return['data'],$default);
         $return['passwordConfirm'] = $post[$passwordConfirm];
-        
+
         return $return;
     }
 
@@ -128,10 +128,10 @@ abstract class RegisterSubmit extends Core\RouteAlias
         $option = $this->getOption();
         $post = $this->post();
         $post = $this->onBeforeCommit($post);
-        
+
         if($post !== null)
         $return = $class::registerProcess($post['data'],$post['passwordConfirm'],$option);
-        
+
         if(empty($return))
         $this->failureComplete();
 

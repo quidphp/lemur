@@ -25,7 +25,7 @@ class Cols extends Base\Test
         $table = 'ormCols';
         $tb = $db[$table];
         $cols = $tb->cols();
-        
+
         // general
         assert($cols->general()->isCount(6));
 
@@ -33,11 +33,11 @@ class Cols extends Base\Test
 
         // formComplexWrap
         assert(strlen($cols->formComplexWrap('table')['date']) === 353);
-        
+
         // specificComponentWrap
         assert($cols->specificComponentWrap('table')['userAdd'] === "<table><tr><td><label>Added by</label></td><td><div class='specific-component'><div class='empty-placeholder'>NULL</div></div></td></tr></table>");
         assert(strlen($cols->specificComponentWrap('table')['date']) === 444);
-        
+
         // cols
         assert(strlen($cols->formComplex()['date']) === 251);
         assert(count($cols->group('panel')) === 2);

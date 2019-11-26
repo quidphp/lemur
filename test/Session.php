@@ -8,7 +8,6 @@ declare(strict_types=1);
  * License: https://github.com/quidphp/lemur/blob/master/LICENSE
  * Readme: https://github.com/quidphp/lemur/blob/master/README.md
  */
-
 namespace Quid\Test\Lemur;
 use Quid\Base;
 use Quid\Lemur;
@@ -25,9 +24,9 @@ class Session extends Base\Test
 
         // allowWelcomeEmail
         assert(!$s->allowWelcomeEmail());
-        
+
         // routeTableGeneral
-        
+
         return true;
     }
 }

@@ -31,13 +31,13 @@ class Cells extends Base\Test
 
         // formComplex
         assert(strlen($cells->formComplex()['active']) === 204);
-        
+
         // formComplexWrap
         assert(strlen($cells->formComplexWrap()['active']) === 225);
-        
+
         // specificComponentWrap
         assert(strlen($cells->specificComponentWrap()['active']) === 263);
-        
+
         // cells
         assert($cells->description()['id'] === 'Primary and unique key. Required');
         assert($cells->description('%:')['id'] === 'Primary and unique key. Required:');

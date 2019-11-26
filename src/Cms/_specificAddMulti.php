@@ -20,7 +20,7 @@ trait _specificAddMulti
     // trait
     use _specific;
 
-    
+
     // onReplace
     // tableau onReplace pour la route
     final protected function onReplace(array $return):array
@@ -30,8 +30,8 @@ trait _specificAddMulti
 
         return $return;
     }
-    
-    
+
+
     // isPanelVisible
     // retourne vrai si le panneau est visible
     final protected function isPanelVisible(Core\Cols $cols):bool

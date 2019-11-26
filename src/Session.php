@@ -19,15 +19,15 @@ class Session extends Core\Session
     // config
     public static $config = [];
 
-    
+
     // allowWelcomeEmail
     // retourne vrai si le user de la session permet l'envoie de courrier de bienvenue
     final public function allowWelcomeEmail():bool
     {
         return $this->user()->allowWelcomeEmail();
     }
-    
-    
+
+
     // routeTableGeneral
     // retourne une route general à partir d'un objet table
     // la session peut générer la route à partir de la dernière route de la même table conservé dans l'objet nav de session

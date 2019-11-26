@@ -10,10 +10,10 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Row;
+use Quid\Base;
 use Quid\Core;
 use Quid\Lemur;
 use Quid\Main;
-use Quid\Base;
 
 // user
 // extended class for a row of the user table, with cms logic
@@ -40,23 +40,23 @@ class User extends Core\Row\User
             'specificOperation'=>[self::class,'specificOperation']],
     ];
 
-    
+
     // onWelcomeEmailSent
     // lorsque le courriel de bienvenue a été envoyé à l'utilisateur
     final protected function onWelcomeEmailSent():void
     {
         return;
     }
-    
-    
+
+
     // allowWelcomeEmail
     // retourne vrai si le user permet l'envoie de courrier de bienvenue
     final public function allowWelcomeEmail():bool
     {
         return ($this->isSomebody() && $this->isActive() && $this->isUpdateable() && $this->canReceiveEmail() && !empty($this->welcomeEmailModel()))? true:false;
     }
-    
-    
+
+
     // welcomeEmail
     // retourne un tableau avec tout ce qu'il faut pour envoyer le courriel de bienvenue
     final public function welcomeEmail(?array $replace=null):?array
@@ -79,8 +79,8 @@ class User extends Core\Row\User
     {
         return $this->getEmailReplace();
     }
-    
-    
+
+
     // sendWelcomeEmail
     // envoie le courriel de bienvenue
     // plusieurs exceptions peuvent être envoyés
@@ -104,8 +104,8 @@ class User extends Core\Row\User
 
         return $return;
     }
-    
-    
+
+
     // activatePasswordRoute
     // retourne la route a utilisé pour l'activation d'un mot de passe
     public function activatePasswordRoute():string

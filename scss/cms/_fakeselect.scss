@@ -14,12 +14,12 @@
 @mixin fakeselect() {
     @include fakeselectTrigger();
     @include inbl();
-    
+
     &[data-absolute-placeholder='ready'].active > .trigger {
         @include abs(0, null, null, 0);
         z-index: 3;
     }
-    
+
     > .popup {
         @include fakeselectPopup();
     }
@@ -38,15 +38,15 @@
             border: 1px solid $red;
         }
     }
-    
+
     &[data-disabled='1'] {
         pointer-events: none;
-        
+
         > .trigger {
             background-color: $gray;
         }
     }
-    
+
     > .trigger {
         position: relative;
         padding: 5px 40px 5px 12px;

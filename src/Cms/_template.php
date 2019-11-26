@@ -225,10 +225,10 @@ trait _template
         }
 
         $r .= Html::divCl();
-        
+
         if(static::sessionUser()->isSomebody())
         $r .= Html::navCond($this->nav());
-        
+
         $r .= Html::divCl();
 
         return $r;

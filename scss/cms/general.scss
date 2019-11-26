@@ -51,7 +51,7 @@
         > .form {
             justify-content: center;
         }
-        
+
         > .in {
             margin: auto;
         }
@@ -158,20 +158,20 @@
 
 /* PAGE */
 [data-route='general'] main .inner > .container .page-input {
-    @include flex(flex-end,center);
+    @include flex(flex-end, center);
 
     a.triangle {
         @include trianglePrevNext();
-        
+
         &.prev {
             margin-right: 8px;
         }
-        
+
         &.next {
             margin-left: 8px;
         }
     }
-    
+
     .center {
         display: flex;
 

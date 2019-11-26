@@ -57,7 +57,7 @@ trait _download
     {
         $return = null;
         $cell = $this->cell();
-        
+
         if(!empty($cell))
         {
             if(static::isSegmentClass())
@@ -71,7 +71,7 @@ trait _download
             if(empty($return))
             $return = $cell->file();
         }
-        
+
         return $return;
     }
 

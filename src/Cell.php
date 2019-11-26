@@ -88,8 +88,8 @@ class Cell extends Core\Cell
     {
         return $this->col()->specificComponentWrap($wrap,$pattern,$this,$attr,$replace,$option);
     }
-    
-    
+
+
     // getDataAttr
     // retourne les datas attr pour la cellule
     final public function getDataAttr(array $return):array

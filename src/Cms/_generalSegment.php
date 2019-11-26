@@ -10,10 +10,10 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Cms;
-use Quid\Core;
-use Quid\Orm;
-use Quid\Lemur;
 use Quid\Base;
+use Quid\Core;
+use Quid\Lemur;
+use Quid\Orm;
 
 // _generalSegment
 // trait that provides some methods for a general navigation page
@@ -100,7 +100,7 @@ trait _generalSegment
     {
         return ($this->table()->isSearchTermValid($value))? true:false;
     }
-    
+
 
     // canReset
     // retourne vrai si la bouton reset peut s'afficher

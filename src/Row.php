@@ -20,8 +20,8 @@ class Row extends Core\Row implements Main\Contract\Meta
 {
     // trait
     use Row\_meta;
-    
-    
+
+
     // config
     public static $config = [];
 

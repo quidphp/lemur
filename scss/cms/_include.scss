@@ -245,7 +245,13 @@ $red: #8d1e2d;
 
 // trianglePrevNext
 // mixin pour génèrer un triangle de couleur du cms
-@mixin trianglePrevNext($dimension: 10px, $transparent: null, $color1: $color, $color2: $darkColor, $color3: $darkerColor) {
+@mixin trianglePrevNext(
+    $dimension: 10px,
+    $transparent: null,
+    $color1: $color,
+    $color2: $darkColor,
+    $color3: $darkerColor
+) {
     cursor: pointer;
 
     &.prev {

@@ -130,8 +130,8 @@ class Table extends Core\Table
                     'colInfoPopup'=>true]]
             ]
     ];
-    
-    
+
+
     // hasPanel
     // retourne vrai si la table a des panels
     final public function hasPanel():bool

@@ -40,7 +40,7 @@ trait _searchGet
         $return = null;
         $searchQuery = $this->getSearchQuery();
         $search = $this->request()->getQuery($searchQuery);
-        
+
         if(is_scalar($search))
         {
             $search = (string) $search;

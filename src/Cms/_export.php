@@ -25,8 +25,8 @@ trait _export
     use Lemur\Segment\_direction;
     use Lemur\Segment\_filter;
     use Lemur\Segment\_primaries;
-    
-    
+
+
     // canTrigger
     // vérifie que l'utilisateur a la permission pour exporter la table et qu'il y a des rows à exporter
     final public function canTrigger():bool

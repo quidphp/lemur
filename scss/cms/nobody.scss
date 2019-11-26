@@ -150,7 +150,7 @@
     text-align: right;
 }
 [data-group='nobody'] main .box .buttons {
-    @include flex(center,center,wrap);
+    @include flex(center, center, wrap);
     padding: 10px 25px 0;
     border-top: 1px solid $darkerColor;
 

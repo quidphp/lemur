@@ -14,11 +14,11 @@
             @include flex();
             position: relative;
             margin-bottom: 10px;
-            
+
             > .current {
                 width: calc(100% - 75px);
             }
-            
+
             > .utils {
                 @include flex(center);
                 width: 65px;

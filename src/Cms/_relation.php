@@ -10,10 +10,10 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Cms;
-use Quid\Lemur;
 use Quid\Base;
-use Quid\Orm;
 use Quid\Base\Html;
+use Quid\Lemur;
+use Quid\Orm;
 
 // _relation
 // trait that provides some initial configuration for a CMS relation route
@@ -21,8 +21,8 @@ trait _relation
 {
     // trait
     use Lemur\Route\_searchGet;
-    
-    
+
+
     // config
     public static $configRelationCms = [
         'limit'=>20,
@@ -34,7 +34,7 @@ trait _relation
         'group'=>'relation',
         'order'=>true
     ];
-    
+
 
     // relation
     // retourne l'objet relation
@@ -235,13 +235,13 @@ trait _relation
             $page = $this->segment('page');
             $option['limit'] = [$page=>$option['limit']];
         }
-        
+
         if($required === false || $search !== null)
         {
             $array = null;
             $count = 0;
             $optionCount = Base\Arr::plus($option,['limit'=>null]);
-            
+
             if(is_string($search))
             {
                 $count = $relation->searchCount($search,$optionCount);

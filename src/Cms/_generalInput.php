@@ -200,7 +200,7 @@ trait _generalInput
             $loop[] = 'closest';
             ($prevNext === true)? ($loop[] = 'next'):null;
             ($firstLast === true)? ($loop[] = 'last'):null;
-            
+
             if(!empty($loop))
             {
                 foreach ($loop as $v)

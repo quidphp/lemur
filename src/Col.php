@@ -42,7 +42,7 @@ class Col extends Core\Col
         return $this->getAttr('quickEdit') === true && !$this->isPlainTag(null,true);
     }
 
-    
+
     // isGeneral
     // retourne vrai si la colonne doit apparaître dans general
     final public function isGeneral():bool
@@ -50,7 +50,7 @@ class Col extends Core\Col
         return ($this->getAttr('general',true) === true)? true:false;
     }
 
-    
+
     // isRelationSearchRequired
     // retourne vrai si la recherche est requise pour la relation
     final public function isRelationSearchRequired():bool
@@ -71,8 +71,8 @@ class Col extends Core\Col
 
         return $return;
     }
-    
-    
+
+
     // specificComponent
     // génère le html pour le specific component de la colonne
     // utilisé dans les formulaires spécifiques de lemur
@@ -199,15 +199,15 @@ class Col extends Core\Col
         return $this->makeFormWrap('formComplex',true,$wrap,$pattern,$value,$attr,$replace,$option);
     }
 
-    
+
     // specificComponentWrap
     // fait un wrap à partir de specificComponent
     final public function specificComponentWrap(?string $wrap=null,$pattern=null,$value=true,?array $attr=null,?array $replace=null,?array $option=null):string
     {
         return $this->makeFormWrap('specificComponent',true,$wrap,$pattern,$value,$attr,$replace,$option);
     }
-    
-    
+
+
     // getDataAttr
     // retourne les attr pour la colonne
     public function getDataAttr(array $return):array
@@ -249,7 +249,7 @@ class Col extends Core\Col
 
         if($this->getAttr('absolutePlaceholder',true))
         $return['data-absolute-placeholder'] = true;
-        
+
         return $return;
     }
 }

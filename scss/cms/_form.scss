@@ -81,7 +81,7 @@
     border-radius: 5px;
     border: 1px solid $lightGray;
     height: auto;
-    
+
     &::-webkit-input-placeholder {
         color: $darkGray;
     }
@@ -107,7 +107,7 @@
     &[disabled] {
         background-color: $gray;
     }
-    
+
     &[data-validate='invalid'] {
         background-color: $red !important;
         color: $white !important;

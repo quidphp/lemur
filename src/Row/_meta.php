@@ -5,8 +5,8 @@ declare(strict_types=1);
  * This file is part of the QuidPHP package.
  * Author: Pierre-Philippe Emond <emondpph@gmail.com>
  * Website: https://quidphp.com
- * License: https://github.com/quidphp/site/blob/master/LICENSE
- * Readme: https://github.com/quidphp/site/blob/master/README.md
+ * License: https://github.com/quidphp/lemur/blob/master/LICENSE
+ * Readme: https://github.com/quidphp/lemur/blob/master/README.md
  */
 
 namespace Quid\Lemur\Row;
@@ -17,15 +17,15 @@ use Quid\Lemur;
 trait _meta
 {
     // config
-    public static $configMeta = array(
-        'meta'=>array( // permet de définir les cellules pour les méta-données
+    public static $configMeta = [
+        'meta'=>[ // permet de définir les cellules pour les méta-données
             'metaTitle'=>['metaTitle_[lang]','name_[lang]'],
             'metaKeywords'=>'metaKeywords_[lang]',
             'metaDescription'=>['metaDescription_[lang]','excerpt_[lang]','content_[lang]'],
-            'metaImage'=>'metaImage_[lang]')
-    );
-    
-    
+            'metaImage'=>'metaImage_[lang]']
+    ];
+
+
     // metaTitle
     // retourne les données pour le meta title
     public function getMetaTitle($value=null)
@@ -56,7 +56,7 @@ trait _meta
     {
         $return = null;
         $cell = $this->metaLoop('metaImage');
-        
+
         if(!empty($cell) && $cell->fileExists('large'))
         $return = $cell;
 
@@ -69,11 +69,11 @@ trait _meta
     final protected function metaLoop(string $type):?Lemur\Cell
     {
         $return = null;
-        $loop = $this->getAttr(array('meta',$type));
-        
+        $loop = $this->getAttr(['meta',$type]);
+
         if(!is_array($loop))
         $loop = (array) $loop;
-        
+
         foreach ($loop as $name)
         {
             if($this->hasCell($name))
@@ -89,8 +89,8 @@ trait _meta
 
         return $return;
     }
-    
-    
+
+
     // getHtmlAttr
     // retourne les données des attributs de html
     public function getHtmlAttr($value=null):?array

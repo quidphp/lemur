@@ -38,9 +38,9 @@ class Cell extends Base\Test
         // formComplex
 
         // formComplexWrap
-        
+
         // specificComponentWrap
-        
+
         // getDataAttr
 
         // cell
