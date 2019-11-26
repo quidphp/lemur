@@ -91,7 +91,7 @@ class HomeFeed extends Core\RouteAlias
         return $r;
     }
 
-    
+
     // rowFeedOutput
     // génère le rendu html pour la row
     final public function rowFeedOutput(Lemur\Row $row,string $dateCol):string
@@ -134,8 +134,8 @@ class HomeFeed extends Core\RouteAlias
 
         return $r;
     }
-    
-    
+
+
     // makeIds
     // génère les ids pour le feed
     protected function makeIds():array
