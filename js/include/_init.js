@@ -6,11 +6,16 @@
  * License: https://github.com/quidphp/lemur/blob/master/LICENSE
  */
 
-// init
-// initialize main utilities
+// globals
+// declare global variables
 
-// globale 
-quid.main = {};
+// objet qui contient toutes les méthodes
+var quid = {
+    base: {},
+    main: {},
+    core: {},
+    component: {}
+};
 
 // callThis
 // appele une méthode pour tous les objets

@@ -93,7 +93,7 @@ quid.core.filterGeneralFull = function()
     .on('clickOpen:close', function(event) {
         $(this).triggerHandler('filter:getResult').html("");
     })
-    .on('filterGeneralFull:bind', function(event) {
+    .on('component:setup', function(event) {
         $(this).trigger('filter:bind');
         
         var target = $(this).triggerHandler('clickOpen:getTarget');

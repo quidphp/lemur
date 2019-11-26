@@ -12,7 +12,7 @@
 // fakeselect
 // crée les comportements pour un input fakeSelect, pouvant avoir un inputHidden lié
 // fakeselect étend clickOpen
-quid.core.fakeselect = function()
+quid.component.fakeselect = function()
 {
     // clickOpen
     quid.core.clickOpenWithTrigger.call(this,"> .trigger");
@@ -54,7 +54,7 @@ quid.core.fakeselect = function()
         var input = $(this).triggerHandler('fakeselect:getInput');
         input.trigger('input:disable');
     })
-    .on('component:bind', function(event) {
+    .one('component:setup', function(event) {
         var $this = $(this);
         var trigger = $(this).triggerHandler('clickOpen:getTrigger');
         var input = $(this).triggerHandler('fakeselect:getInput');
@@ -111,7 +111,7 @@ quid.core.fakeselect = function()
     }
     
     // trigger bind
-    $(this).trigger('component:bind');
+    $(this).trigger('component:setup');
     
     return this;
 }
@@ -182,7 +182,7 @@ quid.core.selectToFake = function()
             $(this).after(html);
             
             var fakeselect = $(this).next('.fakeselect');
-            quid.core.fakeselect.call(fakeselect);
+            quid.component.fakeselect.call(fakeselect);
             
             $(this).remove();
         }

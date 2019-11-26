@@ -78,7 +78,7 @@ class HomeFeed extends Core\RouteAlias
                 $row = $table->row($id);
 
                 if(!empty($row))
-                $r .= Html::divCond($row->homeFeedOutput($dateCol),'row-element');
+                $r .= Html::divCond($this->rowFeedOutput($row,$dateCol),'row-element');
             }
 
             if(!empty($r))
@@ -91,7 +91,51 @@ class HomeFeed extends Core\RouteAlias
         return $r;
     }
 
+    
+    // rowFeedOutput
+    // génère le rendu html pour la row
+    final public function rowFeedOutput(Lemur\Row $row,string $dateCol):string
+    {
+        $r = '';
+        $route = $row->route();
+        $table = $row->table();
+        $isUpdateable = ($table->hasPermission('view','lemurUpdate') && $row->isUpdateable())? true:false;
+        $icon = ($isUpdateable === true)? 'modify':'view';
+        $commit = $row->cellsDateCommit()[$dateCol] ?? null;
+        $label = $row->label(null,100);
 
+        $r .= Html::h3($label);
+
+        if(!empty($commit))
+        {
+            $html = '';
+            ['user'=>$user,'date'=>$date] = $commit;
+
+            if(!empty($user))
+            {
+                $userRow = $user->relationRow();
+
+                if(!empty($userRow))
+                {
+                    $html = Html::span($user->label(),'label').':';
+                    $html .= Html::span($userRow->cellName(),'user');
+                    $html .= Html::span('-','separator');
+                    $html .= Html::span($date->get(),'date');
+                }
+            }
+
+            $r .= Html::divCond($html,'commit');
+        }
+
+        $icon = Html::div(null,['icon-solo',$icon]);
+        $r .= Html::div($icon,'tools');
+
+        $r = $route->a($r);
+
+        return $r;
+    }
+    
+    
     // makeIds
     // génère les ids pour le feed
     protected function makeIds():array

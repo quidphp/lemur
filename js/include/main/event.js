@@ -38,24 +38,31 @@ quid.main.event = new function() {
     {
         if(quid.base.str.isNotEmpty(type))
         {
-            $(this).on(type, function(event) 
+            var binded = $(this).data('blockBind:'+type);
+            
+            if(binded == null)
             {
-                if($(this).data("blocked") != null)
+                $(this).data('blockBind:'+type,true);
+                
+                $(this).on(type, function(event) 
                 {
+                    if($(this).data("blocked") != null)
+                    {
+                        event.stopImmediatePropagation();
+                        event.preventDefault();
+                        $(this).trigger('blocked');
+                        return false;
+                    }
+                })
+                .on('block', function(event) {
                     event.stopImmediatePropagation();
-                    event.preventDefault();
-                    $(this).trigger('blocked');
-                    return false;
-                }
-            })
-            .on('block', function(event) {
-                event.stopImmediatePropagation();
-                $(this).data("blocked",true);
-            })
-            .on('unblock', function(event) {
-                event.stopImmediatePropagation();
-                $(this).removeData("blocked");
-            });
+                    $(this).data("blocked",true);
+                })
+                .on('unblock', function(event) {
+                    event.stopImmediatePropagation();
+                    $(this).removeData("blocked");
+                })
+            }
         }
         
         return this;

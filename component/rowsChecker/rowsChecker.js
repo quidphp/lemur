@@ -8,7 +8,7 @@
  
 // rowsChecker
 // script for the rows checker component in the general page of the CMS
-quid.cms.rowsChecker = function()
+quid.component.rowsChecker = function()
 {
     // triggerHandler
     $(this).on('rowsChecker:getToolsContainer', function(event) {
@@ -97,7 +97,7 @@ quid.cms.rowsChecker = function()
         multiDelete.trigger((showDelete === true)? 'toolMulti:show':'toolMulti:hide')
     })
     
-    // bind
+    // setup
     .one('component:setup', function(event) {
         bindToggleAll.call(this);
         bindCheckboxes.call(this);

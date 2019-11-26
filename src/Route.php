@@ -20,7 +20,7 @@ abstract class Route extends Core\Route
     public static $config = [
         '@cms'=>[
             'metaTitle'=>['typeLabel'=>true],
-            'jsInit'=>'$(document).ready(function() { quid.main.document.bind.call(this); });',
+            'jsInit'=>'$(document).ready(function() { quid.core.document.call(this); });',
             'docOpen'=>[
                 'head'=>[
                     'css'=>[

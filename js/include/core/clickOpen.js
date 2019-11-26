@@ -299,7 +299,7 @@ quid.core.clickOpenInputFormAjax = function(target)
         var field = $(this).triggerHandler('form:getValidateField');
         field.trigger('keyup:clearTimeout');
     })
-    .on('clickOpenForm:prepare', function(event) {
+    .on('clickOpenform:setup', function(event) {
         var form = $(this);
         var field = $(this).triggerHandler('form:getValidateField');
         var submit = $(this).triggerHandler('form:getSubmit');
@@ -341,7 +341,7 @@ quid.core.clickOpenInputFormAjax = function(target)
             event.stopPropagation();
         });
     })
-    .trigger('clickOpenForm:prepare');
+    .trigger('clickOpenform:setup');
     
     return this;
 }

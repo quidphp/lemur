@@ -31,30 +31,26 @@ $(document).ready(function() {
         var checkboxSortable = node.find("[data-group='relation'][data-sortable='1'] .specific-component");
         var files = node.find("[data-group='media'] .specific-component");
         var addRemove = node.find("[data-tag='add-remove'] .specific-component");
-        var tableRelation = node.find("[data-table-relation='1'] .specific-component");
-        var tinymce = node.find("[data-group='tinymce'] .specific-component");
+        var textarea = node.find("[data-tag='textarea'] .specific-component");
         var anchorCorner = node.find("[data-anchor-corner]");
         
         // date
-        date.callThis(quid.core.calendarInput);
+        quid.core.calendarInput.call(date);
         
         // enumSet
-        enumSet.callThis(quid.core.enumSetFull);
+        quid.core.enumSetFull.call(enumSet);
         
         // checkboxSortable
-        checkboxSortable.verticalSorting(".choice",'.choice-in');
+        quid.core.verticalSorter.call(checkboxSortable,".choice",'.choice-in');
         
         // files
-        files.callThis(quid.cms.inputFiles).trigger('component:setup');
+        quid.component.inputFiles.call(files).trigger('component:setup');
         
         // addRemove
-        addRemove.callThis(quid.core.addRemove);
+        quid.component.addRemove.call(addRemove).trigger('component:setup');
         
-        // tableRelation
-        tableRelation.callThis(quid.cms.tableRelation).trigger('tableRelation:bind');
-        
-        // tinycme
-        tinymce.callThis(quid.cms.tinymceWithTableRelation).trigger('component:setup');
+        // textarea
+        quid.component.textarea.call(textarea).trigger('component:setup');
         
         // anchorCorner
         anchorCorner.trigger('anchorCorner:refresh');
@@ -63,8 +59,8 @@ $(document).ready(function() {
     // specificForm unmount
     // permet démonter les champs du formulaire
     $(this).on('specificForm:unmount', function(event,node) {
-        var tinymce = node.find("[data-group='tinymce'] .specific-component");
-        tinymce.trigger('component:teardown');
+        var textarea = node.find("[data-tag='textarea'] .specific-component");
+        textarea.trigger('component:teardown');
     })
     
 	// specific
@@ -72,22 +68,17 @@ $(document).ready(function() {
 	.on('group:specific', function(event,routeWrap) {
         var form = routeWrap.find("main .inner > form.specific-form");
         var panel = form.find("> .form-inner > .panel");
+        var submitConfirm = form.find("button[type='submit'][data-confirm]");
         
 		// submitConfirm
-		var submitConfirm = form.find("button[type='submit'][data-confirm]");
-		submitConfirm.confirm('click');
+        quid.main.window.confirm.call(submitConfirm,'click');
 		
-		// block
-		form.block('submit').on('submit', function() {
-			$(this).trigger('block');
-		});
-        
         // champs simples
         $(this).trigger('specificForm:bindMount',[form]);
         
         // avec panel
         if(panel.length > 1)
-        form.callThis(quid.cms.specificPanel);
+        quid.cms.specificPanel.call(form);
         
         else
         $(this).trigger('specificForm:bindView',[form]);
@@ -121,7 +112,7 @@ $(document).ready(function() {
             $(this).attr('data-disabled',(isActive === true)? 0:1);
             inputs.prop('disabled',(isActive === true)? false:true);
         })
-        .on('specificMulti:prepare', function(event) {
+        .on('specificMulti:setup', function(event) {
             var $this = $(this);
             var checkbox = $(this).triggerHandler('specificMulti:getCheckbox');
             checkbox.on('change', function(event) {
@@ -129,7 +120,7 @@ $(document).ready(function() {
             });
             $(this).trigger('specificMulti:refresh');
         })
-        .trigger('specificMulti:prepare');
+        .trigger('specificMulti:setup');
         
         form.trigger('form:prepare');
 	});

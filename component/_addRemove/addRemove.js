@@ -8,11 +8,9 @@
  
 // addRemove
 // script of behaviours for an add-remove input component
-
-// addRemove
-// génère un input add remove, comme jsonArray
-quid.core.addRemove = function()
+quid.component.addRemove = function()
 {
+    // trigger handler
     $(this).on('addRemove:getInsert', function(event) {
         return $(this).find(".insert");
     })
@@ -27,6 +25,8 @@ quid.core.addRemove = function()
             return !$(this).data("addRemoveBind");
         });
     })
+    
+    // trigger
     .on('addRemove:insert', function(event) {
         var insert = $(this).triggerHandler('addRemove:getInsert');
         var container = $(this).triggerHandler('addRemove:getPlayground');
@@ -67,7 +67,9 @@ quid.core.addRemove = function()
             $(this).trigger('addRemove:insert');
         }
     })
-    .on('addRemove:prepare', function(event) {
+    
+    // component setup
+    .one('component:setup', function(event) {
         var $this = $(this);
         var insert = $(this).triggerHandler('addRemove:getInsert');
         
@@ -78,9 +80,11 @@ quid.core.addRemove = function()
         $(this).trigger('addRemove:bind');
         
         if($(this).find(".move").length)
-        $(this).triggerHandler('addRemove:getPlayground').verticalSorting(".ele",'.move');
-    })
-    .trigger('addRemove:prepare');
+        {
+            var playground = $(this).triggerHandler('addRemove:getPlayground');
+            quid.core.verticalSorter.call(playground,'.ele','.move');
+        }
+    });
     
     return this;
 }

@@ -8,9 +8,9 @@
  
 // quickEdit
 // script for the quickEdit component in the general page of the CMS
-quid.cms.quickEdit = function()
+quid.component.quickEdit = function()
 {
-    // all cells
+    // all
     var $that = $(this);
     
     // ajaxBlock

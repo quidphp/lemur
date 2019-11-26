@@ -8,7 +8,7 @@
  
 // inputFiles
 // script with logic for the file upload component of the CMS
-quid.cms.inputFiles = function()
+quid.component.inputFiles = function()
 {
     // triggerHandler
     $(this).on('inputFiles:getBlock', function(event) {
@@ -17,6 +17,7 @@ quid.cms.inputFiles = function()
     
     // bind
     .one('component:setup', function(event) {
+        bindBlock.call(this);
         $(this).triggerHandler('inputFiles:getBlock').trigger('component:setup');
     });
     
@@ -89,10 +90,6 @@ quid.cms.inputFiles = function()
             });
         };
     };
-    
-    // initialize
-    if($(this).length)
-    bindBlock.call(this);
     
     return this;
 }

@@ -15,14 +15,6 @@ quid.cms = {};
 // ready
 $(document).ready(function() {
 	
-	// window
-    // peut forcer un changement de page, si la page est chargé de la cache
-    // nécessaire pour les formulaire
-	$(window).on("pageshow", function(event) {
-		if(event.originalEvent.persisted)
-	    window.location.href = window.location.href;
-	});
-	
     // document:mountCommon
     // événement appelé pour faire les bindings globaux
     // après le chargement d'une page ou d'un modal
@@ -34,11 +26,11 @@ $(document).ready(function() {
         
         // input
         var input = node.find(":inputReal");
-        quid.main.input.bind.call(input);
+        quid.core.input.call(input);
         
         // form
         var form = node.find("form");
-        quid.main.form.bind.call(form);
+        quid.core.form.call(form).trigger('form:setup');
         
         // autre
         var modal = $(this).find("body > .modal").first();
@@ -50,7 +42,7 @@ $(document).ready(function() {
         var aConfirm = node.find("a[data-confirm]");
         
         // modalAnchor
-        quid.core.modalAjax.call(modalAnchor,modal);
+        quid.component.modalAjax.call(modalAnchor,modal);
                 
 		// aConfirm
 		quid.main.window.confirm.call(aConfirm,'click');
@@ -74,7 +66,7 @@ $(document).ready(function() {
         var modal = body.find("> .modal").first();
         
         // modal
-        quid.core.modal.call(modal).trigger('modal:setup');
+        quid.component.modal.call(modal).trigger('modal:setup');
     })
     
 	// document mount
@@ -97,14 +89,13 @@ $(document).ready(function() {
         });
         
         // com
-        if(com.length)
-		$(quid.cms.com.call(com[0])).trigger('component:setup');
+		quid.cms.com.call(com).trigger('component:setup');
         
         // burger
         quid.core.burger.call(burger);
 
         // mainSearch
-        quid.cms.mainSearch.call(mainSearch);
+        quid.component.mainSearch.call(mainSearch).trigger('component:setup');
 	})
     
     // document ajax progress

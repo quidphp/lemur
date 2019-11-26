@@ -32,9 +32,7 @@ abstract class Boot extends Core\Boot
                         Test\Lemur::class=>['closure'=>false]]]]],
         'concatenateJs'=>[
             '[publicJs]/include.js'=>[
-                0=>'[vendorLemur]/js/base',
-                1=>'[vendorLemur]/js/main',
-                2=>'[vendorLemur]/js/core',
+                0=>'[vendorLemur]/js/include',
                 10=>'[js]/include']],
         'roles'=>[
             'editor'=>[60]],
@@ -51,19 +49,21 @@ abstract class Boot extends Core\Boot
                 'logo'=>null],
             'compileScss'=>[
                 '[publicCss]/cms.css'=>[
-                    0=>'[vendorLemur]/scss/_include.scss',
+                    0=>'[vendorLemur]/scss/include/_init.scss',
                     1=>'[vendorLemur]/scss/cms/_include.scss',
                     2=>'[scss]/cms/_include.scss',
+                    3=>'[vendorLemur]/component',
                     10=>'[vendorLemur]/scss/cms/cms.scss',
                     30=>'[scss]/cms/cms.scss'],
                 '[publicCss]/tinymce.css'=>[
-                    0=>'[vendorLemur]/scss/_include.scss',
+                    0=>'[vendorLemur]/scss/include/_init.scss',
                     1=>'[scss]/cms/_include.scss',
                     5=>'[vendorLemur]/scss/cms/tinymce.scss',
                     10=>'[scss]/cms/tinymce.scss']],
             'concatenateJs'=>[
                 '[publicJs]/cms.js'=>[
                     0=>'[vendorLemur]/js/cms',
+                    1=>'[vendorLemur]/component',
                     10=>'[js]/cms']]]
     ];
 

@@ -10,33 +10,6 @@
 // script with behaviours related to general inputs
 quid.main.input = new function() {
     
-    // bind
-    // permet d'appliquer les bindings de base sur un input
-    this.bind = function() {
-        
-        // triggerHandler
-        $(this).on('input:isDisabled',  function(event) {
-            return ($(this).prop('disabled') === true)? true:false;
-        })
-        .on('input:getValue', function(event) {
-            return String($(this).val());
-        })
-        
-        // trigger
-        .on('input:disable', function(event) {
-            $(this).prop('disabled',true);
-        })
-        .on('input:enable', function(event) {
-            $(this).prop('disabled',false);
-        })
-        .on('input:prepareDisable', function(event) {
-            $(this).trigger($(this).triggerHandler('input:isDisabled')? 'input:enable':'input:disable');
-        });
-        
-        return this;
-    };
-    
-    
     // val
     // retourne la valeur pour un input ou un fakeinput
     // la valeur retourné peut être trim

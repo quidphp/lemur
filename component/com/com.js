@@ -15,21 +15,21 @@ quid.cms.com = function()
     quid.main.keyboard.escape.call(this,true);
     
     // triggerHandler
-    this._getBottom = function(event) {
+    $(this).on('com:getBottom', function(event) {
         return $(this).find('.bottom');
-    };
+    })
 
     // trigger
-    $(this).on('escape:blocked', function(event) {
+    .on('escape:blocked', function(event) {
         $(this).trigger('com:close');
     })
     .on('com:slideUp', function(event) {
         $(this).addClass('slide-close');
-        this._getBottom().stop(true,true).slideUp('fast');
+        $(this).triggerHandler('com:getBottom').stop(true,true).slideUp('fast');
     })
     .on('com:slideDown', function(event) {
         $(this).removeClass('slide-close');
-        this._getBottom().stop(true,true).slideDown('fast');
+        $(this).triggerHandler('com:getBottom').stop(true,true).slideDown('fast');
     })
     .on('com:close', function(event) {
         $(this).stop(true,true).fadeOut("slow");

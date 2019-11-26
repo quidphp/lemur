@@ -11,7 +11,7 @@
 
 // modal
 // gère les comportents pour une l'ouverture et la fermeture d'un overlay modal
-quid.core.modal = function()
+quid.component.modal = function()
 {
     // event + keyboard
     quid.main.event.block.call(this,'modal:fetch');
@@ -137,7 +137,7 @@ quid.core.modal = function()
 
 // modalAjax
 // gère les comportements pour les éléments qui ouvre le modal et y injecte du contenu via ajax
-quid.core.modalAjax = function(modal)
+quid.component.modalAjax = function(modal)
 {
     quid.main.event.block.call(this,'click');
     quid.main.ajax.bind.call(this,'click');
@@ -181,7 +181,7 @@ quid.core.modalAjax = function(modal)
 
 // modalExternal
 // permet de gérer l'ouverture du modal lors du clique sur un lien externe
-quid.core.modalExternal = function(modal,href,route)
+quid.component.modalExternal = function(modal,href,route)
 {
     if(quid.base.str.isNotEmpty(href))
     {
@@ -198,7 +198,7 @@ quid.core.modalExternal = function(modal,href,route)
 
 // modalMailto
 // permet de gérer l'ouverture du modal lors du clique sur un lien mailto
-quid.core.modalMailto = function(modal,href,route)
+quid.component.modalMailto = function(modal,href,route)
 {
     if(quid.base.str.isNotEmpty(href))
     {

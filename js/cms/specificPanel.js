@@ -10,6 +10,8 @@
 // script for the panel component in the specific form page
 quid.cms.specificPanel = function()
 {
+    // TODO + formTruncate confirm
+    
     $(this).each(function(index, el) {
         
         var form = $(this);

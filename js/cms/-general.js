@@ -27,19 +27,19 @@ $(document).ready(function() {
         var highlight = table.find("tr.highlight");
         
         // dragScroll
-        quid.main.drag.scroll.call(scroller,'tbody','div');
+        quid.core.dragScroll.call(scroller,'tbody','div');
         
         // page + limit
         quid.core.inputNumeric.call(pageLimit);
 		
         // rowsChecker
-        quid.cms.rowsChecker.call(main).trigger('component:setup');
+        quid.component.rowsChecker.call(main).trigger('component:setup');
         
 		// colsSorter
-		quid.cms.colsSorter.call(colsSorter);
+		quid.component.colsSorter.call(colsSorter).trigger('component:setup');
 		
         // filter
-		quid.core.filterGeneralFull.call(filter).trigger('filterGeneralFull:bind');
+		quid.core.filterGeneralFull.call(filter).trigger('component:setup');
         
 		// search
 		if(search.length)
@@ -65,7 +65,7 @@ $(document).ready(function() {
         quid.core.slider.call(filesSlider,null,null,'.slider-element',false);
         
         // quickEdit
-        quid.cms.quickEdit.call(quickEdit).trigger('component:setup');
+        quid.component.quickEdit.call(quickEdit).trigger('component:setup');
         
         // highlight 
         highlight.on('mouseover', function(event) {

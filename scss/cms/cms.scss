@@ -10,26 +10,16 @@
 // stylesheet that imports other stylesheets for the CMS
 
 // component
-@import '_addRemove';
 @import '_block';
 @import '_calendar';
 @import '_clickOpen';
-@import '_colsSorter';
-@import '_com';
 @import '_component';
 @import '_enumSet';
-@import '_fakeselect';
 @import '_filter';
 @import '_form';
 @import '_icon';
-@import '_inputFiles';
 @import '_mainNav';
-@import '_mainSearch';
-@import '_modal';
-@import '_quickEdit';
 @import '_relation';
-@import '_rowsChecker';
-@import '_tableRelation';
 
 // import
 @import 'style';
