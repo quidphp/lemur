@@ -15,10 +15,10 @@ quid.core.burger = function()
     $(this).on('click', function(event) {
         var value = (html.attr('data-burger') === 'open')? 'close':'open';
         $(this).trigger('burger:change',[value]);
+        $(window).trigger('resize');
     })
     .on('burger:change', function(event,value) {
         html.attr('data-burger',value)
-        $(window).trigger('resize');
     })
     .trigger('burger:change',['close']);
     

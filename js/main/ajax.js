@@ -70,7 +70,7 @@ quid.main.ajax = new function() {
             event.stopPropagation();
         })
         .on('ajax:confirm', function(event) {
-            return ($(document).triggerHandler('document:isLoading') === true)? false:true;
+            return (document._isLoading() === true)? false:true;
         })
         .on('ajax:trigger', function(event,config,tag,triggerEvent) {
             event.stopImmediatePropagation();
@@ -144,7 +144,7 @@ quid.main.ajax = new function() {
             }
         };
         
-        config = $.extend({},options,config);
+        config = quid.base.obj.replace(options,config);
         
         if(tag === true)
         $that.configFromTag.call(this,config);
@@ -190,7 +190,7 @@ quid.main.ajax = new function() {
                 var formData = new FormData($(this)[0]);
                 var clicked = $(this).triggerHandler('form:getClickedSubmit');
                 
-                if(clicked.length && quid.base.str.isNotEmpty(clicked.attr('name')))
+                if(clicked != null && clicked.length && quid.base.str.isNotEmpty(clicked.attr('name')))
                 formData.append(clicked.attr('name'),clicked.val());
                 
                 r.data = formData;

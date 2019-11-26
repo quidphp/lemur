@@ -20,7 +20,10 @@ class Col extends Core\Col
 {
     // config
     public static $config = [
+        'general'=>null, // la colonne est considéré comme général
         'onComplex'=>null, // callable pour onComplex, si true alors utilise la méthode onGet lors de la création des éléments de formulaires complexes
+        'panel'=>null, // retourne le panel de la colonne
+        'relationSearchRequired'=>false, // si la recherche est obligatoire pour une relation
         '@cms'=>[
             'anchorCorner'=>false,
             'absolutePlaceholder'=>false,
@@ -39,7 +42,37 @@ class Col extends Core\Col
         return $this->getAttr('quickEdit') === true && !$this->isPlainTag(null,true);
     }
 
+    
+    // isGeneral
+    // retourne vrai si la colonne doit apparaître dans general
+    final public function isGeneral():bool
+    {
+        return ($this->getAttr('general',true) === true)? true:false;
+    }
 
+    
+    // isRelationSearchRequired
+    // retourne vrai si la recherche est requise pour la relation
+    final public function isRelationSearchRequired():bool
+    {
+        return ($this->getAttr('relationSearchRequired') === true)? true:false;
+    }
+
+
+    // panel
+    // retourne le panel de la colonne
+    // retourne la string default si vide
+    final public function panel():string
+    {
+        $return = $this->getAttr('panel');
+
+        if(empty($return) || !is_string($return))
+        $return = 'default';
+
+        return $return;
+    }
+    
+    
     // specificComponent
     // génère le html pour le specific component de la colonne
     // utilisé dans les formulaires spécifiques de lemur
@@ -163,10 +196,18 @@ class Col extends Core\Col
     // fait un wrap à partir de formComplex plutôt que form
     final public function formComplexWrap(?string $wrap=null,$pattern=null,$value=true,?array $attr=null,?array $replace=null,?array $option=null):string
     {
-        return $this->makeFormWrap('specificComponent',true,$wrap,$pattern,$value,$attr,$replace,$option);
+        return $this->makeFormWrap('formComplex',true,$wrap,$pattern,$value,$attr,$replace,$option);
     }
 
-
+    
+    // specificComponentWrap
+    // fait un wrap à partir de specificComponent
+    final public function specificComponentWrap(?string $wrap=null,$pattern=null,$value=true,?array $attr=null,?array $replace=null,?array $option=null):string
+    {
+        return $this->makeFormWrap('specificComponent',true,$wrap,$pattern,$value,$attr,$replace,$option);
+    }
+    
+    
     // getDataAttr
     // retourne les attr pour la colonne
     public function getDataAttr(array $return):array
@@ -208,7 +249,7 @@ class Col extends Core\Col
 
         if($this->getAttr('absolutePlaceholder',true))
         $return['data-absolute-placeholder'] = true;
-
+        
         return $return;
     }
 }

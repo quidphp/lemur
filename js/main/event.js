@@ -31,7 +31,7 @@ quid.main.event = new function() {
         return r;
     }
 
-
+    
     // block
     // bloque l'événement sur le ou les éléments s'il y a la data blocked
     this.block = $.fn.block = function(type) 

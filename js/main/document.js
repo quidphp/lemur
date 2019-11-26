@@ -22,10 +22,9 @@ quid.main.document = new function() {
             background: "> .background" // background, descendant de body
         };
         
-        if(option && typeof(option) == 'object')
-        $settings = $.extend($settings, option);
+        if(option != null)
+        $settings = quid.base.obj.replace($settings, option);
         
-        var $target = $(this);
         var $location = window.location;
         var $history = (hasHistoryApi())? window.history:null;
         var $initial = null;
@@ -37,6 +36,8 @@ quid.main.document = new function() {
         // ceci est binder de façon permanente
         function applyBindings()
         {
+            var $target = $(this);
+            
             // sur le premier isTouch
             $(this).one('touchstart', function(event) {
                 $(this).data('isTouch',true);
@@ -45,6 +46,7 @@ quid.main.document = new function() {
             // anchor click
             .on('click', $settings.anchor, function(event) { 
                 var r = true;
+                
                 $target.triggerHandler('document:clickEvent',[event]);
                 
                 if(event.isDefaultPrevented())
@@ -105,12 +107,12 @@ quid.main.document = new function() {
             if(initial === true)
             {
                 var body = $(this).triggerHandler('document:getBody');
-                $(this).trigger('document:initialMount',[body]);
-                $(this).trigger('document:commonBindings',[body]);
+                $(this).trigger('document:mountCommon',[body]);
+                $(this).trigger('document:mountInitial',[body]);
             }
             
             else
-            $(this).trigger('document:commonBindings',[routeWrap]);
+            $(this).trigger('document:mountCommon',[routeWrap]);
             
             $(this).trigger('document:mount',[routeWrap]);
             
@@ -152,8 +154,8 @@ quid.main.document = new function() {
             $(window).off('.document-mount');
             html.off('.document-mount');
             body.off('.document-mount');
-            
             $(this).trigger('document:unsetBackground');
+            
             $(this).trigger('document:unmounted',[routeWrap]);
         }
         
@@ -379,15 +381,13 @@ quid.main.document = new function() {
                 var contentTarget = doc.body;
                 if($settings.routeWrap && !routeWrap.is("body"))
                 {
-                    contentTarget = contentTarget.find($settings.routeWrap);
-                    if(contentTarget.length)
+                    var routeWrapTarget = contentTarget.find($settings.routeWrap);
+                    if(routeWrapTarget.length)
                     {
+                        contentTarget = routeWrapTarget;
                         var routeWrapAttributes = contentTarget.getAttributes();
                         routeWrap.replaceAttributes(routeWrapAttributes,true);
                     }
-                    
-                    else
-                    contentTarget = doc.body;
                 }
                 routeWrap.html(contentTarget.html());
                 
@@ -461,14 +461,14 @@ quid.main.document = new function() {
         
         // isLoading
         // retourne vrai si le chargement de la navigation est présentement active
-        $(this).on('document:isLoading', function(event) {
+        this._isLoading = function() {
             return ($(this).data('document:active') === true)? true:false;
-        })
+        };
         
         
         // hasAjax
         // retourne vrai s'il y a présentement un objet ajax en train de s'effectuer
-        .on('document:hasAjax', function(event) {
+        $(this).on('document:hasAjax', function(event) {
             var r = false;
             var ajax = $(this).data('document:ajax');
             
@@ -651,7 +651,7 @@ quid.main.document = new function() {
         
         // initialMount
         // seulement au chargement initial de la page
-        .on('document:initialMount', function(event,body) {
+        .on('document:mountInitial', function(event,body) {
             
         })
         
@@ -684,11 +684,19 @@ quid.main.document = new function() {
         })
         
         
-        // commonBindings
+        // mountCommon
         // permet d'appliquer des bindings courants sur un parent
         // par exemple pour binder des customs events sur des balises
-        .on('document:commonBindings', function(event,node) {
-            node.find("form").form();
+        .on('document:mountCommon', function(event,node) {
+            
+        })
+        
+        
+        // mountNodeCommon
+        // trigger mountNode et mountCommon en même temps
+        .on('document:mountNodeCommon', function(event,node) {
+            $(this).trigger('document:mountNode',[node]);
+            $(this).trigger('document:mountCommon',[node]);
         })
         
         

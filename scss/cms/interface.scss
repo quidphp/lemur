@@ -121,10 +121,22 @@ body > pre {
     display: block;
     padding-left: 220px;
 }
-[data-error='fatal'] body > .route-wrap {
-    display: block;
+[data-error='fatal'] body {
+    height: auto;
+    min-height: 100%;
     padding: 10px;
     border: 10px solid $red;
+    background-color: $white;
+    
+    > .route-wrap {
+        display: block;
+    }
+    
+    pre,
+    code {
+        display: inline;
+        padding-left: 0;
+    }
 }
 
 /* NAV */

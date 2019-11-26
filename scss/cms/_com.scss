@@ -23,7 +23,7 @@
     }
 
     &.slide-close > .scroller .top .triangle {
-        @include triangle(right, $darkColor, 10px, 10px);
+        @include triangle(right, $darkColor, 10px);
     }
 
     > .scroller {
@@ -41,7 +41,7 @@
             @include flex();
 
             .triangle {
-                @include triangle(bottom, $darkColor, 10px, 10px);
+                @include triangle(bottom, $darkColor, 10px);
             }
 
             .date {

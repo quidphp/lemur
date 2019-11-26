@@ -20,10 +20,10 @@ use Quid\Lemur;
 class HomeFeed extends Core\RouteAlias
 {
     // trait
+    use _common;
+    use _rowsFeed;
     use Lemur\Segment\_page;
     use Lemur\Segment\_boolean;
-    use Lemur\Route\_rowsFeed;
-    use _common;
 
 
     // config

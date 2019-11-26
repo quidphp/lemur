@@ -12,23 +12,14 @@ declare(strict_types=1);
 namespace Quid\Lemur\Cms;
 use Quid\Base\Html;
 use Quid\Core;
-use Quid\Lemur;
 
 // export
 // class for the export popup route of the CMS
 class Export extends Core\RouteAlias
 {
     // trait
-    use _common;
     use _export;
     use _modal;
-    use Lemur\Route\_generalSegment;
-    use Lemur\Segment\_table;
-    use Lemur\Segment\_order;
-    use Lemur\Segment\_direction;
-    use Lemur\Segment\_filter;
-    use Lemur\Segment\_primaries;
-
 
     // config
     public static $config = [

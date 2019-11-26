@@ -221,7 +221,7 @@ class SpecificAdd extends Core\RouteAlias
        if(!empty($this->flash))
        $value = $this->flash($col);
 
-       $return .= $col->formComplexWrap($this->getFormWrap(),'%:',$value,null,$replace);
+       $return .= $col->specificComponentWrap($this->getFormWrap(),'%:',$value,null,$replace);
 
        return $return;
     }

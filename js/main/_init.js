@@ -22,3 +22,20 @@ Object.defineProperty(Object.prototype, 'callThis', {value: function(callable) {
     }
     return callable.apply(this,args);
 }});
+
+// permet de lancer un événement custom (triggerCustom)
+// cette événement ne bubble pas
+HTMLElement.prototype.triggerCustomEvent = function(type,data) {
+    var init = {
+        bubbles: false,
+        cancelable: false,
+        detail: data
+    };
+    var event = new CustomEvent(type,init);
+    
+    $(this).each(function(index, el) {
+        this.dispatchEvent(event);
+    });
+    
+    return this;
+}

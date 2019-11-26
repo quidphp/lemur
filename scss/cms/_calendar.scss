@@ -43,18 +43,18 @@
 
         .prev,
         .next {
-            @include trianglePrevNext($white, $lightGray, $gray);
-            margin-top: -6px;
-
-            &.prev {
-                @include abs(50%, null, null, 10px);
-            }
-
-            &.next {
-                @include abs(50%, 10px);
-            }
+            @include trianglePrevNext($color1: $white, $color2: $lightGray, $color3: $gray);
+            margin-top: -5px;
         }
 
+        .prev {
+            @include abs(50%, null, null, 10px);
+        }
+
+        .next {
+            @include abs(50%, 10px);
+        }
+        
         .current {
             text-align: center;
             font-size: 120%;

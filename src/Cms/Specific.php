@@ -23,7 +23,7 @@ class Specific extends Core\RouteAlias
     use _templateAlias;
     use _general;
     use _specific;
-    use Lemur\Route\_specific;
+    use _specificNav;
     use Lemur\Route\_specificPrimary;
     use Lemur\Segment\_table;
     use Lemur\Segment\_primary;
@@ -58,6 +58,16 @@ class Specific extends Core\RouteAlias
     }
 
 
+    // onReplace
+    // tableau onReplace pour la route
+    final protected function onReplace(array $return):array
+    {
+        $return['title'] = $this->title();
+
+        return $return;
+    }
+    
+    
     // selectedUri
     // retourne les uris sélectionnés pour la route
     // la route account peut être sélectionner
@@ -398,7 +408,7 @@ class Specific extends Core\RouteAlias
     // génère un wrap label -> field pour le formulaire
     protected function makeFormWrap(Core\Cell $cell,array $replace):string
     {
-        return $cell->formComplexWrap($this->getFormWrap(),'%:',$this->formTagAttr($cell),$replace);
+        return $cell->specificComponentWrap($this->getFormWrap(),'%:',$this->formTagAttr($cell),$replace);
     }
 
 

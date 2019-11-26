@@ -10,6 +10,33 @@
 // script with behaviours related to general inputs
 quid.main.input = new function() {
     
+    // bind
+    // permet d'appliquer les bindings de base sur un input
+    this.bind = function() {
+        
+        // triggerHandler
+        $(this).on('input:isDisabled',  function(event) {
+            return ($(this).prop('disabled') === true)? true:false;
+        })
+        .on('input:getValue', function(event) {
+            return String($(this).val());
+        })
+        
+        // trigger
+        .on('input:disable', function(event) {
+            $(this).prop('disabled',true);
+        })
+        .on('input:enable', function(event) {
+            $(this).prop('disabled',false);
+        })
+        .on('input:prepareDisable', function(event) {
+            $(this).trigger($(this).triggerHandler('input:isDisabled')? 'input:enable':'input:disable');
+        });
+        
+        return this;
+    };
+    
+    
     // val
     // retourne la valeur pour un input ou un fakeinput
     // la valeur retourné peut être trim
@@ -17,17 +44,15 @@ quid.main.input = new function() {
     {
         var r = null;
 
-        if($(this).triggerHandler('input:isFake') === true)
-        r = $(this).triggerHandler('input:getValue');
-        
-        else
         r = $(this).val();
         
-        if(r == null)
-        r = '';
-        
-        if(trim === true)
-        r = String(r).trim();
+        if(r != null)
+        {
+            r = String(r);
+            
+            if(trim === true)
+            r = r.trim();
+        }
         
         return r;
     }

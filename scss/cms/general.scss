@@ -40,7 +40,6 @@
         display: none;
         max-width: 450px;
         font-size: 90%;
-        margin: auto;
 
         div span:first-child {
             font-weight: bold;
@@ -51,6 +50,10 @@
     @include responsive() {
         > .form {
             justify-content: center;
+        }
+        
+        > .in {
+            margin: auto;
         }
     }
 
@@ -155,13 +158,22 @@
 
 /* PAGE */
 [data-route='general'] main .inner > .container .page-input {
-    @include flex(flex-end);
+    @include flex(flex-end,center);
 
-    a {
+    a.triangle {
         @include trianglePrevNext();
+        
+        &.prev {
+            margin-right: 8px;
+        }
+        
+        &.next {
+            margin-left: 8px;
+        }
     }
+    
     .center {
-        @include flex();
+        display: flex;
 
         input[type='text'] {
             text-align: center;
@@ -280,20 +292,20 @@
     }
 
     &[data-direction='asc'] .right .triangle {
-        @include triangle(top, $white, 12px, 6px);
+        @include triangle(top, $white, 12px);
     }
     &[data-direction='desc'] .right .triangle {
-        @include triangle(bottom, $white, 12px, 6px);
+        @include triangle(bottom, $white, 12px);
     }
     &[data-direction='asc'] .right:hover .triangle,
     &[data-direction='asc'] .right[data-triggered='1'] .triangle,
     &[data-direction='asc'].ordering .right .triangle {
-        @include triangle(top, $lightYellow, 12px, 6px);
+        @include triangle(top, $lightYellow, 12px);
     }
     &[data-direction='desc'] .right:hover .triangle,
     &[data-direction='desc'] .right[data-triggered='1'] .triangle,
     &[data-direction='desc'].ordering .right .triangle {
-        @include triangle(bottom, $lightYellow, 12px, 6px);
+        @include triangle(bottom, $lightYellow, 12px);
     }
 }
 

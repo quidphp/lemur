@@ -18,8 +18,8 @@ use Quid\Lemur;
 class SpecificRelation extends Core\RouteAlias
 {
     // trait
-    use _relation;
-    use Lemur\Route\_specificRelation;
+    use _common;
+    use _specificRelation;
     use Lemur\Segment\_table;
     use Lemur\Segment\_colRelation;
     use Lemur\Segment\_selected;

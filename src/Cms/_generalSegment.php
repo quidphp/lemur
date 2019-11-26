@@ -9,16 +9,25 @@ declare(strict_types=1);
  * Readme: https://github.com/quidphp/lemur/blob/master/README.md
  */
 
-namespace Quid\Lemur\Route;
+namespace Quid\Lemur\Cms;
 use Quid\Core;
 use Quid\Orm;
+use Quid\Lemur;
+use Quid\Base;
 
 // _generalSegment
 // trait that provides some methods for a general navigation page
 trait _generalSegment
 {
     // trait
-    use _searchGet;
+    use Lemur\Route\_searchGet;
+
+
+    // config
+    public static $configGeneralSegment = [
+        'maxPerPage'=>100,
+        'query'=>['s']
+    ];
 
 
     // hasTablePermission
@@ -90,6 +99,38 @@ trait _generalSegment
     final protected function isSearchValueValid(string $value):bool
     {
         return ($this->table()->isSearchTermValid($value))? true:false;
+    }
+    
+
+    // canReset
+    // retourne vrai si la bouton reset peut s'afficher
+    final protected function canReset(?string $search=null,$not=null):bool
+    {
+        $return = false;
+        $default = static::getDefaultSegment();
+
+        if(is_string($search))
+        $return = true;
+
+        else
+        {
+            $not = (array) $not;
+
+            $segments = $this->segments();
+            $notSegment = Base\Arr::gets($not,$segments);
+            $segments = Base\Arr::keysStrip($not,$segments);
+            $segments = Base\Obj::cast($segments);
+
+            $new = static::make($notSegment);
+            $newSegments = $new->segments();
+            $newSegments = Base\Arr::keysStrip($not,$newSegments);
+            $newSegments = Base\Obj::cast($newSegments);
+
+            if($segments !== $newSegments)
+            $return = true;
+        }
+
+        return $return;
     }
 }
 ?>

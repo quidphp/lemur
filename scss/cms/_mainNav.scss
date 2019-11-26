@@ -79,12 +79,12 @@
             width: 100%;
 
             .triangle {
-                @include triangle(right, $white, 9px, 6px);
+                @include triangle(right, $white, 10px);
                 margin-right: 8px;
             }
 
             &:hover .triangle {
-                @include triangle(right, $gray, 9px, 6px);
+                @include triangle(right, $gray, 10px);
             }
         }
 
@@ -92,8 +92,8 @@
             background-color: $darkerColor;
 
             .triangle {
-                @include triangle(bottom, $gray, 9px, 6px);
-                margin-top: 4px;
+                margin-top: 2px;
+                @include triangle(bottom, $gray, 10px);
             }
         }
 

@@ -113,7 +113,7 @@ $(document).ready(function() {
             return $(this).find(".disabler input[type='checkbox']");
         })
         .on('specificMulti:getInputs', function(event) {
-            return $(this).find("> .right :input").filter("[name]").not("[name^='-']");
+            return $(this).find("> .right :inputReal");
         })
         .on('specificMulti:refresh', function(event) {
             var isActive = $(this).triggerHandler('specificMulti:isActive');

@@ -9,21 +9,15 @@ declare(strict_types=1);
  * Readme: https://github.com/quidphp/lemur/blob/master/README.md
  */
 
-namespace Quid\Lemur\Route;
+namespace Quid\Lemur\Cms;
 use Quid\Base;
 use Quid\Base\Html;
 use Quid\Core;
 
-// _specific
-// trait that provides most methods used for a specific route
-trait _specific
+// _specificNav
+// trait that provides a method for the specific navigation
+trait _specificNav
 {
-    // config
-    public static $configSpecific = [
-        'group'=>'specific'
-    ];
-
-
     // makeSpecificNav
     // génère la nav à partir d'un objet route vers general
     final protected function makeSpecificNav(Core\Route $general,Core\Row $row,string $segment,?string $highlightSegment=null,?array $attr=null):array

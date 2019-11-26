@@ -12,7 +12,6 @@ declare(strict_types=1);
 namespace Quid\Lemur\Cms;
 use Quid\Base;
 use Quid\Core;
-use Quid\Lemur;
 use Quid\Main;
 use Quid\Orm;
 
@@ -21,14 +20,7 @@ use Quid\Orm;
 class ExportDownload extends Core\RouteAlias
 {
     // trait
-    use _common;
     use _export;
-    use Lemur\Route\_generalSegment;
-    use Lemur\Segment\_table;
-    use Lemur\Segment\_order;
-    use Lemur\Segment\_direction;
-    use Lemur\Segment\_filter;
-    use Lemur\Segment\_primaries;
 
 
     // config

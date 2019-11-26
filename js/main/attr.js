@@ -10,6 +10,29 @@
 // script with some functions related to dom attributes manipulation
 quid.main.attr = new function() {
     
+    // str
+    // permet de convertir un objet d'attributs en string
+    this.str = function(obj) {
+        var r = '';
+        
+        $.each(obj,function(key,value) {
+            if(quid.base.str.isNotEmpty(key))
+            {
+                value = String(value);
+                value = JSON.stringify(value);
+                
+                if(r.length)
+                r += ' ';
+                
+                r += key;
+                r += '=';
+                r += value;
+            }
+        });
+
+        return r;
+    }
+    
     // mailto
     // permet d'obtenir un email à partir d'un mailto (comme dans un href)
     this.mailto = function(value)

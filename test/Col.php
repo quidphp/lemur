@@ -40,7 +40,21 @@ class Col extends Base\Test
         $multi = $tb['multi'];
         $check = $tb['check'];
         $array = $tb['myRelation'];
+        
+        // isQuickEditable
+        assert($col->isQuickEditable());
+        
+        // isRelationSearchRequired
+        assert(is_bool($lang->isRelationSearchRequired()));
 
+        // isGeneral
+        assert($col->isGeneral());
+
+        // panel
+        assert($email->panel() === 'default');
+
+        // specificComponent
+        
         // onComplex
 
         // valueComplex
@@ -84,7 +98,9 @@ class Col extends Base\Test
 
         // formComplexWrap
         assert($password->formComplexWrap() !== $password->formWrap());
-        assert(strlen($password->formComplexWrap('br',3)) === 395);
+        
+        // specificComponentWrap
+        assert(strlen($password->specificComponentWrap('br',3)) === 395);
 
         // getDataAttr
 

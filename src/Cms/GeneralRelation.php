@@ -18,9 +18,9 @@ use Quid\Lemur;
 class GeneralRelation extends Core\RouteAlias
 {
     // trait
-    use _relation;
+    use _common;
     use _general;
-    use Lemur\Route\_generalRelation;
+    use _generalRelation;
     use Lemur\Segment\_table;
     use Lemur\Segment\_colRelation;
     use Lemur\Segment\_selected;

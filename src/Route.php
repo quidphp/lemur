@@ -30,6 +30,9 @@ abstract class Route extends Core\Route
                         'type'=>'js/%type%.js']]],
             'permission'=>[
                 '*'=>[
+                    'register'=>false,
+                    'resetPassword'=>false,
+                    'userWelcome'=>false,
                     'popup'=>false,
                     'account'=>true,
                     'contact'=>true,
@@ -51,11 +54,11 @@ abstract class Route extends Core\Route
                     'homePopup'=>true,
                     'homeFeed'=>true,
                     'homeOverview'=>true],
-                'nobody'=>['search'=>false,'logout'=>false,'contact'=>false],
+                'nobody'=>['search'=>false,'logout'=>false,'contact'=>false,'register'=>true,'resetPassword'=>true],
                 'shared'=>['access'=>false],
                 'user'=>['access'=>false],
-                'subAdmin'=>['popup'=>true,'sessionFakeRole'=>true],
-                'admin'=>['popup'=>true,'sessionFakeRole'=>true]
+                'subAdmin'=>['popup'=>true,'sessionFakeRole'=>true,'userWelcome'=>true],
+                'admin'=>['popup'=>true,'sessionFakeRole'=>true,'userWelcome'=>true]
             ]]
     ];
 }

@@ -21,8 +21,8 @@ use Quid\Orm;
 class TableRelation extends Core\RouteAlias
 {
     // trait
+    use _common;
     use _relation;
-    use Lemur\Route\_relation;
     use Lemur\Segment\_table;
     use Lemur\Segment\_orderTableRelation;
     use Lemur\Segment\_page;

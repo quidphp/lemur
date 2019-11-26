@@ -15,14 +15,17 @@ quid.main.dom = new function() {
     // remplace les balises sensibles par des div (comme dans head et script)
     this.parseHtml = function(html)
     {
-        var r = String(html);
+        var r = null;
+        html = String(html);
         
-        r = r.replace(/<\!DOCTYPE[^>]*>/i, '');
-        r = r.replace(/<(html|head|body|title|meta|script|link)([\s\>])/gi,'<div data-tag="$1"$2');
-        r = r.replace(/<\/(html|head|body|title|meta|script|link)\>/gi,'</div>');
+        html = html.replace(/<\!DOCTYPE[^>]*>/i, '');
+        html = html.replace(/<(html|head|body|title|meta|script|link)([\s\>])/gi,'<div data-tag="$1"$2');
+        html = html.replace(/<\/(html|head|body|title|meta|script|link)\>/gi,'</div>');
         
-        r = $.trim(r);
-        r = $($.parseHTML(r));
+        html = quid.base.str.trim(html);
+        var nodes = $.parseHTML(html);
+        
+        r = $(nodes);
         
         return r;
     }

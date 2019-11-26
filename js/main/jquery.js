@@ -36,7 +36,22 @@ quid.main.jquery = new function() {
         return r;
     };
 
-
+    
+    // inputReal
+    // retourne les inputs réel avec un nom valide
+    // exclus les button type button
+    $.expr[':'].inputReal = function(obj,index,meta,stack)
+    {
+        var r = false;
+        obj = $(obj);
+        
+        if(obj.is("input,select,textarea,button[type='submit']") && obj.is("[name]") && !obj.is("[name^='-']"))
+        r = true;
+        
+        return r;
+    };
+    
+    
     // scrollStart
     // gère l'événement scrollStart dans jQuery
     $.event.special.scrollstart = {
@@ -45,7 +60,7 @@ quid.main.jquery = new function() {
         setup: function(data) {
             var current = $.event.special.scrollstart;
             var timer;
-            var data = $.extend({latency: current.latency}, data);
+            var data = quid.base.obj.replace({latency: current.latency}, data);
 
             var handler = function(event) {
                 var $this = this;
@@ -83,7 +98,7 @@ quid.main.jquery = new function() {
         setup: function(data) {
             var current = $.event.special.scrollstop;
             var timer;
-            var data = $.extend({latency: current.latency}, data);
+            var data = quid.base.obj.replace({latency: current.latency}, data);
             
             var handler = function(event) 
             {

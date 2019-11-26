@@ -58,10 +58,10 @@ class SessionRoleSubmit extends Core\RouteAlias
 
 
     // routeSuccess
-    // route sur succès
-    final protected function routeSuccess():Lemur\Route
+    // redirige vers la dernière route valable de l'historique
+    final protected function routeSuccess()
     {
-        return static::session()->historyPreviousRoute(Home::make());
+        return true;
     }
 
 

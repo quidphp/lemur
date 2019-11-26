@@ -14,6 +14,80 @@
 // fakeselect étend clickOpen
 quid.core.fakeselect = function()
 {
+    // clickOpen
+    quid.core.clickOpenWithTrigger.call(this,"> .trigger");
+    quid.main.keyboard.enter.call(this,true);
+    
+    // triggerHandler
+    $(this).on('fakeselect:getChoices', function(event) {
+        return $(this).triggerHandler('clickOpen:getTarget').find("li > button");
+    })
+    .on('fakeselect:getValue', function(event) {
+        return $(this).triggerHandler('fakeselect:getSelected').data('value');
+    })
+    .on('fakeselect:getInput', function(event) {
+        return $(this).find("input[type='hidden']");
+    })
+    .on('fakeselect:getSelected', function(event) {
+        return $(this).find("li > button.selected");
+    })
+    .on('fakeselect:getTitle', function(event) {
+        return $(this).triggerHandler('clickOpen:getTrigger').find(".title").first();
+    })
+    .on('clickOpen:getBackgroundFrom', function(event) {
+        return 'fakeselect';
+    })
+    
+    // trigger
+    .on('enter:blocked', function(event) {
+        $(this).trigger('clickOpen:toggle');
+    })
+    .on('fakeselect:setTitle', function(event,value) {
+        event.stopPropagation();
+        $(this).triggerHandler('fakeselect:getTitle').text(value);
+    })
+    .on('fakeselect:disable',function(event) {
+        var input = $(this).triggerHandler('fakeselect:getInput');
+        input.trigger('input:disable');
+    })
+    .on('fakeselect:enable',function(event) {
+        var input = $(this).triggerHandler('fakeselect:getInput');
+        input.trigger('input:disable');
+    })
+    .on('component:bind', function(event) {
+        var $this = $(this);
+        var trigger = $(this).triggerHandler('clickOpen:getTrigger');
+        var input = $(this).triggerHandler('fakeselect:getInput');
+        var choices = $(this).triggerHandler('fakeselect:getChoices');
+        var selected = $(this).triggerHandler('fakeselect:getSelected');
+        
+        trigger.on('click', function(event) {
+            input.trigger('validate:valid');
+        });
+        
+        input.on('input:disable', function(event) {
+            $this.attr('data-disabled',1);
+        })
+        .on('input:enable', function(event) {
+            $this.removeAttr('data-disabled');
+        })
+        .on('validate:valid', function(event) {
+            $this.attr('data-validate','valid');
+        })
+        .on('validate:invalid', function(event) {
+            $this.attr('data-validate','invalid');
+        })
+        .trigger('input:prepareDisable');
+        
+        choices.enterCatch(true).on('click enter:blocked', function(event) {
+            event.stopPropagation();
+            choose.call($this,$(this));
+        });
+        
+        if(selected.length)
+        choose.call(this,selected);
+    });
+    
     // choose
     function choose(selected)
     {
@@ -36,53 +110,8 @@ quid.core.fakeselect = function()
         }
     }
     
-    quid.core.clickOpenWithTrigger.call(this,"> .trigger");
-    $(this).enterCatch(true)
-    .on('enter:blocked', function(event) {
-        $(this).trigger('clickOpen:toggle');
-    })
-    .on('fakeselect:getChoices', function(event) {
-        return $(this).triggerHandler('clickOpen:getTarget').find("li > button");
-    })
-    .on('input:isFake', function(event) {
-        return true;
-    })
-    .on('input:getValue', function(event) {
-        return $(this).triggerHandler('fakeselect:getValue');
-    })
-    .on('fakeselect:getInput', function(event) {
-        return $(this).find("input[type='hidden']");
-    })
-    .on('fakeselect:getSelected', function(event) {
-        return $(this).find("li > button.selected");
-    })
-    .on('fakeselect:getValue', function(event) {
-        return $(this).triggerHandler('fakeselect:getSelected').data('value');
-    })
-    .on('fakeselect:getTitle', function(event) {
-        return $(this).triggerHandler('clickOpen:getTrigger').find(".title").first();
-    })
-    .on('fakeselect:setTitle', function(event,value) {
-        event.stopPropagation();
-        $(this).triggerHandler('fakeselect:getTitle').text(value);
-    })
-    .on('fakeselect:prepare', function(event) {
-        var $this = $(this);
-        var choices = $(this).triggerHandler('fakeselect:getChoices');
-        var selected = $(this).triggerHandler('fakeselect:getSelected');
-        
-        choices.enterCatch(true).on('click enter:blocked', function(event) {
-            event.stopPropagation();
-            choose.call($this,$(this));
-        });
-        
-        if(selected.length)
-        choose.call(this,selected);
-    })
-    .on('clickOpen:getBackgroundFrom', function(event) {
-        return 'fakeselect';
-    })
-    .trigger('fakeselect:prepare');
+    // trigger bind
+    $(this).trigger('component:bind');
     
     return this;
 }
@@ -97,15 +126,24 @@ quid.core.selectToFake = function()
         {
             var name = $(this).prop('name');
             var required = $(this).data('required');
+            var disabled = $(this).prop('disabled');
             var title = $(this).find("option:selected").text() || "&nbsp;";
             var options = $(this).find("option");
             var value = $(this).inputValue(true);
+            var datas = $(this).getDataAttributes();
             var html = '';
             
-            html += "<div tabindex='-1' class='fakeselect";
-            html += "'";
+            var inputHtml = "<input name='"+name+"' type='hidden' data-fakeselect='1' value='"+value+"'";
             if(required)
-            html += " data-required='1'";
+            inputHtml += " data-required='1'"
+            if(disabled)
+            inputHtml += " disabled";
+            inputHtml += "/>";
+            
+            html += "<div tabindex='-1' data-fake-input='1' class='fakeselect";
+            html += "'";
+            if(!quid.base.obj.isEmpty(datas))
+            html += quid.main.attr.str(datas);
             html += "><button type='button' class='trigger'>";
             html += "<span data-title'='"+title+"' class='title'>"+title+"</span>";
             html += "<span class='ico'></span>";
@@ -114,8 +152,10 @@ quid.core.selectToFake = function()
             html += "<ul>";
             
             options.each(function(index, el) {
-                var val = $(this).prop('value');
+                var val = String($(this).prop('value'));
                 var text = $(this).text() || "&nbsp;";
+                var datas = $(this).getDataAttributes();
+                
                 html += "<li>";
                 html += "<button type='button'";
                 if(val != null)
@@ -124,6 +164,9 @@ quid.core.selectToFake = function()
                     html += " class='selected'";
                     
                     html += " data-value='"+val+"'";
+                    
+                    if(!quid.base.obj.isEmpty(datas))
+                    html += quid.main.attr.str(datas);
                 }
                 
                 html += ">";
@@ -133,7 +176,7 @@ quid.core.selectToFake = function()
             
             html += "</ul>";
             html += "</div>";
-            html += "<input name='"+name+"' type='hidden' data-fakeselect='1' value='"+value+"'/>";
+            html += inputHtml;
             html += "</div>";
 
             $(this).after(html);

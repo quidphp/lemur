@@ -9,7 +9,7 @@ declare(strict_types=1);
  * Readme: https://github.com/quidphp/lemur/blob/master/README.md
  */
 
-namespace Quid\Lemur\Route;
+namespace Quid\Lemur\Cms;
 use Quid\Base\Html;
 use Quid\Core;
 

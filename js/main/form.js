@@ -15,85 +15,72 @@ quid.main.form = new function() {
     // permet la validation, le unload
     this.bind = $.fn.form = function(validate)
     {
-        $(this).each(function(index, el) {
+        // triggerHandler
+        $(this).on('form:getFields', function(event) {
+            return $(this).find("input,select,textarea,button[type='submit']");
+        })
+        .on('form:getSystemFields', function(event) {
+            return $(this).triggerHandler('form:getFields').filter("[name^='-']");
+        })
+        .on('form:getTargetFields', function(event) {
+            return $(this).triggerHandler('form:getFields').not(':disabled').filter("[name]").not("[name^='-']");
+        })
+        .on('form:getValidateFields', function(event) {
+            return $(this).triggerHandler('form:getTargetFields').filter("[data-required],[data-pattern]");
+        })
+        .on('form:getValidateField', function(event) {
+            return $(this).triggerHandler('form:getValidateFields').first();
+        })
+        .on('form:hasFiles', function(event) {
+            return ($(this).triggerHandler('form:getTargetFields').filter("input[type='file']").length)? true:false;
+        })
+        .on('form:getSubmits', function(event) {
+            return $(this).triggerHandler('form:getFields').filter("[type='submit'],[type='image']");
+        })
+        .on('form:getSubmit', function(event) {
+            return $(this).triggerHandler('form:getSubmits').first();
+        })
+        .on('form:getClickedSubmit', function(event) {
+            return $(this).triggerHandler('form:getSubmits').filter("[data-submit-click]").first();
+        })
+        .on('form:getClickedSubmits', function(event) {
+            var r = $(this).triggerHandler('form:getClickedSubmit');
             
-            $(this).on('form:getFields', function(event) {
-                return $(this).find(":input");
-            })
-            .on('form:getSystemFields', function(event) {
-    			return $(this).triggerHandler('form:getFields').filter("[name^='-']");
-    		})
-            .on('form:getTargetFields', function(event) {
-    			return $(this).triggerHandler('form:getFields').filter("[name]").not("[name^='-']");
-    		})
-            .on('form:getValidateFields', function(event) {
-                return $(this).triggerHandler('form:getTargetFields').filter("[data-required],[data-pattern]");
-            })
-            .on('form:getValidateField', function(event) {
-                return $(this).triggerHandler('form:getValidateFields').first();
-            })
-            .on('form:hasFiles', function(event) {
-                return ($(this).triggerHandler('form:getTargetFields').filter("input[type='file']").length)? true:false;
-            })
-            .on('form:getSubmits', function(event) {
-                return $(this).triggerHandler('form:getFields').filter("[type='submit'],[type='image']");
-            })
-            .on('form:getSubmit', function(event) {
-                return $(this).triggerHandler('form:getSubmits').first();
-            })
-            .on('form:getClickedSubmit', function(event) {
-                return $(this).triggerHandler('form:getSubmits').filter("[data-submit-click]").first();
-            })
-            .on('form:getClickedSubmits', function(event) {
-                var r = $(this).triggerHandler('form:getClickedSubmit');
-                
-                if(r.length)
-                {
-                    var name = r.prop('name');
-                    if(quid.base.str.isNotEmpty(name))
-                    r = $(this).triggerHandler('form:getSubmits').filter("[name='"+name+"']");
-                }
-                
-                return r;
-            })
-            .on('form:getCsrfField', function(event) {
-                return $(this).triggerHandler('form:getSystemFields').filter("[data-csrf='1']").first();
-            })
-            .on('form:getGenuineField', function(event) {
-                return $(this).triggerHandler('form:getSystemFields').filter("[data-genuine='1']").first();
-            })
-            .on('form:hasChanged', function(event) {
-                var r = false;
-                var target = $(this).triggerHandler('form:getTargetFields');
-                var serialize = target.serialize();
-                var original = $(this).data('form:serialize');
-                
-                if(original && serialize !== original)
-                r = true;
-                
-                return r;
-            })
-            .on('form:prepare', function(event) {
-                $(this).trigger('form:prepareGenuine');
-                $(this).trigger('form:preparehasChanged');
-            })
-            .on('form:prepareGenuine', function(event) {
-                var genuine = $(this).triggerHandler('form:getGenuineField');
-                if(genuine.length === 1)
-                {
-                    var name = genuine.prop('name');
-                    var newName = name+"2-";
-                    var newValue = 1;
-                    var genuine2 = "<input type='hidden' name='"+newName+"' value='"+newValue+"' />";
-                    $(this).prepend(genuine2);
-                }
-            })
-            .on('form:preparehasChanged', function(event) {
-                var target = $(this).triggerHandler('form:getTargetFields');
-                var serialize = target.serialize();
-                $(this).data('form:serialize',serialize);
-            });
+            if(r.length)
+            {
+                var name = r.prop('name');
+                if(quid.base.str.isNotEmpty(name))
+                r = $(this).triggerHandler('form:getSubmits').filter("[name='"+name+"']");
+            }
             
+            return r;
+        })
+        .on('form:getCsrfField', function(event) {
+            return $(this).triggerHandler('form:getSystemFields').filter("[data-csrf='1']").first();
+        })
+        .on('form:getGenuineField', function(event) {
+            return $(this).triggerHandler('form:getSystemFields').filter("[data-genuine='1']").first();
+        })
+        .on('form:hasChanged', function(event) {
+            var r = false;
+            var target = $(this).triggerHandler('form:getTargetFields');
+            var serialize = target.serialize();
+            var original = $(this).data('form:serialize');
+            
+            if(original && serialize !== original)
+            r = true;
+            
+            return r;
+        })
+        
+        // prepare
+        .on('form:prepare', function(event) {
+            prepareGenuine.call(this);
+            prepareHasChanged.call(this);
+        })
+        
+        // bind
+        .one('form:bind', function(event) {
             if(!$(this).is("[data-skip-form-prepare='1']"))
             $(this).trigger('form:prepare');
             
@@ -111,7 +98,30 @@ quid.main.form = new function() {
             // formUnload
             if($(this).is("[data-unload]"))
             $(this).formUnload();
-        });
+        })
+        
+        // prepareGenuine
+        var prepareGenuine = function() {
+            var genuine = $(this).triggerHandler('form:getGenuineField');
+            if(genuine.length === 1)
+            {
+                var name = genuine.prop('name');
+                var newName = name+"2-";
+                var newValue = 1;
+                var genuine2 = "<input type='hidden' name='"+newName+"' value='"+newValue+"' />";
+                $(this).prepend(genuine2);
+            }
+        };
+        
+        // prepareHasChanged
+        var prepareHasChanged = function() {
+            var target = $(this).triggerHandler('form:getTargetFields');
+            var serialize = target.serialize();
+            $(this).data('form:serialize',serialize);
+        };
+        
+        // triggerBind
+        $(this).trigger('form:bind');
         
         return this;
     }

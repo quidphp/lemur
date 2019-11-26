@@ -9,7 +9,7 @@ declare(strict_types=1);
  * Readme: https://github.com/quidphp/lemur/blob/master/README.md
  */
 
-namespace Quid\Lemur\Route;
+namespace Quid\Lemur\Cms;
 use Quid\Base;
 use Quid\Base\Html;
 use Quid\Core;
@@ -49,7 +49,7 @@ trait _generalRelation
         $r = '';
         $grab = $this->relationGrab();
         $emptyNotEmpty = $this->showEmptyNotEmpty();
-
+        
         if(!empty($grab))
         {
             ['result'=>$results,'count'=>$count] = $grab;

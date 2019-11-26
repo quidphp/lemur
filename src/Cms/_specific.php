@@ -27,17 +27,6 @@ trait _specific
     ];
 
 
-    // onReplace
-    // tableau onReplace pour la route
-    final protected function onReplace(array $return):array
-    {
-        $return['title'] = $this->title();
-        $return['metaDescription'] = $this->table()->description();
-
-        return $return;
-    }
-
-
     // main
     // fait main pour specificAdd
     final public function main():string

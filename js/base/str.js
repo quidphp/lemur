@@ -67,6 +67,14 @@ quid.base.str = new function() {
     }
 
 
+    // trim
+    // trim une string
+    this.trim = function(value)
+    {
+        return $.trim(value);
+    }
+    
+    
     // explodeIndex
     // split une string et retourne l'index demandé en premier argument
     this.explodeIndex = function(index,delimiter,value)

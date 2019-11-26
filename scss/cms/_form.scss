@@ -81,6 +81,18 @@
     border-radius: 5px;
     border: 1px solid $lightGray;
     height: auto;
+    
+    &::-webkit-input-placeholder {
+        color: $darkGray;
+    }
+
+    &::-moz-placeholder {
+        color: $darkGray;
+    }
+
+    &::-ms-input-placeholder {
+        olor: $darkGray;
+    }
 }
 
 // inputTextEvents
@@ -92,6 +104,10 @@
         background-color: $lightYellow;
     }
 
+    &[disabled] {
+        background-color: $gray;
+    }
+    
     &[data-validate='invalid'] {
         background-color: $red !important;
         color: $white !important;

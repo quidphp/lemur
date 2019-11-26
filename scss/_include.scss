@@ -704,8 +704,9 @@ $media: $uriMedia;
 
 // triangle
 // mixin pour faire un triangle
-@mixin triangle($side, $color: $black, $dimension: 16px, $transparent: null) {
-    @if (!$transparent) {
+@mixin triangle($side, $color: $black, $dimension: 16px,$transparent:null) {
+    
+    @if (not $transparent) {
         $transparent: ($dimension/2);
     }
 

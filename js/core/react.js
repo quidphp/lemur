@@ -68,7 +68,7 @@ quid.core.react = new function() {
             })
             .on('react:updateProps', function(event,props) {
                 var initialProps = JSON.parse($(this).attr('data-props'));
-                props = $.extend(initialProps,props);
+                props = quid.base.obj.replace(initialProps,props);
                 renderReactComponent.call(this,props);
             })
             .on('react:replaceProps', function(event,props) {

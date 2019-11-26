@@ -29,6 +29,7 @@ quid.core.filterGeneral = function()
         var select = $(this).triggerHandler('filter:getOrder');
         var selectVal = select.inputValue(true);
         var order = (select.length && selectVal)? selectVal:separator;
+
         return $(this).dataHrefReplaceChar(order);
     })
     .on('ajax:getData', function(event) {

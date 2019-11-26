@@ -23,7 +23,7 @@ quid.main.keyboard = new function() {
                 
                 if(quid.base.arr.in(event.keyCode,values))
                 {
-                    var isInput = $(event.target).is(':input');
+                    var isInput = $(event.target).is(':inputReal');
                     var catched = key+":catched";
                     $(this).trigger(catched,[event,isInput,event.keyCode]);
                     

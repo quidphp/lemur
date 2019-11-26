@@ -17,7 +17,7 @@ use Quid\Base\Html;
 trait _browscap
 {
     // browscap
-    // génère le html pour les capacités du browser (noscript et cookie)
+    // génère le html pour les capacités du browser (noscript, cookie et unsupported)
     final protected function browscap():string
     {
         $r = '';

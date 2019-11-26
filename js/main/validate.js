@@ -192,12 +192,13 @@ quid.main.validate = new function() {
             return r;
         })
         .on('validatePrevent:getFields', function(event) {
-            var r = null;
+            var r = $();
             
             if($(this).is(":input"))
             r = $(this);
-            else
-            r = $(this).find(":input").filter("[data-required],[data-pattern]").not("[name^='-']");
+            
+            else if($(this).is("form"))
+            r = $(this).triggerHandler('form:getValidateFields');
             
             r.each(function(index, el) {
                 if(!$(this).triggerHandler('validate:binded'))

@@ -119,7 +119,7 @@ quid.core.modal = function()
         var route = $(this).attr('data-route');
         $(this).attr('data-status','ready');
         
-        $(document).trigger('document:commonBindings',[modal]);
+        $(document).trigger('document:mountCommon',[modal]);
         $(document).trigger('modal:common',[modal]);
         $(this).trigger('modal:success',[route]);
         

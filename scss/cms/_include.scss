@@ -245,32 +245,30 @@ $red: #8d1e2d;
 
 // trianglePrevNext
 // mixin pour génèrer un triangle de couleur du cms
-@mixin trianglePrevNext($color1: $color, $color2: $darkColor, $color3: $darkerColor) {
+@mixin trianglePrevNext($dimension: 10px, $transparent: null, $color1: $color, $color2: $darkColor, $color3: $darkerColor) {
     cursor: pointer;
 
     &.prev {
-        @include triangle(left, $color1, 10px, 6px);
-        margin-right: 8px;
+        @include triangle(left, $color1, $dimension, $transparent);
 
         &:hover {
-            @include triangle(left, $color2, 10px, 6px);
+            @include triangle(left, $color2, $dimension, $transparent);
         }
 
         &:active {
-            @include triangle(left, $color3, 10px, 6px);
+            @include triangle(left, $color3, $dimension, $transparent);
         }
     }
 
     &.next {
-        @include triangle(right, $color1, 10px, 6px);
-        margin-left: 8px;
+        @include triangle(right, $color1, $dimension, $transparent);
 
         &:hover {
-            @include triangle(right, $color2, 10px, 6px);
+            @include triangle(right, $color2, $dimension, $transparent);
         }
 
         &:active {
-            @include triangle(right, $color3, 10px, 6px);
+            @include triangle(right, $color3, $dimension, $transparent);
         }
     }
 }

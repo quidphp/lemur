@@ -60,7 +60,7 @@ quid.cms.quickEdit = function()
             td.attr('data-editing',1);
             var editContainer = $(this).triggerHandler('quickEdit:getEditContainer');
             editContainer.html(data);
-            $(document).trigger('document:commonBindings',[editContainer]);
+            $(document).trigger('document:mountCommon',[editContainer]);
             $(document).trigger('specificForm:mount',[editContainer]);
             $(this).trigger('dragScroll:refresh');
         }

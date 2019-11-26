@@ -192,7 +192,7 @@ abstract class Relation extends Core\Col\Relation
             $placeholder .= " ($size)";
 
             $searchMinLength = ($rel->isRelationTable())? $rel->relationTable()->searchMinLength():$this->table()->searchMinLength();
-            $required = ($this->getAttr('relationSearchRequired') === true)? true:null;
+            $required = ($this->isRelationSearchRequired())? true:null;
 
             $data = ['query'=>$query,'separator'=>$route::getDefaultSegment(),'required'=>$required,'char'=>$route::getReplaceSegment(),'pattern'=>['minLength'=>$searchMinLength]];
             if($route->hasOrder())

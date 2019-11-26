@@ -20,7 +20,18 @@ trait _specificAddMulti
     // trait
     use _specific;
 
+    
+    // onReplace
+    // tableau onReplace pour la route
+    final protected function onReplace(array $return):array
+    {
+        $return['title'] = $this->title();
+        $return['metaDescription'] = $this->table()->description();
 
+        return $return;
+    }
+    
+    
     // isPanelVisible
     // retourne vrai si le panneau est visible
     final protected function isPanelVisible(Core\Cols $cols):bool

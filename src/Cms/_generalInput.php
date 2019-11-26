@@ -9,95 +9,14 @@ declare(strict_types=1);
  * Readme: https://github.com/quidphp/lemur/blob/master/README.md
  */
 
-namespace Quid\Lemur\Route;
+namespace Quid\Lemur\Cms;
 use Quid\Base;
 use Quid\Base\Html;
 
-// _general
-// trait that provides most methods used for a general navigation route
-trait _general
+// _generalInput
+// trait that provides some methods for generating reusable general inputss
+trait _generalInput
 {
-    // trait
-    use _generalSegment;
-
-
-    // config
-    public static $configGeneral = [
-        'group'=>'general',
-        'maxPerPage'=>100,
-        'query'=>['s']
-    ];
-
-
-    // selectedUri
-    // gère les selected uri pour une route general
-    // par défaut la route avec segment par défaut est sélectionné
-    final public function selectedUri():array
-    {
-        $return = [];
-        $route = static::make();
-        $uri = $route->uri(null,['query'=>false]);
-        $return[$uri] = true;
-
-        return $return;
-    }
-
-
-    // makeGeneral
-    // cette méthode permet de retourner une route general à partir de la classe
-    final public static function makeGeneral($navKey=null,$segment=null):?self
-    {
-        $return = null;
-        $class = static::class;
-
-        $key = [$class];
-        if($navKey !== null)
-        $key = Base\Arr::append($key,$navKey);
-
-        $route = static::session()->nav()->route($key);
-
-        if(empty($route))
-        $route = $class::make($segment);
-
-        if($route->isValidSegment())
-        $return = $route;
-
-        return $return;
-    }
-
-
-    // canReset
-    // retourne vrai si la bouton reset peut s'afficher
-    final protected function canReset(?string $search=null,$not=null):bool
-    {
-        $return = false;
-        $default = static::getDefaultSegment();
-
-        if(is_string($search))
-        $return = true;
-
-        else
-        {
-            $not = (array) $not;
-
-            $segments = $this->segments();
-            $notSegment = Base\Arr::gets($not,$segments);
-            $segments = Base\Arr::keysStrip($not,$segments);
-            $segments = Base\Obj::cast($segments);
-
-            $new = static::make($notSegment);
-            $newSegments = $new->segments();
-            $newSegments = Base\Arr::keysStrip($not,$newSegments);
-            $newSegments = Base\Obj::cast($newSegments);
-
-            if($segments !== $newSegments)
-            $return = true;
-        }
-
-        return $return;
-    }
-
-
     // makeCount
     // fait le count pour une page general
     final protected function makeCount():string
@@ -281,7 +200,7 @@ trait _general
             $loop[] = 'closest';
             ($prevNext === true)? ($loop[] = 'next'):null;
             ($firstLast === true)? ($loop[] = 'last'):null;
-
+            
             if(!empty($loop))
             {
                 foreach ($loop as $v)
@@ -290,12 +209,14 @@ trait _general
                     {
                         if($v === 'closest' && !empty($general['closest']) && is_array($general['closest']))
                         {
+                            $currentPage = $this->segment('page');
                             $closest = '';
 
                             foreach ($general['closest'] as $v)
                             {
+                                $current = ($v === $currentPage)? 'current':null;
                                 $route = $this->changeSegment('page',$v);
-                                $closest .= $route->a($v);
+                                $closest .= $route->a($v,$current);
                             }
 
                             if(strlen($closest))

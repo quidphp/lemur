@@ -20,6 +20,14 @@ class ResetPasswordSubmit extends Lemur\Route\ResetPasswordSubmit
     public static $config = [
         'parent'=>ResetPassword::class
     ];
+    
+    
+    // canTrigger
+    // retourne vrai si la route peut être lancé
+    final public function canTrigger():bool 
+    {
+        return (parent::canTrigger() && $this->hasPermission('resetPassword'))? true:false;
+    }
 }
 
 // init

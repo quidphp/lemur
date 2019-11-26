@@ -20,6 +20,14 @@ class RegisterSubmit extends Lemur\Route\RegisterSubmit
     public static $config = [
         'parent'=>Register::class
     ];
+    
+    
+    // canTrigger
+    // retourne vrai si la route peut être lancé
+    final public function canTrigger():bool 
+    {
+        return (parent::canTrigger() && $this->hasPermission('register'))? true:false;
+    }
 }
 
 // init

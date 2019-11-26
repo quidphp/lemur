@@ -33,10 +33,10 @@ class AccountChangePasswordSubmit extends Lemur\Route\AccountChangePasswordSubmi
 
 
     // routeSuccess
-    // route utilisé pour rediriger après le formulaire
-    final public function routeSuccess():Lemur\Route
+    // redirige vers la dernière route valable de l'historique
+    final public function routeSuccess()
     {
-        return static::session()->historyPreviousRoute(Home::make());
+        return true;
     }
 }
 

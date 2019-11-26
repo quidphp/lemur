@@ -9,7 +9,7 @@ declare(strict_types=1);
  * Readme: https://github.com/quidphp/lemur/blob/master/README.md
  */
 
-namespace Quid\Lemur\Route;
+namespace Quid\Lemur\Cms;
 use Quid\Base;
 use Quid\Base\Html;
 use Quid\Orm;
@@ -108,23 +108,7 @@ trait _rowsFeed
     // retourne l'objet rows pour la page courante (mais seulement les visibles)
     final public function rowsVisible():Orm\RowsIndex
     {
-        return $this->cache(__METHOD__,function() {
-            return $this->rows()->filter(['isVisible'=>true]);
-        });
-    }
-
-
-    // makePager
-    // construit le pager
-    final protected function makePager(int $amount=3):string
-    {
-        $r = '';
-        $general = $this->general($amount);
-
-        if(!empty($general))
-        $r .= $this->makeGeneralPager($general,true,true,true);
-
-        return $r;
+        return $this->rows()->filter(['isVisible'=>true]);
     }
 
 

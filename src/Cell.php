@@ -82,6 +82,14 @@ class Cell extends Core\Cell
     }
 
 
+    // specificComponentWrap
+    // fait un wrap à partir de specificComponent plutôt que formComplex
+    final public function specificComponentWrap(?string $wrap=null,$pattern=null,array $attr=null,?array $replace=null,?array $option=null):string
+    {
+        return $this->col()->specificComponentWrap($wrap,$pattern,$this,$attr,$replace,$option);
+    }
+    
+    
     // getDataAttr
     // retourne les datas attr pour la cellule
     final public function getDataAttr(array $return):array

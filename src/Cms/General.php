@@ -21,7 +21,8 @@ class General extends Core\RouteAlias
 {
     // trait
     use _templateAlias;
-    use Lemur\Route\_general;
+    use _generalInput;
+    use _generalSegment;
     use Lemur\Segment\_table;
     use Lemur\Segment\_page;
     use Lemur\Segment\_limit;
@@ -50,6 +51,7 @@ class General extends Core\RouteAlias
             'highlight'=>'structureSegmentPrimaries'],
         'match'=>[
             'session'=>'canAccess'],
+        'group'=>'general',
         'sitemap'=>true,
         'popup'=>[
             'search','primary','priority','engine','collation','autoIncrement','updateTime',
@@ -1025,7 +1027,7 @@ class General extends Core\RouteAlias
         $option = Base\Arr::plus(['specific'=>null,'modify'=>false,'excerptMin'=>$cell->generalExcerptMin()],$option);
         $col = $cell->col();
 
-        $data = ['name'=>$cell->name(),'cell'=>$cell::className(true),'group'=>$cell->group()];
+        $data = ['name'=>$cell->name(),'cell'=>$cell::className(true),'group'=>$col->group()];
         $table = $this->table();
         $generalEdit = GeneralEdit::make($cell);
         if($generalEdit->canTrigger())

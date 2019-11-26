@@ -23,9 +23,54 @@ $(document).ready(function() {
 	    window.location.href = window.location.href;
 	});
 	
+    // document:mountCommon
+    // événement appelé pour faire les bindings globaux
+    // après le chargement d'une page ou d'un modal
+    $(this).on('document:mountCommon', function(event,node) {
+        
+        // select
+        var select = node.find("select");
+        quid.core.selectToFake.call(select);
+        
+        // input
+        var input = node.find(":inputReal");
+        quid.main.input.bind.call(input);
+        
+        // form
+        var form = node.find("form");
+        quid.main.form.bind.call(form);
+        
+        // autre
+        var modal = $(this).find("body > .modal").first();
+        var popupTrigger = node.find(".popup-trigger.with-popup:not(.with-ajax)");
+        var popupTriggerAjax = node.find(".popup-trigger.with-popup.with-ajax");
+        var modalAnchor = node.find("a[data-modal]");
+        var anchorCorner = node.find("[data-anchor-corner='1']");
+        var absolutePlaceholder = node.find("[data-absolute-placeholder='1']");
+        var aConfirm = node.find("a[data-confirm]");
+        
+        // modalAnchor
+        quid.core.modalAjax.call(modalAnchor,modal);
+                
+		// aConfirm
+		quid.main.window.confirm.call(aConfirm,'click');
+		
+        // popupTrigger
+        quid.core.clickOpenWithTrigger.call(popupTrigger,".popup-title");
+        
+        // popupTriggerAjax
+        quid.core.clickOpenAnchorAjax.call(popupTriggerAjax,".popup-title");
+        
+        // anchorCorner
+        quid.core.anchorCorner.call(anchorCorner);
+        
+        // absolutePlaceholder
+        quid.core.absolutePlaceholder.call(absolutePlaceholder);
+	})
+    
     // initial mount
     // comportements bindés une seule fois
-    $(this).on('document:initialMount', function(event,body) {
+    .on('document:mountInitial', function(event,body) {
         var modal = body.find("> .modal").first();
         
         // modal
@@ -34,7 +79,7 @@ $(document).ready(function() {
     
 	// document mount
     // comportements utilisés pour toutes les pages du CMS
-	$(this).on('document:mount', function(event,routeWrap) {
+	.on('document:mount', function(event,routeWrap) {
 		var html = $(this).triggerHandler('document:getHtml');
 		var burger = routeWrap.find("header .burger-menu, .nav-fixed .nav-close");
 		var com = routeWrap.find("main > .inner > .com");
@@ -43,7 +88,7 @@ $(document).ready(function() {
         var mainSearch = routeWrap.find("header .top form");
         
         // carousel
-        quid.core.carousel.call(carousel,".trigger");
+        quid.core.carousel.call(carousel);
         
         // subMenu
         quid.core.clickOpenWithTrigger.call(subMenu,".trigger");
@@ -52,7 +97,8 @@ $(document).ready(function() {
         });
         
         // com
-		quid.cms.com.call(com).trigger('component:setup');
+        if(com.length)
+		$(quid.cms.com.call(com[0])).trigger('component:setup');
         
         // burger
         quid.core.burger.call(burger);
@@ -68,41 +114,6 @@ $(document).ready(function() {
         var html = (percent >= 0 && percent < 100)? "<div class='percent'>"+percent+"%"+"</div>":"";
         progress.html(html);
     })
-    
-    // document:commonBindings
-    // événement appelé pour faire les bindings globaux
-    // après le chargement d'une page ou d'un modal
-    .on('document:commonBindings', function(event,node) {
-        var modal = $(this).find("body > .modal").first();
-        var popupTrigger = node.find(".popup-trigger.with-popup:not(.with-ajax)");
-        var popupTriggerAjax = node.find(".popup-trigger.with-popup.with-ajax");
-		var modalAnchor = node.find("a[data-modal]");
-		var anchorCorner = node.find("[data-anchor-corner='1']");
-        var absolutePlaceholder = node.find("[data-absolute-placeholder='1']");
-		var aConfirm = node.find("a[data-confirm]");
-        var select = node.find("select");
-        
-        // modalAnchor
-        quid.core.modalAjax.call(modalAnchor,modal);
-                
-		// aConfirm
-		quid.main.window.confirm.call(aConfirm,'click');
-		
-        // popupTrigger
-        quid.core.clickOpenWithTrigger.call(popupTrigger,".popup-title");
-        
-        // popupTriggerAjax
-        quid.core.clickOpenAnchorAjax.call(popupTriggerAjax,".popup-title");
-        
-        // fakeselect
-        quid.core.selectToFake.call(select);
-        
-        // anchorCorner
-        quid.main.dimension.anchorCorner.call(anchorCorner);
-        
-        // absolutePlaceholder
-        quid.main.dimension.absolutePlaceholder.call(absolutePlaceholder);
-	})
     
     // login
     // comportement pour la page login

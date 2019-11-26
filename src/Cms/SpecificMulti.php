@@ -185,7 +185,7 @@ class SpecificMulti extends Core\RouteAlias
     // génère un wrap label -> field pour le formulaire
     final protected function makeFormWrap(Core\Col $col,array $replace):string
     {
-    return $col->formComplexWrap($this->getFormWrap(),'%:',true,null,$replace);
+        return $col->specificComponentWrap($this->getFormWrap(),'%:',true,null,$replace);
     }
 }
 

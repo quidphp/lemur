@@ -31,19 +31,19 @@ abstract class ResetPassword extends Core\RouteAlias
     ];
 
 
+    // canTrigger
+    // retourne vrai si la route peut être lancé
+    public function canTrigger():bool
+    {
+        return (parent::canTrigger() && static::session()->roles(false)->isNobody() && static::session()->allowResetPasswordEmail())? true:false;
+    }
+    
+    
     // submitRoute
     // route pour soumettre le formulaire
     public function submitRoute():ResetPasswordSubmit
     {
         return ResetPasswordSubmit::make();
-    }
-
-
-    // canTrigger
-    // retourne vrai si la route peut être lancé
-    final public function canTrigger():bool
-    {
-        return (parent::canTrigger() && static::session()->roles(false)->isNobody() && static::session()->allowResetPasswordEmail())? true:false;
     }
 
 

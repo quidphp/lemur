@@ -36,6 +36,15 @@ class Cells extends Core\Cells
         $return = $this->pair('formComplexWrap',$wrap,$pattern);
         return ($str === true)? implode($return):$return;
     }
+    
+    
+    // specificComponentWrap
+    // génère les éléments specificComponentWrap pour toutes les cellules
+    final public function specificComponentWrap(?string $wrap=null,$pattern=null,bool $str=false)
+    {
+        $return = $this->pair('specificComponentWrap',$wrap,$pattern);
+        return ($str === true)? implode($return):$return;
+    }
 }
 
 // init

@@ -27,7 +27,11 @@ trait _download
 
     // cell
     // retourne la cell qui store le fichier à downloader
-    abstract protected function cell():Core\Cell;
+    // peut retourner null
+    protected function cell():?Core\Cell
+    {
+        return null;
+    }
 
 
     // trigger
@@ -46,24 +50,28 @@ trait _download
     }
 
 
-    // getFile
+    // file
     // retourne l'objet fichier à downloader ou null
-    final public function getFile():?Main\File
+    // par défaut prend celle de la cell
+    final public function file():?Main\File
     {
         $return = null;
         $cell = $this->cell();
-
-        if(static::isSegmentClass())
+        
+        if(!empty($cell))
         {
-            $index = ($this->hasSegment('index'))? $this->segment('index'):null;
+            if(static::isSegmentClass())
+            {
+                $index = ($this->hasSegment('index'))? $this->segment('index'):null;
 
-            if($cell->hasIndex() && is_int($index))
-            $return = $cell->file($index);
+                if($cell->hasIndex() && is_int($index))
+                $return = $cell->file($index);
+            }
+
+            if(empty($return))
+            $return = $cell->file();
         }
-
-        if(empty($return))
-        $return = $cell->file();
-
+        
         return $return;
     }
 
@@ -73,7 +81,7 @@ trait _download
     final public function download():bool
     {
         $return = false;
-        $file = $this->getFile();
+        $file = $this->file();
         $method = $this->getMethod();
 
         if(!empty($file))

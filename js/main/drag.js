@@ -112,9 +112,10 @@ quid.main.drag = new function() {
                     tolerance: 'pointer',
                     opacity: 0.5,
                     containment: containment,
-                    cancel: ':input:not(button)',
-                    stop: function() {
-                        $(this).trigger('verticalSorting:stop')
+                    cancel: ':inputReal',
+                    stop: function(event,ui) {
+                        $(this).trigger('verticalSorting:stop');
+                        ui.item.css('z-index','auto');
                     }
                 });
             });

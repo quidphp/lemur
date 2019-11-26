@@ -37,7 +37,7 @@ abstract class RegisterSubmit extends Core\RouteAlias
             'genuine'=>true],
         'timeout'=>[
             'failure'=>['max'=>12,'timeout'=>600],
-            'success'=>['max'=>2,'timeout'=>600]],
+            'success'=>['max'=>3,'timeout'=>600]],
         'parent'=>Register::class,
         'dataDefault'=>['active'=>null],
         'baseFields'=>['username','email'],
@@ -52,7 +52,7 @@ abstract class RegisterSubmit extends Core\RouteAlias
 
     // canTrigger
     // retourne vrai si la route peut être lancé
-    final public function canTrigger():bool
+    public function canTrigger():bool
     {
         return (parent::canTrigger() && static::session()->roles(false)->isNobody() && static::session()->allowRegister())? true:false;
     }
@@ -112,7 +112,7 @@ abstract class RegisterSubmit extends Core\RouteAlias
         $return['data'] = Base\Arr::gets($keep,$post);
         $return['data'] = Base\Arr::replace($return['data'],$default);
         $return['passwordConfirm'] = $post[$passwordConfirm];
-
+        
         return $return;
     }
 
@@ -128,10 +128,10 @@ abstract class RegisterSubmit extends Core\RouteAlias
         $option = $this->getOption();
         $post = $this->post();
         $post = $this->onBeforeCommit($post);
-
+        
         if($post !== null)
         $return = $class::registerProcess($post['data'],$post['passwordConfirm'],$option);
-
+        
         if(empty($return))
         $this->failureComplete();
 

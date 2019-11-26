@@ -35,7 +35,7 @@ quid.core.windowHashScroll = function(type,persistent)
         return 'data-id';
     })
     .on('windowHashScroll:canScroll', function(event) {
-        return ($(this).triggerHandler('windowHashScroll:isScrolling') === false && $(document).triggerHandler('document:isLoading') === false)? true:false;
+        return ($(this).triggerHandler('windowHashScroll:isScrolling') === false && document._isLoading() === false)? true:false;
     })
     .on('windowHashScroll:isScrolling', function(event) {
         return ($(this).data('hashScroll:animate') === true)? true:false;

@@ -50,13 +50,10 @@ class UserWelcome extends Core\RouteAlias
         $row = $this->row();
         $table = $row->table();
 
-        if(parent::canTrigger() && $table->hasPermission('view','userWelcome'))
+        if(parent::canTrigger() && $this->hasPermission('userWelcome') && $table->hasPermission('view','update'))
         {
-            if($row->isActive() && $row->allowWelcomeEmail() && $row->isUpdateable() && $row->canReceiveEmail())
-            {
-                if($row !== static::session()->user())
-                $return = true;
-            }
+            if($row->allowWelcomeEmail() && $row !== static::session()->user())
+            $return = true;
         }
 
         return $return;

@@ -74,7 +74,7 @@ abstract class ContactSubmit extends Core\RouteAlias
 
     // routeSuccess
     // retourne la route vers laquelle redirigé, home par défaut
-    public function routeSuccess():Lemur\Route
+    public function routeSuccess()
     {
         return static::makeParent();
     }

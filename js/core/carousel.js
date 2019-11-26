@@ -18,7 +18,7 @@ quid.core.carousel = function(trigger,target)
         target = (target == null)? '.target':target;
         
         $(this)
-        .callThis(quid.core.clickOpenBase)
+        .callThis(quid.core.clickOpenBase,target)
         .callThis(quid.core.clickOpenTrigger,trigger)
         .on('clickOpen:getTarget', function(event) {
             return $(this).find(target).first();

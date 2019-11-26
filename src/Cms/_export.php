@@ -10,15 +10,23 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Cms;
+use Quid\Lemur;
 
 // _export
 // trait that provides commonly used methods for exporting data from the CMS
 trait _export
 {
     // trait
+    use _common;
     use _general;
-
-
+    use _generalSegment;
+    use Lemur\Segment\_table;
+    use Lemur\Segment\_order;
+    use Lemur\Segment\_direction;
+    use Lemur\Segment\_filter;
+    use Lemur\Segment\_primaries;
+    
+    
     // canTrigger
     // vérifie que l'utilisateur a la permission pour exporter la table et qu'il y a des rows à exporter
     final public function canTrigger():bool
