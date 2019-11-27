@@ -1,0 +1,109 @@
+// compileOnSave: false
+
+/*
+ * This file is part of the QuidPHP package.
+ * Website: https://quidphp.com
+ * License: https://github.com/quidphp/lemur/blob/master/LICENSE
+ */
+
+// fakeSelect
+// stylesheet for the fakeSelect component
+
+// fakeSelect
+// mixin pour styliser un faux menu de sélection
+@mixin fakeSelect() {
+    @include fakeSelectTrigger();
+    @include inbl();
+
+    &[data-absolute-placeholder='ready'].active > .trigger {
+        @include abs(0, null, null, 0);
+        z-index: 3;
+    }
+
+    > .popup {
+        @include fakeSelectPopup();
+    }
+}
+
+// fakeSelectTrigger
+// mixin pour le trigger d'un fakeselect
+@mixin fakeSelectTrigger() {
+    position: relative;
+    min-width: 150px;
+
+    &[data-validate='invalid'] {
+        > .trigger {
+            background-color: $red;
+            color: $white;
+            border: 1px solid $red;
+        }
+    }
+
+    &[data-disabled='1'] {
+        pointer-events: none;
+
+        > .trigger {
+            background-color: $gray;
+        }
+    }
+
+    > .trigger {
+        position: relative;
+        padding: 5px 40px 5px 12px;
+        background-color: $white;
+        border: 1px solid $gray;
+        border-radius: 5px;
+        width: 100%;
+
+        > .title {
+            text-align: left;
+            display: block;
+        }
+
+        > .ico {
+            @include abs(50%, 10px);
+            @include triangle(bottom, $color, 10px);
+            display: block;
+            background-size: contain;
+            margin-top: -4px;
+        }
+    }
+
+    &.active > .trigger,
+    > .trigger:hover {
+        background-color: $lightYellow;
+    }
+}
+
+// fakeSelectPopup
+// mixin pour le popup d'un fakeselect
+@mixin fakeSelectPopup() {
+    width: 100%;
+    display: none;
+    text-align: left;
+    max-height: 250px;
+    overflow-y: auto;
+    z-index: 100;
+    border-radius: 5px;
+
+    > ul {
+        list-style-type: none;
+
+        > li {
+            > button {
+                padding: 5px 10px;
+                border-top: 1px solid $lighterGray;
+                width: 100%;
+
+                &:hover,
+                &.selected {
+                    background-color: $lightYellow;
+                }
+
+                &:active {
+                    background-color: $lightGray;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,36 @@
+// compileOnSave: false
+
+/*
+ * This file is part of the QuidPHP package.
+ * Website: https://quidphp.com
+ * License: https://github.com/quidphp/lemur/blob/master/LICENSE
+ */
+
+// anchorCorner
+// stylesheet for the anchorCorner component
+@mixin anchorCorner($child) {
+    &[data-anchor-corner='top-left'] #{$child} {
+        top: 100%;
+        right: auto;
+        bottom: auto;
+        left: 0;
+    }
+    &[data-anchor-corner='top-right'] #{$child} {
+        top: 100%;
+        right: 0;
+        bottom: auto;
+        left: auto;
+    }
+    &[data-anchor-corner='bottom-left'] #{$child} {
+        top: auto;
+        right: auto;
+        bottom: 100%;
+        left: 0;
+    }
+    &[data-anchor-corner='bottom-right'] #{$child} {
+        top: auto;
+        right: 0;
+        bottom: 100%;
+        left: auto;
+    }
+}

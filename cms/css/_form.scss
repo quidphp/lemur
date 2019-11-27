@@ -1,0 +1,251 @@
+// compileOnSave: false
+
+/*
+ * This file is part of the QuidPHP package.
+ * Website: https://quidphp.com
+ * License: https://github.com/quidphp/lemur/blob/master/LICENSE
+ */
+
+// form
+// stylesheet with form-related mixins
+
+// formBase
+// défini quelques styles par défaut pour les inputs de formulaire
+@mixin formBase() {
+    textarea,
+    input[type='text'],
+    input[type='email'],
+    input[type='password'] {
+        display: block;
+        width: 100%;
+    }
+
+    textarea {
+        height: 100px;
+    }
+}
+
+// labelBase
+// applique une couleur au label et au hover du label s'il y a un for
+@mixin labelBase($label: null, $labelHover: null) {
+    @if ($label) {
+        label {
+            color: $label;
+        }
+    }
+
+    @if ($labelHover) {
+        label[for]:hover {
+            color: $labelHover;
+        }
+    }
+
+    .required label:before {
+        content: '* ';
+    }
+}
+
+// tableForm
+// mixin avec les styles pour un formulaire dans une table, comme la page de connexion
+@mixin tableForm($label: null, $labelHover: null) {
+    @include formBase();
+    @include labelBase($label, $labelHover);
+
+    .choice {
+        @include inputChoice();
+    }
+
+    .table {
+        width: 100%;
+        text-align: left;
+
+        .table-cell {
+            padding: 8px 0;
+
+            &.label-cell {
+                padding-right: 15px;
+            }
+        }
+
+        .table-cell:first-child {
+            width: 40%;
+        }
+    }
+}
+
+// inputTextBase
+// mixin avec des styles de base pour les inputs/textarea
+@mixin inputTextBase() {
+    @include inputTextEvents();
+    padding: 8px 10px;
+    border-radius: 5px;
+    border: 1px solid $lightGray;
+    height: auto;
+
+    &::-webkit-input-placeholder {
+        color: $darkGray;
+    }
+
+    &::-moz-placeholder {
+        color: $darkGray;
+    }
+
+    &::-ms-input-placeholder {
+        olor: $darkGray;
+    }
+}
+
+// inputTextEvents
+// mixin avec des styles de base pour les events dans les inputs/textarea
+@mixin inputTextEvents() {
+    &.active,
+    &:hover,
+    &:focus {
+        background-color: $lightYellow;
+    }
+
+    &[disabled] {
+        background-color: $gray;
+    }
+
+    &[data-validate='invalid'] {
+        background-color: $red !important;
+        color: $white !important;
+        border: 1px solid $black;
+
+        &::-webkit-input-placeholder {
+            color: $lightestGray;
+        }
+
+        &::-moz-placeholder {
+            color: $lightestGray;
+        }
+
+        &::-ms-input-placeholder {
+            olor: $lightestGray;
+        }
+    }
+}
+
+// inputChoice
+// style utilisé pour faire un choix parmis plusieurs input radio ou checkbox
+@mixin inputChoice($paddingtb: 8px) {
+    padding: 5px 0;
+
+    .choice-in {
+        @include flex();
+        line-height: 1.1;
+
+        input[type='radio'] + label,
+        input[type='checkbox'] + label,
+        input[type='radio']:checked + label,
+        input[type='checkbox']:checked + label {
+            @include transitions(box-shadow 0.3s, background-color 0.3s, border 0.3s);
+            padding: $paddingtb 10px $paddingtb 30px;
+            background-position: 10px 50%;
+            cursor: pointer;
+            background-color: $lighterGray;
+            border: 1px solid $lightGray;
+            border-radius: 5px;
+            box-shadow: 2px 2px 6px -4px $lightGray;
+
+            &:hover {
+                color: $black;
+                border: 1px solid $gray;
+                background-color: $lightYellow;
+                box-shadow: 2px 2px 6px -4px $gray;
+            }
+
+            &:active {
+                border: 1px solid $darkColor;
+            }
+        }
+
+        input[type='radio']:checked + label,
+        input[type='checkbox']:checked + label {
+            background-color: $white;
+            box-shadow: 2px 2px 6px -4px $black;
+        }
+    }
+}
+
+// button
+// mixin pour le bouton
+@mixin button() {
+    @include inbl();
+    @include transitions(background-color 0.3s, opacity 0.3s);
+    cursor: pointer;
+    line-height: inherit;
+    padding: 5px 10px;
+    border-radius: 6px;
+    color: $white;
+    background-color: $color;
+    border: 1px solid $darkColor;
+
+    &.selected,
+    &:hover {
+        background-color: $darkColor;
+        border: 1px solid $darkerColor;
+        opacity: 1;
+    }
+
+    &[data-triggered='1'],
+    &:active {
+        background-color: $darkerColor;
+        border: 1px solid $black;
+    }
+
+    &.icon-solo {
+        background-color: transparent;
+        border: transparent;
+        padding: 0;
+        border-radius: 0;
+    }
+
+    &.no-border {
+        border: 0;
+        border-radius: 0;
+    }
+}
+
+// modalForm
+// mixin pour un formulaire de base dans le modal
+@mixin modalForm() {
+    @include formBase();
+
+    .info {
+        margin-bottom: 20px;
+    }
+
+    .form {
+        max-width: 500px;
+        margin: auto;
+
+        .fields {
+            padding-bottom: 10px;
+        }
+
+        .action {
+            button {
+                margin: 0 5px;
+            }
+        }
+    }
+
+    .form .fields > .field {
+        margin-bottom: 20px;
+
+        > .table {
+            width: 100%;
+            text-align: left;
+
+            .table-cell.label-cell {
+                padding-right: 15px;
+            }
+
+            .table-cell:first-child {
+                width: 30%;
+            }
+        }
+    }
+}

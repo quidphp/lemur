@@ -11,12 +11,12 @@
 quid.component.inputFiles = function()
 {
     // triggerHandler
-    $(this).on('inputFiles:getBlock', function(event) {
+    $(this).on('inputFiles:getBlock', function() {
         return $(this).find(".file-block");
     })
     
     // bind
-    .one('component:setup', function(event) {
+    .one('component:setup', function() {
         bindBlock.call(this);
         $(this).triggerHandler('inputFiles:getBlock').trigger('component:setup');
     });
@@ -26,26 +26,26 @@ quid.component.inputFiles = function()
         var blocks = $(this).triggerHandler('inputFiles:getBlock');
         
         // triggerHandler
-        blocks.on('block:getAction', function(event) {
+        blocks.on('block:getAction', function() {
             return $(this).find(".action");
         })
-        .on('block:getCancelAction', function(event) {
+        .on('block:getCancelAction', function() {
             return $(this).find(".message .close").first();
         })
-        .on('block:getInputFile', function(event) {
+        .on('block:getInputFile', function() {
             return $(this).find("input[type='file']").first();
         })
-        .on('block:getInputHidden', function(event) {
+        .on('block:getInputHidden', function() {
             var inputFile = $(this).triggerHandler('block:getInputFile');
             var name = inputFile.attr('name');
             return $(this).find("input[type='hidden']").filter("[name='"+name+"']").first();
         })
-        .on('block:getActionText', function(event) {
+        .on('block:getActionText', function() {
             return $(this).find(".action-text").first();
         })
         
         // bind
-        .one('component:setup', function(event) {
+        .one('component:setup', function() {
             bindBlockAction.call(this);
             bindBlockCancelAction.call(this);
         });
@@ -59,7 +59,7 @@ quid.component.inputFiles = function()
             var actionText = block.triggerHandler('block:getActionText');
             quid.main.window.confirm.call(mediaAction,'click');
             
-            mediaAction.on('confirmed', function(event) {
+            mediaAction.on('confirmed', function() {
                 var value = JSON.parse(hidden.val());
                 value.action = $(this).data('action');
                 block.addClass('with-action');
@@ -78,7 +78,7 @@ quid.component.inputFiles = function()
             var hidden =  block.triggerHandler('block:getInputHidden');
             var actionText = block.triggerHandler('block:getActionText');
             
-            mediaCancelAction.on('click', function(event) {
+            mediaCancelAction.on('click', function() {
                 var name = input.attr('name');
                 var value = JSON.parse(hidden.val());
                 value.action = null;

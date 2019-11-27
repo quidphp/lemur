@@ -24,16 +24,16 @@ abstract class Boot extends Core\Boot
             'vendorLemur'=>'[vendor]/quidphp/lemur'],
         'symlink'=>[
             '[vendorLemur]/vendor'=>'[publicJs]/vendor'],
-        'concatenatePhp'=>[ // ajoute le namespace pour le concatenator php
-            'quid'=>[
-                'option'=>[
-                    'namespace'=>[
-                        __NAMESPACE__=>['closure'=>true],
-                        Test\Lemur::class=>['closure'=>false]]]]],
-        'concatenateJs'=>[
-            '[publicJs]/include.js'=>[
-                0=>'[vendorLemur]/js/include',
-                10=>'[js]/include']],
+        'compile'=>array(
+            'php'=>[ // ajoute le namespace pour le concatenator php
+                'quid'=>[
+                    'option'=>[
+                        'namespace'=>[
+                            __NAMESPACE__=>['closure'=>true],
+                            Test\Lemur::class=>['closure'=>false]]]]],
+            'js'=>[
+                '[publicJs]/include.js'=>[
+                    0=>'[vendorLemur]/include']]),
         'roles'=>[
             'editor'=>[60]],
         '@cms'=>[
@@ -47,24 +47,20 @@ abstract class Boot extends Core\Boot
                 'versionQuid'=>true,
                 'background'=>null,
                 'logo'=>null],
-            'compileScss'=>[
-                '[publicCss]/cms.css'=>[
-                    0=>'[vendorLemur]/scss/include/_init.scss',
-                    1=>'[vendorLemur]/scss/cms/_include.scss',
-                    2=>'[scss]/cms/_include.scss',
-                    3=>'[vendorLemur]/component',
-                    10=>'[vendorLemur]/scss/cms/cms.scss',
-                    30=>'[scss]/cms/cms.scss'],
-                '[publicCss]/tinymce.css'=>[
-                    0=>'[vendorLemur]/scss/include/_init.scss',
-                    1=>'[scss]/cms/_include.scss',
-                    5=>'[vendorLemur]/scss/cms/tinymce.scss',
-                    10=>'[scss]/cms/tinymce.scss']],
-            'concatenateJs'=>[
-                '[publicJs]/cms.js'=>[
-                    0=>'[vendorLemur]/js/cms',
-                    1=>'[vendorLemur]/component',
-                    10=>'[js]/cms']]]
+            'compile'=>array(
+                'scss'=>[
+                    '[publicCss]/cms.css'=>[
+                        0=>'[vendorLemur]/include/css/_init.scss',
+                        1=>'[vendorLemur]/cms/css/_include.scss',
+                        5=>'[vendorLemur]/component',
+                        10=>'[vendorLemur]/cms/css/index.scss'],
+                    '[publicCss]/tinymce.css'=>[
+                        0=>'[vendorLemur]/include/css/_init.scss',
+                        5=>'[vendorLemur]/scss/tinymce.scss']],
+                'js'=>[
+                    '[publicJs]/cms.js'=>[
+                        0=>'[vendorLemur]/cms',
+                        1=>'[vendorLemur]/component']])]
     ];
 
 

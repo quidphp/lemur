@@ -1,0 +1,18 @@
+// compileOnSave: false
+
+/*
+ * This file is part of the QuidPHP package.
+ * Website: https://quidphp.com
+ * License: https://github.com/quidphp/lemur/blob/master/LICENSE
+ */
+
+// inputNumeric
+// stylesheet for the inputNumeric component
+@mixin inputNumeric() {
+    input[type='text'] {
+        width: 40px;
+        padding: 2px 5px;
+        margin: 0 5px;
+        text-align: center;
+    }
+}

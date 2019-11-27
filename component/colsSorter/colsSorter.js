@@ -14,22 +14,22 @@ quid.component.colsSorter = function()
     quid.core.clickOpenWithTrigger.call(this,".trigger");
     
     // triggerHandler
-    $(this).on('colsSorter:getPopup', function(event) {
+    $(this).on('colsSorter:getPopup', function() {
         return $(this).find(".popup");
     })
-    .on('colsSorter:getCheckboxes', function(event) {
+    .on('colsSorter:getCheckboxes', function() {
         return $(this).find("input[type='checkbox']");
     })
-    .on('colsSorter:getCheckedCheckboxes', function(event) {
+    .on('colsSorter:getCheckedCheckboxes', function() {
         return $(this).triggerHandler('colsSorter:getCheckboxes').filter(':checked');
     })
-    .on('colsSorter:getButton', function(event) {
+    .on('colsSorter:getButton', function() {
         return $(this).triggerHandler('colsSorter:getPopup').find("button[name='cols']")
     })
-    .on('colsSorter:isValid', function(event) {
+    .on('colsSorter:isValid', function() {
         return $(this).triggerHandler('colsSorter:getCheckboxes').triggerHandlerEqual(true,'validate:isValid');
     })
-    .on('colsSorter:getCheckedSet', function(event) {
+    .on('colsSorter:getCheckedSet', function() {
         var button = $(this).triggerHandler('colsSorter:getButton');
         return $(this).triggerHandler('colsSorter:getCheckedCheckboxes').valSet(button.data('separator'),true);
     })
@@ -39,7 +39,7 @@ quid.component.colsSorter = function()
     })
     
     // setup
-    .one('component:setup', function(event) {
+    .one('component:setup', function() {
         bindColsPopup.call(this);
         bindColsCheckboxes.call(this);
         bindColsButton.call(this);
@@ -52,10 +52,10 @@ quid.component.colsSorter = function()
         
         quid.core.verticalSorter.call(popup,".choice",'.choice-in');
         
-        popup.on('verticalSorter:stop', function(event) {
+        popup.on('verticalSorter:stop', function() {
             $(this).trigger('popup:validate');
         })
-        .on('popup:validate', function(event) {
+        .on('popup:validate', function() {
             $this.triggerHandler('colsSorter:getCheckboxes').trigger('validate:trigger');
         })
         .on('popup:invalid', function() {

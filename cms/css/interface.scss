@@ -1,0 +1,398 @@
+// compileOnSave: false
+
+/*
+ * This file is part of the QuidPHP package.
+ * Website: https://quidphp.com
+ * License: https://github.com/quidphp/lemur/blob/master/LICENSE
+ */
+
+// interface
+// stylesheet for the main interface of the CMS
+
+/* WRAPPER */
+body {
+    @include print() {
+        background-image: none !important;
+    }
+}
+[data-status='loading'] body {
+    * {
+        cursor: wait !important;
+    }
+
+    .loading-fixed {
+        @include flex(null, flex-start);
+    }
+}
+[data-burger='open'] body > .route-wrap {
+    @include responsive() {
+        .nav-wrap .nav-fixed {
+            width: 100%;
+
+            .nav-close {
+                display: block;
+            }
+        }
+
+        .main-wrap {
+            display: none;
+        }
+    }
+}
+body > .background {
+    @include bodyBackground();
+
+    &[data-from='modal'],
+    &[data-from='clickOpen'],
+    &[data-from='calendar'],
+    &[data-from='fakeselect'],
+    &[data-from='enumSet'],
+    &[data-from='tableRelation'] {
+        display: block;
+        @include fadeIn(0.3s);
+    }
+}
+body > .loading-fixed {
+    @include fixed(0, 0);
+    z-index: 9;
+    display: none;
+
+    > .loading-progress {
+        > .percent {
+            text-align: center;
+            color: $white;
+            padding: 3px;
+            background-color: $darkColor;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+    }
+
+    > .loading-icon {
+        @include wh(20px);
+        background-position: center;
+        background-color: $white;
+        border-bottom-left-radius: 50%;
+    }
+}
+body > .route-wrap {
+    @include bodyWrapper();
+    @include flex(flex-start, stretch);
+    @include transitions(opacity 0.3s);
+    opacity: 1;
+
+    > .nav-wrap {
+        width: 220px;
+    }
+
+    > .main-wrap {
+        width: calc(100% - 220px);
+        position: relative;
+        display: flex;
+        flex-direction: column;
+    }
+
+    @include responsive() {
+        .nav-wrap {
+            width: 0;
+
+            .nav-fixed {
+                width: 0;
+
+                .logo {
+                    max-width: 180px;
+                }
+            }
+        }
+
+        .main-wrap {
+            width: 100%;
+        }
+    }
+
+    @include print() {
+        > .nav-wrap {
+            display: none;
+        }
+    }
+}
+body > code,
+body > pre {
+    display: block;
+    padding-left: 220px;
+}
+[data-error='fatal'] body {
+    height: auto;
+    min-height: 100%;
+    padding: 10px;
+    border: 10px solid $red;
+    background-color: $white;
+
+    > .route-wrap {
+        display: block;
+    }
+
+    pre,
+    code {
+        display: inline;
+        padding-left: 0;
+    }
+}
+
+/* NAV */
+.nav-wrap .nav-fixed {
+    @include fixed(0, null, null, 0);
+    @include wh(220px, 100vh);
+    @include scrollbar();
+    overflow-y: scroll;
+    overflow-x: hidden;
+    z-index: 1;
+    background: $darkColor;
+
+    > .nav-top {
+        background-color: $white;
+        min-height: 25px;
+        position: relative;
+
+        > .nav-close {
+            @include burger();
+        }
+
+        > a {
+            display: block;
+            padding: 10px 15px;
+            font-size: 120%;
+            font-weight: bold;
+
+            &:hover {
+                background-color: $lighterGray;
+            }
+
+            &:active,
+            &[data-triggered='1'] {
+                background-color: $lightYellow;
+            }
+        }
+
+        > .logo {
+            margin: auto;
+
+            > img {
+                display: block;
+                max-height: 100px;
+                margin: auto;
+            }
+        }
+    }
+
+    nav {
+        @include mainNav();
+    }
+}
+
+/* HEADER */
+header {
+    background-color: $color;
+    position: relative;
+
+    .burger-menu {
+        @include burger();
+    }
+
+    .boot-label {
+        font-size: 2.2rem;
+        font-weight: bold;
+        color: $white;
+        display: none;
+
+        &:hover,
+        &[data-triggered='1'] {
+            color: $lightGray;
+        }
+    }
+
+    > .top {
+        @include flex(space-between, center, wrap);
+
+        .left {
+            flex-grow: 2;
+
+            > form {
+                @include mainSearch();
+            }
+        }
+
+        .right {
+            padding: 0 15px 0 10px;
+            @include flex(center, center, wrap);
+
+            > a[data-triggered='1'],
+            > a.active {
+                background-color: $darkColor;
+            }
+
+            .popup-trigger > .popup-title {
+                color: $lightGray;
+            }
+        }
+    }
+
+    @include responsive() {
+        padding: 10px 60px;
+        text-align: center;
+        
+        .boot-label {
+            @include inbl();
+        }
+
+        .left {
+            width: 100%;
+            padding: 5px 0;
+        }
+
+        .right {
+            width: 100%;
+        }
+    }
+
+    @include print() {
+        display: none;
+    }
+}
+
+/* MAIN */
+main {
+    padding: 20px 0;
+    flex-grow: 1;
+
+    .inner {
+        padding: 0 15px;
+        min-height: 200px;
+        position: relative;
+    }
+}
+main .inner > .top {
+    @include flex(space-between, flex-start);
+    margin-bottom: 20px;
+
+    .title {
+        @include flex(flex-start, center, wrap);
+        margin-bottom: 3px;
+    }
+
+    .sub-title {
+        font-size: 90%;
+    }
+
+    .left h1 {
+        margin-right: 10px;
+
+        > a {
+            @include inbl();
+
+            &:hover,
+            &[data-triggered='1'] {
+                color: $darkGray;
+            }
+        }
+    }
+
+    .right {
+        padding-left: 20px;
+        text-align: right;
+        min-width: 33%;
+    }
+
+    @include responsive() {
+        @include responsiveFlex(center);
+
+        .title {
+            justify-content: center;
+        }
+
+        .left,
+        .right {
+            width: 100%;
+            text-align: center;
+        }
+
+        .right {
+            padding: 10px 0 0;
+        }
+    }
+
+    @include print() {
+        .right {
+            display: none;
+        }
+    }
+}
+
+/* COM */
+.com {
+    @include com();
+}
+
+/* FOOTER */
+footer {
+    @include flex(flex-end);
+    width: 100%;
+    background-color: $color;
+    padding: 0 15px;
+
+    .with-submenu {
+        position: relative;
+
+        &:first-child {
+            margin-left: 0;
+        }
+
+        &.active .trigger {
+            background-color: $darkColor;
+        }
+
+        &.top .trigger {
+            background-color: $darkerColor;
+            text-decoration: underline;
+        }
+
+        > .popup {
+            @include subMenuPopup();
+        }
+    }
+
+    .popup-trigger {
+        > .popup-title {
+            color: $white;
+        }
+    }
+
+    > * {
+        margin-left: 5px;
+
+        &:first-child {
+            margin-left: 0;
+        }
+    }
+
+    @include responsive() {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    @include print() {
+        display: none;
+    }
+}
+
+/* PRINT */
+@include print() {
+    * {
+        page-break-after: avoid;
+    }
+
+    .submit,
+    .close {
+        display: none !important;
+    }
+}

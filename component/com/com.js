@@ -8,30 +8,30 @@
  
 // com
 // script of behaviours for the communication component of the CMS
-quid.cms.com = function()
+quid.component.com = function()
 {
     // main
     quid.main.event.block.call(this,'click');
     quid.main.keyboard.escape.call(this,true);
     
     // triggerHandler
-    $(this).on('com:getBottom', function(event) {
+    $(this).on('com:getBottom', function() {
         return $(this).find('.bottom');
     })
 
     // trigger
-    .on('escape:blocked', function(event) {
+    .on('escape:blocked', function() {
         $(this).trigger('com:close');
     })
-    .on('com:slideUp', function(event) {
+    .on('com:slideUp', function() {
         $(this).addClass('slide-close');
         $(this).triggerHandler('com:getBottom').stop(true,true).slideUp('fast');
     })
-    .on('com:slideDown', function(event) {
+    .on('com:slideDown', function() {
         $(this).removeClass('slide-close');
         $(this).triggerHandler('com:getBottom').stop(true,true).slideDown('fast');
     })
-    .on('com:close', function(event) {
+    .on('com:close', function() {
         $(this).stop(true,true).fadeOut("slow");
     })
     
@@ -53,7 +53,7 @@ quid.cms.com = function()
     })
     
     // bind
-    .one('component:setup', function(event) {
+    .one('component:setup', function() {
         if($(this).is('[tabindex]'))
         $(this).focus();
     });

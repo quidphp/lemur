@@ -11,37 +11,37 @@
 quid.component.rowsChecker = function()
 {
     // triggerHandler
-    $(this).on('rowsChecker:getToolsContainer', function(event) {
+    $(this).on('rowsChecker:getToolsContainer', function() {
         return $(this).find(".above .tools-container").first();
     })
-    .on('rowsChecker:getTools', function(event) {
+    .on('rowsChecker:getTools', function() {
         return $(this).triggerHandler('rowsChecker:getToolsContainer').find(".tool-element");
     })
-    .on('rowsChecker:getToolsButton', function(event) {
+    .on('rowsChecker:getToolsButton', function() {
         return $(this).triggerHandler('rowsChecker:getTools').filter("button");
     })
-    .on('rowsChecker:getMultiModify', function(event) {
+    .on('rowsChecker:getMultiModify', function() {
         return $(this).triggerHandler('rowsChecker:getToolsButton').filter(".multi-modify").first();
     })
-    .on('rowsChecker:getMultiDelete', function(event) {
+    .on('rowsChecker:getMultiDelete', function() {
         return $(this).triggerHandler('rowsChecker:getTools').filter(".multi-delete-form").first();
     })
-    .on('rowsChecker:getToolsMulti', function(event) {
+    .on('rowsChecker:getToolsMulti', function() {
         var r = $(this).triggerHandler('rowsChecker:getMultiModify');
         r = r.add($(this).triggerHandler('rowsChecker:getMultiDelete'));
         
         return r;
     })
-    .on('rowsChecker:getTable', function(event) {
+    .on('rowsChecker:getTable', function() {
         return $(this).find("table").first();
     })
-    .on('rowsChecker:getToggleAll', function(event) {
+    .on('rowsChecker:getToggleAll', function() {
         return $(this).triggerHandler('rowsChecker:getTable').find("th.rows .toggle-all").first();
     })
-    .on('rowsChecker:getRows', function(event) {
+    .on('rowsChecker:getRows', function() {
         return $(this).triggerHandler('rowsChecker:getTable').find("tbody tr");
     })
-    .on('rowsChecker:getCheckedRows', function(event) {
+    .on('rowsChecker:getCheckedRows', function() {
         var r = $();
         var checked = $(this).triggerHandler('rowsChecker:getCheckedCheckboxes');
         
@@ -52,34 +52,34 @@ quid.component.rowsChecker = function()
         
         return r;
     })
-    .on('rowsChecker:getCheckboxes', function(event) {
+    .on('rowsChecker:getCheckboxes', function() {
         return $(this).triggerHandler('rowsChecker:getRows').find("td.rows input[type='checkbox']");
     })
-    .on('rowsChecker:getCheckedCheckboxes', function(event) {
+    .on('rowsChecker:getCheckedCheckboxes', function() {
         return $(this).triggerHandler('rowsChecker:getCheckboxes').filter(':checked');
     })
     .on('rowsChecker:getCheckedSet', function(event,separator) {
         return $(this).triggerHandler('rowsChecker:getCheckedCheckboxes').valSet(separator,true);
     })
-    .on('rowsChecker:areAllChecked', function(event) {
+    .on('rowsChecker:areAllChecked', function() {
         var checkboxes = $(this).triggerHandler('rowsChecker:getCheckboxes');
         var checked = $(this).triggerHandler('rowsChecker:getCheckedCheckboxes');
         
         return (checkboxes.length === checked.length)? true:false;
     })
-    .on('rowsChecker:areAllUpdateable', function(event) {
+    .on('rowsChecker:areAllUpdateable', function() {
         var rows = $(this).triggerHandler('rowsChecker:getCheckedRows');
         
         return rows.isAll("[data-updateable='1']");
     })
-    .on('rowsChecker:areAllDeleteable', function(event) {
+    .on('rowsChecker:areAllDeleteable', function() {
         var rows = $(this).triggerHandler('rowsChecker:getCheckedRows');
         
         return rows.isAll("[data-deleteable='1']");
     })
     
     // trigger
-    .on('rowsChecker:refresh', function(event) {
+    .on('rowsChecker:refresh', function() {
         var checked = $(this).triggerHandler('rowsChecker:getCheckedCheckboxes');
         var toolsContainer = $(this).triggerHandler('rowsChecker:getToolsContainer');
         var toggleAll = $(this).triggerHandler('rowsChecker:getToggleAll');
@@ -98,7 +98,7 @@ quid.component.rowsChecker = function()
     })
     
     // setup
-    .one('component:setup', function(event) {
+    .one('component:setup', function() {
         bindToggleAll.call(this);
         bindCheckboxes.call(this);
         bindToolsContainer.call(this);
@@ -137,7 +137,7 @@ quid.component.rowsChecker = function()
         checkboxes.on('change', function() {
             $(this).trigger(($(this).is(":checked"))? 'checkbox:check':'checkbox:uncheck',[true]);
         })
-        .on('checkbox:getTr', function(event) {
+        .on('checkbox:getTr', function() {
             return $(this).parents("tr").first();
         })
         .on('checkbox:check', function(event,refresh) {
@@ -197,10 +197,10 @@ quid.component.rowsChecker = function()
     var bindToolsMulti = function() {
         var tools = $(this).triggerHandler('rowsChecker:getToolsMulti');
 
-        tools.on('toolMulti:show', function(event) {
+        tools.on('toolMulti:show', function(cursorDown) {
             $(this).addClass('active');
         })
-        .on('toolMulti:hide', function(event) {
+        .on('toolMulti:hide', function(cursorDown) {
             $(this).removeClass('active');
         });
     };

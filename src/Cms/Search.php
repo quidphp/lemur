@@ -162,7 +162,7 @@ class Search extends Core\RouteAlias
             $data = ['keyupDelay'=>800,'required'=>true,'pattern'=>['minLength'=>$minLength]];
 
             $r .= $this->formOpen();
-            $r .= Html::divOp(['data'=>['absolute-placeholder'=>true,'absolute-placeholder-height'=>true]]);
+            $r .= Html::divOp(['data'=>['absolute-placeholder'=>true,'only-height'=>true]]);
             $r .= Html::inputText(null,['name'=>$name,'placeholder'=>$lang->text('search/submit'),'data'=>$data]);
             $r .= Html::submit(true,['button','icon-solo','search']);
             $r .= Html::divCl();

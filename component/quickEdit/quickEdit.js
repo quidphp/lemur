@@ -17,30 +17,30 @@ quid.component.quickEdit = function()
     quid.main.ajax.block.call(this,'click');
     
     // triggerHandler
-    $(this).on('quickEdit:isEditing', function(event) {
+    $(this).on('quickEdit:isEditing', function() {
         return ($(this).triggerHandler('quickEdit:getTdEditing').length)? true:false;
     })
-    .on('ajaxBlock:getStatusNode', function(event) {
+    .on('ajaxBlock:getStatusNode', function() {
         return $(this).triggerHandler('quickEdit:getTd');
     })
-    .on('quickEdit:getTd', function(event) {
+    .on('quickEdit:getTd', function() {
         return $(this).parents("td").first();
     })
-    .on('quickEdit:getTdEditing', function(event) {
+    .on('quickEdit:getTdEditing', function() {
         return $(this).triggerHandler('quickEdit:getTd').filter("[data-editing='1']");
     })
-    .on('quickEdit:getCellInner', function(event) {
+    .on('quickEdit:getCellInner', function() {
         return $(this).triggerHandler('quickEdit:getTd').find("> .cell-inner");
     })
-    .on('quickEdit:getGeneralComponent', function(event) {
+    .on('quickEdit:getGeneralComponent', function() {
         return $(this).triggerHandler('quickEdit:getCellInner').find("> .general-component");
     })
-    .on('quickEdit:getEditContainer', function(event) {
+    .on('quickEdit:getEditContainer', function() {
         return $(this).triggerHandler('quickEdit:getCellInner').find("> .quick-edit-container");
     })
     
     // trigger
-    .on('quickEdit:revert', function(event) {
+    .on('quickEdit:revert', function() {
         if($(this).triggerHandler('quickEdit:isEditing'))
         {
             var td = $(this).triggerHandler('quickEdit:getTd');
@@ -67,11 +67,11 @@ quid.component.quickEdit = function()
     })
     
     // bind
-    .one('component:setup', function(event) {
+    .one('component:setup', function() {
         var $this = $(this);
         var inner = $(this).triggerHandler('quickEdit:getCellInner');
         
-        inner.on('click', '> .quick-edit-container > form > .tools .revert', function(event) {
+        inner.on('click', '> .quick-edit-container > form > .tools .revert', function() {
             $this.trigger('quickEdit:revert');
         });
     });

@@ -105,7 +105,7 @@ trait _template
         $home = Home::make();
 
         $r .= $home->a($boot->label(),'boot-label');
-        $r .= Html::div(null,['burger-menu','icon-solo','burger']);
+        $r .= Html::button(null,['burger-menu','icon-solo','burger']);
 
         $r .= Html::divOp('top');
         $r .= Html::div($this->headerLeft(),'left');
@@ -210,7 +210,7 @@ trait _template
         $r .= Html::divOp('nav-fixed');
 
         $r .= Html::divOp('nav-top');
-        $r .= Html::div(null,['nav-close','icon-solo','close']);
+        $r .= Html::button(null,['nav-close','icon-solo','close']);
 
         if(!empty($logo))
         {

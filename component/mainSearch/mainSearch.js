@@ -14,12 +14,12 @@ quid.component.mainSearch = function()
     quid.core.clickOpenInputFormAjax.call(this);
     
     // triggerHandler
-    $(this).on('mainSearch:getSearchIn', function(event) {
+    $(this).on('mainSearch:getSearchIn', function() {
         return $(this).find(".search-in");
     })
     
     // setup
-    .one('component:setup', function(event) {
+    .one('component:setup', function() {
         bindClickOpen.call(this);
         bindSearchIn.call(this);
     });
@@ -28,10 +28,10 @@ quid.component.mainSearch = function()
     var bindClickOpen = function() {
         var searchIn = $(this).triggerHandler('mainSearch:getSearchIn');
         
-        $(this).on('inputForm:empty', function(event) {
+        $(this).on('inputForm:empty', function() {
             searchIn.trigger('clickOpen:open');
         })
-        .on('inputForm:notEmpty escape:blocked', function(event) {
+        .on('inputForm:notEmpty escape:blocked', function() {
             searchIn.trigger('clickOpen:close');
         });
     };
@@ -42,10 +42,10 @@ quid.component.mainSearch = function()
         var searchIn = $(this).triggerHandler('mainSearch:getSearchIn');
         
         quid.core.clickOpen.call(searchIn,true);
-        searchIn.on('clickOpen:open', function(event) {
+        searchIn.on('clickOpen:open', function() {
             $this.addClass('active-search-in');
         })
-        .on('clickOpen:close', function(event) {
+        .on('clickOpen:close', function() {
             $this.removeClass('active-search-in');
         });
     };

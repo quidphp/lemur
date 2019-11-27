@@ -83,7 +83,7 @@ trait _generalInput
                 $searchMinLength = $table->searchMinLength();
 
                 $uri = Base\Uri::removeQuery($this->changeSegments(['page'=>1])->uri());
-                $data = ['href'=>$uri,'char'=>$searchQuery,'keyupDelay'=>800,'current'=>$search,'pattern'=>['minLength'=>$searchMinLength]];
+                $data = ['href'=>$uri,'char'=>$searchQuery,'current'=>$search,'pattern'=>['minLength'=>$searchMinLength]];
 
                 $r .= Html::divOp('form');
                 $r .= Html::divOp('input');
@@ -115,7 +115,7 @@ trait _generalInput
             $limit = $sql->getLimit();
             $maxPerPage = $this->getAttr('maxPerPage');
 
-            $data = ['href'=>$route,'char'=>static::getReplaceSegment(),'current'=>$limit,'keyupDelay'=>800,'pattern'=>'numberWholeNotEmpty','max'=>$maxPerPage];
+            $data = ['href'=>$route,'char'=>static::getReplaceSegment(),'current'=>$limit,'pattern'=>'numberWholeNotEmpty','max'=>$maxPerPage];
             $r .= Html::divOp('limit');
             $r .= Html::inputText($limit,['name'=>'limit','data'=>$data]);
             $r .= Html::span(static::langText('lcf|common/limit'));
@@ -147,7 +147,7 @@ trait _generalInput
 
                 $route = $this->changeSegment('page',true);
                 $total = $general['total'];
-                $data = ['href'=>$route,'char'=>static::getReplaceSegment(),'current'=>$general['current'],'keyupDelay'=>800,'pattern'=>'numberWholeNotEmpty','max'=>$total];
+                $data = ['href'=>$route,'char'=>static::getReplaceSegment(),'current'=>$general['current'],'pattern'=>'numberWholeNotEmpty','max'=>$total];
 
                 $r .= Html::divOp('center');
                 $r .= Html::span(static::langText('common/page'));

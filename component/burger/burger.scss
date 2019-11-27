@@ -1,0 +1,33 @@
+// compileOnSave: false
+
+/*
+ * This file is part of the QuidPHP package.
+ * Website: https://quidphp.com
+ * License: https://github.com/quidphp/lemur/blob/master/LICENSE
+ */
+
+// burger
+// stylesheet for the burger component
+@mixin burger() {
+    @include abs(15px, null, null, 15px);
+    display: none;
+    @include transitions(background-color 0.3s);
+    @include wh(32px);
+    background-color: $white;
+    border: 1px solid $darkColor;
+    border-radius: 3px;
+    z-index: 2;
+    opacity: 1 !important;
+    
+    &:hover {
+        background-color: $lightYellow;
+    }
+    
+    &:active {
+        background-color: $lightGray;
+    }
+    
+    @include responsive() {
+        display: block;
+    }
+}
