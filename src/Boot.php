@@ -24,7 +24,7 @@ abstract class Boot extends Core\Boot
             'vendorLemur'=>'[vendor]/quidphp/lemur'],
         'symlink'=>[
             '[vendorLemur]/vendor'=>'[publicJs]/vendor'],
-        'compile'=>array(
+        'compile'=>[
             'php'=>[ // ajoute le namespace pour le concatenator php
                 'quid'=>[
                     'option'=>[
@@ -33,7 +33,7 @@ abstract class Boot extends Core\Boot
                             Test\Lemur::class=>['closure'=>false]]]]],
             'js'=>[
                 '[publicJs]/include.js'=>[
-                    0=>'[vendorLemur]/include']]),
+                    0=>'[vendorLemur]/include']]],
         'roles'=>[
             'editor'=>[60]],
         '@cms'=>[
@@ -47,7 +47,7 @@ abstract class Boot extends Core\Boot
                 'versionQuid'=>true,
                 'background'=>null,
                 'logo'=>null],
-            'compile'=>array(
+            'compile'=>[
                 'scss'=>[
                     '[publicCss]/cms.css'=>[
                         0=>'[vendorLemur]/include/css/_init.scss',
@@ -60,7 +60,7 @@ abstract class Boot extends Core\Boot
                 'js'=>[
                     '[publicJs]/cms.js'=>[
                         0=>'[vendorLemur]/cms',
-                        1=>'[vendorLemur]/component']])]
+                        1=>'[vendorLemur]/component']]]]
     ];
 
 

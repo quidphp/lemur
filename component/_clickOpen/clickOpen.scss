@@ -41,7 +41,7 @@
 // popupBase
 // mixin de base pour un popup
 @mixin popupBase() {
-    @include abs(100%,null,null,0);
+    @include abs(100%, null, null, 0);
     @include scrollbar();
     position: absolute;
     border-top-left-radius: 0;
@@ -61,7 +61,7 @@
     box-sizing: border-box;
     cursor: default;
     border-radius: 0 0 10px 10px;
-    
+
     .popup {
         background: $lightGray;
         border: 1px solid $gray;

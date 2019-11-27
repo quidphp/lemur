@@ -268,7 +268,7 @@ body {
     @include absolutePlaceholder();
 }
 [data-anchor-corner] {
-    @include anchorCorner(".popup");
+    @include anchorCorner('.popup');
 }
 .modal {
     @include modal();

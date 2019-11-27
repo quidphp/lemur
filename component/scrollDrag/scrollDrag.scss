@@ -11,12 +11,12 @@
 @mixin scrollDrag($child) {
     width: 100%;
     overflow: hidden;
-    
+
     &[data-grabbable='1'] #{$child} {
         @include disableSelection();
         cursor: grab !important;
     }
-    
+
     &[data-status='grabbing'] #{$child} {
         cursor: grabbing !important;
     }

@@ -16,7 +16,7 @@
 
         .prev,
         .next {
-            @include trianglePrevNext(12px,null,$white,$lightGray,$gray);
+            @include trianglePrevNext(12px, null, $white, $lightGray, $gray);
             margin-top: -6px;
         }
 
