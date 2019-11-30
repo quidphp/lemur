@@ -38,11 +38,11 @@ abstract class Boot extends Core\Boot
                     0=>'[vendorLemur]/js/include'],
                 '[publicJs]/component.js'=>[
                     0=>'[vendorLemur]/js/component']]],
-        '@dev'=>array(
+        '@dev'=>[
             'compile'=>[
                 'js'=>[
                     '[publicJs]/test.js'=>[
-                        0=>'[vendorLemur]/js/test']]]),
+                        0=>'[vendorLemur]/js/test']]]],
         '@cms'=>[
             'service'=>[
                 'polyfill'=>Service\Polyfill::class,

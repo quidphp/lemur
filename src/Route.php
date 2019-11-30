@@ -61,12 +61,12 @@ abstract class Route extends Core\Route
                 'user'=>['access'=>false],
                 'subAdmin'=>['popup'=>true,'sessionFakeRole'=>true,'userWelcome'=>true],
                 'admin'=>['popup'=>true,'sessionFakeRole'=>true,'userWelcome'=>true]],
-        '@dev'=>array(
+        '@dev'=>[
             'docOpen'=>[
                 'head'=>[
                     'js'=>[
                         'test'=>'js/test.js']]],
-        )]
+        ]]
     ];
 }
 
