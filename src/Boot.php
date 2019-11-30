@@ -24,6 +24,8 @@ abstract class Boot extends Core\Boot
             'vendorLemur'=>'[vendor]/quidphp/lemur'],
         'symlink'=>[
             '[vendorLemur]/vendor'=>'[publicJs]/vendor'],
+        'roles'=>[
+            'editor'=>[60]],
         'compile'=>[
             'php'=>[ // ajoute le namespace pour le concatenator php
                 'quid'=>[
@@ -33,9 +35,14 @@ abstract class Boot extends Core\Boot
                             Test\Lemur::class=>['closure'=>false]]]]],
             'js'=>[
                 '[publicJs]/include.js'=>[
-                    0=>'[vendorLemur]/include']]],
-        'roles'=>[
-            'editor'=>[60]],
+                    0=>'[vendorLemur]/js/include'],
+                '[publicJs]/component.js'=>[
+                    0=>'[vendorLemur]/js/component']]],
+        '@dev'=>array(
+            'compile'=>[
+                'js'=>[
+                    '[publicJs]/test.js'=>[
+                        0=>'[vendorLemur]/js/test']]]),
         '@cms'=>[
             'service'=>[
                 'polyfill'=>Service\Polyfill::class,
@@ -50,17 +57,19 @@ abstract class Boot extends Core\Boot
             'compile'=>[
                 'scss'=>[
                     '[publicCss]/cms.css'=>[
-                        0=>'[vendorLemur]/include/css/_init.scss',
-                        1=>'[vendorLemur]/cms/css/_include.scss',
-                        5=>'[vendorLemur]/component',
-                        10=>'[vendorLemur]/cms/css/index.scss'],
+                        0=>'[vendorLemur]/css/include',
+                        1=>'[vendorLemur]/css/component',
+                        2=>'[vendorLemur]/css/import',
+                        10=>'[vendorLemur]/css/cms'],
+                    '[publicCss]/icon.css'=>[
+                        0=>'[vendorLemur]/css/include',
+                        1=>'[vendorLemur]/css/icon'],
                     '[publicCss]/tinymce.css'=>[
-                        0=>'[vendorLemur]/include/css/_init.scss',
-                        5=>'[vendorLemur]/scss/tinymce.scss']],
+                        0=>'[vendorLemur]/css/include',
+                        1=>'[vendorLemur]/css/tinymce']],
                 'js'=>[
                     '[publicJs]/cms.js'=>[
-                        0=>'[vendorLemur]/cms',
-                        1=>'[vendorLemur]/component']]]]
+                        0=>'[vendorLemur]/js/cms']]]]
     ];
 
 

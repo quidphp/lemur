@@ -1,0 +1,194 @@
+// compileOnSave: false
+
+/*
+ * This file is part of the QuidPHP package.
+ * Website: https://quidphp.com
+ * License: https://github.com/quidphp/lemur/blob/master/LICENSE
+ */
+
+// filter
+// stylesheet for the filter component
+
+// filterTogglerOuter
+// mixin pour le toggler du filter dans general
+@mixin filterTogglerOuter() {
+    @include transition(background-color);
+    z-index: 2;
+
+    .close {
+        @include abs(-8px, -8px);
+        z-index: 5;
+    }
+
+    &:hover,
+    &.filtering,
+    &.active {
+        background-color: $darkerColor;
+    }
+
+    &.active.trigger {
+        z-index: 3;
+    }
+
+    > .trigger {
+        @include wh();
+
+        .filter {
+            @include abs(50%, null, null, 50%);
+            @include transition(opacity);
+            margin-top: -7px;
+            margin-left: -8px;
+            background-position: 0px 0px;
+            display: block;
+        }
+    }
+
+    > .popup {
+        @include filterPopup();
+    }
+}
+
+// filterPopupTop
+// mixin pour la partie supérieure du popup filter avec search et order
+@mixin filterPopupTop() {
+    padding: 10px;
+    display: block;
+
+    input[type='text'] {
+        width: 100%;
+    }
+
+    .spacing {
+        height: 5px;
+    }
+
+    .order {
+        text-align: center;
+    }
+}
+
+// filterPopupBase
+// mixin avec des styles commons pour le popup d'un filtre et enum set
+@mixin filterPopupBase() {
+    width: 350px;
+    max-width: 350px;
+    max-height: 300px;
+    cursor: default;
+    font-weight: 300;
+
+    .fakeselect .popup {
+        top: 100% !important;
+        left: 0 !important;
+        right: auto;
+        bottom: auto;
+    }
+
+    .results {
+        display: block;
+
+        ul {
+            list-style-type: none;
+            text-indent: 0;
+            padding: 0;
+
+            li {
+                position: relative;
+                padding: 0px;
+
+                > .load-more {
+                    @include loadMore();
+                }
+            }
+        }
+    }
+}
+
+// filterPopup
+// mixin avec des styles pour le popup d'un filtre
+@mixin filterPopup() {
+    @include filterPopupBase();
+
+    .top {
+        @include filterPopupTop();
+    }
+
+    .results ul {
+        &.selected-list {
+            border-bottom: 4px solid $lightGray;
+        }
+
+        li {
+            &:first-child > .replace {
+                border-top: 0;
+            }
+
+            &.has-icon > .replace {
+                padding-right: 30px;
+            }
+
+            &.has-icon .icon-solo {
+                @include iconSolo();
+            }
+
+            > a.replace {
+                @include filterElementBase();
+
+                &:hover,
+                &[data-triggered='1'] {
+                    background-color: $lightYellow;
+                }
+
+                &:active {
+                    background-color: $lightGray;
+                }
+
+                &.selected {
+                    background-color: $lightYellow;
+                }
+            }
+
+            a.icon-solo {
+                @include abs(50%, 5px);
+                @include wh(16px, true, null, true);
+
+                &:hover,
+                &[data-triggered='1'] {
+                    opacity: 0.5;
+                }
+            }
+        }
+    }
+}
+
+// filterElementBase
+// mixin avec des styles commons pour un élément d'un filtre et enum set
+@mixin filterElementBase() {
+    @include transitions(background-color 0.3s);
+    @include flex(center);
+    cursor: pointer;
+    text-align: center;
+    position: relative;
+    border-top: 1px solid $lightGray;
+    padding: 5px 10px;
+    width: 100%;
+
+    .label-content {
+        @include imageLegend();
+        display: block;
+        max-width: 80%;
+    }
+
+    .label-count {
+        display: block;
+        height: 16px;
+        min-width: 16px;
+        padding: 0 3px;
+        text-align: center;
+        border-radius: 5px;
+        background-color: $midGray;
+        line-height: 16px;
+        color: $white;
+        margin-left: 10px;
+        font-size: 90%;
+    }
+}

@@ -1,0 +1,328 @@
+// compileOnSave: false
+
+/*
+ * This file is part of the QuidPHP package.
+ * Website: https://quidphp.com
+ * License: https://github.com/quidphp/lemur/blob/master/LICENSE
+ */
+ 
+// include
+// stylesheet with various mixins
+ 
+// jqueryUi
+// quelques styles reliés à jquery-ui pour les draggable
+@mixin jqueryUi() {
+    .ui-draggable-handle {
+        -ms-touch-action: none;
+        touch-action: none;
+    }
+    .ui-selectable {
+        -ms-touch-action: none;
+        touch-action: none;
+    }
+    .ui-selectable-helper {
+        @include abs();
+        z-index: 100;
+        border: 1px dotted black;
+    }
+    .ui-sortable-handle {
+        -ms-touch-action: none;
+        touch-action: none;
+    }
+}
+
+// icon
+// mixin pour gérer un icon
+@mixin icon() {
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: 16px 16px;
+}
+
+// iconSolo
+// mixin pour générer un icon seul
+@mixin iconSolo() {
+    @include icon();
+    @include inbl();
+    @include transitions(background-color 0.3s, opacity 0.3s);
+    @include wh(16px);
+    min-width: 16px;
+    padding: 0;
+    cursor: pointer;
+}
+
+// iconLeft
+// mixin pour générer un icon à gauche, par exemple du texte d'un bouton
+@mixin iconLeft() {
+    @include icon();
+    background-position: 5px 50%;
+    padding-left: 25px;
+}
+
+// emptyPlaceholder
+// mixin pour le style de empty placeholder
+@mixin emptyPlaceholder() {
+    font-style: italic;
+    color: $darkGray;
+}
+
+// wysiwyg
+// mixin avec quelques styles pour un bloc de style article
+// peut être utilisé pour afficher du contenu provenant d'un éditeur WYSIWYG
+@mixin wysiwyg() {
+    ul {
+        @include ulOlMargin();
+
+        > li {
+            padding: 2px 0;
+        }
+    }
+
+    a {
+        font-weight: bold;
+        color: $color;
+
+        &:hover,
+        &[data-triggered='1'] {
+            text-decoration: underline;
+        }
+    }
+}
+
+// nothing
+// style pour le texte Rien à afficher
+@mixin nothing($center: null) {
+    display: block;
+    font-weight: bold;
+
+    @if ($center) {
+        text-align: center;
+    }
+}
+
+// ulOlMargin
+// margin utilisé pour les ul/ol
+@mixin ulOlMargin() {
+    margin-left: 1.7rem;
+}
+
+// bigButton
+// mixin pour les styles de base pour gros boutons
+@mixin bigButton($padding: 5px 10px) {
+    display: block;
+    padding: $padding;
+    border-radius: 5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    @include transitions(color 0.3s, background-color 0.3s, border 0.3s);
+    font-weight: bold;
+}
+
+// bigButtonDark
+// mixin pour les styles de base pour gros boutons avec hover sombre
+@mixin bigButtonDark() {
+    @include bigButton();
+    background-color: $gray;
+    border: 1px solid $lightGray;
+
+    &:hover,
+    &.selected {
+        background-color: $color;
+        border: 1px solid $darkColor;
+        color: $white;
+    }
+
+    &.selected {
+        text-decoration: underline;
+    }
+
+    &:active {
+        background-color: $black;
+        border: 1px solid $color;
+        color: $white;
+    }
+}
+
+// bigButtonLight
+// mixin pour les styles de base pour gros boutons avec hover clair
+@mixin bigButtonLight() {
+    @include bigButton();
+    background-color: $white;
+    border: 1px solid $lightGray;
+
+    &:hover,
+    &.selected {
+        background-color: $lightYellow;
+    }
+
+    &:active {
+        background-color: $lightGray;
+    }
+}
+
+// scrollbar
+// mixin pour la scrollbar
+@mixin scrollbar() {
+    &::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+        background-color: $lightestGray;
+    }
+
+    &::-webkit-scrollbar {
+        width: 8px;
+        background-color: $lightestGray;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: $gray;
+        background-image: -webkit-gradient(
+            linear,
+            0 0,
+            0 100%,
+            color-stop(0.5, rgba(255, 255, 255, 0.2)),
+            color-stop(0.5, transparent),
+            to(transparent)
+        );
+    }
+}
+
+// imageLegend
+// style commun pour des image avec une legend
+@mixin imageLegend() {
+    img {
+        max-width: 100px;
+        min-width: 50px;
+        max-height: 100px;
+        display: block;
+        margin: auto;
+    }
+
+    .legend {
+        display: block;
+        text-align: center;
+        font-size: 90%;
+    }
+
+    .thumbnail {
+        display: block;
+        margin-bottom: 3px;
+        text-align: center;
+    }
+}
+
+// trianglePrevNext
+// mixin pour génèrer un triangle de couleur du cms
+@mixin trianglePrevNext(
+    $dimension: 10px,
+    $transparent: null,
+    $color1: $color,
+    $color2: $darkColor,
+    $color3: $darkerColor
+) {
+    cursor: pointer;
+
+    &.prev {
+        @include triangle(left, $color1, $dimension, $transparent);
+
+        &:hover {
+            @include triangle(left, $color2, $dimension, $transparent);
+        }
+
+        &:active {
+            @include triangle(left, $color3, $dimension, $transparent);
+        }
+    }
+
+    &.next {
+        @include triangle(right, $color1, $dimension, $transparent);
+
+        &:hover {
+            @include triangle(right, $color2, $dimension, $transparent);
+        }
+
+        &:active {
+            @include triangle(right, $color3, $dimension, $transparent);
+        }
+    }
+}
+
+// toolBox
+// mixin pour les styles de l'espace outil lorsqu'une row est checked
+@mixin toolBox() {
+    @include iflex(null, flex-end);
+    padding: 5px;
+    line-height: 1;
+    background-color: $lighterGray;
+
+    > .tool-element {
+        margin-left: 10px;
+
+        &:first-child {
+            margin-left: 0;
+        }
+    }
+
+    .icon-solo {
+        &:hover,
+        &[data-triggered='1'] {
+            opacity: 0.6 !important;
+        }
+    }
+}
+
+// loadMore
+// mixin avec les styles pour le bouton loadMore utilisé dans les champs de relation enumSet
+@mixin loadMore() {
+    text-align: center;
+    padding: 5px;
+    background-color: $gray;
+    font-weight: bold;
+    display: block;
+    text-decoration: none;
+
+    &:hover,
+    &[data-triggered='1'] {
+        background-color: $darkGray;
+        color: $white;
+    }
+
+    &:active {
+        background-color: $black;
+    }
+
+    &[data-status='loading'] {
+        background-position: center;
+        background-color: $lightYellow;
+
+        .text {
+            visibility: hidden;
+        }
+    }
+}
+
+// navSpace
+// mixin pour un bloc avec liens de navigation
+@mixin navSpace() {
+    @include iflex(flex-end, center, wrap);
+    background-color: $lightestGray;
+    border: 1px solid $lightGray;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 6px -4px $gray;
+
+    > a {
+        color: $black;
+        font-weight: bold;
+        margin: 0 8px;
+        font-size: 90%;
+
+        &:hover,
+        &[data-triggered='1'] {
+            color: $darkGray;
+        }
+    }
+
+    @include responsive() {
+        justify-content: center;
+    }
+}

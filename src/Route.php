@@ -20,13 +20,15 @@ abstract class Route extends Core\Route
     public static $config = [
         '@cms'=>[
             'metaTitle'=>['typeLabel'=>true],
-            'jsInit'=>'$(document).ready(function() { quid.core.document.call(this); });',
+            'jsInit'=>'$(document).ready(function() { quid.event.triggerSetup(quid.component.document.call(this)); });',
             'docOpen'=>[
                 'head'=>[
                     'css'=>[
-                        'type'=>'css/%type%.css'],
+                        'type'=>'css/%type%.css',
+                        'icon'=>'css/icon.css'],
                     'js'=>[
                         'include'=>'js/include.js',
+                        'component'=>'js/component.js',
                         'type'=>'js/%type%.js']]],
             'permission'=>[
                 '*'=>[
@@ -58,8 +60,13 @@ abstract class Route extends Core\Route
                 'shared'=>['access'=>false],
                 'user'=>['access'=>false],
                 'subAdmin'=>['popup'=>true,'sessionFakeRole'=>true,'userWelcome'=>true],
-                'admin'=>['popup'=>true,'sessionFakeRole'=>true,'userWelcome'=>true]
-            ]]
+                'admin'=>['popup'=>true,'sessionFakeRole'=>true,'userWelcome'=>true]],
+        '@dev'=>array(
+            'docOpen'=>[
+                'head'=>[
+                    'js'=>[
+                        'test'=>'js/test.js']]],
+        )]
     ];
 }
 
