@@ -7,15 +7,15 @@
 // timeout
 // script of behaviours for a timeout component
 // permet d'appliquer un timeout sur un événement
-quid.component.timeout = function(type,timeout)
+Quid.Component.timeout = function(type,timeout)
 {
-    if(quid.str.isNotEmpty(type))
+    if(Quid.Str.isNotEmpty(type))
     {
         $(this).each(function(index) 
         {
             var delay = timeout || $(this).data(type+"Delay") || 500;
             
-            if(quid.number.is(delay))
+            if(Quid.Number.is(delay))
             {
                 $(this).on(type+':setTimeout',function() {
                     var $this = $(this);

@@ -6,7 +6,7 @@
  
 // uri
 // script with a set of helper functions related to uri management
-quid.uri = new function() 
+Quid.Uri = new function() 
 {
     // instance
     var $inst = this;
@@ -18,9 +18,9 @@ quid.uri = new function()
     {
         var r = false;
         
-        if(quid.str.is(uri))
+        if(Quid.Str.is(uri))
         {
-            compare = (quid.str.is(compare))? $inst.parse(compare):quid.request.parse();			
+            compare = (Quid.Str.is(compare))? $inst.parse(compare):Quid.Request.parse();			
             var parse = $inst.parse(uri);
             
             if(parse.scheme === compare.scheme && parse.host === compare.host)
@@ -53,11 +53,11 @@ quid.uri = new function()
     {
         var r = false;
         
-        if(quid.str.is(uri))
+        if(Quid.Str.is(uri))
         {
             var parse = $inst.parse(uri);
             
-            if(quid.str.isNotEmpty(parse.hash))
+            if(Quid.Str.isNotEmpty(parse.hash))
             r = true;
         }
         
@@ -72,9 +72,9 @@ quid.uri = new function()
     {
         var r = false;
         
-        if(quid.str.is(uri))
+        if(Quid.Str.is(uri))
         {
-            compare = (quid.str.is(compare))? $inst.parse(compare):quid.request.parse();			
+            compare = (Quid.Str.is(compare))? $inst.parse(compare):Quid.Request.parse();			
             var parse = $inst.parse(uri);
             
             if(parse.path === compare.path && parse.query === compare.query)
@@ -92,9 +92,9 @@ quid.uri = new function()
     {
         var r = false;
         
-        if(quid.str.is(uri))
+        if(Quid.Str.is(uri))
         {
-            compare = (quid.str.is(compare))? $inst.parse(compare):quid.request.parse();			
+            compare = (Quid.Str.is(compare))? $inst.parse(compare):Quid.Request.parse();			
             var parse = $inst.parse(uri);
             
             if(parse.path === compare.path && parse.query === compare.query && parse.hash === compare.hash)
@@ -111,14 +111,14 @@ quid.uri = new function()
     {
         var r = false;
         
-        if(quid.str.is(uri))
+        if(Quid.Str.is(uri))
         {
-            compare = (quid.str.is(compare))? $inst.parse(compare):quid.request.parse();
+            compare = (Quid.Str.is(compare))? $inst.parse(compare):Quid.Request.parse();
             var parse = $inst.parse(uri);
             
             if(parse.scheme === compare.scheme && parse.host === compare.host && parse.path === compare.path && parse.query === compare.query)
             {
-                if(quid.str.isNotEmpty(parse.hash) && parse.hash !== compare.hash)
+                if(Quid.Str.isNotEmpty(parse.hash) && parse.hash !== compare.hash)
                 r = true;
             }
         }
@@ -141,7 +141,7 @@ quid.uri = new function()
     {
         var r = null;
         
-        if(quid.str.is(uri))
+        if(Quid.Str.is(uri))
         {
             var parse = $inst.parse(uri);
             r = parse.path;
@@ -163,13 +163,13 @@ quid.uri = new function()
     {
         var r = null;
         
-        if(quid.str.is(uri))
+        if(Quid.Str.is(uri))
         {
             var regex = /(?:\.([^.]+))?$/;
             var parse = $inst.parse(uri);
             var result = regex.exec(parse.path);
             
-            if(quid.arr.is(result) && result.length === 2)
+            if(Quid.Arr.is(result) && result.length === 2)
             r = result[1];
         }
         
@@ -183,12 +183,12 @@ quid.uri = new function()
     {
         var r = {};
         
-        if(quid.str.is(uri))
+        if(Quid.Str.is(uri))
         {
             var $dom = document.createElement('a');
             $dom.href = uri;
             
-            r.scheme = $dom.protocol.substr(0, $dom.protocol.indexOf(':')) || quid.request.scheme();
+            r.scheme = $dom.protocol.substr(0, $dom.protocol.indexOf(':')) || Quid.Request.scheme();
             r.host = $dom.hostname;
             r.port = $dom.port;
             r.path = $dom.pathname;
@@ -208,7 +208,7 @@ quid.uri = new function()
     {
         var r = null;
         
-        if(quid.str.isNotEmpty(value))
+        if(Quid.Str.isNotEmpty(value))
         {
             r = value;
             var hasHash = (r.charAt(0) === "#")? true:false;
@@ -230,11 +230,11 @@ quid.uri = new function()
     {
         var r = null;
         
-        if(quid.str.isNotEmpty(value))
+        if(Quid.Str.isNotEmpty(value))
         {
             var email = value.replace(/mailto:/,'');
             
-            if(quid.validate.isEmail(email))
+            if(Quid.Validate.isEmail(email))
             r = email;
         }
         

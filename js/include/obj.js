@@ -6,7 +6,7 @@
  
 // obj
 // script with a set of helper functions related to objects
-quid.obj = new function() 
+Quid.Obj = new function() 
 {    
     // instance
     var $inst = this;
@@ -16,7 +16,7 @@ quid.obj = new function()
     // retourne vrai si c'est un objet
     this.is = function(value)
     {
-        return quid.vari.type(value) === 'object';
+        return Quid.Vari.type(value) === 'object';
     }
 
     
@@ -32,7 +32,7 @@ quid.obj = new function()
     // retourne vrai si c'est un objet vide
     this.isEmpty = function(value)
     {
-        return $inst.is(value) && quid.vari.isEmpty(value);
+        return $inst.is(value) && Quid.Vari.isEmpty(value);
     }
     
     
@@ -40,7 +40,7 @@ quid.obj = new function()
     // retourne vrai si c'est un objet non-vide
     this.isNotEmpty = function(value)
     {
-        return $inst.is(value) && quid.vari.isNotEmpty(value);
+        return $inst.is(value) && Quid.Vari.isNotEmpty(value);
     }
     
     
@@ -48,7 +48,7 @@ quid.obj = new function()
     // retourne vrai si l'objet a la propriété
     this.hasProperty = function(prop,value)
     {
-        return (quid.str.is(prop) && $inst.is(value))? value.hasOwnProperty(prop):false
+        return (Quid.Str.is(prop) && $inst.is(value))? value.hasOwnProperty(prop):false
     }
     
 
@@ -61,7 +61,7 @@ quid.obj = new function()
         var args = Array.from(arguments);
         
         if(args.length > 1 && $inst.is(args[0]))
-        r = quid.vari.isEqual.apply(null,args);
+        r = Quid.Vari.isEqual.apply(null,args);
         
         return r;
     }
@@ -89,7 +89,7 @@ quid.obj = new function()
     this.str = function(obj,separator,quote) 
     {
         var r = '';
-        separator = (quid.str.isNotEmpty(separator))? separator:'=';
+        separator = (Quid.Str.isNotEmpty(separator))? separator:'=';
         var keys = Object.keys(obj);
         var key;
         var value;
@@ -99,16 +99,16 @@ quid.obj = new function()
             key = keys[i];
             value = obj[key];
             
-            if(quid.str.isNotEmpty(key))
+            if(Quid.Str.isNotEmpty(key))
             {
-                if(quid.obj.is(value))
-                value = quid.json.encode(value);                
+                if(Quid.Obj.is(value))
+                value = Quid.Json.encode(value);                
                 
                 else
-                value = quid.str.cast(value);
+                value = Quid.Str.cast(value);
                 
                 if(quote === true)
-                value = quid.str.quote(value,false);
+                value = Quid.Str.quote(value,false);
                 
                 if(r.length)
                 r += ' ';
@@ -161,7 +161,7 @@ quid.obj = new function()
     // permet de grimper dans un objet à partir d'un tableau
     this.climb = function(array,r) 
     {
-        if(quid.arr.is(array) && $inst.is(r))
+        if(Quid.Arr.is(array) && $inst.is(r))
         {
             for (var i = 0; i < array.length; i++) {
                 var value = array[i];

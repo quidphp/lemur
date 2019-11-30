@@ -6,7 +6,7 @@
 
 // react
 // script containing logic for mounting and unmounting react components
-quid.component.react = function()
+Quid.Component.react = function()
 {
     // bindDocument
     // applique les bindings pour react à la node document
@@ -33,8 +33,8 @@ quid.component.react = function()
         var namespace = $(this).attr('data-namespace');
         var content = $(this).attr('data-content');
         var path = (namespace+"."+component).split('.');
-        var callable = quid.obj.climb(path,window);
-        props = props || quid.json.decode($(this).attr('data-props'));
+        var callable = Quid.Obj.climb(path,window);
+        props = props || Quid.Json.decode($(this).attr('data-props'));
         props.parentNode = this;
         
         r = React.createElement(callable,props,content);
@@ -72,8 +72,8 @@ quid.component.react = function()
             unmountReactComponent.call(this);
         })
         .on('react:updateProps', function(event,props) {
-            var initialProps = quid.json.decode($(this).attr('data-props'));
-            props = quid.obj.replace(initialProps,props);
+            var initialProps = Quid.Json.decode($(this).attr('data-props'));
+            props = Quid.Obj.replace(initialProps,props);
             renderReactComponent.call(this,props);
         })
         .on('react:replaceProps', function(event,props) {

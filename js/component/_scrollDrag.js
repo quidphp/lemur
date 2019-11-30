@@ -6,17 +6,17 @@
  
 // scrollDrag
 // component to allow scrolling while dragging with the mouse
-quid.component.scrollDrag = function(option) {
+Quid.Component.scrollDrag = function(option) {
     
     // settings
-    var $option = quid.obj.replace({
+    var $option = Quid.Obj.replace({
         selector: null,
         targetTag: null,
         dividor: 4
     },option);
     
     // resizeChange
-    quid.component.resizeChange.call(this);
+    Quid.Component.resizeChange.call(this);
     
     // triggerHandler
     $(this).on('scrollDrag:can', function() {
@@ -61,7 +61,7 @@ quid.component.scrollDrag = function(option) {
         {
             var target = $(event.target);
             
-            if(target.length && ($option.targetTag == null || quid.node.isTag($option.targetTag,target)))
+            if(target.length && ($option.targetTag == null || Quid.Node.isTag($option.targetTag,target)))
             {
                 $this.data('cursorDown',true);
                 $this.data('cursorPositionY',event.pageY);

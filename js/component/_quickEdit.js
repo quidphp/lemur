@@ -6,13 +6,13 @@
  
 // quickEdit
 // script for the quickEdit component in the general page of the CMS
-quid.component.quickEdit = function()
+Quid.Component.quickEdit = function()
 {
     // all
     var $that = $(this);
     
     // ajaxBlock
-    quid.component.ajaxBlock.call(this,'click');
+    Quid.Component.ajaxBlock.call(this,'click');
     
     // triggerHandler
     $(this).on('quickEdit:isEditing', function() {
@@ -50,7 +50,7 @@ quid.component.quickEdit = function()
         }
     })
     .on('ajax:success', function(event,data,textStatus,jqXHR) {
-        if(quid.str.isNotEmpty(data))
+        if(Quid.Str.isNotEmpty(data))
         {
             $that.not($(this)).trigger('quickEdit:revert');
             

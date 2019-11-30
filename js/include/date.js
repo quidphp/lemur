@@ -6,7 +6,7 @@
  
 // date
 // script with functions related to date and time
-quid.date = new function() 
+Quid.Date = new function() 
 {   
     // instance
     var $inst = this;

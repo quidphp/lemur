@@ -6,10 +6,10 @@
  
 // absolutePlaceholder
 // script of behaviours for an absolute placeholder component
-quid.component.absolutePlaceholder = function()
+Quid.Component.absolutePlaceholder = function()
 {
     // resizeChange
-    quid.component.resizeChange.call(this);
+    Quid.Component.resizeChange.call(this);
     
     // triggerHandler
     $(this).on('absolutePlaceholder:getChild', function() {

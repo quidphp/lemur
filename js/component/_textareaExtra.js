@@ -6,7 +6,7 @@
  
 // textareaExtra
 // script for a component to search and insert content within a textarea, with support for tinymce
-quid.component.textareaExtra = function()
+Quid.Component.textareaExtra = function()
 {
     // triggerHandler
     $(this).on('textareaExtra:getTextarea', function() {
@@ -51,7 +51,7 @@ quid.component.textareaExtra = function()
         textarea.on('textareaInput:insert', function(event,html) {
             var r = false;
             
-            if(quid.str.isNotEmpty(html))
+            if(Quid.Str.isNotEmpty(html))
             {
                 r = true;
                 var current = $(this).val();
@@ -67,7 +67,7 @@ quid.component.textareaExtra = function()
         var filters = $(this).triggerHandler('textareaExtra:getFilters');
         var textarea = $(this).triggerHandler('textareaExtra:getTextarea');
         
-        quid.component.filter.call(filters);
+        Quid.Component.filter.call(filters);
         filters.on('clickOpen:getBackgroundFrom',function() {
             return 'tableRelation';
         })
@@ -90,7 +90,7 @@ quid.component.textareaExtra = function()
             var target = $(this).triggerHandler('clickOpen:getTarget');
             
             target.on('feed:parseData', function(event,data) {
-                return quid.html.parse(data).find("li");
+                return Quid.Html.parse(data).find("li");
             })
         })
         .trigger('component:setup');
@@ -105,7 +105,7 @@ quid.component.textareaExtra = function()
         textarea.on('textareaInput:insert', function(event,html) {
             var r = false;
             
-            if(quid.str.isNotEmpty(html))
+            if(Quid.Str.isNotEmpty(html))
             {
                 editor.execCommand('mceInsertContent',false,html);
                 r = true;
@@ -119,7 +119,7 @@ quid.component.textareaExtra = function()
     var createTinymce = function() {
         var r = null;
         
-        quid.dom.addId('tinymce-',this);
+        Quid.Dom.addId('tinymce-',this);
         var id = this.prop('id');
         var data = this.data('tinymce') || {};
         

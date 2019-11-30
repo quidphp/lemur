@@ -6,7 +6,7 @@
  
 // scalar
 // script with functions related to scalar values
-quid.scalar = new function() 
+Quid.Scalar = new function() 
 {    
     // instance
     var $inst = this;

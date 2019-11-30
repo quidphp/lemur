@@ -6,11 +6,11 @@
  
 // fakeSelect
 // script with some logic for a select replacement component, uses clickOpen
-quid.component.fakeSelect = function()
+Quid.Component.fakeSelect = function()
 {
     // alias
-    var setFunc = quid.event.setFunc;
-    var triggerFunc = quid.event.triggerFunc;
+    var setFunc = Quid.Event.setFunc;
+    var triggerFunc = Quid.Event.triggerFunc;
     
     // htmlFromSelect
     var htmlFromSelect = function() {
@@ -21,7 +21,7 @@ quid.component.fakeSelect = function()
         var title = $(this).find("option:selected").text() || "&nbsp;";
         var options = $(this).find("option");
         var value = triggerFunc(this,'input:getValue');
-        var datas = quid.node.getAttrStr(this,'data-');
+        var datas = Quid.Node.getAttrStr(this,'data-');
         
         var inputHtml = "<input name='"+name+"' type='hidden' data-fakeselect='1' value='"+value+"'";
         if(required)
@@ -31,7 +31,7 @@ quid.component.fakeSelect = function()
         inputHtml += "/>";
         
         r += "<div tabindex='-1' data-fake-input='1' class='fakeselect'";
-        if(quid.str.isNotEmpty(datas))
+        if(Quid.Str.isNotEmpty(datas))
         r += " "+datas;
         r += "><button type='button' class='trigger'>";
         r += "<span data-title'='"+title+"' class='title'>"+title+"</span>";
@@ -41,9 +41,9 @@ quid.component.fakeSelect = function()
         r += "<ul>";
         
         options.each(function(index, el) {
-            var val = quid.str.cast($(this).prop('value'));
+            var val = Quid.Str.cast($(this).prop('value'));
             var text = $(this).text() || "&nbsp;";
-            var datas = quid.node.getAttrStr(this,'data-');
+            var datas = Quid.Node.getAttrStr(this,'data-');
             
             r += "<li>";
             r += "<button type='button'";
@@ -54,8 +54,8 @@ quid.component.fakeSelect = function()
                 
                 r += " data-value='"+val+"'";
                 
-                if(quid.str.isNotEmpty(datas))
-                r += ' '.quid.obj.str(datas,'=',true);
+                if(Quid.Str.isNotEmpty(datas))
+                r += ' '.Quid.Obj.str(datas,'=',true);
             }
             
             r += ">";
@@ -75,8 +75,8 @@ quid.component.fakeSelect = function()
     var bindFakeSelect = function() {
         
         // clickOpen
-        quid.component.clickOpenWithTrigger.call(this,"> .trigger");
-        quid.component.keyboardEnter.call(this,true);
+        Quid.Component.clickOpenWithTrigger.call(this,"> .trigger");
+        Quid.Component.keyboardEnter.call(this,true);
         
         // triggerHandler
         $(this).on('fakeselect:getChoices', function() {
@@ -158,7 +158,7 @@ quid.component.fakeSelect = function()
             var choices = $(this).triggerHandler('fakeselect:getChoices');
             var selected = $(this).triggerHandler('fakeselect:getSelected');
             
-            quid.component.keyboardEnter.call(choices,true);
+            Quid.Component.keyboardEnter.call(choices,true);
             
             choices.on('click enter:blocked', function(event) {
                 choose.call($this,$(this));
@@ -183,7 +183,7 @@ quid.component.fakeSelect = function()
             $(this).trigger('fakeselect:setTitle',selected.text());
             $(this).trigger('clickOpen:close');
             
-            if(quid.str.cast(value) !== quid.str.cast(current))
+            if(Quid.Str.cast(value) !== Quid.Str.cast(current))
             {
                 $(this).trigger('fakeselect:changed',[value,selected]);
                 $(this).trigger('change');
@@ -196,14 +196,14 @@ quid.component.fakeSelect = function()
     
     // htmlFromSelect
     $(this).each(function(index, el) {
-        if(quid.node.tag(this) === 'select')
+        if(Quid.Node.tag(this) === 'select')
         {
             var html = htmlFromSelect.call(this);
             var node = $(html);
             var input = node.find("input");
 
             $(this).replaceWith(node);
-            quid.component.input.call(input);
+            Quid.Component.input.call(input);
             r = r.add(node);
         }
         

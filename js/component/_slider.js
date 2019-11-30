@@ -6,9 +6,9 @@
  
 // slider
 // script for a tab slider component with next and previous buttons
-quid.component.slider = function(timeout,navs,className,showIfOne)
+Quid.Component.slider = function(timeout,navs,className,showIfOne)
 {
-    className = (quid.str.isNotEmpty(className))? className:".slide";
+    className = (Quid.Str.isNotEmpty(className))? className:".slide";
     
     var func = function() {
         var tab = $(this);
@@ -41,7 +41,7 @@ quid.component.slider = function(timeout,navs,className,showIfOne)
             
             if(navs instanceof jQuery && navs.length)
             {
-                quid.component.tabNav.call(target,navs);
+                Quid.Component.tabNav.call(target,navs);
                 target.on('tab:open', function(event) {
                     var nav = $(this).triggerHandler('link:getNav');
                     navs.removeClass('active');
@@ -53,9 +53,9 @@ quid.component.slider = function(timeout,navs,className,showIfOne)
                 });
             }
             
-            if(quid.number.is(timeout))
+            if(Quid.Number.is(timeout))
             {
-                quid.component.timeout.call(this,'tab:change',timeout);
+                Quid.Component.timeout.call(this,'tab:change',timeout);
                 
                 $(this).on('tab:change:onTimeout', function(event) {
                     $(this).trigger('tab:loopNext');
@@ -84,7 +84,7 @@ quid.component.slider = function(timeout,navs,className,showIfOne)
         $(this).on('tab:getTarget', function(event) {
             return target;
         });
-        quid.component.tab.call(this);
+        Quid.Component.tab.call(this);
         $(this).trigger('tab:changeOrFirst');
     };
     

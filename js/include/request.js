@@ -6,7 +6,7 @@
  
 // request
 // script with functions related to the current request
-quid.request = new function() 
+Quid.Request = new function() 
 {    
     // instance
     var $inst = this;
@@ -32,7 +32,7 @@ quid.request = new function()
     // retourne le fragment de l'uri sans le hash
     this.fragment = function() 
     {
-        return quid.uri.makeHash(window.location.hash);
+        return Quid.Uri.makeHash(window.location.hash);
     }
 
 

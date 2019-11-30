@@ -6,14 +6,14 @@
  
 // confirm
 // demande une confirmation ou bloque l'événement
-quid.component.confirm = function(type) 
+Quid.Component.confirm = function(type) 
 {
-    if(quid.str.isNotEmpty(type))
+    if(Quid.Str.isNotEmpty(type))
     {
         $(this).on(type, function(event) {
             var confirmText = $(this).data('confirm');
             
-            if(quid.str.isNotEmpty(confirmText) && !confirm(confirmText))
+            if(Quid.Str.isNotEmpty(confirmText) && !confirm(confirmText))
             {
                 event.stopImmediatePropagation();
                 event.preventDefault();

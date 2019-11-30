@@ -6,7 +6,7 @@
 
 // xhr
 // script with some logic for ajax calls and xhr object
-quid.xhr = new function() 
+Quid.Xhr = new function() 
 {
     // instance
     var $inst = this;
@@ -18,8 +18,8 @@ quid.xhr = new function()
     this.trigger = function(node,config,tag)
     {
         var r = null;
-        var triggerFunc = quid.event.triggerFunc;
-        var triggerCustom = quid.event.triggerCustom;
+        var triggerFunc = Quid.Event.triggerFunc;
+        var triggerCustom = Quid.Event.triggerCustom;
         
         var options = {
             url: triggerFunc(node,'ajax:getHref'),
@@ -68,12 +68,12 @@ quid.xhr = new function()
             }
         };
         
-        config = quid.obj.replace(options,config);
+        config = Quid.Obj.replace(options,config);
         
         if(tag === true)
         $inst.configFromNode(node,config);
 
-        if(quid.str.isNotEmpty(config.url) && triggerFunc(node,'ajax:confirm') !== false)
+        if(Quid.Str.isNotEmpty(config.url) && triggerFunc(node,'ajax:confirm') !== false)
         {
             if(config.method == null)
             config.method = 'get';
@@ -99,8 +99,8 @@ quid.xhr = new function()
     // met à jour le tableau de config à partir de la tag
     this.configFromNode = function(node,config)
     {
-        var r = (quid.obj.isPlain(config))? config:{};
-        var tagName = quid.node.tag(node);
+        var r = (Quid.Obj.isPlain(config))? config:{};
+        var tagName = Quid.Node.tag(node);
 
         if(r.url == null)
         r.url = (tagName === 'form')? $(node).attr("action"):($(node).prop("href") || $(node).data('href'));
@@ -115,7 +115,7 @@ quid.xhr = new function()
                 var formData = new FormData($(node)[0]);
                 var clicked = triggerFunc(node,'form:getClickedSubmit');
                 
-                if(clicked != null && clicked.length && quid.str.isNotEmpty(clicked.attr('name')))
+                if(clicked != null && clicked.length && Quid.Str.isNotEmpty(clicked.attr('name')))
                 formData.append(clicked.attr('name'),clicked.val());
                 
                 r.data = formData;
@@ -135,20 +135,20 @@ quid.xhr = new function()
     {
         var r = textStatus;
         
-        if(quid.str.isNotEmpty(responseText))
+        if(Quid.Str.isNotEmpty(responseText))
         {
             r = responseText;
             var html;
-            var parse = quid.html.parse(responseText);
+            var parse = Quid.Html.parse(responseText);
             
             if(parse != null && parse.length)
             {
-                html = quid.node.outerHtml(parse.find(".ajax-parse-error").first());
+                html = Quid.Node.outerHtml(parse.find(".ajax-parse-error").first());
                 
-                if(quid.vari.isEmpty(html))
+                if(Quid.Vari.isEmpty(html))
                 html = parse.find("body,[data-tag='body']").first().html();
                 
-                if(quid.str.isNotEmpty(html))
+                if(Quid.Str.isNotEmpty(html))
                 r = html;
             }
         }

@@ -6,7 +6,7 @@
  
 // inputFiles
 // script with logic for the file upload component of the CMS
-quid.component.inputFiles = function()
+Quid.Component.inputFiles = function()
 {
     // triggerHandler
     $(this).on('inputFiles:getBlock', function() {
@@ -55,15 +55,15 @@ quid.component.inputFiles = function()
             var input = block.triggerHandler('block:getInputFile');
             var hidden =  block.triggerHandler('block:getInputHidden');
             var actionText = block.triggerHandler('block:getActionText');
-            quid.component.confirm.call(mediaAction,'click');
+            Quid.Component.confirm.call(mediaAction,'click');
             
             mediaAction.on('confirmed', function() {
-                var value = quid.json.decode(hidden.val());
+                var value = Quid.Json.decode(hidden.val());
                 value.action = $(this).data('action');
                 block.addClass('with-action');
                 input.hide();
                 hidden.prop('disabled',false);
-                hidden.val(quid.json.encode(value));
+                hidden.val(Quid.Json.encode(value));
                 actionText.html($(this).data('text'));
             })
         };
@@ -78,12 +78,12 @@ quid.component.inputFiles = function()
             
             mediaCancelAction.on('click', function() {
                 var name = input.attr('name');
-                var value = quid.json.decode(hidden.val());
+                var value = Quid.Json.decode(hidden.val());
                 value.action = null;
                 block.removeClass('with-action');
                 input.show();
                 hidden.prop('disabled',true);
-                hidden.val(quid.json.encode(value));
+                hidden.val(Quid.Json.encode(value));
                 actionText.html('');
             });
         };

@@ -6,10 +6,10 @@
  
 // appendContainer
 // script of behaviours for an appendContainer component (load more)
-quid.component.appendContainer = function()
+Quid.Component.appendContainer = function()
 {
-    quid.component.block.call(this,'ajax:init');
-    quid.component.ajax.call(this,'ajax:init');
+    Quid.Component.block.call(this,'ajax:init');
+    Quid.Component.ajax.call(this,'ajax:init');
     
     $(this).on('feed:target', function() {
         return $(this);
@@ -30,7 +30,7 @@ quid.component.appendContainer = function()
         $(this).trigger('feed:changed');
     })
     .on('feed:reload', function(event,uri) {
-        if(quid.str.isNotEmpty(uri))
+        if(Quid.Str.isNotEmpty(uri))
         {
             $(this).data("href",uri);
             $(this).trigger('ajax:init');
@@ -65,8 +65,8 @@ quid.component.appendContainer = function()
             event.preventDefault();
             var remove = $this.triggerHandler('feed:loadMoreRemove',[$(this)]);
             
-            quid.component.block.call(this,'ajax:init');
-            quid.component.ajax.call(this,'ajax:init');
+            Quid.Component.block.call(this,'ajax:init');
+            Quid.Component.ajax.call(this,'ajax:init');
             
             $(this).on('ajax:before', function(event) {
                 $(this).attr('data-status','loading');

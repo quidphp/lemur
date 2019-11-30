@@ -7,7 +7,7 @@
 // validatePrevent
 // valide toutes les nodes validables
 // bloque l'événement si la validation échoue
-quid.component.validatePrevent = function(type) 
+Quid.Component.validatePrevent = function(type) 
 {
     $(this).on(type, function(event) {
         var r = $(this).triggerHandler('validatePrevent:validate')
@@ -48,7 +48,7 @@ quid.component.validatePrevent = function(type)
         
         r.each(function(index, el) {
             if(!$(this).triggerHandler('validate:binded'))
-            quid.component.inputValidate.call(this);
+            Quid.Component.inputValidate.call(this);
         });
         
         return r;

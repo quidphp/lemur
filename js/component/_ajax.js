@@ -6,9 +6,9 @@
 
 // ajax
 // charge un lien ou un formulaire via ajax
-quid.component.ajax = function(type) 
+Quid.Component.ajax = function(type) 
 {
-    if(quid.str.isNotEmpty(type))
+    if(Quid.Str.isNotEmpty(type))
     {
         $(this).on(type, function(event) {
             event.stopPropagation();
@@ -22,7 +22,7 @@ quid.component.ajax = function(type)
         })
         .on('ajax:trigger', function(event,config,tag,triggerEvent) {
             event.stopImmediatePropagation();
-            var r = quid.xhr.trigger(this,config,tag);
+            var r = Quid.Xhr.trigger(this,config,tag);
             
             if(r !== false && triggerEvent)
             {

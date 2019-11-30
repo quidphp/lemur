@@ -6,11 +6,11 @@
  
 // keyboardEscape
 // attrape la touche escape, par défaut l'événement est prevent
-quid.component.keyboardEscape = function(prevent,type)
+Quid.Component.keyboardEscape = function(prevent,type)
 {
-    quid.component.keyboard.call(this,'escape',[27],type);
+    Quid.Component.keyboard.call(this,'escape',[27],type);
     
-    $(this).on('escape:prevent', function(event) {
+    setFunc(this,'escape:prevent', function(event) {
         return (prevent === true)? true:false;
     });    
     

@@ -6,7 +6,7 @@
  
 // burger
 // script for a burger menu component
-quid.component.burger = function()
+Quid.Component.burger = function()
 {
     // triggerHandler
     $(this).on('burger:isOpen', function() {

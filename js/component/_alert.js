@@ -6,14 +6,14 @@
  
 // alert
 // lance un message d'alerte lorsqu'un événement est triggé
-quid.component.alert = function(type)
+Quid.Component.alert = function(type)
 {
-    if(quid.str.isNotEmpty(type))
+    if(Quid.Str.isNotEmpty(type))
     {
         $(this).on(type, function(event) {
             var alertText = $(this).data('alert');
             
-            if(quid.str.isNotEmpty(alertText))
+            if(Quid.Str.isNotEmpty(alertText))
             alert(alertText);
         });
     }

@@ -6,7 +6,7 @@
  
 // testInclude
 // script to test the include.js file
-quid.test.include = new function() 
+Quid.test.include = new function() 
 {    
     // instance
     var $inst = this;
@@ -19,27 +19,27 @@ quid.test.include = new function()
     this.trigger = function() 
     {    
         // alias
-        var arr = quid.arr;
-        var bool = quid.bool;
-        var browser = quid.browser;
-        var date = quid.date;
-        var dom = quid.dom;
-        var event = quid.event;
-        var func = quid.func;
-        var html = quid.html;
-        var json = quid.json;
-        var nav = quid.nav;
-        var node = quid.node;
-        var number = quid.number;
-        var obj = quid.obj;
-        var request = quid.request;
-        var scalar = quid.scalar;
-        var selector = quid.selector;
-        var str = quid.str;
-        var uri = quid.uri;
-        var validate = quid.validate;
-        var vari = quid.vari;
-        var xhr = quid.xhr;
+        var arr = Quid.Arr;
+        var bool = Quid.Bool;
+        var browser = Quid.Browser;
+        var date = Quid.Date;
+        var dom = Quid.Dom;
+        var event = Quid.Event;
+        var func = Quid.Func;
+        var html = Quid.Html;
+        var json = Quid.Json;
+        var nav = Quid.Nav;
+        var node = Quid.Node;
+        var number = Quid.Number;
+        var obj = Quid.Obj;
+        var request = Quid.Request;
+        var scalar = Quid.Scalar;
+        var selector = Quid.Selector;
+        var str = Quid.Str;
+        var uri = Quid.Uri;
+        var validate = Quid.Validate;
+        var vari = Quid.Vari;
+        var xhr = Quid.Xhr;
         
         // arr
         assert(arr.is([]));
@@ -101,9 +101,9 @@ quid.test.include = new function()
         assert(func.is(function() { }));
         
         // html
-        var htmlStr = quid.node.outerHtml($("html"));
+        var htmlStr = Quid.Node.outerHtml($("html"));
         assert(html.parse(htmlStr).length === 1);
-        assert(quid.obj.length(html.doc(htmlStr)) === 9);
+        assert(Quid.Obj.length(html.doc(htmlStr)) === 9);
         
         // json
         assert(json.encode({ok: 2}) === '{"ok":2}');
@@ -209,8 +209,8 @@ quid.test.include = new function()
         assert(!obj.isEqual(3,4));
         assert(!obj.isEqual(null,null));
         assert(!obj.isEqual(null,undefined));
-        assert(quid.obj.length({ test: 2, ok: 3}) === 2);
-        assert(quid.obj.length({}) === 0);
+        assert(Quid.Obj.length({ test: 2, ok: 3}) === 2);
+        assert(Quid.Obj.length({}) === 0);
         var replace = {test:2, ok: {what: true}};
         assert(obj.isEqual(obj.replace(replace,{ok: {james: false}}),{test: 2, ok: {james: false}}));
         assert(obj.isEqual(replace,{test:2, ok: {what: true}}));

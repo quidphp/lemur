@@ -6,9 +6,9 @@
  
 // backToTop
 // script for a component which brings back to the top of the page
-quid.component.backToTop = function()
+Quid.Component.backToTop = function()
 {
-    quid.component.scrollChange.call(this);
+    Quid.Component.scrollChange.call(this);
     
     $(this).on('click', function(event) {
         $("html,body").stop(true,true).animate({scrollTop: 0}, 500);

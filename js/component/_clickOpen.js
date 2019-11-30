@@ -6,17 +6,17 @@
  
 // clickOpen
 // gère les comportements pour un élément clickOpen y compris le escape et outside click
-quid.component.clickOpen = function(target)
+Quid.Component.clickOpen = function(target)
 {   
-    quid.component.clickOutside.call(this,'clickOpen:close');
-    quid.component.clickOpenBase.call(this,target);
+    Quid.Component.clickOutside.call(this,'clickOpen:close');
+    Quid.Component.clickOpenBase.call(this,target);
     
     $(this).on('clickOpen:prepare', function(event) {
         event.stopPropagation();
         var $this = $(this);
         var container = $(this).triggerHandler('clickOpen:getTarget');
         
-        quid.component.keyboardEnter.call(container,true);
+        Quid.Component.keyboardEnter.call(container,true);
         
         container.on('click', 'a', function(event) {
             event.stopPropagation();
@@ -24,7 +24,7 @@ quid.component.clickOpen = function(target)
         })
         .on('enter:blocked', function(event,keyEvent) {
             var target = $(keyEvent.target);
-            var tagName = quid.node.tag(target);
+            var tagName = Quid.Node.tag(target);
             if(tagName === 'a' || tagName === 'button')
             target.trigger('click');
         })

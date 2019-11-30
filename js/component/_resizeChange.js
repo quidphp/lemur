@@ -6,7 +6,7 @@
  
 // resizeChange
 // permet de notifier une ou plusieurs nodes du redimensionnement de l'écran
-quid.component.resizeChange = function(persistent)
+Quid.Component.resizeChange = function(persistent)
 {
     var $this = $(this);
     var type = (persistent === true)? 'resize':'resize.document-mount';

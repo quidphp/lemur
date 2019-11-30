@@ -6,7 +6,7 @@
  
 // tabNav
 // script with behaviours for a tab component with nav
-quid.component.tabNav = function(navs)
+Quid.Component.tabNav = function(navs)
 {
     if(navs instanceof jQuery && navs.length === $(this).length)
     {

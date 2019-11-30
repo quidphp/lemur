@@ -7,11 +7,11 @@
 // filter
 // gère les comportements complets pour un filtre general avec popup
 // appendContainer et vide tout on close
-quid.component.filter = function()
+Quid.Component.filter = function()
 {
-    quid.component.clickOpenWithTrigger.call(this,"> .trigger");
-    quid.component.block.call(this,'ajax:init');
-    quid.component.ajax.call(this,'ajax:init');
+    Quid.Component.clickOpenWithTrigger.call(this,"> .trigger");
+    Quid.Component.block.call(this,'ajax:init');
+    Quid.Component.ajax.call(this,'ajax:init');
     
     $(this).on('filter:getResult', function(event) {
         return $(this).find(".results");
@@ -25,16 +25,16 @@ quid.component.filter = function()
     .on('ajax:getHref', function(event) {
         var separator = $(this).data('separator');
         var select = $(this).triggerHandler('filter:getOrder');
-        var selectVal = quid.node.value(select,true);
+        var selectVal = Quid.Node.value(select,true);
         var order = (select.length && selectVal)? selectVal:separator;
         
-        return quid.node.dataHrefReplaceChar(this,order);
+        return Quid.Node.dataHrefReplaceChar(this,order);
     })
     .on('ajax:getData', function(event) {
         var r = {};
         var input = $(this).triggerHandler('filter:getInput');
         
-        r[$(this).data('query')] = quid.node.value(input,true);
+        r[$(this).data('query')] = Quid.Node.value(input,true);
         
         return r;
     })
@@ -59,8 +59,8 @@ quid.component.filter = function()
         var input = $(this).triggerHandler('filter:getInput');
         var order = $(this).triggerHandler('filter:getOrder');
         
-        quid.component.validatePrevent.call(input,'ajax:input');
-        quid.component.timeout.call(input,'keyup',500);
+        Quid.Component.validatePrevent.call(input,'ajax:input');
+        Quid.Component.timeout.call(input,'keyup',500);
 
         input.on('keyup:onTimeout', function(event) {
             $(this).trigger('ajax:input');
@@ -87,7 +87,7 @@ quid.component.filter = function()
         $(this).trigger('filter:bind');
         
         var target = $(this).triggerHandler('clickOpen:getTarget');
-        quid.component.appendContainer.call(target);
+        Quid.Component.appendContainer.call(target);
         
         target.on('feed:loadMoreRemove', function(event,loadMore) {
             return loadMore.parent('li');
@@ -96,7 +96,7 @@ quid.component.filter = function()
             return $(this).find(".results ul:last-child");
         })
         .on('feed:parseData', function(event,data) {
-            return quid.html.parse(data).find("ul:last-child li");
+            return Quid.Html.parse(data).find("ul:last-child li");
         });
     });
     

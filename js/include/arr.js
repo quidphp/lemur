@@ -6,7 +6,7 @@
  
 // arr
 // script with a set of helper functions related to arrays
-quid.arr = new function() 
+Quid.Arr = new function() 
 {    
     // instance
     var $inst = this;
@@ -26,12 +26,12 @@ quid.arr = new function()
     {
         var r = false;
         
-        if(!quid.scalar.is(value))
+        if(!Quid.Scalar.is(value))
         {
             var length = !!value && "length" in value && value.length;
-            var type = quid.vari.type(value);
+            var type = Quid.Vari.type(value);
 
-            if(!(quid.func.is(value) || quid.node.isWindow(value)))
+            if(!(Quid.Func.is(value) || Quid.Node.isWindow(value)))
             r = type === "array" || length === 0 || typeof length === "number" && length > 0 && (length - 1) in value;
         }
         
@@ -68,8 +68,8 @@ quid.arr = new function()
     // fait un slice sur un tableau avec un start et un end
     this.slice = function(start,end,array)
     {
-        start = quid.number.isInt(start)? start:0;
-        end = quid.number.isInt(end)? end:undefined;
+        start = Quid.Number.isInt(start)? start:0;
+        end = Quid.Number.isInt(end)? end:undefined;
         return Array.prototype.slice.call(array,start,end);
     };
     

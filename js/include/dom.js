@@ -6,7 +6,7 @@
   
 // dom
 // script with functions for manipulating the dom
-quid.dom = new function() 
+Quid.Dom = new function() 
 {
     // instance
     var $inst = this;
@@ -20,7 +20,7 @@ quid.dom = new function()
         if(remove === true)
         $inst.removeAttr(node);
         
-        if(quid.obj.isPlain(value))
+        if(Quid.Obj.isPlain(value))
         {
             $(node).each(function() {
                 var $this = $(this);
@@ -59,11 +59,11 @@ quid.dom = new function()
     // change aussi aux labels associés si existants
     this.addId = function(base,node)
     {
-        if(quid.str.isNotEmpty(base))
+        if(Quid.Str.isNotEmpty(base))
         {
             $(node).not("[id]").each(function(index, el) {
-                var newId = base+quid.number.uniqueInt();
-                var labels = quid.selector.labels(this);
+                var newId = base+Quid.Number.uniqueInt();
+                var labels = Quid.Selector.labels(this);
                 $(this).prop('id',newId);
                 labels.prop('for',newId);
             });
@@ -78,7 +78,7 @@ quid.dom = new function()
     this.aExternalBlank = function(node)
     {
         var filter = $(node).find("a[target!='_blank']").filter(function() {
-            return (quid.uri.isExternal($(this).attr("href")) && !$(this).is("[href^='mailto:']"))? true:false;
+            return (Quid.Uri.isExternal($(this).attr("href")) && !$(this).is("[href^='mailto:']"))? true:false;
         });
 
         filter.each(function(index, el) {
@@ -93,7 +93,7 @@ quid.dom = new function()
     // change le hash sur des balises avec attribut href
     this.hrefChangeHash = function(fragment,node)
     {
-        if(quid.str.is(fragment))
+        if(Quid.Str.is(fragment))
         {
             $(node).each(function() {
                 $(this)[0].hash = fragment;
@@ -108,7 +108,7 @@ quid.dom = new function()
     // permet d'enrobber toutes les prochaines balises répondant à until dans une balise html
     this.wrapConsecutiveSiblings = function(node,until,html)
     {
-        if(until && quid.str.isNotEmpty(html))
+        if(until && Quid.Str.isNotEmpty(html))
         {
             $(node).each(function(index, el) {
                 var nextUntil = $(this).nextUntil(until);

@@ -6,9 +6,9 @@
 
 // clickOpenInputFormAjax
 // gère un formulaire à un champ qui s'envoie via ajax et dont le résultat s'affiche dans un clickOpen
-quid.component.clickOpenInputFormAjax = function(target)
+Quid.Component.clickOpenInputFormAjax = function(target)
 {
-    quid.component.clickOpenAjax.call(this,'submit',false,target);
+    Quid.Component.clickOpenAjax.call(this,'submit',false,target);
     
     $(this).on('ajax:complete', function(event) {
         var field = $(this).triggerHandler('form:getValidateField');
@@ -19,9 +19,9 @@ quid.component.clickOpenInputFormAjax = function(target)
         var field = $(this).triggerHandler('form:getValidateField');
         var submit = $(this).triggerHandler('form:getSubmit');
         
-        quid.component.keyboardEnter.call(field,true,'keyup');
-        quid.component.keyboardEscape.call(field,true,'keyup');
-        quid.component.timeout.call(this,'keyup');
+        Quid.Component.keyboardEnter.call(field,true,'keyup');
+        Quid.Component.keyboardEscape.call(field,true,'keyup');
+        Quid.Component.timeout.call(this,'keyup');
         
         field.on('validate:invalid', function(event) {
             form.trigger('clickOpen:close');

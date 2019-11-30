@@ -5,18 +5,18 @@
  */
  
 // component
-quid.component = {};
+Quid.Component = {};
 
 
 // alias
 var d = console.log;
 var dd = console.dir;
-var debug = quid.event.debug;
+var debug = Quid.Event.debug;
 var assert = console.assert;
-var setFunc = quid.event.setFunc;
-var ael = quid.event.addEventListener;
-var aelOnce = quid.event.addEventListenerOnce;
-var triggerEvent = quid.event.triggerEvent;
-var triggerFunc = quid.event.triggerFunc;
-var triggerCustom = quid.event.triggerCustom;
-var triggerSetup = quid.event.triggerSetup;
+var setFunc = Quid.Event.setFunc;
+var ael = Quid.Event.addEventListener;
+var aelOnce = Quid.Event.addEventListenerOnce;
+var triggerEvent = Quid.Event.triggerEvent;
+var triggerFunc = Quid.Event.triggerFunc;
+var triggerCustom = Quid.Event.triggerCustom;
+var triggerSetup = Quid.Event.triggerSetup;

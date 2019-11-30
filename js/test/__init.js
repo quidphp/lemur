@@ -9,4 +9,4 @@
 // init
 
 // globale
-quid.test = {};
+Quid.test = {};

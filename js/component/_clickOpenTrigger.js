@@ -6,14 +6,14 @@
  
 // clickOpenTrigger
 // gère les comportements pour le trigger d'un élément clickOpen
-quid.component.clickOpenTrigger = function(trigger,triggerEvent,noToggle)
+Quid.Component.clickOpenTrigger = function(trigger,triggerEvent,noToggle)
 {
-    triggerEvent = quid.str.isNotEmpty(triggerEvent)? triggerEvent:"click";
+    triggerEvent = Quid.Str.isNotEmpty(triggerEvent)? triggerEvent:"click";
 
     $(this).on('clickOpen:getTrigger', function(event) {
         var r = $(this);
         
-        if(quid.str.isNotEmpty(trigger))
+        if(Quid.Str.isNotEmpty(trigger))
         r = $(this).find(trigger);
         
         return r;

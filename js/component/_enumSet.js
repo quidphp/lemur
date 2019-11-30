@@ -7,7 +7,7 @@
 // enumSet
 // script for an enumSet component (search in a relation)
 // input enumSet complet avec popup et bouton, aussi append container
-quid.component.enumSet = function()
+Quid.Component.enumSet = function()
 {
     // bindEnumSet
     var bindEnumSet = function() {
@@ -39,7 +39,7 @@ quid.component.enumSet = function()
             return $(this).triggerHandler('enumSet:getChoice').length;
         })
         .on('enumSet:isChoiceIn', function(event,value) {
-            return ((quid.scalar.is(value)) && $(this).triggerHandler('enumSet:getRadioCheckbox').filter("[value='"+value+"']").length)? true:false;
+            return ((Quid.Scalar.is(value)) && $(this).triggerHandler('enumSet:getRadioCheckbox').filter("[value='"+value+"']").length)? true:false;
         })
         .on('clickOpen:open', function(event) {
             $(this).attr('data-status','loading');
@@ -52,7 +52,7 @@ quid.component.enumSet = function()
         .on('choice:append', function(event,value,html) {
             var mode = $(this).triggerHandler('enumSet:getMode');
             
-            if(quid.str.isNotEmpty(html) && quid.scalar.is(value) && quid.str.isNotEmpty(mode))
+            if(Quid.Str.isNotEmpty(html) && Quid.Scalar.is(value) && Quid.Str.isNotEmpty(mode))
             {
                 var button = $(this).triggerHandler('clickOpen:getTarget').find("li > button[data-value='"+value+"']");
                 if($(this).triggerHandler('enumSet:isChoiceIn',[value]))
@@ -88,11 +88,11 @@ quid.component.enumSet = function()
     
     // bindEnumSetInput
     var bindEnumSetInput = function() {
-        quid.component.keyboardEnter.call(this,true,'keyup keydown');
-        quid.component.validatePrevent.call(this,'ajax:init');
-        quid.component.block.call(this,'ajax:init');
-        quid.component.timeout.call(this,'keyup',500);
-        quid.component.ajax.call(this,'ajax:init');
+        Quid.Component.keyboardEnter.call(this,true,'keyup keydown');
+        Quid.Component.validatePrevent.call(this,'ajax:init');
+        Quid.Component.block.call(this,'ajax:init');
+        Quid.Component.timeout.call(this,'keyup',500);
+        Quid.Component.ajax.call(this,'ajax:init');
         
         $(this).on('enter:blocked', function(event,keyEvent) {
             if(keyEvent.type === 'keyup')
@@ -112,16 +112,16 @@ quid.component.enumSet = function()
             var r = false;
             var isOpen = $(this).triggerHandler('enumSetInput:getParent').triggerHandler('clickOpen:isOpen');
             
-            if(isOpen === false || (quid.node.value(this,true) !== $(this).data('valueLast')))
+            if(isOpen === false || (Quid.Node.value(this,true) !== $(this).data('valueLast')))
             r = true;
             
             return r;
         })
         .on('ajax:beforeInit', function(event,validate) {
-            var val = quid.node.value(this,true);            
+            var val = Quid.Node.value(this,true);            
             $(this).trigger('validate:valid');
             
-            if(validate !== true || quid.str.isNotEmpty(val))
+            if(validate !== true || Quid.Str.isNotEmpty(val))
             {
                 $(this).trigger('keyup:clearTimeout');
                 $(this).trigger('ajax:init');
@@ -152,14 +152,14 @@ quid.component.enumSet = function()
             var select = $(this).triggerHandler('enumSetInput:getOrder');
             var radioCheckbox = parent.triggerHandler('enumSet:getRadioCheckbox');
             var separator = $(this).data("separator");
-            var selected = quid.node.valueSeparator(radioCheckbox.filter(":checked"),separator,true) || separator;
-            var selectVal = quid.node.value(select,true);
+            var selected = Quid.Node.valueSeparator(radioCheckbox.filter(":checked"),separator,true) || separator;
+            var selectVal = Quid.Node.value(select,true);
             var order = (select.length && selectVal)? selectVal:separator;
-            return quid.node.dataHrefReplaceChar(this,selected,order);
+            return Quid.Node.dataHrefReplaceChar(this,selected,order);
         })
         .on('ajax:getData', function(event) {
             var r = {};
-            r[$(this).data('query')] = quid.node.value(this,true);
+            r[$(this).data('query')] = Quid.Node.value(this,true);
             return r;
         })
         .on('ajax:before', function() {
@@ -188,7 +188,7 @@ quid.component.enumSet = function()
         var enumSet = $(this);
         
         // enumSet
-        quid.component.clickOpenWithTrigger.call(this,"> .trigger");
+        Quid.Component.clickOpenWithTrigger.call(this,"> .trigger");
         bindEnumSet.call(this);
         
         $(this).on('enumSet:getMode', function(event) {
@@ -202,7 +202,7 @@ quid.component.enumSet = function()
         
         // target
         var target = $(this).triggerHandler('clickOpen:getTarget');
-        quid.component.appendContainer.call(target);
+        Quid.Component.appendContainer.call(target);
         
         target.on('feed:target', function(event) {
             return $(this).find(".results ul:first-child");
@@ -211,7 +211,7 @@ quid.component.enumSet = function()
             return loadMore.parent('li');
         })
         .on('feed:parseData', function(event,data) {
-            return quid.html.parse(data).find("li");
+            return Quid.Html.parse(data).find("li");
         })
         .on('click', 'li > button', function(event) {
             enumSet.trigger('choice:append',[$(this).data('value'),$(this).data('html')]);

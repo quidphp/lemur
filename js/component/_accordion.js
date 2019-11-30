@@ -6,7 +6,7 @@
  
 // accordion
 // script of behaviours for an accordion component
-quid.component.accordion = function(until,closeAll,wrap)
+Quid.Component.accordion = function(until,closeAll,wrap)
 {	
     var $this = $(this);
     
@@ -39,7 +39,7 @@ quid.component.accordion = function(until,closeAll,wrap)
         $(this).removeClass(openClass).removeClass(activeClass);
         $(this).triggerHandler('accordion:getContents').removeClass(activeClass);
         
-        if(quid.str.isNotEmpty(wrap))
+        if(Quid.Str.isNotEmpty(wrap))
         $(this).parent().removeClass(openClass);
     })
     .on('accordion:open', function(event) {
@@ -48,14 +48,14 @@ quid.component.accordion = function(until,closeAll,wrap)
         $(this).addClass(openClass).addClass(activeClass);
         $(this).triggerHandler('accordion:getContents').addClass(activeClass);
         
-        if(quid.str.isNotEmpty(wrap))
+        if(Quid.Str.isNotEmpty(wrap))
         $(this).parent().addClass(openClass);
     });
     
-    if(quid.str.isNotEmpty(wrap))
+    if(Quid.Str.isNotEmpty(wrap))
     {
         var html = "<div class='"+wrap+"'></div>";
-        quid.dom.wrapConsecutiveSiblings(this,until,html);
+        Quid.Dom.wrapConsecutiveSiblings(this,until,html);
     }
     
     return this;

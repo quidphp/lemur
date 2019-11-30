@@ -6,16 +6,16 @@
  
 // form
 // script with behaviours for a form component
-quid.component.form = function() {
+Quid.Component.form = function() {
     
     // alias
-    var setFunc = quid.event.setFunc;
-    var triggerFunc = quid.event.triggerFunc;
-    var ael = quid.event.addEventListener;
-    var triggerCustom = quid.event.triggerCustom;
+    var setFunc = Quid.Event.setFunc;
+    var triggerFunc = Quid.Event.triggerFunc;
+    var ael = Quid.Event.addEventListener;
+    var triggerCustom = Quid.Event.triggerCustom;
     
     // block
-    quid.component.block.call(this,'submit');
+    Quid.Component.block.call(this,'submit');
     
     // triggerHandler
     $(this).on('form:getFields', function(event) {
@@ -54,7 +54,7 @@ quid.component.form = function() {
         if(r.length)
         {
             var name = r.prop('name');
-            if(quid.str.isNotEmpty(name))
+            if(Quid.Str.isNotEmpty(name))
             r = $(this).triggerHandler('form:getSubmits').filter("[name='"+name+"']");
         }
         
@@ -105,7 +105,7 @@ quid.component.form = function() {
         
         // validation
         if(!$(this).is("[data-validation='0']"))
-        quid.component.validatePrevent.call(this,'submit');
+        Quid.Component.validatePrevent.call(this,'submit');
         
         // formUnload
         if($(this).is("[data-unload]"))

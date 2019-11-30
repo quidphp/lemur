@@ -6,7 +6,7 @@
  
 // node
 // script with behaviours related to html nodes
-quid.node = new function() 
+Quid.Node = new function() 
 {
     // instance
     var $inst = this;
@@ -80,7 +80,7 @@ quid.node = new function()
         var r = null;
         var tag = $(node).prop("tagName");
         
-        if(quid.str.is(tag))
+        if(Quid.Str.is(tag))
         r = tag.toLowerCase();
         
         return r;
@@ -122,7 +122,7 @@ quid.node = new function()
             r = {};
             
             $.each(node[0].attributes, function() {
-                if(start == null || quid.str.isStart(start,this.name))
+                if(start == null || Quid.Str.isStart(start,this.name))
                 r[this.name] = this.value;
             });
         }
@@ -139,7 +139,7 @@ quid.node = new function()
         var attr = $inst.getAttr(node,start);
         
         if(attr != null)
-        r = quid.obj.str(attr,'=',true);
+        r = Quid.Obj.str(attr,'=',true);
         
         return r;
     }
@@ -164,10 +164,10 @@ quid.node = new function()
         
         if(r != null)
         {
-            r = quid.str.cast(r);
+            r = Quid.Str.cast(r);
             
             if(trim === true)
-            r = quid.str.trim(r);
+            r = Quid.Str.trim(r);
         }
         
         return r;
@@ -180,9 +180,9 @@ quid.node = new function()
     this.valueSeparator = function(node,separator,trim) 
     {
         var r = '';
-        separator = (quid.str.isNotEmpty(separator))? separator:'-';
+        separator = (Quid.Str.isNotEmpty(separator))? separator:'-';
         
-        if(quid.str.isNotEmpty(separator))
+        if(Quid.Str.isNotEmpty(separator))
         {
             $(node).each(function(index) {
                 r += (r.length)? separator:"";
@@ -201,22 +201,22 @@ quid.node = new function()
         var r = null;
         node = $(node).first();
         
-        if(quid.number.is(replace))
-        replace = quid.str.cast(replace);
+        if(Quid.Number.is(replace))
+        replace = Quid.Str.cast(replace);
         
-        if(quid.number.is(replace2))
-        replace2 = quid.str.cast(replace2);
+        if(Quid.Number.is(replace2))
+        replace2 = Quid.Str.cast(replace2);
         
-        if($(node).length === 1 && quid.str.isNotEmpty(replace))
+        if($(node).length === 1 && Quid.Str.isNotEmpty(replace))
         {
             var href = $(node).data("href");
             var char = $(node).data("char");
             
-            if(quid.str.isNotEmpty(href) && quid.str.isNotEmpty(char))
+            if(Quid.Str.isNotEmpty(href) && Quid.Str.isNotEmpty(char))
             {
                 r = href.replace(char,replace);
                 
-                if(quid.str.isNotEmpty(replace2))
+                if(Quid.Str.isNotEmpty(replace2))
                 r = r.replace(char,replace2);
             }
         }

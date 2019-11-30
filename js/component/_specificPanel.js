@@ -6,7 +6,7 @@
  
 // specificPanel
 // script for the panel component in the specific form page
-quid.component.specificPanel = function()
+Quid.Component.specificPanel = function()
 {
     $(this).each(function(index, el) {
         
@@ -16,8 +16,8 @@ quid.component.specificPanel = function()
         var panelDescription = $(this).find("> .form-top .left .description");
         
         // panel
-        quid.component.tabNav.call(panel,panelNav);
-        quid.component.fragment.call(panel);
+        Quid.Component.tabNav.call(panel,panelNav);
+        Quid.Component.fragment.call(panel);
         
         panel.on('tab:init', function(event) {
             $(this).trigger('specificForm:bindView',[$(this)]);
@@ -26,7 +26,7 @@ quid.component.specificPanel = function()
             var nav = $(this).triggerHandler('link:getNav');
             var description = nav.data('description') || '';
             var fragment = $(this).triggerHandler('fragment:get');
-            var current = quid.request.fragment();
+            var current = Quid.Request.fragment();
             
             panelNav.removeClass('selected');
             nav.addClass('selected');
@@ -42,11 +42,11 @@ quid.component.specificPanel = function()
                 $(this).trigger('fragment:update',[true]);
             }
             
-            else if(quid.str.isNotEmpty(current))
+            else if(Quid.Str.isNotEmpty(current))
             $(this).trigger('fragment:update');
             
-            quid.dom.hrefChangeHash(fragment,$("a.hashFollow"));
-            form.triggerHandler('tab:getInput').val((quid.str.isNotEmpty(fragment))? fragment:'');
+            Quid.Dom.hrefChangeHash(fragment,$("a.hashFollow"));
+            form.triggerHandler('tab:getInput').val((Quid.Str.isNotEmpty(fragment))? fragment:'');
             
             $(document).trigger('document:outsideClick');
         })
@@ -59,7 +59,7 @@ quid.component.specificPanel = function()
         });
         
         // form
-        quid.component.hashChange.call(this);
+        Quid.Component.hashChange.call(this);
         
         $(this).on('tab:getTarget', function() {
             return panel;
@@ -70,7 +70,7 @@ quid.component.specificPanel = function()
         .on('tab:findHash', function(event,fragment) {
             var r = panel.filter("[data-current-panel='1']");
             
-            if(quid.str.isNotEmpty(fragment))
+            if(Quid.Str.isNotEmpty(fragment))
             r = panel.filter("[data-fragment='"+fragment+"']");
             
             if(!r.length)
@@ -85,11 +85,11 @@ quid.component.specificPanel = function()
             target.trigger('tab:change');
         })
         .on('tab:showFirst', function(event) {
-            var target = $(this).triggerHandler('tab:findHash',[quid.request.fragment()]);
+            var target = $(this).triggerHandler('tab:findHash',[Quid.Request.fragment()]);
             $(this).trigger('tab:changeOrFirst',[target]);
         });
         
-        quid.component.tab.call(this,quid.component.tab);
+        Quid.Component.tab.call(this,Quid.Component.tab);
         $(this).trigger('tab:closeAll');
         $(this).trigger('tab:showFirst');
     });

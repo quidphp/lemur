@@ -6,9 +6,9 @@
 
 // clickOpenBase
 // gère les comportements basique pour un élément clickOpen
-quid.component.clickOpenBase = function(target)
+Quid.Component.clickOpenBase = function(target)
 {
-    quid.component.keyboardEscape.call(this,true);
+    Quid.Component.keyboardEscape.call(this,true);
     
     $(this).on('clickOpen:isInit', function(event) {
         return ($(this).data('clickOpen:init') === true)? true:false;
@@ -31,7 +31,7 @@ quid.component.clickOpenBase = function(target)
         else if(r == true)
         r = $(this);
         
-        if(quid.str.isNotEmpty(r))
+        if(Quid.Str.isNotEmpty(r))
         r = $(this).find(r).first();
         
         return r;

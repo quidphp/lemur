@@ -7,9 +7,9 @@
 // keyboardArrow
 // attrape les touches de flèche sur le clavier
 // par défaut l'événement est prevent
-quid.component.keyboardArrow = function(prevent,type) 
+Quid.Component.keyboardArrow = function(prevent,type) 
 {
-    quid.component.keyboard.call(this,'arrow',[37,38,39,40],type);
+    Quid.Component.keyboard.call(this,'arrow',[37,38,39,40],type);
     
     $(this).on('arrow:catched', function(event,keyEvent,isInput,keyCode) {
         if(keyCode === 38)

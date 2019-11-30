@@ -6,7 +6,7 @@
  
 // clickRemove
 // sur click, fadeOut l'élément et ensuite efface le
-quid.component.clickRemove = function()
+Quid.Component.clickRemove = function()
 {
     $(this).on('click', function(event) {
         $(this).fadeOut('slow',function() {

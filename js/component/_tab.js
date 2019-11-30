@@ -6,22 +6,22 @@
  
 // tab
 // script with behaviours for a tab component
-quid.component.tab = function()
+Quid.Component.tab = function()
 {
     $(this).on('tab:getIndex', function(event,value,loop) {
         var current = $(this).triggerHandler('tab:getCurrent');
         var target = $(this).triggerHandler('tab:getTarget');
         
-        if(quid.node.isLike(value))
+        if(Quid.Node.isLike(value))
         value = target.index(value);
         
         var max = target.length;
         
-        return quid.nav.index(value,current,max,loop);
+        return Quid.Nav.index(value,current,max,loop);
     })
     .on('tab:indexer', function(event,value,loop) {
         var index = $(this).triggerHandler('tab:getIndex',[value,loop]);
-        if(quid.number.is(index))
+        if(Quid.Number.is(index))
         $(this).trigger('tab:change',[index]);
     })
     .on('tab:first', function() {
@@ -53,8 +53,8 @@ quid.component.tab = function()
     })
     .on('tab:isCurrent', function(event,value) {
         var current = $(this).triggerHandler('tab:getCurrent');
-        var index = (quid.number.is(value))? value:$(this).triggerHandler('tab:getTarget').index(value);
-        return (quid.number.is(current) && index === current)? true:false;
+        var index = (Quid.Number.is(value))? value:$(this).triggerHandler('tab:getTarget').index(value);
+        return (Quid.Number.is(current) && index === current)? true:false;
     })
     .on('tab:closeAll', function() {
         var target = $(this).triggerHandler('tab:getTarget');
@@ -67,12 +67,12 @@ quid.component.tab = function()
         var target = $(this).triggerHandler('tab:getTarget');
         var current = $(this).triggerHandler('tab:getCurrent');
         
-        if(target.length && quid.number.is(index))
+        if(target.length && Quid.Number.is(index))
         {
             if(index !== current)
             {
                 var indexTarget = target.eq(index);
-                var currentTarget = (quid.number.is(current))? target.eq(current):null;
+                var currentTarget = (Quid.Number.is(current))? target.eq(current):null;
                 
                 if(indexTarget.length)
                 {

@@ -6,10 +6,10 @@
  
 // anchorCorner
 // script of behaviours for an absolute anchorCorner component
-quid.component.anchorCorner = function()
+Quid.Component.anchorCorner = function()
 {
     // resizeChange
-    quid.component.resizeChange.call(this);
+    Quid.Component.resizeChange.call(this);
     
     
     // trigger

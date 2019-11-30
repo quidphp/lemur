@@ -10,10 +10,10 @@
 // calendarInput
 // gère les comportement pour un input de date qui ouvre un calendrier
 // utilise clickOpen
-quid.component.calendarInput = function()
+Quid.Component.calendarInput = function()
 {
     // clickOpen
-    quid.component.clickOpenWithTrigger.call(this,"input[type='text']",'click',null,true);
+    Quid.Component.clickOpenWithTrigger.call(this,"input[type='text']",'click',null,true);
     
     // triggerHandler
     $(this).on('calendarInput:getInput', function(event) {
@@ -50,8 +50,8 @@ quid.component.calendarInput = function()
         var calendar = $(this).triggerHandler('calendarInput:getCalendar');
         var target = $(this).triggerHandler('clickOpen:getTarget');
         
-        quid.component.timeout.call(input,'keyup',600);
-        quid.component.keyboardEnter.call(input,true);
+        Quid.Component.timeout.call(input,'keyup',600);
+        Quid.Component.keyboardEnter.call(input,true);
         
         input.on('keyup:onTimeout', function(event) {
             calendarChange.call(this,true);
@@ -80,7 +80,7 @@ quid.component.calendarInput = function()
         var calendar = $(this).triggerHandler('calendarInput:getCalendar');
         var target = $(this).triggerHandler('clickOpen:getTarget');
         
-        quid.component.calendar.call(calendar);
+        Quid.Component.calendar.call(calendar);
         
         calendar.on('calendar:ready', function(event) {
             var val = input.triggerHandler('input:getValue');

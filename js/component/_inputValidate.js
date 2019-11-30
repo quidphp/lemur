@@ -6,7 +6,7 @@
  
 // inputValidate
 // gère les événements relatifs à la validation d'un champ
-quid.component.inputValidate = function() {
+Quid.Component.inputValidate = function() {
     
     $(this).on('change', function(event) {
         $(this).trigger('validate:process');
@@ -18,13 +18,13 @@ quid.component.inputValidate = function() {
         $(this).trigger('validate:process');
     })
     .on('validate:process', function(event) {
-        $(this).trigger(quid.node.value(this,true)? 'validate:trigger':'validate:pattern validate:empty');
+        $(this).trigger(Quid.Node.value(this,true)? 'validate:trigger':'validate:pattern validate:empty');
     })
     .on('validate:binded', function(event) {
         return true;
     })
     .on('validate:isEmpty',function(event) {
-        return (!quid.node.value(this,true))? true:false;
+        return (!Quid.Node.value(this,true))? true:false;
     })
     .on('validate:isValid',function(event) {
         return (trigger.call(this) === true)? true:false;
@@ -44,14 +44,14 @@ quid.component.inputValidate = function() {
         var r = trigger.call(this);
         event.stopPropagation();
         $(this).trigger((r === true)? 'validate:valid':'validate:invalid');
-        $(this).trigger((quid.node.value(this,true))? 'validate:notEmpty':'validate:empty');
+        $(this).trigger((Quid.Node.value(this,true))? 'validate:notEmpty':'validate:empty');
         
         return r;
     })
     .on('validate:valid', function(event) {
         if($(this).is("[type='checkbox'],[type='radio']"))
         {
-            var group = quid.selector.inputGroup(this);
+            var group = Quid.Selector.inputGroup(this);
             group.not($(this)).attr('data-validate','valid');
         }
         
@@ -97,7 +97,7 @@ quid.component.inputValidate = function() {
                 var disabled = $(this).prop('disabled');
                 var required = $(this).attr("data-required");
                 
-                if(!disabled && quid.number.is(required) && required > 0)
+                if(!disabled && Quid.Number.is(required) && required > 0)
                 {
                     if($(this).is("[type='checkbox'],[type='radio']"))
                     {
@@ -109,7 +109,7 @@ quid.component.inputValidate = function() {
                         r = false;
                     }
                     
-                    else if(!quid.node.value(this,true).length)
+                    else if(!Quid.Node.value(this,true).length)
                     r = false;
                 }
                 
@@ -135,9 +135,9 @@ quid.component.inputValidate = function() {
             $(this).each(function(index) {
                 var disabled = $(this).prop('disabled');
                 var pattern = $(this).attr("data-pattern");
-                var val = quid.node.value(this,true);
+                var val = Quid.Node.value(this,true);
                 
-                if(!disabled && quid.str.isNotEmpty(pattern) && val.length)
+                if(!disabled && Quid.Str.isNotEmpty(pattern) && val.length)
                 {
                     pattern = new RegExp(pattern);
                     r = pattern.test(val);

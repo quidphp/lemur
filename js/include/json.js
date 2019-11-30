@@ -6,7 +6,7 @@
  
 // json
 // script with functions related to json
-quid.json = new function() 
+Quid.Json = new function() 
 {    
     // instance
     var $inst = this;

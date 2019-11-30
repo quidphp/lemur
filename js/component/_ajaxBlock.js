@@ -6,12 +6,12 @@
  
 // ajaxBlock
 // intègre la logique ajax, block et loading via une même méthode
-quid.component.ajaxBlock = function(type)
+Quid.Component.ajaxBlock = function(type)
 {
     type = type || 'click';
     
-    quid.component.block.call(this,type);
-    quid.component.ajax.call(this,type);
+    Quid.Component.block.call(this,type);
+    Quid.Component.ajax.call(this,type);
     
     $(this).on('ajaxBlock:getStatusNode', function(event) {
         return $(this);

@@ -6,10 +6,10 @@
  
 // mainSearch
 // script with logic for the main search component of the CMS
-quid.component.mainSearch = function()
+Quid.Component.mainSearch = function()
 {
     // clickOpen
-    quid.component.clickOpenInputFormAjax.call(this);
+    Quid.Component.clickOpenInputFormAjax.call(this);
     
     // triggerHandler
     $(this).on('mainSearch:getSearchIn', function() {
@@ -39,7 +39,7 @@ quid.component.mainSearch = function()
         var $this = $(this);
         var searchIn = $(this).triggerHandler('mainSearch:getSearchIn');
         
-        quid.component.clickOpen.call(searchIn,true);
+        Quid.Component.clickOpen.call(searchIn,true);
         searchIn.on('clickOpen:open', function() {
             $this.addClass('active-search-in');
         })

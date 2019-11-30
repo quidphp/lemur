@@ -7,9 +7,9 @@
 // block
 // script of behaviours for a block component
 // bloque l'événement sur le ou les éléments s'il y a la data blocked
-quid.component.block = function(type) 
+Quid.Component.block = function(type) 
 {
-    if(quid.str.isNotEmpty(type))
+    if(Quid.Str.isNotEmpty(type))
     {
         var binded = $(this).data('blockBind:'+type);
         

@@ -6,7 +6,7 @@
  
 // bool
 // script with functions related to booleans
-quid.bool = new function() 
+Quid.Bool = new function() 
 {
     // instance
     var $inst = this;

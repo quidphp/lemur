@@ -8,26 +8,28 @@
 // script of behaviours for a keyboard component
 // permet d'attraper une touche au clavier
 // l'événement par défaut est keydown
-quid.component.keyboard = function(key,values,type) {
+Quid.Component.keyboard = function(key,values,type) 
+{
     type = type || 'keydown';
     
-    if(quid.str.isNotEmpty(key) && quid.arr.isNotEmpty(values))
+    if(Quid.Str.isNotEmpty(key) && Quid.Arr.isNotEmpty(values))
     {
-        $(this).on(type, function(event) {
-            
-            if(quid.arr.in(event.keyCode,values))
+        ael(this,type, function(event) 
+        {
+            if(Quid.Arr.in(event.keyCode,values))
             {
-                var isInput = $(event.target).is(quid.selector.input());
+                var isInput = $(event.target).is(Quid.Selector.input());
                 var catched = key+":catched";
-                $(this).trigger(catched,[event,isInput,event.keyCode]);
+                triggerCustom(this,catched,event,isInput,event.keyCode);
                 
                 var prevent = key+":prevent";
-                if($(this).triggerHandler(prevent,[event,isInput,event.keyCode]) === true)
+                if(triggerFunc(this,prevent,event,isInput,event.keyCode) === true)
                 {
                     var blocked = key+":blocked";
                     event.stopImmediatePropagation();
                     event.preventDefault();
-                    $(this).trigger(blocked,[event,isInput,event.keyCode]);
+                    triggerCustom(this,blocked,event,isInput,event.keyCode);
+                    
                     return false;
                 }
             }

@@ -6,7 +6,7 @@
  
 // validate
 // script with behaviours related to validation
-quid.validate = new function() 
+Quid.Validate = new function() 
 {
     // instance
     var $inst = this;
@@ -34,7 +34,7 @@ quid.validate = new function()
     {
         var r = false;
         
-        if(quid.str.is(value) && exp)
+        if(Quid.Str.is(value) && exp)
         {
             var regex = new RegExp(exp);
             

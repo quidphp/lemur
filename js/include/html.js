@@ -6,7 +6,7 @@
   
 // html
 // script with functions for parsing html
-quid.html = new function() 
+Quid.Html = new function() 
 {
     // instance
     var $inst = this;
@@ -18,12 +18,12 @@ quid.html = new function()
     this.parse = function(html)
     {
         var r = null;
-        html = quid.str.cast(html);
+        html = Quid.Str.cast(html);
         html = html.replace(/<\!DOCTYPE[^>]*>/i, '');
         html = html.replace(/<(html|head|body|script)([\s\>])/gi,'<div data-tag="$1"$2');
         html = html.replace(/<\/(html|head|body|script)\>/gi,'</div>');
         
-        html = quid.str.trim(html);
+        html = Quid.Str.trim(html);
         var nodes = $.parseHTML(html);
         
         r = $(nodes);
@@ -52,7 +52,7 @@ quid.html = new function()
         
         r.html = doc;
         r.html.removeAttr('data-tag');
-        r.htmlAttr = quid.node.getAttr(r.html);
+        r.htmlAttr = Quid.Node.getAttr(r.html);
         
         r.head = doc.find("[data-tag='head']").first();
         r.body = doc.find("[data-tag='body']").first();
@@ -60,7 +60,7 @@ quid.html = new function()
         if(r.head.length)
         {
             r.head.removeAttr('data-tag');
-            r.headAttr = quid.node.getAttr(r.head);
+            r.headAttr = Quid.Node.getAttr(r.head);
             r.title = r.head.find("title").first().text() || '?';
             r.titleHtml = r.title.replace('<','&lt;').replace('>','&gt;').replace(' & ',' &amp; ');
             r.meta = r.head.find("meta");
@@ -69,12 +69,12 @@ quid.html = new function()
         if(r.body.length)
         {
             r.body.removeAttr('data-tag');
-            r.bodyAttr = quid.node.getAttr(r.body);
+            r.bodyAttr = Quid.Node.getAttr(r.body);
         }
         
         else
         {
-            var html = quid.node.outerHtml(doc);
+            var html = Quid.Node.outerHtml(doc);
             var newBody = "<div data-tag='body'>"+html+"</div>";
             newBody = $.parseHTML(newBody);
             r.body = $(newBody);

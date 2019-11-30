@@ -6,7 +6,7 @@
  
 // selector
 // script with behaviours related to selecting nodes
-quid.selector = new function() 
+Quid.Selector = new function() 
 {
     // instance
     var $inst = this;
@@ -30,7 +30,7 @@ quid.selector = new function()
             var name = $(this).prop("name");
             var type = $(this).prop("type");
             
-            if(quid.str.isNotEmpty(name) && quid.str.isNotEmpty(type))
+            if(Quid.Str.isNotEmpty(name) && Quid.Str.isNotEmpty(type))
             r = r.add($("[type='"+type+"'][name='"+name+"']"));
         });
         
@@ -46,7 +46,7 @@ quid.selector = new function()
         var id = $(node).prop('id');
         d(id);
         
-        if(quid.scalar.is(id))
+        if(Quid.Scalar.is(id))
         r = $(document).find("label[for='"+id+"']");
         
         return r;

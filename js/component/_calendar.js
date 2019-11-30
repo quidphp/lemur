@@ -6,11 +6,11 @@
 
 // calendar
 // script for the calendar component
-quid.component.calendar = function()
+Quid.Component.calendar = function()
 {
     // block + ajax
-    quid.component.block.call(this,'calendar:load');
-    quid.component.ajax.call(this,'calendar:load');
+    Quid.Component.block.call(this,'calendar:load');
+    Quid.Component.ajax.call(this,'calendar:load');
     
     // triggerHandler
     $(this).on('calendar:isEmpty', function(event) {
@@ -35,7 +35,7 @@ quid.component.calendar = function()
         return $(this).data('format');
     })
     .on('ajax:getHref', function() {
-        return quid.node.dataHrefReplaceChar(this,$(this).triggerHandler('calendar:getCurrent'));
+        return Quid.Node.dataHrefReplaceChar(this,$(this).triggerHandler('calendar:getCurrent'));
     })
     
     // trigger
@@ -72,10 +72,10 @@ quid.component.calendar = function()
         
         if(isValueValid.call(this,value))
         {
-            if(quid.number.is(value))
+            if(Quid.Number.is(value))
             td = tds.filter("[data-timestamp='"+value+"']").not(".out");
             
-            else if(quid.str.isNotEmpty(value))
+            else if(Quid.Str.isNotEmpty(value))
             td = tds.filter("[data-format^='"+value+"']").not(".out");
             
             if(td != null && td.length)
@@ -93,7 +93,7 @@ quid.component.calendar = function()
     var isValueValid = function(value) {
         var r = false;
         
-        if(quid.str.isNotEmpty(value) && !quid.number.is(value) && quid.validate.isNumericDash(value))
+        if(Quid.Str.isNotEmpty(value) && !Quid.Number.is(value) && Quid.Validate.isNumericDash(value))
         {
             var format = $(this).triggerHandler('calendar:getFormat');
             if(value.length == format.length)
@@ -107,10 +107,10 @@ quid.component.calendar = function()
     var prepareValue = function(value) {
         var r = null;
         
-        if(quid.str.isNotEmpty(value))
+        if(Quid.Str.isNotEmpty(value))
         {
-            value = quid.str.trim(value);
-            value = quid.str.explodeIndex(0," ",value);
+            value = Quid.Str.trim(value);
+            value = Quid.Str.explodeIndex(0," ",value);
             var split = value.split('-');
             for (var i = 0; i < split.length; i++) 
             {
@@ -128,8 +128,8 @@ quid.component.calendar = function()
         var $this = $(this);
         var prevNext = $(this).triggerHandler('calendar:getPrevNext');
         
-        quid.component.block.call(prevNext,'click');
-        quid.component.ajax.call(prevNext,'click');
+        Quid.Component.block.call(prevNext,'click');
+        Quid.Component.ajax.call(prevNext,'click');
 
         prevNext.on('ajax:before', function() {
             $this.trigger('ajax:before');

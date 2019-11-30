@@ -6,7 +6,7 @@
  
 // func
 // script with functions related to functions
-quid.func = new function() 
+Quid.Func = new function() 
 {    
     // instance
     var $inst = this;

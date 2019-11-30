@@ -6,7 +6,7 @@
  
 // document
 // script for a document component managing site navigation with the HistoryAPI
-quid.component.document = function(option)
+Quid.Component.document = function(option)
 {
     // variable
     var $location = window.location;
@@ -79,7 +79,7 @@ quid.component.document = function(option)
     setFunc(this,'document:replaceState', function(uri,title) {
         var r = makeHistoryState(uri,title);
         
-        if(hasHistoryApi() && quid.str.isNotEmpty(uri))
+        if(hasHistoryApi() && Quid.Str.isNotEmpty(uri))
         $history.replaceState(r,r.title,r.url);
         
         return r;
@@ -163,7 +163,7 @@ quid.component.document = function(option)
     setFunc(this,'document:setBackground', function(value,replace) {
         var r = false;
         
-        if(quid.str.isNotEmpty(value))
+        if(Quid.Str.isNotEmpty(value))
         {
             var background = triggerFunc(this,'document:getBackground');
             
@@ -246,7 +246,7 @@ quid.component.document = function(option)
             if(uri instanceof jQuery && uri.is(option.anchor))
             uri = uri.prop("href");
             
-            if(quid.str.is(uri))
+            if(Quid.Str.is(uri))
             {
                 var current = triggerFunc(this,'document:getCurrentState');
                 var state = makeHistoryState(uri);
@@ -261,7 +261,7 @@ quid.component.document = function(option)
                 }
                 
                 // hash change
-                else if(quid.uri.isHashChange(state.url,current.url))
+                else if(Quid.Uri.isHashChange(state.url,current.url))
                 {
                     
                     r = true;
@@ -365,7 +365,7 @@ quid.component.document = function(option)
             }
             
             // hash change
-            else if(quid.uri.isSamePathQuery(state.url,previous.url) && (quid.uri.hasFragment(state.url) || quid.uri.hasFragment(previous.url)))
+            else if(Quid.Uri.isSamePathQuery(state.url,previous.url) && (Quid.Uri.hasFragment(state.url) || Quid.Uri.hasFragment(previous.url)))
             {
                 $previous = state;
                 triggerCustom(this,'hashchange',event);
@@ -378,7 +378,7 @@ quid.component.document = function(option)
             var r = true;
             var href = $(this).attr('href');
             
-            if(quid.uri.isInternal(href))
+            if(Quid.Uri.isInternal(href))
             {
                 triggerFunc($this,'document:clickEvent',event);
                 
@@ -424,7 +424,7 @@ quid.component.document = function(option)
     {
         var r = false;
         
-        if(quid.obj.isPlain(state) && quid.str.is(state.url) && quid.number.is(state.timestamp))
+        if(Quid.Obj.isPlain(state) && Quid.Str.is(state.url) && Quid.Number.is(state.timestamp))
         r = true;
         
         return r;
@@ -437,12 +437,12 @@ quid.component.document = function(option)
     {
         var r = null;
         
-        if(quid.str.is(uri))
+        if(Quid.Str.is(uri))
         {
             r = {
                 url: uri,
                 title: title || null,
-                timestamp: quid.date.timestamp()
+                timestamp: Quid.Date.timestamp()
             };
         }
         
@@ -473,11 +473,11 @@ quid.component.document = function(option)
         triggerCustom(this,'document:mount',routeWrap);
         
         var group = html.attr("data-group");
-        if(quid.str.isNotEmpty(group))
+        if(Quid.Str.isNotEmpty(group))
         triggerCustom(this,'group:'+group,routeWrap);
         
         var route = html.attr("data-route");
-        if(quid.str.isNotEmpty(route))
+        if(Quid.Str.isNotEmpty(route))
         triggerCustom(this,'route:'+route,routeWrap);
         */
         
@@ -500,11 +500,11 @@ quid.component.document = function(option)
         triggerCustom(this,'document:unmount',routeWrap);
         
         var group = html.attr("data-group");
-        if(quid.str.isNotEmpty(group))
+        if(Quid.Str.isNotEmpty(group))
         triggerCustom(this,'group:'+group+':unmount',routeWrap);
         
         var route = html.attr("data-route");
-        if(quid.str.isNotEmpty(route))
+        if(Quid.Str.isNotEmpty(route))
         triggerCustom(this,'route:'+route+':unmount',routeWrap);
         
         $(this).off('.document-mount');
@@ -525,14 +525,14 @@ quid.component.document = function(option)
         
         if(isHistoryState(state) && isHistoryState(previous))
         {
-            var isInternal = quid.uri.isInternal(state.url,previous.url);
-            var hasExtension = quid.uri.hasExtension(state.url);
-            var isHashChange = quid.uri.isHashChange(state.url,previous.url);
-            var isSameWithHash = quid.uri.isSameWithHash(state.url,previous.url);
+            var isInternal = Quid.Uri.isInternal(state.url,previous.url);
+            var hasExtension = Quid.Uri.hasExtension(state.url);
+            var isHashChange = Quid.Uri.isHashChange(state.url,previous.url);
+            var isSameWithHash = Quid.Uri.isSameWithHash(state.url,previous.url);
             
             if(isInternal === true && hasExtension === false && isHashChange === false && isSameWithHash === false)
             {
-                if(!pathQuery || quid.uri.isSamePathQuery(state.url,previous.url) === false)
+                if(!pathQuery || Quid.Uri.isSamePathQuery(state.url,previous.url) === false)
                 r = true;
             }
         }
@@ -548,7 +548,7 @@ quid.component.document = function(option)
         var r = false;
         var unload = triggerFunc(window,'beforeunload');
         
-        if(!quid.str.isNotEmpty(unload) || confirm(unload))
+        if(!Quid.Str.isNotEmpty(unload) || confirm(unload))
         r = true;
         
         return r;
@@ -566,9 +566,9 @@ quid.component.document = function(option)
         {
             var target = $(sourceEvent.currentTarget);
             
-            if(target && quid.node.tag(target) === 'form')
+            if(target && Quid.Node.tag(target) === 'form')
             {
-                quid.xhr.configFromNode(target,config);
+                Quid.Xhr.configFromNode(target,config);
                 
                 if(triggerFunc(target,'form:hasFiles'))
                 config.timeout = 0;
@@ -607,7 +607,7 @@ quid.component.document = function(option)
                     triggerCustom($this,'document:ajaxProgress',percent,event);
                 },
                 error: function(jqXHR,textStatus,errorThrown) {
-                    if(quid.str.isNotEmpty(jqXHR.responseText))
+                    if(Quid.Str.isNotEmpty(jqXHR.responseText))
                     afterAjax.call($this,type,state,jqXHR);
                     else
                     triggerFunc($this,'document:hardRedirect',state.url);
@@ -615,7 +615,7 @@ quid.component.document = function(option)
             };
             
             var type = makeHistoryType(config,sourceEvent);
-            r = quid.xhr.trigger(this,config);
+            r = Quid.Xhr.trigger(this,config);
             
             if(r != null)
             $(this).data('document:ajax',r);
@@ -643,15 +643,15 @@ quid.component.document = function(option)
     // callback après le ajax
     var afterAjax = function(type,state,jqXHR)
     {
-        if(quid.obj.isPlain(jqXHR) && isHistoryState(state) && quid.str.isNotEmpty(type))
+        if(Quid.Obj.isPlain(jqXHR) && isHistoryState(state) && Quid.Str.isNotEmpty(type))
         {
             var data = jqXHR.responseText;
             var currentUri = jqXHR.getResponseHeader('QUID-URI');
             var current = triggerFunc(this,'document:getCurrentState');
             
-            if(quid.str.is(data))
+            if(Quid.Str.is(data))
             {
-                var doc = quid.html.doc(data);
+                var doc = Quid.Html.doc(data);
                 $(this).removeData('document:active');
                 
                 if(type === 'push' || type === 'form')
@@ -660,14 +660,14 @@ quid.component.document = function(option)
                     
                     if(state.url !== current.url)
                     {
-                        if(type === 'push' || !quid.uri.isSamePathQuery(current.url,currentUri))
+                        if(type === 'push' || !Quid.Uri.isSamePathQuery(current.url,currentUri))
                         $history.pushState(state,state.title,state.url);
                     }
                 }
                 
                 if(state.url !== currentUri)
                 {
-                    if(!quid.uri.isInternal(state.url,currentUri) || !quid.uri.isSamePathQuery(state.url,currentUri))
+                    if(!Quid.Uri.isInternal(state.url,currentUri) || !Quid.Uri.isSamePathQuery(state.url,currentUri))
                     state = triggerFunc(this,'document:replaceState',currentUri,state.title);
                 }	
                     
@@ -686,21 +686,21 @@ quid.component.document = function(option)
     {
         var r = false;
         
-        if(quid.obj.isPlain(doc) && doc.body && doc.body.length)
+        if(Quid.Obj.isPlain(doc) && doc.body && doc.body.length)
         {
             r = true;
             
             // html
             // les attributs de html sont remplacés (les attributs existants ne sont pas effacés)
             var html = triggerFunc(this,'document:getHtml');
-            quid.dom.replaceAttr(doc.htmlAttr,html);
+            Quid.Dom.replaceAttr(doc.htmlAttr,html);
             
             // head
             var head = html.find("head").first();
             
             // title
             var title = head.find("meta");
-            if(quid.str.isNotEmpty(doc.title))
+            if(Quid.Str.isNotEmpty(doc.title))
             {
                 document.title = doc.title;
                 title.html(doc.titleHtml);
@@ -714,7 +714,7 @@ quid.component.document = function(option)
             // body
             // les attributs de body sont effacés et remplacés
             var body = triggerFunc(this,'document:getBody');
-            quid.dom.replaceAttr(doc.bodyAttr,body,true);
+            Quid.Dom.replaceAttr(doc.bodyAttr,body,true);
             
             // routeWrap
             // les attributs de routeWrap sont effacés et remplacés seulement si routeWrap n'est pas body
@@ -726,8 +726,8 @@ quid.component.document = function(option)
                 if(routeWrapTarget.length)
                 {
                     contentTarget = routeWrapTarget;
-                    var routeWrapAttributes = quid.node.getAttr(contentTarget);
-                    quid.dom.replaceAttr(routeWrapAttributes,routeWrap,true);
+                    var routeWrapAttributes = Quid.Node.getAttr(contentTarget);
+                    Quid.Dom.replaceAttr(routeWrapAttributes,routeWrap,true);
                 }
             }
             routeWrap.html(contentTarget.html());

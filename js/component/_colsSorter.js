@@ -6,17 +6,17 @@
 
 // colsSorter
 // script for the col sorter component of the general page of the CMS
-quid.component.colsSorter = function()
+Quid.Component.colsSorter = function()
 {
     // alias
-    var setFunc = quid.event.setFunc;
-    var triggerFunc = quid.event.triggerFunc;
-    var aelOnce = quid.event.addEventListenerOnce;
-    var triggerCustom = quid.event.triggerCustom;
+    var setFunc = Quid.Event.setFunc;
+    var triggerFunc = Quid.Event.triggerFunc;
+    var aelOnce = Quid.Event.addEventListenerOnce;
+    var triggerCustom = Quid.Event.triggerCustom;
     
     
     // bindings
-    quid.component.clickOpenWithTrigger.call(this,".trigger");
+    Quid.Component.clickOpenWithTrigger.call(this,".trigger");
     
     // func
     setFunc(this,'colsSorter:getPopup', function() {
@@ -46,7 +46,7 @@ quid.component.colsSorter = function()
         var button = triggerFunc(this,'colsSorter:getButton');
         var checkbox = triggerFunc(this,'colsSorter:getCheckedCheckboxes');
         
-        return quid.node.valueSeparator(checkbox,button.data('separator'),true);
+        return Quid.Node.valueSeparator(checkbox,button.data('separator'),true);
     });
     
     setFunc(this,'colsSorter:isCurrent',function() {
@@ -70,7 +70,7 @@ quid.component.colsSorter = function()
         var $this = $(this);
         var popup = triggerFunc(this,'colsSorter:getPopup');
         
-        quid.component.verticalSorter.call(popup,".choice",'.choice-in');
+        Quid.Component.verticalSorter.call(popup,".choice",'.choice-in');
         
         popup.on('verticalSorter:stop', function() {
             triggerCustom(this,'popup:validate');
@@ -95,7 +95,7 @@ quid.component.colsSorter = function()
         var checkboxes = triggerFunc(this,'colsSorter:getCheckboxes');
         var popup = triggerFunc(this,'colsSorter:getPopup');
         
-        quid.component.inputValidate.call(checkboxes);
+        Quid.Component.inputValidate.call(checkboxes);
         
         checkboxes.on('validate:invalid', function() {
             triggerCustom(popup,'popup:invalid');
@@ -110,7 +110,7 @@ quid.component.colsSorter = function()
         var $this = $(this);
         var button = triggerFunc(this,'colsSorter:getButton');
         
-        quid.component.block.call(button,'click');
+        Quid.Component.block.call(button,'click');
         
         button.on('click', function(event) {
             redirect.call(this,event);
@@ -118,9 +118,9 @@ quid.component.colsSorter = function()
         
         var redirect = function(clickEvent) {
             var set = triggerFunc($this,'colsSorter:getCheckedSet');
-            var href = quid.node.dataHrefReplaceChar(this,set);
+            var href = Quid.Node.dataHrefReplaceChar(this,set);
             
-            if(quid.str.isNotEmpty(href) && href !== quid.request.relative())
+            if(Quid.Str.isNotEmpty(href) && href !== Quid.Request.relative())
             {
                 triggerCustom(this,'block');
                 triggerCustom(document,'document:go',href,clickEvent);

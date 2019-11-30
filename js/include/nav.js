@@ -6,7 +6,7 @@
  
 // nav
 // script with helper functions related to navigation and pagination
-quid.nav = new function() 
+Quid.Nav = new function() 
 {    
     // instance
     var $inst = this;
@@ -18,7 +18,7 @@ quid.nav = new function()
     {
         var r = null;
         
-        if(quid.number.isInt(max) && max > 0)
+        if(Quid.Number.isInt(max) && max > 0)
         {
             var first = 0;
             var last = (max - 1);
@@ -29,7 +29,7 @@ quid.nav = new function()
             else if(value ==='last')
             r = last;
             
-            else if(value === 'next' && quid.number.isInt(current))
+            else if(value === 'next' && Quid.Number.isInt(current))
             {
                 r = (current + 1);
                 
@@ -43,7 +43,7 @@ quid.nav = new function()
                 }
             }
             
-            else if(value === 'prev' && quid.number.isInt(current))
+            else if(value === 'prev' && Quid.Number.isInt(current))
             {
                 r = (current - 1);
                 
@@ -57,7 +57,7 @@ quid.nav = new function()
                 }
             }
             
-            else if(quid.number.isInt(value) && value >= 0 && value < max)
+            else if(Quid.Number.isInt(value) && value >= 0 && value < max)
             r = value;
         }
         

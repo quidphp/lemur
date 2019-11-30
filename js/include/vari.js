@@ -6,7 +6,7 @@
  
 // vari
 // script with a set of helper functions related to variables
-quid.vari = new function() 
+Quid.Vari = new function() 
 {    
     // instance
     var $inst = this;
@@ -26,7 +26,7 @@ quid.vari = new function()
     {
         var r = true;
         
-        if(quid.scalar.is(value))
+        if(Quid.Scalar.is(value))
         r = (!value)? true:false;
         
         else
@@ -66,7 +66,7 @@ quid.vari = new function()
         {
             for (var i = 0; i < length; i++) 
             {
-                json = quid.json.encode(args[i]);
+                json = Quid.Json.encode(args[i]);
                 
                 if(typeof jsonOld === 'undefined')
                 var jsonOld = json;

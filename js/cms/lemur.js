@@ -13,15 +13,15 @@ $(document).ready(function() {
     // alias
     var d = console.log;
     var dd = console.dir;
-    var debug = quid.event.debug;
+    var debug = Quid.Event.debug;
     var assert = console.assert;
-    var setFunc = quid.event.setFunc;
-    var ael = quid.event.addEventListener;
-    var aelOnce = quid.event.addEventListenerOnce;
-    var triggerEvent = quid.event.triggerEvent;
-    var triggerFunc = quid.event.triggerFunc;
-    var triggerCustom = quid.event.triggerCustom;
-    var triggerSetup = quid.event.triggerSetup;
+    var setFunc = Quid.Event.setFunc;
+    var ael = Quid.Event.addEventListener;
+    var aelOnce = Quid.Event.addEventListenerOnce;
+    var triggerEvent = Quid.Event.triggerEvent;
+    var triggerFunc = Quid.Event.triggerFunc;
+    var triggerCustom = Quid.Event.triggerCustom;
+    var triggerSetup = Quid.Event.triggerSetup;
     debug(true);
     
     
@@ -31,7 +31,7 @@ $(document).ready(function() {
         var modal = body.find("> .modal").first();
         
         // modal
-        triggerSetup(quid.component.modal.call(modal));
+        triggerSetup(Quid.Component.modal.call(modal));
     });
     
     
@@ -42,16 +42,16 @@ $(document).ready(function() {
         
         /*
         // input
-        var input = node.find(quid.selector.input());
-        quid.component.input.call(input);
+        var input = node.find(Quid.Selector.input());
+        Quid.Component.input.call(input);
         
         // select
         var select = node.find("select");
-        triggerSetup(quid.component.fakeSelect.call(select));
+        triggerSetup(Quid.Component.fakeSelect.call(select));
         
         // form
         var form = node.find("form");
-        quid.component.form.call(form);
+        Quid.Component.form.call(form);
         triggerCustom(form,'form:setup');
         
         // autre
@@ -62,19 +62,19 @@ $(document).ready(function() {
         var aConfirm = node.find("a[data-confirm]");
         
 		// aConfirm
-		quid.component.confirm.call(aConfirm,'click');
+		Quid.Component.confirm.call(aConfirm,'click');
 		
         // popupTrigger
-        quid.component.clickOpenWithTrigger.call(popupTrigger,".popup-title");
+        Quid.Component.clickOpenWithTrigger.call(popupTrigger,".popup-title");
         
         // popupTriggerAjax
-        quid.component.clickOpenAnchorAjax.call(popupTriggerAjax,".popup-title");
+        Quid.Component.clickOpenAnchorAjax.call(popupTriggerAjax,".popup-title");
         
         // anchorCorner
-        quid.component.anchorCorner.call(anchorCorner);
+        Quid.Component.anchorCorner.call(anchorCorner);
         
         // absolutePlaceholder
-        quid.component.absolutePlaceholder.call(absolutePlaceholder);
+        Quid.Component.absolutePlaceholder.call(absolutePlaceholder);
         */
 	});
     
@@ -90,22 +90,22 @@ $(document).ready(function() {
         var mainSearch = routeWrap.find("header .top form");
         
         // carousel
-        quid.component.carousel.call(carousel);
+        Quid.Component.carousel.call(carousel);
         
         // subMenu
-        quid.component.clickOpenWithTrigger.call(subMenu,".trigger");
+        Quid.Component.clickOpenWithTrigger.call(subMenu,".trigger");
         setFunc(subMenu,'clickOpen:getBackgroundFrom', function(event) {
             return 'submenu';
         });
         
         // com
-		triggerSetup(quid.component.com.call(com));
+		triggerSetup(Quid.Component.com.call(com));
         
         // burger
-        triggerSetup(quid.component.burger.call(burger));
+        triggerSetup(Quid.Component.burger.call(burger));
 
         // mainSearch
-        triggerSetup(quid.component.mainSearch.call(mainSearch));
+        triggerSetup(Quid.Component.mainSearch.call(mainSearch));
 	});
     
     
@@ -162,10 +162,10 @@ $(document).ready(function() {
 		var feed = routeWrap.find("main .home-feed");
         var feedTogglers = feed.find(".block-head .feed-togglers > a");
         var feedBody = feed.find(".block-body");
-        quid.component.appendContainer.call(feedBody);
-        triggerCustom(quid.component.appendContainer,'feed:bind');
+        Quid.Component.appendContainer.call(feedBody);
+        triggerCustom(Quid.Component.appendContainer,'feed:bind');
         
-        quid.component.ajaxBlock.call(feedTogglers);
+        Quid.Component.ajaxBlock.call(feedTogglers);
         
         setFunc(feedTogglers,'ajaxBlock:getStatusNode', function(event) {
             return feedBody;
@@ -203,35 +203,35 @@ $(document).ready(function() {
         var highlight = table.find("tr.highlight");
         
         // dragScroll
-        triggerSetup(quid.component.scrollDrag.call(scroller,{selector: 'tbody',targetTag: 'div'}));
+        triggerSetup(Quid.Component.scrollDrag.call(scroller,{selector: 'tbody',targetTag: 'div'}));
         
         // page + limit
-        quid.component.inputNumeric.call(pageLimit.get());
+        Quid.Component.inputNumeric.call(pageLimit.get());
         
         // rowsChecker
-        triggerSetup(quid.component.rowsChecker.call(main));
+        triggerSetup(Quid.Component.rowsChecker.call(main));
         
 		// colsSorter
-        quid.component.colsSorter.call(colsSorter);
+        Quid.Component.colsSorter.call(colsSorter);
 		triggerCustom(colsSorter,'component:setup');
         
         // filter
-		triggerSetup(quid.component.filter.call(filter));
+		triggerSetup(Quid.Component.filter.call(filter));
         
 		// search
 		if(search.length)
 		{
 			var searchInput = search.find(".form input[type='text']");
 			var searchSlide = search.find(".in");
-			triggerSetup(quid.component.inputSearch.call(searchInput));
-            quid.component.focusSlide.call(searchInput,searchSlide);
+			triggerSetup(Quid.Component.inputSearch.call(searchInput));
+            Quid.Component.focusSlide.call(searchInput,searchSlide);
 		}
 		
 		// formTruncate
 		if(formTruncate.length)
 		{
-            quid.component.block.call(formTruncate,'submit');
-            quid.component.confirm.call(formTruncate,'submit');
+            Quid.Component.block.call(formTruncate,'submit');
+            Quid.Component.confirm.call(formTruncate,'submit');
 			
             ael(formTruncate,'confirmed', function() {
 				triggerCustom(this,'block');
@@ -239,10 +239,10 @@ $(document).ready(function() {
 		}
         
         // filesSlider
-        quid.component.slider.call(filesSlider,null,null,'.slider-element',false);
+        Quid.Component.slider.call(filesSlider,null,null,'.slider-element',false);
         
         // quickEdit
-        triggerSetup(quid.component.quickEdit.call(quickEdit));
+        triggerSetup(Quid.Component.quickEdit.call(quickEdit));
         
         // highlight 
         ael(highlight,'mouseover', function(event) {
@@ -282,22 +282,22 @@ $(document).ready(function() {
         var anchorCorner = node.find("[data-anchor-corner]");
         
         // date
-        triggerSetup(quid.component.calendarInput.call(date));
+        triggerSetup(Quid.Component.calendarInput.call(date));
         
         // enumSet
-        quid.component.enumSet.call(enumSet);
+        Quid.Component.enumSet.call(enumSet);
         
         // checkboxSortable
-        quid.component.verticalSorter.call(checkboxSortable,".choice",'.choice-in');
+        Quid.Component.verticalSorter.call(checkboxSortable,".choice",'.choice-in');
         
         // files
-        triggerSetup(quid.component.inputFiles.call(files));
+        triggerSetup(Quid.Component.inputFiles.call(files));
         
         // addRemove
-        triggerSetup(quid.component.addRemove.call(addRemove));
+        triggerSetup(Quid.Component.addRemove.call(addRemove));
         
         // textarea
-        triggerSetup(quid.component.textareaExtra.call(textarea));
+        triggerSetup(Quid.Component.textareaExtra.call(textarea));
         
         // anchorCorner
         triggerCustom(anchorCorner,'anchorCorner:refresh');
@@ -320,14 +320,14 @@ $(document).ready(function() {
         var submitConfirm = form.find("button[type='submit'][data-confirm]");
         
 		// submitConfirm
-        quid.component.confirm.call(submitConfirm,'click');
+        Quid.Component.confirm.call(submitConfirm,'click');
 		
         // champs simples
         triggerCustom(this,'specificForm:bindMount',form);
         
         // avec panel
         if(panel.length > 1)
-        quid.component.specificPanel.call(form);
+        Quid.Component.specificPanel.call(form);
         
         else
         triggerCustom(this,'specificForm:bindView',form);
@@ -357,7 +357,7 @@ $(document).ready(function() {
         });
         
         setFunc(formElement,'specificMulti:getInputs', function(event) {
-            return $(this).find("> .right").find(quid.selector.input());
+            return $(this).find("> .right").find(Quid.Selector.input());
         });
         
         ael(formElement,'specificMulti:refresh', function(event) {
@@ -391,10 +391,10 @@ $(document).ready(function() {
         
 		triggerCustom(form,'form:focusFirst');
 		
-		if(!quid.browser.allowsCookie())
+		if(!Quid.Browser.allowsCookie())
 		browscap.find(".cookie-disabled").show();
         
-        if(quid.browser.isUnsupported())
+        if(Quid.Browser.isUnsupported())
 		browscap.find(".unsupported-browser").show();
     };
 });

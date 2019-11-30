@@ -6,13 +6,13 @@
  
 // inputNumeric
 // script with logic for an input containing a number
-quid.component.inputNumeric = function(option)
+Quid.Component.inputNumeric = function(option)
 {
     // alias
-    var setFunc = quid.event.setFunc;
-    var triggerFunc = quid.event.triggerFunc;
-    var ael = quid.event.addEventListener;
-    var triggerCustom = quid.event.triggerCustom;
+    var setFunc = Quid.Event.setFunc;
+    var triggerFunc = Quid.Event.triggerFunc;
+    var ael = Quid.Event.addEventListener;
+    var triggerCustom = Quid.Event.triggerCustom;
     
     
     // option
@@ -20,9 +20,9 @@ quid.component.inputNumeric = function(option)
     
     
     // bindings
-    quid.component.block.call(this,'change');
-    quid.component.timeout.call(this,'keyup',option.timeout);
-    quid.component.inputValidate.call(this);
+    Quid.Component.block.call(this,'change');
+    Quid.Component.timeout.call(this,'keyup',option.timeout);
+    Quid.Component.inputValidate.call(this);
 
 
     // func
@@ -96,9 +96,9 @@ quid.component.inputNumeric = function(option)
     // redirect
     var redirect = function() {
         var val = triggerFunc(this,'inputNumeric:getValue');
-        var href = quid.node.dataHrefReplaceChar(this,val);
+        var href = Quid.Node.dataHrefReplaceChar(this,val);
         
-        if(quid.str.isNotEmpty(href))
+        if(Quid.Str.isNotEmpty(href))
         {
             triggerCustom(this,'block');
             triggerCustom(document,'document:go',href)

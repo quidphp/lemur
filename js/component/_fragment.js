@@ -6,24 +6,24 @@
  
 // fragment
 // gère les changements de fragment
-quid.component.fragment = function() 
+Quid.Component.fragment = function() 
 {
     $(this).on('fragment:get', function(event) {
         return $(this).data('fragment');
     })
     .on('fragment:update', function(event,replaceState) {
-        var current = quid.request.fragment();
+        var current = Quid.Request.fragment();
         var fragment = $(this).triggerHandler('fragment:get');
         var hasHistoryApi = $(document).triggerHandler('document:hasHistoryApi');
         
         if(current !== fragment)
         {
-            if(quid.str.isNotEmpty(fragment))
+            if(Quid.Str.isNotEmpty(fragment))
             {
                 var fragmentHash = '#'+fragment;
                 
                 if(hasHistoryApi === true && replaceState === true)
-                $(document).triggerHandler('document:replaceState',quid.request.relative()+fragmentHash);
+                $(document).triggerHandler('document:replaceState',Quid.Request.relative()+fragmentHash);
                 else
                 window.location.hash = fragmentHash;
             }
@@ -36,7 +36,7 @@ quid.component.fragment = function()
     })
     .on('fragment:remove', function(event) {
         if(hasHistoryApi === true && replaceState === true)
-        $(document).triggerHandler('document:replaceState',quid.request.relative());
+        $(document).triggerHandler('document:replaceState',Quid.Request.relative());
         else
         window.location.hash = '';
     });

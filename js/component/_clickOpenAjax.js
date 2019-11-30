@@ -6,9 +6,9 @@
 
 // clickOpenAjax
 // gère un click open qui s'ouvre lors d'un événement et déclenche une requête ajax
-quid.component.clickOpenAjax = function(triggerEvent,closeOnOpen,target)
+Quid.Component.clickOpenAjax = function(triggerEvent,closeOnOpen,target)
 {
-    triggerEvent = quid.str.isNotEmpty(triggerEvent)? triggerEvent:"click";
+    triggerEvent = Quid.Str.isNotEmpty(triggerEvent)? triggerEvent:"click";
 
     $(this).on(triggerEvent, function(event) {
         if($(this).triggerHandler('clickOpen:isOpen') && closeOnOpen === true)
@@ -48,9 +48,9 @@ quid.component.clickOpenAjax = function(triggerEvent,closeOnOpen,target)
         $(this).triggerHandler('clickOpen:unsetTargetContent');
     });
     
-    quid.component.block.call(this,triggerEvent);
-    quid.component.ajax.call(this,triggerEvent);    
-    quid.component.clickOpen.call(this,target);
+    Quid.Component.block.call(this,triggerEvent);
+    Quid.Component.ajax.call(this,triggerEvent);    
+    Quid.Component.clickOpen.call(this,target);
     
     return this;
 }

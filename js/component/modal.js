@@ -6,11 +6,11 @@
  
 // modal
 // script with behaviours for a modal component (popup in a fixed div)
-quid.component.modal = function()
+Quid.Component.modal = function()
 {
     // event + keyboard
-    quid.component.block.call(this,'modal:fetch');
-    quid.component.keyboardEscape.call(this,true);
+    Quid.Component.block.call(this,'modal:fetch');
+    Quid.Component.keyboardEscape.call(this,true);
     
     
     // func
@@ -40,7 +40,7 @@ quid.component.modal = function()
     ael(this,'modal:open', function(event,route) {
         $(this).attr('data-status','loading');
         
-        if(quid.str.isNotEmpty(route))
+        if(Quid.Str.isNotEmpty(route))
         $(this).attr('data-route',route);
         
         triggerFunc(document,'document:setBackground','modal',true);
@@ -79,11 +79,11 @@ quid.component.modal = function()
                 triggerCustom(modal,'unblock');
             },
             error: function(data,textStatus,jqXHR) {
-                triggerCustom(modal,'modal:set',quid.xhr.parseError(jqXHR.responseText,textStatus),route);
+                triggerCustom(modal,'modal:set',Quid.Xhr.parseError(jqXHR.responseText,textStatus),route);
                 triggerCustom(modal,'unblock');
             }
         };
-        quid.xhr.trigger(this,config);
+        Quid.Xhr.trigger(this,config);
     });
     
     ael(this,'modal:anchorBind', function(event,anchor) {
@@ -130,7 +130,7 @@ quid.component.modal = function()
         if(box.is('[tabindex]'))
         box.focus();
         
-        if(quid.str.isNotEmpty(route))
+        if(Quid.Str.isNotEmpty(route))
         triggerCustom(document,'modal:'+route,modal);
     };
     
@@ -177,8 +177,8 @@ quid.component.modal = function()
     // anchorBind
     var anchorBind = function(anchor) {
         var modal = $(this);
-        quid.component.block.call(anchor,'click');
-        quid.component.ajax.call(anchor,'click');
+        Quid.Component.block.call(anchor,'click');
+        Quid.Component.ajax.call(anchor,'click');
         
         // trigger
         ael(anchor,'ajax:beforeSend', function() {

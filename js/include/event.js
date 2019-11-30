@@ -6,7 +6,7 @@
  
 // event
 // script containing event management functions
-quid.event = new function() 
+Quid.Event = new function() 
 {    
     // instance
     var $inst = this;
@@ -21,7 +21,7 @@ quid.event = new function()
     // active ou désactive le débogagge
     this.debug = function(value)
     {
-        if(quid.bool.is(value))
+        if(Quid.Bool.is(value))
         debug = value;
         
         return;
@@ -33,7 +33,7 @@ quid.event = new function()
     this.isTriggerFuncEqual = function(equal,type,node)
     {
         var r = false;
-        var args = [type].concat(quid.arr.sliceStart(3,arguments));
+        var args = [type].concat(Quid.Arr.sliceStart(3,arguments));
         
         $(node).each(function(index) {
             var funcArgs = [this].concat(args);
@@ -82,7 +82,7 @@ quid.event = new function()
         var event = (custom === true)? new CustomEvent(type,option):new Event(type,option);
         
         if(debug === true)
-        console.log(event);
+        console.log(node,event);
         
         $(node).each(function(index, el) {
             this.dispatchEvent(event);
@@ -97,7 +97,7 @@ quid.event = new function()
     // ces événements buble
     this.triggerEvent = function(node,type) 
     {
-        var data = quid.arr.sliceStart(2,arguments);
+        var data = Quid.Arr.sliceStart(2,arguments);
         var option = {bubbles: true, cancelable: true, detail: data};
         
         return $inst.trigger(node,type,false,option);
@@ -109,7 +109,7 @@ quid.event = new function()
     // ces événements ne bubble pas
     this.triggerCustom = function(node,type) 
     {
-        var data = quid.arr.sliceStart(2,arguments);
+        var data = Quid.Arr.sliceStart(2,arguments);
         var option = {bubbles: false, cancelable: true, detail: data};
         
         return $inst.trigger(node,type,true,option);
@@ -121,7 +121,7 @@ quid.event = new function()
     // ces événements ne bubble pas
     this.triggerSetup = function(node) 
     {
-        var args = [node,'component:setup'].concat(quid.arr.sliceStart(1,arguments));
+        var args = [node,'component:setup'].concat(Quid.Arr.sliceStart(1,arguments));
         return $inst.triggerCustom.apply(null,args);
     }
     
@@ -166,12 +166,12 @@ quid.event = new function()
         var r = null;
         var one = $(node).first();
         var func = $inst.getFunc(one,type);
-        var args = quid.arr.sliceStart(2,arguments);
+        var args = Quid.Arr.sliceStart(2,arguments);
 
-        if(quid.func.is(func))
+        if(Quid.Func.is(func))
         {
             if(debug === true)
-            console.log(type,node);
+            console.log(node,type);
             
             r = func.apply(node,args);
         }

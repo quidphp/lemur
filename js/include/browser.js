@@ -6,7 +6,7 @@
  
 // browser
 // script with a some functions related to browsers
-quid.browser = new function() 
+Quid.Browser = new function() 
 {    
     // instance
     var $inst = this;

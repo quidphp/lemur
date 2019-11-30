@@ -6,9 +6,9 @@
  
 // keyboardEnter
 // attrape la touche enter, par défaut l'événement est prevent
-quid.component.keyboardEnter = function(prevent,type)
+Quid.Component.keyboardEnter = function(prevent,type)
 {
-    quid.component.keyboard.call(this,'enter',[10,13],type);
+    Quid.Component.keyboard.call(this,'enter',[10,13],type);
     
     $(this).on('enter:prevent', function(event) {
         return (prevent === true)? true:false;

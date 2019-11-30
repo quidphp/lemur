@@ -5,7 +5,7 @@
  */
 
 // globale
-var quid = {};
+var Quid = {};
 
 
 // alias

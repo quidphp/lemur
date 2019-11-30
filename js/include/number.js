@@ -6,7 +6,7 @@
  
 // number
 // script with functions related to numbers
-quid.number = new function() 
+Quid.Number = new function() 
 {   
     // instance
     var $inst = this;

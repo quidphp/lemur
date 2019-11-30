@@ -6,7 +6,7 @@
  
 // str
 // script with a set of helper functions related to strings
-quid.str = new function() 
+Quid.Str = new function() 
 {    
     // instance
     var $inst = this;
@@ -116,7 +116,7 @@ quid.str = new function()
         var r = null;
         var x = $inst.explode(delimiter,value);
         
-        if(quid.number.isInt(index) && $inst.isNotEmpty(x[index]))
+        if(Quid.Number.isInt(index) && $inst.isNotEmpty(x[index]))
         r = x[index];
         
         return r;

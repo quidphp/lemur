@@ -6,11 +6,11 @@
  
 // com
 // script of behaviours for the communication component of the CMS
-quid.component.com = function()
+Quid.Component.com = function()
 {
     // main
-    quid.component.block.call(this,'click');
-    quid.component.keyboardEscape.call(this,true);
+    Quid.Component.block.call(this,'click');
+    Quid.Component.keyboardEscape.call(this,true);
     
     // triggerHandler
     $(this).on('com:getBottom', function() {
@@ -59,9 +59,9 @@ quid.component.com = function()
     // redirect
     var redirect = function(table,primary,clickEvent)
     {
-        var href = quid.node.dataHrefReplaceChar(this,table);
+        var href = Quid.Node.dataHrefReplaceChar(this,table);
         
-        if(quid.str.isNotEmpty(href))
+        if(Quid.Str.isNotEmpty(href))
         {
             $(this).trigger('block');
             href = href.replace($(this).data('char'),primary);

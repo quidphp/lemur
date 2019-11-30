@@ -6,7 +6,7 @@
  
 // rowsChecker
 // script for the rows checker component in the general page of the CMS
-quid.component.rowsChecker = function()
+Quid.Component.rowsChecker = function()
 {
     // triggerHandler
     $(this).on('rowsChecker:getToolsContainer', function() {
@@ -57,7 +57,7 @@ quid.component.rowsChecker = function()
         return $(this).triggerHandler('rowsChecker:getCheckboxes').filter(':checked');
     })
     .on('rowsChecker:getCheckedSet', function(event,separator) {
-        return quid.node.valueSeparator($(this).triggerHandler('rowsChecker:getCheckedCheckboxes'),separator,true);
+        return Quid.Node.valueSeparator($(this).triggerHandler('rowsChecker:getCheckedCheckboxes'),separator,true);
     })
     .on('rowsChecker:areAllChecked', function() {
         var checkboxes = $(this).triggerHandler('rowsChecker:getCheckboxes');
@@ -68,12 +68,12 @@ quid.component.rowsChecker = function()
     .on('rowsChecker:areAllUpdateable', function() {
         var rows = $(this).triggerHandler('rowsChecker:getCheckedRows');
         
-        return quid.node.isAll("[data-updateable='1']",rows);
+        return Quid.Node.isAll("[data-updateable='1']",rows);
     })
     .on('rowsChecker:areAllDeleteable', function() {
         var rows = $(this).triggerHandler('rowsChecker:getCheckedRows');
         
-        return quid.node.isAll("[data-deleteable='1']",rows);
+        return Quid.Node.isAll("[data-deleteable='1']",rows);
     })
     
     // trigger
@@ -173,7 +173,7 @@ quid.component.rowsChecker = function()
         var $this = $(this);
         var button = $(this).triggerHandler('rowsChecker:getToolsButton');
         
-        quid.component.block.call(button,'click');
+        Quid.Component.block.call(button,'click');
         
         button.on('click', function(event) {
             $(this).trigger('toolButton:redirect',[event]);
@@ -181,9 +181,9 @@ quid.component.rowsChecker = function()
         .on('toolButton:redirect', function(event,clickEvent) {
             var separator = $(this).data("separator");
             var set = $this.triggerHandler('rowsChecker:getCheckedSet',[separator]);
-            var href = quid.node.dataHrefReplaceChar(this,set);
+            var href = Quid.Node.dataHrefReplaceChar(this,set);
             
-            if(quid.str.isNotEmpty(href))
+            if(Quid.Str.isNotEmpty(href))
             {
                 $(this).trigger('block');
                 $(document).trigger('document:go',[href,clickEvent]);
@@ -208,15 +208,15 @@ quid.component.rowsChecker = function()
         var $this = $(this);
         var multiDelete = $(this).triggerHandler('rowsChecker:getMultiDelete');
         
-        quid.component.block.call(multiDelete,'submit');
-        quid.component.confirm.call(multiDelete,'submit');
+        Quid.Component.block.call(multiDelete,'submit');
+        Quid.Component.confirm.call(multiDelete,'submit');
         
         multiDelete.on('confirmed', function(event,submit) {
             var input = $(this).find("input[name='primaries']");
             var separator = $(this).data('separator');
             var set = $this.triggerHandler('rowsChecker:getCheckedSet',[separator]);
             
-            if(quid.str.isNotEmpty(set))
+            if(Quid.Str.isNotEmpty(set))
             {
                 input.val(set);
                 $(this).trigger('block');

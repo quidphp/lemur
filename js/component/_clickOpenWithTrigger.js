@@ -6,10 +6,10 @@
  
 // clickOpenWithTrigger
 // gère les comportements pour un click open avec un trigger
-quid.component.clickOpenWithTrigger = function(trigger,triggerEvent,target,noToggle)
+Quid.Component.clickOpenWithTrigger = function(trigger,triggerEvent,target,noToggle)
 {
-    quid.component.clickOpenTrigger.call(this,trigger,triggerEvent,noToggle);
-    quid.component.clickOpen.call(this,target);
+    Quid.Component.clickOpenTrigger.call(this,trigger,triggerEvent,noToggle);
+    Quid.Component.clickOpen.call(this,target);
     
     return this;
 }
