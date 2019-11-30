@@ -5,8 +5,8 @@
  */
  
 // modal
-// script with behaviours for a modal component (popup in a fixed div)
-Quid.Component.modal = function()
+// script for a modal component (popup in a fixed div)
+var Modal = function()
 {
     // event + keyboard
     Quid.Component.block.call(this,'modal:fetch');
@@ -222,3 +222,6 @@ Quid.Component.modal = function()
     
     return this;
 }
+
+// export
+Quid.Component.Modal = Modal;

@@ -6,7 +6,7 @@
  
 // arr
 // script with a set of helper functions related to arrays
-Quid.Arr = new function() 
+var Arr = new function() 
 {    
     // instance
     var $inst = this;
@@ -81,3 +81,6 @@ Quid.Arr = new function()
         return $inst.slice(start,true,array);
     }
 };
+
+// export
+Quid.Arr = Arr;

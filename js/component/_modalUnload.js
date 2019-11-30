@@ -6,7 +6,7 @@
 
 // modalUnload
 // script containing logic for a modalUnload component
-Quid.Component.modalUnload = function()
+Quid.Component.ModalUnload = function()
 {
     // modalExternal
     // permet de gérer l'ouverture du modal lors du clique sur un lien externe

@@ -6,7 +6,7 @@
  
 // testInclude
 // script to test the include.js file
-Quid.test.include = new function() 
+Quid.Test.include = new function() 
 {    
     // instance
     var $inst = this;
@@ -143,7 +143,7 @@ Quid.test.include = new function()
         assert(node.tag(window) === null);
         assert(str.isNotEmpty(node.outerHtml(htmlNode)));
         assert(number.isInt(node.heightWithPadding(htmlNode)));
-        assert(obj.isPlain(node.getAttr(htmlNode)));
+        assert(obj.isPlain(node.attr(htmlNode)));
         assert(str.isNotEmpty(node.getAttrStr(htmlNode)));
         assert(obj.isPlain(node.getDataAttr(htmlNode)));
         

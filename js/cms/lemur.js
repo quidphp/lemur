@@ -31,7 +31,7 @@ $(document).ready(function() {
         var modal = body.find("> .modal").first();
         
         // modal
-        triggerSetup(Quid.Component.modal.call(modal));
+        triggerSetup(Quid.Component.Modal.call(modal));
     });
     
     

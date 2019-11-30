@@ -26,23 +26,28 @@ abstract class Boot extends Core\Boot
             '[vendorLemur]/vendor'=>'[publicJs]/vendor'],
         'roles'=>[
             'editor'=>[60]],
-        'compile'=>[
-            'php'=>[ // ajoute le namespace pour le concatenator php
-                'quid'=>[
-                    'option'=>[
-                        'namespace'=>[
-                            __NAMESPACE__=>['closure'=>true],
-                            Test\Lemur::class=>['closure'=>false]]]]],
-            'js'=>[
-                '[publicJs]/include.js'=>[
-                    0=>'[vendorLemur]/js/include'],
-                '[publicJs]/component.js'=>[
-                    0=>'[vendorLemur]/js/component']]],
+            
+        'compileJs'=>[
+            'include'=>array(
+                'to'=>'[publicJs]/include.js',
+                'from'=>array(
+                    0=>'[vendorLemur]/js/include')),
+            'component'=>array(
+                'to'=>'[publicJs]/component.js',
+                'from'=>array(
+                    0=>'[vendorLemur]/js/component'))],
+        
+        'compileJsOption'=>array(
+            'concatenator'=>array(
+                'start'=>"\"use strict\";\n\n(function() {\n\n",
+                'end'=>"\n\n})();")),
+    
         '@dev'=>[
-            'compile'=>[
-                'js'=>[
-                    '[publicJs]/test.js'=>[
-                        0=>'[vendorLemur]/js/test']]]],
+            'compileJs'=>[
+                'test'=>[
+                    'to'=>'[publicJs]/test.js',
+                    'from'=>array(0=>'[vendorLemur]/js/test')]]],
+                    
         '@cms'=>[
             'service'=>[
                 'polyfill'=>Service\Polyfill::class,
@@ -54,22 +59,31 @@ abstract class Boot extends Core\Boot
                 'versionQuid'=>true,
                 'background'=>null,
                 'logo'=>null],
-            'compile'=>[
-                'scss'=>[
-                    '[publicCss]/cms.css'=>[
+                
+            'compileCss'=>[
+                'cms'=>array(
+                    'to'=>'[publicCss]/cms.css',
+                    'from'=>array(
                         0=>'[vendorLemur]/css/include',
                         1=>'[vendorLemur]/css/component',
                         2=>'[vendorLemur]/css/import',
-                        10=>'[vendorLemur]/css/cms'],
-                    '[publicCss]/icon.css'=>[
+                        10=>'[vendorLemur]/css/cms')),
+                'icon'=>array(
+                    'to'=>'[publicCss]/icon.css',
+                    'from'=>array(
                         0=>'[vendorLemur]/css/include',
-                        1=>'[vendorLemur]/css/icon'],
-                    '[publicCss]/tinymce.css'=>[
+                        1=>'[vendorLemur]/css/icon')),
+                'tinymce'=>array(
+                    'to'=>'[publicCss]/tinymce.css',
+                    'from'=>array(
                         0=>'[vendorLemur]/css/include',
-                        1=>'[vendorLemur]/css/tinymce']],
-                'js'=>[
-                    '[publicJs]/cms.js'=>[
-                        0=>'[vendorLemur]/js/cms']]]]
+                        1=>'[vendorLemur]/css/tinymce'))],
+                        
+            'compileJs'=>array(
+                'cms'=>array(
+                    'to'=>'[publicJs]/cms.js',
+                    'from'=>array(
+                        0=>'[vendorLemur]/js/cms')))]
     ];
 
 

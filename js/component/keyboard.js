@@ -5,16 +5,14 @@
  */
  
 // keyboard
-// script of behaviours for a keyboard component
-// permet d'attraper une touche au clavier
-// l'événement par défaut est keydown
+// component to catch and/or prevent an event related to a key press on the keyboard
 Quid.Component.keyboard = function(key,values,type) 
 {
     type = type || 'keydown';
     
     if(Quid.Str.isNotEmpty(key) && Quid.Arr.isNotEmpty(values))
     {
-        ael(this,type, function(event) 
+        ael(this,type,function(event) 
         {
             if(Quid.Arr.in(event.keyCode,values))
             {
@@ -33,7 +31,7 @@ Quid.Component.keyboard = function(key,values,type)
                     return false;
                 }
             }
-        })
+        });
     }
     
     return this;

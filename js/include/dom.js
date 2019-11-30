@@ -12,14 +12,11 @@ Quid.Dom = new function()
     var $inst = this;
     
     
-    // replaceAttr
+    // setsAttr
     // remplace tous les attributs d'une balise, il faut fournir un plain object
     // possible de retirer les attributs existants
-    this.replaceAttr = function(value,node,remove)
+    this.setsAttr = function(value,node)
     {
-        if(remove === true)
-        $inst.removeAttr(node);
-        
         if(Quid.Obj.isPlain(value))
         {
             $(node).each(function() {
@@ -35,9 +32,9 @@ Quid.Dom = new function()
     }
 
 
-    // removeAttr
+    // emptyAttr
     // permet de retirer tous les attributs à une tag
-    this.removeAttr = function(node)
+    this.emptyAttr = function(node)
     {
         $(node).each(function(index, el) {
             var $this = $(this);

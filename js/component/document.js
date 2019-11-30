@@ -16,7 +16,7 @@ Quid.Component.document = function(option)
     
     
     // option
-    option = Object.assign({
+    var $option = Object.assign({
         anchor: "a:not([target='_blank']):not([data-navigation='0']):not([data-modal]):not([href^='mailto:'])",
         form: "form:not([data-navigation='0'])",
         timeout: 10000,
@@ -131,8 +131,8 @@ Quid.Component.document = function(option)
     setFunc(this,'document:getRouteWrap', function() {
         var r = triggerFunc(this,'document:getBody');
 
-        if(option.routeWrap)
-        r = r.find(option.routeWrap).first();
+        if($option.routeWrap)
+        r = r.find($option.routeWrap).first();
         
         return r;
     });
@@ -154,7 +154,7 @@ Quid.Component.document = function(option)
     // getBackground
     // retourne la node du background
     setFunc(this,'document:getBackground', function() {
-        return triggerFunc(this,'document:getBody').find(option.background).first();
+        return triggerFunc(this,'document:getBody').find($option.background).first();
     });
     
     
@@ -206,7 +206,7 @@ Quid.Component.document = function(option)
         {
             var target = $(click.currentTarget);
             
-            if(target.is(option.anchor))
+            if(target.is($option.anchor))
             {
                 var uri = target.prop('href');
                 r = triggerFunc(this,'document:go',uri,click);
@@ -223,7 +223,7 @@ Quid.Component.document = function(option)
         var r = false;
         var target = $(submit.target);
         
-        if(target.is(option.form))
+        if(target.is($option.form))
         {
             var uri = target.prop('action');
             r = triggerFunc(this,'document:go',uri,submit);
@@ -243,7 +243,7 @@ Quid.Component.document = function(option)
         
         else
         {
-            if(uri instanceof jQuery && uri.is(option.anchor))
+            if(uri instanceof jQuery && uri.is($option.anchor))
             uri = uri.prop("href");
             
             if(Quid.Str.is(uri))
@@ -374,7 +374,7 @@ Quid.Component.document = function(option)
         
         
         // anchor click
-        $(this).on('click', option.anchor, function(event) { 
+        $(this).on('click', $option.anchor, function(event) { 
             var r = true;
             var href = $(this).attr('href');
             
@@ -390,7 +390,7 @@ Quid.Component.document = function(option)
         })
         
         // submit
-        .on('submit', option.form, function(event) { 
+        .on('submit', $option.form, function(event) { 
             var r = true;
             triggerFunc($this,'document:submitEvent',event);
             
@@ -599,7 +599,7 @@ Quid.Component.document = function(option)
             
             var config = {
                 url: state.url,
-                timeout: option.timeout,
+                timeout: $option.timeout,
                 success: function(data,textStatus,jqXHR) {
                     afterAjax.call($this,type,state,jqXHR);
                 },
@@ -693,7 +693,7 @@ Quid.Component.document = function(option)
             // html
             // les attributs de html sont remplacés (les attributs existants ne sont pas effacés)
             var html = triggerFunc(this,'document:getHtml');
-            Quid.Dom.replaceAttr(doc.htmlAttr,html);
+            Quid.Dom.setsAttr(doc.htmlAttr,html);
             
             // head
             var head = html.find("head").first();
@@ -714,20 +714,22 @@ Quid.Component.document = function(option)
             // body
             // les attributs de body sont effacés et remplacés
             var body = triggerFunc(this,'document:getBody');
-            Quid.Dom.replaceAttr(doc.bodyAttr,body,true);
+            Quid.Dom.emptyAttr(body);
+            Quid.Dom.setsAttr(doc.bodyAttr,body);
             
             // routeWrap
             // les attributs de routeWrap sont effacés et remplacés seulement si routeWrap n'est pas body
             var routeWrap = triggerFunc(this,'document:getRouteWrap');
             var contentTarget = doc.body;
-            if(option.routeWrap && !routeWrap.is("body"))
+            if($option.routeWrap && !routeWrap.is("body"))
             {
-                var routeWrapTarget = contentTarget.find(option.routeWrap);
+                var routeWrapTarget = contentTarget.find($option.routeWrap);
                 if(routeWrapTarget.length)
                 {
                     contentTarget = routeWrapTarget;
-                    var routeWrapAttributes = Quid.Node.getAttr(contentTarget);
-                    Quid.Dom.replaceAttr(routeWrapAttributes,routeWrap,true);
+                    var routeWrapAttributes = Quid.Node.attr(contentTarget);
+                    Quid.Dom.emptyAttr(routeWrap);
+                    Quid.Dom.setsAttr(routeWrapAttributes,routeWrap);
                 }
             }
             routeWrap.html(contentTarget.html());

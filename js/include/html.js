@@ -52,7 +52,7 @@ Quid.Html = new function()
         
         r.html = doc;
         r.html.removeAttr('data-tag');
-        r.htmlAttr = Quid.Node.getAttr(r.html);
+        r.htmlAttr = Quid.Node.attr(r.html);
         
         r.head = doc.find("[data-tag='head']").first();
         r.body = doc.find("[data-tag='body']").first();
@@ -60,7 +60,7 @@ Quid.Html = new function()
         if(r.head.length)
         {
             r.head.removeAttr('data-tag');
-            r.headAttr = Quid.Node.getAttr(r.head);
+            r.headAttr = Quid.Node.attr(r.head);
             r.title = r.head.find("title").first().text() || '?';
             r.titleHtml = r.title.replace('<','&lt;').replace('>','&gt;').replace(' & ',' &amp; ');
             r.meta = r.head.find("meta");
@@ -69,7 +69,7 @@ Quid.Html = new function()
         if(r.body.length)
         {
             r.body.removeAttr('data-tag');
-            r.bodyAttr = Quid.Node.getAttr(r.body);
+            r.bodyAttr = Quid.Node.attr(r.body);
         }
         
         else

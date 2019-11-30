@@ -4,9 +4,11 @@
  * License: https://github.com/quidphp/lemur/blob/master/LICENSE
  */
 
-// globale
+// variable
 var Quid = {};
 
+// globale
+window.Quid = Quid;
 
 // alias
 var d = console.log;

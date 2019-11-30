@@ -110,9 +110,9 @@ Quid.Node = new function()
     }
     
     
-    // getAttr
+    // attr
     // retourne un objet contenant tous les attributs d'une balise
-    this.getAttr = function(node,start)
+    this.attr = function(node,start)
     {
         var r = null;
         node = $(node).first();
@@ -136,7 +136,7 @@ Quid.Node = new function()
     this.getAttrStr = function(node,start)
     {
         var r = null;
-        var attr = $inst.getAttr(node,start);
+        var attr = $inst.attr(node,start);
         
         if(attr != null)
         r = Quid.Obj.str(attr,'=',true);
@@ -149,7 +149,7 @@ Quid.Node = new function()
     // retourne un objet contenant tous les data-attributs d'une balise
     this.getDataAttr = function(node)
     {
-        return $inst.getAttr(node,'data-');
+        return $inst.attr(node,'data-');
     }
     
     
