@@ -11,7 +11,6 @@ declare(strict_types=1);
 
 namespace Quid\Lemur;
 use Quid\Core;
-use Quid\Test;
 
 // boot
 // extended abstract class for the object that bootstraps the cms
@@ -26,28 +25,28 @@ abstract class Boot extends Core\Boot
             '[vendorLemur]/vendor'=>'[publicJs]/vendor'],
         'roles'=>[
             'editor'=>[60]],
-            
+
         'compileJs'=>[
-            'include'=>array(
+            'include'=>[
                 'to'=>'[publicJs]/include.js',
-                'from'=>array(
-                    0=>'[vendorLemur]/js/include')),
-            'component'=>array(
+                'from'=>[
+                    0=>'[vendorLemur]/js/include']],
+            'component'=>[
                 'to'=>'[publicJs]/component.js',
-                'from'=>array(
-                    0=>'[vendorLemur]/js/component'))],
-        
-        'compileJsOption'=>array(
-            'concatenator'=>array(
+                'from'=>[
+                    0=>'[vendorLemur]/js/component']]],
+
+        'compileJsOption'=>[
+            'concatenator'=>[
                 'start'=>"\"use strict\";\n\n(function() {\n\n",
-                'end'=>"\n\n})();")),
-    
+                'end'=>"\n\n})();"]],
+
         '@dev'=>[
             'compileJs'=>[
                 'test'=>[
                     'to'=>'[publicJs]/test.js',
-                    'from'=>array(0=>'[vendorLemur]/js/test')]]],
-                    
+                    'from'=>[0=>'[vendorLemur]/js/test']]]],
+
         '@cms'=>[
             'service'=>[
                 'polyfill'=>Service\Polyfill::class,
@@ -59,31 +58,31 @@ abstract class Boot extends Core\Boot
                 'versionQuid'=>true,
                 'background'=>null,
                 'logo'=>null],
-                
+
             'compileCss'=>[
-                'cms'=>array(
+                'cms'=>[
                     'to'=>'[publicCss]/cms.css',
-                    'from'=>array(
+                    'from'=>[
                         0=>'[vendorLemur]/css/include',
                         1=>'[vendorLemur]/css/component',
                         2=>'[vendorLemur]/css/import',
-                        10=>'[vendorLemur]/css/cms')),
-                'icon'=>array(
+                        10=>'[vendorLemur]/css/cms']],
+                'icon'=>[
                     'to'=>'[publicCss]/icon.css',
-                    'from'=>array(
+                    'from'=>[
                         0=>'[vendorLemur]/css/include',
-                        1=>'[vendorLemur]/css/icon')),
-                'tinymce'=>array(
+                        1=>'[vendorLemur]/css/icon']],
+                'tinymce'=>[
                     'to'=>'[publicCss]/tinymce.css',
-                    'from'=>array(
+                    'from'=>[
                         0=>'[vendorLemur]/css/include',
-                        1=>'[vendorLemur]/css/tinymce'))],
-                        
-            'compileJs'=>array(
-                'cms'=>array(
+                        1=>'[vendorLemur]/css/tinymce']]],
+
+            'compileJs'=>[
+                'cms'=>[
                     'to'=>'[publicJs]/cms.js',
-                    'from'=>array(
-                        0=>'[vendorLemur]/js/cms')))]
+                    'from'=>[
+                        0=>'[vendorLemur]/js/cms']]]]
     ];
 
 
