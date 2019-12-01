@@ -6,13 +6,13 @@
  
 // input
 // script with behaviours for an input component
-Quid.Component.input = function() {
+Component.input = function() {
     
     // alias
-    var setFunc = Quid.Event.setFunc;
-    var triggerFunc = Quid.Event.triggerFunc;
-    var ael = Quid.Event.addEventListener;
-    var triggerCustom = Quid.Event.triggerCustom;
+    const setFunc = Evt.setFunc;
+    const triggerFunc = Evt.triggerFunc;
+    const ael = Evt.addEventListener;
+    const triggerCustom = Evt.triggerCustom;
     
     // func
     setFunc(this,'input:isBinded',function() {
@@ -20,13 +20,13 @@ Quid.Component.input = function() {
     });
     
     setFunc(this,'input:isEmpty',function() {
-        var value = triggerFunc(this,'input:getValue');
-        return Quid.Str.isEmpty(value,true);
+        const value = triggerFunc(this,'input:getValue');
+        return Str.isEmpty(value,true);
     });
     
     setFunc(this,'input:isNotEmpty',function() {
-        var value = triggerFunc(this,'input:getValue');
-        return Quid.Str.isNotEmpty(value,true);
+        const value = triggerFunc(this,'input:getValue');
+        return Str.isNotEmpty(value,true);
     });
     
     setFunc(this,'input:isDisabled',function() {
@@ -34,11 +34,11 @@ Quid.Component.input = function() {
     });
     
     setFunc(this,'input:getValue',function(trim) {
-        return Quid.Node.value(this,trim);
+        return Dom.value(this,trim);
     });
     
     setFunc(this,'input:getValueInt',function() {
-        return Quid.Number.castInt($(this).val());
+        return Num.castInt($(this).val());
     });
     
     setFunc(this,'input:getValueTrim',function() {
@@ -64,7 +64,7 @@ Quid.Component.input = function() {
     });
     
     ael(this,'input:prepareDisable',function(event) {
-        $(this).trigger(triggerFunc(this,'input:isDisabled')? 'input:disable':'input:enable');
+        triggerCustom(this,triggerFunc(this,'input:isDisabled')? 'input:disable':'input:enable');
     });
     
     return this;

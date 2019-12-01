@@ -6,9 +6,9 @@
  
 // keyboardTab
 // attrape la touche tab, par défaut l'événement est prevent
-Quid.Component.keyboardTab = function(prevent,type)
+Component.keyboardTab = function(prevent,type)
 {
-    Quid.Component.keyboard.call(this,'tab',[9],type);
+    Component.keyboard.call(this,'tab',[9],type);
     
     $(this).on('tab:prevent', function(event) {
         return (prevent === true)? true:false;

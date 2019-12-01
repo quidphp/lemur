@@ -6,37 +6,37 @@
  
 // fragment
 // gère les changements de fragment
-Quid.Component.fragment = function() 
+Component.fragment = function() 
 {
     $(this).on('fragment:get', function(event) {
         return $(this).data('fragment');
     })
     .on('fragment:update', function(event,replaceState) {
-        var current = Quid.Request.fragment();
-        var fragment = $(this).triggerHandler('fragment:get');
-        var hasHistoryApi = $(document).triggerHandler('document:hasHistoryApi');
+        const current = Request.fragment();
+        const fragment = triggerFunc(this,'fragment:get');
+        const hasHistoryApi = $(document).triggerHandler('document:hasHistoryApi');
         
         if(current !== fragment)
         {
-            if(Quid.Str.isNotEmpty(fragment))
+            if(Str.isNotEmpty(fragment))
             {
-                var fragmentHash = '#'+fragment;
+                const fragmentHash = '#'+fragment;
                 
                 if(hasHistoryApi === true && replaceState === true)
-                $(document).triggerHandler('document:replaceState',Quid.Request.relative()+fragmentHash);
+                $(document).triggerHandler('document:replaceState',Request.relative()+fragmentHash);
                 else
                 window.location.hash = fragmentHash;
             }
             
             else
-            $(this).trigger('fragment:remove',[replaceState]);
+            triggerCustom(this,'fragment:remove',[replaceState]);
             
-            $(this).trigger('fragment:updated',[fragment]);
+            triggerCustom(this,'fragment:updated',[fragment]);
         }
     })
     .on('fragment:remove', function(event) {
         if(hasHistoryApi === true && replaceState === true)
-        $(document).triggerHandler('document:replaceState',Quid.Request.relative());
+        $(document).triggerHandler('document:replaceState',Request.relative());
         else
         window.location.hash = '';
     });

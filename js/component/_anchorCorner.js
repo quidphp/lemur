@@ -6,34 +6,34 @@
  
 // anchorCorner
 // script of behaviours for an absolute anchorCorner component
-Quid.Component.anchorCorner = function()
+Component.anchorCorner = function()
 {
     // resizeChange
-    Quid.Component.resizeChange.call(this);
+    Component.resizeChange.call(this);
     
     
     // trigger
     $(this).on('anchorCorner:refresh', function(event) {
-        var offset = offsetCorner.call(this);
+        const offset = offsetCorner.call(this);
         $(this).attr('data-anchor-corner',offset.corner);
         event.stopPropagation();
     })
     .on('resize:change', function() {
-        $(this).trigger('anchorCorner:refresh');
+        triggerCustom(this,'anchorCorner:refresh');
     })
     
     
     // mouse
     .on('mouseenter', function(event) {
-        $(this).trigger('anchorCorner:refresh');
+        triggerCustom(this,'anchorCorner:refresh');
         event.stopPropagation();
     });
     
     
     // offsetCorner
-    var offsetCorner = function()
+    const offsetCorner = function()
     {
-        var r = $(this).offset();
+        let r = $(this).offset();
         r.y = r.top - $(window).scrollTop();
         r.x = r.left - $(window).scrollLeft();
         
@@ -46,7 +46,7 @@ Quid.Component.anchorCorner = function()
     
     
     // firstRefresh
-    $(this).trigger('anchorCorner:refresh');
+    triggerCustom(this,'anchorCorner:refresh');
     
     
     return this;

@@ -6,10 +6,10 @@
  
 // browser
 // script with a some functions related to browsers
-Quid.Browser = new function() 
+const Browser = new function() 
 {    
     // instance
-    var $inst = this;
+    const $inst = this;
     
     
     // isResponsive
@@ -32,8 +32,8 @@ Quid.Browser = new function()
     // retourne vrai si le navigateur est une vieille version de IE (IE 10 ou moins)
     this.isOldIe = function() 
     {
-        var r = false;
-        var msie = window.navigator.userAgent.indexOf('MSIE ');
+        let r = false;
+        const msie = window.navigator.userAgent.indexOf('MSIE ');
         
         if(msie > 0)
         r = true;
@@ -54,7 +54,7 @@ Quid.Browser = new function()
     // retourne vrai si les cookies sont activés
     this.allowsCookie = function()
     {
-        var r = false;
+        let r = false;
         
         if(navigator.cookieEnabled) 
         r = true;
@@ -69,3 +69,6 @@ Quid.Browser = new function()
         return r;
     }
 };
+
+// export
+Lemur.Browser = Browser;

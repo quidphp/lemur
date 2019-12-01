@@ -10,28 +10,13 @@
 // ready
 $(document).ready(function() {
 	
-    // alias
-    var d = console.log;
-    var dd = console.dir;
-    var debug = Quid.Event.debug;
-    var assert = console.assert;
-    var setFunc = Quid.Event.setFunc;
-    var ael = Quid.Event.addEventListener;
-    var aelOnce = Quid.Event.addEventListenerOnce;
-    var triggerEvent = Quid.Event.triggerEvent;
-    var triggerFunc = Quid.Event.triggerFunc;
-    var triggerCustom = Quid.Event.triggerCustom;
-    var triggerSetup = Quid.Event.triggerSetup;
-    debug(true);
-    
-    
     // initial mount
     // comportements bindés une seule fois au tout début
     ael(this,'document:mountInitial', function(event,body) {
-        var modal = body.find("> .modal").first();
+        const modal = body.find("> .modal").first();
         
         // modal
-        triggerSetup(Quid.Component.Modal.call(modal));
+        triggerSetup(Component.Modal.call(modal));
     });
     
     
@@ -42,39 +27,39 @@ $(document).ready(function() {
         
         /*
         // input
-        var input = node.find(Quid.Selector.input());
-        Quid.Component.input.call(input);
+        const input = node.find(Selector.input());
+        Component.input.call(input);
         
         // select
-        var select = node.find("select");
-        triggerSetup(Quid.Component.fakeSelect.call(select));
+        const select = node.find("select");
+        triggerSetup(Component.fakeSelect.call(select));
         
         // form
-        var form = node.find("form");
-        Quid.Component.form.call(form);
+        const form = node.find("form");
+        Component.form.call(form);
         triggerCustom(form,'form:setup');
         
         // autre
-        var popupTrigger = node.find(".popup-trigger.with-popup:not(.with-ajax)");
-        var popupTriggerAjax = node.find(".popup-trigger.with-popup.with-ajax");
-        var anchorCorner = node.find("[data-anchor-corner='1']");
-        var absolutePlaceholder = node.find("[data-absolute-placeholder='1']");
-        var aConfirm = node.find("a[data-confirm]");
+        const popupTrigger = node.find(".popup-trigger.with-popup:not(.with-ajax)");
+        const popupTriggerAjax = node.find(".popup-trigger.with-popup.with-ajax");
+        const anchorCorner = node.find("[data-anchor-corner='1']");
+        const absolutePlaceholder = node.find("[data-absolute-placeholder='1']");
+        const aConfirm = node.find("a[data-confirm]");
         
 		// aConfirm
-		Quid.Component.confirm.call(aConfirm,'click');
+		Component.confirm.call(aConfirm,'click');
 		
         // popupTrigger
-        Quid.Component.clickOpenWithTrigger.call(popupTrigger,".popup-title");
+        Component.clickOpenWithTrigger.call(popupTrigger,".popup-title");
         
         // popupTriggerAjax
-        Quid.Component.clickOpenAnchorAjax.call(popupTriggerAjax,".popup-title");
+        Component.clickOpenAnchorAjax.call(popupTriggerAjax,".popup-title");
         
         // anchorCorner
-        Quid.Component.anchorCorner.call(anchorCorner);
+        Component.anchorCorner.call(anchorCorner);
         
         // absolutePlaceholder
-        Quid.Component.absolutePlaceholder.call(absolutePlaceholder);
+        Component.absolutePlaceholder.call(absolutePlaceholder);
         */
 	});
     
@@ -82,36 +67,36 @@ $(document).ready(function() {
 	// document mount
     // comportements utilisés pour toutes les pages du CMS
 	ael(this,'document:mount', function(event,routeWrap) {
-		var html = triggerFunc(this,'document:getHtml');
-		var burger = routeWrap.find("header .burger-menu, .nav-fixed .nav-close");
-		var com = routeWrap.find("main > .inner > .com");
-        var subMenu = routeWrap.find(".with-submenu");
-        var carousel = routeWrap.find(".with-carousel");
-        var mainSearch = routeWrap.find("header .top form");
+		const html = triggerFunc(this,'document:getHtml');
+		const burger = routeWrap.find("header .burger-menu, .nav-fixed .nav-close");
+		const com = routeWrap.find("main > .inner > .com");
+        const subMenu = routeWrap.find(".with-submenu");
+        const carousel = routeWrap.find(".with-carousel");
+        const mainSearch = routeWrap.find("header .top form");
         
         // carousel
-        Quid.Component.carousel.call(carousel);
+        Component.carousel.call(carousel);
         
         // subMenu
-        Quid.Component.clickOpenWithTrigger.call(subMenu,".trigger");
+        Component.clickOpenWithTrigger.call(subMenu,".trigger");
         setFunc(subMenu,'clickOpen:getBackgroundFrom', function(event) {
             return 'submenu';
         });
         
         // com
-		triggerSetup(Quid.Component.com.call(com));
+		triggerSetup(Component.com.call(com));
         
         // burger
-        triggerSetup(Quid.Component.burger.call(burger));
+        triggerSetup(Component.burger.call(burger));
 
         // mainSearch
-        triggerSetup(Quid.Component.mainSearch.call(mainSearch));
+        triggerSetup(Component.mainSearch.call(mainSearch));
 	});
     
     
     // document unmount
     ael(this,'document:unmount', function(event,routeWrap) {
-        var burger = routeWrap.find("header .burger-menu, .nav-fixed .nav-close");
+        const burger = routeWrap.find("header .burger-menu, .nav-fixed .nav-close");
         
         // burger
         triggerCustom(burger,'component:teardown');
@@ -120,9 +105,9 @@ $(document).ready(function() {
     
     // document ajax progress
     ael(this,'document:ajaxProgress', function(event,percent,progressEvent) {
-        var body = $(this).find("body");
-        var progress = body.find(".loading-progress");
-        var html = (percent >= 0 && percent < 100)? "<div class='percent'>"+percent+"%"+"</div>":"";
+        const body = $(this).find("body");
+        const progress = body.find(".loading-progress");
+        const html = (percent >= 0 && percent < 100)? "<div class='percent'>"+percent+"%"+"</div>":"";
         progress.html(html);
     });
     
@@ -151,7 +136,7 @@ $(document).ready(function() {
     // changePassword
     // comportement pour le popup changer mon mot de passe
 	ael(this,'modal:accountChangePassword', function(event,modal) {
-		var form = modal.find("form");
+		const form = modal.find("form");
         triggerCustom(form,'form:focusFirst');
 	});
     
@@ -159,13 +144,13 @@ $(document).ready(function() {
     // home
     // comportement pour la page d'accueil du CMS une fois connecté
 	ael(this,'route:home', function(event,routeWrap) {
-		var feed = routeWrap.find("main .home-feed");
-        var feedTogglers = feed.find(".block-head .feed-togglers > a");
-        var feedBody = feed.find(".block-body");
-        Quid.Component.appendContainer.call(feedBody);
-        triggerCustom(Quid.Component.appendContainer,'feed:bind');
+		const feed = routeWrap.find("main .home-feed");
+        const feedTogglers = feed.find(".block-head .feed-togglers > a");
+        const feedBody = feed.find(".block-body");
+        Component.appendContainer.call(feedBody);
+        triggerCustom(Component.appendContainer,'feed:bind');
         
-        Quid.Component.ajaxBlock.call(feedTogglers);
+        Component.ajaxBlock.call(feedTogglers);
         
         setFunc(feedTogglers,'ajaxBlock:getStatusNode', function(event) {
             return feedBody;
@@ -190,48 +175,48 @@ $(document).ready(function() {
     // comportement pour la page de navigation
 	ael(this,'route:general', function(event,routeWrap) {
 		
-        var main = routeWrap.find("main");
-        var scroller = main.find(".scroller");
-		var search = main.find(".left > .search");
-        var formTruncate = main.find(".truncate form");
-		var pageLimit = main.find("input[name='limit'],input[name='page']");
-        var table = scroller.find("table").first();
-        var filter = table.find("th.filterable .filter-outer");
-		var colsSorter = table.find("th.action");
-		var filesSlider = table.find("td[data-group='media'] .slider");
-        var quickEdit = table.find("td[data-quick-edit='1'] a.quick-edit");
-        var highlight = table.find("tr.highlight");
+        const main = routeWrap.find("main");
+        const scroller = main.find(".scroller");
+		const search = main.find(".left > .search");
+        const formTruncate = main.find(".truncate form");
+		const pageLimit = main.find("input[name='limit'],input[name='page']");
+        const table = scroller.find("table").first();
+        const filter = table.find("th.filterable .filter-outer");
+		const colsSorter = table.find("th.action");
+		const filesSlider = table.find("td[data-group='media'] .slider");
+        const quickEdit = table.find("td[data-quick-edit='1'] a.quick-edit");
+        const highlight = table.find("tr.highlight");
         
         // dragScroll
-        triggerSetup(Quid.Component.scrollDrag.call(scroller,{selector: 'tbody',targetTag: 'div'}));
+        triggerSetup(Component.scrollDrag.call(scroller,{selector: 'tbody',targetTag: 'div'}));
         
         // page + limit
-        Quid.Component.inputNumeric.call(pageLimit.get());
+        Component.inputNumeric.call(pageLimit.get());
         
         // rowsChecker
-        triggerSetup(Quid.Component.rowsChecker.call(main));
+        triggerSetup(Component.rowsChecker.call(main));
         
 		// colsSorter
-        Quid.Component.colsSorter.call(colsSorter);
+        Component.colsSorter.call(colsSorter);
 		triggerCustom(colsSorter,'component:setup');
         
         // filter
-		triggerSetup(Quid.Component.filter.call(filter));
+		triggerSetup(Component.filter.call(filter));
         
 		// search
 		if(search.length)
 		{
-			var searchInput = search.find(".form input[type='text']");
-			var searchSlide = search.find(".in");
-			triggerSetup(Quid.Component.inputSearch.call(searchInput));
-            Quid.Component.focusSlide.call(searchInput,searchSlide);
+			const searchInput = search.find(".form input[type='text']");
+			const searchSlide = search.find(".in");
+			triggerSetup(Component.inputSearch.call(searchInput));
+            Component.focusSlide.call(searchInput,searchSlide);
 		}
 		
 		// formTruncate
 		if(formTruncate.length)
 		{
-            Quid.Component.block.call(formTruncate,'submit');
-            Quid.Component.confirm.call(formTruncate,'submit');
+            Component.block.call(formTruncate,'submit');
+            Component.confirm.call(formTruncate,'submit');
 			
             ael(formTruncate,'confirmed', function() {
 				triggerCustom(this,'block');
@@ -239,10 +224,10 @@ $(document).ready(function() {
 		}
         
         // filesSlider
-        Quid.Component.slider.call(filesSlider,null,null,'.slider-element',false);
+        Component.slider.call(filesSlider,null,null,'.slider-element',false);
         
         // quickEdit
-        triggerSetup(Quid.Component.quickEdit.call(quickEdit));
+        triggerSetup(Component.quickEdit.call(quickEdit));
         
         // highlight 
         ael(highlight,'mouseover', function(event) {
@@ -253,8 +238,8 @@ $(document).ready(function() {
     
     // unmount
     ael(this,'route:general:unmount', function(event,routeWrap) {
-        var table = routeWrap.find("main .scroller table").first();
-        var quickEdit = table.find("td[data-quick-edit='1'] a.quick-edit");
+        const table = routeWrap.find("main .scroller table").first();
+        const quickEdit = table.find("td[data-quick-edit='1'] a.quick-edit");
         
         // quickEdit
         triggerCustom(quickEdit,'quickEdit:revert');
@@ -273,31 +258,31 @@ $(document).ready(function() {
     // permet de faire les bindings de champs
     // ces champs seront bindés à l'initialisation du panneau, lorsqu'ils sont visibles
     ael(this,'specificForm:bindView', function(event,node) {
-        var date = node.find("[data-group='date'] .specific-component");
-        var enumSet = node.find("[data-tag='search'] .specific-component");
-        var checkboxSortable = node.find("[data-group='relation'][data-sortable='1'] .specific-component");
-        var files = node.find("[data-group='media'] .specific-component");
-        var addRemove = node.find("[data-tag='add-remove'] .specific-component");
-        var textarea = node.find("[data-tag='textarea'] .specific-component");
-        var anchorCorner = node.find("[data-anchor-corner]");
+        const date = node.find("[data-group='date'] .specific-component");
+        const enumSet = node.find("[data-tag='search'] .specific-component");
+        const checkboxSortable = node.find("[data-group='relation'][data-sortable='1'] .specific-component");
+        const files = node.find("[data-group='media'] .specific-component");
+        const addRemove = node.find("[data-tag='add-remove'] .specific-component");
+        const textarea = node.find("[data-tag='textarea'] .specific-component");
+        const anchorCorner = node.find("[data-anchor-corner]");
         
         // date
-        triggerSetup(Quid.Component.calendarInput.call(date));
+        triggerSetup(Component.calendarInput.call(date));
         
         // enumSet
-        Quid.Component.enumSet.call(enumSet);
+        Component.enumSet.call(enumSet);
         
         // checkboxSortable
-        Quid.Component.verticalSorter.call(checkboxSortable,".choice",'.choice-in');
+        Component.verticalSorter.call(checkboxSortable,".choice",'.choice-in');
         
         // files
-        triggerSetup(Quid.Component.inputFiles.call(files));
+        triggerSetup(Component.inputFiles.call(files));
         
         // addRemove
-        triggerSetup(Quid.Component.addRemove.call(addRemove));
+        triggerSetup(Component.addRemove.call(addRemove));
         
         // textarea
-        triggerSetup(Quid.Component.textareaExtra.call(textarea));
+        triggerSetup(Component.textareaExtra.call(textarea));
         
         // anchorCorner
         triggerCustom(anchorCorner,'anchorCorner:refresh');
@@ -307,7 +292,7 @@ $(document).ready(function() {
     // specificForm unmount
     // permet démonter les champs du formulaire
     ael(this,'specificForm:unmount', function(event,node) {
-        var textarea = node.find("[data-tag='textarea'] .specific-component");
+        const textarea = node.find("[data-tag='textarea'] .specific-component");
         triggerCustom(textarea,'component:teardown');
     });
     
@@ -315,19 +300,19 @@ $(document).ready(function() {
 	// specific
     // comportement communs pour les pages spécifiques
 	ael(this,'group:specific', function(event,routeWrap) {
-        var form = routeWrap.find("main .inner > form.specific-form");
-        var panel = form.find("> .form-inner > .panel");
-        var submitConfirm = form.find("button[type='submit'][data-confirm]");
+        const form = routeWrap.find("main .inner > form.specific-form");
+        const panel = form.find("> .form-inner > .panel");
+        const submitConfirm = form.find("button[type='submit'][data-confirm]");
         
 		// submitConfirm
-        Quid.Component.confirm.call(submitConfirm,'click');
+        Component.confirm.call(submitConfirm,'click');
 		
         // champs simples
         triggerCustom(this,'specificForm:bindMount',form);
         
         // avec panel
         if(panel.length > 1)
-        Quid.Component.specificPanel.call(form);
+        Component.specificPanel.call(form);
         
         else
         triggerCustom(this,'specificForm:bindView',form);
@@ -337,7 +322,7 @@ $(document).ready(function() {
     // unmount
     // comportements communs pour démonter la page spécifique
     ael(this,'group:specific:unmount', function(event,routeWrap) {
-        var form = routeWrap.find("main .inner > form.specific-form");
+        const form = routeWrap.find("main .inner > form.specific-form");
         triggerCustom(this,'specificForm:unmount',form);
     });
     
@@ -345,8 +330,8 @@ $(document).ready(function() {
     // specificMulti
     // comportement pour la page de modification multiple
 	ael(this,'route:specificMulti', function(event) {
-        var form = $(this).find("main .inner > form.specific-form");
-        var formElement = form.find(".form-element");
+        const form = $(this).find("main .inner > form.specific-form");
+        const formElement = form.find(".form-element");
         
         setFunc(formElement,'specificMulti:isActive', function(event) {
             return triggerFunc(this,'specificMulti:getCheckbox').is(':checked');
@@ -357,19 +342,19 @@ $(document).ready(function() {
         });
         
         setFunc(formElement,'specificMulti:getInputs', function(event) {
-            return $(this).find("> .right").find(Quid.Selector.input());
+            return $(this).find("> .right").find(Selector.input());
         });
         
         ael(formElement,'specificMulti:refresh', function(event) {
-            var isActive = triggerFunc(this,'specificMulti:isActive');
-            var inputs = triggerFunc(this,'specificMulti:getInputs');
+            const isActive = triggerFunc(this,'specificMulti:isActive');
+            const inputs = triggerFunc(this,'specificMulti:getInputs');
             $(this).attr('data-disabled',(isActive === true)? 0:1);
             triggerCustom(inputs,(isActive === true)? 'input:enable':'input:disable');
         });
         
         aelOnce(formElement,'specificMulti:setup', function(event) {
-            var $this = $(this);
-            var checkbox = triggerFunc(this,'specificMulti:getCheckbox');
+            const $this = $(this);
+            const checkbox = triggerFunc(this,'specificMulti:getCheckbox');
             
             ael(checkbox,'change', function(event) {
                 triggerCustom($this,'specificMulti:refresh');
@@ -385,16 +370,16 @@ $(document).ready(function() {
     
     
     // nobodyCommon
-    var nobodyCommon = function() {
-        var browscap = $(this).find("main .browscap");
-		var form = $(this).find("main form");
+    const nobodyCommon = function() {
+        const browscap = $(this).find("main .browscap");
+		const form = $(this).find("main form");
         
 		triggerCustom(form,'form:focusFirst');
 		
-		if(!Quid.Browser.allowsCookie())
+		if(!Browser.allowsCookie())
 		browscap.find(".cookie-disabled").show();
         
-        if(Quid.Browser.isUnsupported())
+        if(Browser.isUnsupported())
 		browscap.find(".unsupported-browser").show();
     };
 });

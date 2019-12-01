@@ -6,10 +6,10 @@
  
 // json
 // script with functions related to json
-Quid.Json = new function() 
+const Json = new function() 
 {    
     // instance
-    var $inst = this;
+    const $inst = this;
     
     
     // encode
@@ -27,3 +27,6 @@ Quid.Json = new function()
         return JSON.parse(value);
     }
 };
+
+// export
+Lemur.Json = Json;

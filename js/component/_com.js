@@ -6,11 +6,11 @@
  
 // com
 // script of behaviours for the communication component of the CMS
-Quid.Component.com = function()
+Component.com = function()
 {
     // main
-    Quid.Component.block.call(this,'click');
-    Quid.Component.keyboardEscape.call(this,true);
+    Component.block.call(this,'click');
+    Component.keyboardEscape.call(this,true);
     
     // triggerHandler
     $(this).on('com:getBottom', function() {
@@ -19,15 +19,15 @@ Quid.Component.com = function()
 
     // trigger
     .on('escape:blocked', function() {
-        $(this).trigger('com:close');
+        triggerCustom(this,'com:close');
     })
     .on('com:slideUp', function() {
         $(this).addClass('slide-close');
-        $(this).triggerHandler('com:getBottom').stop(true,true).slideUp('fast');
+        triggerFunc(this,'com:getBottom').stop(true,true).slideUp('fast');
     })
     .on('com:slideDown', function() {
         $(this).removeClass('slide-close');
-        $(this).triggerHandler('com:getBottom').stop(true,true).slideDown('fast');
+        triggerFunc(this,'com:getBottom').stop(true,true).slideDown('fast');
     })
     .on('com:close', function() {
         $(this).stop(true,true).fadeOut("slow");
@@ -35,18 +35,18 @@ Quid.Component.com = function()
     
     // delegate
     .on('click', '.close', function(event) {
-        var $this = $(event.delegateTarget);
+        const $this = $(event.delegateTarget);
         $this.trigger('com:close');
     })
     .on('click', '.date', function(event) {
-        var $this = $(event.delegateTarget);
+        const $this = $(event.delegateTarget);
         $this.trigger($this.hasClass('slide-close')? 'com:slideDown':'com:slideUp');
     })
     .on('click', ".row.insert > span,.row.update > span", function(event) {
-        var $this = $(event.delegateTarget);
-        var parent = $(this).parent();
-        var table = parent.data('table');
-        var primary = parent.data('primary');
+        const $this = $(event.delegateTarget);
+        const parent = $(this).parent();
+        const table = parent.data('table');
+        const primary = parent.data('primary');
         redirect.call($this,table,primary,event);
     })
     
@@ -57,13 +57,13 @@ Quid.Component.com = function()
     });
     
     // redirect
-    var redirect = function(table,primary,clickEvent)
+    let redirect = function(table,primary,clickEvent)
     {
-        var href = Quid.Node.dataHrefReplaceChar(this,table);
+        const href = Dom.dataHrefReplaceChar(this,table);
         
-        if(Quid.Str.isNotEmpty(href))
+        if(Str.isNotEmpty(href))
         {
-            $(this).trigger('block');
+            triggerCustom(this,'block');
             href = href.replace($(this).data('char'),primary);
             $(document).trigger('document:go',[href,clickEvent]);
         }

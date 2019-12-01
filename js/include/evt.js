@@ -6,22 +6,22 @@
  
 // event
 // script containing event management functions
-Quid.Event = new function() 
+const Evt = new function() 
 {    
     // instance
-    var $inst = this;
+    const $inst = this;
     
     
     // debug
     // si true affiche les événements dans la console
-    var debug = false;
+    const debug = false;
     
     
     // debug
     // active ou désactive le débogagge
     this.debug = function(value)
     {
-        if(Quid.Bool.is(value))
+        if(Bool.is(value))
         debug = value;
         
         return;
@@ -32,12 +32,12 @@ Quid.Event = new function()
     // retourne vrai si la fonction de chaque node retourne la valeur donné en argument
     this.isTriggerFuncEqual = function(equal,type,node)
     {
-        var r = false;
-        var args = [type].concat(Quid.Arr.sliceStart(3,arguments));
+        let r = false;
+        const args = [type].concat(Arr.sliceStart(3,arguments));
         
         $(node).each(function(index) {
-            var funcArgs = [this].concat(args);
-            var result = $inst.triggerFunc.apply(null,funcArgs);
+            const funcArgs = [this].concat(args);
+            let result = $inst.triggerFunc.apply(null,funcArgs);
             r = (result === equal);
             
             if(r === false)
@@ -56,8 +56,8 @@ Quid.Event = new function()
         
         $(node).each(function() {
             this.addEventListener(type,function(event) {
-                var args = [event];
-                var detail = event.detail;
+                let args = [event];
+                const detail = event.detail;
                 args = args.concat(detail);
                 func.apply(this,args);
             },option);
@@ -79,7 +79,7 @@ Quid.Event = new function()
     // function utilisé par triggerEvent et triggerCustom pour envoyer des événements
     this.trigger = function(node,type,custom,option)
     {
-        var event = (custom === true)? new CustomEvent(type,option):new Event(type,option);
+        const event = (custom === true)? new CustomEvent(type,option):new Event(type,option);
         
         if(debug === true)
         console.log(node,event);
@@ -97,8 +97,8 @@ Quid.Event = new function()
     // ces événements buble
     this.triggerEvent = function(node,type) 
     {
-        var data = Quid.Arr.sliceStart(2,arguments);
-        var option = {bubbles: true, cancelable: true, detail: data};
+        const data = Arr.sliceStart(2,arguments);
+        const option = {bubbles: true, cancelable: true, detail: data};
         
         return $inst.trigger(node,type,false,option);
     }
@@ -109,8 +109,8 @@ Quid.Event = new function()
     // ces événements ne bubble pas
     this.triggerCustom = function(node,type) 
     {
-        var data = Quid.Arr.sliceStart(2,arguments);
-        var option = {bubbles: false, cancelable: true, detail: data};
+        const data = Arr.sliceStart(2,arguments);
+        const option = {bubbles: false, cancelable: true, detail: data};
         
         return $inst.trigger(node,type,true,option);
     }
@@ -121,7 +121,7 @@ Quid.Event = new function()
     // ces événements ne bubble pas
     this.triggerSetup = function(node) 
     {
-        var args = [node,'component:setup'].concat(Quid.Arr.sliceStart(1,arguments));
+        const args = [node,'component:setup'].concat(Arr.sliceStart(1,arguments));
         return $inst.triggerCustom.apply(null,args);
     }
     
@@ -163,12 +163,12 @@ Quid.Event = new function()
     // permet de lancer la fonction sur la première node donnée en argumetn
     this.triggerFunc = function(node,type) 
     {
-        var r = null;
-        var one = $(node).first();
-        var func = $inst.getFunc(one,type);
-        var args = Quid.Arr.sliceStart(2,arguments);
+        let r = null;
+        const one = $(node).first();
+        const func = $inst.getFunc(one,type);
+        const args = Arr.sliceStart(2,arguments);
 
-        if(Quid.Func.is(func))
+        if(Func.is(func))
         {
             if(debug === true)
             console.log(node,type);
@@ -179,3 +179,6 @@ Quid.Event = new function()
         return r;
     }
 }
+
+// export
+Lemur.Evt = Evt;

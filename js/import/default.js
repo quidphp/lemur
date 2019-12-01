@@ -4,5 +4,8 @@
  * License: https://github.com/quidphp/lemur/blob/master/LICENSE
  */
 
-// globale
-Quid.Test = {};
+// import default
+const d = console.log;
+const dd = console.dir;
+const assert = console.assert;
+const al = alert;

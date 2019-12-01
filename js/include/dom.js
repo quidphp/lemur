@@ -3,116 +3,229 @@
  * Website: https://quidphp.com
  * License: https://github.com/quidphp/lemur/blob/master/LICENSE
  */
-  
+
 // dom
-// script with functions for manipulating the dom
-Quid.Dom = new function() 
+// script with behaviours related to dom nodes
+const Dom = new function() 
 {
     // instance
-    var $inst = this;
+    const $inst = this;
     
     
-    // setsAttr
-    // remplace tous les attributs d'une balise, il faut fournir un plain object
-    // possible de retirer les attributs existants
-    this.setsAttr = function(value,node)
+    // is
+    // retourne vrai si la valeur est une node, node list ou un objet jQuery
+    // accepte aussi un tableau contenant seulement des nodes
+    this.is = function(value) 
     {
-        if(Quid.Obj.isPlain(value))
-        {
-            $(node).each(function() {
-                var $this = $(this);
-                
-                $.each(value, function(k,v) {
-                    $this.attr(k,v);
-                });
-            });
-        }
+        let r = false;
         
-        return this;
-    }
-
-
-    // emptyAttr
-    // permet de retirer tous les attributs à une tag
-    this.emptyAttr = function(node)
-    {
-        $(node).each(function(index, el) {
-            var $this = $(this);
-            var node = $(this)[0];
+        if(value != null)
+        {
+            if(value === document || value instanceof HTMLElement || value instanceof NodeList)
+            r = true;
             
-            $.each(node.attributes, function(index,value) 
+            else if(value instanceof jQuery && value.length)
+            r = true;
+            
+            else if(Array.isArray(value) && value.length)
             {
-                if(value != null)
-                $this.removeAttr(value.name);
-            });
-        });
+                var i;
+                
+                for (i = 0; i < value.length; i++) 
+                {
+                    r = $inst.is(value[i]);
+                    
+                    if(r === false)
+                    break;
+                }
+            }
+        }
         
-        return this;
+        return r;
     }
     
     
-    // addId
-    // ajoute un id aux éléments contenus dans l'objet qui n'en ont pas
-    // change aussi aux labels associés si existants
-    this.addId = function(base,node)
+    // isWindow
+    // retourne vrai si la valeur est une node window
+    this.isWindow = function(value) 
     {
-        if(Quid.Str.isNotEmpty(base))
-        {
-            $(node).not("[id]").each(function(index, el) {
-                var newId = base+Quid.Number.uniqueInt();
-                var labels = Quid.Selector.labels(this);
-                $(this).prop('id',newId);
-                labels.prop('for',newId);
-            });
-        }
+        return value != null && value === value.window;
+    }
+    
+    
+    // isTag
+    // retourne vrai si  la tag est celle donnée en argument
+    this.isTag = function(value,node)
+    {
+        return ($inst.tag(node) === value);
+    }
+    
+    
+    // matchAll
+    // retourne vrai si toutes les nodes retournent vrai à is
+    this.matchAll = function(value,node)
+    {
+        let r = false;
         
-        return this;
+        $(node).each(function() {
+            return r = $(this).is(value);
+        });
+        
+        return r;
+    }
+    
+    
+    // tag
+    // retourne le nom de la tag en lowerCase
+    this.tag = function(node) 
+    {
+        let r = null;
+        const tag = $(node).prop("tagName");
+        
+        if(Str.is(tag))
+        r = tag.toLowerCase();
+        
+        return r;
+    };
+
+
+    // outerHtml
+    // retourne le outerHtml d'une ou plusieurs nodes
+    // si pas de outerHtml, peut aussi retourner le html ou le texte
+    this.outerHtml = function(node)
+    {
+        let r = '';
+        
+        $(node).each(function(index, el) {
+            r += $(this).prop('outerHTML') || $(this).html() || $(this).text();
+        });
+        
+        return r;
     }
 
 
-    // aExternalBlank
-    // ajout target _blank à tous les liens externes qui n'ont pas la target
-    this.aExternalBlank = function(node)
+    // heightWithPadding
+    // retourne la hauteur avec le padding top et bottom
+    this.heightWithPadding = function(node)
     {
-        var filter = $(node).find("a[target!='_blank']").filter(function() {
-            return (Quid.Uri.isExternal($(this).attr("href")) && !$(this).is("[href^='mailto:']"))? true:false;
-        });
+        return $(node).height() + parseInt($(node).css("padding-top")) + parseInt($(node).css("padding-bottom"));
+    }
+    
+    
+    // attr
+    // retourne un objet contenant tous les attributs d'une balise
+    this.attr = function(node,start)
+    {
+        let r = null;
+        node = $(node).first();
+        
+        if(node.length === 1)
+        {   
+            r = {};
+            
+            $.each(node[0].attributes, function() {
+                if(start == null || Str.isStart(start,this.name))
+                r[this.name] = this.value;
+            });
+        }
+        
+        return r;
+    }
 
-        filter.each(function(index, el) {
-            $(this).prop('target','_blank');
-        });
+
+    // getAttrStr
+    // retourne les attributs d'une node sous forme de string
+    this.getAttrStr = function(node,start)
+    {
+        let r = null;
+        const attr = $inst.attr(node,start);
         
-        return this;
+        if(attr != null)
+        r = Obj.str(attr,'=',true);
+        
+        return r;
     }
     
     
-    // hrefChangeHash
-    // change le hash sur des balises avec attribut href
-    this.hrefChangeHash = function(fragment,node)
+    // getDataAttr
+    // retourne un objet contenant tous les data-attributs d'une balise
+    this.getDataAttr = function(node)
     {
-        if(Quid.Str.is(fragment))
-        {
-            $(node).each(function() {
-                $(this)[0].hash = fragment;
-            });
-        }
-        
-        return this;
+        return $inst.attr(node,'data-');
     }
     
     
-    // wrapConsecutiveSiblings
-    // permet d'enrobber toutes les prochaines balises répondant à until dans une balise html
-    this.wrapConsecutiveSiblings = function(node,until,html)
+    // value
+    // retourne la valeur pour une node, surtout pour les formulaires
+    // la valeur retourné peut être trim
+    this.value = function(node,trim)
     {
-        if(until && Quid.Str.isNotEmpty(html))
+        let r = null;
+
+        r = $(node).val();
+        
+        if(r != null)
         {
-            $(node).each(function(index, el) {
-                var nextUntil = $(this).nextUntil(until);
-                $(this).add(nextUntil).wrapAll(html);
+            r = Str.cast(r);
+            
+            if(trim === true)
+            r = Str.trim(r);
+        }
+        
+        return r;
+    }
+    
+    
+    // valueSeparator
+    // prend un ensemble de input et crée un set avec les valeurs
+    // un séparateur peut être fourni, sinon utilise -
+    this.valueSeparator = function(node,separator,trim) 
+    {
+        let r = '';
+        separator = (Str.isNotEmpty(separator))? separator:'-';
+        
+        if(Str.isNotEmpty(separator))
+        {
+            $(node).each(function(index) {
+                r += (r.length)? separator:"";
+                r += $inst.value(this,trim);
             });
         }
         
-        return this;
+        return r;
+    }
+    
+    
+    // dataHrefReplaceChar
+    // permet de changer le caractère de remplacement sur une balise avec attribut data-href
+    this.dataHrefReplaceChar = function(node,replace,replace2) 
+    {
+        let r = null;
+        node = $(node).first();
+        
+        if(Num.is(replace))
+        replace = Str.cast(replace);
+        
+        if(Num.is(replace2))
+        replace2 = Str.cast(replace2);
+        
+        if($(node).length === 1 && Str.isNotEmpty(replace))
+        {
+            const href = $(node).data("href");
+            const char = $(node).data("char");
+            
+            if(Str.isNotEmpty(href) && Str.isNotEmpty(char))
+            {
+                r = href.replace(char,replace);
+                
+                if(Str.isNotEmpty(replace2))
+                r = r.replace(char,replace2);
+            }
+        }
+        
+        return r;
     }
 }
+
+// export
+Lemur.Dom = Dom;

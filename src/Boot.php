@@ -34,7 +34,8 @@ abstract class Boot extends Core\Boot
             'component'=>[
                 'to'=>'[publicJs]/component.js',
                 'from'=>[
-                    0=>'[vendorLemur]/js/component']]],
+                    0=>'[vendorLemur]/js/import',
+                    1=>'[vendorLemur]/js/component']]],
 
         'compileJsOption'=>[
             'concatenator'=>[
@@ -45,7 +46,9 @@ abstract class Boot extends Core\Boot
             'compileJs'=>[
                 'test'=>[
                     'to'=>'[publicJs]/test.js',
-                    'from'=>[0=>'[vendorLemur]/js/test']]]],
+                    'from'=>[
+                        0=>'[vendorLemur]/js/import',
+                        1=>'[vendorLemur]/js/test']]]],
 
         '@cms'=>[
             'service'=>[
@@ -82,7 +85,8 @@ abstract class Boot extends Core\Boot
                 'cms'=>[
                     'to'=>'[publicJs]/cms.js',
                     'from'=>[
-                        0=>'[vendorLemur]/js/cms']]]]
+                        0=>'[vendorLemur]/js/import',
+                        1=>'[vendorLemur]/js/cms']]]]
     ];
 
 

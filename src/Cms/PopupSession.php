@@ -106,10 +106,10 @@ class PopupSession extends Core\RouteAlias
                 elseif(is_int($value))
                 {
                     if($key === 'expire')
-                    $value = Base\Date::format(1,$value);
+                    $value = Base\Datetime::format(1,$value);
 
                     elseif(in_array($key,['getLifetime','getLoginLifetime'],true))
-                    $value = Base\Date::amountStr(1,$value);
+                    $value = Base\Datetime::amountStr(1,$value);
                 }
             }
 

@@ -6,7 +6,7 @@
  
 // addRemove
 // script of behaviours for an add-remove input component
-Quid.Component.addRemove = function()
+Component.addRemove = function()
 {
     // trigger handler
     $(this).on('addRemove:getInsert', function() {
@@ -16,62 +16,62 @@ Quid.Component.addRemove = function()
         return $(this).find(".playground").first();
     })
     .on('addRemove:getCount', function() {
-        return $(this).triggerHandler('addRemove:getAll').length;
+        return triggerFunc(this,'addRemove:getAll').length;
     })
     .on('addRemove:getAll', function() {
-        return $(this).triggerHandler('addRemove:getPlayground').find(".ele");
+        return triggerFunc(this,'addRemove:getPlayground').find(".ele");
     })
     .on('addRemove:getIndex', function(event,index) {
-        return $(this).triggerHandler('addRemove:getAll').eq(index);
+        return triggerFunc(this,'addRemove:getAll').eq(index);
     })
     .on('addRemove:getLast', function() {
-        return $(this).triggerHandler('addRemove:getAll').last()
+        return triggerFunc(this,'addRemove:getAll').last()
     })
     .on('addRemove:findIndex', function(event,element) {
-        var all = $(this).triggerHandler('addRemove:getAll');
+        const all = triggerFunc(this,'addRemove:getAll');
         return all.index(element);
     })
     
     // trigger
     .on('addRemove:insert', function() {
-        var insert = $(this).triggerHandler('addRemove:getInsert');
-        var container = $(this).triggerHandler('addRemove:getPlayground');
-        var html = insert.data('html');
+        const insert = triggerFunc(this,'addRemove:getInsert');
+        const container = triggerFunc(this,'addRemove:getPlayground');
+        const html = insert.data('html');
         
-        if(Quid.Str.isNotEmpty(html))
+        if(Str.isNotEmpty(html))
         {
             container.append(html);
-            var inserted = $(this).triggerHandler('addRemove:getLast');
+            const inserted = triggerFunc(this,'addRemove:getLast');
             bindElement.call(this,inserted);
-            $(this).trigger('addRemove:inserted',[inserted]);
+            triggerCustom(this,'addRemove:inserted',[inserted]);
         }
     })
     .on('addRemove:remove', function(event,index) {
-        if(Quid.Number.is(index))
+        if(Num.is(index))
         {
-            var ele = $(this).triggerHandler('addRemove:getIndex',[index]);
+            const ele = triggerFunc(this,'addRemove:getIndex',[index]);
             ele.remove();
             
-            if(!$(this).triggerHandler('addRemove:getCount'))
-            $(this).trigger('addRemove:insert');
+            if(!triggerFunc(this,'addRemove:getCount'))
+            triggerCustom(this,'addRemove:insert');
         }
     })
     
     // component setup
     .one('component:setup', function() {
-        var $this = $(this);
+        const $this = $(this);
         bindInsert.call(this);
         bindSorter.call(this);
         
-        $(this).triggerHandler('addRemove:getAll').each(function() {
+        triggerFunc(this,'addRemove:getAll').each(function() {
             bindElement.call($this,$(this));
         });
     });
     
     // bindInsert
-    var bindInsert = function() {
-        var $this = $(this);
-        var insert = $(this).triggerHandler('addRemove:getInsert');
+    const bindInsert = function() {
+        const $this = $(this);
+        const insert = triggerFunc(this,'addRemove:getInsert');
         
         insert.on('click', function() {
             $this.trigger('addRemove:insert');
@@ -79,22 +79,22 @@ Quid.Component.addRemove = function()
     };
     
     // bindSorter
-    var bindSorter = function() {
-        var move = $(this).find(".move");
-        var playground = $(this).triggerHandler('addRemove:getPlayground');
+    const bindSorter = function() {
+        const move = $(this).find(".move");
+        const playground = triggerFunc(this,'addRemove:getPlayground');
         
         if(move.length)
-        Quid.Component.verticalSorter.call(playground,'.ele','.move');
+        Component.verticalSorter.call(playground,'.ele','.move');
     };
     
     // bindElement
-    var bindElement = function(element) {
-        var $this = $(this);
-        var remove = element.find(".remove");
-        Quid.Component.confirm.call(remove,'click');
+    const bindElement = function(element) {
+        const $this = $(this);
+        let remove = element.find(".remove");
+        Component.confirm.call(remove,'click');
         
         remove.on('confirmed', function() {
-            var index = $this.triggerHandler('addRemove:findIndex',[element]);
+            const index = $this.triggerHandler('addRemove:findIndex',[element]);
             $this.trigger('addRemove:remove',[index]);
         });
     };

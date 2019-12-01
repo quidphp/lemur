@@ -6,10 +6,10 @@
  
 // arr
 // script with a set of helper functions related to arrays
-var Arr = new function() 
+const Arr = new function() 
 {    
     // instance
-    var $inst = this;
+    const $inst = this;
     
     
     // is
@@ -24,14 +24,14 @@ var Arr = new function()
     // retourne vrai si la variable est comme un tableau
     this.isLike = function(value)
     {
-        var r = false;
+        let r = false;
         
-        if(!Quid.Scalar.is(value))
+        if(!Scalar.is(value))
         {
-            var length = !!value && "length" in value && value.length;
-            var type = Quid.Vari.type(value);
+            const length = !!value && "length" in value && value.length;
+            const type = Vari.type(value);
 
-            if(!(Quid.Func.is(value) || Quid.Node.isWindow(value)))
+            if(!(Func.is(value) || Dom.isWindow(value)))
             r = type === "array" || length === 0 || typeof length === "number" && length > 0 && (length - 1) in value;
         }
         
@@ -68,8 +68,8 @@ var Arr = new function()
     // fait un slice sur un tableau avec un start et un end
     this.slice = function(start,end,array)
     {
-        start = Quid.Number.isInt(start)? start:0;
-        end = Quid.Number.isInt(end)? end:undefined;
+        start = Num.isInt(start)? start:0;
+        end = Num.isInt(end)? end:undefined;
         return Array.prototype.slice.call(array,start,end);
     };
     
@@ -80,7 +80,7 @@ var Arr = new function()
     {
         return $inst.slice(start,true,array);
     }
-};
+}
 
 // export
-Quid.Arr = Arr;
+Lemur.Arr = Arr;

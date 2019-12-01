@@ -6,7 +6,7 @@
  
 // focusSlide
 // permet de slideDown/up une target lors du focus sur une node
-Quid.Component.focusSlide = function(target) 
+Component.focusSlide = function(target) 
 {
     if($(this).length === 1 && target instanceof jQuery)
     {

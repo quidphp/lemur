@@ -212,11 +212,11 @@ class Slug extends Core\ColAlias
                 $format = $col->date();
 
                 if(is_string($format))
-                $value = Base\Date::time($value,$format);
+                $value = Base\Datetime::time($value,$format);
             }
 
             if(is_int($value))
-            $return = Base\Date::$method($value);
+            $return = Base\Datetime::$method($value);
         }
 
         return $return;
@@ -309,7 +309,7 @@ class Slug extends Core\ColAlias
             {
                 if(is_string($method))
                 {
-                    $now = Base\Date::$method();
+                    $now = Base\Datetime::$method();
 
                     if(is_string($now))
                     {

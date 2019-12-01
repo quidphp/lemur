@@ -6,22 +6,25 @@
  
 // scalar
 // script with functions related to scalar values
-Quid.Scalar = new function() 
+const Scalar = new function() 
 {    
     // instance
-    var $inst = this;
+    const $inst = this;
     
     
     // is
     // retourne vrai si la valeur est scalar
     this.is = function(value) 
     {
-        var r = false;
-        var type = typeof value;
+        let r = false;
+        const type = typeof value;
         
         if(type === 'boolean' || type === 'number' || type === 'string')
         r = true;
         
         return r;
     }
-};
+}
+
+// export
+Lemur.Scalar = Scalar;

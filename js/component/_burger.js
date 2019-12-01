@@ -6,7 +6,7 @@
  
 // burger
 // script for a burger menu component
-Quid.Component.burger = function()
+Component.burger = function()
 {
     // triggerHandler
     $(this).on('burger:isOpen', function() {
@@ -15,28 +15,28 @@ Quid.Component.burger = function()
     
     // trigger
     .on('click', function() {
-        $(this).trigger('burger:toggle');
+        triggerCustom(this,'burger:toggle');
     })
     .on('burger:toggle', function() {
-        $(this).trigger($(this).triggerHandler('burger:isOpen')? 'burger:close':'burger:open');
+        triggerCustom(this,triggerFunc(this,'burger:isOpen')? 'burger:close':'burger:open');
     })
     .on('burger:open', function() {
-        var html = $(document).triggerHandler('document:getHtml');
+        const html = $(document).triggerHandler('document:getHtml');
         html.attr('data-burger','open');
     })
     .on('burger:close', function() {
-        var html = $(document).triggerHandler('document:getHtml');
+        const html = $(document).triggerHandler('document:getHtml');
         html.attr('data-burger','close');
     })
     
     // setup
     .one('component:setup', function() {
-        $(this).trigger('burger:close');
+        triggerCustom(this,'burger:close');
     })
     
     // teardown
     .one('component:teardown', function() {
-        $(this).trigger('burger:close');
+        triggerCustom(this,'burger:close');
     });
     
     return this;

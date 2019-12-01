@@ -6,52 +6,52 @@
  
 // inputValidate
 // gère les événements relatifs à la validation d'un champ
-Quid.Component.inputValidate = function() {
+Component.inputValidate = function() {
     
     $(this).on('change', function(event) {
-        $(this).trigger('validate:process');
+        triggerCustom(this,'validate:process');
     })
     .on('focus', function(event) {
-        $(this).trigger("validate:valid");
+        triggerCustom(this,"validate:valid");
     })
     .on('focusout', function(event) {
-        $(this).trigger('validate:process');
+        triggerCustom(this,'validate:process');
     })
     .on('validate:process', function(event) {
-        $(this).trigger(Quid.Node.value(this,true)? 'validate:trigger':'validate:pattern validate:empty');
+        triggerCustom(this,Dom.value(this,true)? 'validate:trigger':'validate:pattern validate:empty');
     })
     .on('validate:binded', function(event) {
         return true;
     })
     .on('validate:isEmpty',function(event) {
-        return (!Quid.Node.value(this,true))? true:false;
+        return (!Dom.value(this,true))? true:false;
     })
     .on('validate:isValid',function(event) {
         return (trigger.call(this) === true)? true:false;
     })
     .on('validate:isNotEmptyAndValid',function(event) {
-        return (!$(this).triggerHandler('validate:isEmpty') && $(this).triggerHandler('validate:isValid'))? true:false;
+        return (!triggerFunc(this,'validate:isEmpty') && triggerFunc(this,'validate:isValid'))? true:false;
     })
     .on('validate:required', function(event) {
         event.stopPropagation();
-        $(this).trigger((required.call(this) === true)? 'validate:valid':'validate:invalid');
+        triggerCustom(this,(required.call(this) === true)? 'validate:valid':'validate:invalid');
     })
     .on('validate:pattern', function(event) {
         event.stopPropagation();
-        $(this).trigger((pattern.call(this) === true)? 'validate:valid':'validate:invalid');
+        triggerCustom(this,(pattern.call(this) === true)? 'validate:valid':'validate:invalid');
     })
     .on('validate:trigger', function(event) {
-        var r = trigger.call(this);
+        let r = trigger.call(this);
         event.stopPropagation();
-        $(this).trigger((r === true)? 'validate:valid':'validate:invalid');
-        $(this).trigger((Quid.Node.value(this,true))? 'validate:notEmpty':'validate:empty');
+        triggerCustom(this,(r === true)? 'validate:valid':'validate:invalid');
+        triggerCustom(this,(Dom.value(this,true))? 'validate:notEmpty':'validate:empty');
         
         return r;
     })
     .on('validate:valid', function(event) {
         if($(this).is("[type='checkbox'],[type='radio']"))
         {
-            var group = Quid.Selector.inputGroup(this);
+            const group = Selector.inputGroup(this);
             group.not($(this)).attr('data-validate','valid');
         }
         
@@ -64,9 +64,9 @@ Quid.Component.inputValidate = function() {
     
     // trigger
     // validate un élément de formulaire, utilise required et pattern
-    var trigger = function() 
+    const trigger = function() 
     {
-        var r = false;
+        let r = false;
         
         if($(this).length)
         {
@@ -84,32 +84,32 @@ Quid.Component.inputValidate = function() {
     // validate un élément de formulaire, uniquemment avec required
     // required peut être numérique pour checkbox et radio, à ce moment c'est un min count
     // les input disabled ne sont pas considéré
-    var required = function() 
+    let required = function() 
     {
-        var r = false;
+        let r = false;
         
         if($(this).length)
         {
             r = true;
             
             $(this).each(function(index) {
-                var name = $(this).prop('name');
-                var disabled = $(this).prop('disabled');
-                var required = $(this).attr("data-required");
+                const name = $(this).prop('name');
+                const disabled = $(this).prop('disabled');
+                let required = $(this).attr("data-required");
                 
-                if(!disabled && Quid.Number.is(required) && required > 0)
+                if(!disabled && Num.is(required) && required > 0)
                 {
                     if($(this).is("[type='checkbox'],[type='radio']"))
                     {
-                        var checked = ($(this).prop("checked") === true)? 1:0;
-                        var group = $(this).inputGroup();
-                        var amount = group.filter(":checked").not($(this)).length;
+                        const checked = ($(this).prop("checked") === true)? 1:0;
+                        const group = $(this).inputGroup();
+                        const amount = group.filter(":checked").not($(this)).length;
                         
                         if((checked + amount) < required)
                         r = false;
                     }
                     
-                    else if(!Quid.Node.value(this,true).length)
+                    else if(!Dom.value(this,true).length)
                     r = false;
                 }
                 
@@ -124,20 +124,20 @@ Quid.Component.inputValidate = function() {
     // pattern
     // validate un élément de formulaire, uniquemment avec pattern
     // les input disabled ne sont pas considéré
-    var pattern = function() 
+    const pattern = function() 
     {
-        var r = false;
+        let r = false;
         
         if($(this).length)
         {
             r = true;
             
             $(this).each(function(index) {
-                var disabled = $(this).prop('disabled');
-                var pattern = $(this).attr("data-pattern");
-                var val = Quid.Node.value(this,true);
+                const disabled = $(this).prop('disabled');
+                const pattern = $(this).attr("data-pattern");
+                const val = Dom.value(this,true);
                 
-                if(!disabled && Quid.Str.isNotEmpty(pattern) && val.length)
+                if(!disabled && Str.isNotEmpty(pattern) && val.length)
                 {
                     pattern = new RegExp(pattern);
                     r = pattern.test(val);

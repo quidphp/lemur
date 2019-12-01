@@ -79,7 +79,7 @@ class ExportDownload extends Core\RouteAlias
         $return = null;
         $table = $this->table();
         $type = $this->segment('type');
-        $basename = $table->name().'_'.Base\Date::format(0).'_'.$type;
+        $basename = $table->name().'_'.Base\Datetime::format(0).'_'.$type;
         $return = Main\File\Csv::new(true,['basename'=>$basename]);
 
         return $return;

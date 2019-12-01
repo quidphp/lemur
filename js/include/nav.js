@@ -6,22 +6,22 @@
  
 // nav
 // script with helper functions related to navigation and pagination
-Quid.Nav = new function() 
+const Nav = new function() 
 {    
     // instance
-    var $inst = this;
+    const $inst = this;
     
     
     // index
     // retourne l'index du nouvel élément
     this.index = function(value,current,max,loop)
     {
-        var r = null;
+        let r = null;
         
-        if(Quid.Number.isInt(max) && max > 0)
+        if(Num.isInt(max) && max > 0)
         {
-            var first = 0;
-            var last = (max - 1);
+            const first = 0;
+            const last = (max - 1);
             
             if(value === 'first')
             r = first;
@@ -29,7 +29,7 @@ Quid.Nav = new function()
             else if(value ==='last')
             r = last;
             
-            else if(value === 'next' && Quid.Number.isInt(current))
+            else if(value === 'next' && Num.isInt(current))
             {
                 r = (current + 1);
                 
@@ -43,7 +43,7 @@ Quid.Nav = new function()
                 }
             }
             
-            else if(value === 'prev' && Quid.Number.isInt(current))
+            else if(value === 'prev' && Num.isInt(current))
             {
                 r = (current - 1);
                 
@@ -57,10 +57,13 @@ Quid.Nav = new function()
                 }
             }
             
-            else if(Quid.Number.isInt(value) && value >= 0 && value < max)
+            else if(Num.isInt(value) && value >= 0 && value < max)
             r = value;
         }
         
         return r;
     }
 }
+
+// export
+Lemur.Nav = Nav;

@@ -6,10 +6,10 @@
  
 // appendContainer
 // script of behaviours for an appendContainer component (load more)
-Quid.Component.appendContainer = function()
+Component.appendContainer = function()
 {
-    Quid.Component.block.call(this,'ajax:init');
-    Quid.Component.ajax.call(this,'ajax:init');
+    Component.block.call(this,'ajax:init');
+    Component.ajax.call(this,'ajax:init');
     
     $(this).on('feed:target', function() {
         return $(this);
@@ -18,22 +18,22 @@ Quid.Component.appendContainer = function()
         return data;
     })
     .on('feed:append', function(event,data) {
-        data = $(this).triggerHandler('feed:parseData',[data]);
-        $(this).triggerHandler('feed:target').append(data);
-        $(this).trigger('feed:bind');
-        $(this).trigger('feed:changed');
+        data = triggerFunc(this,'feed:parseData',[data]);
+        triggerFunc(this,'feed:target').append(data);
+        triggerCustom(this,'feed:bind');
+        triggerCustom(this,'feed:changed');
     })
     .on('feed:overwrite', function(event,data) {
-        data = $(this).triggerHandler('feed:parseData',[data]);
-        $(this).triggerHandler('feed:target').html(data);
-        $(this).trigger('feed:bind');
-        $(this).trigger('feed:changed');
+        data = triggerFunc(this,'feed:parseData',[data]);
+        triggerFunc(this,'feed:target').html(data);
+        triggerCustom(this,'feed:bind');
+        triggerCustom(this,'feed:changed');
     })
     .on('feed:reload', function(event,uri) {
-        if(Quid.Str.isNotEmpty(uri))
+        if(Str.isNotEmpty(uri))
         {
             $(this).data("href",uri);
-            $(this).trigger('ajax:init');
+            triggerCustom(this,'ajax:init');
         }
     })
     .on('feed:loadMore', function(event) {
@@ -44,33 +44,33 @@ Quid.Component.appendContainer = function()
     })
     .on('ajax:before', function(event) {
         $(this).attr('data-status','loading');
-        $(this).trigger('block');
+        triggerCustom(this,'block');
     })
     .on('ajax:success', function(event,data,textStatus,jqXHR) {
-        $(this).trigger('feed:overwrite',[data]);
+        triggerCustom(this,'feed:overwrite',[data]);
     })
     .on('ajax:error', function(event,parsedError,jqXHR,textStatus,errorThrown) {
         $(this).attr('data-status','error');
-        $(this).triggerHandler('feed:target').html(parsedError);
+        triggerFunc(this,'feed:target').html(parsedError);
     })
     .on('ajax:complete', function(event) {
         $(this).removeAttr('data-status');
     })
     .on('feed:bind', function(event) {
-        var $this = $(this);
-        var loadMore = $(this).triggerHandler('feed:loadMore');
+        const $this = $(this);
+        const loadMore = triggerFunc(this,'feed:loadMore');
         
         loadMore.off('click').on('click', function(event) {
             event.stopPropagation();
             event.preventDefault();
-            var remove = $this.triggerHandler('feed:loadMoreRemove',[$(this)]);
+            let remove = $this.triggerHandler('feed:loadMoreRemove',[$(this)]);
             
-            Quid.Component.block.call(this,'ajax:init');
-            Quid.Component.ajax.call(this,'ajax:init');
+            Component.block.call(this,'ajax:init');
+            Component.ajax.call(this,'ajax:init');
             
             $(this).on('ajax:before', function(event) {
                 $(this).attr('data-status','loading');
-                $(this).trigger('block');
+                triggerCustom(this,'block');
             })
             .on('ajax:success', function(event,data,textStatus,jqXHR) {
                 remove.remove();

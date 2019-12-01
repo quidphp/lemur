@@ -7,11 +7,11 @@
 // block
 // script of behaviours for a block component
 // bloque l'événement sur le ou les éléments s'il y a la data blocked
-Quid.Component.block = function(type) 
+Component.block = function(type) 
 {
-    if(Quid.Str.isNotEmpty(type))
+    if(Str.isNotEmpty(type))
     {
-        var binded = $(this).data('blockBind:'+type);
+        const binded = $(this).data('blockBind:'+type);
         
         if(binded == null)
         {
@@ -23,7 +23,7 @@ Quid.Component.block = function(type)
                 {
                     event.stopImmediatePropagation();
                     event.preventDefault();
-                    $(this).trigger('blocked');
+                    triggerCustom(this,'blocked');
                     return false;
                 }
             })

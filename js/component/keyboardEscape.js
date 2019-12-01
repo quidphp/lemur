@@ -6,9 +6,9 @@
  
 // keyboardEscape
 // component to catchan escape key press on the keyboard
-Quid.Component.keyboardEscape = function(prevent,type)
+Component.keyboardEscape = function(prevent,type)
 {
-    Quid.Component.keyboard.call(this,'escape',[27],type);
+    Component.keyboard.call(this,'escape',[27],type);
     
     setFunc(this,'escape:prevent', function(event) {
         return (prevent === true)? true:false;

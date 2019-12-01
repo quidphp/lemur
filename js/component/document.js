@@ -6,17 +6,17 @@
  
 // document
 // script for a document component managing site navigation with the HistoryAPI
-Quid.Component.document = function(option)
+const Document = function(option)
 {
-    // variable
-    var $location = window.location;
-    var $history = null;
-    var $initial = null;
-    var $previous = null;
+    // letiable
+    const $location = window.location;
+    let $history = null;
+    let $initial = null;
+    let $previous = null;
     
     
     // option
-    var $option = Object.assign({
+    const $option = Object.assign({
         anchor: "a:not([target='_blank']):not([data-navigation='0']):not([data-modal]):not([href^='mailto:'])",
         form: "form:not([data-navigation='0'])",
         timeout: 10000,
@@ -37,8 +37,8 @@ Quid.Component.document = function(option)
     // hasAjax
     // retourne vrai s'il y a présentement un objet ajax en train de s'effectuer
     setFunc(this,'document:hasAjax', function() {
-        var r = false;
-        var ajax = $(this).data('document:ajax');
+        let r = false;
+        const ajax = $(this).data('document:ajax');
         
         if(ajax != null && ajax.readyState < 4)
         r = true;
@@ -77,9 +77,9 @@ Quid.Component.document = function(option)
     
     // replaceState
     setFunc(this,'document:replaceState', function(uri,title) {
-        var r = makeHistoryState(uri,title);
+        let r = makeHistoryState(uri,title);
         
-        if(hasHistoryApi() && Quid.Str.isNotEmpty(uri))
+        if(hasHistoryApi() && Str.isNotEmpty(uri))
         $history.replaceState(r,r.title,r.url);
         
         return r;
@@ -96,11 +96,11 @@ Quid.Component.document = function(option)
     // cancelAjax
     // annule et détruit l'objet ajax si existant
     setFunc(this,'document:cancelAjax', function() {
-        var r = false;
+        let r = false;
         
         if(triggerFunc(this,'document:hasAjax') === true)
         {
-            var ajax = $(this).data('document:ajax');
+            const ajax = $(this).data('document:ajax');
             ajax.onreadystatechange = $.noop;
             ajax.abort();
         }
@@ -129,7 +129,7 @@ Quid.Component.document = function(option)
     // retourne la node du route wrap
     // seul le contenu dans cette node est remplacé au chargement d'une nouvelle page
     setFunc(this,'document:getRouteWrap', function() {
-        var r = triggerFunc(this,'document:getBody');
+        let r = triggerFunc(this,'document:getBody');
 
         if($option.routeWrap)
         r = r.find($option.routeWrap).first();
@@ -141,8 +141,8 @@ Quid.Component.document = function(option)
     // isBackgroundActive
     // retourne vrai si le background existe et est présentement actif
     setFunc(this,'document:isBackgroundActive', function() {
-        var r = false;
-        var background = triggerFunc(this,'document:getBackground');
+        let r = false;
+        const background = triggerFunc(this,'document:getBackground');
         
         if(background.length && background.attr('data-from') != null)
         r = true;
@@ -161,11 +161,11 @@ Quid.Component.document = function(option)
     // setBackground
     // permet d'ajouter une attribut data au background
     setFunc(this,'document:setBackground', function(value,replace) {
-        var r = false;
+        let r = false;
         
-        if(Quid.Str.isNotEmpty(value))
+        if(Str.isNotEmpty(value))
         {
-            var background = triggerFunc(this,'document:getBackground');
+            const background = triggerFunc(this,'document:getBackground');
             
             if(replace === true || background.attr('data-from') == null)
             {
@@ -181,10 +181,10 @@ Quid.Component.document = function(option)
     // unsetBackground
     // enlève les attributs du background
     setFunc(this,'document:unsetBackground', function(value) {
-        var r = false;
+        let r = false;
         if(triggerFunc(this,'document:isBackgroundActive'))
         {
-            var background = triggerFunc(this,'document:getBackground');
+            const background = triggerFunc(this,'document:getBackground');
             
             if(value == null || value === background.attr('data-from'))
             {
@@ -200,15 +200,15 @@ Quid.Component.document = function(option)
     // clickEvent
     // gère un nouvel historique déclenché par un clic
     setFunc(this,'document:clickEvent', function(click) {
-        var r = false;
+        let r = false;
         
         if(click.target && !(click.which > 1 || click.metaKey || click.ctrlKey || click.shiftKey || click.altKey))
         {
-            var target = $(click.currentTarget);
+            const target = $(click.currentTarget);
             
             if(target.is($option.anchor))
             {
-                var uri = target.prop('href');
+                const uri = target.prop('href');
                 r = triggerFunc(this,'document:go',uri,click);
             }
         }
@@ -220,12 +220,12 @@ Quid.Component.document = function(option)
     // document:submitEvent
     // gère un nouvel historique déclenché par l'envoie d'un formulaire
     setFunc(this,'document:submitEvent', function(submit) {
-        var r = false;
-        var target = $(submit.target);
+        let r = false;
+        const target = $(submit.target);
         
         if(target.is($option.form))
         {
-            var uri = target.prop('action');
+            const uri = target.prop('action');
             r = triggerFunc(this,'document:go',uri,submit);
         }
         
@@ -236,7 +236,7 @@ Quid.Component.document = function(option)
     // document:go
     // pousse ou replace une nouvelle entrée dans l'historique
     setFunc(this,'document:go', function(uri,sourceEvent) {
-        var r = false;
+        let r = false;
         
         if(triggerFunc(this,'document:hasAjax'))
         r = true;
@@ -246,11 +246,11 @@ Quid.Component.document = function(option)
             if(uri instanceof jQuery && uri.is($option.anchor))
             uri = uri.prop("href");
             
-            if(Quid.Str.is(uri))
+            if(Str.is(uri))
             {
-                var current = triggerFunc(this,'document:getCurrentState');
-                var state = makeHistoryState(uri);
-                var isValid = isStateChangeValid(state,current);
+                const current = triggerFunc(this,'document:getCurrentState');
+                const state = makeHistoryState(uri);
+                const isValid = isStateChangeValid(state,current);
                 
                 if(isValid === true)
                 {
@@ -261,7 +261,7 @@ Quid.Component.document = function(option)
                 }
                 
                 // hash change
-                else if(Quid.Uri.isHashChange(state.url,current.url))
+                else if(Uri.isHashChange(state.url,current.url))
                 {
                     
                     r = true;
@@ -275,7 +275,7 @@ Quid.Component.document = function(option)
         if(r === true && sourceEvent != null)
         {
             sourceEvent.preventDefault();
-            var target = $(sourceEvent.currentTarget);
+            const target = $(sourceEvent.currentTarget);
             
             if(target)
             {
@@ -284,7 +284,7 @@ Quid.Component.document = function(option)
                 
                 else if(sourceEvent.type === 'submit')
                 {
-                    var clickedSubmit = triggerFunc(target,'form:getClickedSubmits');
+                    const clickedSubmit = triggerFunc(target,'form:getClickedSubmits');
                     
                     if(clickedSubmit != null)
                     clickedSubmit.attr('data-triggered',1);
@@ -335,9 +335,9 @@ Quid.Component.document = function(option)
     // bindDocument
     // applique les bindings sur les clicks et popstate
     // ceci est binder de façon permanente
-    var bindDocument = function()
+    const bindDocument = function()
     {
-        var $this = $(this);
+        const $this = $(this);
         
         // sur le premier isTouch
         aelOnce(this,'touchstart', function(event) {
@@ -351,9 +351,9 @@ Quid.Component.document = function(option)
         
         // popstate
         ael(window,'popstate',function(event) {
-            var state = event.state || triggerFunc($this,'document:getCurrentState');
-            var previous = triggerFunc($this,'document:getPreviousState');
-            var isValid = isStateChangeValid(state,previous,true);
+            const state = event.state || triggerFunc($this,'document:getCurrentState');
+            const previous = triggerFunc($this,'document:getPreviousState');
+            const isValid = isStateChangeValid(state,previous,true);
             
             if(isValid === true)
             {
@@ -365,7 +365,7 @@ Quid.Component.document = function(option)
             }
             
             // hash change
-            else if(Quid.Uri.isSamePathQuery(state.url,previous.url) && (Quid.Uri.hasFragment(state.url) || Quid.Uri.hasFragment(previous.url)))
+            else if(Uri.isSamePathQuery(state.url,previous.url) && (Uri.hasFragment(state.url) || Uri.hasFragment(previous.url)))
             {
                 $previous = state;
                 triggerCustom(this,'hashchange',event);
@@ -375,10 +375,10 @@ Quid.Component.document = function(option)
         
         // anchor click
         $(this).on('click', $option.anchor, function(event) { 
-            var r = true;
-            var href = $(this).attr('href');
+            let r = true;
+            const href = $(this).attr('href');
             
-            if(Quid.Uri.isInternal(href))
+            if(Uri.isInternal(href))
             {
                 triggerFunc($this,'document:clickEvent',event);
                 
@@ -391,7 +391,7 @@ Quid.Component.document = function(option)
         
         // submit
         .on('submit', $option.form, function(event) { 
-            var r = true;
+            let r = true;
             triggerFunc($this,'document:submitEvent',event);
             
             if(event.isDefaultPrevented())
@@ -404,9 +404,9 @@ Quid.Component.document = function(option)
     
     // hasHistoryApi
     // retourne vrai si le navigateur courant supporte history API
-    var hasHistoryApi = function()
+    const hasHistoryApi = function()
     {
-        var r = false;
+        let r = false;
         
         if(window.history && window.history.pushState && window.history.replaceState)
         {
@@ -420,11 +420,11 @@ Quid.Component.document = function(option)
     
     // isHistoryState
     // retourne vrai si la valeur est un objet compatible pour un état d'historique
-    var isHistoryState = function(state)
+    const isHistoryState = function(state)
     {
-        var r = false;
+        let r = false;
         
-        if(Quid.Obj.isPlain(state) && Quid.Str.is(state.url) && Quid.Number.is(state.timestamp))
+        if(Obj.isPlain(state) && Str.is(state.url) && Num.is(state.timestamp))
         r = true;
         
         return r;
@@ -433,16 +433,16 @@ Quid.Component.document = function(option)
     
     // makeHistoryState
     // retourne un objet état d'historique (avec url, title et timestamp)
-    var makeHistoryState = function(uri,title) 
+    const makeHistoryState = function(uri,title) 
     {
-        var r = null;
+        let r = null;
         
-        if(Quid.Str.is(uri))
+        if(Str.is(uri))
         {
             r = {
                 url: uri,
                 title: title || null,
-                timestamp: Quid.Date.timestamp()
+                timestamp: Datetime.timestamp()
             };
         }
         
@@ -452,15 +452,15 @@ Quid.Component.document = function(option)
     
     // mountDocument
     // lance les évènements pour monter le document dans le bon order
-    var mountDocument = function(initial)
+    const mountDocument = function(initial)
     {
-        var $this = $(this);
-        var html = triggerFunc(this,'document:getHtml');
-        var routeWrap = triggerFunc(this,'document:getRouteWrap');
+        const $this = $(this);
+        const html = triggerFunc(this,'document:getHtml');
+        let routeWrap = triggerFunc(this,'document:getRouteWrap');
         
         if(initial === true)
         {
-            var body = triggerFunc(this,'document:getBody');
+            const body = triggerFunc(this,'document:getBody');
             triggerCustom(this,'document:mountInitial',body);
             triggerCustom(this,'document:mountCommon',body);
         }
@@ -472,12 +472,12 @@ Quid.Component.document = function(option)
         /*
         triggerCustom(this,'document:mount',routeWrap);
         
-        var group = html.attr("data-group");
-        if(Quid.Str.isNotEmpty(group))
+        const group = html.attr("data-group");
+        if(Str.isNotEmpty(group))
         triggerCustom(this,'group:'+group,routeWrap);
         
-        var route = html.attr("data-route");
-        if(Quid.Str.isNotEmpty(route))
+        let route = html.attr("data-route");
+        if(Str.isNotEmpty(route))
         triggerCustom(this,'route:'+route,routeWrap);
         */
         
@@ -491,20 +491,20 @@ Quid.Component.document = function(option)
     
     // unmountDocument
     // lance les évènements pour démonter le document dans le bon order
-    var unmountDocument = function()
+    const unmountDocument = function()
     {
-        var html = triggerFunc(this,'document:getHtml');
-        var body = triggerFunc(this,'document:getBody');
-        var routeWrap = triggerFunc(this,'document:getRouteWrap');
+        const html = triggerFunc(this,'document:getHtml');
+        const body = triggerFunc(this,'document:getBody');
+        let routeWrap = triggerFunc(this,'document:getRouteWrap');
         
         triggerCustom(this,'document:unmount',routeWrap);
         
-        var group = html.attr("data-group");
-        if(Quid.Str.isNotEmpty(group))
+        const group = html.attr("data-group");
+        if(Str.isNotEmpty(group))
         triggerCustom(this,'group:'+group+':unmount',routeWrap);
         
-        var route = html.attr("data-route");
-        if(Quid.Str.isNotEmpty(route))
+        let route = html.attr("data-route");
+        if(Str.isNotEmpty(route))
         triggerCustom(this,'route:'+route+':unmount',routeWrap);
         
         $(this).off('.document-mount');
@@ -519,20 +519,20 @@ Quid.Component.document = function(option)
     
     // isStateChangeValid
     // retourne vrai si le changement de state est valide
-    var isStateChangeValid = function(state,previous,pathQuery)
+    const isStateChangeValid = function(state,previous,pathQuery)
     {
-        var r = false;
+        let r = false;
         
         if(isHistoryState(state) && isHistoryState(previous))
         {
-            var isInternal = Quid.Uri.isInternal(state.url,previous.url);
-            var hasExtension = Quid.Uri.hasExtension(state.url);
-            var isHashChange = Quid.Uri.isHashChange(state.url,previous.url);
-            var isSameWithHash = Quid.Uri.isSameWithHash(state.url,previous.url);
+            const isInternal = Uri.isInternal(state.url,previous.url);
+            const hasExtension = Uri.hasExtension(state.url);
+            const isHashChange = Uri.isHashChange(state.url,previous.url);
+            const isSameWithHash = Uri.isSameWithHash(state.url,previous.url);
             
             if(isInternal === true && hasExtension === false && isHashChange === false && isSameWithHash === false)
             {
-                if(!pathQuery || Quid.Uri.isSamePathQuery(state.url,previous.url) === false)
+                if(!pathQuery || Uri.isSamePathQuery(state.url,previous.url) === false)
                 r = true;
             }
         }
@@ -543,12 +543,12 @@ Quid.Component.document = function(option)
     
     // isUnloadValid
     // retourne vrai si unload est vide ou confirmé
-    var isUnloadValid = function()
+    const isUnloadValid = function()
     {
-        var r = false;
-        var unload = triggerFunc(window,'beforeunload');
+        let r = false;
+        const unload = triggerFunc(window,'beforeunload');
         
-        if(!Quid.Str.isNotEmpty(unload) || confirm(unload))
+        if(!Str.isNotEmpty(unload) || confirm(unload))
         r = true;
         
         return r;
@@ -558,17 +558,17 @@ Quid.Component.document = function(option)
     // makeHistoryType
     // retourne le type d'historique
     // met à jour l'objet config si c'est form
-    var makeHistoryType = function(config,sourceEvent)
+    const makeHistoryType = function(config,sourceEvent)
     {
-        var r = 'push';
+        let r = 'push';
         
         if(sourceEvent)
         {
-            var target = $(sourceEvent.currentTarget);
+            const target = $(sourceEvent.currentTarget);
             
-            if(target && Quid.Node.tag(target) === 'form')
+            if(target && Dom.tag(target) === 'form')
             {
-                Quid.Xhr.configFromNode(target,config);
+                Xhr.configFromNode(target,config);
                 
                 if(triggerFunc(target,'form:hasFiles'))
                 config.timeout = 0;
@@ -586,18 +586,18 @@ Quid.Component.document = function(option)
     
     // makeAjax
     // crée et retourne l'objet ajax
-    var makeAjax = function(state,sourceEvent)
+    const makeAjax = function(state,sourceEvent)
     {
-        var r = null;
+        let r = null;
 
         if(isHistoryState(state))
         {
-            var $this = $(this);
-            var html = triggerFunc(this,'document:getHtml');
+            const $this = $(this);
+            const html = triggerFunc(this,'document:getHtml');
             triggerFunc(this,'document:cancelAjax');
             beforeAjax.call(this);
             
-            var config = {
+            const config = {
                 url: state.url,
                 timeout: $option.timeout,
                 success: function(data,textStatus,jqXHR) {
@@ -607,15 +607,15 @@ Quid.Component.document = function(option)
                     triggerCustom($this,'document:ajaxProgress',percent,event);
                 },
                 error: function(jqXHR,textStatus,errorThrown) {
-                    if(Quid.Str.isNotEmpty(jqXHR.responseText))
+                    if(Str.isNotEmpty(jqXHR.responseText))
                     afterAjax.call($this,type,state,jqXHR);
                     else
                     triggerFunc($this,'document:hardRedirect',state.url);
                 }
             };
             
-            var type = makeHistoryType(config,sourceEvent);
-            r = Quid.Xhr.trigger(this,config);
+            const type = makeHistoryType(config,sourceEvent);
+            r = Xhr.trigger(this,config);
             
             if(r != null)
             $(this).data('document:ajax',r);
@@ -627,7 +627,7 @@ Quid.Component.document = function(option)
 
     // beforeAjax
     // callback avant le ajax
-    var beforeAjax = function()
+    const beforeAjax = function()
     {
         $(this).data('document:active',true);
         
@@ -641,17 +641,17 @@ Quid.Component.document = function(option)
     
     // afterAjax
     // callback après le ajax
-    var afterAjax = function(type,state,jqXHR)
+    const afterAjax = function(type,state,jqXHR)
     {
-        if(Quid.Obj.isPlain(jqXHR) && isHistoryState(state) && Quid.Str.isNotEmpty(type))
+        if(Obj.isPlain(jqXHR) && isHistoryState(state) && Str.isNotEmpty(type))
         {
-            var data = jqXHR.responseText;
-            var currentUri = jqXHR.getResponseHeader('QUID-URI');
-            var current = triggerFunc(this,'document:getCurrentState');
+            const data = jqXHR.responseText;
+            const currentUri = jqXHR.getResponseHeader('QUID-URI');
+            const current = triggerFunc(this,'document:getCurrentState');
             
-            if(Quid.Str.is(data))
+            if(Str.is(data))
             {
-                var doc = Quid.Html.doc(data);
+                const doc = Html.doc(data);
                 $(this).removeData('document:active');
                 
                 if(type === 'push' || type === 'form')
@@ -660,14 +660,14 @@ Quid.Component.document = function(option)
                     
                     if(state.url !== current.url)
                     {
-                        if(type === 'push' || !Quid.Uri.isSamePathQuery(current.url,currentUri))
+                        if(type === 'push' || !Uri.isSamePathQuery(current.url,currentUri))
                         $history.pushState(state,state.title,state.url);
                     }
                 }
                 
                 if(state.url !== currentUri)
                 {
-                    if(!Quid.Uri.isInternal(state.url,currentUri) || !Quid.Uri.isSamePathQuery(state.url,currentUri))
+                    if(!Uri.isInternal(state.url,currentUri) || !Uri.isSamePathQuery(state.url,currentUri))
                     state = triggerFunc(this,'document:replaceState',currentUri,state.title);
                 }	
                     
@@ -682,54 +682,54 @@ Quid.Component.document = function(option)
     
     // makeDocument
     // crée le document à partir d'un objet doc, passé dans dom.parse
-    var makeDocument = function(doc)
+    const makeDocument = function(doc)
     {
-        var r = false;
+        let r = false;
         
-        if(Quid.Obj.isPlain(doc) && doc.body && doc.body.length)
+        if(Obj.isPlain(doc) && doc.body && doc.body.length)
         {
             r = true;
             
             // html
             // les attributs de html sont remplacés (les attributs existants ne sont pas effacés)
-            var html = triggerFunc(this,'document:getHtml');
-            Quid.Dom.setsAttr(doc.htmlAttr,html);
+            const html = triggerFunc(this,'document:getHtml');
+            DomChange.setsAttr(doc.htmlAttr,html);
             
             // head
-            var head = html.find("head").first();
+            const head = html.find("head").first();
             
             // title
-            var title = head.find("meta");
-            if(Quid.Str.isNotEmpty(doc.title))
+            const title = head.find("meta");
+            if(Str.isNotEmpty(doc.title))
             {
                 document.title = doc.title;
                 title.html(doc.titleHtml);
             }
             
             // meta
-            var meta = head.find("meta");
+            const meta = head.find("meta");
             meta.remove();
             head.prepend(doc.meta);
             
             // body
             // les attributs de body sont effacés et remplacés
-            var body = triggerFunc(this,'document:getBody');
-            Quid.Dom.emptyAttr(body);
-            Quid.Dom.setsAttr(doc.bodyAttr,body);
+            const body = triggerFunc(this,'document:getBody');
+            DomChange.emptyAttr(body);
+            DomChange.setsAttr(doc.bodyAttr,body);
             
             // routeWrap
             // les attributs de routeWrap sont effacés et remplacés seulement si routeWrap n'est pas body
-            var routeWrap = triggerFunc(this,'document:getRouteWrap');
-            var contentTarget = doc.body;
+            const routeWrap = triggerFunc(this,'document:getRouteWrap');
+            let contentTarget = doc.body;
             if($option.routeWrap && !routeWrap.is("body"))
             {
-                var routeWrapTarget = contentTarget.find($option.routeWrap);
+                let routeWrapTarget = contentTarget.find($option.routeWrap);
                 if(routeWrapTarget.length)
                 {
                     contentTarget = routeWrapTarget;
-                    var routeWrapAttributes = Quid.Node.attr(contentTarget);
-                    Quid.Dom.emptyAttr(routeWrap);
-                    Quid.Dom.setsAttr(routeWrapAttributes,routeWrap);
+                    let routeWrapAttributes = Dom.attr(contentTarget);
+                    DomChange.emptyAttr(routeWrap);
+                    DomChange.setsAttr(routeWrapAttributes,routeWrap);
                 }
             }
             routeWrap.html(contentTarget.html());
@@ -744,9 +744,9 @@ Quid.Component.document = function(option)
     
     // afterMakeDocument
     // callback après le chargement du nouveau document
-    var afterMakeDocument = function()
+    const afterMakeDocument = function()
     {
-        var state = triggerFunc(this,'document:getCurrentState');
+        const state = triggerFunc(this,'document:getCurrentState');
 
         $(this).find("html,body").stop(true,true).scrollTop(0);
         
@@ -756,3 +756,6 @@ Quid.Component.document = function(option)
     
     return this;
 }
+
+// export
+Component.Document = Document;

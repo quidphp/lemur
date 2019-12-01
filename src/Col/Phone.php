@@ -36,7 +36,7 @@ class Phone extends Core\ColAlias
         $return = $this->value($return);
 
         if(!empty($return))
-        $return = Base\Number::phoneFormat($return,null,$this->getAttr('phone'));
+        $return = Base\Num::phoneFormat($return,null,$this->getAttr('phone'));
 
         return $return;
     }

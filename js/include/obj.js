@@ -6,17 +6,17 @@
  
 // obj
 // script with a set of helper functions related to objects
-Quid.Obj = new function() 
+const Obj = new function() 
 {    
     // instance
-    var $inst = this;
+    const $inst = this;
     
     
     // is
     // retourne vrai si c'est un objet
     this.is = function(value)
     {
-        return Quid.Vari.type(value) === 'object';
+        return Vari.type(value) === 'object';
     }
 
     
@@ -32,7 +32,7 @@ Quid.Obj = new function()
     // retourne vrai si c'est un objet vide
     this.isEmpty = function(value)
     {
-        return $inst.is(value) && Quid.Vari.isEmpty(value);
+        return $inst.is(value) && Vari.isEmpty(value);
     }
     
     
@@ -40,7 +40,7 @@ Quid.Obj = new function()
     // retourne vrai si c'est un objet non-vide
     this.isNotEmpty = function(value)
     {
-        return $inst.is(value) && Quid.Vari.isNotEmpty(value);
+        return $inst.is(value) && Vari.isNotEmpty(value);
     }
     
     
@@ -48,7 +48,7 @@ Quid.Obj = new function()
     // retourne vrai si l'objet a la propriété
     this.hasProperty = function(prop,value)
     {
-        return (Quid.Str.is(prop) && $inst.is(value))? value.hasOwnProperty(prop):false
+        return (Str.is(prop) && $inst.is(value))? value.hasOwnProperty(prop):false
     }
     
 
@@ -57,11 +57,11 @@ Quid.Obj = new function()
     // retourne vrai si les valeurs contenus sont égales
     this.isEqual = function() 
     {
-        var r = false;
-        var args = Array.from(arguments);
+        let r = false;
+        const args = Array.from(arguments);
         
         if(args.length > 1 && $inst.is(args[0]))
-        r = Quid.Vari.isEqual.apply(null,args);
+        r = Vari.isEqual.apply(null,args);
         
         return r;
     }
@@ -71,11 +71,11 @@ Quid.Obj = new function()
     // retourne la longueur de l'objet
     this.length = function(value) 
     {
-        var r = null;
+        let r = null;
         
         if($inst.is(value))
         {
-            var keys = Object.keys(value);
+            const keys = Object.keys(value);
             r = keys.length;
         }
         
@@ -88,27 +88,28 @@ Quid.Obj = new function()
     // possible de spécifier un séparateur et s'il faut quote les valeurs
     this.str = function(obj,separator,quote) 
     {
-        var r = '';
-        separator = (Quid.Str.isNotEmpty(separator))? separator:'=';
-        var keys = Object.keys(obj);
-        var key;
-        var value;
+        let r = '';
+        separator = (Str.isNotEmpty(separator))? separator:'=';
+        const keys = Object.keys(obj);
+        let key;
+        let value;
+        var i;
         
-        for (var i = 0; i < keys.length; i++) 
+        for (i = 0; i < keys.length; i++) 
         {
             key = keys[i];
             value = obj[key];
             
-            if(Quid.Str.isNotEmpty(key))
+            if(Str.isNotEmpty(key))
             {
-                if(Quid.Obj.is(value))
-                value = Quid.Json.encode(value);                
+                if(Obj.is(value))
+                value = Json.encode(value);                
                 
                 else
-                value = Quid.Str.cast(value);
+                value = Str.cast(value);
                 
                 if(quote === true)
-                value = Quid.Str.quote(value,false);
+                value = Str.quote(value,false);
                 
                 if(r.length)
                 r += ' ';
@@ -127,8 +128,8 @@ Quid.Obj = new function()
     // retourne un nouvel objet contenant le résultat d'un merge unidimensionnel de tous les objets données en argument
     this.replace = function() 
     {
-        var r = {};
-        var args = Array.from(arguments);
+        let r = {};
+        let args = Array.from(arguments);
         
         if(args.length > 0 && $inst.is(args[0]))
         {
@@ -144,8 +145,8 @@ Quid.Obj = new function()
     // retourne un nouvel objet contenant le résultat d'un merge multidimensionnel de tous les objets données en argument
     this.replaceRecursive = function() 
     {
-        var r = {};
-        var args = Array.from(arguments);
+        let r = {};
+        let args = Array.from(arguments);
         
         if(args.length > 0 && $inst.is(args[0]))
         {
@@ -161,10 +162,12 @@ Quid.Obj = new function()
     // permet de grimper dans un objet à partir d'un tableau
     this.climb = function(array,r) 
     {
-        if(Quid.Arr.is(array) && $inst.is(r))
+        if(Arr.is(array) && $inst.is(r))
         {
-            for (var i = 0; i < array.length; i++) {
-                var value = array[i];
+            var i;
+            
+            for (i = 0; i < array.length; i++) {
+                const value = array[i];
                 
                 if($inst.hasProperty(value,r))
                 r = r[value];
@@ -179,4 +182,7 @@ Quid.Obj = new function()
         
         return r;
     }
-};
+}
+
+// export
+Lemur.Obj = Obj;

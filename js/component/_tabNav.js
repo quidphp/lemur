@@ -6,15 +6,15 @@
  
 // tabNav
 // script with behaviours for a tab component with nav
-Quid.Component.tabNav = function(navs)
+Component.tabNav = function(navs)
 {
     if(navs instanceof jQuery && navs.length === $(this).length)
     {
-        var targets = $(this);
+        const targets = $(this);
         
         $(this).each(function(index) 
         {
-            var nav = navs.eq(index);
+            const nav = navs.eq(index);
             
             if(nav.length)
             {

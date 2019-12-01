@@ -32,17 +32,17 @@ trait _calendar
 
         if(is_string($value))
         {
-            if(Base\Date::isFormat('ym',$value))
-            $value = Base\Date::time($value,'ym');
+            if(Base\Datetime::isFormat('ym',$value))
+            $value = Base\Datetime::time($value,'ym');
 
-            elseif(Base\Date::isFormat('dateToDay',$value))
-            $value = Base\Date::time($value,'dateToDay');
+            elseif(Base\Datetime::isFormat('dateToDay',$value))
+            $value = Base\Datetime::time($value,'dateToDay');
         }
 
         if(!is_int($value))
         $value = null;
 
-        $return = Base\Date::floorMonth($value);
+        $return = Base\Datetime::floorMonth($value);
 
         return $return;
     }

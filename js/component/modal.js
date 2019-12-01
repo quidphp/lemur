@@ -6,12 +6,11 @@
  
 // modal
 // script for a modal component (popup in a fixed div)
-var Modal = function()
+const Modal = function()
 {
     // event + keyboard
-    Quid.Component.block.call(this,'modal:fetch');
-    Quid.Component.keyboardEscape.call(this,true);
-    
+    Component.block.call(this,'modal:fetch');
+    Component.keyboardEscape.call(this,true);
     
     // func
     setFunc(this,'modal:getBox', function() {
@@ -27,7 +26,7 @@ var Modal = function()
     });
     
     setFunc(this,'modal:isOpen', function() {
-        var status = $(this).attr('data-status');
+        const status = $(this).attr('data-status');
         return (status === 'loading' || status === 'ready')? true:false;
     });
     
@@ -40,7 +39,7 @@ var Modal = function()
     ael(this,'modal:open', function(event,route) {
         $(this).attr('data-status','loading');
         
-        if(Quid.Str.isNotEmpty(route))
+        if(Str.isNotEmpty(route))
         $(this).attr('data-route',route);
         
         triggerFunc(document,'document:setBackground','modal',true);
@@ -66,12 +65,12 @@ var Modal = function()
     });
     
     ael(this,'modal:fetch', function(event,href,args,route) {
-        var modal = $(this);
+        const modal = $(this);
         
         triggerCustom(this,'block');
         triggerCustom(this,'modal:open',route);
         
-        var config = {
+        const config = {
             uri: href, 
             data: args,
             sucess: function(data,textStatus,jqXHR) {
@@ -79,11 +78,11 @@ var Modal = function()
                 triggerCustom(modal,'unblock');
             },
             error: function(data,textStatus,jqXHR) {
-                triggerCustom(modal,'modal:set',Quid.Xhr.parseError(jqXHR.responseText,textStatus),route);
+                triggerCustom(modal,'modal:set',Xhr.parseError(jqXHR.responseText,textStatus),route);
                 triggerCustom(modal,'unblock');
             }
         };
-        Quid.Xhr.trigger(this,config);
+        Xhr.trigger(this,config);
     });
     
     ael(this,'modal:anchorBind', function(event,anchor) {
@@ -103,7 +102,7 @@ var Modal = function()
     
     // delegateEvent
     $(this).on('click', '.close', function(event) {
-        var modal = $(event.delegateTarget);
+        const modal = $(event.delegateTarget);
         triggerCustom(modal,'modal:close');
         event.stopImmediatePropagation();
     });
@@ -117,35 +116,35 @@ var Modal = function()
     
     
     // opened 
-    var opened = function() {
-        var modal = $(this);
-        var route = $(this).attr('data-route');
+    const opened = function() {
+        const modal = $(this);
+        let route = $(this).attr('data-route');
         $(this).attr('data-status','ready');
         
         triggerCustom(document,'document:mountCommon',modal);
         triggerCustom(document,'modal:common',modal);
         triggerCustom(this,'modal:success',route);
         
-        var box = triggerFunc(this,'modal:getBox');
+        const box = triggerFunc(this,'modal:getBox');
         if(box.is('[tabindex]'))
         box.focus();
         
-        if(Quid.Str.isNotEmpty(route))
+        if(Str.isNotEmpty(route))
         triggerCustom(document,'modal:'+route,modal);
     };
     
     
     // boxBind
-    var boxBind = function() {
-        var modal = $(this);
-        var box = triggerFunc(this,'modal:getBox');
+    const boxBind = function() {
+        const modal = $(this);
+        const box = triggerFunc(this,'modal:getBox');
         
         ael(box,'click', function(event) {
             event.stopPropagation();
         });
         
         box.on('click', 'a', function(event) {
-            var href = $(this).attr('href');
+            const href = $(this).attr('href');
             triggerCustom(document,'document:go',href,event);
         })
         .on('click', '.close', function(event) {
@@ -156,15 +155,15 @@ var Modal = function()
     
     
     // documentBind
-    var documentBind = function() {
-        var modal = $(this);
+    const documentBind = function() {
+        const modal = $(this);
         
         setFunc(document,'document:getModal', function() {
             return modal;
         });
         
         ael(document,'document:mountCommon', function(event,node) {
-            var anchor = node.find("a[data-modal]");
+            const anchor = node.find("a[data-modal]");
             triggerCustom(modal,'modal:anchorBind',anchor);
         });
         
@@ -175,27 +174,27 @@ var Modal = function()
     
     
     // anchorBind
-    var anchorBind = function(anchor) {
-        var modal = $(this);
-        Quid.Component.block.call(anchor,'click');
-        Quid.Component.ajax.call(anchor,'click');
+    const anchorBind = function(anchor) {
+        const modal = $(this);
+        Component.block.call(anchor,'click');
+        Component.ajax.call(anchor,'click');
         
         // trigger
         ael(anchor,'ajax:beforeSend', function() {
-            var route = $(this).data('modal');
+            let route = $(this).data('modal');
             triggerCustom(this,'block');
             $(this).addClass('selected');
             triggerCustom(modal,'modal:open',route);
         });
         
         ael(anchor,'ajax:success', function(event,data,textStatus,jqXHR) {
-            var route = $(this).data('modal');
+            let route = $(this).data('modal');
             triggerCustom(modal,'modal:set',data,route);
             triggerCustom(this,'modal:success',modal);
         });
         
         ael(anchor,'ajax:error', function(event,parsedError,jqXHR,textStatus,errorThrown) {
-            var route = $(this).data('modal');
+            let route = $(this).data('modal');
             triggerCustom(modal,'modal:set',parsedError,route);
             triggerCustom(this,'unblock');
         });
@@ -210,7 +209,7 @@ var Modal = function()
         
         // setup
         aelOnce(anchor,'anchor:setup', function() {
-            var $this = $(this);
+            const $this = $(this);
             modal.on('modal:close', function() {
                 triggerCustom($this,'modal:close');
             });
@@ -224,4 +223,4 @@ var Modal = function()
 }
 
 // export
-Quid.Component.Modal = Modal;
+Component.Modal = Modal;

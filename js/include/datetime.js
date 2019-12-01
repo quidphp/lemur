@@ -4,12 +4,12 @@
  * License: https://github.com/quidphp/lemur/blob/master/LICENSE
  */
  
-// date
+// datetime
 // script with functions related to date and time
-Quid.Date = new function() 
+const Datetime = new function() 
 {   
     // instance
-    var $inst = this;
+    const $inst = this;
     
     
     // timestamp
@@ -18,4 +18,7 @@ Quid.Date = new function()
     {
         return (new Date).getTime();
     }
-};
+}
+
+// export
+Lemur.Datetime = Datetime;

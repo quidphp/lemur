@@ -6,19 +6,19 @@
 
 // react
 // script containing logic for mounting and unmounting react components
-Quid.Component.react = function()
+Component.react = function()
 {
     // bindDocument
     // applique les bindings pour react à la node document
-    var bindDocument = function() 
+    const bindDocument = function() 
     {
         $that.bind.call(this);
         
         $(this).on('document:mount', function(event) {
-            $(this).trigger('reactContainer:mount');
+            triggerCustom(this,'reactContainer:mount');
         })
         .on('document:unmount', function(event) {
-            $(this).trigger('reactContainer:unmount');
+            triggerCustom(this,'reactContainer:unmount');
         });
         
         return this;
@@ -26,15 +26,15 @@ Quid.Component.react = function()
     
     
     // createReactElement
-    var createReactElement = function(props)
+    const createReactElement = function(props)
     {
-        var r = null;
-        var component = $(this).attr('data-component');
-        var namespace = $(this).attr('data-namespace');
-        var content = $(this).attr('data-content');
-        var path = (namespace+"."+component).split('.');
-        var callable = Quid.Obj.climb(path,window);
-        props = props || Quid.Json.decode($(this).attr('data-props'));
+        let r = null;
+        const component = $(this).attr('data-component');
+        const namespace = $(this).attr('data-namespace');
+        const content = $(this).attr('data-content');
+        const path = (namespace+"."+component).split('.');
+        const callable = Obj.climb(path,window);
+        props = props || Json.decode($(this).attr('data-props'));
         props.parentNode = this;
         
         r = React.createElement(callable,props,content);
@@ -43,10 +43,10 @@ Quid.Component.react = function()
     }
     
     // renderReactComponent
-    var renderReactComponent = function(props)
+    let renderReactComponent = function(props)
     {
-        var node = $(this)[0];
-        var component = createReactElement.call(this,props);
+        const node = $(this)[0];
+        const component = createReactElement.call(this,props);
         
         if(component != null)
         ReactDOM.render(component,node);
@@ -55,7 +55,7 @@ Quid.Component.react = function()
     }
     
     // unmountReactComponent
-    var unmountReactComponent = function()
+    const unmountReactComponent = function()
     {
         ReactDOM.unmountComponentAtNode($(this)[0]);
         
@@ -63,7 +63,7 @@ Quid.Component.react = function()
     }
     
     $(this).on('reactContainer:mount', function(event,uri) {
-        var components = $(this).triggerHandler('reactContainer:getComponents');
+        const components = triggerFunc(this,'reactContainer:getComponents');
         
         components.on('react:mount', function(event) {
             renderReactComponent.call(this);
@@ -72,8 +72,8 @@ Quid.Component.react = function()
             unmountReactComponent.call(this);
         })
         .on('react:updateProps', function(event,props) {
-            var initialProps = Quid.Json.decode($(this).attr('data-props'));
-            props = Quid.Obj.replace(initialProps,props);
+            const initialProps = Json.decode($(this).attr('data-props'));
+            props = Obj.replace(initialProps,props);
             renderReactComponent.call(this,props);
         })
         .on('react:replaceProps', function(event,props) {
@@ -82,7 +82,7 @@ Quid.Component.react = function()
         .trigger('react:mount');
     })
     .on('reactContainer:unmount', function(event) {
-        var components = $(this).triggerHandler('reactContainer:getComponents');
+        const components = triggerFunc(this,'reactContainer:getComponents');
         components.trigger('react:unmount');
     })
     .on('reactContainer:getComponents', function(event) {

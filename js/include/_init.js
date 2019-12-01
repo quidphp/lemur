@@ -5,12 +5,14 @@
  */
 
 // variable
-var Quid = {};
+const Lemur = {};
+Lemur.Component = {};
+Lemur.Test = {};
 
 // globale
-window.Quid = Quid;
+window.Lemur = Lemur;
 
 // alias
-var d = console.log;
-var dd = console.dir;
-var assert = console.assert;
+const d = console.log;
+const dd = console.dir;
+const assert = console.assert;

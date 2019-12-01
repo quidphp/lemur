@@ -6,10 +6,10 @@
  
 // number
 // script with functions related to numbers
-Quid.Number = new function() 
+const Num = new function() 
 {   
     // instance
-    var $inst = this;
+    const $inst = this;
     
     
     // is
@@ -48,9 +48,12 @@ Quid.Number = new function()
     // retourne un int jamais utilisé, utile pour générer des ids unique
     this.uniqueInt = (function(value)
     {
-        var i = 0;
+        let i = 0;
         return function() {
             return i++;
         };
     })();
-};
+}
+
+// export
+Lemur.Num = Num;

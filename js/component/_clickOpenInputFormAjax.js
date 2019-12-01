@@ -6,22 +6,22 @@
 
 // clickOpenInputFormAjax
 // gère un formulaire à un champ qui s'envoie via ajax et dont le résultat s'affiche dans un clickOpen
-Quid.Component.clickOpenInputFormAjax = function(target)
+Component.clickOpenInputFormAjax = function(target)
 {
-    Quid.Component.clickOpenAjax.call(this,'submit',false,target);
+    Component.clickOpenAjax.call(this,'submit',false,target);
     
     $(this).on('ajax:complete', function(event) {
-        var field = $(this).triggerHandler('form:getValidateField');
+        const field = triggerFunc(this,'form:getValidateField');
         field.trigger('keyup:clearTimeout');
     })
     .on('clickOpenform:setup', function(event) {
-        var form = $(this);
-        var field = $(this).triggerHandler('form:getValidateField');
-        var submit = $(this).triggerHandler('form:getSubmit');
+        const form = $(this);
+        const field = triggerFunc(this,'form:getValidateField');
+        const submit = triggerFunc(this,'form:getSubmit');
         
-        Quid.Component.keyboardEnter.call(field,true,'keyup');
-        Quid.Component.keyboardEscape.call(field,true,'keyup');
-        Quid.Component.timeout.call(this,'keyup');
+        Component.keyboardEnter.call(field,true,'keyup');
+        Component.keyboardEscape.call(field,true,'keyup');
+        Component.timeout.call(this,'keyup');
         
         field.on('validate:invalid', function(event) {
             form.trigger('clickOpen:close');
@@ -36,17 +36,17 @@ Quid.Component.clickOpenInputFormAjax = function(target)
             event.stopPropagation();
             form.trigger('clickOpen:closeOthers');
             
-            if($(this).triggerHandler('validate:isEmpty'))
+            if(triggerFunc(this,'validate:isEmpty'))
             form.triggerHandler('inputForm:empty');
             
-            else if($(this).triggerHandler('validate:isNotEmptyAndValid') && !form.triggerHandler('clickOpen:isOpen'))
+            else if(triggerFunc(this,'validate:isNotEmptyAndValid') && !form.triggerHandler('clickOpen:isOpen'))
             form.trigger('submit');
         })
         .on('keyup:onTimeout', function() {
-            $(this).trigger('validate:trigger');
+            triggerCustom(this,'validate:trigger');
             
             if(!$(this).val())
-            $(this).trigger('validate:valid');
+            triggerCustom(this,'validate:valid');
             
             else if($(this).is(":focus"))
             form.trigger('submit');

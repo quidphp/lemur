@@ -38,7 +38,7 @@ trait _template
 
 
     // template
-    final protected function template():string
+    protected function template():string
     {
         $r = '';
         $flush = $this->docOpen();
@@ -593,7 +593,7 @@ trait _template
 
             $r = Html::divOp('top');
             $r .= Html::div(null,'triangle');
-            $r .= Html::div(Base\Date::format(4),'date');
+            $r .= Html::div(Base\Datetime::format(4),'date');
             $r .= Html::divCl();
             $r .= Html::div(null,'spacer');
             $r .= Html::div($comText,'bottom');

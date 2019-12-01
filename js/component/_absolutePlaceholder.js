@@ -6,10 +6,10 @@
  
 // absolutePlaceholder
 // script of behaviours for an absolute placeholder component
-Quid.Component.absolutePlaceholder = function()
+Component.absolutePlaceholder = function()
 {
     // resizeChange
-    Quid.Component.resizeChange.call(this);
+    Component.resizeChange.call(this);
     
     // triggerHandler
     $(this).on('absolutePlaceholder:getChild', function() {
@@ -24,16 +24,16 @@ Quid.Component.absolutePlaceholder = function()
     
     // trigger
     $(this).on('absolutePlaceholder:refresh', function(event) {
-        var child = $(this).triggerHandler('absolutePlaceholder:getChild');
+        const child = triggerFunc(this,'absolutePlaceholder:getChild');
         if(child.length)
         {
-            if(!$(this).triggerHandler('absolutePlaceholder:onlyHeight'))
+            if(!triggerFunc(this,'absolutePlaceholder:onlyHeight'))
             {
                 $(this).width('auto');
                 $(this).width(child.outerWidth());
             }
             
-            if(!$(this).triggerHandler('absolutePlaceholder:onlyWidth'))
+            if(!triggerFunc(this,'absolutePlaceholder:onlyWidth'))
             {
                 $(this).height('auto');
                 $(this).height(child.outerHeight());
@@ -45,7 +45,7 @@ Quid.Component.absolutePlaceholder = function()
         event.stopPropagation();
     })
     .on('resize:change', function() {
-        $(this).trigger('absolutePlaceholder:refresh');
+        triggerCustom(this,'absolutePlaceholder:refresh');
     })
     
     // firstRefresh

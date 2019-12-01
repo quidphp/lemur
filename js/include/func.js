@@ -6,10 +6,10 @@
  
 // func
 // script with functions related to functions
-Quid.Func = new function() 
+const Func = new function() 
 {    
     // instance
-    var $inst = this;
+    const $inst = this;
     
     
     // is
@@ -18,4 +18,7 @@ Quid.Func = new function()
     {
         return typeof value === "function" && typeof value.nodeType !== "number";
     }
-};
+}
+
+// export
+Lemur.Func = Func;

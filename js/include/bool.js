@@ -6,10 +6,10 @@
  
 // bool
 // script with functions related to booleans
-Quid.Bool = new function() 
+const Bool = new function() 
 {
     // instance
-    var $inst = this;
+    const $inst = this;
     
     
     // is
@@ -18,4 +18,7 @@ Quid.Bool = new function()
     {
         return typeof(value) === 'boolean';
     }
-};
+}
+
+// export
+Lemur.Bool = Bool;

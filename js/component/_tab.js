@@ -6,73 +6,73 @@
  
 // tab
 // script with behaviours for a tab component
-Quid.Component.tab = function()
+Component.tab = function()
 {
     $(this).on('tab:getIndex', function(event,value,loop) {
-        var current = $(this).triggerHandler('tab:getCurrent');
-        var target = $(this).triggerHandler('tab:getTarget');
+        const current = triggerFunc(this,'tab:getCurrent');
+        const target = triggerFunc(this,'tab:getTarget');
         
-        if(Quid.Node.isLike(value))
+        if(Dom.is(value))
         value = target.index(value);
         
-        var max = target.length;
+        const max = target.length;
         
-        return Quid.Nav.index(value,current,max,loop);
+        return Nav.index(value,current,max,loop);
     })
     .on('tab:indexer', function(event,value,loop) {
-        var index = $(this).triggerHandler('tab:getIndex',[value,loop]);
-        if(Quid.Number.is(index))
-        $(this).trigger('tab:change',[index]);
+        const index = triggerFunc(this,'tab:getIndex',[value,loop]);
+        if(Num.is(index))
+        triggerCustom(this,'tab:change',[index]);
     })
     .on('tab:first', function() {
-        $(this).trigger('tab:indexer',['first']);
+        triggerCustom(this,'tab:indexer',['first']);
     })
     .on('tab:prev', function() {
-        $(this).trigger('tab:indexer',['prev']);
+        triggerCustom(this,'tab:indexer',['prev']);
     })
     .on('tab:next', function() {
-        $(this).trigger('tab:indexer',['next']);
+        triggerCustom(this,'tab:indexer',['next']);
     })
     .on('tab:last', function() {
-        $(this).trigger('tab:indexer',['last']);
+        triggerCustom(this,'tab:indexer',['last']);
     })
     .on('tab:index', function(event,index) {
-        $(this).trigger('tab:indexer',['index']);
+        triggerCustom(this,'tab:indexer',['index']);
     })
     .on('tab:loopNext', function(event) {
-        $(this).trigger('tab:indexer',['next',true]);
+        triggerCustom(this,'tab:indexer',['next',true]);
     })
     .on('tab:loopPrev', function(event) {
-        $(this).trigger('tab:indexer',['prev',true]);
+        triggerCustom(this,'tab:indexer',['prev',true]);
     })
     .on('tab:target', function(event,target) {
-        $(this).trigger('tab:indexer',[target]);
+        triggerCustom(this,'tab:indexer',[target]);
     })
     .on('tab:getCurrent', function() {
         return $(this).data('tab-current');
     })
     .on('tab:isCurrent', function(event,value) {
-        var current = $(this).triggerHandler('tab:getCurrent');
-        var index = (Quid.Number.is(value))? value:$(this).triggerHandler('tab:getTarget').index(value);
-        return (Quid.Number.is(current) && index === current)? true:false;
+        const current = triggerFunc(this,'tab:getCurrent');
+        const index = (Num.is(value))? value:triggerFunc(this,'tab:getTarget').index(value);
+        return (Num.is(current) && index === current)? true:false;
     })
     .on('tab:closeAll', function() {
-        var target = $(this).triggerHandler('tab:getTarget');
+        const target = triggerFunc(this,'tab:getTarget');
         $(this).data('tab-current',null);
         target.each(function(index) {
-            $(this).trigger('tab:close');
+            triggerCustom(this,'tab:close');
         });
     })
     .on('tab:change', function(event,index) {
-        var target = $(this).triggerHandler('tab:getTarget');
-        var current = $(this).triggerHandler('tab:getCurrent');
+        const target = triggerFunc(this,'tab:getTarget');
+        const current = triggerFunc(this,'tab:getCurrent');
         
-        if(target.length && Quid.Number.is(index))
+        if(target.length && Num.is(index))
         {
             if(index !== current)
             {
-                var indexTarget = target.eq(index);
-                var currentTarget = (Quid.Number.is(current))? target.eq(current):null;
+                const indexTarget = target.eq(index);
+                const currentTarget = (Num.is(current))? target.eq(current):null;
                 
                 if(indexTarget.length)
                 {
@@ -90,22 +90,22 @@ Quid.Component.tab = function()
                 }
                 
                 else
-                $(this).trigger('tab:notExist');
+                triggerCustom(this,'tab:notExist');
             }
             
             else
-            $(this).trigger('tab:noChange');
+            triggerCustom(this,'tab:noChange');
         }
     })
     .on('tab:changeOrFirst', function(event,target) {
         if(target != null && target.length === 1)
         target.trigger('tab:change');
         else
-        $(this).trigger('tab:first');
+        triggerCustom(this,'tab:first');
     })
     .on('tab:prepare', function() {
-        var tab = $(this);
-        var target = $(this).triggerHandler('tab:getTarget');
+        const tab = $(this);
+        const target = triggerFunc(this,'tab:getTarget');
         
         target.on('tab:getIndex', function() {
             return target.index($(this));
@@ -123,7 +123,7 @@ Quid.Component.tab = function()
             tab.trigger('tab:target',[$(this)]);
         })
         .on('tab:open', function() {
-            var index = $(this).triggerHandler('tab:getIndex');
+            const index = triggerFunc(this,'tab:getIndex');
             tab.data('tab-current',index);
         });
     }).trigger('tab:prepare');

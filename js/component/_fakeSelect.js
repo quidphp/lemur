@@ -6,24 +6,24 @@
  
 // fakeSelect
 // script with some logic for a select replacement component, uses clickOpen
-Quid.Component.fakeSelect = function()
+Component.fakeSelect = function()
 {
     // alias
-    var setFunc = Quid.Event.setFunc;
-    var triggerFunc = Quid.Event.triggerFunc;
+    const setFunc = Evt.setFunc;
+    const triggerFunc = Evt.triggerFunc;
     
     // htmlFromSelect
-    var htmlFromSelect = function() {
-        var r = '';
-        var name = $(this).prop('name');
-        var required = $(this).data('required');
-        var disabled = $(this).prop('disabled');
-        var title = $(this).find("option:selected").text() || "&nbsp;";
-        var options = $(this).find("option");
-        var value = triggerFunc(this,'input:getValue');
-        var datas = Quid.Node.getAttrStr(this,'data-');
+    const htmlFromSelect = function() {
+        let r = '';
+        const name = $(this).prop('name');
+        let required = $(this).data('required');
+        const disabled = $(this).prop('disabled');
+        const title = $(this).find("option:selected").text() || "&nbsp;";
+        const options = $(this).find("option");
+        const value = triggerFunc(this,'input:getValue');
+        const datas = Dom.getAttrStr(this,'data-');
         
-        var inputHtml = "<input name='"+name+"' type='hidden' data-fakeselect='1' value='"+value+"'";
+        const inputHtml = "<input name='"+name+"' type='hidden' data-fakeselect='1' value='"+value+"'";
         if(required)
         inputHtml += " data-required='1'"
         if(disabled)
@@ -31,7 +31,7 @@ Quid.Component.fakeSelect = function()
         inputHtml += "/>";
         
         r += "<div tabindex='-1' data-fake-input='1' class='fakeselect'";
-        if(Quid.Str.isNotEmpty(datas))
+        if(Str.isNotEmpty(datas))
         r += " "+datas;
         r += "><button type='button' class='trigger'>";
         r += "<span data-title'='"+title+"' class='title'>"+title+"</span>";
@@ -41,9 +41,9 @@ Quid.Component.fakeSelect = function()
         r += "<ul>";
         
         options.each(function(index, el) {
-            var val = Quid.Str.cast($(this).prop('value'));
-            var text = $(this).text() || "&nbsp;";
-            var datas = Quid.Node.getAttrStr(this,'data-');
+            const val = Str.cast($(this).prop('value'));
+            const text = $(this).text() || "&nbsp;";
+            const datas = Dom.getAttrStr(this,'data-');
             
             r += "<li>";
             r += "<button type='button'";
@@ -54,8 +54,8 @@ Quid.Component.fakeSelect = function()
                 
                 r += " data-value='"+val+"'";
                 
-                if(Quid.Str.isNotEmpty(datas))
-                r += ' '.Quid.Obj.str(datas,'=',true);
+                if(Str.isNotEmpty(datas))
+                r += ' '.Obj.str(datas,'=',true);
             }
             
             r += ">";
@@ -72,18 +72,18 @@ Quid.Component.fakeSelect = function()
     };
     
     // bindFakeSelect
-    var bindFakeSelect = function() {
+    const bindFakeSelect = function() {
         
         // clickOpen
-        Quid.Component.clickOpenWithTrigger.call(this,"> .trigger");
-        Quid.Component.keyboardEnter.call(this,true);
+        Component.clickOpenWithTrigger.call(this,"> .trigger");
+        Component.keyboardEnter.call(this,true);
         
         // triggerHandler
         $(this).on('fakeselect:getChoices', function() {
-            return $(this).triggerHandler('clickOpen:getTarget').find("li > button");
+            return triggerFunc(this,'clickOpen:getTarget').find("li > button");
         })
         .on('fakeselect:getValue', function() {
-            return $(this).triggerHandler('fakeselect:getSelected').data('value');
+            return triggerFunc(this,'fakeselect:getSelected').data('value');
         })
         .on('fakeselect:getInput', function() {
             return $(this).find("input[type='hidden']");
@@ -92,7 +92,7 @@ Quid.Component.fakeSelect = function()
             return $(this).find("li > button.selected");
         })
         .on('fakeselect:getTitle', function() {
-            return $(this).triggerHandler('clickOpen:getTrigger').find(".title").first();
+            return triggerFunc(this,'clickOpen:getTrigger').find(".title").first();
         })
         .on('clickOpen:getBackgroundFrom', function() {
             return 'fakeselect';
@@ -100,18 +100,18 @@ Quid.Component.fakeSelect = function()
         
         // trigger
         .on('enter:blocked', function() {
-            $(this).trigger('clickOpen:toggle');
+            triggerCustom(this,'clickOpen:toggle');
         })
         .on('fakeselect:setTitle', function(event,value) {
-            $(this).triggerHandler('fakeselect:getTitle').text(value);
+            triggerFunc(this,'fakeselect:getTitle').text(value);
             event.stopPropagation();
         })
         .on('fakeselect:disable',function() {
-            var input = $(this).triggerHandler('fakeselect:getInput');
+            const input = triggerFunc(this,'fakeselect:getInput');
             input.trigger('input:disable');
         })
         .on('fakeselect:enable',function() {
-            var input = $(this).triggerHandler('fakeselect:getInput');
+            const input = triggerFunc(this,'fakeselect:getInput');
             input.trigger('input:disable');
         })
         
@@ -123,9 +123,9 @@ Quid.Component.fakeSelect = function()
         });
         
         // bindTrigger
-        var bindTrigger = function() {
-            var trigger = $(this).triggerHandler('clickOpen:getTrigger');
-            var input = $(this).triggerHandler('fakeselect:getInput');
+        const bindTrigger = function() {
+            const trigger = triggerFunc(this,'clickOpen:getTrigger');
+            const input = triggerFunc(this,'fakeselect:getInput');
             
             trigger.on('click', function() {
                 input.trigger('validate:valid');
@@ -133,9 +133,9 @@ Quid.Component.fakeSelect = function()
         };
         
         // bindInput
-        var bindInput = function() {
-            var $this = $(this);
-            var input = $(this).triggerHandler('fakeselect:getInput');
+        const bindInput = function() {
+            const $this = $(this);
+            const input = triggerFunc(this,'fakeselect:getInput');
             
             input.on('input:disable', function() {
                 $this.attr('data-disabled',1);
@@ -153,12 +153,12 @@ Quid.Component.fakeSelect = function()
         };
         
         // bindChoices
-        var bindChoices = function() {
-            var $this = $(this);
-            var choices = $(this).triggerHandler('fakeselect:getChoices');
-            var selected = $(this).triggerHandler('fakeselect:getSelected');
+        const bindChoices = function() {
+            const $this = $(this);
+            const choices = triggerFunc(this,'fakeselect:getChoices');
+            const selected = triggerFunc(this,'fakeselect:getSelected');
             
-            Quid.Component.keyboardEnter.call(choices,true);
+            Component.keyboardEnter.call(choices,true);
             
             choices.on('click enter:blocked', function(event) {
                 choose.call($this,$(this));
@@ -170,40 +170,40 @@ Quid.Component.fakeSelect = function()
         };
         
         // choose
-        var choose = function(selected)
+        const choose = function(selected)
         {
-            var input = $(this).triggerHandler('fakeselect:getInput');
-            var choices = $(this).triggerHandler('fakeselect:getChoices');
-            var value = selected.data("value");
-            var current = input.triggerHandler('input:getValue');
+            const input = triggerFunc(this,'fakeselect:getInput');
+            const choices = triggerFunc(this,'fakeselect:getChoices');
+            const value = selected.data("value");
+            const current = input.triggerHandler('input:getValue');
             choices.removeClass('selected');
             selected.addClass('selected');
             input.val(value);
             
-            $(this).trigger('fakeselect:setTitle',selected.text());
-            $(this).trigger('clickOpen:close');
+            triggerCustom(this,'fakeselect:setTitle',selected.text());
+            triggerCustom(this,'clickOpen:close');
             
-            if(Quid.Str.cast(value) !== Quid.Str.cast(current))
+            if(Str.cast(value) !== Str.cast(current))
             {
-                $(this).trigger('fakeselect:changed',[value,selected]);
-                $(this).trigger('change');
+                triggerCustom(this,'fakeselect:changed',[value,selected]);
+                triggerCustom(this,'change');
                 input.trigger('change');
             }
         }
     }
     
-    var r = $();
+    let r = $();
     
     // htmlFromSelect
     $(this).each(function(index, el) {
-        if(Quid.Node.tag(this) === 'select')
+        if(Dom.tag(this) === 'select')
         {
-            var html = htmlFromSelect.call(this);
-            var node = $(html);
-            var input = node.find("input");
+            const html = htmlFromSelect.call(this);
+            const node = $(html);
+            const input = node.find("input");
 
             $(this).replaceWith(node);
-            Quid.Component.input.call(input);
+            Component.input.call(input);
             r = r.add(node);
         }
         

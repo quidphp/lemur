@@ -6,10 +6,10 @@
  
 // str
 // script with a set of helper functions related to strings
-Quid.Str = new function() 
+const Str = new function() 
 {    
     // instance
-    var $inst = this;
+    const $inst = this;
     
     
     // is
@@ -90,8 +90,8 @@ Quid.Str = new function()
     // possible de spécifier double ou non
     this.quote = function(value,double)
     {
-        var r = null;
-        var quote = (double === true)? '"':"'";
+        let r = null;
+        const quote = (double === true)? '"':"'";
         
         if($inst.is(value))
         r = quote+value+quote;
@@ -113,12 +113,15 @@ Quid.Str = new function()
     // split une string et retourne l'index demandé en premier argument
     this.explodeIndex = function(index,delimiter,value)
     {
-        var r = null;
-        var x = $inst.explode(delimiter,value);
+        let r = null;
+        const x = $inst.explode(delimiter,value);
         
-        if(Quid.Number.isInt(index) && $inst.isNotEmpty(x[index]))
+        if(Num.isInt(index) && $inst.isNotEmpty(x[index]))
         r = x[index];
         
         return r;
     }
-};
+}
+
+// export
+Lemur.Str = Str;

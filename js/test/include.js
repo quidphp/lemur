@@ -4,353 +4,323 @@
  * License: https://github.com/quidphp/lemur/blob/master/LICENSE
  */
  
-// testInclude
+// include
 // script to test the include.js file
-Quid.Test.include = new function() 
+const Include = function()
 {    
-    // instance
-    var $inst = this;
-    var d = console.log;
-    var dd = console.dir;
-    var assert = console.assert;
+    // arr
+    assert(Arr.is([]));
+    assert(!Arr.is({}));
+    assert(!Arr.is(arguments));
+    assert(Arr.isLike([]));
+    assert(!Arr.isLike({}));
+    assert(!Arr.isLike(function() { }));
+    assert(Arr.isLike(arguments));
+    assert(!Arr.isLike(2));
+    assert(!Arr.isLike('str'));
+    assert(!Arr.isLike(null));
+    assert(Arr.isEmpty([]));
+    assert(Arr.isNotEmpty([null]));
+    assert(!Arr.isNotEmpty([]));
+    assert(Arr.in(null,[null]));
+    assert(!Arr.in(true,[false]));
+    assert(Vari.isEqual(Arr.slice(1,3,[2,4,6,8,10]),[4,6]));
+    assert(Vari.isEqual(Arr.slice(1,undefined,[2,4,6,8,10]),[4,6,8,10]));
+    assert(Vari.isEqual(Arr.slice(null,null,[2,4,6,8,10]),[2,4,6,8,10]));
+    assert(Vari.isEqual(Arr.sliceStart(2,[2,4,6,8,10]),[6,8,10]));
     
+    // bool
+    assert(!Bool.is('true'));
+    assert(!Bool.is(function() { }));
+    assert(!Bool.is(null));
+    assert(!Bool.is(1));
+    assert(Bool.is(true));
     
-    // trigger
-    this.trigger = function() 
-    {    
-        // alias
-        var arr = Quid.Arr;
-        var bool = Quid.Bool;
-        var browser = Quid.Browser;
-        var date = Quid.Date;
-        var dom = Quid.Dom;
-        var event = Quid.Event;
-        var func = Quid.Func;
-        var html = Quid.Html;
-        var json = Quid.Json;
-        var nav = Quid.Nav;
-        var node = Quid.Node;
-        var number = Quid.Number;
-        var obj = Quid.Obj;
-        var request = Quid.Request;
-        var scalar = Quid.Scalar;
-        var selector = Quid.Selector;
-        var str = Quid.Str;
-        var uri = Quid.Uri;
-        var validate = Quid.Validate;
-        var vari = Quid.Vari;
-        var xhr = Quid.Xhr;
+    // browser
+    assert(Bool.is(Browser.isResponsive()));
+    assert(Bool.is(Browser.isTouch()));
+    assert(Bool.is(Browser.isOldIe()));
+    assert(Bool.is(Browser.isUnsupported()));
+    assert(Bool.is(Browser.allowsCookie()));
+    
+    // datetime
+    assert(Num.is(Datetime.timestamp()));
+    
+    // dom
+    const htmlNode = $("html").get(0);
+    const selectorOne = htmlNode.querySelector("body");
+    const selectorAll = htmlNode.querySelectorAll("body");
+    assert(!Dom.is(window));
+    assert(Dom.is(document));
+    assert(Dom.is($("html")));
+    assert(Dom.is($("html,body").get()));
+    assert(Dom.is([htmlNode]));
+    assert(Dom.is([selectorOne]));
+    assert(Dom.is([selectorAll]));
+    assert(!Dom.is([htmlNode,true]));
+    assert(Dom.is(htmlNode));
+    assert(Dom.isWindow(window));
+    assert(!Dom.isWindow(document));
+    assert(Dom.isTag('html',htmlNode));
+    assert(Dom.matchAll('html',htmlNode));
+    assert(Dom.tag(htmlNode) === 'html');
+    assert(Dom.tag(window) === null);
+    assert(Str.isNotEmpty(Dom.outerHtml(htmlNode)));
+    assert(Num.isInt(Dom.heightWithPadding(htmlNode)));
+    assert(Obj.isPlain(Dom.attr(htmlNode)));
+    assert(Str.isNotEmpty(Dom.getAttrStr(htmlNode)));
+    assert(Obj.isPlain(Dom.getDataAttr(htmlNode)));
+
+    // domChange
+
+    // evt
+    Evt.setFunc(htmlNode,'what',function(value) { $(this).data('OK',value); return true; });
+    assert(Func.is(Evt.getFunc(htmlNode,'what')));
+    assert($(htmlNode).data('OK') == null);
+    assert(Evt.isTriggerFuncEqual(true,'what',[htmlNode],'james'));
+    assert($(htmlNode).data('OK') == 'james');
+    assert(Evt.triggerFunc(htmlNode,'what','no') === true);
+    assert(Evt.triggerFunc(htmlNode,'what','yes') === true);
+    assert($(htmlNode).data('OK') === 'yes');
+    Evt.setFunc(htmlNode,'what',function() { return false; });
+    assert(Evt.triggerFunc(htmlNode,'what') === false);
+    Evt.removeFunc(htmlNode,'what');
+    assert(Evt.getFunc(htmlNode,'what') === undefined);
+    
+    // func
+    assert(!Func.is('test'));
+    assert(Func.is(function() { }));
+    
+    // html
+    const htmlStr = Dom.outerHtml($("html"));
+    assert(Html.parse(htmlStr).length === 1);
+    assert(Obj.length(Html.doc(htmlStr)) === 9);
+    
+    // json
+    assert(Json.encode({ok: 2}) === '{"ok":2}');
+    assert(Obj.isEqual(Json.decode('{"ok":2}'),{ok: 2}));
+    
+    // nav
+    assert(Nav.index('first',2,10) === 0);
+    assert(Nav.index('last',2,10) === 9);
+    assert(Nav.index('prev',2,10) === 1);
+    assert(Nav.index('next',2,10) === 3);
+    assert(Nav.index('next',9,10) === null);
+    assert(Nav.index('next',9,10,true) === 0);
+    assert(Nav.index('prev',0,10) === null);
+    assert(Nav.index('prev',0,10,true) === 9);
+    assert(Nav.index(2,0,10,true) === 2);
+    assert(Nav.index(0,0,10,true) === 0);
+    assert(Nav.index(11,0,10,true) === null);
         
-        // arr
-        assert(arr.is([]));
-        assert(!arr.is({}));
-        assert(!arr.is(arguments));
-        assert(arr.isLike([]));
-        assert(!arr.isLike({}));
-        assert(!arr.isLike(function() { }));
-        assert(arr.isLike(arguments));
-        assert(!arr.isLike(2));
-        assert(!arr.isLike('str'));
-        assert(!arr.isLike(null));
-        assert(arr.isEmpty([]));
-        assert(arr.isNotEmpty([null]));
-        assert(!arr.isNotEmpty([]));
-        assert(arr.in(null,[null]));
-        assert(!arr.in(true,[false]));
-        assert(vari.isEqual(arr.slice(1,3,[2,4,6,8,10]),[4,6]));
-        assert(vari.isEqual(arr.slice(1,undefined,[2,4,6,8,10]),[4,6,8,10]));
-        assert(vari.isEqual(arr.slice(null,null,[2,4,6,8,10]),[2,4,6,8,10]));
-        assert(vari.isEqual(arr.sliceStart(2,[2,4,6,8,10]),[6,8,10]));
-        
-        // bool
-        assert(!bool.is('true'));
-        assert(!bool.is(function() { }));
-        assert(!bool.is(null));
-        assert(!bool.is(1));
-        assert(bool.is(true));
-        
-        // browser
-        assert(bool.is(browser.isResponsive()));
-        assert(bool.is(browser.isTouch()));
-        assert(bool.is(browser.isOldIe()));
-        assert(bool.is(browser.isUnsupported()));
-        assert(bool.is(browser.allowsCookie()));
-        
-        // date
-        assert(number.is(date.timestamp()));
-        
-        // dom
-        
-        // event
-        var htmlNode = $("html").get(0);
-        event.setFunc(htmlNode,'what',function(value) { $(this).data('OK',value); return true; });
-        assert(func.is(event.getFunc(htmlNode,'what')));
-        assert($(htmlNode).data('OK') == null);
-        assert(event.isTriggerFuncEqual(true,'what',[htmlNode],'james'));
-        assert($(htmlNode).data('OK') == 'james');
-        assert(event.triggerFunc(htmlNode,'what','no') === true);
-        assert(event.triggerFunc(htmlNode,'what','yes') === true);
-        assert($(htmlNode).data('OK') === 'yes');
-        event.setFunc(htmlNode,'what',function() { return false; });
-        assert(event.triggerFunc(htmlNode,'what') === false);
-        event.removeFunc(htmlNode,'what');
-        assert(event.getFunc(htmlNode,'what') === undefined);
-        
-        // func
-        assert(!func.is('test'));
-        assert(func.is(function() { }));
-        
-        // html
-        var htmlStr = Quid.Node.outerHtml($("html"));
-        assert(html.parse(htmlStr).length === 1);
-        assert(Quid.Obj.length(html.doc(htmlStr)) === 9);
-        
-        // json
-        assert(json.encode({ok: 2}) === '{"ok":2}');
-        assert(obj.isEqual(json.decode('{"ok":2}'),{ok: 2}));
-        
-        // nav
-        assert(nav.index('first',2,10) === 0);
-        assert(nav.index('last',2,10) === 9);
-        assert(nav.index('prev',2,10) === 1);
-        assert(nav.index('next',2,10) === 3);
-        assert(nav.index('next',9,10) === null);
-        assert(nav.index('next',9,10,true) === 0);
-        assert(nav.index('prev',0,10) === null);
-        assert(nav.index('prev',0,10,true) === 9);
-        assert(nav.index(2,0,10,true) === 2);
-        assert(nav.index(0,0,10,true) === 0);
-        assert(nav.index(11,0,10,true) === null);
-        
-        // node
-        var htmlNode = $("html").get(0);
-        var selectorOne = htmlNode.querySelector("body");
-        var selectorAll = htmlNode.querySelectorAll("body");
-        assert(!node.isLike(window));
-        assert(node.isLike(document));
-        assert(node.isLike($("html")));
-        assert(node.isLike($("html,body").get()));
-        assert(node.isLike([htmlNode]));
-        assert(node.isLike([selectorOne]));
-        assert(node.isLike([selectorAll]));
-        assert(!node.isLike([htmlNode,true]));
-        assert(node.isLike(htmlNode));
-        assert(node.isWindow(window));
-        assert(!node.isWindow(document));
-        assert(node.isTag('html',htmlNode));
-        assert(node.isAll('html',htmlNode));
-        assert(node.tag(htmlNode) === 'html');
-        assert(node.tag(window) === null);
-        assert(str.isNotEmpty(node.outerHtml(htmlNode)));
-        assert(number.isInt(node.heightWithPadding(htmlNode)));
-        assert(obj.isPlain(node.attr(htmlNode)));
-        assert(str.isNotEmpty(node.getAttrStr(htmlNode)));
-        assert(obj.isPlain(node.getDataAttr(htmlNode)));
-        
-        // number
-        assert(!number.is('what'));
-        assert(number.is('2'));
-        assert(number.is('2.3'));
-        assert(number.is(2));
-        assert(number.is(2.2));
-        assert(!number.isInt('2'));
-        assert(number.isInt(2));
-        assert(!number.isInt(2.2));
-        assert(number.castInt('2.3') === 2);
-        assert(number.castInt(4) === 4);
-        assert(number.castInt(2.3) === 2);
-        assert(number.castStr('2.3') === '2.3');
-        assert(number.castStr(4) === '4');
-        assert(number.castStr(2.3) === '2.3');
-        assert(number.isInt(number.uniqueInt()));
-        assert(number.uniqueInt() !== number.uniqueInt());
-        
-        // obj
-        assert(obj.is({}));
-        assert(obj.is([]));
-        assert(obj.is(arguments));
-        assert(obj.is(function() { }));
-        assert(!obj.is('test'));
-        assert(!obj.is(null));
-        assert(!obj.is(undefined));
-        assert(!obj.is(true));
-        assert(obj.isPlain({}));
-        assert(!obj.isPlain([]));
-        assert(!obj.isPlain(arguments));
-        assert(!obj.isPlain(function() { }));
-        assert(!obj.isPlain('test'));
-        assert(!obj.isPlain(null));
-        assert(!obj.isPlain(undefined));
-        assert(obj.isEmpty({}));
-        assert(obj.isEmpty([]));
-        assert(obj.isEmpty(function() { }));
-        assert(!obj.isEmpty({ok: 2}));
-        assert(!obj.isEmpty([2]));
-        assert(!obj.isEmpty(null));
-        assert(!obj.isEmpty(false));
-        assert(!obj.isEmpty(undefined));
-        assert(obj.isEmpty(function() { return 2; }));
-        assert(obj.isNotEmpty({ok: 2}));
-        assert(obj.isNotEmpty([2]));
-        assert(!obj.isNotEmpty(2));
-        assert(!obj.isNotEmpty(null));
-        assert(obj.hasProperty('test',{test: 2}));
-        assert(!obj.hasProperty('test',{testz: 2}));
-        assert(!obj.isEqual({},[]));
-        assert(!obj.isEqual({},{},[]));
-        assert(obj.isEqual({},{},{}));
-        assert(obj.isEqual([2],[2],[2]));
-        assert(!obj.isEqual([2],[2],[1]));
-        assert(obj.isEqual({test: 2},{test: 2}));
-        assert(!obj.isEqual({test: 2},{test: 3}));
-        assert(!obj.isEqual('test','test'));
-        assert(!obj.isEqual('test','testz'));
-        assert(!obj.isEqual(3,3));
-        assert(!obj.isEqual(3,4));
-        assert(!obj.isEqual(null,null));
-        assert(!obj.isEqual(null,undefined));
-        assert(Quid.Obj.length({ test: 2, ok: 3}) === 2);
-        assert(Quid.Obj.length({}) === 0);
-        var replace = {test:2, ok: {what: true}};
-        assert(obj.isEqual(obj.replace(replace,{ok: {james: false}}),{test: 2, ok: {james: false}}));
-        assert(obj.isEqual(replace,{test:2, ok: {what: true}}));
-        assert(obj.str({str: 2, what: 'ok', loop: [1,2], meh: { what: 2 }}) === 'str=2 what=ok loop=[1,2] meh={"what":2}');
-        assert(obj.str({str: 2, what: 'ok', loop: [1,2], meh: { what: 2 }},'!') === 'str!2 what!ok loop![1,2] meh!{"what":2}');
-        assert(obj.str({str: 2, what: 'ok', loop: [1,2], meh: { what: 2 }},'=',true) === "str='2' what='ok' loop='[1,2]' meh='{\"what\":2}'");
-        assert(obj.isEqual(obj.replace([1,2,3],[4,5]),{0:4,1: 5,2:3}));
-        assert(obj.isEqual(obj.replaceRecursive({test:2, ok: {what: true}},{ok: {james: false}}),{test: 2, ok: {what: true, james: false}}));
-        assert(obj.climb(['test','what'],{test: {what: 'LOL'}}) === 'LOL');
-        
-        // request
-        assert(str.isNotEmpty(request.relative()));
-        assert(str.isNotEmpty(request.scheme()));
-        assert(str.is(request.fragment()) || request.fragment() === null);
-        assert(obj.isPlain(request.parse()));
-        
-        // scalar
-        assert(scalar.is('test'));
-        assert(scalar.is(2));
-        assert(scalar.is(true));
-        assert(scalar.is(false));
-        assert(!scalar.is(null));
-        
-        // selector
-        assert(selector.input() === "input,select,textarea,button[type='submit']");
-        
-        // str
-        assert(str.is('WHAT'));
-        assert(str.is(''));
-        assert(!str.is([]));
-        assert(!str.is(null));
-        assert(!str.isEmpty('WHAT'));
-        assert(str.isEmpty(''));
-        assert(!str.isEmpty('as'));
-        var isEmpty = str.isEmpty;
-        assert(isEmpty(''));
-        assert(!str.isNotEmpty(''));
-        assert(str.isNotEmpty('as'));
-        assert(str.isStart('a','as'));
-        assert(!str.isStart(3,'3s'));
-        assert(str.isEnd('s','as'));
-        assert(!str.isEnd('a','as'));
-        assert(str.lowerFirst('as') === 'as');
-        assert(str.lowerFirst('As') === 'as');
-        assert(str.lowerFirst('És') === 'és');
-        assert(str.upperFirst('as') === 'As');
-        assert(str.upperFirst('As') === 'As');
-        assert(str.trim(' As ') === 'As');
-        assert(str.cast(2) === '2');
-        assert(str.cast(false) === 'false');
-        assert(str.cast(true) === 'true');
-        assert(str.cast(null) === '');
-        assert(str.cast(undefined) === '');
-        assert(str.quote('what',true) === '"what"');
-        assert(str.quote('what') === "'what'");
-        assert(str.quote(2) === null);
-        assert(obj.isEqual(str.explode('-','la-vie-ok'),['la','vie','ok']));
-        assert(str.explodeIndex(2,'-','la-vie-ok') === 'ok');
-        assert(str.explodeIndex('2','-','la-vie-ok') === null);
-        assert(str.explodeIndex(3,'-','la-vie-ok') === null);
-        
-        // uri
-        assert(uri.isInternal("http://google.com/test","http://google.com/test2"));
-        assert(uri.isInternal("/test","/test2"));
-        assert(!uri.isInternal("http://google.com/test","/test2"));
-        assert(uri.isExternal("http://googlez.com/test","http://google.com/test2"));
-        assert(!uri.isExternal("/test","/test2"));
-        assert(!uri.hasExtension("http://googlez.com/test"));
-        assert(uri.hasExtension("http://googlez.com/test.jpg"));
-        assert(!uri.hasFragment("http://googlez.com/test.jpg"));
-        assert(uri.hasFragment("http://googlez.com/test.jpg#james"));
-        assert(uri.hasFragment("/test.jpg#james"));
-        assert(uri.isSamePathQuery("/test.jpg?v=2","http://google.com/test.jpg?v=2#ok"));
-        assert(!uri.isSamePathQuery("/test.jpg?v=2","http://google.com/test.jpg?v=3#ok"));
-        assert(uri.isSamePathQueryHash("/test.jpg?v=2#ok","http://google.com/test.jpg?v=2#ok"));
-        assert(!uri.isSamePathQueryHash("/test.jpg?v=2#ok","http://google.com/test.jpg?v=3#ok1"));
-        assert(uri.isHashChange("/test.jpg?v=2#ok","/test.jpg?v=2#ok2"));
-        assert(!uri.isHashChange("/test.jpg?v=2#ok","/testz.jpg?v=2#ok2"));
-        assert(!uri.isHashChange("/test.jpg?v=2#ok","/test.jpg?v=2#ok"));
-        assert(!uri.isHashChange("/test.jpg?v=2","/test.jpg?v=2"));
-        assert(uri.isSameWithHash("http://goog.com/test.jpg?v=2#ok","http://goog.com/test.jpg?v=2#ok"));
-        assert(!uri.isSameWithHash("/test.jpg?v=2","/test.jpg?v=2"));
-        assert(uri.relative("http://google.com/ok?v=2#what") === '/ok?v=2');
-        assert(uri.relative("http://google.com/ok?v=2#what",true) === '/ok?v=2#what');
-        assert(uri.extension("http://google.com/ok.jpg?v=2#what") === 'jpg');
-        assert(obj.length(uri.parse("http://google.com/ok?v=2#what")) === 6);
-        assert(uri.makeHash("james",true) === '#james');
-        assert(uri.makeHash("#james",true) === '#james');
-        assert(uri.makeHash("james") === 'james');
-        assert(uri.makeHash("#james") === 'james');
-        assert(uri.getMailto('mailto:test@test.com') === 'test@test.com');
-        assert(uri.getMailto('test@test.com') === 'test@test.com');
-        assert(uri.getMailto('mailto:testtest.com') === null);
-        
-        // validate
-        assert(validate.isNumericDash("213-123"));
-        assert(validate.isNumericDash("213123"));
-        assert(!validate.isNumericDash("213_123"));
-        assert(validate.isEmail("test@test.com"));
-        assert(!validate.isEmail("testtest.com"));
-        assert(validate.isEmail('bla@bla.zzzzzzz'));
-        
-        // vari
-        assert(vari.is(null));
-        assert(!vari.is(undefined));
-        assert(vari.isEmpty(null));
-        assert(vari.isEmpty({}));
-        assert(vari.isEmpty(false));
-        assert(!vari.isEmpty(true));
-        assert(vari.isEmpty(''));
-        assert(vari.isEmpty([]));
-        assert(!vari.isEmpty('0'));
-        assert(vari.isEmpty(0));
-        assert(!vari.isEmpty(1));
-        assert(vari.isEmpty(undefined));
-        assert(vari.isNotEmpty(2));
-        assert(!vari.isNotEmpty(null));
-        assert(vari.isEqual('test','test'));
-        assert(!vari.isEqual('test','testz'));
-        assert(vari.isEqual(3,3));
-        assert(!vari.isEqual(3,4));
-        assert(vari.isEqual(null,null));
-        assert(!vari.isEqual(null,undefined));
-        assert(vari.isEqualStrict(null,null));
-        assert(vari.isEqualStrict('test','test'));
-        assert(!vari.isEqualStrict([],[]));
-        assert(vari.type('test') === 'string');
-        assert(vari.type({}) === 'object');
-        assert(vari.type([]) === 'object');
-        assert(vari.type(function() { }) === 'object');
-        assert(vari.type(2) === 'number');
-        assert(vari.type(2.3) === 'number');
-        assert(vari.type(null) === 'null');
-        assert(vari.type(true) === 'boolean');
-        assert(vari.type(undefined) === 'undefined');
-        
-        // xhr
-        assert(obj.length(xhr.configFromNode(htmlNode)) === 3);
-        assert(xhr.parseError('<html><body><div>TEST</div></body></html>','error') === '<div>TEST</div>');
-        assert(xhr.parseError('<html><body><div class="ajax-parse-error"><div>TEST</div></div></body></html>','error') === '<div class="ajax-parse-error"><div>TEST</div></div>');
-        assert(xhr.parseError('','error') === 'error');
-    }
+    // num
+    assert(!Num.is('what'));
+    assert(Num.is('2'));
+    assert(Num.is('2.3'));
+    assert(Num.is(2));
+    assert(Num.is(2.2));
+    assert(!Num.isInt('2'));
+    assert(Num.isInt(2));
+    assert(!Num.isInt(2.2));
+    assert(Num.castInt('2.3') === 2);
+    assert(Num.castInt(4) === 4);
+    assert(Num.castInt(2.3) === 2);
+    assert(Num.castStr('2.3') === '2.3');
+    assert(Num.castStr(4) === '4');
+    assert(Num.castStr(2.3) === '2.3');
+    assert(Num.isInt(Num.uniqueInt()));
+    assert(Num.uniqueInt() !== Num.uniqueInt());
+    
+    // obj
+    assert(Obj.is({}));
+    assert(Obj.is([]));
+    assert(Obj.is(arguments));
+    assert(Obj.is(function() { }));
+    assert(!Obj.is('test'));
+    assert(!Obj.is(null));
+    assert(!Obj.is(undefined));
+    assert(!Obj.is(true));
+    assert(Obj.isPlain({}));
+    assert(!Obj.isPlain([]));
+    assert(!Obj.isPlain(arguments));
+    assert(!Obj.isPlain(function() { }));
+    assert(!Obj.isPlain('test'));
+    assert(!Obj.isPlain(null));
+    assert(!Obj.isPlain(undefined));
+    assert(Obj.isEmpty({}));
+    assert(Obj.isEmpty([]));
+    assert(Obj.isEmpty(function() { }));
+    assert(!Obj.isEmpty({ok: 2}));
+    assert(!Obj.isEmpty([2]));
+    assert(!Obj.isEmpty(null));
+    assert(!Obj.isEmpty(false));
+    assert(!Obj.isEmpty(undefined));
+    assert(Obj.isEmpty(function() { return 2; }));
+    assert(Obj.isNotEmpty({ok: 2}));
+    assert(Obj.isNotEmpty([2]));
+    assert(!Obj.isNotEmpty(2));
+    assert(!Obj.isNotEmpty(null));
+    assert(Obj.hasProperty('test',{test: 2}));
+    assert(!Obj.hasProperty('test',{testz: 2}));
+    assert(!Obj.isEqual({},[]));
+    assert(!Obj.isEqual({},{},[]));
+    assert(Obj.isEqual({},{},{}));
+    assert(Obj.isEqual([2],[2],[2]));
+    assert(!Obj.isEqual([2],[2],[1]));
+    assert(Obj.isEqual({test: 2},{test: 2}));
+    assert(!Obj.isEqual({test: 2},{test: 3}));
+    assert(!Obj.isEqual('test','test'));
+    assert(!Obj.isEqual('test','testz'));
+    assert(!Obj.isEqual(3,3));
+    assert(!Obj.isEqual(3,4));
+    assert(!Obj.isEqual(null,null));
+    assert(!Obj.isEqual(null,undefined));
+    assert(Obj.length({ test: 2, ok: 3}) === 2);
+    assert(Obj.length({}) === 0);
+    let replace = {test:2, ok: {what: true}};
+    assert(Obj.isEqual(Obj.replace(replace,{ok: {james: false}}),{test: 2, ok: {james: false}}));
+    assert(Obj.isEqual(replace,{test:2, ok: {what: true}}));
+    assert(Obj.str({str: 2, what: 'ok', loop: [1,2], meh: { what: 2 }}) === 'str=2 what=ok loop=[1,2] meh={"what":2}');
+    assert(Obj.str({str: 2, what: 'ok', loop: [1,2], meh: { what: 2 }},'!') === 'str!2 what!ok loop![1,2] meh!{"what":2}');
+    assert(Obj.str({str: 2, what: 'ok', loop: [1,2], meh: { what: 2 }},'=',true) === "str='2' what='ok' loop='[1,2]' meh='{\"what\":2}'");
+    assert(Obj.isEqual(Obj.replace([1,2,3],[4,5]),{0:4,1: 5,2:3}));
+    assert(Obj.isEqual(Obj.replaceRecursive({test:2, ok: {what: true}},{ok: {james: false}}),{test: 2, ok: {what: true, james: false}}));
+    assert(Obj.climb(['test','what'],{test: {what: 'LOL'}}) === 'LOL');
+    
+    // request
+    assert(Str.isNotEmpty(Request.relative()));
+    assert(Str.isNotEmpty(Request.scheme()));
+    assert(Str.is(Request.fragment()) || Request.fragment() === null);
+    assert(Obj.isPlain(Request.parse()));
+    
+    // scalar
+    assert(Scalar.is('test'));
+    assert(Scalar.is(2));
+    assert(Scalar.is(true));
+    assert(Scalar.is(false));
+    assert(!Scalar.is(null));
+    
+    // selector
+    assert(Selector.input() === "input,select,textarea,button[type='submit']");
+    
+    // str
+    assert(Str.is('WHAT'));
+    assert(Str.is(''));
+    assert(!Str.is([]));
+    assert(!Str.is(null));
+    assert(!Str.isEmpty('WHAT'));
+    assert(Str.isEmpty(''));
+    assert(!Str.isEmpty('as'));
+    const isEmpty = Str.isEmpty;
+    assert(isEmpty(''));
+    assert(!Str.isNotEmpty(''));
+    assert(Str.isNotEmpty('as'));
+    assert(Str.isStart('a','as'));
+    assert(!Str.isStart(3,'3s'));
+    assert(Str.isEnd('s','as'));
+    assert(!Str.isEnd('a','as'));
+    assert(Str.lowerFirst('as') === 'as');
+    assert(Str.lowerFirst('As') === 'as');
+    assert(Str.lowerFirst('És') === 'és');
+    assert(Str.upperFirst('as') === 'As');
+    assert(Str.upperFirst('As') === 'As');
+    assert(Str.trim(' As ') === 'As');
+    assert(Str.cast(2) === '2');
+    assert(Str.cast(false) === 'false');
+    assert(Str.cast(true) === 'true');
+    assert(Str.cast(null) === '');
+    assert(Str.cast(undefined) === '');
+    assert(Str.quote('what',true) === '"what"');
+    assert(Str.quote('what') === "'what'");
+    assert(Str.quote(2) === null);
+    assert(Obj.isEqual(Str.explode('-','la-vie-ok'),['la','vie','ok']));
+    assert(Str.explodeIndex(2,'-','la-vie-ok') === 'ok');
+    assert(Str.explodeIndex('2','-','la-vie-ok') === null);
+    assert(Str.explodeIndex(3,'-','la-vie-ok') === null);
+    
+    // uri
+    assert(Uri.isInternal("http://google.com/test","http://google.com/test2"));
+    assert(Uri.isInternal("/test","/test2"));
+    assert(!Uri.isInternal("http://google.com/test","/test2"));
+    assert(Uri.isExternal("http://googlez.com/test","http://google.com/test2"));
+    assert(!Uri.isExternal("/test","/test2"));
+    assert(!Uri.hasExtension("http://googlez.com/test"));
+    assert(Uri.hasExtension("http://googlez.com/test.jpg"));
+    assert(!Uri.hasFragment("http://googlez.com/test.jpg"));
+    assert(Uri.hasFragment("http://googlez.com/test.jpg#james"));
+    assert(Uri.hasFragment("/test.jpg#james"));
+    assert(Uri.isSamePathQuery("/test.jpg?v=2","http://google.com/test.jpg?v=2#ok"));
+    assert(!Uri.isSamePathQuery("/test.jpg?v=2","http://google.com/test.jpg?v=3#ok"));
+    assert(Uri.isSamePathQueryHash("/test.jpg?v=2#ok","http://google.com/test.jpg?v=2#ok"));
+    assert(!Uri.isSamePathQueryHash("/test.jpg?v=2#ok","http://google.com/test.jpg?v=3#ok1"));
+    assert(Uri.isHashChange("/test.jpg?v=2#ok","/test.jpg?v=2#ok2"));
+    assert(!Uri.isHashChange("/test.jpg?v=2#ok","/testz.jpg?v=2#ok2"));
+    assert(!Uri.isHashChange("/test.jpg?v=2#ok","/test.jpg?v=2#ok"));
+    assert(!Uri.isHashChange("/test.jpg?v=2","/test.jpg?v=2"));
+    assert(Uri.isSameWithHash("http://goog.com/test.jpg?v=2#ok","http://goog.com/test.jpg?v=2#ok"));
+    assert(!Uri.isSameWithHash("/test.jpg?v=2","/test.jpg?v=2"));
+    assert(Uri.relative("http://google.com/ok?v=2#what") === '/ok?v=2');
+    assert(Uri.relative("http://google.com/ok?v=2#what",true) === '/ok?v=2#what');
+    assert(Uri.extension("http://google.com/ok.jpg?v=2#what") === 'jpg');
+    assert(Obj.length(Uri.parse("http://google.com/ok?v=2#what")) === 6);
+    assert(Uri.makeHash("james",true) === '#james');
+    assert(Uri.makeHash("#james",true) === '#james');
+    assert(Uri.makeHash("james") === 'james');
+    assert(Uri.makeHash("#james") === 'james');
+    assert(Uri.getMailto('mailto:test@test.com') === 'test@test.com');
+    assert(Uri.getMailto('test@test.com') === 'test@test.com');
+    assert(Uri.getMailto('mailto:testtest.com') === null);
+    
+    // validate
+    assert(Validate.isNumericDash("213-123"));
+    assert(Validate.isNumericDash("213123"));
+    assert(!Validate.isNumericDash("213_123"));
+    assert(Validate.isEmail("test@test.com"));
+    assert(!Validate.isEmail("testtest.com"));
+    assert(Validate.isEmail('bla@bla.zzzzzzz'));
+    
+    // vari
+    assert(Vari.is(null));
+    assert(!Vari.is(undefined));
+    assert(Vari.isEmpty(null));
+    assert(Vari.isEmpty({}));
+    assert(Vari.isEmpty(false));
+    assert(!Vari.isEmpty(true));
+    assert(Vari.isEmpty(''));
+    assert(Vari.isEmpty([]));
+    assert(!Vari.isEmpty('0'));
+    assert(Vari.isEmpty(0));
+    assert(!Vari.isEmpty(1));
+    assert(Vari.isEmpty(undefined));
+    assert(Vari.isNotEmpty(2));
+    assert(!Vari.isNotEmpty(null));
+    assert(Vari.isEqual('test','test'));
+    assert(!Vari.isEqual('test','testz'));
+    assert(Vari.isEqual(3,3));
+    assert(!Vari.isEqual(3,4));
+    assert(Vari.isEqual(null,null));
+    assert(!Vari.isEqual(null,undefined));
+    assert(Vari.isEqualStrict(null,null));
+    assert(Vari.isEqualStrict('test','test'));
+    assert(!Vari.isEqualStrict([],[]));
+    assert(Vari.type('test') === 'string');
+    assert(Vari.type({}) === 'object');
+    assert(Vari.type([]) === 'object');
+    assert(Vari.type(function() { }) === 'object');
+    assert(Vari.type(2) === 'number');
+    assert(Vari.type(2.3) === 'number');
+    assert(Vari.type(null) === 'null');
+    assert(Vari.type(true) === 'boolean');
+    assert(Vari.type(undefined) === 'undefined');
+    
+    // xhr
+    assert(Obj.length(Xhr.configFromNode(htmlNode)) === 3);
+    assert(Xhr.parseError('<html><body><div>TEST</div></body></html>','error') === '<div>TEST</div>');
+    assert(Xhr.parseError('<html><body><div class="ajax-parse-error"><div>TEST</div></div></body></html>','error') === '<div class="ajax-parse-error"><div>TEST</div></div>');
+    assert(Xhr.parseError('','error') === 'error');
+    
+    return true;
 }
+
+// export
+Test.Include = Include;

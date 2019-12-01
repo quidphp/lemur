@@ -6,14 +6,14 @@
  
 // carousel
 // script for a carousel component which slides up or down
-Quid.Component.carousel = function(trigger,target)
+Component.carousel = function(trigger,target)
 {
     $(this).each(function(index, el) {
         trigger = (trigger == null)? '.trigger':trigger;
         target = (target == null)? '.target':target;
         
-        Quid.Component.clickOpenBase.call(this,target);
-        Quid.Component.clickOpenTrigger.call(this,trigger);
+        Component.clickOpenBase.call(this,target);
+        Component.clickOpenTrigger.call(this,trigger);
         
         $(this).on('clickOpen:getTarget', function(event) {
             return $(this).find(target).first();

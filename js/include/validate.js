@@ -6,10 +6,10 @@
  
 // validate
 // script with behaviours related to validation
-Quid.Validate = new function() 
+const Validate = new function() 
 {
     // instance
-    var $inst = this;
+    const $inst = this;
     
     
     // isNumericDash
@@ -32,11 +32,11 @@ Quid.Validate = new function()
     // permet de lancer un test d'expression régulière
     this.regex = function(value,exp)
     {
-        var r = false;
+        let r = false;
         
-        if(Quid.Str.is(value) && exp)
+        if(Str.is(value) && exp)
         {
-            var regex = new RegExp(exp);
+            let regex = new RegExp(exp);
             
             if(regex.test(value))
             r = true;
@@ -45,3 +45,6 @@ Quid.Validate = new function()
         return r;
     }
 }
+
+// export
+Lemur.Validate = Validate;

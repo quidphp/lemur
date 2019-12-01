@@ -6,13 +6,13 @@
  
  // hashChange
  // renvoie l'événement haschange aux nodes
-Quid.Component.hashChange = function(persistent)
+Component.hashChange = function(persistent)
 {
-    var $this = $(this);
-    var type = (persistent === true)? 'hashchange':'hashchange.document-mount';
+    const $this = $(this);
+    const type = (persistent === true)? 'hashchange':'hashchange.document-mount';
     $(window).on(type, function(event,sourceEvent) {
         event.stopPropagation();
-        $this.trigger('hash:change',[Quid.Request.fragment(),sourceEvent]);
+        $this.trigger('hash:change',[Request.fragment(),sourceEvent]);
     });
     
     return this;

@@ -6,10 +6,10 @@
  
 // vari
 // script with a set of helper functions related to variables
-Quid.Vari = new function() 
+const Vari = new function() 
 {    
     // instance
-    var $inst = this;
+    const $inst = this;
     
     
     // is
@@ -24,9 +24,9 @@ Quid.Vari = new function()
     // retourne vrai si la variable est vide
     this.isEmpty = function(value)
     {
-        var r = true;
+        let r = true;
         
-        if(Quid.Scalar.is(value))
+        if(Scalar.is(value))
         r = (!value)? true:false;
         
         else
@@ -57,27 +57,25 @@ Quid.Vari = new function()
     // retourne vrai si les valeurs contenus sont égales
     this.isEqual = function() 
     {
-        var r = false;
-        var args = Array.from(arguments);
-        var length = args.length;
-        var json = null;
+        let r = false;
+        const args = Array.from(arguments);
+        const length = args.length;
+        let json = null;
+        var i;
         
-        if(length > 1)
+        for (i = 0; i < length; i++) 
         {
-            for (var i = 0; i < length; i++) 
+            json = Json.encode(args[i]);
+            
+            if(typeof jsonOld === 'undefined')
+            var jsonOld = json;
+            
+            else
             {
-                json = Quid.Json.encode(args[i]);
+                r = (json === jsonOld);
                 
-                if(typeof jsonOld === 'undefined')
-                var jsonOld = json;
-                
-                else
-                {
-                    r = (json === jsonOld);
-                    
-                    if(r === false)
-                    break;
-                }
+                if(r === false)
+                break;
             }
         }
         
@@ -89,24 +87,22 @@ Quid.Vari = new function()
     // comme isEqual, mais les objects et array doivent être les mêmes variables
     this.isEqualStrict = function()
     {
-        var r = false;
-        var args = Array.from(arguments);
-        var length = args.length;
+        let r = false;
+        const args = Array.from(arguments);
+        const length = args.length;
+        var i;
         
-        if(length > 1)
+        for (i = 0; i < args.length; i++) 
         {
-            for (var i = 0; i < args.length; i++) 
+            if(typeof first === 'undefined')
+            var first = args[i];
+            
+            else
             {
-                if(typeof first === 'undefined')
-                var first = args[i];
+                r = Object.is(first,args[i]);
                 
-                else
-                {
-                    r = Object.is(first,args[i]);
-                    
-                    if(r === false)
-                    break;
-                }
+                if(r === false)
+                break;
             }
         }
         
@@ -118,18 +114,21 @@ Quid.Vari = new function()
     // retourne le vrai type d'un objet ou d'une variable
     this.type = function(value)
     {
-        var r = typeof value;
-        var obj = {};
+        let r = typeof value;
+        const obj = {};
         
         if(value == null)
         r = value + "";
         
         else if(r === 'function')
         {
-            var str = obj.toString.call(value);
+            const str = obj.toString.call(value);
             r = obj[str] || "object";
         }
         
         return r;
     }
-};
+}
+
+// export
+Lemur.Vari = Vari;

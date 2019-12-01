@@ -7,32 +7,32 @@
 // timeout
 // script of behaviours for a timeout component
 // permet d'appliquer un timeout sur un événement
-Quid.Component.timeout = function(type,timeout)
+Component.timeout = function(type,timeout)
 {
-    if(Quid.Str.isNotEmpty(type))
+    if(Str.isNotEmpty(type))
     {
         $(this).each(function(index) 
         {
-            var delay = timeout || $(this).data(type+"Delay") || 500;
+            const delay = timeout || $(this).data(type+"Delay") || 500;
             
-            if(Quid.Number.is(delay))
+            if(Num.is(delay))
             {
                 $(this).on(type+':setTimeout',function() {
-                    var $this = $(this);
-                    var $type = type;
-                    $(this).trigger(type+':clearTimeout');
+                    const $this = $(this);
+                    const $type = type;
+                    triggerCustom(this,type+':clearTimeout');
                     $(this).data(type+"Timeout",setTimeout(function() {
                         $this.trigger($type+':onTimeout');
                     },delay));
                 })
                 .on(type+':clearTimeout',function() {
-                    var oldTimeout = $(this).data(type+"Timeout");
+                    const oldTimeout = $(this).data(type+"Timeout");
                     
                     if(oldTimeout != null)
                     clearTimeout(oldTimeout);
                 })
                 .on(type, function() {
-                    $(this).trigger(type+':setTimeout');
+                    triggerCustom(this,type+':setTimeout');
                 });
             }
         });

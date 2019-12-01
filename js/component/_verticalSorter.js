@@ -7,10 +7,10 @@
 // verticalSorter
 // script with drag and drop related functionnalities
 // uses jquery-ui
-Quid.Component.verticalSorter = function(items,handle,containment) 
+Component.verticalSorter = function(items,handle,containment) 
 {    
     containment = (containment != null)? containment:'parent';
-    if(Quid.Str.isNotEmpty(items) && Quid.Str.isNotEmpty(handle))
+    if(Str.isNotEmpty(items) && Str.isNotEmpty(handle))
     {
         $(this).each(function() {
             $(this).sortable({
@@ -21,9 +21,9 @@ Quid.Component.verticalSorter = function(items,handle,containment)
                 tolerance: 'pointer',
                 opacity: 0.5,
                 containment: containment,
-                cancel: Quid.Selector.input(),
+                cancel: Selector.input(),
                 stop: function(event,ui) {
-                    $(this).trigger('verticalSorter:stop');
+                    triggerCustom(this,'verticalSorter:stop');
                     ui.item.css('z-index','auto');
                 }
             });

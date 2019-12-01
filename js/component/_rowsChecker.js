@@ -6,27 +6,27 @@
  
 // rowsChecker
 // script for the rows checker component in the general page of the CMS
-Quid.Component.rowsChecker = function()
+Component.rowsChecker = function()
 {
     // triggerHandler
     $(this).on('rowsChecker:getToolsContainer', function() {
         return $(this).find(".above .tools-container").first();
     })
     .on('rowsChecker:getTools', function() {
-        return $(this).triggerHandler('rowsChecker:getToolsContainer').find(".tool-element");
+        return triggerFunc(this,'rowsChecker:getToolsContainer').find(".tool-element");
     })
     .on('rowsChecker:getToolsButton', function() {
-        return $(this).triggerHandler('rowsChecker:getTools').filter("button");
+        return triggerFunc(this,'rowsChecker:getTools').filter("button");
     })
     .on('rowsChecker:getMultiModify', function() {
-        return $(this).triggerHandler('rowsChecker:getToolsButton').filter(".multi-modify").first();
+        return triggerFunc(this,'rowsChecker:getToolsButton').filter(".multi-modify").first();
     })
     .on('rowsChecker:getMultiDelete', function() {
-        return $(this).triggerHandler('rowsChecker:getTools').filter(".multi-delete-form").first();
+        return triggerFunc(this,'rowsChecker:getTools').filter(".multi-delete-form").first();
     })
     .on('rowsChecker:getToolsMulti', function() {
-        var r = $(this).triggerHandler('rowsChecker:getMultiModify');
-        r = r.add($(this).triggerHandler('rowsChecker:getMultiDelete'));
+        let r = triggerFunc(this,'rowsChecker:getMultiModify');
+        r = r.add(triggerFunc(this,'rowsChecker:getMultiDelete'));
         
         return r;
     })
@@ -34,60 +34,60 @@ Quid.Component.rowsChecker = function()
         return $(this).find("table").first();
     })
     .on('rowsChecker:getToggleAll', function() {
-        return $(this).triggerHandler('rowsChecker:getTable').find("th.rows .toggle-all").first();
+        return triggerFunc(this,'rowsChecker:getTable').find("th.rows .toggle-all").first();
     })
     .on('rowsChecker:getRows', function() {
-        return $(this).triggerHandler('rowsChecker:getTable').find("tbody tr");
+        return triggerFunc(this,'rowsChecker:getTable').find("tbody tr");
     })
     .on('rowsChecker:getCheckedRows', function() {
-        var r = $();
-        var checked = $(this).triggerHandler('rowsChecker:getCheckedCheckboxes');
+        let r = $();
+        const checked = triggerFunc(this,'rowsChecker:getCheckedCheckboxes');
         
         checked.each(function() {
-            var row = $(this).triggerHandler('checkbox:getTr');
+            let row = triggerFunc(this,'checkbox:getTr');
             r = r.add(row);
         });
         
         return r;
     })
     .on('rowsChecker:getCheckboxes', function() {
-        return $(this).triggerHandler('rowsChecker:getRows').find("td.rows input[type='checkbox']");
+        return triggerFunc(this,'rowsChecker:getRows').find("td.rows input[type='checkbox']");
     })
     .on('rowsChecker:getCheckedCheckboxes', function() {
-        return $(this).triggerHandler('rowsChecker:getCheckboxes').filter(':checked');
+        return triggerFunc(this,'rowsChecker:getCheckboxes').filter(':checked');
     })
     .on('rowsChecker:getCheckedSet', function(event,separator) {
-        return Quid.Node.valueSeparator($(this).triggerHandler('rowsChecker:getCheckedCheckboxes'),separator,true);
+        return Dom.valueSeparator(triggerFunc(this,'rowsChecker:getCheckedCheckboxes'),separator,true);
     })
     .on('rowsChecker:areAllChecked', function() {
-        var checkboxes = $(this).triggerHandler('rowsChecker:getCheckboxes');
-        var checked = $(this).triggerHandler('rowsChecker:getCheckedCheckboxes');
+        const checkboxes = triggerFunc(this,'rowsChecker:getCheckboxes');
+        const checked = triggerFunc(this,'rowsChecker:getCheckedCheckboxes');
         
         return (checkboxes.length === checked.length)? true:false;
     })
     .on('rowsChecker:areAllUpdateable', function() {
-        var rows = $(this).triggerHandler('rowsChecker:getCheckedRows');
+        let rows = triggerFunc(this,'rowsChecker:getCheckedRows');
         
-        return Quid.Node.isAll("[data-updateable='1']",rows);
+        return Dom.matchAll("[data-updateable='1']",rows);
     })
     .on('rowsChecker:areAllDeleteable', function() {
-        var rows = $(this).triggerHandler('rowsChecker:getCheckedRows');
+        let rows = triggerFunc(this,'rowsChecker:getCheckedRows');
         
-        return Quid.Node.isAll("[data-deleteable='1']",rows);
+        return Dom.matchAll("[data-deleteable='1']",rows);
     })
     
     // trigger
     .on('rowsChecker:refresh', function() {
-        var checked = $(this).triggerHandler('rowsChecker:getCheckedCheckboxes');
-        var toolsContainer = $(this).triggerHandler('rowsChecker:getToolsContainer');
-        var toggleAll = $(this).triggerHandler('rowsChecker:getToggleAll');
-        var multiModify = $(this).triggerHandler('rowsChecker:getMultiModify');
-        var multiDelete = $(this).triggerHandler('rowsChecker:getMultiDelete');
-        var oneChecked = (checked.length)? true:false;
-        var manyChecked = (checked.length > 1)? true:false;
-        var allChecked = $(this).triggerHandler('rowsChecker:areAllChecked');
-        var showMulti = (manyChecked === true && $(this).triggerHandler('rowsChecker:areAllUpdateable'))? true:false;
-        var showDelete = (oneChecked === true && $(this).triggerHandler('rowsChecker:areAllDeleteable'))? true:false;
+        const checked = triggerFunc(this,'rowsChecker:getCheckedCheckboxes');
+        const toolsContainer = triggerFunc(this,'rowsChecker:getToolsContainer');
+        const toggleAll = triggerFunc(this,'rowsChecker:getToggleAll');
+        const multiModify = triggerFunc(this,'rowsChecker:getMultiModify');
+        const multiDelete = triggerFunc(this,'rowsChecker:getMultiDelete');
+        const oneChecked = (checked.length)? true:false;
+        const manyChecked = (checked.length > 1)? true:false;
+        const allChecked = triggerFunc(this,'rowsChecker:areAllChecked');
+        const showMulti = (manyChecked === true && triggerFunc(this,'rowsChecker:areAllUpdateable'))? true:false;
+        const showDelete = (oneChecked === true && triggerFunc(this,'rowsChecker:areAllDeleteable'))? true:false;
         
         toolsContainer.trigger((oneChecked === true)? 'toolsContainer:show':'toolsContainer:hide');
         toggleAll.toggleClass('all-checked',allChecked);
@@ -106,15 +106,15 @@ Quid.Component.rowsChecker = function()
     });
     
     // bindToggleAll
-    var bindToggleAll = function() {
-        var $this = $(this);
-        var toggleAll = $(this).triggerHandler('rowsChecker:getToggleAll');
+    const bindToggleAll = function() {
+        const $this = $(this);
+        const toggleAll = triggerFunc(this,'rowsChecker:getToggleAll');
         
         toggleAll.on('click', function() {
-            $(this).trigger('toggleAll:toggle');
+            triggerCustom(this,'toggleAll:toggle');
         })
         .on('toggleAll:toggle', function() {
-            $(this).trigger(($this.triggerHandler('rowsChecker:areAllChecked'))? 'toggleAll:uncheck':'toggleAll:check');
+            triggerCustom(this,($this.triggerHandler('rowsChecker:areAllChecked'))? 'toggleAll:uncheck':'toggleAll:check');
         })
         .on('toggleAll:check', function() {
             $this.triggerHandler('rowsChecker:getCheckboxes').trigger('checkbox:check');
@@ -127,19 +127,19 @@ Quid.Component.rowsChecker = function()
     };
     
     // bindCheckboxes
-    var bindCheckboxes = function() {
-        var $this = $(this);
-        var checkboxes = $(this).triggerHandler('rowsChecker:getCheckboxes');
+    const bindCheckboxes = function() {
+        const $this = $(this);
+        const checkboxes = triggerFunc(this,'rowsChecker:getCheckboxes');
         
         // checkboxes
         checkboxes.on('change', function() {
-            $(this).trigger(($(this).is(":checked"))? 'checkbox:check':'checkbox:uncheck',[true]);
+            triggerCustom(this,($(this).is(":checked"))? 'checkbox:check':'checkbox:uncheck',[true]);
         })
         .on('checkbox:getTr', function() {
             return $(this).parents("tr").first();
         })
         .on('checkbox:check', function(event,refresh) {
-            var tr = $(this).triggerHandler('checkbox:getTr');
+            const tr = triggerFunc(this,'checkbox:getTr');
             $(this).prop('checked',true);
             tr.addClass('selected');
             
@@ -147,7 +147,7 @@ Quid.Component.rowsChecker = function()
             $this.trigger('rowsChecker:refresh');
         })
         .on('checkbox:uncheck', function(event,refresh) {
-            var tr = $(this).triggerHandler('checkbox:getTr');
+            const tr = triggerFunc(this,'checkbox:getTr');
             $(this).prop('checked',false);
             tr.removeClass('selected');
             
@@ -157,8 +157,8 @@ Quid.Component.rowsChecker = function()
     };
     
     // bindToolsContainer
-    var bindToolsContainer = function() {
-        var container = $(this).triggerHandler('rowsChecker:getToolsContainer');
+    const bindToolsContainer = function() {
+        const container = triggerFunc(this,'rowsChecker:getToolsContainer');
         
         container.on('toolsContainer:show', function() {
             $(this).css('visibility','visible');
@@ -169,31 +169,31 @@ Quid.Component.rowsChecker = function()
     };
     
     // bindToolsButton
-    var bindToolsButton = function() {
-        var $this = $(this);
-        var button = $(this).triggerHandler('rowsChecker:getToolsButton');
+    const bindToolsButton = function() {
+        const $this = $(this);
+        const button = triggerFunc(this,'rowsChecker:getToolsButton');
         
-        Quid.Component.block.call(button,'click');
+        Component.block.call(button,'click');
         
         button.on('click', function(event) {
-            $(this).trigger('toolButton:redirect',[event]);
+            triggerCustom(this,'toolButton:redirect',[event]);
         })
         .on('toolButton:redirect', function(event,clickEvent) {
-            var separator = $(this).data("separator");
-            var set = $this.triggerHandler('rowsChecker:getCheckedSet',[separator]);
-            var href = Quid.Node.dataHrefReplaceChar(this,set);
+            const separator = $(this).data("separator");
+            const set = $this.triggerHandler('rowsChecker:getCheckedSet',[separator]);
+            const href = Dom.dataHrefReplaceChar(this,set);
             
-            if(Quid.Str.isNotEmpty(href))
+            if(Str.isNotEmpty(href))
             {
-                $(this).trigger('block');
+                triggerCustom(this,'block');
                 $(document).trigger('document:go',[href,clickEvent]);
             }
         });
     };
     
     // bindToolsMulti
-    var bindToolsMulti = function() {
-        var tools = $(this).triggerHandler('rowsChecker:getToolsMulti');
+    const bindToolsMulti = function() {
+        const tools = triggerFunc(this,'rowsChecker:getToolsMulti');
 
         tools.on('toolMulti:show', function(cursorDown) {
             $(this).addClass('active');
@@ -204,22 +204,22 @@ Quid.Component.rowsChecker = function()
     };
 
     // bindMultiDelete
-    var bindMultiDelete = function() {
-        var $this = $(this);
-        var multiDelete = $(this).triggerHandler('rowsChecker:getMultiDelete');
+    const bindMultiDelete = function() {
+        const $this = $(this);
+        const multiDelete = triggerFunc(this,'rowsChecker:getMultiDelete');
         
-        Quid.Component.block.call(multiDelete,'submit');
-        Quid.Component.confirm.call(multiDelete,'submit');
+        Component.block.call(multiDelete,'submit');
+        Component.confirm.call(multiDelete,'submit');
         
         multiDelete.on('confirmed', function(event,submit) {
-            var input = $(this).find("input[name='primaries']");
-            var separator = $(this).data('separator');
-            var set = $this.triggerHandler('rowsChecker:getCheckedSet',[separator]);
+            const input = $(this).find("input[name='primaries']");
+            const separator = $(this).data('separator');
+            const set = $this.triggerHandler('rowsChecker:getCheckedSet',[separator]);
             
-            if(Quid.Str.isNotEmpty(set))
+            if(Str.isNotEmpty(set))
             {
                 input.val(set);
-                $(this).trigger('block');
+                triggerCustom(this,'block');
             }
             
             else

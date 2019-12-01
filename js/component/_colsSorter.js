@@ -6,17 +6,10 @@
 
 // colsSorter
 // script for the col sorter component of the general page of the CMS
-Quid.Component.colsSorter = function()
+Component.colsSorter = function()
 {
-    // alias
-    var setFunc = Quid.Event.setFunc;
-    var triggerFunc = Quid.Event.triggerFunc;
-    var aelOnce = Quid.Event.addEventListenerOnce;
-    var triggerCustom = Quid.Event.triggerCustom;
-    
-    
     // bindings
-    Quid.Component.clickOpenWithTrigger.call(this,".trigger");
+    Component.clickOpenWithTrigger.call(this,".trigger");
     
     // func
     setFunc(this,'colsSorter:getPopup', function() {
@@ -36,22 +29,21 @@ Quid.Component.colsSorter = function()
     });
     
     setFunc(this,'colsSorter:isValid', function() {
-        var r = false;
-        var checkboxes = triggerFunc(this,'colsSorter:getCheckboxes');
+        const checkboxes = triggerFunc(this,'colsSorter:getCheckboxes');
         
         return triggerFuncEqual(checkboxes,true,'validate:isValid');
     });
     
     setFunc(this,'colsSorter:getCheckedSet', function() {
-        var button = triggerFunc(this,'colsSorter:getButton');
-        var checkbox = triggerFunc(this,'colsSorter:getCheckedCheckboxes');
+        const button = triggerFunc(this,'colsSorter:getButton');
+        const checkbox = triggerFunc(this,'colsSorter:getCheckedCheckboxes');
         
-        return Quid.Node.valueSeparator(checkbox,button.data('separator'),true);
+        return Dom.valueSeparator(checkbox,button.data('separator'),true);
     });
     
     setFunc(this,'colsSorter:isCurrent',function() {
-        var button = triggerFunc(this,'colsSorter:getButton');
-        var set = triggerFunc(this,'colsSorter:getCheckedSet');
+        const button = triggerFunc(this,'colsSorter:getButton');
+        const set = triggerFunc(this,'colsSorter:getCheckedSet');
         
         return (set === button.data('current'))? true:false;
     });
@@ -66,17 +58,17 @@ Quid.Component.colsSorter = function()
     
     
     // bindColsPopup
-    var bindColsPopup = function() {
-        var $this = $(this);
-        var popup = triggerFunc(this,'colsSorter:getPopup');
+    const bindColsPopup = function() {
+        const $this = $(this);
+        const popup = triggerFunc(this,'colsSorter:getPopup');
         
-        Quid.Component.verticalSorter.call(popup,".choice",'.choice-in');
+        Component.verticalSorter.call(popup,".choice",'.choice-in');
         
         popup.on('verticalSorter:stop', function() {
             triggerCustom(this,'popup:validate');
         })
         .on('popup:validate', function() {
-            var checkboxes = triggerFunc($this,'colsSorter:getCheckboxes');
+            const checkboxes = triggerFunc($this,'colsSorter:getCheckboxes');
             triggerCustom(checkboxes,'validate:trigger');
         })
         .on('popup:invalid', function() {
@@ -91,11 +83,11 @@ Quid.Component.colsSorter = function()
     };
     
     // bindColsCheckboxes
-    var bindColsCheckboxes = function() {
-        var checkboxes = triggerFunc(this,'colsSorter:getCheckboxes');
-        var popup = triggerFunc(this,'colsSorter:getPopup');
+    const bindColsCheckboxes = function() {
+        const checkboxes = triggerFunc(this,'colsSorter:getCheckboxes');
+        const popup = triggerFunc(this,'colsSorter:getPopup');
         
-        Quid.Component.inputValidate.call(checkboxes);
+        Component.inputValidate.call(checkboxes);
         
         checkboxes.on('validate:invalid', function() {
             triggerCustom(popup,'popup:invalid');
@@ -106,21 +98,21 @@ Quid.Component.colsSorter = function()
     };
     
     // bindColsButton
-    var bindColsButton = function() {
-        var $this = $(this);
-        var button = triggerFunc(this,'colsSorter:getButton');
+    const bindColsButton = function() {
+        const $this = $(this);
+        const button = triggerFunc(this,'colsSorter:getButton');
         
-        Quid.Component.block.call(button,'click');
+        Component.block.call(button,'click');
         
         button.on('click', function(event) {
             redirect.call(this,event);
         });
         
-        var redirect = function(clickEvent) {
-            var set = triggerFunc($this,'colsSorter:getCheckedSet');
-            var href = Quid.Node.dataHrefReplaceChar(this,set);
+        let redirect = function(clickEvent) {
+            const set = triggerFunc($this,'colsSorter:getCheckedSet');
+            const href = Dom.dataHrefReplaceChar(this,set);
             
-            if(Quid.Str.isNotEmpty(href) && href !== Quid.Request.relative())
+            if(Str.isNotEmpty(href) && href !== Request.relative())
             {
                 triggerCustom(this,'block');
                 triggerCustom(document,'document:go',href,clickEvent);

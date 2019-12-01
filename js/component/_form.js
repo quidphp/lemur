@@ -6,71 +6,71 @@
  
 // form
 // script with behaviours for a form component
-Quid.Component.form = function() {
+Component.form = function() {
     
     // alias
-    var setFunc = Quid.Event.setFunc;
-    var triggerFunc = Quid.Event.triggerFunc;
-    var ael = Quid.Event.addEventListener;
-    var triggerCustom = Quid.Event.triggerCustom;
+    const setFunc = Evt.setFunc;
+    const triggerFunc = Evt.triggerFunc;
+    const ael = Evt.addEventListener;
+    const triggerCustom = Evt.triggerCustom;
     
     // block
-    Quid.Component.block.call(this,'submit');
+    Component.block.call(this,'submit');
     
     // triggerHandler
     $(this).on('form:getFields', function(event) {
         return $(this).find("input,select,textarea,button[type='submit']");
     })
     .on('form:getSystemFields', function(event) {
-        return $(this).triggerHandler('form:getFields').filter("[name^='-']");
+        return triggerFunc(this,'form:getFields').filter("[name^='-']");
     })
     .on('form:getTargetFields', function(event) {
-        return $(this).triggerHandler('form:getFields').not(':disabled').filter("[name]").not("[name^='-']");
+        return triggerFunc(this,'form:getFields').not(':disabled').filter("[name]").not("[name^='-']");
     })
     .on('form:getTargetVisibleFields', function(event) {
-        return $(this).triggerHandler('form:getTargetFields').filter(":visible");
+        return triggerFunc(this,'form:getTargetFields').filter(":visible");
     })
     .on('form:getValidateFields', function(event) {
-        return $(this).triggerHandler('form:getTargetFields').filter("[data-required],[data-pattern]");
+        return triggerFunc(this,'form:getTargetFields').filter("[data-required],[data-pattern]");
     })
     .on('form:getValidateField', function(event) {
-        return $(this).triggerHandler('form:getValidateFields').first();
+        return triggerFunc(this,'form:getValidateFields').first();
     })
     .on('form:hasFiles', function(event) {
-        return ($(this).triggerHandler('form:getTargetFields').filter("input[type='file']").length)? true:false;
+        return (triggerFunc(this,'form:getTargetFields').filter("input[type='file']").length)? true:false;
     })
     .on('form:getSubmits', function(event) {
-        return $(this).triggerHandler('form:getFields').filter("[type='submit'],[type='image']");
+        return triggerFunc(this,'form:getFields').filter("[type='submit'],[type='image']");
     })
     .on('form:getSubmit', function(event) {
-        return $(this).triggerHandler('form:getSubmits').first();
+        return triggerFunc(this,'form:getSubmits').first();
     })
     .on('form:getClickedSubmit', function(event) {
-        return $(this).triggerHandler('form:getSubmits').filter("[data-submit-click]").first();
+        return triggerFunc(this,'form:getSubmits').filter("[data-submit-click]").first();
     })
     .on('form:getClickedSubmits', function(event) {
-        var r = $(this).triggerHandler('form:getClickedSubmit');
+        let r = triggerFunc(this,'form:getClickedSubmit');
         
         if(r.length)
         {
-            var name = r.prop('name');
-            if(Quid.Str.isNotEmpty(name))
-            r = $(this).triggerHandler('form:getSubmits').filter("[name='"+name+"']");
+            const name = r.prop('name');
+            if(Str.isNotEmpty(name))
+            r = triggerFunc(this,'form:getSubmits').filter("[name='"+name+"']");
         }
         
         return r;
     })
     .on('form:getCsrfField', function(event) {
-        return $(this).triggerHandler('form:getSystemFields').filter("[data-csrf='1']").first();
+        return triggerFunc(this,'form:getSystemFields').filter("[data-csrf='1']").first();
     })
     .on('form:getGenuineField', function(event) {
-        return $(this).triggerHandler('form:getSystemFields').filter("[data-genuine='1']").first();
+        return triggerFunc(this,'form:getSystemFields').filter("[data-genuine='1']").first();
     })
     .on('form:hasChanged', function(event) {
-        var r = false;
-        var target = $(this).triggerHandler('form:getTargetFields');
-        var serialize = target.serialize();
-        var original = $(this).data('form:serialize');
+        let r = false;
+        const target = triggerFunc(this,'form:getTargetFields');
+        const serialize = target.serialize();
+        const original = $(this).data('form:serialize');
         
         if(original && serialize !== original)
         r = true;
@@ -78,7 +78,7 @@ Quid.Component.form = function() {
         return r;
     })
     .on('form:focusFirst', function(event) {
-        $(this).triggerHandler('form:getTargetVisibleFields').filter(function() {
+        triggerFunc(this,'form:getTargetVisibleFields').filter(function() {
             return triggerFunc(this,'input:isEmpty');
         }).first().focus();
         
@@ -94,10 +94,10 @@ Quid.Component.form = function() {
     // setup
     .one('form:setup', function(event) {
         if(!$(this).is("[data-skip-form-prepare='1']"))
-        $(this).trigger('form:prepare');
+        triggerCustom(this,'form:prepare');
         
         // click sur submit, met un attribut data-clicked
-        var submits = $(this).triggerHandler('form:getSubmits');
+        const submits = triggerFunc(this,'form:getSubmits');
         submits.on('click', function(event) {
             submits.removeAttr('data-submit-click');
             $(this).attr('data-submit-click',true);
@@ -105,7 +105,7 @@ Quid.Component.form = function() {
         
         // validation
         if(!$(this).is("[data-validation='0']"))
-        Quid.Component.validatePrevent.call(this,'submit');
+        Component.validatePrevent.call(this,'submit');
         
         // formUnload
         if($(this).is("[data-unload]"))
@@ -115,37 +115,37 @@ Quid.Component.form = function() {
         if(!$(this).is("[data-block='0']"))
         {
             $(this).on('submit', function(event) {
-                $(this).trigger('block');
+                triggerCustom(this,'block');
             });
         }
     })
     
     // prepareGenuine
-    var prepareGenuine = function() {
-        var genuine = $(this).triggerHandler('form:getGenuineField');
+    const prepareGenuine = function() {
+        const genuine = triggerFunc(this,'form:getGenuineField');
         if(genuine.length === 1)
         {
-            var name = genuine.prop('name');
-            var newName = name+"2-";
-            var newValue = 1;
-            var genuine2 = "<input type='hidden' name='"+newName+"' value='"+newValue+"' />";
+            const name = genuine.prop('name');
+            const newName = name+"2-";
+            const newValue = 1;
+            const genuine2 = "<input type='hidden' name='"+newName+"' value='"+newValue+"' />";
             $(this).prepend(genuine2);
         }
     };
     
     // prepareHasChanged
-    var prepareHasChanged = function() {
-        var target = $(this).triggerHandler('form:getTargetFields');
-        var serialize = target.serialize();
+    const prepareHasChanged = function() {
+        const target = triggerFunc(this,'form:getTargetFields');
+        const serialize = target.serialize();
         $(this).data('form:serialize',serialize);
     };
     
     // prepareUnload
     // permet d'ajouter un message d'alerte si le formulaire a changé et on tente de changer la page (unload)
-    var prepareUnload = function()
+    const prepareUnload = function()
     {
         $(this).each(function(index, el) {
-            var $this = $(this);
+            const $this = $(this);
             $(this).on('submit', function(event) {
                 $(window).off('beforeunload');
             });

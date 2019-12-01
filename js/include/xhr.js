@@ -6,10 +6,10 @@
 
 // xhr
 // script with some logic for ajax calls and xhr object
-Quid.Xhr = new function() 
+const Xhr = new function() 
 {
     // instance
-    var $inst = this;
+    const $inst = this;
     
     
     // trigger
@@ -17,11 +17,11 @@ Quid.Xhr = new function()
     // retourne false ou un objet promise ajax
     this.trigger = function(node,config,tag)
     {
-        var r = null;
-        var triggerFunc = Quid.Event.triggerFunc;
-        var triggerCustom = Quid.Event.triggerCustom;
+        let r = null;
+        const triggerFunc = Evt.triggerFunc;
+        const triggerCustom = Evt.triggerCustom;
         
-        var options = {
+        const options = {
             url: triggerFunc(node,'ajax:getHref'),
             method: triggerFunc(node,'ajax:getMethod'),
             timeout: triggerFunc(node,'ajax:getTimeout') || 5000,
@@ -29,7 +29,7 @@ Quid.Xhr = new function()
             processData: true,
             contentType: "application/x-www-form-urlencoded; charset=UTF-8",
             xhr: function() {
-                var r = this.originalXHR;
+                let r = this.originalXHR;
                 
                 if(r == null)
                 {
@@ -40,12 +40,12 @@ Quid.Xhr = new function()
                 return r;
             },
             xhrProgress: function() {
-                var xhr = this.xhr();
-                var $this = this;
+                const xhr = this.xhr();
+                const $this = this;
                 xhr.upload.addEventListener("progress", function(event) {
                     if(event.lengthComputable === true)
                     {
-                        var percent = parseInt((event.loaded / event.total * 100));
+                        const percent = parseInt((event.loaded / event.total * 100));
                         $this.progress(percent,event);
                     }
                 });
@@ -60,7 +60,7 @@ Quid.Xhr = new function()
                 triggerCustom(node,'ajax:success',data,textStatus,jqXHR);
             },
             error: function(jqXHR,textStatus,errorThrown) {
-                var parsedError = $inst.parseError(jqXHR.responseText,textStatus);
+                const parsedError = $inst.parseError(jqXHR.responseText,textStatus);
                 triggerCustom(node,'ajax:error',parsedError,jqXHR,textStatus,errorThrown);
             },
             complete: function(jqXHR,textStatus) {
@@ -68,12 +68,12 @@ Quid.Xhr = new function()
             }
         };
         
-        config = Quid.Obj.replace(options,config);
+        config = Obj.replace(options,config);
         
         if(tag === true)
         $inst.configFromNode(node,config);
 
-        if(Quid.Str.isNotEmpty(config.url) && triggerFunc(node,'ajax:confirm') !== false)
+        if(Str.isNotEmpty(config.url) && triggerFunc(node,'ajax:confirm') !== false)
         {
             if(config.method == null)
             config.method = 'get';
@@ -99,8 +99,8 @@ Quid.Xhr = new function()
     // met à jour le tableau de config à partir de la tag
     this.configFromNode = function(node,config)
     {
-        var r = (Quid.Obj.isPlain(config))? config:{};
-        var tagName = Quid.Node.tag(node);
+        let r = (Obj.isPlain(config))? config:{};
+        const tagName = Dom.tag(node);
 
         if(r.url == null)
         r.url = (tagName === 'form')? $(node).attr("action"):($(node).prop("href") || $(node).data('href'));
@@ -112,10 +112,10 @@ Quid.Xhr = new function()
         {
             if(tagName === 'form')
             {
-                var formData = new FormData($(node)[0]);
-                var clicked = triggerFunc(node,'form:getClickedSubmit');
+                const formData = new FormData($(node)[0]);
+                const clicked = triggerFunc(node,'form:getClickedSubmit');
                 
-                if(clicked != null && clicked.length && Quid.Str.isNotEmpty(clicked.attr('name')))
+                if(clicked != null && clicked.length && Str.isNotEmpty(clicked.attr('name')))
                 formData.append(clicked.attr('name'),clicked.val());
                 
                 r.data = formData;
@@ -133,26 +133,29 @@ Quid.Xhr = new function()
     // cette méthode gère l'affichage pour un xhr en erreur
     this.parseError = function(responseText,textStatus)
     {
-        var r = textStatus;
+        let r = textStatus;
         
-        if(Quid.Str.isNotEmpty(responseText))
+        if(Str.isNotEmpty(responseText))
         {
             r = responseText;
-            var html;
-            var parse = Quid.Html.parse(responseText);
+            let html;
+            const parse = Html.parse(responseText);
             
             if(parse != null && parse.length)
             {
-                html = Quid.Node.outerHtml(parse.find(".ajax-parse-error").first());
+                html = Dom.outerHtml(parse.find(".ajax-parse-error").first());
                 
-                if(Quid.Vari.isEmpty(html))
+                if(Vari.isEmpty(html))
                 html = parse.find("body,[data-tag='body']").first().html();
                 
-                if(Quid.Str.isNotEmpty(html))
+                if(Str.isNotEmpty(html))
                 r = html;
             }
         }
 
         return r;
     }
-};
+}
+
+// export
+Lemur.Xhr = Xhr;

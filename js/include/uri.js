@@ -6,22 +6,22 @@
  
 // uri
 // script with a set of helper functions related to uri management
-Quid.Uri = new function() 
+const Uri = new function() 
 {
     // instance
-    var $inst = this;
+    const $inst = this;
     
         
     // isInternal
     // retourne vrai si l'uri et la comparaison ont le même scheme et host
     this.isInternal = function(uri,compare)
     {
-        var r = false;
+        let r = false;
         
-        if(Quid.Str.is(uri))
+        if(Str.is(uri))
         {
-            compare = (Quid.Str.is(compare))? $inst.parse(compare):Quid.Request.parse();			
-            var parse = $inst.parse(uri);
+            compare = (Str.is(compare))? $inst.parse(compare):Request.parse();			
+            const parse = $inst.parse(uri);
             
             if(parse.scheme === compare.scheme && parse.host === compare.host)
             r = true;
@@ -51,13 +51,13 @@ Quid.Uri = new function()
     // retourne vrai si l'uri a un hash
     this.hasFragment = function(uri)
     {
-        var r = false;
+        let r = false;
         
-        if(Quid.Str.is(uri))
+        if(Str.is(uri))
         {
-            var parse = $inst.parse(uri);
+            const parse = $inst.parse(uri);
             
-            if(Quid.Str.isNotEmpty(parse.hash))
+            if(Str.isNotEmpty(parse.hash))
             r = true;
         }
         
@@ -70,12 +70,12 @@ Quid.Uri = new function()
     // compare path et query
     this.isSamePathQuery = function(uri,compare)
     {
-        var r = false;
+        let r = false;
         
-        if(Quid.Str.is(uri))
+        if(Str.is(uri))
         {
-            compare = (Quid.Str.is(compare))? $inst.parse(compare):Quid.Request.parse();			
-            var parse = $inst.parse(uri);
+            compare = (Str.is(compare))? $inst.parse(compare):Request.parse();			
+            const parse = $inst.parse(uri);
             
             if(parse.path === compare.path && parse.query === compare.query)
             r = true;
@@ -90,12 +90,12 @@ Quid.Uri = new function()
     // compare path, query et hash
     this.isSamePathQueryHash = function(uri,compare)
     {
-        var r = false;
+        let r = false;
         
-        if(Quid.Str.is(uri))
+        if(Str.is(uri))
         {
-            compare = (Quid.Str.is(compare))? $inst.parse(compare):Quid.Request.parse();			
-            var parse = $inst.parse(uri);
+            compare = (Str.is(compare))? $inst.parse(compare):Request.parse();			
+            const parse = $inst.parse(uri);
             
             if(parse.path === compare.path && parse.query === compare.query && parse.hash === compare.hash)
             r = true;
@@ -109,16 +109,16 @@ Quid.Uri = new function()
     // retourne vrai si l'uri est la même que la comparaison mais que le hash change
     this.isHashChange = function(uri,compare)
     {
-        var r = false;
+        let r = false;
         
-        if(Quid.Str.is(uri))
+        if(Str.is(uri))
         {
-            compare = (Quid.Str.is(compare))? $inst.parse(compare):Quid.Request.parse();
-            var parse = $inst.parse(uri);
+            compare = (Str.is(compare))? $inst.parse(compare):Request.parse();
+            const parse = $inst.parse(uri);
             
             if(parse.scheme === compare.scheme && parse.host === compare.host && parse.path === compare.path && parse.query === compare.query)
             {
-                if(Quid.Str.isNotEmpty(parse.hash) && parse.hash !== compare.hash)
+                if(Str.isNotEmpty(parse.hash) && parse.hash !== compare.hash)
                 r = true;
             }
         }
@@ -139,11 +139,11 @@ Quid.Uri = new function()
     // retourne une uri relative à partir d'une uri absolut
     this.relative = function(uri,hash)
     {
-        var r = null;
+        let r = null;
         
-        if(Quid.Str.is(uri))
+        if(Str.is(uri))
         {
-            var parse = $inst.parse(uri);
+            const parse = $inst.parse(uri);
             r = parse.path;
             
             if(parse.query)
@@ -161,15 +161,15 @@ Quid.Uri = new function()
     // retourne l'extension du path de l'uri
     this.extension = function(uri)
     {
-        var r = null;
+        let r = null;
         
-        if(Quid.Str.is(uri))
+        if(Str.is(uri))
         {
-            var regex = /(?:\.([^.]+))?$/;
-            var parse = $inst.parse(uri);
-            var result = regex.exec(parse.path);
+            let regex = /(?:\.([^.]+))?$/;
+            const parse = $inst.parse(uri);
+            let result = regex.exec(parse.path);
             
-            if(Quid.Arr.is(result) && result.length === 2)
+            if(Arr.is(result) && result.length === 2)
             r = result[1];
         }
         
@@ -181,14 +181,14 @@ Quid.Uri = new function()
     // retourne un objet avec les différentes parties d'une uri séparés
     this.parse = function(uri)
     {
-        var r = {};
+        let r = {};
         
-        if(Quid.Str.is(uri))
+        if(Str.is(uri))
         {
-            var $dom = document.createElement('a');
+            let $dom = document.createElement('a');
             $dom.href = uri;
             
-            r.scheme = $dom.protocol.substr(0, $dom.protocol.indexOf(':')) || Quid.Request.scheme();
+            r.scheme = $dom.protocol.substr(0, $dom.protocol.indexOf(':')) || Request.scheme();
             r.host = $dom.hostname;
             r.port = $dom.port;
             r.path = $dom.pathname;
@@ -206,12 +206,12 @@ Quid.Uri = new function()
     // permet de faire une hash avec ou sans le hash
     this.makeHash = function(value,symbol)
     {
-        var r = null;
+        let r = null;
         
-        if(Quid.Str.isNotEmpty(value))
+        if(Str.isNotEmpty(value))
         {
             r = value;
-            var hasHash = (r.charAt(0) === "#")? true:false;
+            const hasHash = (r.charAt(0) === "#")? true:false;
             
             if(symbol === true)
             r = (!hasHash)? "#"+r:r;
@@ -228,16 +228,19 @@ Quid.Uri = new function()
     // permet d'obtenir un email à partir d'un mailto (comme dans un href)
     this.getMailto = function(value)
     {
-        var r = null;
+        let r = null;
         
-        if(Quid.Str.isNotEmpty(value))
+        if(Str.isNotEmpty(value))
         {
-            var email = value.replace(/mailto:/,'');
+            const email = value.replace(/mailto:/,'');
             
-            if(Quid.Validate.isEmail(email))
+            if(Validate.isEmail(email))
             r = email;
         }
         
         return r;
     }
-};
+}
+
+// export
+Lemur.Uri = Uri;

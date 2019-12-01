@@ -6,7 +6,7 @@
  
 // confirm
 // sur clique de l'élément, imprime la page
-Quid.Component.clickPrint = function() 
+Component.clickPrint = function() 
 {
     $(this).on('click', function(event) {
         window.print();

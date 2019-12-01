@@ -6,10 +6,10 @@
   
 // html
 // script with functions for parsing html
-Quid.Html = new function() 
+const Html = new function() 
 {
     // instance
-    var $inst = this;
+    const $inst = this;
     
     
     // parse
@@ -17,14 +17,14 @@ Quid.Html = new function()
     // remplace les balises sensibles par des div (comme dans head et script)
     this.parse = function(html)
     {
-        var r = null;
-        html = Quid.Str.cast(html);
+        let r = null;
+        html = Str.cast(html);
         html = html.replace(/<\!DOCTYPE[^>]*>/i, '');
         html = html.replace(/<(html|head|body|script)([\s\>])/gi,'<div data-tag="$1"$2');
         html = html.replace(/<\/(html|head|body|script)\>/gi,'</div>');
         
-        html = Quid.Str.trim(html);
-        var nodes = $.parseHTML(html);
+        html = Str.trim(html);
+        const nodes = $.parseHTML(html);
         
         r = $(nodes);
 
@@ -37,7 +37,7 @@ Quid.Html = new function()
     // retourne un objet avec les différents éléments d'un document décortiqués
     this.doc = function(html)
     {
-        var r = {
+        let r = {
             html: null,
             htmlAttr: null,
             head: null,
@@ -48,11 +48,11 @@ Quid.Html = new function()
             body: null,
             bodyAttr: null
         };
-        var doc = $inst.parse(html);
+        const doc = $inst.parse(html);
         
         r.html = doc;
         r.html.removeAttr('data-tag');
-        r.htmlAttr = Quid.Node.attr(r.html);
+        r.htmlAttr = Dom.attr(r.html);
         
         r.head = doc.find("[data-tag='head']").first();
         r.body = doc.find("[data-tag='body']").first();
@@ -60,7 +60,7 @@ Quid.Html = new function()
         if(r.head.length)
         {
             r.head.removeAttr('data-tag');
-            r.headAttr = Quid.Node.attr(r.head);
+            r.headAttr = Dom.attr(r.head);
             r.title = r.head.find("title").first().text() || '?';
             r.titleHtml = r.title.replace('<','&lt;').replace('>','&gt;').replace(' & ',' &amp; ');
             r.meta = r.head.find("meta");
@@ -69,13 +69,13 @@ Quid.Html = new function()
         if(r.body.length)
         {
             r.body.removeAttr('data-tag');
-            r.bodyAttr = Quid.Node.attr(r.body);
+            r.bodyAttr = Dom.attr(r.body);
         }
         
         else
         {
-            var html = Quid.Node.outerHtml(doc);
-            var newBody = "<div data-tag='body'>"+html+"</div>";
+            const html = Dom.outerHtml(doc);
+            const newBody = "<div data-tag='body'>"+html+"</div>";
             newBody = $.parseHTML(newBody);
             r.body = $(newBody);
         }
@@ -83,3 +83,6 @@ Quid.Html = new function()
         return r;
     }
 }
+
+// export
+Lemur.Html = Html;

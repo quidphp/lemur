@@ -6,7 +6,7 @@
  
 // textareaExtra
 // script for a component to search and insert content within a textarea, with support for tinymce
-Quid.Component.textareaExtra = function()
+Component.textareaExtra = function()
 {
     // triggerHandler
     $(this).on('textareaExtra:getTextarea', function() {
@@ -16,10 +16,10 @@ Quid.Component.textareaExtra = function()
         return $(this).find(".table-relation");
     })
     .on('textareaExtra:getTinymceEditor', function() {
-        return $(this).triggerHandler('textareaExtra:getTextarea').data('tinymceEditor');
+        return triggerFunc(this,'textareaExtra:getTextarea').data('tinymceEditor');
     })
     .on('textareaExtra:hasFilters', function() {
-        return ($(this).triggerHandler('textareaExtra:getFilters').length)? true:false;
+        return (triggerFunc(this,'textareaExtra:getFilters').length)? true:false;
     })
     .on('textareaExtra:hasTinymce', function() {
         return ($(this).parents(".form-element").is("[data-group='tinymce']"))? true:false;
@@ -29,32 +29,32 @@ Quid.Component.textareaExtra = function()
     .one('component:setup', function() {
         bindTextarea.call(this);
         
-        if($(this).triggerHandler('textareaExtra:hasFilters'))
+        if(triggerFunc(this,'textareaExtra:hasFilters'))
         bindFilter.call(this);
         
-        if($(this).triggerHandler('textareaExtra:hasTinymce'))
+        if(triggerFunc(this,'textareaExtra:hasTinymce'))
         bindTinymce.call(this);
     })
     
     // teardown
     .one('component:teardown', function() {
-        var editor = $(this).triggerHandler("textareaExtra:getTinymceEditor");
+        const editor = triggerFunc(this,"textareaExtra:getTinymceEditor");
         
         if(editor != null)
         editor.remove();
     });
     
     // bindTextarea
-    var bindTextarea = function() {
-        var textarea = $(this).triggerHandler('textareaExtra:getTextarea');
+    const bindTextarea = function() {
+        const textarea = triggerFunc(this,'textareaExtra:getTextarea');
         
         textarea.on('textareaInput:insert', function(event,html) {
-            var r = false;
+            let r = false;
             
-            if(Quid.Str.isNotEmpty(html))
+            if(Str.isNotEmpty(html))
             {
                 r = true;
-                var current = $(this).val();
+                const current = $(this).val();
                 textarea.val(current+html);
             }
             
@@ -63,22 +63,22 @@ Quid.Component.textareaExtra = function()
     };
     
     // bindFilter
-    var bindFilter = function() {
-        var filters = $(this).triggerHandler('textareaExtra:getFilters');
-        var textarea = $(this).triggerHandler('textareaExtra:getTextarea');
+    const bindFilter = function() {
+        const filters = triggerFunc(this,'textareaExtra:getFilters');
+        const textarea = triggerFunc(this,'textareaExtra:getTextarea');
         
-        Quid.Component.filter.call(filters);
+        Component.filter.call(filters);
         filters.on('clickOpen:getBackgroundFrom',function() {
             return 'tableRelation';
         })
         .one('component:setup', function(event) {
-            $(this).trigger('component:setup');
+            triggerCustom(this,'component:setup');
             
-            var clickOpen = $(this).triggerHandler('clickOpen:getTarget');
-            var result = $(this).triggerHandler('filter:getResult');
+            const clickOpen = triggerFunc(this,'clickOpen:getTarget');
+            let result = triggerFunc(this,'filter:getResult');
             
             result.on('click', '.insert', function(event) {
-                var html = $(this).data('html');
+                const html = $(this).data('html');
                 textarea.triggerHandler('textareaInput:insert',html);
                 clickOpen.trigger('clickOpen:close');
                 event.stopPropagation();
@@ -87,25 +87,25 @@ Quid.Component.textareaExtra = function()
             event.stopPropagation();
         })
         .on('feed:bind', function() {
-            var target = $(this).triggerHandler('clickOpen:getTarget');
+            const target = triggerFunc(this,'clickOpen:getTarget');
             
             target.on('feed:parseData', function(event,data) {
-                return Quid.Html.parse(data).find("li");
+                return Html.parse(data).find("li");
             })
         })
         .trigger('component:setup');
     };
     
     // bindTinymce
-    var bindTinymce = function() {
-        var textarea = $(this).triggerHandler('textareaExtra:getTextarea');
-        var editor = createTinymce.call(textarea);
+    const bindTinymce = function() {
+        const textarea = triggerFunc(this,'textareaExtra:getTextarea');
+        const editor = createTinymce.call(textarea);
         textarea.data('tinymceEditor',editor);
         
         textarea.on('textareaInput:insert', function(event,html) {
-            var r = false;
+            let r = false;
             
-            if(Quid.Str.isNotEmpty(html))
+            if(Str.isNotEmpty(html))
             {
                 editor.execCommand('mceInsertContent',false,html);
                 r = true;
@@ -116,12 +116,12 @@ Quid.Component.textareaExtra = function()
     }
     
     // createTinymce
-    var createTinymce = function() {
-        var r = null;
+    const createTinymce = function() {
+        let r = null;
         
-        Quid.Dom.addId('tinymce-',this);
-        var id = this.prop('id');
-        var data = this.data('tinymce') || {};
+        DomChange.addId('tinymce-',this);
+        const id = this.prop('id');
+        const data = this.data('tinymce') || {};
         
         data.selector = "#"+id;
         data.init_instance_callback = function (editor) {

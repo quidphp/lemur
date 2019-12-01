@@ -6,10 +6,10 @@
  
 // scrollChange
 // permet de notifier une node du changement de scroll
-Quid.Component.scrollChange = function(persistent)
+Component.scrollChange = function(persistent)
 {
-    var $this = $(this);
-    var type = (persistent === true)? 'scroll':'scroll.document-mount';
+    const $this = $(this);
+    const type = (persistent === true)? 'scroll':'scroll.document-mount';
     $(window).on(type, function(event) {
         event.stopPropagation();
         $this.trigger('scroll:change');

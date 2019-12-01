@@ -6,19 +6,19 @@
  
 // accordion
 // script of behaviours for an accordion component
-Quid.Component.accordion = function(until,closeAll,wrap)
+Component.accordion = function(until,closeAll,wrap)
 {	
-    var $this = $(this);
+    const $this = $(this);
     
     $(this).on('click', function(event) {
         if(closeAll === true)
         $this.trigger('accordion:close');
         
-        if($(this).triggerHandler('accordion:isOpen'))
-        $(this).trigger('accordion:close');
+        if(triggerFunc(this,'accordion:isOpen'))
+        triggerCustom(this,'accordion:close');
         
         else
-        $(this).trigger('accordion:open');
+        triggerCustom(this,'accordion:open');
     })
     .on('accordion:getContents', function(event) {
         return $(this).nextUntil(until);
@@ -30,32 +30,32 @@ Quid.Component.accordion = function(until,closeAll,wrap)
         return 'open';
     })
     .on('accordion:isOpen', function(event) {
-        var openClass = $(this).triggerHandler('accordion:getOpenClass');
+        const openClass = triggerFunc(this,'accordion:getOpenClass');
         return $(this).hasClass(openClass);
     })
     .on('accordion:close', function(event) {
-        var openClass = $(this).triggerHandler('accordion:getOpenClass');
-        var activeClass = $(this).triggerHandler('accordion:getActiveClass');
+        const openClass = triggerFunc(this,'accordion:getOpenClass');
+        const activeClass = triggerFunc(this,'accordion:getActiveClass');
         $(this).removeClass(openClass).removeClass(activeClass);
-        $(this).triggerHandler('accordion:getContents').removeClass(activeClass);
+        triggerFunc(this,'accordion:getContents').removeClass(activeClass);
         
-        if(Quid.Str.isNotEmpty(wrap))
+        if(Str.isNotEmpty(wrap))
         $(this).parent().removeClass(openClass);
     })
     .on('accordion:open', function(event) {
-        var openClass = $(this).triggerHandler('accordion:getOpenClass');
-        var activeClass = $(this).triggerHandler('accordion:getActiveClass');
+        const openClass = triggerFunc(this,'accordion:getOpenClass');
+        const activeClass = triggerFunc(this,'accordion:getActiveClass');
         $(this).addClass(openClass).addClass(activeClass);
-        $(this).triggerHandler('accordion:getContents').addClass(activeClass);
+        triggerFunc(this,'accordion:getContents').addClass(activeClass);
         
-        if(Quid.Str.isNotEmpty(wrap))
+        if(Str.isNotEmpty(wrap))
         $(this).parent().addClass(openClass);
     });
     
-    if(Quid.Str.isNotEmpty(wrap))
+    if(Str.isNotEmpty(wrap))
     {
-        var html = "<div class='"+wrap+"'></div>";
-        Quid.Dom.wrapConsecutiveSiblings(this,until,html);
+        const html = "<div class='"+wrap+"'></div>";
+        DomChange.wrapConsecutiveSiblings(this,until,html);
     }
     
     return this;

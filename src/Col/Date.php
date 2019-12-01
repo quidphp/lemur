@@ -42,22 +42,22 @@ class Date extends Core\Col\Date
             $this->checkFormatCalendar();
             $value = $this->valueComplex($value);
             $format = $this->date(true);
-            $placeholder = Base\Date::placeholder($format);
-            $timestamp = Base\Date::timestamp();
+            $placeholder = Base\Datetime::placeholder($format);
+            $timestamp = Base\Datetime::timestamp();
 
             if(is_int($value))
             $timestamp = $value;
 
             elseif(is_string($value))
             {
-                $v = Base\Date::time($value,$format);
+                $v = Base\Datetime::time($value,$format);
                 if(is_int($v))
                 $timestamp = $v;
             }
 
             $route = static::route('calendar',['timestamp'=>true,'format'=>$format]);
 
-            $formatCalendar = strtolower(Base\Date::placeholder($this->attr['calendarFormat']));
+            $formatCalendar = strtolower(Base\Datetime::placeholder($this->attr['calendarFormat']));
             $placeholderMaxLength = strlen($placeholder);
             $attr = Base\Attr::append($attr,['placeholder'=>$placeholder,'maxlength'=>$placeholderMaxLength]);
             $return .= $this->form($value,$attr,$option);

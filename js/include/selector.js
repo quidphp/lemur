@@ -6,10 +6,10 @@
  
 // selector
 // script with behaviours related to selecting nodes
-Quid.Selector = new function() 
+const Selector = new function() 
 {
     // instance
-    var $inst = this;
+    const $inst = this;
     
     
     // input
@@ -24,13 +24,13 @@ Quid.Selector = new function()
     // retourne une sélection avec tous les inputs de même type et même nom
     this.inputGroup = function(node)
     {
-        var r = $();
+        let r = $();
         
         $(node).each(function(index) {
-            var name = $(this).prop("name");
-            var type = $(this).prop("type");
+            const name = $(this).prop("name");
+            const type = $(this).prop("type");
             
-            if(Quid.Str.isNotEmpty(name) && Quid.Str.isNotEmpty(type))
+            if(Str.isNotEmpty(name) && Str.isNotEmpty(type))
             r = r.add($("[type='"+type+"'][name='"+name+"']"));
         });
         
@@ -42,13 +42,16 @@ Quid.Selector = new function()
     // retourne le ou les labels liés à l'élément
     this.labels = function(node)
     {
-        var r = $();
-        var id = $(node).prop('id');
+        let r = $();
+        const id = $(node).prop('id');
         d(id);
         
-        if(Quid.Scalar.is(id))
+        if(Scalar.is(id))
         r = $(document).find("label[for='"+id+"']");
         
         return r;
     }
 }
+
+// export
+Lemur.Selector = Selector;

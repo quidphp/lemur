@@ -6,15 +6,15 @@
  
 // slider
 // script for a tab slider component with next and previous buttons
-Quid.Component.slider = function(timeout,navs,className,showIfOne)
+Component.slider = function(timeout,navs,className,showIfOne)
 {
-    className = (Quid.Str.isNotEmpty(className))? className:".slide";
+    className = (Str.isNotEmpty(className))? className:".slide";
     
-    var func = function() {
-        var tab = $(this);
-        var prev = $(this).find(".prev");
-        var next = $(this).find(".next");
-        var target = $(this).find(className);
+    const func = function() {
+        const tab = $(this);
+        const prev = $(this).find(".prev");
+        const next = $(this).find(".next");
+        const target = $(this).find(className);
         
         target.on('tab:open', function(event) {
             $(this).addClass("active");
@@ -41,30 +41,30 @@ Quid.Component.slider = function(timeout,navs,className,showIfOne)
             
             if(navs instanceof jQuery && navs.length)
             {
-                Quid.Component.tabNav.call(target,navs);
+                Component.tabNav.call(target,navs);
                 target.on('tab:open', function(event) {
-                    var nav = $(this).triggerHandler('link:getNav');
+                    const nav = triggerFunc(this,'link:getNav');
                     navs.removeClass('active');
                     nav.addClass('active');
                 });
                 navs.on('click', function(event) {
-                    var target = $(this).triggerHandler('link:getTarget');
+                    const target = triggerFunc(this,'link:getTarget');
                     target.trigger('tab:change');
                 });
             }
             
-            if(Quid.Number.is(timeout))
+            if(Num.is(timeout))
             {
-                Quid.Component.timeout.call(this,'tab:change',timeout);
+                Component.timeout.call(this,'tab:change',timeout);
                 
                 $(this).on('tab:change:onTimeout', function(event) {
-                    $(this).trigger('tab:loopNext');
+                    triggerCustom(this,'tab:loopNext');
                 })
                 .on('mouseover', function(event) {
-                    $(this).trigger('tab:change:clearTimeout');
+                    triggerCustom(this,'tab:change:clearTimeout');
                 })
                 .on('mouseleave', function(event) {
-                    $(this).trigger('tab:change:setTimeout');
+                    triggerCustom(this,'tab:change:setTimeout');
                 });
             }
         }
@@ -84,8 +84,8 @@ Quid.Component.slider = function(timeout,navs,className,showIfOne)
         $(this).on('tab:getTarget', function(event) {
             return target;
         });
-        Quid.Component.tab.call(this);
-        $(this).trigger('tab:changeOrFirst');
+        Component.tab.call(this);
+        triggerCustom(this,'tab:changeOrFirst');
     };
     
     $(this).each(function(index, el) {
@@ -93,7 +93,7 @@ Quid.Component.slider = function(timeout,navs,className,showIfOne)
     });
     
     $(this).find(className).on('tab:close', function(event) {
-        var iframe = $(this).find("iframe");
+        const iframe = $(this).find("iframe");
         if(iframe.length)
         iframe.attr('src',iframe.attr('src'));
     });

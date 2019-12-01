@@ -6,25 +6,25 @@
  
 // inputSearch
 // script containing logic for a search input which redirects
-Quid.Component.inputSearch = function(option)
+Component.inputSearch = function(option)
 {
     // settings
-    var $option = Quid.Obj.replace({
+    const $option = Obj.replace({
         timeout: 100
     },option);
     
     // bindings
-    Quid.Component.block.call(this,'change');
-    Quid.Component.keyboardEnter.call(this,true,'keyup');
-    Quid.Component.timeout.call(this,'keyup',$option.timeout);
-    Quid.Component.inputValidate.call(this);
+    Component.block.call(this,'change');
+    Component.keyboardEnter.call(this,true,'keyup');
+    Component.timeout.call(this,'keyup',$option.timeout);
+    Component.inputValidate.call(this);
     
     // triggerHandler
     $(this).on('inputSearch:getValue', function(event) {
-        return Quid.Str.cast($(this).val());
+        return Str.cast($(this).val());
     })
     .on('inputSearch:getCurrent',  function() {
-        return Quid.Str.cast($(this).data("current"));
+        return Str.cast($(this).data("current"));
     })
     .on('inputSearch:getButton', function(event) {
         return $(this).parent().next("button[type='button']");
@@ -32,11 +32,11 @@ Quid.Component.inputSearch = function(option)
     
     // event
     .on('change enter:blocked inputSeach:buttonClick', function() {
-        $(this).trigger('validate:process');
+        triggerCustom(this,'validate:process');
         refresh.call(this);
     })
     .on('keyup:onTimeout', function() {
-        $(this).trigger('validate:pattern');
+        triggerCustom(this,'validate:pattern');
     })
     
     // setup
@@ -45,37 +45,37 @@ Quid.Component.inputSearch = function(option)
     });
     
     // refresh
-    var refresh = function() {
-        var val = $(this).triggerHandler('inputSearch:getValue');
-        var current = $(this).triggerHandler('inputSearch:getCurrent');
+    let refresh = function() {
+        const val = triggerFunc(this,'inputSearch:getValue');
+        const current = triggerFunc(this,'inputSearch:getCurrent');
         
         if(val === current)
-        $(this).trigger('validate:invalid');
+        triggerCustom(this,'validate:invalid');
         
-        else if($(this).triggerHandler('validate:isValid'))
+        else if(triggerFunc(this,'validate:isValid'))
         redirect.call(this);
     };
     
     // redirect
-    var redirect = function() {
-        var val = $(this).triggerHandler('inputSearch:getValue');
-        var href = $(this).attr("data-href");
-        var char = $(this).attr("data-char");
+    let redirect = function() {
+        const val = triggerFunc(this,'inputSearch:getValue');
+        const href = $(this).attr("data-href");
+        const char = $(this).attr("data-char");
         
-        if(Quid.Str.isNotEmpty(val))
+        if(Str.isNotEmpty(val))
         {
             val = encodeURIComponent(val);
             href += "?"+char+"="+val;
         }
         
-        $(this).trigger('block');
+        triggerCustom(this,'block');
         $(document).trigger('document:go',[href])
     };
     
     // bindButton
-    var bindButton = function() {
-        var $this = $(this);
-        var button = $(this).triggerHandler('inputSearch:getButton');
+    const bindButton = function() {
+        const $this = $(this);
+        const button = triggerFunc(this,'inputSearch:getButton');
         
         if(button != null)
         {

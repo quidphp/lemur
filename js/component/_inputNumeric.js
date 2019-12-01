@@ -6,13 +6,13 @@
  
 // inputNumeric
 // script with logic for an input containing a number
-Quid.Component.inputNumeric = function(option)
+Component.inputNumeric = function(option)
 {
     // alias
-    var setFunc = Quid.Event.setFunc;
-    var triggerFunc = Quid.Event.triggerFunc;
-    var ael = Quid.Event.addEventListener;
-    var triggerCustom = Quid.Event.triggerCustom;
+    const setFunc = Evt.setFunc;
+    const triggerFunc = Evt.triggerFunc;
+    const ael = Evt.addEventListener;
+    const triggerCustom = Evt.triggerCustom;
     
     
     // option
@@ -20,9 +20,9 @@ Quid.Component.inputNumeric = function(option)
     
     
     // bindings
-    Quid.Component.block.call(this,'change');
-    Quid.Component.timeout.call(this,'keyup',option.timeout);
-    Quid.Component.inputValidate.call(this);
+    Component.block.call(this,'change');
+    Component.timeout.call(this,'keyup',option.timeout);
+    Component.inputValidate.call(this);
 
 
     // func
@@ -50,7 +50,7 @@ Quid.Component.inputNumeric = function(option)
     });
     
     ael(this,'validate:invalid',function() {
-        var current = triggerFunc(this,'inputNumeric:getCurrent');
+        const current = triggerFunc(this,'inputNumeric:getCurrent');
         triggerFunc(this,'input:setValue',current);
         triggerCustom(this,'validate:valid');
     });
@@ -71,10 +71,10 @@ Quid.Component.inputNumeric = function(option)
     
     
     // refresh
-    var refresh = function() {
-        var val = triggerFunc(this,'inputNumeric:getValue');
-        var max = triggerFunc(this,'inputNumeric:getMax');
-        var current = triggerFunc(this,'inputNumeric:getCurrent');
+    let refresh = function() {
+        const val = triggerFunc(this,'inputNumeric:getValue');
+        const max = triggerFunc(this,'inputNumeric:getMax');
+        const current = triggerFunc(this,'inputNumeric:getCurrent');
         
         if(!val)
         triggerCustom(this,'validate:invalid');
@@ -87,18 +87,18 @@ Quid.Component.inputNumeric = function(option)
                 val = max;
             }
             
-            if($(this).triggerHandler('validate:isValid') && val !== current)
+            if(triggerFunc(this,'validate:isValid') && val !== current)
             redirect.call(this);
         }
     };
     
     
     // redirect
-    var redirect = function() {
-        var val = triggerFunc(this,'inputNumeric:getValue');
-        var href = Quid.Node.dataHrefReplaceChar(this,val);
+    let redirect = function() {
+        const val = triggerFunc(this,'inputNumeric:getValue');
+        const href = Dom.dataHrefReplaceChar(this,val);
         
-        if(Quid.Str.isNotEmpty(href))
+        if(Str.isNotEmpty(href))
         {
             triggerCustom(this,'block');
             triggerCustom(document,'document:go',href)

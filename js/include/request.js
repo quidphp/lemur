@@ -6,10 +6,10 @@
  
 // request
 // script with functions related to the current request
-Quid.Request = new function() 
+const Request = new function() 
 {    
     // instance
-    var $inst = this;
+    const $inst = this;
     
     
     // relative
@@ -32,7 +32,7 @@ Quid.Request = new function()
     // retourne le fragment de l'uri sans le hash
     this.fragment = function() 
     {
-        return Quid.Uri.makeHash(window.location.hash);
+        return Uri.makeHash(window.location.hash);
     }
 
 
@@ -48,4 +48,7 @@ Quid.Request = new function()
             hash: location.hash
         };
     }
-};
+}
+
+// export
+Lemur.Request = Request;

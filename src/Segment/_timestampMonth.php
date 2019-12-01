@@ -26,21 +26,21 @@ trait _timestampMonth
         {
             if(is_string($value))
             {
-                if(Base\Date::isFormat('ym',$value))
+                if(Base\Datetime::isFormat('ym',$value))
                 $return = $value;
 
-                elseif(Base\Date::isFormat('dateToDay',$value))
-                $value = Base\Date::format('ym',$value,'dateToDay');
+                elseif(Base\Datetime::isFormat('dateToDay',$value))
+                $value = Base\Datetime::format('ym',$value,'dateToDay');
             }
 
             elseif(is_int($value))
-            $return = Base\Date::format('ym',$value);
+            $return = Base\Datetime::format('ym',$value);
         }
 
         elseif($type === 'match')
         {
             if($value === null)
-            $return = Base\Date::floorMonth();
+            $return = Base\Datetime::floorMonth();
 
             elseif(is_scalar($value))
             $return = $value;

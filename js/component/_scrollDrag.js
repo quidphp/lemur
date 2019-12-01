@@ -6,24 +6,24 @@
  
 // scrollDrag
 // component to allow scrolling while dragging with the mouse
-Quid.Component.scrollDrag = function(option) {
+Component.scrollDrag = function(option) {
     
     // settings
-    var $option = Quid.Obj.replace({
+    const $option = Obj.replace({
         selector: null,
         targetTag: null,
         dividor: 4
     },option);
     
     // resizeChange
-    Quid.Component.resizeChange.call(this);
+    Component.resizeChange.call(this);
     
     // triggerHandler
     $(this).on('scrollDrag:can', function() {
         return ($(this).attr('data-grabbable') == 1)? true:false;
     })
     .on('scrollDrag:required', function() {
-        return (($(this).triggerHandler('scrollDrag:getChildren').width() - $(this).width()) > 0)? true:false;
+        return ((triggerFunc(this,'scrollDrag:getChildren').width() - $(this).width()) > 0)? true:false;
     })
     .on('scrollDrag:getChildren', function() {
         return $(this).children().first();
@@ -31,10 +31,10 @@ Quid.Component.scrollDrag = function(option) {
     
     // trigger
     .on('resize:change', function() {
-        $(this).trigger('scrollDrag:refresh');
+        triggerCustom(this,'scrollDrag:refresh');
     })
     .on('scrollDrag:refresh', function() {
-        if($(this).triggerHandler('scrollDrag:required'))
+        if(triggerFunc(this,'scrollDrag:required'))
         $(this).attr('data-grabbable',1);
         else
         $(this).removeAttr('data-grabbable');
@@ -46,22 +46,22 @@ Quid.Component.scrollDrag = function(option) {
     
     // mouse
     .on('mousemove', $option.selector, function(event) {
-        var $this = $(event.delegateTarget);
+        const $this = $(event.delegateTarget);
         if($this.data('cursorDown') === true)
         {
-            var newY = (($this.data('cursorPositionY') - event.pageY) / $option.dividor);
-            var newX = (($this.data('cursorPositionX') - event.pageX) / $option.dividor);
+            const newY = (($this.data('cursorPositionY') - event.pageY) / $option.dividor);
+            const newX = (($this.data('cursorPositionX') - event.pageX) / $option.dividor);
             $this.scrollTop($this.scrollTop() + newY); 
             $this.scrollLeft($this.scrollLeft() + newX);
         }
     })
     .on('mousedown', $option.selector, function(event) {
-        var $this = $(event.delegateTarget);
+        const $this = $(event.delegateTarget);
         if($this.triggerHandler('scrollDrag:can') && $this.triggerHandler('scrollDrag:required') && event.which === 1)
         {
-            var target = $(event.target);
+            const target = $(event.target);
             
-            if(target.length && ($option.targetTag == null || Quid.Node.isTag($option.targetTag,target)))
+            if(target.length && ($option.targetTag == null || Dom.isTag($option.targetTag,target)))
             {
                 $this.data('cursorDown',true);
                 $this.data('cursorPositionY',event.pageY);
@@ -71,7 +71,7 @@ Quid.Component.scrollDrag = function(option) {
         }
     })
     .on('mouseup', $option.selector, function(event) {
-        var $this = $(event.delegateTarget);
+        const $this = $(event.delegateTarget);
         $this.trigger('scrollDrag:stop');
     })
     .on('mouseout', $option.selector, function(event) {
@@ -80,7 +80,7 @@ Quid.Component.scrollDrag = function(option) {
     
     // setup
     .on('component:setup', function() {
-        var $this = $(this);
+        const $this = $(this);
         $(this).data('cursorDown',false);
         $(this).data('cursorPositionY',0);
         $(this).data('cursorPositionX',0);
@@ -89,7 +89,7 @@ Quid.Component.scrollDrag = function(option) {
             $this.trigger('scrollDrag:stop');
         });
         
-        $(this).trigger('scrollDrag:refresh');
+        triggerCustom(this,'scrollDrag:refresh');
     });
     
     return this;
