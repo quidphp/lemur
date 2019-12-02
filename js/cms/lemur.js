@@ -10,6 +10,8 @@
 // ready
 $(document).ready(function() {
 	
+    evtDebug(true);
+    
     // initial mount
     // comportements bindés une seule fois au tout début
     ael(this,'document:mountInitial',function(event,body) {

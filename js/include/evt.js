@@ -14,7 +14,7 @@ const Evt = new function()
     
     // debug
     // si true affiche les événements dans la console
-    const debug = false;
+    let debug = false;
     
     
     // debug
@@ -62,6 +62,10 @@ const Evt = new function()
                 let args = [event];
                 const detail = event.detail;
                 args = args.concat(detail);
+                
+                if(debug === true)
+                console.log('listener',type,this,detail,event);
+                
                 func.apply(this,args);
             },option);
         });
@@ -88,7 +92,7 @@ const Evt = new function()
         const event = (custom === true)? new CustomEvent(type,option):new Event(type,option);
         
         if(debug === true)
-        console.log(node,event);
+        console.log('trigger',type,node);
         
         $(node).each(function(index, el) {
             this.dispatchEvent(event);
@@ -177,13 +181,13 @@ const Evt = new function()
         if(Func.is(func))
         {
             if(debug === true)
-            console.log(node,type);
+            console.log('triggerFunc',type,'found',node);
             
             r = func.apply(node,args);
         }
         
-        else
-        logError('funcNotFound:'+type);
+        else if(debug === true)
+        console.log('triggerFunc',type,'notFound',node);
         
         return r;
     }
