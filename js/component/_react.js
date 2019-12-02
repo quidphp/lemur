@@ -14,10 +14,10 @@ Component.react = function()
     {
         $that.bind.call(this);
         
-        $(this).on('document:mount', function(event) {
+        $(this).on('document:mount',function(event) {
             triggerCustom(this,'reactContainer:mount');
         })
-        .on('document:unmount', function(event) {
+        .on('document:unmount',function(event) {
             triggerCustom(this,'reactContainer:unmount');
         });
         
@@ -43,7 +43,7 @@ Component.react = function()
     }
     
     // renderReactComponent
-    let renderReactComponent = function(props)
+    const renderReactComponent = function(props)
     {
         const node = $(this)[0];
         const component = createReactElement.call(this,props);
@@ -62,30 +62,30 @@ Component.react = function()
         return;
     }
     
-    $(this).on('reactContainer:mount', function(event,uri) {
+    $(this).on('reactContainer:mount',function(event,uri) {
         const components = triggerFunc(this,'reactContainer:getComponents');
         
-        components.on('react:mount', function(event) {
+        components.on('react:mount',function(event) {
             renderReactComponent.call(this);
         })
-        .on('react:unmount', function(event) {
+        .on('react:unmount',function(event) {
             unmountReactComponent.call(this);
         })
-        .on('react:updateProps', function(event,props) {
+        .on('react:updateProps',function(event,props) {
             const initialProps = Json.decode($(this).attr('data-props'));
             props = Obj.replace(initialProps,props);
             renderReactComponent.call(this,props);
         })
-        .on('react:replaceProps', function(event,props) {
+        .on('react:replaceProps',function(event,props) {
             renderReactComponent.call(this,props);
         })
         .trigger('react:mount');
     })
-    .on('reactContainer:unmount', function(event) {
+    .on('reactContainer:unmount',function(event) {
         const components = triggerFunc(this,'reactContainer:getComponents');
         components.trigger('react:unmount');
     })
-    .on('reactContainer:getComponents', function(event) {
+    .on('reactContainer:getComponents',function(event) {
         return $(this).find(".react-component");
     });
     

@@ -31,14 +31,14 @@ trait _template
 
     // trigger
     // trigger pour toutes les pages html du cms
-    final public function trigger()
+    public function trigger()
     {
         return $this->template();
     }
 
 
     // template
-    protected function template():string
+    final protected function template():string
     {
         $r = '';
         $flush = $this->docOpen();

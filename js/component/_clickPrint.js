@@ -8,7 +8,7 @@
 // sur clique de l'élément, imprime la page
 Component.clickPrint = function() 
 {
-    $(this).on('click', function(event) {
+    $(this).on('click',function(event) {
         window.print();
     });
     

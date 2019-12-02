@@ -12,29 +12,29 @@ Component.colsSorter = function()
     Component.clickOpenWithTrigger.call(this,".trigger");
     
     // func
-    setFunc(this,'colsSorter:getPopup', function() {
+    setFunc(this,'colsSorter:getPopup',function() {
         return $(this).find(".popup");
     });
     
-    setFunc(this,'colsSorter:getCheckboxes', function() {
+    setFunc(this,'colsSorter:getCheckboxes',function() {
         return $(this).find("input[type='checkbox']");
     });
     
-    setFunc(this,'colsSorter:getCheckedCheckboxes', function() {
+    setFunc(this,'colsSorter:getCheckedCheckboxes',function() {
         return triggerFunc(this,'colsSorter:getCheckboxes').filter(':checked');
     });
     
-    setFunc(this,'colsSorter:getButton', function() {
+    setFunc(this,'colsSorter:getButton',function() {
         return triggerFunc(this,'colsSorter:getPopup').find("button[name='cols']");
     });
     
-    setFunc(this,'colsSorter:isValid', function() {
+    setFunc(this,'colsSorter:isValid',function() {
         const checkboxes = triggerFunc(this,'colsSorter:getCheckboxes');
         
         return triggerFuncEqual(checkboxes,true,'validate:isValid');
     });
     
-    setFunc(this,'colsSorter:getCheckedSet', function() {
+    setFunc(this,'colsSorter:getCheckedSet',function() {
         const button = triggerFunc(this,'colsSorter:getButton');
         const checkbox = triggerFunc(this,'colsSorter:getCheckedCheckboxes');
         
@@ -50,7 +50,7 @@ Component.colsSorter = function()
     
     
     // setup
-    aelOnce(this,'component:setup', function() {
+    aelOnce(this,'component:setup',function() {
         bindColsPopup.call(this);
         bindColsCheckboxes.call(this);
         bindColsButton.call(this);
@@ -64,17 +64,17 @@ Component.colsSorter = function()
         
         Component.verticalSorter.call(popup,".choice",'.choice-in');
         
-        popup.on('verticalSorter:stop', function() {
+        popup.on('verticalSorter:stop',function() {
             triggerCustom(this,'popup:validate');
         })
-        .on('popup:validate', function() {
+        .on('popup:validate',function() {
             const checkboxes = triggerFunc($this,'colsSorter:getCheckboxes');
             triggerCustom(checkboxes,'validate:trigger');
         })
-        .on('popup:invalid', function() {
+        .on('popup:invalid',function() {
             $(this).attr('data-validate','invalid');
         })
-        .on('popup:valid', function() {
+        .on('popup:valid',function() {
             $(this).removeAttr("data-validate");
             
             if(!triggerFunc($this,'colsSorter:isCurrent'))
@@ -89,10 +89,10 @@ Component.colsSorter = function()
         
         Component.inputValidate.call(checkboxes);
         
-        checkboxes.on('validate:invalid', function() {
+        checkboxes.on('validate:invalid',function() {
             triggerCustom(popup,'popup:invalid');
         })
-        .on('validate:valid', function() {
+        .on('validate:valid',function() {
             triggerCustom(popup,'popup:valid');
         });
     };
@@ -104,11 +104,11 @@ Component.colsSorter = function()
         
         Component.block.call(button,'click');
         
-        button.on('click', function(event) {
+        button.on('click',function(event) {
             redirect.call(this,event);
         });
         
-        let redirect = function(clickEvent) {
+        const redirect = function(clickEvent) {
             const set = triggerFunc($this,'colsSorter:getCheckedSet');
             const href = Dom.dataHrefReplaceChar(this,set);
             

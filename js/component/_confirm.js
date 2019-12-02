@@ -10,19 +10,19 @@ Component.confirm = function(type)
 {
     if(Str.isNotEmpty(type))
     {
-        $(this).on(type, function(event) {
+        $(this).on(type,function(event) {
             const confirmText = $(this).data('confirm');
             
             if(Str.isNotEmpty(confirmText) && !confirm(confirmText))
             {
                 event.stopImmediatePropagation();
                 event.preventDefault();
-                triggerCustom(this,'notConfirmed',[event]);
+                triggerCustom(this,'notConfirmed',event);
                 return false;
             }
             
             else
-            triggerCustom(this,'confirmed',[event]);
+            triggerCustom(this,'confirmed',event);
         });
     }
     

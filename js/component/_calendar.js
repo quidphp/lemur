@@ -10,16 +10,16 @@ Component.calendar = function()
 {
     // block + ajax
     Component.block.call(this,'calendar:load');
-    Component.ajax.call(this,'calendar:load');
+    Component.Ajax.call(this,'calendar:load');
     
     // triggerHandler
-    $(this).on('calendar:isEmpty', function(event) {
+    $(this).on('calendar:isEmpty',function(event) {
         return (!$(this).html())? true:false;
     })
     .on('calendar:getHead',  function() {
         return $(this).find(".head");
     })
-    .on('calendar:getPrevNext', function() {
+    .on('calendar:getPrevNext',function() {
         return triggerFunc(this,'calendar:getHead').find(".prev,.next");
     })
     .on('calendar:getCells',  function() {
@@ -28,43 +28,43 @@ Component.calendar = function()
     .on('calendar:getSelected',  function() {
         return triggerFunc(this,'calendar:getCells').filter(".selected");
     })
-    .on('calendar:getCurrent', function() {
+    .on('calendar:getCurrent',function() {
         return $(this).data('current');
     })
-    .on('calendar:getFormat', function() {
+    .on('calendar:getFormat',function() {
         return $(this).data('format');
     })
-    .on('ajax:getHref', function() {
+    .on('ajax:getHref',function() {
         return Dom.dataHrefReplaceChar(this,triggerFunc(this,'calendar:getCurrent'));
     })
     
     // trigger
-    .on('ajax:before', function() {
+    .on('ajax:before',function() {
         $(this).find("> *").hide();
         triggerCustom(this,'block');
         triggerCustom(this,'calendar:loading');
     })
-    .on('ajax:success', function(event,data,textStatus,jqXHR) {
+    .on('ajax:success',function(event,data,textStatus,jqXHR) {
         $(this).html(data);
         triggerCustom(this,'calendar:loaded');
         triggerCustom(this,'calendar:bind');
         triggerCustom(this,'calendar:ready');
     })
-    .on('ajax:error', function(event,parsedError,jqXHR,textStatus,errorThrown) {
+    .on('ajax:error',function(event,parsedError,jqXHR,textStatus,errorThrown) {
         $(this).html(parsedError);
         triggerCustom(this,'calendar:removeSelected');
         triggerCustom(this,'calendar:loaded');
     })
-    .on('calendar:loaded', function(event) {
+    .on('calendar:loaded',function(event) {
         triggerCustom(this,'unblock');
     })
-    .on('calendar:bind', function() {
+    .on('calendar:bind',function() {
         bindNav.call(this);
     })
     .on('calendar:removeSelected',  function() {
         triggerFunc(this,'calendar:getSelected').removeClass('selected');
     })
-    .on('calendar:select', function(event,value,reload) {
+    .on('calendar:select',function(event,value,reload) {
         triggerCustom(this,'calendar:removeSelected');
         const tds = triggerFunc(this,'calendar:getCells');
         const td = null;
@@ -132,17 +132,17 @@ Component.calendar = function()
         const prevNext = triggerFunc(this,'calendar:getPrevNext');
         
         Component.block.call(prevNext,'click');
-        Component.ajax.call(prevNext,'click');
+        Component.Ajax.call(prevNext,'click');
 
-        prevNext.on('ajax:before', function() {
+        prevNext.on('ajax:before',function() {
             $this.trigger('ajax:before');
             triggerCustom(this,'block');
         })
-        .on('ajax:success', function(event,data,textStatus,jqXHR) {
+        .on('ajax:success',function(event,data,textStatus,jqXHR) {
             $this.trigger('ajax:success',[data,textStatus,jqXHR]);
             triggerCustom(this,'unblock');
         })
-        .on('ajax:error', function(event,parsedError,jqXHR,textStatus,errorThrown) {
+        .on('ajax:error',function(event,parsedError,jqXHR,textStatus,errorThrown) {
             $this.trigger('ajax:error',[parsedError,jqXHR,textStatus,errorThrown]);
         });
     };

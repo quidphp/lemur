@@ -15,16 +15,16 @@ Component.carousel = function(trigger,target)
         Component.clickOpenBase.call(this,target);
         Component.clickOpenTrigger.call(this,trigger);
         
-        $(this).on('clickOpen:getTarget', function(event) {
+        $(this).on('clickOpen:getTarget',function(event) {
             return $(this).find(target).first();
         })
-        .on('clickOpen:getAttr', function(event) {
+        .on('clickOpen:getAttr',function(event) {
             return 'data-carousel';
         })
         .on('clickOpen:getBackgroundFrom',function(event) {
             return 'carousel';
         })
-        .on('clickOpen:allowMultiple', function(event) {
+        .on('clickOpen:allowMultiple',function(event) {
             return true;
         })
         .trigger('clickOpen:prepare');

@@ -165,9 +165,9 @@ const Uri = new function()
         
         if(Str.is(uri))
         {
-            let regex = /(?:\.([^.]+))?$/;
+            const regex = /(?:\.([^.]+))?$/;
             const parse = $inst.parse(uri);
-            let result = regex.exec(parse.path);
+            const result = regex.exec(parse.path);
             
             if(Arr.is(result) && result.length === 2)
             r = result[1];

@@ -36,7 +36,7 @@ const Validate = new function()
         
         if(Str.is(value) && exp)
         {
-            let regex = new RegExp(exp);
+            const regex = new RegExp(exp);
             
             if(regex.test(value))
             r = true;

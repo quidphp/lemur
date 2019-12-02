@@ -18,17 +18,17 @@ Component.tabNav = function(navs)
             
             if(nav.length)
             {
-                $(this).data('link-nav',nav).on('link:getIndex', function() {
+                $(this).data('link-nav',nav).on('link:getIndex',function() {
                     return targets.index($(this));
                 })
-                .on('link:getNav', function() {
+                .on('link:getNav',function() {
                     return $(this).data('link-nav');
                 });
                 
-                nav.data('link-target',$(this)).on('link:getIndex', function() {
+                nav.data('link-target',$(this)).on('link:getIndex',function() {
                     return navs.index($(this));
                 })
-                .on('link:getTarget', function() {
+                .on('link:getTarget',function() {
                     return $(this).data('link-target');
                 });
             }

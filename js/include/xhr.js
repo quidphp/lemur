@@ -42,7 +42,7 @@ const Xhr = new function()
             xhrProgress: function() {
                 const xhr = this.xhr();
                 const $this = this;
-                xhr.upload.addEventListener("progress", function(event) {
+                xhr.upload.addEventListener("progress",function(event) {
                     if(event.lengthComputable === true)
                     {
                         const percent = parseInt((event.loaded / event.total * 100));

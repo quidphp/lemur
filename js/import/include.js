@@ -9,6 +9,7 @@ const Arr = Lemur.Arr;
 const Bool = Lemur.Bool;
 const Browser = Lemur.Browser;
 const Datetime = Lemur.Datetime;
+const Debug = Lemur.Debug;
 const Dom = Lemur.Dom;
 const DomChange = Lemur.DomChange;
 const Evt = Lemur.Evt;
@@ -27,8 +28,11 @@ const Validate = Lemur.Validate;
 const Vari = Lemur.Vari;
 const Xhr = Lemur.Xhr;
 
+// debug
+const assert = Debug.assertThrow;
+
 // event
-const debug = Evt.debug;
+const evtDebug = Evt.debug;
 const setFunc = Evt.setFunc;
 const ael = Evt.addEventListener;
 const aelOnce = Evt.addEventListenerOnce;
@@ -41,4 +45,4 @@ const triggerSetup = Evt.triggerSetup;
 const Component = Lemur.Component;
 
 // test
-const Test =Lemur. Test;
+const Test = Lemur.Test;

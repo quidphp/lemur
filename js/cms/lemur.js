@@ -12,7 +12,7 @@ $(document).ready(function() {
 	
     // initial mount
     // comportements bindés une seule fois au tout début
-    ael(this,'document:mountInitial', function(event,body) {
+    ael(this,'document:mountInitial',function(event,body) {
         const modal = body.find("> .modal").first();
         
         // modal
@@ -23,7 +23,7 @@ $(document).ready(function() {
     // document:mountCommon
     // événement appelé pour faire les bindings globaux
     // après le chargement d'une page ou d'un modal
-    ael(this,'document:mountCommon', function(event,node) {
+    ael(this,'document:mountCommon',function(event,node) {
         
         /*
         // input
@@ -66,7 +66,7 @@ $(document).ready(function() {
     
 	// document mount
     // comportements utilisés pour toutes les pages du CMS
-	ael(this,'document:mount', function(event,routeWrap) {
+	ael(this,'document:mount',function(event,routeWrap) {
 		const html = triggerFunc(this,'document:getHtml');
 		const burger = routeWrap.find("header .burger-menu, .nav-fixed .nav-close");
 		const com = routeWrap.find("main > .inner > .com");
@@ -79,7 +79,7 @@ $(document).ready(function() {
         
         // subMenu
         Component.clickOpenWithTrigger.call(subMenu,".trigger");
-        setFunc(subMenu,'clickOpen:getBackgroundFrom', function(event) {
+        setFunc(subMenu,'clickOpen:getBackgroundFrom',function(event) {
             return 'submenu';
         });
         
@@ -95,7 +95,7 @@ $(document).ready(function() {
     
     
     // document unmount
-    ael(this,'document:unmount', function(event,routeWrap) {
+    ael(this,'document:unmount',function(event,routeWrap) {
         const burger = routeWrap.find("header .burger-menu, .nav-fixed .nav-close");
         
         // burger
@@ -104,7 +104,7 @@ $(document).ready(function() {
     
     
     // document ajax progress
-    ael(this,'document:ajaxProgress', function(event,percent,progressEvent) {
+    ael(this,'document:ajaxProgress',function(event,percent,progressEvent) {
         const body = $(this).find("body");
         const progress = body.find(".loading-progress");
         const html = (percent >= 0 && percent < 100)? "<div class='percent'>"+percent+"%"+"</div>":"";
@@ -114,28 +114,28 @@ $(document).ready(function() {
     
     // login
     // comportement pour la page login
-	ael(this,'route:login', function(event,routeWrap) {
+	ael(this,'route:login',function(event,routeWrap) {
 		nobodyCommon.call(routeWrap);
 	});
 	
     
 	// resetPassword
     // comportement pour la page regénérer mon mot de passe
-	ael(this,'route:resetPassword', function(event,routeWrap) {
+	ael(this,'route:resetPassword',function(event,routeWrap) {
 		nobodyCommon.call(routeWrap);
 	});
 	
     
 	// register
     // comportement pour la page enregistrement
-	ael(this,'route:register', function(event,routeWrap) {
+	ael(this,'route:register',function(event,routeWrap) {
 		nobodyCommon.call(routeWrap);
 	});
 	
     
     // changePassword
     // comportement pour le popup changer mon mot de passe
-	ael(this,'modal:accountChangePassword', function(event,modal) {
+	ael(this,'modal:accountChangePassword',function(event,modal) {
 		const form = modal.find("form");
         triggerCustom(form,'form:focusFirst');
 	});
@@ -143,7 +143,7 @@ $(document).ready(function() {
     
     // home
     // comportement pour la page d'accueil du CMS une fois connecté
-	ael(this,'route:home', function(event,routeWrap) {
+	ael(this,'route:home',function(event,routeWrap) {
 		const feed = routeWrap.find("main .home-feed");
         const feedTogglers = feed.find(".block-head .feed-togglers > a");
         const feedBody = feed.find(".block-body");
@@ -152,20 +152,20 @@ $(document).ready(function() {
         
         Component.ajaxBlock.call(feedTogglers);
         
-        setFunc(feedTogglers,'ajaxBlock:getStatusNode', function(event) {
+        setFunc(feedTogglers,'ajaxBlock:getStatusNode',function(event) {
             return feedBody;
         });
         
-        ael(feedTogglers,'ajax:before', function(event) {
+        ael(feedTogglers,'ajax:before',function(event) {
             feedTogglers.removeClass('selected');
             $(this).addClass('selected');
         })
         
-        ael(feedTogglers,'ajax:success', function(event,data,textStatus,jqXHR) {
+        ael(feedTogglers,'ajax:success',function(event,data,textStatus,jqXHR) {
             triggerCustom(feedBody,'feed:overwrite',data);
         })
         
-        ael(feedTogglers,'ajax:error', function(event,parsedError,jqXHR,textStatus,errorThrown) {
+        ael(feedTogglers,'ajax:error',function(event,parsedError,jqXHR,textStatus,errorThrown) {
             feedBody.html(parsedError);
         });
 	});
@@ -173,7 +173,7 @@ $(document).ready(function() {
     
     // general
     // comportement pour la page de navigation
-	ael(this,'route:general', function(event,routeWrap) {
+	ael(this,'route:general',function(event,routeWrap) {
 		
         const main = routeWrap.find("main");
         const scroller = main.find(".scroller");
@@ -218,7 +218,7 @@ $(document).ready(function() {
             Component.block.call(formTruncate,'submit');
             Component.confirm.call(formTruncate,'submit');
 			
-            ael(formTruncate,'confirmed', function() {
+            ael(formTruncate,'confirmed',function() {
 				triggerCustom(this,'block');
 			});
 		}
@@ -230,14 +230,14 @@ $(document).ready(function() {
         triggerSetup(Component.quickEdit.call(quickEdit));
         
         // highlight 
-        ael(highlight,'mouseover', function(event) {
+        ael(highlight,'mouseover',function(event) {
             $(this).removeClass('highlight');
         });
 	});
     
     
     // unmount
-    ael(this,'route:general:unmount', function(event,routeWrap) {
+    ael(this,'route:general:unmount',function(event,routeWrap) {
         const table = routeWrap.find("main .scroller table").first();
         const quickEdit = table.find("td[data-quick-edit='1'] a.quick-edit");
         
@@ -248,7 +248,7 @@ $(document).ready(function() {
     
     // specificForm mount
     // permet de faire tous les bindings des champs (simples et complexes)
-    ael(this,'specificForm:mount', function(event,node) {
+    ael(this,'specificForm:mount',function(event,node) {
         triggerCustom(this,'specificForm:bindMount',node);
         triggerCustom(this,'specificForm:bindView',node);
     });
@@ -257,7 +257,7 @@ $(document).ready(function() {
     // bindView
     // permet de faire les bindings de champs
     // ces champs seront bindés à l'initialisation du panneau, lorsqu'ils sont visibles
-    ael(this,'specificForm:bindView', function(event,node) {
+    ael(this,'specificForm:bindView',function(event,node) {
         const date = node.find("[data-group='date'] .specific-component");
         const enumSet = node.find("[data-tag='search'] .specific-component");
         const checkboxSortable = node.find("[data-group='relation'][data-sortable='1'] .specific-component");
@@ -291,7 +291,7 @@ $(document).ready(function() {
     
     // specificForm unmount
     // permet démonter les champs du formulaire
-    ael(this,'specificForm:unmount', function(event,node) {
+    ael(this,'specificForm:unmount',function(event,node) {
         const textarea = node.find("[data-tag='textarea'] .specific-component");
         triggerCustom(textarea,'component:teardown');
     });
@@ -299,7 +299,7 @@ $(document).ready(function() {
     
 	// specific
     // comportement communs pour les pages spécifiques
-	ael(this,'group:specific', function(event,routeWrap) {
+	ael(this,'group:specific',function(event,routeWrap) {
         const form = routeWrap.find("main .inner > form.specific-form");
         const panel = form.find("> .form-inner > .panel");
         const submitConfirm = form.find("button[type='submit'][data-confirm]");
@@ -321,7 +321,7 @@ $(document).ready(function() {
     
     // unmount
     // comportements communs pour démonter la page spécifique
-    ael(this,'group:specific:unmount', function(event,routeWrap) {
+    ael(this,'group:specific:unmount',function(event,routeWrap) {
         const form = routeWrap.find("main .inner > form.specific-form");
         triggerCustom(this,'specificForm:unmount',form);
     });
@@ -329,11 +329,11 @@ $(document).ready(function() {
     
     // specificMulti
     // comportement pour la page de modification multiple
-	ael(this,'route:specificMulti', function(event) {
+	ael(this,'route:specificMulti',function(event) {
         const form = $(this).find("main .inner > form.specific-form");
         const formElement = form.find(".form-element");
         
-        setFunc(formElement,'specificMulti:isActive', function(event) {
+        setFunc(formElement,'specificMulti:isActive',function(event) {
             return triggerFunc(this,'specificMulti:getCheckbox').is(':checked');
         });
         
@@ -341,22 +341,22 @@ $(document).ready(function() {
             return $(this).find(".disabler input[type='checkbox']");
         });
         
-        setFunc(formElement,'specificMulti:getInputs', function(event) {
+        setFunc(formElement,'specificMulti:getInputs',function(event) {
             return $(this).find("> .right").find(Selector.input());
         });
         
-        ael(formElement,'specificMulti:refresh', function(event) {
+        ael(formElement,'specificMulti:refresh',function(event) {
             const isActive = triggerFunc(this,'specificMulti:isActive');
             const inputs = triggerFunc(this,'specificMulti:getInputs');
             $(this).attr('data-disabled',(isActive === true)? 0:1);
             triggerCustom(inputs,(isActive === true)? 'input:enable':'input:disable');
         });
         
-        aelOnce(formElement,'specificMulti:setup', function(event) {
+        aelOnce(formElement,'specificMulti:setup',function(event) {
             const $this = $(this);
             const checkbox = triggerFunc(this,'specificMulti:getCheckbox');
             
-            ael(checkbox,'change', function(event) {
+            ael(checkbox,'change',function(event) {
                 triggerCustom($this,'specificMulti:refresh');
             });
             

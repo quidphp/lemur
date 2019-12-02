@@ -20,32 +20,32 @@ Component.inputSearch = function(option)
     Component.inputValidate.call(this);
     
     // triggerHandler
-    $(this).on('inputSearch:getValue', function(event) {
+    $(this).on('inputSearch:getValue',function(event) {
         return Str.cast($(this).val());
     })
     .on('inputSearch:getCurrent',  function() {
         return Str.cast($(this).data("current"));
     })
-    .on('inputSearch:getButton', function(event) {
+    .on('inputSearch:getButton',function(event) {
         return $(this).parent().next("button[type='button']");
     })
     
     // event
-    .on('change enter:blocked inputSeach:buttonClick', function() {
+    .on('change enter:blocked inputSeach:buttonClick',function() {
         triggerCustom(this,'validate:process');
         refresh.call(this);
     })
-    .on('keyup:onTimeout', function() {
+    .on('keyup:onTimeout',function() {
         triggerCustom(this,'validate:pattern');
     })
     
     // setup
-    .on('component:setup', function(event) {
+    .on('component:setup',function(event) {
         bindButton.call(this);
     });
     
     // refresh
-    let refresh = function() {
+    const refresh = function() {
         const val = triggerFunc(this,'inputSearch:getValue');
         const current = triggerFunc(this,'inputSearch:getCurrent');
         
@@ -57,7 +57,7 @@ Component.inputSearch = function(option)
     };
     
     // redirect
-    let redirect = function() {
+    const redirect = function() {
         const val = triggerFunc(this,'inputSearch:getValue');
         const href = $(this).attr("data-href");
         const char = $(this).attr("data-char");
@@ -79,7 +79,7 @@ Component.inputSearch = function(option)
         
         if(button != null)
         {
-            button.on('click', function(event) {
+            button.on('click',function(event) {
                 $this.trigger('inputSeach:buttonClick');
             });
         }

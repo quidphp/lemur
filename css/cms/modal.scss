@@ -7,7 +7,45 @@
  */
 
 // modal
-// stylesheet for the modal routes
+// stylesheet for the modal and the modal routes
+
+// box
+body > .modal > .box {
+    border-radius: 10px;
+    @include flex(center);
+
+    > .close {
+        @include abs(-8px, -8px);
+
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+
+    > .inner {
+        width: 100%;
+        text-align: center;
+        padding: 20px;
+    }
+
+    h1 {
+        color: $darkColor;
+    }
+
+    @include print() {
+        left: 0;
+        top: 0;
+        @include wh(100%);
+        background-color: $white;
+        border-radius: 0;
+    }
+
+    @include responsive() {
+        @include wh(80% !important);
+        top: 10% !important;
+        left: 10% !important;
+    }
+}
 
 /* CHANGE PASSWORD */
 .modal[data-route='accountChangePassword'] .inner {

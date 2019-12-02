@@ -76,7 +76,6 @@ body > .loading-fixed {
     }
 }
 body > .route-wrap {
-    @include bodyWrapper();
     @include flex(flex-start, stretch);
     @include transitions(opacity 0.3s);
     opacity: 1;

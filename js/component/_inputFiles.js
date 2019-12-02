@@ -9,12 +9,12 @@
 Component.inputFiles = function()
 {
     // triggerHandler
-    $(this).on('inputFiles:getBlock', function() {
+    $(this).on('inputFiles:getBlock',function() {
         return $(this).find(".file-block");
     })
     
     // bind
-    .one('component:setup', function() {
+    .one('component:setup',function() {
         bindBlock.call(this);
         triggerFunc(this,'inputFiles:getBlock').trigger('component:setup');
     });
@@ -24,26 +24,26 @@ Component.inputFiles = function()
         const blocks = triggerFunc(this,'inputFiles:getBlock');
         
         // triggerHandler
-        blocks.on('block:getAction', function() {
+        blocks.on('block:getAction',function() {
             return $(this).find(".action");
         })
-        .on('block:getCancelAction', function() {
+        .on('block:getCancelAction',function() {
             return $(this).find(".message .close").first();
         })
-        .on('block:getInputFile', function() {
+        .on('block:getInputFile',function() {
             return $(this).find("input[type='file']").first();
         })
-        .on('block:getInputHidden', function() {
+        .on('block:getInputHidden',function() {
             const inputFile = triggerFunc(this,'block:getInputFile');
             const name = inputFile.attr('name');
             return $(this).find("input[type='hidden']").filter("[name='"+name+"']").first();
         })
-        .on('block:getActionText', function() {
+        .on('block:getActionText',function() {
             return $(this).find(".action-text").first();
         })
         
         // bind
-        .one('component:setup', function() {
+        .one('component:setup',function() {
             bindBlockAction.call(this);
             bindBlockCancelAction.call(this);
         });
@@ -57,7 +57,7 @@ Component.inputFiles = function()
             const actionText = block.triggerHandler('block:getActionText');
             Component.confirm.call(mediaAction,'click');
             
-            mediaAction.on('confirmed', function() {
+            mediaAction.on('confirmed',function() {
                 const value = Json.decode(hidden.val());
                 value.action = $(this).data('action');
                 block.addClass('with-action');
@@ -76,7 +76,7 @@ Component.inputFiles = function()
             const hidden =  block.triggerHandler('block:getInputHidden');
             const actionText = block.triggerHandler('block:getActionText');
             
-            mediaCancelAction.on('click', function() {
+            mediaCancelAction.on('click',function() {
                 const name = input.attr('name');
                 const value = Json.decode(hidden.val());
                 value.action = null;

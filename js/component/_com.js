@@ -13,36 +13,36 @@ Component.com = function()
     Component.keyboardEscape.call(this,true);
     
     // triggerHandler
-    $(this).on('com:getBottom', function() {
+    $(this).on('com:getBottom',function() {
         return $(this).find('.bottom');
     })
 
     // trigger
-    .on('escape:blocked', function() {
+    .on('escape:blocked',function() {
         triggerCustom(this,'com:close');
     })
-    .on('com:slideUp', function() {
+    .on('com:slideUp',function() {
         $(this).addClass('slide-close');
         triggerFunc(this,'com:getBottom').stop(true,true).slideUp('fast');
     })
-    .on('com:slideDown', function() {
+    .on('com:slideDown',function() {
         $(this).removeClass('slide-close');
         triggerFunc(this,'com:getBottom').stop(true,true).slideDown('fast');
     })
-    .on('com:close', function() {
+    .on('com:close',function() {
         $(this).stop(true,true).fadeOut("slow");
     })
     
     // delegate
-    .on('click', '.close', function(event) {
+    .on('click', '.close',function(event) {
         const $this = $(event.delegateTarget);
         $this.trigger('com:close');
     })
-    .on('click', '.date', function(event) {
+    .on('click', '.date',function(event) {
         const $this = $(event.delegateTarget);
         $this.trigger($this.hasClass('slide-close')? 'com:slideDown':'com:slideUp');
     })
-    .on('click', ".row.insert > span,.row.update > span", function(event) {
+    .on('click', ".row.insert > span,.row.update > span",function(event) {
         const $this = $(event.delegateTarget);
         const parent = $(this).parent();
         const table = parent.data('table');
@@ -51,13 +51,13 @@ Component.com = function()
     })
     
     // bind
-    .one('component:setup', function() {
+    .one('component:setup',function() {
         if($(this).is('[tabindex]'))
         $(this).focus();
     });
     
     // redirect
-    let redirect = function(table,primary,clickEvent)
+    const redirect = function(table,primary,clickEvent)
     {
         const href = Dom.dataHrefReplaceChar(this,table);
         

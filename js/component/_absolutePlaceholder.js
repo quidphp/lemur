@@ -12,18 +12,18 @@ Component.absolutePlaceholder = function()
     Component.resizeChange.call(this);
     
     // triggerHandler
-    $(this).on('absolutePlaceholder:getChild', function() {
+    $(this).on('absolutePlaceholder:getChild',function() {
         return $(this).children().first();
     })
-    .on('absolutePlaceholder:onlyHeight', function() {
+    .on('absolutePlaceholder:onlyHeight',function() {
         return $(this).is('[data-only-height]');
     })
-    .on('absolutePlaceholder:onlyWidth', function() {
+    .on('absolutePlaceholder:onlyWidth',function() {
         return $(this).is('[data-only-width]');
     })
     
     // trigger
-    $(this).on('absolutePlaceholder:refresh', function(event) {
+    $(this).on('absolutePlaceholder:refresh',function(event) {
         const child = triggerFunc(this,'absolutePlaceholder:getChild');
         if(child.length)
         {
@@ -44,7 +44,7 @@ Component.absolutePlaceholder = function()
         
         event.stopPropagation();
     })
-    .on('resize:change', function() {
+    .on('resize:change',function() {
         triggerCustom(this,'absolutePlaceholder:refresh');
     })
     

@@ -31,7 +31,7 @@ Component.timeout = function(type,timeout)
                     if(oldTimeout != null)
                     clearTimeout(oldTimeout);
                 })
-                .on(type, function() {
+                .on(type,function() {
                     triggerCustom(this,type+':setTimeout');
                 });
             }

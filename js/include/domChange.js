@@ -22,7 +22,7 @@ const DomChange = new function()
             $(node).each(function() {
                 const $this = $(this);
                 
-                $.each(value, function(k,v) {
+                $.each(value,function(k,v) {
                     $this.attr(k,v);
                 });
             });
@@ -40,7 +40,7 @@ const DomChange = new function()
             const $this = $(this);
             const node = $(this)[0];
             
-            $.each(node.attributes, function(index,value) 
+            $.each(node.attributes,function(index,value) 
             {
                 if(value != null)
                 $this.removeAttr(value.name);

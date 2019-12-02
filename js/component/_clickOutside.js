@@ -15,7 +15,7 @@ Component.clickOutside = function(value,parent)
         parent = (parent instanceof jQuery && parent.length === 1)? parent:$(document);
         const $this = $(this);
         
-        parent.on('click.document-mount', function(event) {
+        parent.on('click.document-mount',function(event) {
             $this.trigger(value);
         });
     }

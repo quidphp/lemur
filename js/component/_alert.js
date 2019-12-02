@@ -10,7 +10,7 @@ Component.alert = function(type)
 {
     if(Str.isNotEmpty(type))
     {
-        $(this).on(type, function(event) {
+        $(this).on(type,function(event) {
             const alertText = $(this).data('alert');
             
             if(Str.isNotEmpty(alertText))

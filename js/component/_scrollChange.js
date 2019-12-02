@@ -10,7 +10,7 @@ Component.scrollChange = function(persistent)
 {
     const $this = $(this);
     const type = (persistent === true)? 'scroll':'scroll.document-mount';
-    $(window).on(type, function(event) {
+    $(window).on(type,function(event) {
         event.stopPropagation();
         $this.trigger('scroll:change');
     });

@@ -9,75 +9,75 @@
 Component.rowsChecker = function()
 {
     // triggerHandler
-    $(this).on('rowsChecker:getToolsContainer', function() {
+    $(this).on('rowsChecker:getToolsContainer',function() {
         return $(this).find(".above .tools-container").first();
     })
-    .on('rowsChecker:getTools', function() {
+    .on('rowsChecker:getTools',function() {
         return triggerFunc(this,'rowsChecker:getToolsContainer').find(".tool-element");
     })
-    .on('rowsChecker:getToolsButton', function() {
+    .on('rowsChecker:getToolsButton',function() {
         return triggerFunc(this,'rowsChecker:getTools').filter("button");
     })
-    .on('rowsChecker:getMultiModify', function() {
+    .on('rowsChecker:getMultiModify',function() {
         return triggerFunc(this,'rowsChecker:getToolsButton').filter(".multi-modify").first();
     })
-    .on('rowsChecker:getMultiDelete', function() {
+    .on('rowsChecker:getMultiDelete',function() {
         return triggerFunc(this,'rowsChecker:getTools').filter(".multi-delete-form").first();
     })
-    .on('rowsChecker:getToolsMulti', function() {
+    .on('rowsChecker:getToolsMulti',function() {
         let r = triggerFunc(this,'rowsChecker:getMultiModify');
         r = r.add(triggerFunc(this,'rowsChecker:getMultiDelete'));
         
         return r;
     })
-    .on('rowsChecker:getTable', function() {
+    .on('rowsChecker:getTable',function() {
         return $(this).find("table").first();
     })
-    .on('rowsChecker:getToggleAll', function() {
+    .on('rowsChecker:getToggleAll',function() {
         return triggerFunc(this,'rowsChecker:getTable').find("th.rows .toggle-all").first();
     })
-    .on('rowsChecker:getRows', function() {
+    .on('rowsChecker:getRows',function() {
         return triggerFunc(this,'rowsChecker:getTable').find("tbody tr");
     })
-    .on('rowsChecker:getCheckedRows', function() {
+    .on('rowsChecker:getCheckedRows',function() {
         let r = $();
         const checked = triggerFunc(this,'rowsChecker:getCheckedCheckboxes');
         
         checked.each(function() {
-            let row = triggerFunc(this,'checkbox:getTr');
+            const row = triggerFunc(this,'checkbox:getTr');
             r = r.add(row);
         });
         
         return r;
     })
-    .on('rowsChecker:getCheckboxes', function() {
+    .on('rowsChecker:getCheckboxes',function() {
         return triggerFunc(this,'rowsChecker:getRows').find("td.rows input[type='checkbox']");
     })
-    .on('rowsChecker:getCheckedCheckboxes', function() {
+    .on('rowsChecker:getCheckedCheckboxes',function() {
         return triggerFunc(this,'rowsChecker:getCheckboxes').filter(':checked');
     })
-    .on('rowsChecker:getCheckedSet', function(event,separator) {
+    .on('rowsChecker:getCheckedSet',function(event,separator) {
         return Dom.valueSeparator(triggerFunc(this,'rowsChecker:getCheckedCheckboxes'),separator,true);
     })
-    .on('rowsChecker:areAllChecked', function() {
+    .on('rowsChecker:areAllChecked',function() {
         const checkboxes = triggerFunc(this,'rowsChecker:getCheckboxes');
         const checked = triggerFunc(this,'rowsChecker:getCheckedCheckboxes');
         
         return (checkboxes.length === checked.length)? true:false;
     })
-    .on('rowsChecker:areAllUpdateable', function() {
-        let rows = triggerFunc(this,'rowsChecker:getCheckedRows');
+    .on('rowsChecker:areAllUpdateable',function() {
+        const rows = triggerFunc(this,'rowsChecker:getCheckedRows');
         
         return Dom.matchAll("[data-updateable='1']",rows);
     })
-    .on('rowsChecker:areAllDeleteable', function() {
-        let rows = triggerFunc(this,'rowsChecker:getCheckedRows');
+    .on('rowsChecker:areAllDeleteable',function() {
+        const rows = triggerFunc(this,'rowsChecker:getCheckedRows');
         
         return Dom.matchAll("[data-deleteable='1']",rows);
     })
     
     // trigger
-    .on('rowsChecker:refresh', function() {
+    .on('rowsChecker:refresh',function() {
         const checked = triggerFunc(this,'rowsChecker:getCheckedCheckboxes');
         const toolsContainer = triggerFunc(this,'rowsChecker:getToolsContainer');
         const toggleAll = triggerFunc(this,'rowsChecker:getToggleAll');
@@ -96,7 +96,7 @@ Component.rowsChecker = function()
     })
     
     // setup
-    .one('component:setup', function() {
+    .one('component:setup',function() {
         bindToggleAll.call(this);
         bindCheckboxes.call(this);
         bindToolsContainer.call(this);
@@ -110,17 +110,17 @@ Component.rowsChecker = function()
         const $this = $(this);
         const toggleAll = triggerFunc(this,'rowsChecker:getToggleAll');
         
-        toggleAll.on('click', function() {
+        toggleAll.on('click',function() {
             triggerCustom(this,'toggleAll:toggle');
         })
-        .on('toggleAll:toggle', function() {
+        .on('toggleAll:toggle',function() {
             triggerCustom(this,($this.triggerHandler('rowsChecker:areAllChecked'))? 'toggleAll:uncheck':'toggleAll:check');
         })
-        .on('toggleAll:check', function() {
+        .on('toggleAll:check',function() {
             $this.triggerHandler('rowsChecker:getCheckboxes').trigger('checkbox:check');
             $this.trigger('rowsChecker:refresh');
         })
-        .on('toggleAll:uncheck', function() {
+        .on('toggleAll:uncheck',function() {
             $this.triggerHandler('rowsChecker:getCheckboxes').trigger('checkbox:uncheck');
             $this.trigger('rowsChecker:refresh');
         })
@@ -132,13 +132,13 @@ Component.rowsChecker = function()
         const checkboxes = triggerFunc(this,'rowsChecker:getCheckboxes');
         
         // checkboxes
-        checkboxes.on('change', function() {
-            triggerCustom(this,($(this).is(":checked"))? 'checkbox:check':'checkbox:uncheck',[true]);
+        checkboxes.on('change',function() {
+            triggerCustom(this,($(this).is(":checked"))? 'checkbox:check':'checkbox:uncheck',true);
         })
-        .on('checkbox:getTr', function() {
+        .on('checkbox:getTr',function() {
             return $(this).parents("tr").first();
         })
-        .on('checkbox:check', function(event,refresh) {
+        .on('checkbox:check',function(event,refresh) {
             const tr = triggerFunc(this,'checkbox:getTr');
             $(this).prop('checked',true);
             tr.addClass('selected');
@@ -146,7 +146,7 @@ Component.rowsChecker = function()
             if(refresh === true)
             $this.trigger('rowsChecker:refresh');
         })
-        .on('checkbox:uncheck', function(event,refresh) {
+        .on('checkbox:uncheck',function(event,refresh) {
             const tr = triggerFunc(this,'checkbox:getTr');
             $(this).prop('checked',false);
             tr.removeClass('selected');
@@ -160,10 +160,10 @@ Component.rowsChecker = function()
     const bindToolsContainer = function() {
         const container = triggerFunc(this,'rowsChecker:getToolsContainer');
         
-        container.on('toolsContainer:show', function() {
+        container.on('toolsContainer:show',function() {
             $(this).css('visibility','visible');
         })
-        .on('toolsContainer:hide', function() {
+        .on('toolsContainer:hide',function() {
             $(this).css('visibility','hidden');
         });
     };
@@ -175,10 +175,10 @@ Component.rowsChecker = function()
         
         Component.block.call(button,'click');
         
-        button.on('click', function(event) {
-            triggerCustom(this,'toolButton:redirect',[event]);
+        button.on('click',function(event) {
+            triggerCustom(this,'toolButton:redirect',event);
         })
-        .on('toolButton:redirect', function(event,clickEvent) {
+        .on('toolButton:redirect',function(event,clickEvent) {
             const separator = $(this).data("separator");
             const set = $this.triggerHandler('rowsChecker:getCheckedSet',[separator]);
             const href = Dom.dataHrefReplaceChar(this,set);
@@ -195,10 +195,10 @@ Component.rowsChecker = function()
     const bindToolsMulti = function() {
         const tools = triggerFunc(this,'rowsChecker:getToolsMulti');
 
-        tools.on('toolMulti:show', function(cursorDown) {
+        tools.on('toolMulti:show',function(cursorDown) {
             $(this).addClass('active');
         })
-        .on('toolMulti:hide', function(cursorDown) {
+        .on('toolMulti:hide',function(cursorDown) {
             $(this).removeClass('active');
         });
     };
@@ -211,7 +211,7 @@ Component.rowsChecker = function()
         Component.block.call(multiDelete,'submit');
         Component.confirm.call(multiDelete,'submit');
         
-        multiDelete.on('confirmed', function(event,submit) {
+        multiDelete.on('confirmed',function(event,submit) {
             const input = $(this).find("input[name='primaries']");
             const separator = $(this).data('separator');
             const set = $this.triggerHandler('rowsChecker:getCheckedSet',[separator]);

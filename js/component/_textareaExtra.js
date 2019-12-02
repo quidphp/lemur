@@ -9,24 +9,24 @@
 Component.textareaExtra = function()
 {
     // triggerHandler
-    $(this).on('textareaExtra:getTextarea', function() {
+    $(this).on('textareaExtra:getTextarea',function() {
         return $(this).find("textarea").first();
     })
-    .on('textareaExtra:getFilters', function() {
+    .on('textareaExtra:getFilters',function() {
         return $(this).find(".table-relation");
     })
-    .on('textareaExtra:getTinymceEditor', function() {
+    .on('textareaExtra:getTinymceEditor',function() {
         return triggerFunc(this,'textareaExtra:getTextarea').data('tinymceEditor');
     })
-    .on('textareaExtra:hasFilters', function() {
+    .on('textareaExtra:hasFilters',function() {
         return (triggerFunc(this,'textareaExtra:getFilters').length)? true:false;
     })
-    .on('textareaExtra:hasTinymce', function() {
+    .on('textareaExtra:hasTinymce',function() {
         return ($(this).parents(".form-element").is("[data-group='tinymce']"))? true:false;
     })
     
     // setup
-    .one('component:setup', function() {
+    .one('component:setup',function() {
         bindTextarea.call(this);
         
         if(triggerFunc(this,'textareaExtra:hasFilters'))
@@ -37,7 +37,7 @@ Component.textareaExtra = function()
     })
     
     // teardown
-    .one('component:teardown', function() {
+    .one('component:teardown',function() {
         const editor = triggerFunc(this,"textareaExtra:getTinymceEditor");
         
         if(editor != null)
@@ -48,7 +48,7 @@ Component.textareaExtra = function()
     const bindTextarea = function() {
         const textarea = triggerFunc(this,'textareaExtra:getTextarea');
         
-        textarea.on('textareaInput:insert', function(event,html) {
+        textarea.on('textareaInput:insert',function(event,html) {
             let r = false;
             
             if(Str.isNotEmpty(html))
@@ -71,13 +71,13 @@ Component.textareaExtra = function()
         filters.on('clickOpen:getBackgroundFrom',function() {
             return 'tableRelation';
         })
-        .one('component:setup', function(event) {
+        .one('component:setup',function(event) {
             triggerCustom(this,'component:setup');
             
             const clickOpen = triggerFunc(this,'clickOpen:getTarget');
-            let result = triggerFunc(this,'filter:getResult');
+            const result = triggerFunc(this,'filter:getResult');
             
-            result.on('click', '.insert', function(event) {
+            result.on('click', '.insert',function(event) {
                 const html = $(this).data('html');
                 textarea.triggerHandler('textareaInput:insert',html);
                 clickOpen.trigger('clickOpen:close');
@@ -86,10 +86,10 @@ Component.textareaExtra = function()
             
             event.stopPropagation();
         })
-        .on('feed:bind', function() {
+        .on('feed:bind',function() {
             const target = triggerFunc(this,'clickOpen:getTarget');
             
-            target.on('feed:parseData', function(event,data) {
+            target.on('feed:parseData',function(event,data) {
                 return Html.parse(data).find("li");
             })
         })
@@ -102,7 +102,7 @@ Component.textareaExtra = function()
         const editor = createTinymce.call(textarea);
         textarea.data('tinymceEditor',editor);
         
-        textarea.on('textareaInput:insert', function(event,html) {
+        textarea.on('textareaInput:insert',function(event,html) {
             let r = false;
             
             if(Str.isNotEmpty(html))

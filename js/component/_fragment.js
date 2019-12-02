@@ -8,13 +8,13 @@
 // gère les changements de fragment
 Component.fragment = function() 
 {
-    $(this).on('fragment:get', function(event) {
+    $(this).on('fragment:get',function(event) {
         return $(this).data('fragment');
     })
-    .on('fragment:update', function(event,replaceState) {
+    .on('fragment:update',function(event,replaceState) {
         const current = Request.fragment();
         const fragment = triggerFunc(this,'fragment:get');
-        const hasHistoryApi = $(document).triggerHandler('document:hasHistoryApi');
+        const hasHistoryApi = triggerFunc(document,'document:hasHistoryApi');
         
         if(current !== fragment)
         {
@@ -23,20 +23,20 @@ Component.fragment = function()
                 const fragmentHash = '#'+fragment;
                 
                 if(hasHistoryApi === true && replaceState === true)
-                $(document).triggerHandler('document:replaceState',Request.relative()+fragmentHash);
+                triggerFunc(document,'document:replaceState',Request.relative()+fragmentHash);
                 else
                 window.location.hash = fragmentHash;
             }
             
             else
-            triggerCustom(this,'fragment:remove',[replaceState]);
+            triggerCustom(this,'fragment:remove',replaceState);
             
-            triggerCustom(this,'fragment:updated',[fragment]);
+            triggerCustom(this,'fragment:updated',fragment);
         }
     })
-    .on('fragment:remove', function(event) {
+    .on('fragment:remove',function(event) {
         if(hasHistoryApi === true && replaceState === true)
-        $(document).triggerHandler('document:replaceState',Request.relative());
+        triggerFunc(document,'document:replaceState',Request.relative());
         else
         window.location.hash = '';
     });

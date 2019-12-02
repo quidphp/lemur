@@ -11,24 +11,24 @@ Component.clickOpen = function(target)
     Component.clickOutside.call(this,'clickOpen:close');
     Component.clickOpenBase.call(this,target);
     
-    $(this).on('clickOpen:prepare', function(event) {
+    $(this).on('clickOpen:prepare',function(event) {
         event.stopPropagation();
         const $this = $(this);
         const container = triggerFunc(this,'clickOpen:getTarget');
         
         Component.keyboardEnter.call(container,true);
         
-        container.on('click', 'a', function(event) {
+        container.on('click', 'a',function(event) {
             event.stopPropagation();
             $(document).trigger('document:clickEvent',[event]);
         })
-        .on('enter:blocked', function(event,keyEvent) {
+        .on('enter:blocked',function(event,keyEvent) {
             const target = $(keyEvent.target);
             const tagName = Dom.tag(target);
             if(tagName === 'a' || tagName === 'button')
             target.trigger('click');
         })
-        .on('click', function(event) {
+        .on('click',function(event) {
             event.stopPropagation();
             const attr = $this.triggerHandler('clickOpen:getAttr');
             $(this).find("["+attr+"='1']").trigger('clickOpen:close');

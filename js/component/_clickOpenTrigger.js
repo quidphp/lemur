@@ -10,7 +10,7 @@ Component.clickOpenTrigger = function(trigger,triggerEvent,noToggle)
 {
     triggerEvent = Str.isNotEmpty(triggerEvent)? triggerEvent:"click";
 
-    $(this).on('clickOpen:getTrigger', function(event) {
+    $(this).on('clickOpen:getTrigger',function(event) {
         let r = $(this);
         
         if(Str.isNotEmpty(trigger))
@@ -18,18 +18,18 @@ Component.clickOpenTrigger = function(trigger,triggerEvent,noToggle)
         
         return r;
     })
-    .on('clickOpen:prepare', function(event) {
+    .on('clickOpen:prepare',function(event) {
         event.stopPropagation();
         const $this = $(this);
         const trigger = triggerFunc(this,'clickOpen:getTrigger');
         
         if(trigger.length)
         {
-            trigger.on('click', 'a', function(event) {
+            trigger.on('click', 'a',function(event) {
                 event.stopPropagation();
                 $(document).trigger('document:clickEvent',[event]);
             })
-            .on(triggerEvent, function(event) {
+            .on(triggerEvent,function(event) {
                 event.stopPropagation();
                 event.preventDefault();
                 

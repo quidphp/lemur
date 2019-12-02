@@ -12,14 +12,14 @@ Component.clickOpenAnchorAjax = function(trigger,target)
         const anchor = $(this).find("a");
         trigger = trigger || 'a';
         
-        $(this).on('ajax:getHref', function(event) {
+        $(this).on('ajax:getHref',function(event) {
             return triggerFunc(this,'clickOpen:getTrigger').prop('href');
         });
         
         Component.clickOpenAjax.call(this,'click',true,target);
         Component.clickOpenTrigger.call(this,trigger,'click');
         
-        anchor.on('click', function(event) {
+        anchor.on('click',function(event) {
             event.preventDefault();
         });
     });

@@ -5,14 +5,17 @@
  */
  
 // keyboardTab
-// attrape la touche tab, par défaut l'événement est prevent
-Component.keyboardTab = function(prevent,type)
+// component to catch or prevent the tab key on the keyboard
+const KeyboardTab = function(prevent,type)
 {
-    Component.keyboard.call(this,'tab',[9],type);
+    Component.Keyboard.call(this,'tab',[9],type);
     
-    $(this).on('tab:prevent', function(event) {
+    setFunc(this,'tab:prevent',function(event) {
         return (prevent === true)? true:false;
     });    
     
     return this;
 }
+
+// export
+Component.KeyboardTab = KeyboardTab;

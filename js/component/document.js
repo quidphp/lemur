@@ -29,14 +29,14 @@ const Document = function(option)
     
     // isLoading
     // retourne vrai si le chargement de la navigation est présentement active
-    setFunc(this,'document:isLoading', function() {
+    setFunc(this,'document:isLoading',function() {
         return ($(this).data('document:active') === true)? true:false;
     });
     
     
     // hasAjax
     // retourne vrai s'il y a présentement un objet ajax en train de s'effectuer
-    setFunc(this,'document:hasAjax', function() {
+    setFunc(this,'document:hasAjax',function() {
         let r = false;
         const ajax = $(this).data('document:ajax');
         
@@ -49,34 +49,34 @@ const Document = function(option)
     
     // hasHistoryApi
     // retourne vrai si history api est activé
-    setFunc(this,'document:hasHistoryApi', function() {
+    setFunc(this,'document:hasHistoryApi',function() {
         return hasHistoryApi();
     });
     
     
     // getInitialState
     // retourne l'état initial
-    setFunc(this,'document:getInitialState', function() {
+    setFunc(this,'document:getInitialState',function() {
         return $initial;
     });
     
     
     // getPreviousState
     // retourne l'état précédent
-    setFunc(this,'document:getPreviousState', function() {
+    setFunc(this,'document:getPreviousState',function() {
         return $previous || $initial;
     });
     
     
     // getCurrentState
     // retourne l'état courant
-    setFunc(this,'document:getCurrentState', function() {
+    setFunc(this,'document:getCurrentState',function() {
         return makeHistoryState($location.href,document.title);
     });
     
     
     // replaceState
-    setFunc(this,'document:replaceState', function(uri,title) {
+    setFunc(this,'document:replaceState',function(uri,title) {
         let r = makeHistoryState(uri,title);
         
         if(hasHistoryApi() && Str.isNotEmpty(uri))
@@ -88,14 +88,14 @@ const Document = function(option)
     
     // hardRedirect
     // fait une redirection dure vers une nouvelle uri
-    setFunc(this,'document:hardRedirect', function(uri) {
+    setFunc(this,'document:hardRedirect',function(uri) {
         $location.href = uri;
     });
     
     
     // cancelAjax
     // annule et détruit l'objet ajax si existant
-    setFunc(this,'document:cancelAjax', function() {
+    setFunc(this,'document:cancelAjax',function() {
         let r = false;
         
         if(triggerFunc(this,'document:hasAjax') === true)
@@ -113,14 +113,14 @@ const Document = function(option)
     
     // getHtml
     // retourne la node html
-    setFunc(this,'document:getHtml', function() {
+    setFunc(this,'document:getHtml',function() {
         return $(this).find("html").first();
     })
     
     
     // getBody
     // retourne la node body
-    setFunc(this,'document:getBody', function() {
+    setFunc(this,'document:getBody',function() {
         return $(this).find("body").first();
     })
     
@@ -128,7 +128,7 @@ const Document = function(option)
     // getRouteWrap
     // retourne la node du route wrap
     // seul le contenu dans cette node est remplacé au chargement d'une nouvelle page
-    setFunc(this,'document:getRouteWrap', function() {
+    setFunc(this,'document:getRouteWrap',function() {
         let r = triggerFunc(this,'document:getBody');
 
         if($option.routeWrap)
@@ -140,7 +140,7 @@ const Document = function(option)
     
     // isBackgroundActive
     // retourne vrai si le background existe et est présentement actif
-    setFunc(this,'document:isBackgroundActive', function() {
+    setFunc(this,'document:isBackgroundActive',function() {
         let r = false;
         const background = triggerFunc(this,'document:getBackground');
         
@@ -153,14 +153,14 @@ const Document = function(option)
     
     // getBackground
     // retourne la node du background
-    setFunc(this,'document:getBackground', function() {
+    setFunc(this,'document:getBackground',function() {
         return triggerFunc(this,'document:getBody').find($option.background).first();
     });
     
     
     // setBackground
     // permet d'ajouter une attribut data au background
-    setFunc(this,'document:setBackground', function(value,replace) {
+    setFunc(this,'document:setBackground',function(value,replace) {
         let r = false;
         
         if(Str.isNotEmpty(value))
@@ -180,7 +180,7 @@ const Document = function(option)
     
     // unsetBackground
     // enlève les attributs du background
-    setFunc(this,'document:unsetBackground', function(value) {
+    setFunc(this,'document:unsetBackground',function(value) {
         let r = false;
         if(triggerFunc(this,'document:isBackgroundActive'))
         {
@@ -199,7 +199,7 @@ const Document = function(option)
     
     // clickEvent
     // gère un nouvel historique déclenché par un clic
-    setFunc(this,'document:clickEvent', function(click) {
+    setFunc(this,'document:clickEvent',function(click) {
         let r = false;
         
         if(click.target && !(click.which > 1 || click.metaKey || click.ctrlKey || click.shiftKey || click.altKey))
@@ -219,7 +219,7 @@ const Document = function(option)
     
     // document:submitEvent
     // gère un nouvel historique déclenché par l'envoie d'un formulaire
-    setFunc(this,'document:submitEvent', function(submit) {
+    setFunc(this,'document:submitEvent',function(submit) {
         let r = false;
         const target = $(submit.target);
         
@@ -235,7 +235,7 @@ const Document = function(option)
     
     // document:go
     // pousse ou replace une nouvelle entrée dans l'historique
-    setFunc(this,'document:go', function(uri,sourceEvent) {
+    setFunc(this,'document:go',function(uri,sourceEvent) {
         let r = false;
         
         if(triggerFunc(this,'document:hasAjax'))
@@ -300,14 +300,14 @@ const Document = function(option)
     
     // outsideClick
     // permet de lancer tous les évenements liés aux outside clicks
-    ael(this,'document:outsideClick', function(event) {
+    ael(this,'document:outsideClick',function(event) {
         triggerCustom(this,'click.document-mount');
     });
     
     
     // mountNodeCommon
     // trigger mountNode et mountCommon en même temps
-    ael(this,'document:mountNodeCommon', function(event,node) {
+    ael(this,'document:mountNodeCommon',function(event,node) {
         triggerCustom(this,'document:mountNode',node);
         triggerCustom(this,'document:mountCommon',node);
     });
@@ -340,12 +340,12 @@ const Document = function(option)
         const $this = $(this);
         
         // sur le premier isTouch
-        aelOnce(this,'touchstart', function(event) {
+        aelOnce(this,'touchstart',function(event) {
             $(this).data('isTouch',true);
         })
         
         // docClick, ferme le background
-        ael(this,'click', function(event) {
+        ael(this,'click',function(event) {
             triggerCustom(this,'document:unsetBackground');
         });
         
@@ -374,10 +374,10 @@ const Document = function(option)
         
         
         // anchor click
-        $(this).on('click', $option.anchor, function(event) { 
+        $(this).on('click', $option.anchor,function(event) { 
             let r = true;
             const href = $(this).attr('href');
-            
+
             if(Uri.isInternal(href))
             {
                 triggerFunc($this,'document:clickEvent',event);
@@ -390,7 +390,7 @@ const Document = function(option)
         })
         
         // submit
-        .on('submit', $option.form, function(event) { 
+        .on('submit', $option.form,function(event) { 
             let r = true;
             triggerFunc($this,'document:submitEvent',event);
             
@@ -456,7 +456,7 @@ const Document = function(option)
     {
         const $this = $(this);
         const html = triggerFunc(this,'document:getHtml');
-        let routeWrap = triggerFunc(this,'document:getRouteWrap');
+        const routeWrap = triggerFunc(this,'document:getRouteWrap');
         
         if(initial === true)
         {
@@ -476,7 +476,7 @@ const Document = function(option)
         if(Str.isNotEmpty(group))
         triggerCustom(this,'group:'+group,routeWrap);
         
-        let route = html.attr("data-route");
+        const route = html.attr("data-route");
         if(Str.isNotEmpty(route))
         triggerCustom(this,'route:'+route,routeWrap);
         */
@@ -495,7 +495,7 @@ const Document = function(option)
     {
         const html = triggerFunc(this,'document:getHtml');
         const body = triggerFunc(this,'document:getBody');
-        let routeWrap = triggerFunc(this,'document:getRouteWrap');
+        const routeWrap = triggerFunc(this,'document:getRouteWrap');
         
         triggerCustom(this,'document:unmount',routeWrap);
         
@@ -503,7 +503,7 @@ const Document = function(option)
         if(Str.isNotEmpty(group))
         triggerCustom(this,'group:'+group+':unmount',routeWrap);
         
-        let route = html.attr("data-route");
+        const route = html.attr("data-route");
         if(Str.isNotEmpty(route))
         triggerCustom(this,'route:'+route+':unmount',routeWrap);
         
@@ -723,11 +723,11 @@ const Document = function(option)
             let contentTarget = doc.body;
             if($option.routeWrap && !routeWrap.is("body"))
             {
-                let routeWrapTarget = contentTarget.find($option.routeWrap);
+                const routeWrapTarget = contentTarget.find($option.routeWrap);
                 if(routeWrapTarget.length)
                 {
                     contentTarget = routeWrapTarget;
-                    let routeWrapAttributes = Dom.attr(contentTarget);
+                    const routeWrapAttributes = Dom.attr(contentTarget);
                     DomChange.emptyAttr(routeWrap);
                     DomChange.setsAttr(routeWrapAttributes,routeWrap);
                 }

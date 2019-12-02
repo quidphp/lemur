@@ -18,7 +18,7 @@ Component.ModalUnload = function()
                 return (Uri.isExternal($(this).attr("href")) && !$(this).is("[href^='mailto:']"))? true:false;
             });
             
-            filter.off('click').on('click', function(event) {
+            filter.off('click').on('click',function(event) {
                 event.preventDefault();
                 const uri = $(this).attr('href');
                 modal.trigger('modal:fetch',[href,{v: uri},route]);
@@ -35,7 +35,7 @@ Component.ModalUnload = function()
     {
         if(Str.isNotEmpty(href))
         {
-            $(this).find("a[href^='mailto:']:not(.mailto)").off('click').on('click', function(event) {
+            $(this).find("a[href^='mailto:']:not(.mailto)").off('click').on('click',function(event) {
                 event.preventDefault();
                 const email = email.fromHref($(this).attr('href'));
                 modal.trigger('modal:fetch',[href,{v: email},route])

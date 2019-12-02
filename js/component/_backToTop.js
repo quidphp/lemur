@@ -10,16 +10,16 @@ Component.backToTop = function()
 {
     Component.scrollChange.call(this);
     
-    $(this).on('click', function(event) {
+    $(this).on('click',function(event) {
         $("html,body").stop(true,true).animate({scrollTop: 0}, 500);
     })
-    .on('backToTop:show', function(event) {
+    .on('backToTop:show',function(event) {
         $(this).addClass('active');
     })
-    .on('backToTop:hide', function(event) {
+    .on('backToTop:hide',function(event) {
         $(this).removeClass('active');
     })
-    .on('scroll:change', function(event) {
+    .on('scroll:change',function(event) {
         const scrollTop = $(window).scrollTop();
         triggerCustom(this,(scrollTop === 0)? 'backToTop:hide':'backToTop:show');
     })

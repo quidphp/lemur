@@ -10,7 +10,7 @@ Component.resizeChange = function(persistent)
 {
     const $this = $(this);
     const type = (persistent === true)? 'resize':'resize.document-mount';
-    $(window).on(type, function(event) {
+    $(window).on(type,function(event) {
         event.stopPropagation();
         $this.trigger('resize:change');
     });

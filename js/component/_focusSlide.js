@@ -10,10 +10,10 @@ Component.focusSlide = function(target)
 {
     if($(this).length === 1 && target instanceof jQuery)
     {
-        $(this).on('focus', function() {
+        $(this).on('focus',function() {
             target.slideDown("fast");
         })
-        .on('focusout', function() {
+        .on('focusout',function() {
             target.slideUp("fast");
         });
     }

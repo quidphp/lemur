@@ -5,14 +5,17 @@
  */
  
 // keyboardEscape
-// component to catchan escape key press on the keyboard
-Component.keyboardEscape = function(prevent,type)
+// component to catch or prevent the escape key on the keyboard
+const KeyboardEscape = function(prevent,type)
 {
-    Component.keyboard.call(this,'escape',[27],type);
+    Component.Keyboard.call(this,'escape',[27],type);
     
-    setFunc(this,'escape:prevent', function(event) {
+    setFunc(this,'escape:prevent',function(event) {
         return (prevent === true)? true:false;
     });    
     
     return this;
 }
+
+// export
+Component.KeyboardEscape = KeyboardEscape;

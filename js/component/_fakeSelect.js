@@ -16,7 +16,7 @@ Component.fakeSelect = function()
     const htmlFromSelect = function() {
         let r = '';
         const name = $(this).prop('name');
-        let required = $(this).data('required');
+        const required = $(this).data('required');
         const disabled = $(this).prop('disabled');
         const title = $(this).find("option:selected").text() || "&nbsp;";
         const options = $(this).find("option");
@@ -79,30 +79,30 @@ Component.fakeSelect = function()
         Component.keyboardEnter.call(this,true);
         
         // triggerHandler
-        $(this).on('fakeselect:getChoices', function() {
+        $(this).on('fakeselect:getChoices',function() {
             return triggerFunc(this,'clickOpen:getTarget').find("li > button");
         })
-        .on('fakeselect:getValue', function() {
+        .on('fakeselect:getValue',function() {
             return triggerFunc(this,'fakeselect:getSelected').data('value');
         })
-        .on('fakeselect:getInput', function() {
+        .on('fakeselect:getInput',function() {
             return $(this).find("input[type='hidden']");
         })
-        .on('fakeselect:getSelected', function() {
+        .on('fakeselect:getSelected',function() {
             return $(this).find("li > button.selected");
         })
-        .on('fakeselect:getTitle', function() {
+        .on('fakeselect:getTitle',function() {
             return triggerFunc(this,'clickOpen:getTrigger').find(".title").first();
         })
-        .on('clickOpen:getBackgroundFrom', function() {
+        .on('clickOpen:getBackgroundFrom',function() {
             return 'fakeselect';
         })
         
         // trigger
-        .on('enter:blocked', function() {
+        .on('enter:blocked',function() {
             triggerCustom(this,'clickOpen:toggle');
         })
-        .on('fakeselect:setTitle', function(event,value) {
+        .on('fakeselect:setTitle',function(event,value) {
             triggerFunc(this,'fakeselect:getTitle').text(value);
             event.stopPropagation();
         })
@@ -116,7 +116,7 @@ Component.fakeSelect = function()
         })
         
         // setup
-        .one('component:setup', function() {
+        .one('component:setup',function() {
             bindTrigger.call(this);
             bindInput.call(this);
             bindChoices.call(this);
@@ -127,7 +127,7 @@ Component.fakeSelect = function()
             const trigger = triggerFunc(this,'clickOpen:getTrigger');
             const input = triggerFunc(this,'fakeselect:getInput');
             
-            trigger.on('click', function() {
+            trigger.on('click',function() {
                 input.trigger('validate:valid');
             });
         };
@@ -137,16 +137,16 @@ Component.fakeSelect = function()
             const $this = $(this);
             const input = triggerFunc(this,'fakeselect:getInput');
             
-            input.on('input:disable', function() {
+            input.on('input:disable',function() {
                 $this.attr('data-disabled',1);
             })
-            .on('input:enable', function() {
+            .on('input:enable',function() {
                 $this.removeAttr('data-disabled');
             })
-            .on('validate:valid', function() {
+            .on('validate:valid',function() {
                 $this.attr('data-validate','valid');
             })
-            .on('validate:invalid', function() {
+            .on('validate:invalid',function() {
                 $this.attr('data-validate','invalid');
             })
             .trigger('input:prepareDisable');
@@ -160,7 +160,7 @@ Component.fakeSelect = function()
             
             Component.keyboardEnter.call(choices,true);
             
-            choices.on('click enter:blocked', function(event) {
+            choices.on('click enter:blocked',function(event) {
                 choose.call($this,$(this));
                 event.stopPropagation();
             });
@@ -185,7 +185,7 @@ Component.fakeSelect = function()
             
             if(Str.cast(value) !== Str.cast(current))
             {
-                triggerCustom(this,'fakeselect:changed',[value,selected]);
+                triggerCustom(this,'fakeselect:changed',value,selected);
                 triggerCustom(this,'change');
                 input.trigger('change');
             }

@@ -19,10 +19,10 @@ Component.specificPanel = function()
         Component.tabNav.call(panel,panelNav);
         Component.fragment.call(panel);
         
-        panel.on('tab:init', function(event) {
-            triggerCustom(this,'specificForm:bindView',[$(this)]);
+        panel.on('tab:init',function(event) {
+            triggerCustom(this,'specificForm:bindView',this);
         })
-        .on('tab:open', function() {
+        .on('tab:open',function() {
             const nav = triggerFunc(this,'link:getNav');
             const description = nav.data('description') || '';
             const fragment = triggerFunc(this,'fragment:get');
@@ -39,7 +39,7 @@ Component.specificPanel = function()
             if($(this).is("[data-current-panel='1']") === true && !current)
             {
                 $(this).removeAttr('data-current-panel');
-                triggerCustom(this,'fragment:update',[true]);
+                triggerCustom(this,'fragment:update',true);
             }
             
             else if(Str.isNotEmpty(current))
@@ -50,24 +50,24 @@ Component.specificPanel = function()
             
             $(document).trigger('document:outsideClick');
         })
-        .on('tab:close', function() {
+        .on('tab:close',function() {
             panelNav.trigger('unselected');
             panel.hide();
         })
-        .on('fragment:updated', function(event,fragment) {
+        .on('fragment:updated',function(event,fragment) {
             form.trigger('hash:change',[fragment]);
         });
         
         // form
         Component.hashChange.call(this);
         
-        $(this).on('tab:getTarget', function() {
+        $(this).on('tab:getTarget',function() {
             return panel;
         })
-        .on('tab:getInput', function(event) {
+        .on('tab:getInput',function(event) {
             return $(this).find("input[name='-panel-']");
         })
-        .on('tab:findHash', function(event,fragment) {
+        .on('tab:findHash',function(event,fragment) {
             let r = panel.filter("[data-current-panel='1']");
             
             if(Str.isNotEmpty(fragment))
@@ -78,15 +78,15 @@ Component.specificPanel = function()
             
             return r;
         })
-        .on('hash:change', function(event,fragment) {
-            const target = triggerFunc(this,'tab:findHash',[fragment]);
+        .on('hash:change',function(event,fragment) {
+            const target = triggerFunc(this,'tab:findHash',fragment);
             
-            if(target.length === 1 && !triggerFunc(this,'tab:isCurrent',[target]))
+            if(target.length === 1 && !triggerFunc(this,'tab:isCurrent',target))
             target.trigger('tab:change');
         })
-        .on('tab:showFirst', function(event) {
-            const target = triggerFunc(this,'tab:findHash',[Request.fragment()]);
-            triggerCustom(this,'tab:changeOrFirst',[target]);
+        .on('tab:showFirst',function(event) {
+            const target = triggerFunc(this,'tab:findHash',Request.fragment());
+            triggerCustom(this,'tab:changeOrFirst',target);
         });
         
         Component.tab.call(this,Component.tab);

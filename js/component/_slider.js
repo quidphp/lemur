@@ -16,10 +16,10 @@ Component.slider = function(timeout,navs,className,showIfOne)
         const next = $(this).find(".next");
         const target = $(this).find(className);
         
-        target.on('tab:open', function(event) {
+        target.on('tab:open',function(event) {
             $(this).addClass("active");
         })
-        .on('tab:close', function(event) {
+        .on('tab:close',function(event) {
             $(this).removeClass("active");
         });
         
@@ -27,14 +27,14 @@ Component.slider = function(timeout,navs,className,showIfOne)
         {
             if(next.length)
             {
-                next.on('click', function(event) {
+                next.on('click',function(event) {
                     tab.trigger('tab:loopNext');
                 });
             }
             
             if(prev.length)
             {
-                prev.on('click', function(event) {
+                prev.on('click',function(event) {
                     tab.trigger('tab:loopPrev');
                 });
             }
@@ -42,12 +42,12 @@ Component.slider = function(timeout,navs,className,showIfOne)
             if(navs instanceof jQuery && navs.length)
             {
                 Component.tabNav.call(target,navs);
-                target.on('tab:open', function(event) {
+                target.on('tab:open',function(event) {
                     const nav = triggerFunc(this,'link:getNav');
                     navs.removeClass('active');
                     nav.addClass('active');
                 });
-                navs.on('click', function(event) {
+                navs.on('click',function(event) {
                     const target = triggerFunc(this,'link:getTarget');
                     target.trigger('tab:change');
                 });
@@ -57,13 +57,13 @@ Component.slider = function(timeout,navs,className,showIfOne)
             {
                 Component.timeout.call(this,'tab:change',timeout);
                 
-                $(this).on('tab:change:onTimeout', function(event) {
+                $(this).on('tab:change:onTimeout',function(event) {
                     triggerCustom(this,'tab:loopNext');
                 })
-                .on('mouseover', function(event) {
+                .on('mouseover',function(event) {
                     triggerCustom(this,'tab:change:clearTimeout');
                 })
-                .on('mouseleave', function(event) {
+                .on('mouseleave',function(event) {
                     triggerCustom(this,'tab:change:setTimeout');
                 });
             }
@@ -81,7 +81,7 @@ Component.slider = function(timeout,navs,className,showIfOne)
             navs.hide();
         }
         
-        $(this).on('tab:getTarget', function(event) {
+        $(this).on('tab:getTarget',function(event) {
             return target;
         });
         Component.tab.call(this);
@@ -92,7 +92,7 @@ Component.slider = function(timeout,navs,className,showIfOne)
         func.call(this);
     });
     
-    $(this).find(className).on('tab:close', function(event) {
+    $(this).find(className).on('tab:close',function(event) {
         const iframe = $(this).find("iframe");
         if(iframe.length)
         iframe.attr('src',iframe.attr('src'));

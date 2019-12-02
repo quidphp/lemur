@@ -10,11 +10,11 @@ Component.clickOpenInputFormAjax = function(target)
 {
     Component.clickOpenAjax.call(this,'submit',false,target);
     
-    $(this).on('ajax:complete', function(event) {
+    $(this).on('ajax:complete',function(event) {
         const field = triggerFunc(this,'form:getValidateField');
         field.trigger('keyup:clearTimeout');
     })
-    .on('clickOpenform:setup', function(event) {
+    .on('clickOpenform:setup',function(event) {
         const form = $(this);
         const field = triggerFunc(this,'form:getValidateField');
         const submit = triggerFunc(this,'form:getSubmit');
@@ -23,16 +23,16 @@ Component.clickOpenInputFormAjax = function(target)
         Component.keyboardEscape.call(field,true,'keyup');
         Component.timeout.call(this,'keyup');
         
-        field.on('validate:invalid', function(event) {
+        field.on('validate:invalid',function(event) {
             form.trigger('clickOpen:close');
         })
-        .on('validate:empty', function(event) {
+        .on('validate:empty',function(event) {
             form.triggerHandler('inputForm:empty');
         })
-        .on('validate:notEmpty', function(event) {
+        .on('validate:notEmpty',function(event) {
             form.triggerHandler('inputForm:notEmpty');
         })
-        .on('click', function(event) {
+        .on('click',function(event) {
             event.stopPropagation();
             form.trigger('clickOpen:closeOthers');
             
@@ -42,7 +42,7 @@ Component.clickOpenInputFormAjax = function(target)
             else if(triggerFunc(this,'validate:isNotEmptyAndValid') && !form.triggerHandler('clickOpen:isOpen'))
             form.trigger('submit');
         })
-        .on('keyup:onTimeout', function() {
+        .on('keyup:onTimeout',function() {
             triggerCustom(this,'validate:trigger');
             
             if(!$(this).val())
@@ -51,11 +51,11 @@ Component.clickOpenInputFormAjax = function(target)
             else if($(this).is(":focus"))
             form.trigger('submit');
         })
-        .on('escape:blocked', function(event) {
+        .on('escape:blocked',function(event) {
             form.trigger('clickOpen:close');
         });
         
-        submit.on('click', function(event) {
+        submit.on('click',function(event) {
             event.stopPropagation();
         });
     })

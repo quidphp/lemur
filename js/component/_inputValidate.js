@@ -8,19 +8,19 @@
 // gère les événements relatifs à la validation d'un champ
 Component.inputValidate = function() {
     
-    $(this).on('change', function(event) {
+    $(this).on('change',function(event) {
         triggerCustom(this,'validate:process');
     })
-    .on('focus', function(event) {
+    .on('focus',function(event) {
         triggerCustom(this,"validate:valid");
     })
-    .on('focusout', function(event) {
+    .on('focusout',function(event) {
         triggerCustom(this,'validate:process');
     })
-    .on('validate:process', function(event) {
+    .on('validate:process',function(event) {
         triggerCustom(this,Dom.value(this,true)? 'validate:trigger':'validate:pattern validate:empty');
     })
-    .on('validate:binded', function(event) {
+    .on('validate:binded',function(event) {
         return true;
     })
     .on('validate:isEmpty',function(event) {
@@ -32,15 +32,15 @@ Component.inputValidate = function() {
     .on('validate:isNotEmptyAndValid',function(event) {
         return (!triggerFunc(this,'validate:isEmpty') && triggerFunc(this,'validate:isValid'))? true:false;
     })
-    .on('validate:required', function(event) {
+    .on('validate:required',function(event) {
         event.stopPropagation();
         triggerCustom(this,(required.call(this) === true)? 'validate:valid':'validate:invalid');
     })
-    .on('validate:pattern', function(event) {
+    .on('validate:pattern',function(event) {
         event.stopPropagation();
         triggerCustom(this,(pattern.call(this) === true)? 'validate:valid':'validate:invalid');
     })
-    .on('validate:trigger', function(event) {
+    .on('validate:trigger',function(event) {
         let r = trigger.call(this);
         event.stopPropagation();
         triggerCustom(this,(r === true)? 'validate:valid':'validate:invalid');
@@ -48,7 +48,7 @@ Component.inputValidate = function() {
         
         return r;
     })
-    .on('validate:valid', function(event) {
+    .on('validate:valid',function(event) {
         if($(this).is("[type='checkbox'],[type='radio']"))
         {
             const group = Selector.inputGroup(this);
@@ -57,7 +57,7 @@ Component.inputValidate = function() {
         
         $(this).attr('data-validate','valid');
     })
-    .on('validate:invalid', function(event) {
+    .on('validate:invalid',function(event) {
         $(this).attr('data-validate','invalid');
     });
     
@@ -84,7 +84,7 @@ Component.inputValidate = function() {
     // validate un élément de formulaire, uniquemment avec required
     // required peut être numérique pour checkbox et radio, à ce moment c'est un min count
     // les input disabled ne sont pas considéré
-    let required = function() 
+    const required = function() 
     {
         let r = false;
         
@@ -95,9 +95,9 @@ Component.inputValidate = function() {
             $(this).each(function(index) {
                 const name = $(this).prop('name');
                 const disabled = $(this).prop('disabled');
-                let required = $(this).attr("data-required");
+                const dataRequired = $(this).attr("data-required");
                 
-                if(!disabled && Num.is(required) && required > 0)
+                if(!disabled && Num.is(dataRequired) && dataRequired > 0)
                 {
                     if($(this).is("[type='checkbox'],[type='radio']"))
                     {
@@ -105,7 +105,7 @@ Component.inputValidate = function() {
                         const group = $(this).inputGroup();
                         const amount = group.filter(":checked").not($(this)).length;
                         
-                        if((checked + amount) < required)
+                        if((checked + amount) < dataRequired)
                         r = false;
                     }
                     

@@ -37,7 +37,7 @@ const Evt = new function()
         
         $(node).each(function(index) {
             const funcArgs = [this].concat(args);
-            let result = $inst.triggerFunc.apply(null,funcArgs);
+            const result = $inst.triggerFunc.apply(null,funcArgs);
             r = (result === equal);
             
             if(r === false)
@@ -53,6 +53,9 @@ const Evt = new function()
     this.addEventListener = function(node,type,func,option) 
     {
         option = Object.assign({capture: false, once: false},option);
+        
+        if(!Str.isNotEmpty(type))
+        logError('invalidType');
         
         $(node).each(function() {
             this.addEventListener(type,function(event) {
@@ -79,6 +82,9 @@ const Evt = new function()
     // function utilisé par triggerEvent et triggerCustom pour envoyer des événements
     this.trigger = function(node,type,custom,option)
     {
+        if(!Str.isNotEmpty(type))
+        logError('invalidType');
+        
         const event = (custom === true)? new CustomEvent(type,option):new Event(type,option);
         
         if(debug === true)
@@ -175,6 +181,9 @@ const Evt = new function()
             
             r = func.apply(node,args);
         }
+        
+        else
+        logError('funcNotFound:'+type);
         
         return r;
     }

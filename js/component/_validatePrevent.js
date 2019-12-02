@@ -9,22 +9,22 @@
 // bloque l'événement si la validation échoue
 Component.validatePrevent = function(type) 
 {
-    $(this).on(type, function(event) {
+    $(this).on(type,function(event) {
         let r = triggerFunc(this,'validatePrevent:validate')
         
         if(r !== true)
         {
             event.stopImmediatePropagation();
             event.preventDefault();
-            triggerCustom(this,'validate:failed',[event]);
+            triggerCustom(this,'validate:failed',event);
         }
         
         else
-        triggerCustom(this,'validate:success',[event]);
+        triggerCustom(this,'validate:success',event);
         
         return r;
     })
-    .on('validatePrevent:validate', function(event) {
+    .on('validatePrevent:validate',function(event) {
         let r = true;
         const fields = triggerFunc(this,'validatePrevent:getFields');
         
@@ -37,7 +37,7 @@ Component.validatePrevent = function(type)
         
         return r;
     })
-    .on('validatePrevent:getFields', function(event) {
+    .on('validatePrevent:getFields',function(event) {
         let r = $();
         
         if($(this).is(":input"))
@@ -53,7 +53,7 @@ Component.validatePrevent = function(type)
         
         return r;
     })
-    .on('validatePrevent:prepare', function(event) {
+    .on('validatePrevent:prepare',function(event) {
         event.stopPropagation();
         const fields = triggerFunc(this,'validatePrevent:getFields');
         fields.trigger("validate:pattern");

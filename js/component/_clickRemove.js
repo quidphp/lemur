@@ -8,7 +8,7 @@
 // sur click, fadeOut l'élément et ensuite efface le
 Component.clickRemove = function()
 {
-    $(this).on('click', function(event) {
+    $(this).on('click',function(event) {
         $(this).fadeOut('slow',function() {
             $(this).remove();
         });

@@ -11,7 +11,7 @@ Component.windowSmall = function()
 {    
     DomChange.addId('window-small-',this);
     
-    $(this).on('click', function(event) {
+    $(this).on('click',function(event) {
         const win = window;
         const href = $(this).attr('href');
         const id = $(this).prop('id');

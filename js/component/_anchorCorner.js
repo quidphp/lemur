@@ -13,18 +13,18 @@ Component.anchorCorner = function()
     
     
     // trigger
-    $(this).on('anchorCorner:refresh', function(event) {
+    $(this).on('anchorCorner:refresh',function(event) {
         const offset = offsetCorner.call(this);
         $(this).attr('data-anchor-corner',offset.corner);
         event.stopPropagation();
     })
-    .on('resize:change', function() {
+    .on('resize:change',function() {
         triggerCustom(this,'anchorCorner:refresh');
     })
     
     
     // mouse
-    .on('mouseenter', function(event) {
+    .on('mouseenter',function(event) {
         triggerCustom(this,'anchorCorner:refresh');
         event.stopPropagation();
     });

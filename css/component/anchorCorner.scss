@@ -8,7 +8,7 @@
 
 // anchorCorner
 // stylesheet for the anchorCorner component
-@mixin anchorCorner($child) {
+@mixin AnchorCorner($child) {
     &[data-anchor-corner='top-left'] #{$child} {
         top: 100%;
         right: auto;

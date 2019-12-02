@@ -6,7 +6,7 @@
  
 // keyboard
 // component to catch and/or prevent an event related to a key press on the keyboard
-Component.keyboard = function(key,values,type) 
+const Keyboard = function(key,values,type) 
 {
     type = type || 'keydown';
     
@@ -35,3 +35,6 @@ Component.keyboard = function(key,values,type)
     
     return this;
 }
+
+// export
+Component.Keyboard = Keyboard;

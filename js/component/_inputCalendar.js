@@ -16,29 +16,29 @@ Component.calendarInput = function()
     Component.clickOpenWithTrigger.call(this,"input[type='text']",'click',null,true);
     
     // triggerHandler
-    $(this).on('calendarInput:getInput', function(event) {
+    $(this).on('calendarInput:getInput',function(event) {
         return $(this).find("input[type='text']");
     })
-    .on('calendarInput:getCalendar', function(event) {
+    .on('calendarInput:getCalendar',function(event) {
         return triggerFunc(this,'clickOpen:getTarget').find(".calendar");
     })
-    .on('clickOpen:getBackgroundFrom', function(event) {
+    .on('clickOpen:getBackgroundFrom',function(event) {
         return 'calendar';
     })
     
     // trigger
-    .on('clickOpen:open', function(event) {
+    .on('clickOpen:open',function(event) {
         const input = triggerFunc(this,'calendarInput:getInput');
         const calendar = triggerFunc(this,'calendarInput:getCalendar');
         input.addClass('active');
         calendar.trigger((calendar.triggerHandler('calendar:isEmpty'))? 'calendar:load':'calendar:refresh');
     })
-    .on('clickOpen:close', function(event) {
+    .on('clickOpen:close',function(event) {
         triggerFunc(this,'calendarInput:getInput').removeClass('active');
     })
     
     // setup
-    .one('component:setup', function(event) {
+    .one('component:setup',function(event) {
         bindInput.call(this);
         bindCalendar.call(this);
     });
@@ -53,16 +53,16 @@ Component.calendarInput = function()
         Component.timeout.call(input,'keyup',600);
         Component.keyboardEnter.call(input,true);
         
-        input.on('keyup:onTimeout', function(event) {
+        input.on('keyup:onTimeout',function(event) {
             calendarChange.call(this,true);
         })
-        .on('enter:blocked', function(event) {
+        .on('enter:blocked',function(event) {
             target.trigger('clickOpen:toggle');
         })
-        .on('click', function(event) {
+        .on('click',function(event) {
             event.stopImmediatePropagation();
         })
-        .on('change', function(event) {
+        .on('change',function(event) {
             calendarChange.call(this,false);
         });
         
@@ -82,17 +82,17 @@ Component.calendarInput = function()
         
         Component.calendar.call(calendar);
         
-        calendar.on('calendar:ready', function(event) {
+        calendar.on('calendar:ready',function(event) {
             const val = input.triggerHandler('input:getValue');
-            triggerCustom(this,'calendar:select',[val]);
+            triggerCustom(this,'calendar:select',val);
         })
-        .on('calendar:loading', function(event) {
+        .on('calendar:loading',function(event) {
             target.attr('data-status','loading');
         })
-        .on('calendar:loaded', function(event) {
+        .on('calendar:loaded',function(event) {
             target.removeAttr('data-status');
         })
-        .on('click', 'td', function(event) {
+        .on('click', 'td',function(event) {
             const format = $(this).data('format');
             const timestamp = $(this).data("timestamp");
             calendar.trigger('calendar:select',timestamp);

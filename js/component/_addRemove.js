@@ -9,31 +9,31 @@
 Component.addRemove = function()
 {
     // trigger handler
-    $(this).on('addRemove:getInsert', function() {
+    $(this).on('addRemove:getInsert',function() {
         return $(this).find(".insert");
     })
-    .on('addRemove:getPlayground', function() {
+    .on('addRemove:getPlayground',function() {
         return $(this).find(".playground").first();
     })
-    .on('addRemove:getCount', function() {
+    .on('addRemove:getCount',function() {
         return triggerFunc(this,'addRemove:getAll').length;
     })
-    .on('addRemove:getAll', function() {
+    .on('addRemove:getAll',function() {
         return triggerFunc(this,'addRemove:getPlayground').find(".ele");
     })
-    .on('addRemove:getIndex', function(event,index) {
+    .on('addRemove:getIndex',function(event,index) {
         return triggerFunc(this,'addRemove:getAll').eq(index);
     })
-    .on('addRemove:getLast', function() {
+    .on('addRemove:getLast',function() {
         return triggerFunc(this,'addRemove:getAll').last()
     })
-    .on('addRemove:findIndex', function(event,element) {
+    .on('addRemove:findIndex',function(event,element) {
         const all = triggerFunc(this,'addRemove:getAll');
         return all.index(element);
     })
     
     // trigger
-    .on('addRemove:insert', function() {
+    .on('addRemove:insert',function() {
         const insert = triggerFunc(this,'addRemove:getInsert');
         const container = triggerFunc(this,'addRemove:getPlayground');
         const html = insert.data('html');
@@ -43,13 +43,13 @@ Component.addRemove = function()
             container.append(html);
             const inserted = triggerFunc(this,'addRemove:getLast');
             bindElement.call(this,inserted);
-            triggerCustom(this,'addRemove:inserted',[inserted]);
+            triggerCustom(this,'addRemove:inserted',inserted);
         }
     })
-    .on('addRemove:remove', function(event,index) {
+    .on('addRemove:remove',function(event,index) {
         if(Num.is(index))
         {
-            const ele = triggerFunc(this,'addRemove:getIndex',[index]);
+            const ele = triggerFunc(this,'addRemove:getIndex',index);
             ele.remove();
             
             if(!triggerFunc(this,'addRemove:getCount'))
@@ -58,7 +58,7 @@ Component.addRemove = function()
     })
     
     // component setup
-    .one('component:setup', function() {
+    .one('component:setup',function() {
         const $this = $(this);
         bindInsert.call(this);
         bindSorter.call(this);
@@ -73,7 +73,7 @@ Component.addRemove = function()
         const $this = $(this);
         const insert = triggerFunc(this,'addRemove:getInsert');
         
-        insert.on('click', function() {
+        insert.on('click',function() {
             $this.trigger('addRemove:insert');
         });
     };
@@ -90,10 +90,10 @@ Component.addRemove = function()
     // bindElement
     const bindElement = function(element) {
         const $this = $(this);
-        let remove = element.find(".remove");
+        const remove = element.find(".remove");
         Component.confirm.call(remove,'click');
         
-        remove.on('confirmed', function() {
+        remove.on('confirmed',function() {
             const index = $this.triggerHandler('addRemove:findIndex',[element]);
             $this.trigger('addRemove:remove',[index]);
         });

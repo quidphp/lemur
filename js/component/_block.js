@@ -17,7 +17,7 @@ Component.block = function(type)
         {
             $(this).data('blockBind:'+type,true);
             
-            $(this).on(type, function(event) 
+            $(this).on(type,function(event) 
             {
                 if($(this).data("blocked") != null)
                 {
@@ -27,11 +27,11 @@ Component.block = function(type)
                     return false;
                 }
             })
-            .on('block', function(event) {
+            .on('block',function(event) {
                 event.stopImmediatePropagation();
                 $(this).data("blocked",true);
             })
-            .on('unblock', function(event) {
+            .on('unblock',function(event) {
                 event.stopImmediatePropagation();
                 $(this).removeData("blocked");
             })

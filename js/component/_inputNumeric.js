@@ -8,13 +8,6 @@
 // script with logic for an input containing a number
 Component.inputNumeric = function(option)
 {
-    // alias
-    const setFunc = Evt.setFunc;
-    const triggerFunc = Evt.triggerFunc;
-    const ael = Evt.addEventListener;
-    const triggerCustom = Evt.triggerCustom;
-    
-    
     // option
     option = Object.assign({timeout: 500},option);
     
@@ -71,7 +64,7 @@ Component.inputNumeric = function(option)
     
     
     // refresh
-    let refresh = function() {
+    const refresh = function() {
         const val = triggerFunc(this,'inputNumeric:getValue');
         const max = triggerFunc(this,'inputNumeric:getMax');
         const current = triggerFunc(this,'inputNumeric:getCurrent');
@@ -94,7 +87,7 @@ Component.inputNumeric = function(option)
     
     
     // redirect
-    let redirect = function() {
+    const redirect = function() {
         const val = triggerFunc(this,'inputNumeric:getValue');
         const href = Dom.dataHrefReplaceChar(this,val);
         

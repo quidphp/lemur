@@ -1,0 +1,45 @@
+// compileOnSave: false
+
+/*
+ * This file is part of the QuidPHP package.
+ * Website: https://quidphp.com
+ * License: https://github.com/quidphp/lemur/blob/master/LICENSE
+ */
+
+// document
+// stylesheet for the document component
+@mixin Document($routeWrap) {
+    height: 100%;
+    box-sizing: border-box;
+    font-family: sans-serif;
+    font-size: 62.5%;
+    -ms-text-size-adjust: 100%;
+    -ms-overflow-style: scrollbar;
+    -webkit-tap-highlight-color: transparent;
+    -moz-osx-font-smoothing: grayscale;
+    
+    body {
+        height: 100%;
+        font-family: $font;
+        font-size: 1.6rem;
+        background-color: $white;
+        font-weight: 400;
+        line-height: 1.4;
+        color: $black;
+        text-align: left;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+    
+    #{$routeWrap} {
+        margin: auto;
+        min-height: 100%;
+        height: auto;
+        position: relative;
+        min-width: 900px;
+
+        @include responsive() {
+            min-width: auto;
+        }
+    }
+}

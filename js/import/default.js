@@ -7,5 +7,5 @@
 // import default
 const d = console.log;
 const dd = console.dir;
-const assert = console.assert;
-const al = alert;
+const $$ = alert;
+const logError = console.error;

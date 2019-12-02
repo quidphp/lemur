@@ -16,3 +16,4 @@ window.Lemur = Lemur;
 const d = console.log;
 const dd = console.dir;
 const assert = console.assert;
+const logError = console.error;

@@ -12,10 +12,10 @@ const Dom = new function()
     const $inst = this;
     
     
-    // is
+    // isNode
     // retourne vrai si la valeur est une node, node list ou un objet jQuery
     // accepte aussi un tableau contenant seulement des nodes
-    this.is = function(value) 
+    this.isNode = function(value) 
     {
         let r = false;
         
@@ -33,7 +33,7 @@ const Dom = new function()
                 
                 for (i = 0; i < value.length; i++) 
                 {
-                    r = $inst.is(value[i]);
+                    r = $inst.isNode(value[i]);
                     
                     if(r === false)
                     break;
@@ -123,7 +123,7 @@ const Dom = new function()
         {   
             r = {};
             
-            $.each(node[0].attributes, function() {
+            $.each(node[0].attributes,function() {
                 if(start == null || Str.isStart(start,this.name))
                 r[this.name] = this.value;
             });

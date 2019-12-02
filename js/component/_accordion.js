@@ -10,7 +10,7 @@ Component.accordion = function(until,closeAll,wrap)
 {	
     const $this = $(this);
     
-    $(this).on('click', function(event) {
+    $(this).on('click',function(event) {
         if(closeAll === true)
         $this.trigger('accordion:close');
         
@@ -20,20 +20,20 @@ Component.accordion = function(until,closeAll,wrap)
         else
         triggerCustom(this,'accordion:open');
     })
-    .on('accordion:getContents', function(event) {
+    .on('accordion:getContents',function(event) {
         return $(this).nextUntil(until);
     })
-    .on('accordion:getActiveClass', function(event) {
+    .on('accordion:getActiveClass',function(event) {
         return 'active';
     })
-    .on('accordion:getOpenClass', function(event) {
+    .on('accordion:getOpenClass',function(event) {
         return 'open';
     })
-    .on('accordion:isOpen', function(event) {
+    .on('accordion:isOpen',function(event) {
         const openClass = triggerFunc(this,'accordion:getOpenClass');
         return $(this).hasClass(openClass);
     })
-    .on('accordion:close', function(event) {
+    .on('accordion:close',function(event) {
         const openClass = triggerFunc(this,'accordion:getOpenClass');
         const activeClass = triggerFunc(this,'accordion:getActiveClass');
         $(this).removeClass(openClass).removeClass(activeClass);
@@ -42,7 +42,7 @@ Component.accordion = function(until,closeAll,wrap)
         if(Str.isNotEmpty(wrap))
         $(this).parent().removeClass(openClass);
     })
-    .on('accordion:open', function(event) {
+    .on('accordion:open',function(event) {
         const openClass = triggerFunc(this,'accordion:getOpenClass');
         const activeClass = triggerFunc(this,'accordion:getActiveClass');
         $(this).addClass(openClass).addClass(activeClass);

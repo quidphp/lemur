@@ -43,7 +43,7 @@ class Date extends Core\Col\Date
             $value = $this->valueComplex($value);
             $format = $this->date(true);
             $placeholder = Base\Datetime::placeholder($format);
-            $timestamp = Base\Datetime::timestamp();
+            $timestamp = Base\Datetime::now();
 
             if(is_int($value))
             $timestamp = $value;

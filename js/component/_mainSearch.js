@@ -12,12 +12,12 @@ Component.mainSearch = function()
     Component.clickOpenInputFormAjax.call(this);
     
     // triggerHandler
-    $(this).on('mainSearch:getSearchIn', function() {
+    $(this).on('mainSearch:getSearchIn',function() {
         return $(this).find(".search-in");
     })
     
     // setup
-    .one('component:setup', function() {
+    .one('component:setup',function() {
         bindClickOpen.call(this);
         bindSearchIn.call(this);
     });
@@ -26,10 +26,10 @@ Component.mainSearch = function()
     const bindClickOpen = function() {
         const searchIn = triggerFunc(this,'mainSearch:getSearchIn');
         
-        $(this).on('inputForm:empty', function() {
+        $(this).on('inputForm:empty',function() {
             searchIn.trigger('clickOpen:open');
         })
-        .on('inputForm:notEmpty escape:blocked', function() {
+        .on('inputForm:notEmpty escape:blocked',function() {
             searchIn.trigger('clickOpen:close');
         });
     };
@@ -40,10 +40,10 @@ Component.mainSearch = function()
         const searchIn = triggerFunc(this,'mainSearch:getSearchIn');
         
         Component.clickOpen.call(searchIn,true);
-        searchIn.on('clickOpen:open', function() {
+        searchIn.on('clickOpen:open',function() {
             $this.addClass('active-search-in');
         })
-        .on('clickOpen:close', function() {
+        .on('clickOpen:close',function() {
             $this.removeClass('active-search-in');
         });
     };

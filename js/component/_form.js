@@ -18,37 +18,37 @@ Component.form = function() {
     Component.block.call(this,'submit');
     
     // triggerHandler
-    $(this).on('form:getFields', function(event) {
+    $(this).on('form:getFields',function(event) {
         return $(this).find("input,select,textarea,button[type='submit']");
     })
-    .on('form:getSystemFields', function(event) {
+    .on('form:getSystemFields',function(event) {
         return triggerFunc(this,'form:getFields').filter("[name^='-']");
     })
-    .on('form:getTargetFields', function(event) {
+    .on('form:getTargetFields',function(event) {
         return triggerFunc(this,'form:getFields').not(':disabled').filter("[name]").not("[name^='-']");
     })
-    .on('form:getTargetVisibleFields', function(event) {
+    .on('form:getTargetVisibleFields',function(event) {
         return triggerFunc(this,'form:getTargetFields').filter(":visible");
     })
-    .on('form:getValidateFields', function(event) {
+    .on('form:getValidateFields',function(event) {
         return triggerFunc(this,'form:getTargetFields').filter("[data-required],[data-pattern]");
     })
-    .on('form:getValidateField', function(event) {
+    .on('form:getValidateField',function(event) {
         return triggerFunc(this,'form:getValidateFields').first();
     })
-    .on('form:hasFiles', function(event) {
+    .on('form:hasFiles',function(event) {
         return (triggerFunc(this,'form:getTargetFields').filter("input[type='file']").length)? true:false;
     })
-    .on('form:getSubmits', function(event) {
+    .on('form:getSubmits',function(event) {
         return triggerFunc(this,'form:getFields').filter("[type='submit'],[type='image']");
     })
-    .on('form:getSubmit', function(event) {
+    .on('form:getSubmit',function(event) {
         return triggerFunc(this,'form:getSubmits').first();
     })
-    .on('form:getClickedSubmit', function(event) {
+    .on('form:getClickedSubmit',function(event) {
         return triggerFunc(this,'form:getSubmits').filter("[data-submit-click]").first();
     })
-    .on('form:getClickedSubmits', function(event) {
+    .on('form:getClickedSubmits',function(event) {
         let r = triggerFunc(this,'form:getClickedSubmit');
         
         if(r.length)
@@ -60,13 +60,13 @@ Component.form = function() {
         
         return r;
     })
-    .on('form:getCsrfField', function(event) {
+    .on('form:getCsrfField',function(event) {
         return triggerFunc(this,'form:getSystemFields').filter("[data-csrf='1']").first();
     })
-    .on('form:getGenuineField', function(event) {
+    .on('form:getGenuineField',function(event) {
         return triggerFunc(this,'form:getSystemFields').filter("[data-genuine='1']").first();
     })
-    .on('form:hasChanged', function(event) {
+    .on('form:hasChanged',function(event) {
         let r = false;
         const target = triggerFunc(this,'form:getTargetFields');
         const serialize = target.serialize();
@@ -77,7 +77,7 @@ Component.form = function() {
         
         return r;
     })
-    .on('form:focusFirst', function(event) {
+    .on('form:focusFirst',function(event) {
         triggerFunc(this,'form:getTargetVisibleFields').filter(function() {
             return triggerFunc(this,'input:isEmpty');
         }).first().focus();
@@ -86,19 +86,19 @@ Component.form = function() {
     })
     
     // prepare
-    .on('form:prepare', function(event) {
+    .on('form:prepare',function(event) {
         prepareGenuine.call(this);
         prepareHasChanged.call(this);
     })
     
     // setup
-    .one('form:setup', function(event) {
+    .one('form:setup',function(event) {
         if(!$(this).is("[data-skip-form-prepare='1']"))
         triggerCustom(this,'form:prepare');
         
         // click sur submit, met un attribut data-clicked
         const submits = triggerFunc(this,'form:getSubmits');
-        submits.on('click', function(event) {
+        submits.on('click',function(event) {
             submits.removeAttr('data-submit-click');
             $(this).attr('data-submit-click',true);
         });
@@ -114,7 +114,7 @@ Component.form = function() {
         // block
         if(!$(this).is("[data-block='0']"))
         {
-            $(this).on('submit', function(event) {
+            $(this).on('submit',function(event) {
                 triggerCustom(this,'block');
             });
         }
@@ -146,11 +146,11 @@ Component.form = function() {
     {
         $(this).each(function(index, el) {
             const $this = $(this);
-            $(this).on('submit', function(event) {
+            $(this).on('submit',function(event) {
                 $(window).off('beforeunload');
             });
             
-            $(window).off('beforeunload').on('beforeunload', function() {
+            $(window).off('beforeunload').on('beforeunload',function() {
                 if($this.triggerHandler('form:hasChanged'))
                 return $this.attr('data-unload');
             });
