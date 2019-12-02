@@ -16,7 +16,7 @@
 
 /* HTML */
 :root {
-    @include Document(".route-wrap");
+    @include Document('.route-wrap');
 }
 body {
     font-size: 1.4rem;

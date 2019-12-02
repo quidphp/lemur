@@ -17,7 +17,7 @@
     -ms-overflow-style: scrollbar;
     -webkit-tap-highlight-color: transparent;
     -moz-osx-font-smoothing: grayscale;
-    
+
     body {
         height: 100%;
         font-family: $font;
@@ -30,7 +30,7 @@
         word-wrap: break-word;
         overflow-wrap: break-word;
     }
-    
+
     #{$routeWrap} {
         margin: auto;
         min-height: 100%;
