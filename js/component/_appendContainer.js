@@ -8,7 +8,7 @@
 // script of behaviours for an appendContainer component (load more)
 Component.appendContainer = function()
 {
-    Component.block.call(this,'ajax:init');
+    Component.BlockEvent.call(this,'ajax:init');
     Component.Ajax.call(this,'ajax:init');
     
     $(this).on('feed:target',function() {
@@ -65,7 +65,7 @@ Component.appendContainer = function()
             event.preventDefault();
             const remove = $this.triggerHandler('feed:loadMoreRemove',[$(this)]);
             
-            Component.block.call(this,'ajax:init');
+            Component.BlockEvent.call(this,'ajax:init');
             Component.Ajax.call(this,'ajax:init');
             
             $(this).on('ajax:before',function(event) {
@@ -74,11 +74,11 @@ Component.appendContainer = function()
             })
             .on('ajax:success',function(event,data,textStatus,jqXHR) {
                 remove.remove();
-                $this.trigger('feed:append',[data]);
+                triggerCustom($this,'feed:append',[data]);
             })
             .on('ajax:error',function(event,parsedError,jqXHR,textStatus,errorThrown) {
                 remove.remove();
-                $this.trigger('ajax:error',[parsedError,jqXHR,textStatus]);
+                triggerCustom($this,'ajax:error',[parsedError,jqXHR,textStatus]);
             })
             .trigger('ajax:init');
         });

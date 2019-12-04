@@ -72,7 +72,7 @@ Component.scrollDrag = function(option) {
     })
     .on('mouseup', $option.selector,function(event) {
         const $this = $(event.delegateTarget);
-        $this.trigger('scrollDrag:stop');
+        triggerCustom($this,'scrollDrag:stop');
     })
     .on('mouseout', $option.selector,function(event) {
         event.stopPropagation();
@@ -85,8 +85,8 @@ Component.scrollDrag = function(option) {
         $(this).data('cursorPositionY',0);
         $(this).data('cursorPositionX',0);
         
-        $(document).on('mouseout.document-mount',function() {
-            $this.trigger('scrollDrag:stop');
+        $(document).on('mouseout.doc-mount',function() {
+            triggerCustom($this,'scrollDrag:stop');
         });
         
         triggerCustom(this,'scrollDrag:refresh');

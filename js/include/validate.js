@@ -44,6 +44,59 @@ const Validate = new function()
         
         return r;
     }
+    
+    
+    // trigger
+    // lance la validation required et ensuite pattern
+    this.trigger = function(value,required,pattern)
+    {
+        let r = $inst.required(value,required);
+        
+        if(r === true)
+        r = $inst.pattern(value,pattern);
+        
+        return r;
+    }
+    
+    
+    // required
+    // fait le test required sur la valeur
+    this.required = function(value,required)
+    {
+        let r = true;
+        
+        if(Bool.is(required))
+        required = Bool.num(required);
+        
+        if(Num.is(required) && required > 0)
+        {
+            value = Str.cast(value);
+            value = Str.trim(value);
+            
+            if(!value.length)
+            r = false;
+        }
+        
+        return r;
+    }
+    
+    
+    // pattern
+    // fait le test required sur la valeur
+    this.pattern = function(value,pattern)
+    {
+        let r = true;
+        
+        if(Str.isNotEmpty(pattern))
+        {
+            value = Str.cast(value);
+            
+            if(value.length && !$inst.regex(value,pattern))
+            r = false;
+        }
+        
+        return r;
+    }
 }
 
 // export

@@ -50,7 +50,7 @@ Component.calendarInput = function()
         const calendar = triggerFunc(this,'calendarInput:getCalendar');
         const target = triggerFunc(this,'clickOpen:getTarget');
         
-        Component.timeout.call(input,'keyup',600);
+        Component.Timeout.call(input,'keyup',600);
         Component.keyboardEnter.call(input,true);
         
         input.on('keyup:onTimeout',function(event) {
@@ -97,7 +97,7 @@ Component.calendarInput = function()
             const timestamp = $(this).data("timestamp");
             calendar.trigger('calendar:select',timestamp);
             input.val(format);
-            $this.trigger("clickOpen:close");
+            triggerCustom($this,"clickOpen:close");
         })
     };
         

@@ -21,7 +21,7 @@ Component.fakeSelect = function()
         const title = $(this).find("option:selected").text() || "&nbsp;";
         const options = $(this).find("option");
         const value = triggerFunc(this,'input:getValue');
-        const datas = Dom.getAttrStr(this,'data-');
+        const datas = Dom.attrStr(this,'data-');
         
         const inputHtml = "<input name='"+name+"' type='hidden' data-fakeselect='1' value='"+value+"'";
         if(required)
@@ -43,7 +43,7 @@ Component.fakeSelect = function()
         options.each(function(index, el) {
             const val = Str.cast($(this).prop('value'));
             const text = $(this).text() || "&nbsp;";
-            const datas = Dom.getAttrStr(this,'data-');
+            const datas = Dom.attrStr(this,'data-');
             
             r += "<li>";
             r += "<button type='button'";

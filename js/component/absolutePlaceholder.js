@@ -6,24 +6,32 @@
  
 // absolutePlaceholder
 // script of behaviours for an absolute placeholder component
-Component.absolutePlaceholder = function()
+const AbsolutePlaceholder = function()
 {
+    // nodes
+    const $nodes = this;
+    
+    
     // resizeChange
-    Component.resizeChange.call(this);
+    Component.ResizeChange.call(this);
     
-    // triggerHandler
-    $(this).on('absolutePlaceholder:getChild',function() {
+    
+    // func
+    setFunc(this,'absolutePlaceholder:getChild',function() {
         return $(this).children().first();
-    })
-    .on('absolutePlaceholder:onlyHeight',function() {
-        return $(this).is('[data-only-height]');
-    })
-    .on('absolutePlaceholder:onlyWidth',function() {
-        return $(this).is('[data-only-width]');
-    })
+    });
     
-    // trigger
-    $(this).on('absolutePlaceholder:refresh',function(event) {
+    setFunc(this,'absolutePlaceholder:onlyHeight',function() {
+        return $(this).is('[data-only-height]');
+    });
+    
+    setFunc(this,'absolutePlaceholder:onlyWidth',function() {
+        return $(this).is('[data-only-width]');
+    });
+    
+    
+    // custom event
+    ael(this,'absolutePlaceholder:refresh',function() {
         const child = triggerFunc(this,'absolutePlaceholder:getChild');
         if(child.length)
         {
@@ -41,15 +49,18 @@ Component.absolutePlaceholder = function()
             
             $(this).attr('data-absolute-placeholder','ready');
         }
-        
-        event.stopPropagation();
-    })
-    .on('resize:change',function() {
+    });
+    
+    ael(this,'resize:change',function() {
         triggerCustom(this,'absolutePlaceholder:refresh');
     })
     
+    
     // firstRefresh
-    .trigger('absolutePlaceholder:refresh');
+    triggerCustom(this,'absolutePlaceholder:refresh');
     
     return this;
 }
+
+// export
+Component.AbsolutePlaceholder = AbsolutePlaceholder;

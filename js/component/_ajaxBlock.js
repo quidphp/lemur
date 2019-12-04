@@ -10,7 +10,7 @@ Component.ajaxBlock = function(type)
 {
     type = type || 'click';
     
-    Component.block.call(this,type);
+    Component.BlockEvent.call(this,type);
     Component.Ajax.call(this,type);
     
     $(this).on('ajaxBlock:getStatusNode',function(event) {

@@ -48,7 +48,7 @@ Component.specificPanel = function()
             DomChange.hrefChangeHash(fragment,$("a.hashFollow"));
             form.triggerHandler('tab:getInput').val((Str.isNotEmpty(fragment))? fragment:'');
             
-            $(document).trigger('document:outsideClick');
+            $(document).trigger('doc:outsideClick');
         })
         .on('tab:close',function() {
             panelNav.trigger('unselected');

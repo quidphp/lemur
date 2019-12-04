@@ -48,7 +48,7 @@ Component.clickOpenAjax = function(triggerEvent,closeOnOpen,target)
         triggerFunc(this,'clickOpen:unsetTargetContent');
     });
     
-    Component.block.call(this,triggerEvent);
+    Component.BlockEvent.call(this,triggerEvent);
     Component.Ajax.call(this,triggerEvent);    
     Component.clickOpen.call(this,target);
     

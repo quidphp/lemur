@@ -90,8 +90,8 @@ Component.enumSet = function()
     const bindEnumSetInput = function() {
         Component.keyboardEnter.call(this,true,'keyup keydown');
         Component.validatePrevent.call(this,'ajax:init');
-        Component.block.call(this,'ajax:init');
-        Component.timeout.call(this,'keyup',500);
+        Component.BlockEvent.call(this,'ajax:init');
+        Component.Timeout.call(this,'keyup',500);
         Component.Ajax.call(this,'ajax:init');
         
         $(this).on('enter:blocked',function(event,keyEvent) {

@@ -12,7 +12,7 @@ Component.accordion = function(until,closeAll,wrap)
     
     $(this).on('click',function(event) {
         if(closeAll === true)
-        $this.trigger('accordion:close');
+        triggerCustom($this,'accordion:close');
         
         if(triggerFunc(this,'accordion:isOpen'))
         triggerCustom(this,'accordion:close');

@@ -14,17 +14,21 @@ const Evt = new function()
     
     // debug
     // si true affiche les événements dans la console
-    let debug = false;
+    let debug = 0;
     
     
     // debug
     // active ou désactive le débogagge
+    // il faut spécifier un chiffre pour le niveau d'éléments à afficher
     this.debug = function(value)
     {
         if(Bool.is(value))
+        value = Bool.num(value);
+        
+        if(Num.isInt(value))
         debug = value;
         
-        return;
+        return debug;
     }
     
     
@@ -50,25 +54,44 @@ const Evt = new function()
     
     // addEventListener
     // méthode qui permet d'ajouter un nouveau listener d'événement custom
-    this.addEventListener = function(node,type,func,option) 
+    // retourne un tableau avec les paramètres pour retirer le listener
+    this.addEventListener = function(node,type,func,register,option) 
     {
         option = Object.assign({capture: false, once: false},option);
         
         if(!Str.isNotEmpty(type))
         logError('invalidType');
         
+        const handler = function(event) {
+            let args = [event];
+            const detail = event.detail;
+            args = args.concat(detail);
+            
+            if(debug > 0)
+            console.log('listener',this,type,detail,event);
+            
+            func.apply(this,args);
+        };
+        
         $(node).each(function() {
-            this.addEventListener(type,function(event) {
-                let args = [event];
-                const detail = event.detail;
-                args = args.concat(detail);
-                
-                if(debug === true)
-                console.log('listener',type,this,detail,event);
-                
-                func.apply(this,args);
-            },option);
+            this.addEventListener(type,handler,option);
+            
+            if(Str.isNotEmpty(register))
+            $inst.registerEventListener(this,register,type,handler,option);
         });
+        
+        return [type,handler,option];
+    }
+    
+    
+    // registerEventListener
+    // permet d'enregistrer un event listener dans la node
+    // ceci permet de le retirer par la suite
+    this.registerEventListener = function(node,register,type,handler,option) 
+    {
+        const data = Dom.getData(node,'rel',{});
+        const entry = [type,handler,option];
+        Obj.setRef(register,entry,data);
         
         return;
     }
@@ -76,9 +99,36 @@ const Evt = new function()
     
     // addEventListenerOnce
     // comme ael, mais le listener ne peut être déclenché qu'une seule fois
-    this.addEventListenerOnce = function(node,type,func,option) 
+    this.addEventListenerOnce = function(node,type,func,register,option) 
     {
-        return $inst.addEventListener(node,type,func,Object.assign({},option,{once: true}));
+        return $inst.addEventListener(node,type,func,register,Object.assign({},option,{once: true}));
+    }
+    
+    
+    // removeEventListener
+    // permet de retirer un event listener
+    // args est le tableau retournée par addEventListener (contient type, handler et option)
+    this.removeEventListener = function(node,args)
+    {
+        if(debug > 0)
+        {
+            let consoleArgs = ['removeListener',node,Arr.copy(args).shift()];
+            console.log.apply(this,consoleArgs);
+        }
+        
+        $(node).each(function() {
+            
+            if(Str.isNotEmpty(args))
+            {
+                const key = args;
+                const data = Dom.getData(node,'rel');
+                args = Obj.get(key,data);
+                Obj.unsetRef(key,data);
+            }
+            
+            if(Arr.is(args))
+            this.removeEventListener.apply(this,args);
+        });
     }
     
     
@@ -91,7 +141,7 @@ const Evt = new function()
         
         const event = (custom === true)? new CustomEvent(type,option):new Event(type,option);
         
-        if(debug === true)
+        if(debug > 1)
         console.log('trigger',type,node);
         
         $(node).each(function(index, el) {
@@ -136,14 +186,23 @@ const Evt = new function()
     }
     
     
+    // allFunc
+    // retourne un objet avec toutes les func lié à la node
+    // si plusieurs nodes, retourne seulement pour la première node
+    this.allFunc = function(node)
+    {
+        return Dom.getData(node,'lemur-func',{}); 
+    }
+    
+    
     // getFunc
     // méthode qui retourne une fonction emmagasiné dans une node
-    // si plusieurs nodes, retoure la fonction de la première node
+    // si plusieurs nodes, retourne la fonction de la première node
     this.getFunc = function(node,type,func) 
     {
-        type = 'func:'+type;
+        const all = $inst.allFunc(node);
         
-        return $(node).data(type);
+        return Obj.get(type,all);
     }
     
     
@@ -151,8 +210,8 @@ const Evt = new function()
     // permet d'emmagasiné une fonction dans chaque node fournit en argument
     this.setFunc = function(node,type,func) 
     {
-        type = 'func:'+type;
-        $(node).data(type,func);
+        const all = $inst.allFunc(node);
+        Obj.setRef(type,func,all);
         
         return;
     }
@@ -162,8 +221,8 @@ const Evt = new function()
     // permet de retirer une fonction emmagasiné dans une ou plusiuers node
     this.removeFunc = function(node,type) 
     {
-        type = 'func:'+type;
-        $(node).removeData(type);
+        const all = $inst.allFunc(node);
+        Obj.unsetRef(type,all);
         
         return;
     }
@@ -174,19 +233,19 @@ const Evt = new function()
     this.triggerFunc = function(node,type) 
     {
         let r = null;
-        const one = $(node).first();
-        const func = $inst.getFunc(one,type);
-        const args = Arr.sliceStart(2,arguments);
-
+        const func = $inst.getFunc(node,type);
+        
         if(Func.is(func))
         {
-            if(debug === true)
+            const args = Arr.sliceStart(2,arguments);
+            
+            if(debug > 2)
             console.log('triggerFunc',type,'found',node);
             
             r = func.apply(node,args);
         }
         
-        else if(debug === true)
+        else if(debug > 0)
         console.log('triggerFunc',type,'notFound',node);
         
         return r;

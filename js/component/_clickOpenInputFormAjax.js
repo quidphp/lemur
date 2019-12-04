@@ -21,7 +21,7 @@ Component.clickOpenInputFormAjax = function(target)
         
         Component.keyboardEnter.call(field,true,'keyup');
         Component.keyboardEscape.call(field,true,'keyup');
-        Component.timeout.call(this,'keyup');
+        Component.Timeout.call(this,'keyup');
         
         field.on('validate:invalid',function(event) {
             form.trigger('clickOpen:close');

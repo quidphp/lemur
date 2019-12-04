@@ -10,42 +10,50 @@
 // ready
 $(document).ready(function() {
 	
-    evtDebug(true);
-    
     // initial mount
     // comportements bindés une seule fois au tout début
-    ael(this,'document:mountInitial',function(event,body) {
+    ael(this,'doc:mountInitial',function(event,body) {
+        const background = body.find("> .background").first();
         const modal = body.find("> .modal").first();
         
-        // modal
+        triggerSetup(Component.Background.call(background));
         triggerSetup(Component.Modal.call(modal));
     });
     
     
-    // document:mountCommon
+    // doc:mountCommon
     // événement appelé pour faire les bindings globaux
     // après le chargement d'une page ou d'un modal
-    ael(this,'document:mountCommon',function(event,node) {
+    ael(this,'doc:mountCommon',function(event,node) {
         
-        /*
         // input
         const input = node.find(Selector.input());
-        Component.input.call(input);
+        Component.Input.call(input);
+
+        // form
+        const form = node.find("form");
+        triggerCustom(Component.Form.call(form),'form:setup');
+
+        // autre
+        const anchorCorner = node.find("[data-anchor-corner='1']");
+        const absolutePlaceholder = node.find("[data-absolute-placeholder='1']");
         
+        // anchorCorner
+        Component.AnchorCorner.call(anchorCorner);
+        
+        // absolutePlaceholder
+        Component.AbsolutePlaceholder.call(absolutePlaceholder);
+        
+        /*
         // select
         const select = node.find("select");
         triggerSetup(Component.fakeSelect.call(select));
-        
-        // form
-        const form = node.find("form");
-        Component.form.call(form);
-        triggerCustom(form,'form:setup');
         
         // autre
         const popupTrigger = node.find(".popup-trigger.with-popup:not(.with-ajax)");
         const popupTriggerAjax = node.find(".popup-trigger.with-popup.with-ajax");
         const anchorCorner = node.find("[data-anchor-corner='1']");
-        const absolutePlaceholder = node.find("[data-absolute-placeholder='1']");
+        
         const aConfirm = node.find("a[data-confirm]");
         
 		// aConfirm
@@ -56,26 +64,23 @@ $(document).ready(function() {
         
         // popupTriggerAjax
         Component.clickOpenAnchorAjax.call(popupTriggerAjax,".popup-title");
-        
-        // anchorCorner
-        Component.anchorCorner.call(anchorCorner);
-        
-        // absolutePlaceholder
-        Component.absolutePlaceholder.call(absolutePlaceholder);
         */
 	});
     
     
 	// document mount
     // comportements utilisés pour toutes les pages du CMS
-	ael(this,'document:mount',function(event,routeWrap) {
-		const html = triggerFunc(this,'document:getHtml');
+	ael(this,'doc:mount',function(event,routeWrap) {
 		const burger = routeWrap.find("header .burger-menu, .nav-fixed .nav-close");
 		const com = routeWrap.find("main > .inner > .com");
         const subMenu = routeWrap.find(".with-submenu");
         const carousel = routeWrap.find(".with-carousel");
         const mainSearch = routeWrap.find("header .top form");
         
+        // burger
+        triggerSetup(Component.Burger.call(burger));
+        
+        /*
         // carousel
         Component.carousel.call(carousel);
         
@@ -87,17 +92,15 @@ $(document).ready(function() {
         
         // com
 		triggerSetup(Component.com.call(com));
-        
-        // burger
-        triggerSetup(Component.burger.call(burger));
 
         // mainSearch
         triggerSetup(Component.mainSearch.call(mainSearch));
+        */
 	});
     
     
     // document unmount
-    ael(this,'document:unmount',function(event,routeWrap) {
+    ael(this,'doc:unmount',function(event,routeWrap) {
         const burger = routeWrap.find("header .burger-menu, .nav-fixed .nav-close");
         
         // burger
@@ -106,7 +109,7 @@ $(document).ready(function() {
     
     
     // document ajax progress
-    ael(this,'document:ajaxProgress',function(event,percent,progressEvent) {
+    ael(this,'doc:ajaxProgress',function(event,percent,progressEvent) {
         const body = $(this).find("body");
         const progress = body.find(".loading-progress");
         const html = (percent >= 0 && percent < 100)? "<div class='percent'>"+percent+"%"+"</div>":"";
@@ -146,11 +149,15 @@ $(document).ready(function() {
     // home
     // comportement pour la page d'accueil du CMS une fois connecté
 	ael(this,'route:home',function(event,routeWrap) {
+        
+        /*
 		const feed = routeWrap.find("main .home-feed");
         const feedTogglers = feed.find(".block-head .feed-togglers > a");
         const feedBody = feed.find(".block-body");
+        
         Component.appendContainer.call(feedBody);
-        triggerCustom(Component.appendContainer,'feed:bind');
+        triggerCustom(feedBody,'feed:bind');
+        
         
         Component.ajaxBlock.call(feedTogglers);
         
@@ -170,6 +177,7 @@ $(document).ready(function() {
         ael(feedTogglers,'ajax:error',function(event,parsedError,jqXHR,textStatus,errorThrown) {
             feedBody.html(parsedError);
         });
+        */
 	});
     
     
@@ -180,7 +188,6 @@ $(document).ready(function() {
         const main = routeWrap.find("main");
         const scroller = main.find(".scroller");
 		const search = main.find(".left > .search");
-        const formTruncate = main.find(".truncate form");
 		const pageLimit = main.find("input[name='limit'],input[name='page']");
         const table = scroller.find("table").first();
         const filter = table.find("th.filterable .filter-outer");
@@ -212,17 +219,6 @@ $(document).ready(function() {
 			const searchSlide = search.find(".in");
 			triggerSetup(Component.inputSearch.call(searchInput));
             Component.focusSlide.call(searchInput,searchSlide);
-		}
-		
-		// formTruncate
-		if(formTruncate.length)
-		{
-            Component.block.call(formTruncate,'submit');
-            Component.confirm.call(formTruncate,'submit');
-			
-            ael(formTruncate,'confirmed',function() {
-				triggerCustom(this,'block');
-			});
 		}
         
         // filesSlider
@@ -376,7 +372,7 @@ $(document).ready(function() {
         const browscap = $(this).find("main .browscap");
 		const form = $(this).find("main form");
         
-		triggerCustom(form,'form:focusFirst');
+		triggerFunc(form,'form:focusFirst');
 		
 		if(!Browser.allowsCookie())
 		browscap.find(".cookie-disabled").show();

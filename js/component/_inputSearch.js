@@ -14,9 +14,9 @@ Component.inputSearch = function(option)
     },option);
     
     // bindings
-    Component.block.call(this,'change');
+    Component.BlockEvent.call(this,'change');
     Component.keyboardEnter.call(this,true,'keyup');
-    Component.timeout.call(this,'keyup',$option.timeout);
+    Component.Timeout.call(this,'keyup',$option.timeout);
     Component.inputValidate.call(this);
     
     // triggerHandler
@@ -69,7 +69,7 @@ Component.inputSearch = function(option)
         }
         
         triggerCustom(this,'block');
-        $(document).trigger('document:go',[href])
+        $(document).trigger('doc:go',[href])
     };
     
     // bindButton
@@ -80,7 +80,7 @@ Component.inputSearch = function(option)
         if(button != null)
         {
             button.on('click',function(event) {
-                $this.trigger('inputSeach:buttonClick');
+                triggerCustom($this,'inputSeach:buttonClick');
             });
         }
     };

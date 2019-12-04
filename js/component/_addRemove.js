@@ -74,7 +74,7 @@ Component.addRemove = function()
         const insert = triggerFunc(this,'addRemove:getInsert');
         
         insert.on('click',function() {
-            $this.trigger('addRemove:insert');
+            triggerCustom($this,'addRemove:insert');
         });
     };
     
@@ -95,7 +95,7 @@ Component.addRemove = function()
         
         remove.on('confirmed',function() {
             const index = $this.triggerHandler('addRemove:findIndex',[element]);
-            $this.trigger('addRemove:remove',[index]);
+            triggerCustom($this,'addRemove:remove',[index]);
         });
     };
     

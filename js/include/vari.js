@@ -31,13 +31,9 @@ const Vari = new function()
         
         else
         {
-            var name;
-            
-            for (name in value) 
-            {
-                r = false;
-                break;
-            }
+            $inst.eachProto(value,function() {
+                return r = false;
+            });
         }
         
         return r;
@@ -58,26 +54,18 @@ const Vari = new function()
     this.isEqual = function() 
     {
         let r = false;
-        const args = Array.from(arguments);
-        const length = args.length;
         let json = null;
-        var i;
+        let jsonOld = undefined;
         
-        for (i = 0; i < length; i++) 
-        {
-            json = Json.encode(args[i]);
+        r = Arr.each(arguments,function(value) {
+            json = Json.encode(value);
             
             if(typeof jsonOld === 'undefined')
-            var jsonOld = json;
+            jsonOld = json;
             
             else
-            {
-                r = (json === jsonOld);
-                
-                if(r === false)
-                break;
-            }
-        }
+            return (json === jsonOld);
+        });
         
         return r;
     }
@@ -88,23 +76,15 @@ const Vari = new function()
     this.isEqualStrict = function()
     {
         let r = false;
-        const args = Array.from(arguments);
-        const length = args.length;
-        var i;
+        let first = undefined;
         
-        for (i = 0; i < args.length; i++) 
-        {
+        r = Arr.each(arguments,function(value) {
             if(typeof first === 'undefined')
-            var first = args[i];
+            first = value;
             
             else
-            {
-                r = Object.is(first,args[i]);
-                
-                if(r === false)
-                break;
-            }
-        }
+            return Object.is(first,value);
+        });
         
         return r;
     }
@@ -124,6 +104,57 @@ const Vari = new function()
         {
             const str = obj.toString.call(value);
             r = obj[str] || "object";
+        }
+        
+        return r;
+    }
+    
+    
+    // each
+    // méthode utilisé pour faire un for each sur un array, un objet ou une string
+    // retourne true si le loop a complêté
+    this.each = function(loop,callback) 
+    {
+        let r = null;
+        
+        if(Arr.is(loop) || Arr.isLike(loop))
+        r = Arr.each(loop,callback);
+        
+        else if(Obj.is(loop))
+        r = Obj.each(loop,callback);
+        
+        else if(Str.is(loop))
+        r = Str.each(loop,callback);
+        
+        return r;
+    };
+    
+    
+    // eachProto
+    // fait un each en incluant les propriétés du prototype
+    // retourne true si le loop a complêté
+    this.eachProto = function(loop,callback)
+    {
+        let r = null;
+        
+        if(Func.is(callback))
+        {
+            r = true;
+            var key;
+            let value;
+            let result;
+            
+            for (key in loop) 
+            {
+                value = loop[key];
+                result = callback.call(value,value,key,loop);
+                
+                if(result === false)
+                {
+                    r = false;
+                    break;
+                }
+            }
         }
         
         return r;

@@ -8,4 +8,3 @@
 const d = console.log;
 const dd = console.dir;
 const $$ = alert;
-const logError = console.error;

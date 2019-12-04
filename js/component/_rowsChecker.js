@@ -118,11 +118,11 @@ Component.rowsChecker = function()
         })
         .on('toggleAll:check',function() {
             $this.triggerHandler('rowsChecker:getCheckboxes').trigger('checkbox:check');
-            $this.trigger('rowsChecker:refresh');
+            triggerCustom($this,'rowsChecker:refresh');
         })
         .on('toggleAll:uncheck',function() {
             $this.triggerHandler('rowsChecker:getCheckboxes').trigger('checkbox:uncheck');
-            $this.trigger('rowsChecker:refresh');
+            triggerCustom($this,'rowsChecker:refresh');
         })
     };
     
@@ -144,7 +144,7 @@ Component.rowsChecker = function()
             tr.addClass('selected');
             
             if(refresh === true)
-            $this.trigger('rowsChecker:refresh');
+            triggerCustom($this,'rowsChecker:refresh');
         })
         .on('checkbox:uncheck',function(event,refresh) {
             const tr = triggerFunc(this,'checkbox:getTr');
@@ -152,7 +152,7 @@ Component.rowsChecker = function()
             tr.removeClass('selected');
             
             if(refresh === true)
-            $this.trigger('rowsChecker:refresh');
+            triggerCustom($this,'rowsChecker:refresh');
         })
     };
     
@@ -173,7 +173,7 @@ Component.rowsChecker = function()
         const $this = $(this);
         const button = triggerFunc(this,'rowsChecker:getToolsButton');
         
-        Component.block.call(button,'click');
+        Component.BlockEvent.call(button,'click');
         
         button.on('click',function(event) {
             triggerCustom(this,'toolButton:redirect',event);
@@ -186,7 +186,7 @@ Component.rowsChecker = function()
             if(Str.isNotEmpty(href))
             {
                 triggerCustom(this,'block');
-                $(document).trigger('document:go',[href,clickEvent]);
+                $(document).trigger('doc:go',[href,clickEvent]);
             }
         });
     };
@@ -208,7 +208,7 @@ Component.rowsChecker = function()
         const $this = $(this);
         const multiDelete = triggerFunc(this,'rowsChecker:getMultiDelete');
         
-        Component.block.call(multiDelete,'submit');
+        Component.BlockEvent.call(multiDelete,'submit');
         Component.confirm.call(multiDelete,'submit');
         
         multiDelete.on('confirmed',function(event,submit) {

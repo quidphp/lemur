@@ -102,7 +102,7 @@ Component.colsSorter = function()
         const $this = $(this);
         const button = triggerFunc(this,'colsSorter:getButton');
         
-        Component.block.call(button,'click');
+        Component.BlockEvent.call(button,'click');
         
         button.on('click',function(event) {
             redirect.call(this,event);
@@ -115,7 +115,7 @@ Component.colsSorter = function()
             if(Str.isNotEmpty(href) && href !== Request.relative())
             {
                 triggerCustom(this,'block');
-                triggerCustom(document,'document:go',href,clickEvent);
+                triggerCustom(document,'doc:go',href,clickEvent);
             }
         }
     };

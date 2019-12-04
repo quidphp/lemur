@@ -1,0 +1,18 @@
+// compileOnSave: false
+
+/*
+ * This file is part of the QuidPHP package.
+ * Website: https://quidphp.com
+ * License: https://github.com/quidphp/lemur/blob/master/LICENSE
+ */
+
+// background
+// stylesheet for the background component
+@mixin Background($zindex: 2, $opacity: 0.2) {
+    @include fixed(0, null, null, 0);
+    @include transitions(opacity 1.5s);
+    @include wh(100%);
+    z-index: $zindex;
+    background-color: rgba(0, 0, 0, $opacity);
+    display: none;
+}

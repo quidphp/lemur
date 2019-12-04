@@ -13,8 +13,8 @@ Component.inputNumeric = function(option)
     
     
     // bindings
-    Component.block.call(this,'change');
-    Component.timeout.call(this,'keyup',option.timeout);
+    Component.BlockEvent.call(this,'change');
+    Component.Timeout.call(this,'keyup',option.timeout);
     Component.inputValidate.call(this);
 
 
@@ -94,7 +94,7 @@ Component.inputNumeric = function(option)
         if(Str.isNotEmpty(href))
         {
             triggerCustom(this,'block');
-            triggerCustom(document,'document:go',href)
+            triggerCustom(document,'doc:go',href)
         }
     };
     

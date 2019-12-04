@@ -27,13 +27,13 @@ Component.clickOpenTrigger = function(trigger,triggerEvent,noToggle)
         {
             trigger.on('click', 'a',function(event) {
                 event.stopPropagation();
-                $(document).trigger('document:clickEvent',[event]);
+                $(document).trigger('doc:clickEvent',[event]);
             })
             .on(triggerEvent,function(event) {
                 event.stopPropagation();
                 event.preventDefault();
                 
-                $this.trigger((noToggle === true)? 'clickOpen:open':'clickOpen:toggle'); // temp, fix it
+                triggerCustom($this,(noToggle === true)? 'clickOpen:open':'clickOpen:toggle'); // temp, fix it
             });
         }
     });

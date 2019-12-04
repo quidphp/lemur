@@ -14,7 +14,7 @@ Component.fragment = function()
     .on('fragment:update',function(event,replaceState) {
         const current = Request.fragment();
         const fragment = triggerFunc(this,'fragment:get');
-        const hasHistoryApi = triggerFunc(document,'document:hasHistoryApi');
+        const hasHistoryApi = triggerFunc(document,'doc:hasHistoryApi');
         
         if(current !== fragment)
         {
@@ -23,7 +23,7 @@ Component.fragment = function()
                 const fragmentHash = '#'+fragment;
                 
                 if(hasHistoryApi === true && replaceState === true)
-                triggerFunc(document,'document:replaceState',Request.relative()+fragmentHash);
+                triggerFunc(document,'doc:replaceState',Request.relative()+fragmentHash);
                 else
                 window.location.hash = fragmentHash;
             }
@@ -36,7 +36,7 @@ Component.fragment = function()
     })
     .on('fragment:remove',function(event) {
         if(hasHistoryApi === true && replaceState === true)
-        triggerFunc(document,'document:replaceState',Request.relative());
+        triggerFunc(document,'doc:replaceState',Request.relative());
         else
         window.location.hash = '';
     });

@@ -8,9 +8,13 @@
 // script to activate ajax with an event on the nodes
 const Ajax = function(type) 
 {
+    // nodes
+    const $nodes = this;
+    
+    
     // func
     setFunc(this,'ajax:confirm',function() {
-        return (triggerFunc(document,'document:isLoading') === true)? false:true;
+        return (triggerFunc(document,'doc:isLoading') === true)? false:true;
     });
     
     setFunc(this,'ajax:trigger',function(config,tag,triggerEvent) {
@@ -26,12 +30,11 @@ const Ajax = function(type)
     });
     
     
-    // trigger
+    // custom event
     ael(this,type,function(event) {
         event.stopPropagation();
         triggerFunc(this,'ajax:trigger',null,true,event);
     });
-    
     
     return this;
 }

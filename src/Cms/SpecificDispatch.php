@@ -49,7 +49,7 @@ class SpecificDispatch extends Core\RouteAlias
         'group'=>'submit',
         'form'=>[
             'attr'=>[
-                'data-unload'=>'common/unload',
+                'data-unload'=>true,
                 'data-validation'=>false]]
     ];
 

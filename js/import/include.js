@@ -3,7 +3,7 @@
  * Website: https://quidphp.com
  * License: https://github.com/quidphp/lemur/blob/master/LICENSE
  */
- 
+
 // include
 const Arr = Lemur.Arr;
 const Bool = Lemur.Bool;
@@ -14,6 +14,7 @@ const Dom = Lemur.Dom;
 const DomChange = Lemur.DomChange;
 const Evt = Lemur.Evt;
 const Func = Lemur.Func;
+const HistoryApi = Lemur.HistoryApi;
 const Html = Lemur.Html;
 const Json = Lemur.Json;
 const Nav = Lemur.Nav;
@@ -30,16 +31,26 @@ const Xhr = Lemur.Xhr;
 
 // debug
 const assert = Debug.assertThrow;
+const logError = Debug.logError;
+
+// dom 
+const getData = Dom.getData;
 
 // event
 const evtDebug = Evt.debug;
 const setFunc = Evt.setFunc;
+const removeFunc = Evt.removeFunc;
+const allFunc = Evt.allFunc;
 const ael = Evt.addEventListener;
 const aelOnce = Evt.addEventListenerOnce;
+const rel = Evt.removeEventListener;
 const triggerEvent = Evt.triggerEvent;
 const triggerFunc = Evt.triggerFunc;
 const triggerCustom = Evt.triggerCustom;
 const triggerSetup = Evt.triggerSetup;
+
+// vari
+const each = Vari.each;
 
 // component
 const Component = Lemur.Component;

@@ -10,7 +10,7 @@
 Component.filter = function()
 {
     Component.clickOpenWithTrigger.call(this,"> .trigger");
-    Component.block.call(this,'ajax:init');
+    Component.BlockEvent.call(this,'ajax:init');
     Component.Ajax.call(this,'ajax:init');
     
     $(this).on('filter:getResult',function(event) {
@@ -60,7 +60,7 @@ Component.filter = function()
         const order = triggerFunc(this,'filter:getOrder');
         
         Component.validatePrevent.call(input,'ajax:input');
-        Component.timeout.call(input,'keyup',500);
+        Component.Timeout.call(input,'keyup',500);
 
         input.on('keyup:onTimeout',function(event) {
             triggerCustom(this,'ajax:input');

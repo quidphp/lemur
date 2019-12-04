@@ -6,25 +6,29 @@
  
 // anchorCorner
 // script of behaviours for an absolute anchorCorner component
-Component.anchorCorner = function()
+const AnchorCorner = function()
 {
+    // nodes
+    const $nodes = this;
+    
+    
     // resizeChange
-    Component.resizeChange.call(this);
+    Component.ResizeChange.call(this);
     
     
-    // trigger
-    $(this).on('anchorCorner:refresh',function(event) {
+    // custom event
+    ael(this,'anchorCorner:refresh',function() {
         const offset = offsetCorner.call(this);
         $(this).attr('data-anchor-corner',offset.corner);
-        event.stopPropagation();
-    })
-    .on('resize:change',function() {
+    });
+    
+    ael(this,'resize:change',function() {
         triggerCustom(this,'anchorCorner:refresh');
     })
     
     
-    // mouse
-    .on('mouseenter',function(event) {
+    // event mouse
+    ael(this,'mouseenter',function(event) {
         triggerCustom(this,'anchorCorner:refresh');
         event.stopPropagation();
     });
@@ -48,6 +52,8 @@ Component.anchorCorner = function()
     // firstRefresh
     triggerCustom(this,'anchorCorner:refresh');
     
-    
     return this;
 }
+
+// export
+Component.AnchorCorner = AnchorCorner;

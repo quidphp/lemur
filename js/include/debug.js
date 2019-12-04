@@ -12,16 +12,21 @@ const Debug = new function()
     const $inst = this;
     
     
-    // comme assert mais lance une exception
+    // assertThrow
+    // comme assert mais lance une errur
     this.assertThrow = function(value) 
     {
         if(value !== true)
-        {
-            console.error('Assert throw');
-            console.trace();
-            throw new Exception();
-        }
+        throw new Error();
     };
+    
+    
+    // logError
+    // permet de logger une erreur
+    this.logError = function(value)
+    {
+        console.error('Catched',value);
+    }
 }
 
 // export

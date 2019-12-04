@@ -9,7 +9,7 @@
 Component.calendar = function()
 {
     // block + ajax
-    Component.block.call(this,'calendar:load');
+    Component.BlockEvent.call(this,'calendar:load');
     Component.Ajax.call(this,'calendar:load');
     
     // triggerHandler
@@ -112,13 +112,11 @@ Component.calendar = function()
             value = Str.trim(value);
             value = Str.explodeIndex(0," ",value);
             const split = value.split('-');
-            var i;
             
-            for (i = 0; i < split.length; i++) 
-            {
-                if(split[i].length === 1)
-                split[i] = "0"+split[i];
-            }
+            Arr.each(split,function(value,key,split) {
+                if(value.length === 1)
+                split[key] = "0"+value;
+            });
             
             r = split.join('-');
         }
@@ -131,19 +129,19 @@ Component.calendar = function()
         const $this = $(this);
         const prevNext = triggerFunc(this,'calendar:getPrevNext');
         
-        Component.block.call(prevNext,'click');
+        Component.BlockEvent.call(prevNext,'click');
         Component.Ajax.call(prevNext,'click');
 
         prevNext.on('ajax:before',function() {
-            $this.trigger('ajax:before');
+            triggerCustom($this,'ajax:before');
             triggerCustom(this,'block');
         })
         .on('ajax:success',function(event,data,textStatus,jqXHR) {
-            $this.trigger('ajax:success',[data,textStatus,jqXHR]);
+            triggerCustom($this,'ajax:success',[data,textStatus,jqXHR]);
             triggerCustom(this,'unblock');
         })
         .on('ajax:error',function(event,parsedError,jqXHR,textStatus,errorThrown) {
-            $this.trigger('ajax:error',[parsedError,jqXHR,textStatus,errorThrown]);
+            triggerCustom($this,'ajax:error',[parsedError,jqXHR,textStatus,errorThrown]);
         });
     };
     

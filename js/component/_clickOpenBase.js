@@ -96,8 +96,9 @@ Component.clickOpenBase = function(target)
             triggerCustom(this,'clickOpen:focus');
         }
         
+        const background = triggerFunc(document,'doc:getBackground');
         const bgFrom = triggerFunc(this,'clickOpen:getBackgroundFrom');
-        $(document).trigger('document:setBackground',[bgFrom,false]);
+        triggerFunc(background,'background:set',bgFrom,false);
     })
     .on('clickOpen:close',function(event) {
         event.stopPropagation();
@@ -107,7 +108,8 @@ Component.clickOpenBase = function(target)
             $(this).removeClass('active');
             $(this).removeAttr(attr);
             
-            $(document).trigger('document:unsetBackground',[triggerFunc(this,'clickOpen:getBackgroundFrom')]);
+            const background = triggerFunc(document,'doc:getBackground');
+            triggerFunc(background,'background:unset',triggerFunc(this,'clickOpen:getBackgroundFrom'));
         }
     })
     .on('clickOpen:closeOthers',function(event) {

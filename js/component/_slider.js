@@ -55,7 +55,7 @@ Component.slider = function(timeout,navs,className,showIfOne)
             
             if(Num.is(timeout))
             {
-                Component.timeout.call(this,'tab:change',timeout);
+                Component.Timeout.call(this,'tab:change',timeout);
                 
                 $(this).on('tab:change:onTimeout',function(event) {
                     triggerCustom(this,'tab:loopNext');

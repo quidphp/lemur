@@ -6,7 +6,7 @@
  
 // include
 // script to test the include.js file
-const Include = function()
+const TestInclude = function()
 {   
     let r = true;
     
@@ -16,7 +16,7 @@ const Include = function()
         assert(Arr.is([]));
         assert(!Arr.is({}));
         assert(!Arr.is(arguments));
-        assert(Arr.isLike([]));
+        assert(!Arr.isLike([]));
         assert(!Arr.isLike({}));
         assert(!Arr.isLike(function() { }));
         assert(Arr.isLike(arguments));
@@ -28,21 +28,43 @@ const Include = function()
         assert(!Arr.isNotEmpty([]));
         assert(Arr.in(null,[null]));
         assert(!Arr.in(true,[false]));
-        assert(Vari.isEqual(Arr.slice(1,3,[2,4,6,8,10]),[4,6]));
-        assert(Vari.isEqual(Arr.slice(1,undefined,[2,4,6,8,10]),[4,6,8,10]));
-        assert(Vari.isEqual(Arr.slice(null,null,[2,4,6,8,10]),[2,4,6,8,10]));
-        assert(Vari.isEqual(Arr.sliceStart(2,[2,4,6,8,10]),[6,8,10]));
+        assert(Arr.search(2,[1,2,3]) === 1);
+        assert(!Arr.isEqual({},{}));
+        assert(Arr.isEqual(Arr.slice(1,3,[2,4,6,8,10]),[4,6]));
+        assert(Arr.isEqual(Arr.slice(1,undefined,[2,4,6,8,10]),[4,6,8,10]));
+        assert(Arr.isEqual(Arr.slice(null,null,[2,4,6,8,10]),[2,4,6,8,10]));
+        assert(Arr.isEqual(Arr.sliceStart(2,[2,4,6,8,10]),[6,8,10]));
+        let spliceArr = [12,3,40];
+        Arr.spliceValue(3,spliceArr);
+        assert(Arr.isEqual(spliceArr,[12,40]));
+        assert(Arr.isEqual(Arr.spliceValue(40,spliceArr,'ok'),[40]));
+        assert(Arr.isEqual(spliceArr,[12,'ok']));
+        assert(Vari.isEqual(Arr.valueStrip(3,[3,2,3,1,5]),[2,1,5]));
+        let arr = [3,2,3,1,5];
+        assert(Arr.valueStrip('8',arr) !== arr);
+        assert(Arr.isEqual(Arr.valueStrip('8',arr),arr));
+        let arrKey;
+        assert(Vari.isEqual(Arr.copy([1,2,3]),[1,2,3]));
+        assert(Arr.copy([1,2,3]) !== [1,2,3]);
+        assert(Arr.each([1,2,3],function(value,key) {
+            assert(this === value);
+            arrKey = key;
+        }));
+        assert(arrKey === 2);
         
-        // bool
+        // boolean
         assert(!Bool.is('true'));
         assert(!Bool.is(function() { }));
         assert(!Bool.is(null));
         assert(!Bool.is(1));
         assert(Bool.is(true));
+        assert(Bool.num(true) === 1);
+        assert(Bool.num(false) === 0);
+        assert(Bool.toggle(1) === 0);
+        assert(Bool.toggle('1') === '0');
+        assert(Bool.toggle(false) === true);
         
         // browser
-        assert(Bool.is(Browser.isResponsive()));
-        assert(Bool.is(Browser.isTouch()));
         assert(Bool.is(Browser.isOldIe()));
         assert(Bool.is(Browser.isUnsupported()));
         assert(Bool.is(Browser.allowsCookie()));
@@ -72,9 +94,11 @@ const Include = function()
         assert(Str.isNotEmpty(Dom.outerHtml(htmlNode)));
         assert(Num.is(Dom.heightWithPadding(htmlNode)));
         assert(Obj.isPlain(Dom.attr(htmlNode)));
-        assert(Str.isNotEmpty(Dom.getAttrStr(htmlNode)));
-        assert(Obj.isPlain(Dom.getDataAttr(htmlNode)));
-
+        assert(Dom.getAttr('data-error',htmlNode) === 'none');
+        assert(Str.isNotEmpty(Dom.attrStr(htmlNode)));
+        assert(Obj.isPlain(Dom.dataAttr(htmlNode)));
+        assert(Dom.getDataAttr('error',htmlNode) === 'none');
+        
         // domChange
 
         // evt
@@ -89,11 +113,17 @@ const Include = function()
         Evt.setFunc(htmlNode,'what',function() { return false; });
         assert(Evt.triggerFunc(htmlNode,'what') === false);
         Evt.removeFunc(htmlNode,'what');
-        assert(Evt.getFunc(htmlNode,'what') === undefined);
+        assert(Evt.getFunc(htmlNode,'what') === null);
         
         // func
         assert(!Func.is('test'));
         assert(Func.is(function() { }));
+        
+        // historyApi
+        assert(HistoryApi.supported());
+        assert(HistoryApi.isState({ url: 'test', timestamp: 1234 }));
+        assert(HistoryApi.isStateChangeValid({ url: 'test', timestamp: 1234 },HistoryApi.makeState('what','bleh')));
+        assert(Obj.length(HistoryApi.makeState('what','bleh')) === 3);
         
         // html
         const htmlStr = Dom.outerHtml($("html"));
@@ -126,6 +156,7 @@ const Include = function()
         assert(!Num.isInt('2'));
         assert(Num.isInt(2));
         assert(!Num.isInt(2.2));
+        assert(Num.castInt(true) === null);
         assert(Num.castInt('2.3') === 2);
         assert(Num.castInt(4) === 4);
         assert(Num.castInt(2.3) === 2);
@@ -164,8 +195,9 @@ const Include = function()
         assert(Obj.isNotEmpty([2]));
         assert(!Obj.isNotEmpty(2));
         assert(!Obj.isNotEmpty(null));
-        assert(Obj.hasProperty('test',{test: 2}));
-        assert(!Obj.hasProperty('test',{testz: 2}));
+        assert(Obj.keyExists('test',{test: 2}));
+        assert(!Obj.keyExists('test',{testz: 2}));
+        assert(Obj.isEqual([],[]))
         assert(!Obj.isEqual({},[]));
         assert(!Obj.isEqual({},{},[]));
         assert(Obj.isEqual({},{},{}));
@@ -181,7 +213,19 @@ const Include = function()
         assert(!Obj.isEqual(null,undefined));
         assert(Obj.length({ test: 2, ok: 3}) === 2);
         assert(Obj.length({}) === 0);
+        let objGetSet = {};
+        assert(Obj.get('what',objGetSet) === null);
+        assert(Obj.set('meh',2,objGetSet) !== objGetSet);
+        assert(Obj.isEqual(Obj.set('meh',2,objGetSet),{meh: 2}));
+        assert(Obj.setRef('meh',2,objGetSet) === objGetSet);
+        assert(Obj.get('meh',objGetSet) === 2);
+        assert(Obj.unset('meh',objGetSet) !== objGetSet);
+        assert(Obj.isEqual(Obj.unset('meh',objGetSet),{}));
+        assert(Obj.unsetRef('meh',objGetSet) === objGetSet);
+        assert(Obj.get('meh',objGetSet) === null);
         let replace = {test:2, ok: {what: true}};
+        assert(Obj.isEqual(Obj.copy(replace),replace));
+        assert(Obj.copy(replace) !== replace);
         assert(Obj.isEqual(Obj.replace(replace,{ok: {james: false}}),{test: 2, ok: {james: false}}));
         assert(Obj.isEqual(replace,{test:2, ok: {what: true}}));
         assert(Obj.str({str: 2, what: 'ok', loop: [1,2], meh: { what: 2 }}) === 'str=2 what=ok loop=[1,2] meh={"what":2}');
@@ -190,6 +234,23 @@ const Include = function()
         assert(Obj.isEqual(Obj.replace([1,2,3],[4,5]),{0:4,1: 5,2:3}));
         assert(Obj.isEqual(Obj.replaceRecursive({test:2, ok: {what: true}},{ok: {james: false}}),{test: 2, ok: {what: true, james: false}}));
         assert(Obj.climb(['test','what'],{test: {what: 'LOL'}}) === 'LOL');
+        assert(Obj.climb(['test','whatz'],{test: {what: 'LOL'}}) === null);
+        let objKey;
+        let objVal;
+        assert(Obj.each({test: 'ok', what: 3},function(value,key) {
+            assert(this === value);
+            objKey = key;
+            objVal = value;
+        }));
+        assert(objKey === 'what');
+        assert(objVal === 3);
+        assert(Obj.each({test: 'ok', what: 3},function(value,key) {
+            objKey = key;
+            objVal = value;
+            return false;
+        }) === false);
+        assert(objKey === 'test');
+        assert(objVal === 'ok');
         
         // request
         assert(Str.isNotEmpty(Request.relative()));
@@ -241,6 +302,17 @@ const Include = function()
         assert(Str.explodeIndex(2,'-','la-vie-ok') === 'ok');
         assert(Str.explodeIndex('2','-','la-vie-ok') === null);
         assert(Str.explodeIndex(3,'-','la-vie-ok') === null);
+        let val = null;
+        assert(Str.each('abcde',function(value) {
+            assert(this === value);
+            val = value;
+        }));
+        assert(val === 'e');
+        assert(Str.each('abcde',function(value) {
+            val = value;
+            return (value === 'c')? false:true;
+        }) === false)
+        assert(val === 'c');
         
         // uri
         assert(Uri.isInternal("http://google.com/test","http://google.com/test2"));
@@ -282,6 +354,19 @@ const Include = function()
         assert(Validate.isEmail("test@test.com"));
         assert(!Validate.isEmail("testtest.com"));
         assert(Validate.isEmail('bla@bla.zzzzzzz'));
+        assert(!Validate.trigger('test',true,"^[0-9\-]+$"));
+        assert(!Validate.trigger('abc-de',true,"^[0-9\-]+$"));
+        assert(!Validate.trigger('',1,"^[0-9\-]+$"));
+        assert(Validate.trigger('',false,"^[0-9\-]+$"));
+        assert(Validate.required('test',true));
+        assert(!Validate.required('',true));
+        assert(Validate.required('test',1));
+        assert(Validate.required('test',0));
+        assert(!Validate.required('',1));
+        assert(Validate.required('',0));
+        assert(Validate.pattern('',"^[0-9\-]+$"));
+        assert(Validate.pattern('01-2',"^[0-9\-]+$"));
+        assert(!Validate.pattern('abc',"^[0-9\-]+$"));
         
         // vari
         assert(Vari.is(null));
@@ -316,6 +401,21 @@ const Include = function()
         assert(Vari.type(null) === 'null');
         assert(Vari.type(true) === 'boolean');
         assert(Vari.type(undefined) === 'undefined');
+        let variVal;
+        assert(Vari.each({ok: 2},function(value) {
+            assert(this === value);
+            variVal = value;
+        }));
+        assert(variVal === 2);
+        let length = 0;
+        Vari.each(new XMLHttpRequest(),function(value) {
+            length++;
+        });
+        assert(length === 0);
+        Vari.eachProto(new XMLHttpRequest(),function(value) {
+            length++;
+        });
+        assert(length === 34);
         
         // xhr
         assert(Obj.length(Xhr.configFromNode(htmlNode)) === 3);
@@ -327,10 +427,11 @@ const Include = function()
     catch (e) 
     {
         r = false;
+        logError(e);
     } 
     
     return r;
 }
 
 // export
-Test.Include = Include;
+Test.Include = TestInclude;

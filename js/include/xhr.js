@@ -18,14 +18,12 @@ const Xhr = new function()
     this.trigger = function(node,config,tag)
     {
         let r = null;
-        const triggerFunc = Evt.triggerFunc;
-        const triggerCustom = Evt.triggerCustom;
-        
+
         const options = {
-            url: triggerFunc(node,'ajax:getHref'),
-            method: triggerFunc(node,'ajax:getMethod'),
-            timeout: triggerFunc(node,'ajax:getTimeout') || 5000,
-            data: triggerFunc(node,'ajax:getData'),
+            url: Evt.triggerFunc(node,'ajax:getHref'),
+            method: Evt.triggerFunc(node,'ajax:getMethod'),
+            timeout: Evt.triggerFunc(node,'ajax:getTimeout') || 5000,
+            data: Evt.triggerFunc(node,'ajax:getData'),
             processData: true,
             contentType: "application/x-www-form-urlencoded; charset=UTF-8",
             xhr: function() {
@@ -51,20 +49,20 @@ const Xhr = new function()
                 });
             },
             progress: function(percent,progressEvent) {
-                triggerCustom(node,'ajax:progress',percent,progressEvent);
+                Evt.triggerCustom(node,'ajax:progress',percent,progressEvent);
             },
             beforeSend: function(jqXHR,settings) {
-                triggerCustom(node,'ajax:beforeSend',jqXHR,settings);
+                Evt.triggerCustom(node,'ajax:beforeSend',jqXHR,settings);
             },
             success: function(data,textStatus,jqXHR) {
-                triggerCustom(node,'ajax:success',data,textStatus,jqXHR);
+                Evt.triggerCustom(node,'ajax:success',data,textStatus,jqXHR);
             },
             error: function(jqXHR,textStatus,errorThrown) {
                 const parsedError = $inst.parseError(jqXHR.responseText,textStatus);
-                triggerCustom(node,'ajax:error',parsedError,jqXHR,textStatus,errorThrown);
+                Evt.triggerCustom(node,'ajax:error',parsedError,jqXHR,textStatus,errorThrown);
             },
             complete: function(jqXHR,textStatus) {
-                triggerCustom(node,'ajax:complete',jqXHR,textStatus);
+                Evt.triggerCustom(node,'ajax:complete',jqXHR,textStatus);
             }
         };
         
@@ -72,8 +70,8 @@ const Xhr = new function()
         
         if(tag === true)
         $inst.configFromNode(node,config);
-
-        if(Str.isNotEmpty(config.url) && triggerFunc(node,'ajax:confirm') !== false)
+        
+        if(Str.isNotEmpty(config.url) && Evt.triggerFunc(node,'ajax:confirm') !== false)
         {
             if(config.method == null)
             config.method = 'get';
@@ -86,7 +84,7 @@ const Xhr = new function()
                 config.contentType = false;
             }
 
-            triggerCustom(node,'ajax:before',config);
+            Evt.triggerCustom(node,'ajax:before',config);
 
             r = $.ajax(config);
         }
@@ -113,7 +111,7 @@ const Xhr = new function()
             if(tagName === 'form')
             {
                 const formData = new FormData($(node)[0]);
-                const clicked = triggerFunc(node,'form:getClickedSubmit');
+                const clicked = Evt.triggerFunc(node,'form:getClickedSubmit');
                 
                 if(clicked != null && clicked.length && Str.isNotEmpty(clicked.attr('name')))
                 formData.append(clicked.attr('name'),clicked.val());

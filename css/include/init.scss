@@ -319,17 +319,6 @@ $media: $uriMedia;
     }
 }
 
-// bodyBackground
-// mixin pour le css contenu dans la div background sous le body
-@mixin bodyBackground($zindex: 2, $opacity: 0.2) {
-    @include fixed(0, null, null, 0);
-    @include transitions(opacity 1.5s);
-    @include wh(100%);
-    z-index: $zindex;
-    background-color: rgba(0, 0, 0, $opacity);
-    display: none;
-}
-
 // abs
 // mixin utilisé pour positionner un élément en absolute
 @mixin abs($top: null, $right: null, $bottom: null, $left: null) {

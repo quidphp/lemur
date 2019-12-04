@@ -8,9 +8,16 @@
 // component to catch or prevent the tab key on the keyboard
 const KeyboardTab = function(prevent,type)
 {
+    // nodes
+    const $nodes = this;
+    
+    
+    // keyboard
     Component.Keyboard.call(this,'tab',[9],type);
     
-    setFunc(this,'tab:prevent',function(event) {
+    
+    // func
+    setFunc(this,'keyboard:tab:prevent',function() {
         return (prevent === true)? true:false;
     });    
     

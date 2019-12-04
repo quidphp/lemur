@@ -4,12 +4,15 @@
  * License: https://github.com/quidphp/lemur/blob/master/LICENSE
  */
  
-// document
+// doc
 // script for a document component managing site navigation with the HistoryAPI
-const Document = function(option)
+const Doc = function(option)
 {
-    // letiable
-    const $location = window.location;
+    // nodes
+    const $nodes = this;
+    
+
+    // variable
     let $history = null;
     let $initial = null;
     let $previous = null;
@@ -20,8 +23,7 @@ const Document = function(option)
         anchor: "a:not([target='_blank']):not([data-navigation='0']):not([data-modal]):not([href^='mailto:'])",
         form: "form:not([data-navigation='0'])",
         timeout: 10000,
-        routeWrap: "> .route-wrap", // target, descendant de body
-        background: "> .background" // background, descendant de body
+        routeWrap: "> .route-wrap" // target, descendant de body
     },option);
     
     
@@ -29,16 +31,15 @@ const Document = function(option)
     
     // isLoading
     // retourne vrai si le chargement de la navigation est présentement active
-    setFunc(this,'document:isLoading',function() {
-        return ($(this).data('document:active') === true)? true:false;
+    setFunc(this,'doc:isLoading',function() {
+        return ($(this).data('doc-active') === true)? true:false;
     });
-    
     
     // hasAjax
     // retourne vrai s'il y a présentement un objet ajax en train de s'effectuer
-    setFunc(this,'document:hasAjax',function() {
+    setFunc(this,'doc:hasAjax',function() {
         let r = false;
-        const ajax = $(this).data('document:ajax');
+        const ajax = $(this).data('doc-ajax');
         
         if(ajax != null && ajax.readyState < 4)
         r = true;
@@ -46,90 +47,86 @@ const Document = function(option)
         return r;
     });
     
-    
     // hasHistoryApi
     // retourne vrai si history api est activé
-    setFunc(this,'document:hasHistoryApi',function() {
-        return hasHistoryApi();
+    setFunc(this,'doc:hasHistoryApi',function() {
+        return HistoryApi.supported();
     });
     
-    
+    // isTouch
+    // retourne vrai si le navigateur courant supporte le touch
+    setFunc(this,'doc:isTouch',function() {
+        return ($(this).data('doc-isTouch') === true)? true:false;
+    });
+
     // getInitialState
     // retourne l'état initial
-    setFunc(this,'document:getInitialState',function() {
+    setFunc(this,'doc:getInitialState',function() {
         return $initial;
     });
     
-    
     // getPreviousState
     // retourne l'état précédent
-    setFunc(this,'document:getPreviousState',function() {
+    setFunc(this,'doc:getPreviousState',function() {
         return $previous || $initial;
     });
     
-    
     // getCurrentState
     // retourne l'état courant
-    setFunc(this,'document:getCurrentState',function() {
-        return makeHistoryState($location.href,document.title);
+    setFunc(this,'doc:getCurrentState',function() {
+        return HistoryApi.makeState(location.href,document.title);
     });
     
-    
     // replaceState
-    setFunc(this,'document:replaceState',function(uri,title) {
-        let r = makeHistoryState(uri,title);
+    setFunc(this,'doc:replaceState',function(uri,title) {
+        let r = HistoryApi.makeState(uri,title);
         
-        if(hasHistoryApi() && Str.isNotEmpty(uri))
+        if(HistoryApi.supported() && Str.isNotEmpty(uri))
         $history.replaceState(r,r.title,r.url);
         
         return r;
     });
     
-    
     // hardRedirect
     // fait une redirection dure vers une nouvelle uri
-    setFunc(this,'document:hardRedirect',function(uri) {
-        $location.href = uri;
+    setFunc(this,'doc:hardRedirect',function(uri) {
+        location.href = uri;
     });
-    
     
     // cancelAjax
     // annule et détruit l'objet ajax si existant
-    setFunc(this,'document:cancelAjax',function() {
+    setFunc(this,'doc:cancelAjax',function() {
         let r = false;
         
-        if(triggerFunc(this,'document:hasAjax') === true)
+        if(triggerFunc(this,'doc:hasAjax') === true)
         {
-            const ajax = $(this).data('document:ajax');
+            const ajax = $(this).data('doc-ajax');
             ajax.onreadystatechange = $.noop;
             ajax.abort();
         }
         
-        $(this).removeData('document:ajax');
+        $(this).removeData('doc-ajax');
         
         return r;
     });
     
-    
     // getHtml
     // retourne la node html
-    setFunc(this,'document:getHtml',function() {
+    setFunc(this,'doc:getHtml',function() {
         return $(this).find("html").first();
-    })
-    
+    });
     
     // getBody
     // retourne la node body
-    setFunc(this,'document:getBody',function() {
+    setFunc(this,'doc:getBody',function() {
         return $(this).find("body").first();
-    })
-    
+    });
     
     // getRouteWrap
     // retourne la node du route wrap
     // seul le contenu dans cette node est remplacé au chargement d'une nouvelle page
-    setFunc(this,'document:getRouteWrap',function() {
-        let r = triggerFunc(this,'document:getBody');
+    setFunc(this,'doc:getRouteWrap',function() {
+        let r = triggerFunc(this,'doc:getBody');
 
         if($option.routeWrap)
         r = r.find($option.routeWrap).first();
@@ -137,69 +134,9 @@ const Document = function(option)
         return r;
     });
     
-    
-    // isBackgroundActive
-    // retourne vrai si le background existe et est présentement actif
-    setFunc(this,'document:isBackgroundActive',function() {
-        let r = false;
-        const background = triggerFunc(this,'document:getBackground');
-        
-        if(background.length && background.attr('data-from') != null)
-        r = true;
-        
-        return r;
-    });
-    
-    
-    // getBackground
-    // retourne la node du background
-    setFunc(this,'document:getBackground',function() {
-        return triggerFunc(this,'document:getBody').find($option.background).first();
-    });
-    
-    
-    // setBackground
-    // permet d'ajouter une attribut data au background
-    setFunc(this,'document:setBackground',function(value,replace) {
-        let r = false;
-        
-        if(Str.isNotEmpty(value))
-        {
-            const background = triggerFunc(this,'document:getBackground');
-            
-            if(replace === true || background.attr('data-from') == null)
-            {
-                r = true;
-                background.attr('data-from',value);
-            }
-        }
-        
-        return r;
-    });
-    
-    
-    // unsetBackground
-    // enlève les attributs du background
-    setFunc(this,'document:unsetBackground',function(value) {
-        let r = false;
-        if(triggerFunc(this,'document:isBackgroundActive'))
-        {
-            const background = triggerFunc(this,'document:getBackground');
-            
-            if(value == null || value === background.attr('data-from'))
-            {
-                r = true;
-                background.removeAttr('data-from');
-            }
-        }
-        
-        return r;
-    });
-    
-    
     // clickEvent
     // gère un nouvel historique déclenché par un clic
-    setFunc(this,'document:clickEvent',function(click) {
+    setFunc(this,'doc:clickEvent',function(click) {
         let r = false;
         
         if(click.target && !(click.which > 1 || click.metaKey || click.ctrlKey || click.shiftKey || click.altKey))
@@ -209,36 +146,37 @@ const Document = function(option)
             if(target.is($option.anchor))
             {
                 const uri = target.prop('href');
-                r = triggerFunc(this,'document:go',uri,click);
+                r = triggerFunc(this,'doc:go',uri,click);
             }
         }
         
         return r;
     });
     
-    
-    // document:submitEvent
+    // doc:submitEvent
     // gère un nouvel historique déclenché par l'envoie d'un formulaire
-    setFunc(this,'document:submitEvent',function(submit) {
+    setFunc(this,'doc:submitEvent',function(submit) {
         let r = false;
         const target = $(submit.target);
         
         if(target.is($option.form))
         {
             const uri = target.prop('action');
-            r = triggerFunc(this,'document:go',uri,submit);
+            r = triggerFunc(this,'doc:go',uri,submit);
         }
         
+        submit.preventDefault();
+        r = false;
+        
         return r;
-    })
+    });
     
-    
-    // document:go
+    // doc:go
     // pousse ou replace une nouvelle entrée dans l'historique
-    setFunc(this,'document:go',function(uri,sourceEvent) {
+    setFunc(this,'doc:go',function(uri,sourceEvent) {
         let r = false;
         
-        if(triggerFunc(this,'document:hasAjax'))
+        if(triggerFunc(this,'doc:hasAjax'))
         r = true;
         
         else
@@ -248,13 +186,13 @@ const Document = function(option)
             
             if(Str.is(uri))
             {
-                const current = triggerFunc(this,'document:getCurrentState');
-                const state = makeHistoryState(uri);
-                const isValid = isStateChangeValid(state,current);
+                const current = triggerFunc(this,'doc:getCurrentState');
+                const state = HistoryApi.makeState(uri);
+                const isValid = HistoryApi.isStateChangeValid(state,current);
                 
                 if(isValid === true)
                 {
-                    if(isUnloadValid() === true)
+                    if(triggerFunc(window,'win:isUnloadValid') === true)
                     r = (makeAjax.call(this,state,sourceEvent))? true:false;
                     else
                     r = true;
@@ -263,11 +201,10 @@ const Document = function(option)
                 // hash change
                 else if(Uri.isHashChange(state.url,current.url))
                 {
-                    
                     r = true;
                     $history.pushState(state,state.title,state.url);
                     $previous = state;
-                    triggerEvent(window,'hashchange',[sourceEvent]);
+                    triggerEvent(window,'hashchange',sourceEvent);
                 }
             }
         }
@@ -300,32 +237,32 @@ const Document = function(option)
     
     // outsideClick
     // permet de lancer tous les évenements liés aux outside clicks
-    ael(this,'document:outsideClick',function(event) {
-        triggerCustom(this,'click.document-mount');
+    ael(this,'doc:outsideClick',function(event) {
+        triggerCustom(this,'click.doc-mount');
     });
-    
     
     // mountNodeCommon
     // trigger mountNode et mountCommon en même temps
-    ael(this,'document:mountNodeCommon',function(event,node) {
-        triggerCustom(this,'document:mountNode',node);
-        triggerCustom(this,'document:mountCommon',node);
+    ael(this,'doc:mountNodeCommon',function(event,node) {
+        triggerCustom(this,'doc:mountNode',node);
+        triggerCustom(this,'doc:mountCommon',node);
     });
     
 
     // setup
     aelOnce(this,'component:setup',function() {
         
-        if(hasHistoryApi())
+        if(HistoryApi.supported())
         $history = window.history;
 
-        triggerFunc(this,'document:cancelAjax');
-        $initial = triggerFunc(this,'document:replaceState',$location.href,document.title);
+        triggerFunc(this,'doc:cancelAjax');
+        $initial = triggerFunc(this,'doc:replaceState',location.href,document.title);
         
         if($history)
         {
             $history.scrollRestoration = 'manual';
             bindDocument.call(this);
+            bindWindow.call(this);
         }
         
         mountDocument.call(this,true); 
@@ -337,28 +274,21 @@ const Document = function(option)
     // ceci est binder de façon permanente
     const bindDocument = function()
     {
-        const $this = $(this);
-        
         // sur le premier isTouch
-        aelOnce(this,'touchstart',function(event) {
-            $(this).data('isTouch',true);
+        aelOnce(this,'touchstart',function() {
+            $(this).data('doc-isTouch',true);
         })
-        
-        // docClick, ferme le background
-        ael(this,'click',function(event) {
-            triggerCustom(this,'document:unsetBackground');
-        });
         
         // popstate
         ael(window,'popstate',function(event) {
-            const state = event.state || triggerFunc($this,'document:getCurrentState');
-            const previous = triggerFunc($this,'document:getPreviousState');
-            const isValid = isStateChangeValid(state,previous,true);
+            const state = event.state || triggerFunc($nodes,'doc:getCurrentState');
+            const previous = triggerFunc($nodes,'doc:getPreviousState');
+            const isValid = HistoryApi.isStateChangeValid(state,previous,true);
             
             if(isValid === true)
             {
-                if(isUnloadValid() === true)
-                makeAjax.call($this,state,event);
+                if(triggerFunc(this,'win:isUnloadValid') === true)
+                makeAjax.call($nodes,state,event);
                 
                 else
                 $history.pushState($previous,$previous.title,$previous.url);
@@ -380,7 +310,7 @@ const Document = function(option)
 
             if(Uri.isInternal(href))
             {
-                triggerFunc($this,'document:clickEvent',event);
+                triggerFunc($nodes,'doc:clickEvent',event);
                 
                 if(event.isDefaultPrevented())
                 r = false;
@@ -392,7 +322,7 @@ const Document = function(option)
         // submit
         .on('submit', $option.form,function(event) { 
             let r = true;
-            triggerFunc($this,'document:submitEvent',event);
+            triggerFunc($nodes,'doc:submitEvent',event);
             
             if(event.isDefaultPrevented())
             r = false;
@@ -402,51 +332,11 @@ const Document = function(option)
     }
     
     
-    // hasHistoryApi
-    // retourne vrai si le navigateur courant supporte history API
-    const hasHistoryApi = function()
+    // bindWindow
+    // ajoute certains événements à l'objet window
+    const bindWindow = function()
     {
-        let r = false;
-        
-        if(window.history && window.history.pushState && window.history.replaceState)
-        {
-            if(!navigator.userAgent.match(/((iPod|iPhone|iPad).+\bOS\s+[1-4]\D|WebApps\/.+CFNetwork)/))
-            r = true;
-        }
-        
-        return r;
-    }
-
-    
-    // isHistoryState
-    // retourne vrai si la valeur est un objet compatible pour un état d'historique
-    const isHistoryState = function(state)
-    {
-        let r = false;
-        
-        if(Obj.isPlain(state) && Str.is(state.url) && Num.is(state.timestamp))
-        r = true;
-        
-        return r;
-    }
-    
-    
-    // makeHistoryState
-    // retourne un objet état d'historique (avec url, title et timestamp)
-    const makeHistoryState = function(uri,title) 
-    {
-        let r = null;
-        
-        if(Str.is(uri))
-        {
-            r = {
-                url: uri,
-                title: title || null,
-                timestamp: Datetime.timestamp()
-            };
-        }
-        
-        return r;
+        Component.Win.call(window);
     }
     
     
@@ -454,23 +344,21 @@ const Document = function(option)
     // lance les évènements pour monter le document dans le bon order
     const mountDocument = function(initial)
     {
-        const $this = $(this);
-        const html = triggerFunc(this,'document:getHtml');
-        const routeWrap = triggerFunc(this,'document:getRouteWrap');
+        const html = triggerFunc(this,'doc:getHtml');
+        const routeWrap = triggerFunc(this,'doc:getRouteWrap');
         
         if(initial === true)
         {
-            const body = triggerFunc(this,'document:getBody');
-            triggerCustom(this,'document:mountInitial',body);
-            triggerCustom(this,'document:mountCommon',body);
+            const body = triggerFunc(this,'doc:getBody');
+            triggerCustom(this,'doc:mountInitial',body);
+            triggerCustom(this,'doc:mountCommon',body);
         }
         
         
         else
-        triggerCustom(this,'document:mountCommon',routeWrap);
+        triggerCustom(this,'doc:mountCommon',routeWrap);
         
-        /*
-        triggerCustom(this,'document:mount',routeWrap);
+        triggerCustom(this,'doc:mount',routeWrap);
         
         const group = html.attr("data-group");
         if(Str.isNotEmpty(group))
@@ -479,9 +367,8 @@ const Document = function(option)
         const route = html.attr("data-route");
         if(Str.isNotEmpty(route))
         triggerCustom(this,'route:'+route,routeWrap);
-        */
         
-        triggerCustom(this,'document:mounted',routeWrap);
+        triggerCustom(this,'doc:mounted',routeWrap);
         
         setTimeout(function() {
             html.attr('data-status','ready');
@@ -493,11 +380,11 @@ const Document = function(option)
     // lance les évènements pour démonter le document dans le bon order
     const unmountDocument = function()
     {
-        const html = triggerFunc(this,'document:getHtml');
-        const body = triggerFunc(this,'document:getBody');
-        const routeWrap = triggerFunc(this,'document:getRouteWrap');
+        const html = triggerFunc(this,'doc:getHtml');
+        const body = triggerFunc(this,'doc:getBody');
+        const routeWrap = triggerFunc(this,'doc:getRouteWrap');
         
-        triggerCustom(this,'document:unmount',routeWrap);
+        triggerCustom(this,'doc:unmount',routeWrap);
         
         const group = html.attr("data-group");
         if(Str.isNotEmpty(group))
@@ -507,51 +394,12 @@ const Document = function(option)
         if(Str.isNotEmpty(route))
         triggerCustom(this,'route:'+route+':unmount',routeWrap);
         
-        $(this).off('.document-mount');
-        $(window).off('.document-mount');
-        html.off('.document-mount');
-        body.off('.document-mount');
-        triggerCustom(this,'document:unsetBackground');
+        $(this).off('.doc-mount');
+        $(window).off('.doc-mount');
+        html.off('.doc-mount');
+        body.off('.doc-mount');
         
-        triggerCustom(this,'document:unmounted',routeWrap);
-    }
-    
-    
-    // isStateChangeValid
-    // retourne vrai si le changement de state est valide
-    const isStateChangeValid = function(state,previous,pathQuery)
-    {
-        let r = false;
-        
-        if(isHistoryState(state) && isHistoryState(previous))
-        {
-            const isInternal = Uri.isInternal(state.url,previous.url);
-            const hasExtension = Uri.hasExtension(state.url);
-            const isHashChange = Uri.isHashChange(state.url,previous.url);
-            const isSameWithHash = Uri.isSameWithHash(state.url,previous.url);
-            
-            if(isInternal === true && hasExtension === false && isHashChange === false && isSameWithHash === false)
-            {
-                if(!pathQuery || Uri.isSamePathQuery(state.url,previous.url) === false)
-                r = true;
-            }
-        }
-        
-        return r;
-    }
-    
-    
-    // isUnloadValid
-    // retourne vrai si unload est vide ou confirmé
-    const isUnloadValid = function()
-    {
-        let r = false;
-        const unload = triggerFunc(window,'beforeunload');
-        
-        if(!Str.isNotEmpty(unload) || confirm(unload))
-        r = true;
-        
-        return r;
+        triggerCustom(this,'doc:unmounted',routeWrap);
     }
     
     
@@ -590,35 +438,35 @@ const Document = function(option)
     {
         let r = null;
 
-        if(isHistoryState(state))
+        if(HistoryApi.isState(state))
         {
-            const $this = $(this);
-            const html = triggerFunc(this,'document:getHtml');
-            triggerFunc(this,'document:cancelAjax');
+            const html = triggerFunc(this,'doc:getHtml');
+            triggerFunc(this,'doc:cancelAjax');
             beforeAjax.call(this);
             
             const config = {
                 url: state.url,
                 timeout: $option.timeout,
                 success: function(data,textStatus,jqXHR) {
-                    afterAjax.call($this,type,state,jqXHR);
+                    afterAjax.call($nodes,type,state,jqXHR);
                 },
                 progress: function(percent,event) {
-                    triggerCustom($this,'document:ajaxProgress',percent,event);
+                    triggerCustom($nodes,'doc:ajaxProgress',percent,event);
                 },
                 error: function(jqXHR,textStatus,errorThrown) {
                     if(Str.isNotEmpty(jqXHR.responseText))
-                    afterAjax.call($this,type,state,jqXHR);
+                    afterAjax.call($nodes,type,state,jqXHR);
                     else
-                    triggerFunc($this,'document:hardRedirect',state.url);
+                    triggerFunc($nodes,'doc:hardRedirect',state.url);
                 }
             };
             
             const type = makeHistoryType(config,sourceEvent);
+            
             r = Xhr.trigger(this,config);
             
             if(r != null)
-            $(this).data('document:ajax',r);
+            $(this).data('doc-ajax',r);
         }
         
         return r;
@@ -629,13 +477,10 @@ const Document = function(option)
     // callback avant le ajax
     const beforeAjax = function()
     {
-        $(this).data('document:active',true);
+        $(this).data('doc-active',true);
         
         // loading
-        triggerFunc(this,'document:getHtml').attr('data-status','loading');
-        
-        // beforeUnload
-        $(window).off('beforeunload');
+        triggerFunc(this,'doc:getHtml').attr('data-status','loading');
     }
     
     
@@ -643,20 +488,20 @@ const Document = function(option)
     // callback après le ajax
     const afterAjax = function(type,state,jqXHR)
     {
-        if(Obj.isPlain(jqXHR) && isHistoryState(state) && Str.isNotEmpty(type))
+        if(Obj.isPlain(jqXHR) && HistoryApi.isState(state) && Str.isNotEmpty(type))
         {
             const data = jqXHR.responseText;
             const currentUri = jqXHR.getResponseHeader('QUID-URI');
-            const current = triggerFunc(this,'document:getCurrentState');
+            const current = triggerFunc(this,'doc:getCurrentState');
             
             if(Str.is(data))
             {
                 const doc = Html.doc(data);
-                $(this).removeData('document:active');
+                $(this).removeData('doc-active');
                 
                 if(type === 'push' || type === 'form')
                 {
-                    state = makeHistoryState(state.url,doc.title);
+                    state = HistoryApi.makeState(state.url,doc.title);
                     
                     if(state.url !== current.url)
                     {
@@ -668,7 +513,7 @@ const Document = function(option)
                 if(state.url !== currentUri)
                 {
                     if(!Uri.isInternal(state.url,currentUri) || !Uri.isSamePathQuery(state.url,currentUri))
-                    state = triggerFunc(this,'document:replaceState',currentUri,state.title);
+                    state = triggerFunc(this,'doc:replaceState',currentUri,state.title);
                 }	
                     
                 unmountDocument.call(this);
@@ -692,7 +537,7 @@ const Document = function(option)
             
             // html
             // les attributs de html sont remplacés (les attributs existants ne sont pas effacés)
-            const html = triggerFunc(this,'document:getHtml');
+            const html = triggerFunc(this,'doc:getHtml');
             DomChange.setsAttr(doc.htmlAttr,html);
             
             // head
@@ -713,13 +558,13 @@ const Document = function(option)
             
             // body
             // les attributs de body sont effacés et remplacés
-            const body = triggerFunc(this,'document:getBody');
+            const body = triggerFunc(this,'doc:getBody');
             DomChange.emptyAttr(body);
             DomChange.setsAttr(doc.bodyAttr,body);
             
             // routeWrap
             // les attributs de routeWrap sont effacés et remplacés seulement si routeWrap n'est pas body
-            const routeWrap = triggerFunc(this,'document:getRouteWrap');
+            const routeWrap = triggerFunc(this,'doc:getRouteWrap');
             let contentTarget = doc.body;
             if($option.routeWrap && !routeWrap.is("body"))
             {
@@ -746,16 +591,15 @@ const Document = function(option)
     // callback après le chargement du nouveau document
     const afterMakeDocument = function()
     {
-        const state = triggerFunc(this,'document:getCurrentState');
+        const state = triggerFunc(this,'doc:getCurrentState');
 
         $(this).find("html,body").stop(true,true).scrollTop(0);
         
         mountDocument.call(this);
     }
     
-    
     return this;
 }
 
 // export
-Component.Document = Document;
+Component.Doc = Doc;

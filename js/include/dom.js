@@ -29,15 +29,9 @@ const Dom = new function()
             
             else if(Array.isArray(value) && value.length)
             {
-                var i;
-                
-                for (i = 0; i < value.length; i++) 
-                {
-                    r = $inst.isNode(value[i]);
-                    
-                    if(r === false)
-                    break;
-                }
+                r = Arr.each(value,function(v) {
+                    return $inst.isNode(v);
+                });
             }
         }
         
@@ -88,7 +82,24 @@ const Dom = new function()
         return r;
     };
 
-
+    
+    // getData
+    // permet de retourner une date d'une node
+    // si la valeur est null et qu'un fallback est spécifié, créer la propriété data
+    this.getData = function(node,key,fallback)
+    {
+        let r = $(node).data(key);
+        
+        if(r == null && fallback != null)
+        {
+            $(node).data(key,fallback);
+            r = fallback;
+        }
+        
+        return r;
+    }
+    
+    
     // outerHtml
     // retourne le outerHtml d'une ou plusieurs nodes
     // si pas de outerHtml, peut aussi retourner le html ou le texte
@@ -132,10 +143,10 @@ const Dom = new function()
         return r;
     }
 
-
-    // getAttrStr
+    
+    // attrStr
     // retourne les attributs d'une node sous forme de string
-    this.getAttrStr = function(node,start)
+    this.attrStr = function(node,start)
     {
         let r = null;
         const attr = $inst.attr(node,start);
@@ -147,11 +158,27 @@ const Dom = new function()
     }
     
     
-    // getDataAttr
+    // getAttr
+    // retourne un attribut
+    this.getAttr = function(key,node)
+    {
+        return Obj.get(key,$inst.attr(node));
+    }
+    
+    
+    // dataAttr
     // retourne un objet contenant tous les data-attributs d'une balise
-    this.getDataAttr = function(node)
+    this.dataAttr = function(node)
     {
         return $inst.attr(node,'data-');
+    }
+    
+    
+    // getDataAttr
+    // retourne un attribut data
+    this.getDataAttr = function(key,node)
+    {
+        return (Str.isNotEmpty(key))? Obj.get('data-'+key,$inst.attr(node)):null;
     }
     
     

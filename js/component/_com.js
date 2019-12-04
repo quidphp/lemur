@@ -9,7 +9,7 @@
 Component.com = function()
 {
     // main
-    Component.block.call(this,'click');
+    Component.BlockEvent.call(this,'click');
     Component.keyboardEscape.call(this,true);
     
     // triggerHandler
@@ -36,11 +36,11 @@ Component.com = function()
     // delegate
     .on('click', '.close',function(event) {
         const $this = $(event.delegateTarget);
-        $this.trigger('com:close');
+        triggerCustom($this,'com:close');
     })
     .on('click', '.date',function(event) {
         const $this = $(event.delegateTarget);
-        $this.trigger($this.hasClass('slide-close')? 'com:slideDown':'com:slideUp');
+        triggerCustom($this,$this.hasClass('slide-close')? 'com:slideDown':'com:slideUp');
     })
     .on('click', ".row.insert > span,.row.update > span",function(event) {
         const $this = $(event.delegateTarget);
@@ -65,7 +65,7 @@ Component.com = function()
         {
             triggerCustom(this,'block');
             href = href.replace($(this).data('char'),primary);
-            $(document).trigger('document:go',[href,clickEvent]);
+            $(document).trigger('doc:go',[href,clickEvent]);
         }
     }
     

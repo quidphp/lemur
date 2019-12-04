@@ -127,6 +127,9 @@ td[data-quick-edit='1'][data-status='loading'] > .cell-inner > a.quick-edit {
 body {
     @include clickOpen();
 }
+body > .background {
+    @include Background();
+}
 body > .modal {
     @include Modal();
 }

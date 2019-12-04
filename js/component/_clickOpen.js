@@ -20,7 +20,7 @@ Component.clickOpen = function(target)
         
         container.on('click', 'a',function(event) {
             event.stopPropagation();
-            $(document).trigger('document:clickEvent',[event]);
+            $(document).trigger('doc:clickEvent',[event]);
         })
         .on('enter:blocked',function(event,keyEvent) {
             const target = $(keyEvent.target);

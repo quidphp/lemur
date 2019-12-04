@@ -12,22 +12,6 @@ const Browser = new function()
     const $inst = this;
     
     
-    // isResponsive
-    // retourne vrai si la fenêtre courante est responsive
-    this.isResponsive = function() 
-    {
-        return ($(window).width() < 900)? true:false;
-    }
-
-
-    // isTouch
-    // retourne vrai si le navigateur courant supporte le touch
-    this.isTouch = function() 
-    {
-        return ($(document).data('isTouch') === true)? true:false;
-    }
-
-
     // isOldIe
     // retourne vrai si le navigateur est une vieille version de IE (IE 10 ou moins)
     this.isOldIe = function() 

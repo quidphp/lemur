@@ -5,14 +5,23 @@
  */
  
 // clickRemove
-// sur click, fadeOut l'élément et ensuite efface le
-Component.clickRemove = function()
+// component that fades out and removes itself on click
+const ClickRemove = function()
 {
-    $(this).on('click',function(event) {
+    // nodes
+    const $nodes = this;
+    
+    
+    // event
+    ael(this,'click',function() {
         $(this).fadeOut('slow',function() {
             $(this).remove();
         });
     });
     
+    
     return this;
 }
+
+// export
+Component.ClickRemove = ClickRemove;

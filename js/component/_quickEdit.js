@@ -58,7 +58,7 @@ Component.quickEdit = function()
             td.attr('data-editing',1);
             const editContainer = triggerFunc(this,'quickEdit:getEditContainer');
             editContainer.html(data);
-            $(document).trigger('document:mountCommon',[editContainer]);
+            $(document).trigger('doc:mountCommon',[editContainer]);
             $(document).trigger('specificForm:mount',[editContainer]);
             triggerCustom(this,'dragScroll:refresh');
         }
@@ -70,7 +70,7 @@ Component.quickEdit = function()
         const inner = triggerFunc(this,'quickEdit:getCellInner');
         
         inner.on('click', '> .quick-edit-container > form > .tools .revert',function() {
-            $this.trigger('quickEdit:revert');
+            triggerCustom($this,'quickEdit:revert');
         });
     });
     

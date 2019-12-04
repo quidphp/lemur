@@ -121,6 +121,22 @@ const Str = new function()
         
         return r;
     }
+    
+    
+    // each
+    // permet de faire un each sur chaque lettre de la string
+    this.each = function(value,callback) 
+    {
+        let r = null;
+        
+        if($inst.is(value))
+        {
+            const arr = $inst.explode('',value);
+            r = Arr.each(arr,callback);
+        }
+        
+        return r;
+    }
 }
 
 // export

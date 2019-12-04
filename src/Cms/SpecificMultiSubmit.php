@@ -44,7 +44,7 @@ class SpecificMultiSubmit extends Core\RouteAlias
         'form'=>[
             'attr'=>[
                 'data-skip-form-prepare'=>true,
-                'data-unload'=>'common/unload',
+                'data-unload'=>true,
                 'data-validation'=>false]],
         'group'=>'submit'
     ];
