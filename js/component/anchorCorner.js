@@ -16,21 +16,27 @@ const AnchorCorner = function()
     Component.ResizeChange.call(this);
     
     
-    // custom event
-    ael(this,'anchorCorner:refresh',function() {
+    // func
+    setFunc(this,'anchorCorner:refresh',function() {
         const offset = offsetCorner.call(this);
         $(this).attr('data-anchor-corner',offset.corner);
     });
     
-    ael(this,'resize:change',function() {
-        triggerCustom(this,'anchorCorner:refresh');
-    })
     
-    
-    // event mouse
+    // event
     ael(this,'mouseenter',function(event) {
-        triggerCustom(this,'anchorCorner:refresh');
+        triggerFunc(this,'anchorCorner:refresh');
         event.stopPropagation();
+    });
+    
+    ael(this,'resize:change',function() {
+        triggerFunc(this,'anchorCorner:refresh');
+    });
+    
+    
+    // setup
+    aelOnce(this,'component:setup',function() {
+        triggerFunc(this,'anchorCorner:refresh');
     });
     
     
@@ -47,10 +53,6 @@ const AnchorCorner = function()
         
         return r;
     }
-    
-    
-    // firstRefresh
-    triggerCustom(this,'anchorCorner:refresh');
     
     return this;
 }

@@ -51,18 +51,15 @@ const ValidatePrevent = function(type)
     
     
     // setup
-    aelOnce(this,'validatePrevent:setup', function(event) {
+    aelOnce(this,'component:setup', function(event) {
         const targets = triggerFunc(this,'validatePrevent:getTargets');
         
-        $(targets).each(function(index, el) {
+        $(targets).each(function() {
             if(!triggerFunc(this,'validate:isBinded'))
-            {
-                Component.Validate.call(this);
-                triggerCustom(this,'validate:setup');
-            }
-            
-            triggerFunc(this,'validate:process');
+            Component.Validate.call(this);
         });
+        
+        triggerCustom(targets,'validate:setup');
     });
     
     return this;

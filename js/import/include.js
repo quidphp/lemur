@@ -42,12 +42,17 @@ const setFunc = Evt.setFunc;
 const removeFunc = Evt.removeFunc;
 const allFunc = Evt.allFunc;
 const ael = Evt.addEventListener;
+const aelDelegate = Evt.addDelegatedEventListener;
 const aelOnce = Evt.addEventListenerOnce;
 const rel = Evt.removeEventListener;
 const triggerEvent = Evt.triggerEvent;
 const triggerFunc = Evt.triggerFunc;
 const triggerCustom = Evt.triggerCustom;
 const triggerSetup = Evt.triggerSetup;
+
+// selector
+const qsa = Selector.scopedQuerySelectorAll;
+const qs = Selector.scopedQuerySelector;
 
 // vari
 const each = Vari.each;

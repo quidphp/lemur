@@ -31,7 +31,7 @@ class TinyMce extends TextareaAlias
             'branding'=>false,
             'add_unload_trigger'=>false,
             'cache_suffix'=>'?v=%version%',
-            'content_css'=>['[public]/css/tinymce.css'],
+            'content_css'=>['[public]/css/%type%-tinymce.css'],
             'convert_urls'=>false,
             'entity_encoding'=>'raw',
             'fix_list_elements'=>true,
@@ -79,7 +79,10 @@ class TinyMce extends TextareaAlias
         foreach ($return['content_css'] as $key => $value)
         {
             if(is_string($value))
-            $return['content_css'][$key] = Base\Uri::absolute($value);
+            {
+                $value = str_replace("%type%",$boot->type(),$value);
+                $return['content_css'][$key] = Base\Uri::absolute($value);
+            }
 
             else
             unset($return['content_css'][$key]);

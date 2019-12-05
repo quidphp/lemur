@@ -52,26 +52,37 @@ const Evt = new function()
     }
     
     
+    // getTriggerTarget
+    // retourne la trigger target
+    // les bindings delegate, créés la propirété triggerTarget sur l'objet event
+    this.getTriggerTarget = function(event)
+    {
+        let r = null;
+        
+        if(Obj.is(event) && event.target)
+        {
+            if(event.triggerTarget != null)
+            r = event.triggerTarget;
+            
+            else
+            r = event.target;
+        }
+        
+        return r;
+    }
+    
+    
     // addEventListener
     // méthode qui permet d'ajouter un nouveau listener d'événement custom
     // retourne un tableau avec les paramètres pour retirer le listener
-    this.addEventListener = function(node,type,func,register,option) 
+    this.addEventListener = function(node,type,func,register,delegate,option) 
     {
         option = Object.assign({capture: false, once: false},option);
         
         if(!Str.isNotEmpty(type))
         logError('invalidType');
         
-        const handler = function(event) {
-            let args = [event];
-            const detail = event.detail;
-            args = args.concat(detail);
-            
-            if(debug > 0)
-            console.log('listener',this,type,detail,event);
-            
-            func.apply(this,args);
-        };
+        const handler = $inst.addEventListenerHandler(type,func,delegate);
         
         $(node).each(function() {
             this.addEventListener(type,handler,option);
@@ -81,6 +92,50 @@ const Evt = new function()
         });
         
         return [type,handler,option];
+    }
+    
+    
+    // addEventListenerHandler
+    // retourne le handler utilisé par addEventListener
+    this.addEventListenerHandler = function(type,func,delegate) 
+    {
+        return function(event) {
+            
+            let go = (delegate == null)? true:false;
+            let context = this;
+            
+            if(Str.isNotEmpty(delegate) && event.target != null)
+            {
+                context = event.target;
+                const nodes = Selector.scopedQuerySelectorAll(this,delegate);
+                const delegateTarget = this;
+                let triggerTarget = context;
+                
+                if($(nodes).filter(context).length)
+                go = true;
+                
+                else if(Arr.isNotEmpty(Selector.scopedQuerySelectorAll(nodes,context)))
+                {
+                    triggerTarget = $(context).parents(delegate).get(0);
+                    go = true;
+                }
+                
+                event.delegateTarget = delegateTarget;
+                event.triggerTarget = triggerTarget;
+            }
+            
+            if(go === true)
+            {
+                let args = [event];
+                const detail = event.detail;
+                args = args.concat(detail);
+                
+                if(debug > 0)
+                console.log('listener',this,type,delegate,detail,event);
+                
+                func.apply(context,args);
+            }
+        };
     }
     
     
@@ -99,9 +154,17 @@ const Evt = new function()
     
     // addEventListenerOnce
     // comme ael, mais le listener ne peut être déclenché qu'une seule fois
-    this.addEventListenerOnce = function(node,type,func,register,option) 
+    this.addEventListenerOnce = function(node,type,func,register,delegate,option) 
     {
-        return $inst.addEventListener(node,type,func,register,Object.assign({},option,{once: true}));
+        return $inst.addEventListener(node,type,func,register,delegate,Object.assign({},option,{once: true}));
+    }
+    
+    
+    // addDelegatedEventListener
+    // permet d'ajouter un event listener qui se trigge seulement selon le delegate
+    this.addDelegatedEventListener = function(node,type,delegate,func,register,option)
+    {
+        return $inst.addEventListener(node,type,func,register,delegate,option);
     }
     
     
@@ -187,11 +250,17 @@ const Evt = new function()
     
     
     // allFunc
-    // retourne un objet avec toutes les func lié à la node
+    // retourne de l'objet avec toutes les func lié à la node
     // si plusieurs nodes, retourne seulement pour la première node
-    this.allFunc = function(node)
+    // possible de retourner une copie, plus facile pour le débogagge
+    this.allFunc = function(node,copy)
     {
-        return Dom.getData(node,'lemur-func',{}); 
+        let r = Dom.getData(node,'lemur-func',{});
+        
+        if(copy === true)
+        r = Obj.copy(r);
+        
+        return r;
     }
     
     
@@ -210,8 +279,10 @@ const Evt = new function()
     // permet d'emmagasiné une fonction dans chaque node fournit en argument
     this.setFunc = function(node,type,func) 
     {
-        const all = $inst.allFunc(node);
-        Obj.setRef(type,func,all);
+        $(node).each(function() {
+            const all = $inst.allFunc(this);
+            Obj.setRef(type,func,all);
+        });
         
         return;
     }
@@ -221,8 +292,10 @@ const Evt = new function()
     // permet de retirer une fonction emmagasiné dans une ou plusiuers node
     this.removeFunc = function(node,type) 
     {
-        const all = $inst.allFunc(node);
-        Obj.unsetRef(type,all);
+        $(node).each(function() {
+            const all = $inst.allFunc(this);
+            Obj.unsetRef(type,all);
+        });
         
         return;
     }

@@ -12,15 +12,20 @@ const HashChange = function(persistent)
     const $nodes = this;
     
     
-    // type
-    const type = (persistent === true)? 'hashchange':'hashchange.doc-mount';
-    
-    
     // event
-    $(window).on(type,function(event,sourceEvent) {
+    const handler = ael(window,'hashchange',function(event,sourceEvent) {
         event.stopPropagation();
         triggerCustom($nodes,'hash:change',Request.fragment(),sourceEvent);
     });
+    
+    
+    // persistent
+    if(persistent !== true)
+    {
+        aelOnce(document,'doc:unmount',function() {
+            rel(window,handler);
+        });
+    }
     
     return this;
 }

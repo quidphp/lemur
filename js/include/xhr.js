@@ -15,11 +15,10 @@ const Xhr = new function()
     // trigger
     // fonction utilisé pour lancer une requête ajax
     // retourne false ou un objet promise ajax
-    this.trigger = function(node,config,tag)
+    this.trigger = function(node,option)
     {
         let r = null;
-
-        const options = {
+        const config = Object.assign({
             url: Evt.triggerFunc(node,'ajax:getHref'),
             method: Evt.triggerFunc(node,'ajax:getMethod'),
             timeout: Evt.triggerFunc(node,'ajax:getTimeout') || 5000,
@@ -49,27 +48,22 @@ const Xhr = new function()
                 });
             },
             progress: function(percent,progressEvent) {
-                Evt.triggerCustom(node,'ajax:progress',percent,progressEvent);
+                Evt.triggerFunc(node,'ajax:progress',percent,progressEvent);
             },
             beforeSend: function(jqXHR,settings) {
-                Evt.triggerCustom(node,'ajax:beforeSend',jqXHR,settings);
+                Evt.triggerFunc(node,'ajax:before',jqXHR,settings);
             },
             success: function(data,textStatus,jqXHR) {
-                Evt.triggerCustom(node,'ajax:success',data,textStatus,jqXHR);
+                Evt.triggerFunc(node,'ajax:success',data,textStatus,jqXHR);
             },
             error: function(jqXHR,textStatus,errorThrown) {
                 const parsedError = $inst.parseError(jqXHR.responseText,textStatus);
-                Evt.triggerCustom(node,'ajax:error',parsedError,jqXHR,textStatus,errorThrown);
+                Evt.triggerFunc(node,'ajax:error',parsedError,jqXHR,textStatus,errorThrown);
             },
             complete: function(jqXHR,textStatus) {
-                Evt.triggerCustom(node,'ajax:complete',jqXHR,textStatus);
+                Evt.triggerFunc(node,'ajax:complete',jqXHR,textStatus);
             }
-        };
-        
-        config = Obj.replace(options,config);
-        
-        if(tag === true)
-        $inst.configFromNode(node,config);
+        },option);
         
         if(Str.isNotEmpty(config.url) && Evt.triggerFunc(node,'ajax:confirm') !== false)
         {
@@ -83,9 +77,7 @@ const Xhr = new function()
                 config.processData = false;
                 config.contentType = false;
             }
-
-            Evt.triggerCustom(node,'ajax:before',config);
-
+            
             r = $.ajax(config);
         }
         
@@ -139,12 +131,16 @@ const Xhr = new function()
             let html;
             const parse = Html.parse(responseText);
             
-            if(parse != null && parse.length)
+            if(Arr.isNotEmpty(parse))
             {
-                html = Dom.outerHtml(parse.find(".ajax-parse-error").first());
+                const ajaxParse = Selector.scopedQuerySelector(parse,".ajax-parse-error");
+                html = Dom.outerHtml(ajaxParse);
                 
                 if(Vari.isEmpty(html))
-                html = parse.find("body,[data-tag='body']").first().html();
+                {
+                    const body = Selector.scopedQuerySelector(parse,"body,[data-tag='body']");
+                    html = $(body).html();
+                }
                 
                 if(Str.isNotEmpty(html))
                 r = html;

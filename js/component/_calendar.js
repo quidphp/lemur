@@ -113,7 +113,7 @@ Component.calendar = function()
             value = Str.explodeIndex(0," ",value);
             const split = value.split('-');
             
-            Arr.each(split,function(value,key,split) {
+            Arr.each(split,function(value,key) {
                 if(value.length === 1)
                 split[key] = "0"+value;
             });

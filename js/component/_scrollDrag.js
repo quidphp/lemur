@@ -26,7 +26,7 @@ Component.scrollDrag = function(option) {
         return ((triggerFunc(this,'scrollDrag:getChildren').width() - $(this).width()) > 0)? true:false;
     })
     .on('scrollDrag:getChildren',function() {
-        return $(this).children().first();
+        return $(this).children().get(0);
     })
     
     // trigger

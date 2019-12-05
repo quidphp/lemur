@@ -17,10 +17,12 @@ const Ajax = function(type)
         return (triggerFunc(document,'doc:isLoading') === true)? false:true;
     });
     
-    setFunc(this,'ajax:trigger',function(config,tag,triggerEvent) {
-        const r = Xhr.trigger(this,config,tag);
+    setFunc(this,'ajax:trigger',function(triggerEvent) {
+        const configNode = triggerFunc(this,'ajax:getNodeConfig',triggerEvent);
+        const config = Xhr.configFromNode(configNode);
+        const r = Xhr.trigger(this,config);
         
-        if(r !== false && triggerEvent)
+        if(r !== false && triggerEvent != null)
         {
             triggerEvent.stopImmediatePropagation();
             triggerEvent.preventDefault();
@@ -29,11 +31,15 @@ const Ajax = function(type)
         return r;
     });
     
+    setFunc(this,'ajax:getNodeConfig',function(triggerEvent) {
+        return this;
+    });
     
-    // custom event
+    
+    // event
     ael(this,type,function(event) {
         event.stopPropagation();
-        triggerFunc(this,'ajax:trigger',null,true,event);
+        triggerFunc(this,'ajax:trigger',event);
     });
     
     return this;

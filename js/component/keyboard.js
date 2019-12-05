@@ -16,7 +16,7 @@ const Keyboard = function(key,values,type)
     type = type || 'keydown';
     
     
-    // custom event
+    // event
     if(Str.isNotEmpty(key) && Arr.isNotEmpty(values))
     {
         ael(this,type,function(event) {

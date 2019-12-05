@@ -10,7 +10,7 @@ Component.rowsChecker = function()
 {
     // triggerHandler
     $(this).on('rowsChecker:getToolsContainer',function() {
-        return $(this).find(".above .tools-container").first();
+        return $(this).find(".above .tools-container").get(0);
     })
     .on('rowsChecker:getTools',function() {
         return triggerFunc(this,'rowsChecker:getToolsContainer').find(".tool-element");
@@ -19,10 +19,10 @@ Component.rowsChecker = function()
         return triggerFunc(this,'rowsChecker:getTools').filter("button");
     })
     .on('rowsChecker:getMultiModify',function() {
-        return triggerFunc(this,'rowsChecker:getToolsButton').filter(".multi-modify").first();
+        return triggerFunc(this,'rowsChecker:getToolsButton').filter(".multi-modify").get(0);
     })
     .on('rowsChecker:getMultiDelete',function() {
-        return triggerFunc(this,'rowsChecker:getTools').filter(".multi-delete-form").first();
+        return triggerFunc(this,'rowsChecker:getTools').filter(".multi-delete-form").get(0);
     })
     .on('rowsChecker:getToolsMulti',function() {
         let r = triggerFunc(this,'rowsChecker:getMultiModify');
@@ -31,10 +31,10 @@ Component.rowsChecker = function()
         return r;
     })
     .on('rowsChecker:getTable',function() {
-        return $(this).find("table").first();
+        return $(this).find("table").get(0);
     })
     .on('rowsChecker:getToggleAll',function() {
-        return triggerFunc(this,'rowsChecker:getTable').find("th.rows .toggle-all").first();
+        return triggerFunc(this,'rowsChecker:getTable').find("th.rows .toggle-all").get(0);
     })
     .on('rowsChecker:getRows',function() {
         return triggerFunc(this,'rowsChecker:getTable').find("tbody tr");
@@ -136,7 +136,7 @@ Component.rowsChecker = function()
             triggerCustom(this,($(this).is(":checked"))? 'checkbox:check':'checkbox:uncheck',true);
         })
         .on('checkbox:getTr',function() {
-            return $(this).parents("tr").first();
+            return $(this).parents("tr").get(0);
         })
         .on('checkbox:check',function(event,refresh) {
             const tr = triggerFunc(this,'checkbox:getTr');

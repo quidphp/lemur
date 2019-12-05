@@ -28,18 +28,18 @@ Component.inputFiles = function()
             return $(this).find(".action");
         })
         .on('block:getCancelAction',function() {
-            return $(this).find(".message .close").first();
+            return $(this).find(".message .close").get(0);
         })
         .on('block:getInputFile',function() {
-            return $(this).find("input[type='file']").first();
+            return $(this).find("input[type='file']").get(0);
         })
         .on('block:getInputHidden',function() {
             const inputFile = triggerFunc(this,'block:getInputFile');
             const name = inputFile.attr('name');
-            return $(this).find("input[type='hidden']").filter("[name='"+name+"']").first();
+            return $(this).find("input[type='hidden']").filter("[name='"+name+"']").get(0);
         })
         .on('block:getActionText',function() {
-            return $(this).find(".action-text").first();
+            return $(this).find(".action-text").get(0);
         })
         
         // bind

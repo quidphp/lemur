@@ -67,19 +67,18 @@ abstract class Boot extends Core\Boot
                     'to'=>'[publicCss]/cms.css',
                     'from'=>[
                         0=>'[vendorLemur]/css/include',
-                        1=>'[vendorLemur]/css/component',
-                        2=>'[vendorLemur]/css/import',
-                        10=>'[vendorLemur]/css/cms']],
+                        1=>'[vendorLemur]/css/cms-mixin',
+                        6=>'[vendorLemur]/css/cms']],
                 'icon'=>[
-                    'to'=>'[publicCss]/icon.css',
+                    'to'=>'[publicCss]/cms-icon.css',
                     'from'=>[
                         0=>'[vendorLemur]/css/include',
-                        1=>'[vendorLemur]/css/icon']],
+                        1=>'[vendorLemur]/css/cms-icon']],
                 'tinymce'=>[
-                    'to'=>'[publicCss]/tinymce.css',
+                    'to'=>'[publicCss]/cms-tinymce.css',
                     'from'=>[
                         0=>'[vendorLemur]/css/include',
-                        1=>'[vendorLemur]/css/tinymce']]],
+                        2=>'[vendorLemur]/css/cms-tinymce']]],
 
             'compileJs'=>[
                 'cms'=>[

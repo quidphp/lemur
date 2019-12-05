@@ -19,15 +19,17 @@ const Modal = function()
     
     // func
     setFunc(this,'modal:getBox',function() {
-        return $(this).find(".box").first();
+        return qs(this,'.box');
     });
     
     setFunc(this,'modal:getInner',function() {
-        return triggerFunc(this,'modal:getBox').find(".inner").first();
+        const box = triggerFunc(this,'modal:getBox');
+        return qs(box,".inner");
     });
     
     setFunc(this,'modal:isEmpty',function() {
-        return ($triggerFunc(this,'modal:getInner').html().length > 0)? false:true;
+        const inner = triggerFunc(this,'modal:getInner');
+        return ($(inner).html().length > 0)? false:true;
     });
     
     setFunc(this,'modal:isOpen',function() {
@@ -39,8 +41,21 @@ const Modal = function()
         return ($(this).attr('data-status') === 'ready')? true:false;
     });
     
+    setFunc(this,'modal:anchorBind',function(anchor) {
+        anchorBind.call(this,anchor);
+    });
     
-    // custom event
+    setFunc(this,'modal:set',function(data,route) {
+        if(!triggerFunc(this,'modal:isOpen'))
+        triggerCustom(this,'modal:open',route);
+        
+        const inner = triggerFunc(this,'modal:getInner');
+        $(inner).html(data);
+        opened.call(this);
+    });
+    
+    
+    // custom
     ael(this,'modal:open',function(event,route) {
         $(this).attr('data-status','loading');
         
@@ -49,27 +64,21 @@ const Modal = function()
         
         const background = triggerFunc(document,'doc:getBackground');
         triggerFunc(background,'background:set','modal',true);
-        triggerCustom(document,'doc:outsideClick');
+        triggerCustom(document,'clickOutside:click');
     });
     
     ael(this,'modal:close',function() {
         if(triggerFunc(this,'modal:isOpen'))
         {
             $(this).removeAttr('data-route');
-            triggerFunc(this,'modal:getInner').html("");
+            
+            const inner = triggerFunc(this,'modal:getInner');
+            $(inner).html("");
             $(this).attr('data-status','inactive');
             
             const background = triggerFunc(document,'doc:getBackground');
             triggerFunc(background,'background:unset','modal');
         }
-    });
-    
-    ael(this,'modal:set',function(event,data,route) {
-        if(!triggerFunc(this,'modal:isOpen'))
-        triggerCustom(this,'modal:open',route);
-        
-        triggerFunc(this,'modal:getInner').html(data);
-        opened.call(this);
     });
     
     ael(this,'modal:fetch',function(event,href,args,route) {
@@ -82,19 +91,15 @@ const Modal = function()
             uri: href, 
             data: args,
             sucess: function(data,textStatus,jqXHR) {
-                triggerCustom(modal,'modal:set',data,route);
+                triggerFunc(modal,'modal:set',data,route);
                 triggerFunc(modal,'blockEvent:unblock','modal:fetch');
             },
             error: function(data,textStatus,jqXHR) {
-                triggerCustom(modal,'modal:set',Xhr.parseError(jqXHR.responseText,textStatus),route);
+                triggerFunc(modal,'modal:set',Xhr.parseError(jqXHR.responseText,textStatus),route);
                 triggerFunc(modal,'blockEvent:unblock','modal:fetch');
             }
         };
         Xhr.trigger(this,config);
-    });
-    
-    ael(this,'modal:anchorBind',function(event,anchor) {
-        anchorBind.call(this,anchor);
     });
     
     ael(this,'keyboard:escape:blocked',function() {
@@ -105,14 +110,6 @@ const Modal = function()
     // event
     ael(this,'click',function() {
         triggerCustom(this,'modal:close');
-    });
-    
-    
-    // delegateEvent
-    $(this).on('click', '.close',function(event) {
-        const modal = $(event.delegateTarget);
-        triggerCustom(modal,'modal:close');
-        event.stopImmediatePropagation();
     });
     
     
@@ -135,8 +132,8 @@ const Modal = function()
         triggerCustom(this,'modal:success',route);
         
         const box = triggerFunc(this,'modal:getBox');
-        if(box.is('[tabindex]'))
-        box.focus();
+        if($(box).is('[tabindex]'))
+        $(box).focus();
         
         if(Str.isNotEmpty(route))
         triggerCustom(document,'modal:'+route,modal);
@@ -153,11 +150,12 @@ const Modal = function()
             event.stopPropagation();
         });
         
-        box.on('click', 'a',function(event) {
+        aelDelegate(box,'click','a',function(event) {
             const href = $(this).attr('href');
             triggerCustom(document,'doc:go',href,event);
-        })
-        .on('click', '.close',function(event) {
+        });
+        
+        aelDelegate(box,'click','button.close',function(event) {
             triggerCustom(modal,'modal:close');
             event.stopPropagation();
         });
@@ -174,8 +172,8 @@ const Modal = function()
         });
         
         ael(document,'doc:mountCommon',function(event,node) {
-            const anchor = node.find("a[data-modal]");
-            triggerCustom(modal,'modal:anchorBind',anchor);
+            const anchor = qsa(node,"a[data-modal]");
+            triggerFunc(modal,'modal:anchorBind',anchor);
         });
         
         ael(document,'doc:unmount',function() {
@@ -191,26 +189,27 @@ const Modal = function()
         Component.BlockEvent.call(anchor,'click');
         Component.Ajax.call(anchor,'click');
         
-        // custom event
-        ael(anchor,'ajax:beforeSend',function() {
+        // func
+        setFunc(anchor,'ajax:before',function() {
             const route = $(this).data('modal');
             triggerFunc(this,'blockEvent:block','click');
             $(this).addClass('selected');
             triggerCustom(modal,'modal:open',route);
         });
         
-        ael(anchor,'ajax:success',function(event,data,textStatus,jqXHR) {
+        setFunc(anchor,'ajax:success',function(data,textStatus,jqXHR) {
             const route = $(this).data('modal');
-            triggerCustom(modal,'modal:set',data,route);
+            triggerFunc(modal,'modal:set',data,route);
             triggerCustom(this,'modal:success',modal);
         });
         
-        ael(anchor,'ajax:error',function(event,parsedError,jqXHR,textStatus,errorThrown) {
+        setFunc(anchor,'ajax:error',function(parsedError,jqXHR,textStatus,errorThrown) {
             const route = $(this).data('modal');
-            triggerCustom(modal,'modal:set',parsedError,route);
+            triggerFunc(modal,'modal:set',parsedError,route);
             triggerFunc(this,'blockEvent:unblock','click');
         });
         
+        // event
         ael(anchor,'modal:success',function(event,modal) {
             triggerFunc(this,'blockEvent:unblock','click');
         });
@@ -222,7 +221,8 @@ const Modal = function()
         // setup
         aelOnce(anchor,'anchor:setup',function() {
             const $anchor = this;
-            modal.on('modal:close',function() {
+            
+            ael(modal,'modal:close',function() {
                 triggerCustom($anchor,'modal:close');
             });
         });

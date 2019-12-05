@@ -11,7 +11,6 @@ const ComponentValidate = function()
     // nodes
     const $nodes = this;
     
-    
     // func
     setFunc(this,'validate:isBinded',function() {
         return true;
@@ -83,7 +82,7 @@ const ComponentValidate = function()
     });
     
     
-    // custom
+    // event
     ael(this,'validate:valid',function() {
         $(this).attr('data-validate','valid');
     });
@@ -103,7 +102,7 @@ const ComponentValidate = function()
     
     // setup
     aelOnce(this,'validate:setup',function() {
-        
+
         ael(this,'change',function() {
             triggerFunc(this,'validate:process');
         });

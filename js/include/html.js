@@ -24,9 +24,7 @@ const Html = new function()
         html = html.replace(/<\/(html|head|body|script)\>/gi,'</div>');
         
         html = Str.trim(html);
-        const nodes = $.parseHTML(html);
-        
-        r = $(nodes);
+        r = $.parseHTML(html);
 
         return r;
     }
@@ -50,34 +48,36 @@ const Html = new function()
         };
         const doc = $inst.parse(html);
         
-        r.html = doc;
-        r.html.removeAttr('data-tag');
+        r.html = Arr.valueFirst(doc);
+        $(r.html).removeAttr('data-tag');
         r.htmlAttr = Dom.attr(r.html);
         
-        r.head = doc.find("[data-tag='head']").first();
-        r.body = doc.find("[data-tag='body']").first();
+        r.head = Selector.scopedQuerySelector(doc,"[data-tag='head']");
+        r.body = Selector.scopedQuerySelector(doc,"[data-tag='body']");
         
-        if(r.head.length)
+        if(r.head != null)
         {
-            r.head.removeAttr('data-tag');
+            const title = Selector.scopedQuerySelector(r.head,"title");
+            
+            $(r.head).removeAttr('data-tag');
             r.headAttr = Dom.attr(r.head);
-            r.title = r.head.find("title").first().text() || '?';
+            r.title = (title != null)? $(title).text():'?';
             r.titleHtml = r.title.replace('<','&lt;').replace('>','&gt;').replace(' & ',' &amp; ');
-            r.meta = r.head.find("meta");
+            r.meta = Selector.scopedQuerySelectorAll(r.head,"meta");
         }
         
-        if(r.body.length)
+        if(r.body != null)
         {
-            r.body.removeAttr('data-tag');
+            $(r.body).removeAttr('data-tag');
             r.bodyAttr = Dom.attr(r.body);
         }
         
         else
         {
             const html = Dom.outerHtml(doc);
-            const newBody = "<div data-tag='body'>"+html+"</div>";
+            let newBody = "<div data-tag='body'>"+html+"</div>";
             newBody = $.parseHTML(newBody);
-            r.body = $(newBody);
+            r.body = newBody;
         }
         
         return r;

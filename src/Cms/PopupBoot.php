@@ -66,7 +66,7 @@ class PopupBoot extends Core\RouteAlias
             $value = $boot->pathOverview('js',['js','jsx']);
 
             elseif($key === 'cssOverview')
-            $value = $boot->pathOverview('scss',['css','scss']);
+            $value = $boot->pathOverview('css',['css','scss']);
 
             elseif($key === 'user')
             $value = Base\Server::$key(true,true);

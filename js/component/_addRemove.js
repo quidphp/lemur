@@ -13,7 +13,7 @@ Component.addRemove = function()
         return $(this).find(".insert");
     })
     .on('addRemove:getPlayground',function() {
-        return $(this).find(".playground").first();
+        return $(this).find(".playground").get(0);
     })
     .on('addRemove:getCount',function() {
         return triggerFunc(this,'addRemove:getAll').length;

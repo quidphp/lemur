@@ -22,7 +22,7 @@ Component.quickEdit = function()
         return triggerFunc(this,'quickEdit:getTd');
     })
     .on('quickEdit:getTd',function() {
-        return $(this).parents("td").first();
+        return $(this).parents("td").get(0);
     })
     .on('quickEdit:getTdEditing',function() {
         return triggerFunc(this,'quickEdit:getTd').filter("[data-editing='1']");

@@ -92,7 +92,7 @@ Component.fakeSelect = function()
             return $(this).find("li > button.selected");
         })
         .on('fakeselect:getTitle',function() {
-            return triggerFunc(this,'clickOpen:getTrigger').find(".title").first();
+            return triggerFunc(this,'clickOpen:getTrigger').find(".title").get(0);
         })
         .on('clickOpen:getBackgroundFrom',function() {
             return 'fakeselect';

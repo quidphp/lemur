@@ -74,7 +74,7 @@ Component.specificPanel = function()
             r = panel.filter("[data-fragment='"+fragment+"']");
             
             if(!r.length)
-            r = panel.first();
+            r = panel.get(0);
             
             return r;
         })

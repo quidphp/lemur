@@ -60,7 +60,6 @@ const Timeout = function(type,timeout)
         return Dom.getData(this,'timeout-obj',{});
     }
     
-    
     return this;
 }
 

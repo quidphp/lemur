@@ -14,27 +14,28 @@ const Burger = function()
     
     // func
     setFunc(this,'burger:isOpen',function() {
-        return (triggerFunc(document,'doc:getHtml').attr('data-burger') === 'open')? true:false;
-    })
-    
-    
-    // custom
-    ael(this,'click',function() {
-        triggerCustom(this,'burger:toggle');
+        const html = triggerFunc(document,'doc:getHtml');
+        return ($(html).attr('data-burger') === 'open')? true:false;
     });
     
-    ael(this,'burger:toggle',function() {
+    setFunc(this,'burger:toggle',function() {
         triggerCustom(this,triggerFunc(this,'burger:isOpen')? 'burger:close':'burger:open');
+    });
+    
+    
+    // event
+    ael(this,'click',function() {
+        triggerFunc(this,'burger:toggle');
     });
     
     ael(this,'burger:open',function() {
         const html = triggerFunc(document,'doc:getHtml');
-        html.attr('data-burger','open');
+        $(html).attr('data-burger','open');
     });
     
     ael(this,'burger:close',function() {
         const html = triggerFunc(document,'doc:getHtml');
-        html.attr('data-burger','close');
+        $(html).attr('data-burger','close');
     });
     
     

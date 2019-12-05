@@ -263,6 +263,7 @@ const Obj = new function()
     // each
     // permet de faire un foreach sur un objet, utilise obj.keys
     // ne loop pas sur les propriétés du prototype
+    // la valeur est binder comme this
     this.each = function(loop,callback)
     {
         let r = null;

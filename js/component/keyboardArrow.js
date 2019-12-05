@@ -22,7 +22,7 @@ const KeyboardArrow = function(prevent,type)
     }); 
     
     
-    // custom event
+    // event
     ael(this,'keyboard:arrow:catched',function(event,keyEvent,isInput,keyCode) {
         if(keyCode === 38)
         triggerCustom(this,'keyboard:arrowUp:catched',keyEvent,isInput);

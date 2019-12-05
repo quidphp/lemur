@@ -12,9 +12,9 @@ const Datetime = new function()
     const $inst = this;
     
     
-    // timestamp
+    // now
     // retourne le timestamp courant
-    this.timestamp = function() 
+    this.now = function() 
     {
         return (new Date).getTime();
     }

@@ -76,7 +76,7 @@ const HistoryApi = new function()
             r = {
                 url: uri,
                 title: title || null,
-                timestamp: Datetime.timestamp()
+                timestamp: Datetime.now()
             };
         }
         

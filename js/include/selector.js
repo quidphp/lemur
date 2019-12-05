@@ -20,6 +20,22 @@ const Selector = new function()
     }
     
     
+    // scopedQuerySelectorAll
+    // méthode utilisé pour faire une recherche et retourner les enfants d'une target qui match le selector
+    this.scopedQuerySelectorAll = function(node,selector)
+    {
+        return $(node).first().find(selector).get();
+    }
+    
+    
+    // scopedQuerySelector
+    // méthode utilisé pour faire une recherche et retourner le premier enfant d'une target qui match le selector
+    this.scopedQuerySelector = function(node,selector)
+    {
+        return $(node).first().find(selector).get(0);
+    }
+    
+    
     // inputGroup
     // retourne une sélection avec tous les inputs de même type et même nom
     this.inputGroup = function(node)
@@ -47,7 +63,7 @@ const Selector = new function()
         d(id);
         
         if(Scalar.is(id))
-        r = $(document).find("label[for='"+id+"']");
+        r = $inst.scopedQuerySelectorAll(document,"label[for='"+id+"']");
         
         return r;
     }

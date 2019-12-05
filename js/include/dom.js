@@ -13,26 +13,31 @@ const Dom = new function()
     
     
     // isNode
-    // retourne vrai si la valeur est une node, node list ou un objet jQuery
-    // accepte aussi un tableau contenant seulement des nodes
+    // retourne vrai si la valeur est une node
     this.isNode = function(value) 
+    {
+        return (value === document || value instanceof HTMLElement)? true:false;
+    }
+    
+    
+    // isNodes
+    // retourne vrai si la valeur est une collection de node
+    // accepte jquery, nodeList ou un tableau de nodes
+    this.isNodes = function(value)
     {
         let r = false;
         
-        if(value != null)
+        if(value instanceof jQuery && value.length)
+        r = true;
+        
+        else if(value instanceof NodeList)
+        r = true;
+        
+        else if(Array.isArray(value) && value.length)
         {
-            if(value === document || value instanceof HTMLElement || value instanceof NodeList)
-            r = true;
-            
-            else if(value instanceof jQuery && value.length)
-            r = true;
-            
-            else if(Array.isArray(value) && value.length)
-            {
-                r = Arr.each(value,function(v) {
-                    return $inst.isNode(v);
-                });
-            }
+            r = Arr.each(value,function(v) {
+                return $inst.isNode(v);
+            });
         }
         
         return r;
@@ -128,13 +133,13 @@ const Dom = new function()
     this.attr = function(node,start)
     {
         let r = null;
-        node = $(node).first();
+        node = $(node).get(0);
         
-        if(node.length === 1)
+        if(node != null)
         {   
             r = {};
             
-            $.each(node[0].attributes,function() {
+            $.each(node.attributes,function() {
                 if(start == null || Str.isStart(start,this.name))
                 r[this.name] = this.value;
             });
@@ -228,7 +233,7 @@ const Dom = new function()
     this.dataHrefReplaceChar = function(node,replace,replace2) 
     {
         let r = null;
-        node = $(node).first();
+        node = $(node).get(0);
         
         if(Num.is(replace))
         replace = Str.cast(replace);
@@ -236,7 +241,7 @@ const Dom = new function()
         if(Num.is(replace2))
         replace2 = Str.cast(replace2);
         
-        if($(node).length === 1 && Str.isNotEmpty(replace))
+        if(node != null && Str.isNotEmpty(replace))
         {
             const href = $(node).data("href");
             const char = $(node).data("char");

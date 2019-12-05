@@ -23,7 +23,7 @@ const Doc = function(option)
         anchor: "a:not([target='_blank']):not([data-navigation='0']):not([data-modal]):not([href^='mailto:'])",
         form: "form:not([data-navigation='0'])",
         timeout: 10000,
-        routeWrap: "> .route-wrap" // target, descendant de body
+        routeWrap: "> .route-wrap" // routeWrap, descendant de body
     },option);
     
     
@@ -81,7 +81,7 @@ const Doc = function(option)
     setFunc(this,'doc:replaceState',function(uri,title) {
         let r = HistoryApi.makeState(uri,title);
         
-        if(HistoryApi.supported() && Str.isNotEmpty(uri))
+        if($history != null && Str.isNotEmpty(uri))
         $history.replaceState(r,r.title,r.url);
         
         return r;
@@ -110,16 +110,29 @@ const Doc = function(option)
         return r;
     });
     
+    // scrollTo
+    // permet de scroller la page
+    setFunc(this,'doc:scrollTo',function(top) {
+        const htmlBody = qsa(this,"html,body");
+        $(htmlBody).stop(true,true).scrollTop(top);
+    });
+    
+    // getWindow
+    // retourne l'objet window
+    setFunc(this,'doc:getWindow',function() {
+        return window;
+    });
+    
     // getHtml
     // retourne la node html
     setFunc(this,'doc:getHtml',function() {
-        return $(this).find("html").first();
+        return qs(this,'html');
     });
     
     // getBody
     // retourne la node body
     setFunc(this,'doc:getBody',function() {
-        return $(this).find("body").first();
+        return qs(this,'body');
     });
     
     // getRouteWrap
@@ -129,7 +142,7 @@ const Doc = function(option)
         let r = triggerFunc(this,'doc:getBody');
 
         if($option.routeWrap)
-        r = r.find($option.routeWrap).first();
+        r = qs(r,$option.routeWrap);
         
         return r;
     });
@@ -138,14 +151,13 @@ const Doc = function(option)
     // gère un nouvel historique déclenché par un clic
     setFunc(this,'doc:clickEvent',function(click) {
         let r = false;
+        const target = Evt.getTriggerTarget(click);
         
-        if(click.target && !(click.which > 1 || click.metaKey || click.ctrlKey || click.shiftKey || click.altKey))
+        if(target != null && $(target).is($option.anchor))
         {
-            const target = $(click.currentTarget);
-            
-            if(target.is($option.anchor))
+            if(!(click.which > 1 || click.metaKey || click.ctrlKey || click.shiftKey || click.altKey))
             {
-                const uri = target.prop('href');
+                const uri = $(target).prop('href');
                 r = triggerFunc(this,'doc:go',uri,click);
             }
         }
@@ -157,16 +169,13 @@ const Doc = function(option)
     // gère un nouvel historique déclenché par l'envoie d'un formulaire
     setFunc(this,'doc:submitEvent',function(submit) {
         let r = false;
-        const target = $(submit.target);
+        const target = Evt.getTriggerTarget(submit);
         
-        if(target.is($option.form))
+        if(target != null && $(target).is($option.form))
         {
-            const uri = target.prop('action');
+            const uri = $(target).prop('action');
             r = triggerFunc(this,'doc:go',uri,submit);
         }
-        
-        submit.preventDefault();
-        r = false;
         
         return r;
     });
@@ -179,52 +188,46 @@ const Doc = function(option)
         if(triggerFunc(this,'doc:hasAjax'))
         r = true;
         
-        else
+        else if(Str.is(uri) && Uri.isInternal(uri))
         {
-            if(uri instanceof jQuery && uri.is($option.anchor))
-            uri = uri.prop("href");
+            const current = triggerFunc(this,'doc:getCurrentState');
+            const state = HistoryApi.makeState(uri);
+            const isValid = HistoryApi.isStateChangeValid(state,current);
             
-            if(Str.is(uri))
+            if(isValid === true)
             {
-                const current = triggerFunc(this,'doc:getCurrentState');
-                const state = HistoryApi.makeState(uri);
-                const isValid = HistoryApi.isStateChangeValid(state,current);
-                
-                if(isValid === true)
-                {
-                    if(triggerFunc(window,'win:isUnloadValid') === true)
-                    r = (makeAjax.call(this,state,sourceEvent))? true:false;
-                    else
-                    r = true;
-                }
-                
-                // hash change
-                else if(Uri.isHashChange(state.url,current.url))
-                {
-                    r = true;
-                    $history.pushState(state,state.title,state.url);
-                    $previous = state;
-                    triggerEvent(window,'hashchange',sourceEvent);
-                }
+                if(triggerFunc(window,'win:isUnloadValid') === true)
+                r = (makeAjax.call(this,state,sourceEvent))? true:false;
+                else
+                r = true;
+            }
+            
+            // hash change
+            else if(Uri.isHashChange(state.url,current.url))
+            {
+                r = true;
+                $history.pushState(state,state.title,state.url);
+                $previous = state;
+                triggerEvent(window,'hashchange',sourceEvent);
             }
         }
         
         if(r === true && sourceEvent != null)
         {
             sourceEvent.preventDefault();
-            const target = $(sourceEvent.currentTarget);
+            const target = $(sourceEvent.target);
             
             if(target)
             {
                 if(sourceEvent.type === 'click')
-                target.attr('data-triggered',1);
+                $(target).attr('data-triggered',1);
                 
                 else if(sourceEvent.type === 'submit')
                 {
                     const clickedSubmit = triggerFunc(target,'form:getClickedSubmits');
                     
                     if(clickedSubmit != null)
-                    clickedSubmit.attr('data-triggered',1);
+                    $(clickedSubmit).attr('data-triggered',1);
                 }
             }
         }
@@ -234,12 +237,6 @@ const Doc = function(option)
     
     
     // custom
-    
-    // outsideClick
-    // permet de lancer tous les évenements liés aux outside clicks
-    ael(this,'doc:outsideClick',function(event) {
-        triggerCustom(this,'click.doc-mount');
-    });
     
     // mountNodeCommon
     // trigger mountNode et mountCommon en même temps
@@ -252,7 +249,7 @@ const Doc = function(option)
     // setup
     aelOnce(this,'component:setup',function() {
         
-        if(HistoryApi.supported())
+        if(triggerFunc(this,'doc:hasHistoryApi'))
         $history = window.history;
 
         triggerFunc(this,'doc:cancelAjax');
@@ -302,29 +299,23 @@ const Doc = function(option)
             }
         });
         
-        
         // anchor click
-        $(this).on('click', $option.anchor,function(event) { 
+        aelDelegate(this,'click',$option.anchor,function(event) { 
             let r = true;
-            const href = $(this).attr('href');
-
-            if(Uri.isInternal(href))
-            {
-                triggerFunc($nodes,'doc:clickEvent',event);
-                
-                if(event.isDefaultPrevented())
-                r = false;
-            }
+            triggerFunc($nodes,'doc:clickEvent',event);
+            
+            if(event.defaultPrevented === true)
+            r = false;
             
             return r;
-        })
+        });
         
         // submit
-        .on('submit', $option.form,function(event) { 
+        aelDelegate(this,'submit',$option.form,function(event) { 
             let r = true;
             triggerFunc($nodes,'doc:submitEvent',event);
             
-            if(event.isDefaultPrevented())
+            if(event.defaultPrevented === true)
             r = false;
             
             return r;
@@ -360,18 +351,18 @@ const Doc = function(option)
         
         triggerCustom(this,'doc:mount',routeWrap);
         
-        const group = html.attr("data-group");
+        const group = $(html).attr("data-group");
         if(Str.isNotEmpty(group))
         triggerCustom(this,'group:'+group,routeWrap);
         
-        const route = html.attr("data-route");
+        const route = $(html).attr("data-route");
         if(Str.isNotEmpty(route))
         triggerCustom(this,'route:'+route,routeWrap);
         
         triggerCustom(this,'doc:mounted',routeWrap);
         
         setTimeout(function() {
-            html.attr('data-status','ready');
+            $(html).attr('data-status','ready');
         }, 100);
     }
     
@@ -386,19 +377,14 @@ const Doc = function(option)
         
         triggerCustom(this,'doc:unmount',routeWrap);
         
-        const group = html.attr("data-group");
+        const group = $(html).attr("data-group");
         if(Str.isNotEmpty(group))
         triggerCustom(this,'group:'+group+':unmount',routeWrap);
         
-        const route = html.attr("data-route");
+        const route = $(html).attr("data-route");
         if(Str.isNotEmpty(route))
         triggerCustom(this,'route:'+route+':unmount',routeWrap);
-        
-        $(this).off('.doc-mount');
-        $(window).off('.doc-mount');
-        html.off('.doc-mount');
-        body.off('.doc-mount');
-        
+                
         triggerCustom(this,'doc:unmounted',routeWrap);
     }
     
@@ -412,9 +398,9 @@ const Doc = function(option)
         
         if(sourceEvent)
         {
-            const target = $(sourceEvent.currentTarget);
+            const target = Evt.getTriggerTarget(sourceEvent);
             
-            if(target && Dom.tag(target) === 'form')
+            if(target != null && Dom.tag(target) === 'form')
             {
                 Xhr.configFromNode(target,config);
                 
@@ -480,7 +466,8 @@ const Doc = function(option)
         $(this).data('doc-active',true);
         
         // loading
-        triggerFunc(this,'doc:getHtml').attr('data-status','loading');
+        const html = triggerFunc(this,'doc:getHtml');
+        $(html).attr('data-status','loading');
     }
     
     
@@ -515,10 +502,12 @@ const Doc = function(option)
                     if(!Uri.isInternal(state.url,currentUri) || !Uri.isSamePathQuery(state.url,currentUri))
                     state = triggerFunc(this,'doc:replaceState',currentUri,state.title);
                 }	
-                    
+                
                 unmountDocument.call(this);
                 makeDocument.call(this,doc);
-                doc.html.remove();
+                $(doc.html).remove();
+                triggerFunc(this,'doc:scrollTo',0);
+                mountDocument.call(this);
                 $previous = state;
             }
         }
@@ -531,7 +520,7 @@ const Doc = function(option)
     {
         let r = false;
         
-        if(Obj.isPlain(doc) && doc.body && doc.body.length)
+        if(Obj.isPlain(doc) && doc.body != null)
         {
             r = true;
             
@@ -541,20 +530,20 @@ const Doc = function(option)
             DomChange.setsAttr(doc.htmlAttr,html);
             
             // head
-            const head = html.find("head").first();
+            const head = qs(html,'head');
+            const title = qs(head,'title');
             
             // title
-            const title = head.find("meta");
             if(Str.isNotEmpty(doc.title))
             {
                 document.title = doc.title;
-                title.html(doc.titleHtml);
+                $(title).html(doc.titleHtml);
             }
             
             // meta
-            const meta = head.find("meta");
-            meta.remove();
-            head.prepend(doc.meta);
+            const meta = qsa(head,'meta');
+            $(meta).remove();
+            $(head).prepend(doc.meta);
             
             // body
             // les attributs de body sont effacés et remplacés
@@ -566,10 +555,10 @@ const Doc = function(option)
             // les attributs de routeWrap sont effacés et remplacés seulement si routeWrap n'est pas body
             const routeWrap = triggerFunc(this,'doc:getRouteWrap');
             let contentTarget = doc.body;
-            if($option.routeWrap && !routeWrap.is("body"))
+            if($option.routeWrap && !$(routeWrap).is("body"))
             {
-                const routeWrapTarget = contentTarget.find($option.routeWrap);
-                if(routeWrapTarget.length)
+                const routeWrapTarget = qs(contentTarget,$option.routeWrap);
+                if(routeWrapTarget != null)
                 {
                     contentTarget = routeWrapTarget;
                     const routeWrapAttributes = Dom.attr(contentTarget);
@@ -577,25 +566,11 @@ const Doc = function(option)
                     DomChange.setsAttr(routeWrapAttributes,routeWrap);
                 }
             }
-            routeWrap.html(contentTarget.html());
-            
-            // after
-            afterMakeDocument.call(this);
+            const contentHtml = $(contentTarget).html();
+            $(routeWrap).html(contentHtml);
         }
         
         return r;
-    }
-    
-    
-    // afterMakeDocument
-    // callback après le chargement du nouveau document
-    const afterMakeDocument = function()
-    {
-        const state = triggerFunc(this,'doc:getCurrentState');
-
-        $(this).find("html,body").stop(true,true).scrollTop(0);
-        
-        mountDocument.call(this);
     }
     
     return this;

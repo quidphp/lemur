@@ -41,13 +41,15 @@ const TestInclude = function()
         assert(Arr.isEqual(spliceArr,[12,'ok']));
         assert(Vari.isEqual(Arr.valueStrip(3,[3,2,3,1,5]),[2,1,5]));
         let arr = [3,2,3,1,5];
+        assert(Arr.valueFirst(arr) === 3);
+        assert(Arr.valueFirst([]) === null);
         assert(Arr.valueStrip('8',arr) !== arr);
         assert(Arr.isEqual(Arr.valueStrip('8',arr),arr));
         let arrKey;
         assert(Vari.isEqual(Arr.copy([1,2,3]),[1,2,3]));
         assert(Arr.copy([1,2,3]) !== [1,2,3]);
         assert(Arr.each([1,2,3],function(value,key) {
-            assert(this === value);
+            assert(value === this);
             arrKey = key;
         }));
         assert(arrKey === 2);
@@ -70,7 +72,7 @@ const TestInclude = function()
         assert(Bool.is(Browser.allowsCookie()));
         
         // datetime
-        assert(Num.is(Datetime.timestamp()));
+        assert(Num.is(Datetime.now()));
         
         // dom
         const htmlNode = $("html").get(0);
@@ -78,13 +80,13 @@ const TestInclude = function()
         const selectorAll = htmlNode.querySelectorAll("body");
         assert(!Dom.isNode(window));
         assert(Dom.isNode(document));
-        assert(Dom.isNode($("html")));
-        assert(Dom.isNode($("html,body").get()));
-        assert(Dom.isNode([htmlNode]));
-        assert(Dom.isNode([selectorOne]));
-        assert(Dom.isNode([selectorAll]));
-        assert(!Dom.isNode([htmlNode,true]));
+        assert(!Dom.isNode($("html")));
+        assert(!Dom.isNode($("html,body").get()));
         assert(Dom.isNode(htmlNode));
+        assert(Dom.isNodes([selectorOne]));
+        assert(Dom.isNodes(selectorAll));
+        assert(!Dom.isNodes([htmlNode,true]));
+        assert(!Dom.isNodes(htmlNode));
         assert(Dom.isWindow(window));
         assert(!Dom.isWindow(document));
         assert(Dom.isTag('html',htmlNode));
@@ -238,7 +240,7 @@ const TestInclude = function()
         let objKey;
         let objVal;
         assert(Obj.each({test: 'ok', what: 3},function(value,key) {
-            assert(this === value);
+            assert(value === this);
             objKey = key;
             objVal = value;
         }));
@@ -267,6 +269,10 @@ const TestInclude = function()
         
         // selector
         assert(Selector.input() === "input,select,textarea,button[type='submit']");
+        assert(Dom.isNode(Selector.scopedQuerySelector(htmlNode,"body")));
+        assert(Selector.scopedQuerySelector(htmlNode,"james") == null);
+        assert(Arr.isNotEmpty(Selector.scopedQuerySelectorAll(htmlNode,"body")));
+        assert(Arr.isEmpty(Selector.scopedQuerySelectorAll(htmlNode,"james")));
         
         // str
         assert(Str.is('WHAT'));
@@ -304,7 +310,7 @@ const TestInclude = function()
         assert(Str.explodeIndex(3,'-','la-vie-ok') === null);
         let val = null;
         assert(Str.each('abcde',function(value) {
-            assert(this === value);
+            assert(value === this);
             val = value;
         }));
         assert(val === 'e');
@@ -403,7 +409,6 @@ const TestInclude = function()
         assert(Vari.type(undefined) === 'undefined');
         let variVal;
         assert(Vari.each({ok: 2},function(value) {
-            assert(this === value);
             variVal = value;
         }));
         assert(variVal === 2);

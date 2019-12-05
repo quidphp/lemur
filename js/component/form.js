@@ -22,83 +22,107 @@ const Form = function()
     });
     
     setFunc(this,'form:getFields',function() {
-        return $(this).find(Selector.input());
+        return qsa(this,Selector.input());
     });
     
     setFunc(this,'form:getSystemFields',function() {
-        return triggerFunc(this,'form:getFields').filter(function() {
-            return triggerFunc(this,'input:isSystem');
+        const fields = triggerFunc(this,'form:getFields');
+        
+        return fields.filter(function(value) {
+            return triggerFunc(value,'input:isSystem');
         });
     });
     
     setFunc(this,'form:getTargetFields',function() {
-        return triggerFunc(this,'form:getFields').filter(function() {
-            return triggerFunc(this,'input:isTarget');
+        const fields = triggerFunc(this,'form:getFields');
+        
+        return fields.filter(function(value) {
+            return triggerFunc(value,'input:isTarget');
         });
     });
     
     setFunc(this,'form:getTargetVisibleFields',function() {
-        return triggerFunc(this,'form:getFields').filter(function() {
-            return triggerFunc(this,'input:isTargetVisible');
+        const fields = triggerFunc(this,'form:getFields');
+        
+        return fields.filter(function(value) {
+            return triggerFunc(value,'input:isTargetVisible');
         });
     });
     
     setFunc(this,'form:getValidateFields',function() {
-        return triggerFunc(this,'form:getFields').filter(function() {
-            return triggerFunc(this,'input:isValidate');
+        const fields = triggerFunc(this,'form:getFields');
+        
+        return fields.filter(function(value) {
+            return triggerFunc(value,'input:isValidate');
         });
     });
     
     setFunc(this,'form:getFiles',function() {
-        return triggerFunc(this,'form:getFields').filter(function() {
-            return triggerFunc(this,'input:isFile');
+        const fields = triggerFunc(this,'form:getFields');
+        
+        return fields.filter(function(value) {
+            return triggerFunc(value,'input:isFile');
         });
     });
     
     setFunc(this,'form:getCsrfField',function() {
-        return triggerFunc(this,'form:getFields').filter(function() {
-            return triggerFunc(this,'input:isCsrf');
-        }).first();
+        const fields = triggerFunc(this,'form:getFields');
+        
+        return fields.find(function(value) {
+            return triggerFunc(value,'input:isCsrf');
+        });
     });
     
     setFunc(this,'form:getGenuineField',function() {
-        return triggerFunc(this,'form:getFields').filter(function() {
-            return triggerFunc(this,'input:isGenuine');
-        }).first();
+        const fields = triggerFunc(this,'form:getFields');
+        
+        return fields.find(function(value) {
+            return triggerFunc(value,'input:isGenuine');
+        });
     });
     
     setFunc(this,'form:getSubmits',function() {
-        return triggerFunc(this,'form:getFields').filter(function() {
-            return triggerFunc(this,'input:isSubmit');
+        const fields = triggerFunc(this,'form:getFields');
+        
+        return fields.find(function(value) {
+            return triggerFunc(value,'input:isSubmit');
         });
     });
     
     setFunc(this,'form:getClickedSubmit',function() {
-        return triggerFunc(this,'form:getFields').filter(function() {
-            return triggerFunc(this,'input:isClickedSubmit');
-        }).first();
+        const fields = triggerFunc(this,'form:getFields');
+        
+        return fields.find(function(value) {
+            return triggerFunc(value,'input:isClickedSubmit');
+        });
     });
     
     setFunc(this,'form:getValidateField',function() {
-        return triggerFunc(this,'form:getValidateFields').first();
+        return Arr.valueFirst(triggerFunc(this,'form:getValidateFields'));
+    });
+    
+    setFunc(this,'form:getSubmit',function() {
+        return Arr.valueFirst(triggerFunc(this,'form:getSubmits'));
     });
     
     setFunc(this,'form:hasFiles',function() {
         return (triggerFunc(this,'form:getFiles').length)? true:false;
     });
     
-    setFunc(this,'form:getSubmit',function() {
-        return triggerFunc(this,'form:getSubmits').first();
-    });
-    
     setFunc(this,'form:getClickedSubmits',function() {
         let r = triggerFunc(this,'form:getClickedSubmit');
         
-        if(r.length)
+        if(r != null)
         {
             const name = triggerFunc(r,'input:getName');
+            
             if(Str.isNotEmpty(name))
-            r = triggerFunc(this,'form:getSubmits').filter("[name='"+name+"']");
+            {
+                const submits = triggerFunc(this,'form:getSubmits');
+                r = submits.filter(function(value) {
+                    return $(value).is("[name='"+name+"']");
+                });
+            }
         }
         
         return r;
@@ -107,7 +131,7 @@ const Form = function()
     setFunc(this,'form:hasChanged',function() {
         let r = false;
         const target = triggerFunc(this,'form:getTargetFields');
-        const serialize = target.serialize();
+        const serialize = $(target).serialize();
         const original = $(this).data('form-serialize');
         
         if(original && serialize !== original)
@@ -117,9 +141,12 @@ const Form = function()
     });
     
     setFunc(this,'form:focusFirst',function() {
-        triggerFunc(this,'form:getTargetVisibleFields').filter(function() {
-            return triggerFunc(this,'input:isEmpty');
-        }).first().focus();
+        const target = triggerFunc(this,'form:getTargetVisibleFields').find(function(value) {
+            return triggerFunc(value,'input:isEmpty');
+        });
+        
+        if(target != null)
+        $(target).focus();
         
         return this;
     });
@@ -133,7 +160,7 @@ const Form = function()
     
     
     // setup
-    aelOnce(this,'form:setup',function() {
+    aelOnce(this,'component:setup',function() {
         // input
         prepareInput.call(this);
         
@@ -174,7 +201,7 @@ const Form = function()
     const prepareGenuine = function() 
     {
         const genuine = triggerFunc(this,'form:getGenuineField');
-        if(genuine.length === 1)
+        if(genuine != null)
         {
             const name = triggerFunc(genuine,'input:getName');
             const newName = name+"2-";
@@ -189,7 +216,7 @@ const Form = function()
     const prepareHasChanged = function() 
     {
         const target = triggerFunc(this,'form:getTargetFields');
-        const serialize = target.serialize();
+        const serialize = $(target).serialize();
         $(this).data('form-serialize',serialize);
     }
     
@@ -201,7 +228,7 @@ const Form = function()
         const submits = triggerFunc(this,'form:getSubmits');
         
         ael(submits,'click',function() {
-            submits.removeAttr('data-submit-click');
+            $(submits).removeAttr('data-submit-click');
             $(this).attr('data-submit-click',true);
         });
     }
@@ -218,12 +245,16 @@ const Form = function()
     const prepareValidate = function() 
     {
         const validateFields = triggerFunc(this,'form:getValidateFields');
-        triggerCustom(validateFields,'input:validate:setup');
         
         Component.ValidatePrevent.call(this,'submit');
+        
         setFunc(this,'validatePrevent:getTargets',function() {
             return validateFields;
         });
+        
+        triggerSetup(this);
+        
+        triggerCustom(validateFields,'input:validate:setup');
     }
     
     

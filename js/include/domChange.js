@@ -74,11 +74,12 @@ const DomChange = new function()
     // ajout target _blank à tous les liens externes qui n'ont pas la target
     this.aExternalBlank = function(node)
     {
-        const filter = $(node).find("a[target!='_blank']").filter(function() {
+        const anchor = Selector.scopedQuerySelectorAll(node,"a[target!='_blank']");
+        
+        $(anchor).filter(function() {
             return (Uri.isExternal($(this).attr("href")) && !$(this).is("[href^='mailto:']"))? true:false;
-        });
-
-        filter.each(function(index, el) {
+        })
+        .each(function(index, el) {
             $(this).prop('target','_blank');
         });
         

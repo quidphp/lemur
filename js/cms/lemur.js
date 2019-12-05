@@ -13,8 +13,8 @@ $(document).ready(function() {
     // initial mount
     // comportements bindés une seule fois au tout début
     ael(this,'doc:mountInitial',function(event,body) {
-        const background = body.find("> .background").first();
-        const modal = body.find("> .modal").first();
+        const background = qs(body,"> .background");
+        const modal = qs(body,"> .modal");
         
         triggerSetup(Component.Background.call(background));
         triggerSetup(Component.Modal.call(modal));
@@ -27,43 +27,39 @@ $(document).ready(function() {
     ael(this,'doc:mountCommon',function(event,node) {
         
         // input
-        const input = node.find(Selector.input());
+        const input = qsa(node,Selector.input());
         Component.Input.call(input);
 
         // form
-        const form = node.find("form");
-        triggerCustom(Component.Form.call(form),'form:setup');
+        const form = qsa(node,"form");
+        triggerCustom(Component.Form.call(form),'component:setup');
 
         // autre
-        const anchorCorner = node.find("[data-anchor-corner='1']");
-        const absolutePlaceholder = node.find("[data-absolute-placeholder='1']");
+        const anchorCorner = qsa(node,"[data-anchor-corner='1']");
+        const absolutePlaceholder = qsa(node,"[data-absolute-placeholder='1']");
+        const aConfirm = qsa(node,"a[data-confirm]");
+        const popupTrigger = qsa(node,".popup-trigger.with-popup:not(.with-ajax)");
+        const popupTriggerAjax = qsa(node,".popup-trigger.with-popup.with-ajax");
         
         // anchorCorner
-        Component.AnchorCorner.call(anchorCorner);
+        triggerSetup(Component.AnchorCorner.call(anchorCorner));
         
         // absolutePlaceholder
-        Component.AbsolutePlaceholder.call(absolutePlaceholder);
+        triggerSetup(Component.AbsolutePlaceholder.call(absolutePlaceholder));
+        
+        // aConfirm
+		Component.Confirm.call(aConfirm,'click');
+        
+        // popupTrigger
+        triggerSetup(Component.ClickOpenTrigger.call(popupTrigger,{trigger: ".popup-title", target: ".popup"}));
+        
+        // popupTriggerAjax
+        triggerSetup(Component.ClickOpenAjaxAnchor.call(popupTriggerAjax,{trigger: ".popup-title", target: ".popup"}));
         
         /*
         // select
-        const select = node.find("select");
+        const select = qsa(node,"select");
         triggerSetup(Component.fakeSelect.call(select));
-        
-        // autre
-        const popupTrigger = node.find(".popup-trigger.with-popup:not(.with-ajax)");
-        const popupTriggerAjax = node.find(".popup-trigger.with-popup.with-ajax");
-        const anchorCorner = node.find("[data-anchor-corner='1']");
-        
-        const aConfirm = node.find("a[data-confirm]");
-        
-		// aConfirm
-		Component.confirm.call(aConfirm,'click');
-		
-        // popupTrigger
-        Component.clickOpenWithTrigger.call(popupTrigger,".popup-title");
-        
-        // popupTriggerAjax
-        Component.clickOpenAnchorAjax.call(popupTriggerAjax,".popup-title");
         */
 	});
     
@@ -71,28 +67,28 @@ $(document).ready(function() {
 	// document mount
     // comportements utilisés pour toutes les pages du CMS
 	ael(this,'doc:mount',function(event,routeWrap) {
-		const burger = routeWrap.find("header .burger-menu, .nav-fixed .nav-close");
-		const com = routeWrap.find("main > .inner > .com");
-        const subMenu = routeWrap.find(".with-submenu");
-        const carousel = routeWrap.find(".with-carousel");
-        const mainSearch = routeWrap.find("header .top form");
+		const burger = qsa(routeWrap,"header .burger-menu, .nav-fixed .nav-close");
+		const com = qs(routeWrap,"main > .inner > .com");
+        const subMenu = qsa(routeWrap,".with-submenu");
+        const carousel = qsa(routeWrap,".with-carousel");
+        const mainSearch = qs(routeWrap,"header .top form");
         
         // burger
         triggerSetup(Component.Burger.call(burger));
         
-        /*
+        // com
+		triggerSetup(Component.Com.call(com));
+        
         // carousel
-        Component.carousel.call(carousel);
+        triggerSetup(Component.Carousel.call(carousel,{trigger: ".trigger", target: ".target"}));
         
         // subMenu
-        Component.clickOpenWithTrigger.call(subMenu,".trigger");
+        triggerSetup(Component.ClickOpenTrigger.call(subMenu,{trigger: ".trigger", target: ".popup"}));
         setFunc(subMenu,'clickOpen:getBackgroundFrom',function(event) {
             return 'submenu';
         });
         
-        // com
-		triggerSetup(Component.com.call(com));
-
+        /*
         // mainSearch
         triggerSetup(Component.mainSearch.call(mainSearch));
         */
@@ -101,7 +97,7 @@ $(document).ready(function() {
     
     // document unmount
     ael(this,'doc:unmount',function(event,routeWrap) {
-        const burger = routeWrap.find("header .burger-menu, .nav-fixed .nav-close");
+        const burger = qsa(routeWrap,"header .burger-menu, .nav-fixed .nav-close");
         
         // burger
         triggerCustom(burger,'component:teardown');
@@ -110,10 +106,12 @@ $(document).ready(function() {
     
     // document ajax progress
     ael(this,'doc:ajaxProgress',function(event,percent,progressEvent) {
-        const body = $(this).find("body");
-        const progress = body.find(".loading-progress");
+        /*
+        const body = qs(this,"body");
+        const progress = qs(body,".loading-progress");
         const html = (percent >= 0 && percent < 100)? "<div class='percent'>"+percent+"%"+"</div>":"";
         progress.html(html);
+        */
     });
     
     
@@ -141,8 +139,8 @@ $(document).ready(function() {
     // changePassword
     // comportement pour le popup changer mon mot de passe
 	ael(this,'modal:accountChangePassword',function(event,modal) {
-		const form = modal.find("form");
-        triggerCustom(form,'form:focusFirst');
+		const form = qs(modal,"form");
+        triggerFunc(form,'form:focusFirst');
 	});
     
     
@@ -150,34 +148,26 @@ $(document).ready(function() {
     // comportement pour la page d'accueil du CMS une fois connecté
 	ael(this,'route:home',function(event,routeWrap) {
         
-        /*
-		const feed = routeWrap.find("main .home-feed");
-        const feedTogglers = feed.find(".block-head .feed-togglers > a");
-        const feedBody = feed.find(".block-body");
+        const feed = qs(routeWrap,"main .home-feed");
+        const feedTogglers = qsa(feed,".block-head .feed-togglers > a");
+        const feedBody = qs(feed,".block-body");
         
-        Component.appendContainer.call(feedBody);
-        triggerCustom(feedBody,'feed:bind');
+        triggerSetup(Component.Feed.call(feedBody));
         
-        
-        Component.ajaxBlock.call(feedTogglers);
+        Component.AjaxBlock.call(feedTogglers);
         
         setFunc(feedTogglers,'ajaxBlock:getStatusNode',function(event) {
             return feedBody;
         });
         
-        ael(feedTogglers,'ajax:before',function(event) {
-            feedTogglers.removeClass('selected');
+        ael(feedTogglers,'ajaxBlock:before',function(event) {
+            $(feedTogglers).removeClass('selected');
             $(this).addClass('selected');
-        })
-        
-        ael(feedTogglers,'ajax:success',function(event,data,textStatus,jqXHR) {
-            triggerCustom(feedBody,'feed:overwrite',data);
-        })
-        
-        ael(feedTogglers,'ajax:error',function(event,parsedError,jqXHR,textStatus,errorThrown) {
-            feedBody.html(parsedError);
         });
-        */
+        
+        ael(feedTogglers,'ajaxBlock:success',function(event) {
+            triggerCustom(feedBody,'feed:bind');
+        });
 	});
     
     
@@ -185,16 +175,17 @@ $(document).ready(function() {
     // comportement pour la page de navigation
 	ael(this,'route:general',function(event,routeWrap) {
 		
-        const main = routeWrap.find("main");
-        const scroller = main.find(".scroller");
-		const search = main.find(".left > .search");
-		const pageLimit = main.find("input[name='limit'],input[name='page']");
-        const table = scroller.find("table").first();
-        const filter = table.find("th.filterable .filter-outer");
-		const colsSorter = table.find("th.action");
-		const filesSlider = table.find("td[data-group='media'] .slider");
-        const quickEdit = table.find("td[data-quick-edit='1'] a.quick-edit");
-        const highlight = table.find("tr.highlight");
+        /*
+        const main = qsa(routeWrap,"main");
+        const scroller = qs(main,".scroller");
+		const search = qs(main,".left > .search");
+		const pageLimit = qsa(main,"input[name='limit'],input[name='page']");
+        const table = qs(scroller,"table").get(0);
+        const filter = qsa(table,"th.filterable .filter-outer");
+		const colsSorter = qs(table,"th.action");
+		const filesSlider = qsa(table,"td[data-group='media'] .slider");
+        const quickEdit = qsa(table,"td[data-quick-edit='1'] a.quick-edit");
+        const highlight = qsa(table,"tr.highlight");
         
         // dragScroll
         triggerSetup(Component.scrollDrag.call(scroller,{selector: 'tbody',targetTag: 'div'}));
@@ -215,8 +206,8 @@ $(document).ready(function() {
 		// search
 		if(search.length)
 		{
-			const searchInput = search.find(".form input[type='text']");
-			const searchSlide = search.find(".in");
+			const searchInput = qs(search,".form input[type='text']");
+			const searchSlide = qs(search,".in");
 			triggerSetup(Component.inputSearch.call(searchInput));
             Component.focusSlide.call(searchInput,searchSlide);
 		}
@@ -231,16 +222,19 @@ $(document).ready(function() {
         ael(highlight,'mouseover',function(event) {
             $(this).removeClass('highlight');
         });
+        */
 	});
     
     
     // unmount
     ael(this,'route:general:unmount',function(event,routeWrap) {
-        const table = routeWrap.find("main .scroller table").first();
-        const quickEdit = table.find("td[data-quick-edit='1'] a.quick-edit");
+        /*
+        const table = qs(routeWrap,"main .scroller table").get(0);
+        const quickEdit = qsa(table,"td[data-quick-edit='1'] a.quick-edit");
         
         // quickEdit
         triggerCustom(quickEdit,'quickEdit:revert');
+        */
     });
     
     
@@ -256,13 +250,14 @@ $(document).ready(function() {
     // permet de faire les bindings de champs
     // ces champs seront bindés à l'initialisation du panneau, lorsqu'ils sont visibles
     ael(this,'specificForm:bindView',function(event,node) {
-        const date = node.find("[data-group='date'] .specific-component");
-        const enumSet = node.find("[data-tag='search'] .specific-component");
-        const checkboxSortable = node.find("[data-group='relation'][data-sortable='1'] .specific-component");
-        const files = node.find("[data-group='media'] .specific-component");
-        const addRemove = node.find("[data-tag='add-remove'] .specific-component");
-        const textarea = node.find("[data-tag='textarea'] .specific-component");
-        const anchorCorner = node.find("[data-anchor-corner]");
+        /*
+        const date = qsa(node,"[data-group='date'] .specific-component");
+        const enumSet = qsa(node,"[data-tag='search'] .specific-component");
+        const checkboxSortable = qsa(node,"[data-group='relation'][data-sortable='1'] .specific-component");
+        const files = qsa(node,"[data-group='media'] .specific-component");
+        const addRemove = qsa(node,"[data-tag='add-remove'] .specific-component");
+        const textarea = qsa(node,"[data-tag='textarea'] .specific-component");
+        const anchorCorner = qsa(node,"[data-anchor-corner]");
         
         // date
         triggerSetup(Component.calendarInput.call(date));
@@ -283,24 +278,28 @@ $(document).ready(function() {
         triggerSetup(Component.textareaExtra.call(textarea));
         
         // anchorCorner
-        triggerCustom(anchorCorner,'anchorCorner:refresh');
+        triggerFunc(anchorCorner,'anchorCorner:refresh');
+        */
     });
     
     
     // specificForm unmount
     // permet démonter les champs du formulaire
     ael(this,'specificForm:unmount',function(event,node) {
-        const textarea = node.find("[data-tag='textarea'] .specific-component");
+        /*
+        const textarea = qsa(node,"[data-tag='textarea'] .specific-component");
         triggerCustom(textarea,'component:teardown');
+        */
     });
     
     
 	// specific
     // comportement communs pour les pages spécifiques
 	ael(this,'group:specific',function(event,routeWrap) {
-        const form = routeWrap.find("main .inner > form.specific-form");
-        const panel = form.find("> .form-inner > .panel");
-        const submitConfirm = form.find("button[type='submit'][data-confirm]");
+        /*
+        const form = qs(routeWrap,"main .inner > form.specific-form");
+        const panel = qsa(form,"> .form-inner > .panel");
+        const submitConfirm = qsa(form,"button[type='submit'][data-confirm]");
         
 		// submitConfirm
         Component.confirm.call(submitConfirm,'click');
@@ -314,33 +313,39 @@ $(document).ready(function() {
         
         else
         triggerCustom(this,'specificForm:bindView',form);
+        */
 	});
 	
     
     // unmount
     // comportements communs pour démonter la page spécifique
     ael(this,'group:specific:unmount',function(event,routeWrap) {
-        const form = routeWrap.find("main .inner > form.specific-form");
+        /*
+        const form = qs(routeWrap,"main .inner > form.specific-form");
         triggerCustom(this,'specificForm:unmount',form);
+        */
     });
     
     
     // specificMulti
     // comportement pour la page de modification multiple
 	ael(this,'route:specificMulti',function(event) {
-        const form = $(this).find("main .inner > form.specific-form");
-        const formElement = form.find(".form-element");
+        /*
+        const form = qs(this,"main .inner > form.specific-form");
+        const formElement = qsa(form,".form-element");
         
         setFunc(formElement,'specificMulti:isActive',function(event) {
-            return triggerFunc(this,'specificMulti:getCheckbox').is(':checked');
+            const checkbox = triggerFunc(this,'specificMulti:getCheckbox');
+            return $(checkbox).is(':checked');
         });
         
         setFunc(formElement,'specificMulti:getCheckbox',function(event) {
-            return $(this).find(".disabler input[type='checkbox']");
+            return qs(this,".disabler input[type='checkbox']");
         });
         
         setFunc(formElement,'specificMulti:getInputs',function(event) {
-            return $(this).find("> .right").find(Selector.input());
+            const right = qs(this,"> .right");
+            return qsa(right,Selector.input());
         });
         
         ael(formElement,'specificMulti:refresh',function(event) {
@@ -364,20 +369,23 @@ $(document).ready(function() {
         triggerCustom(formElement,'specificMulti:setup');
         
         triggerCustom(form,'form:prepare');
+        */
 	});
     
     
     // nobodyCommon
     const nobodyCommon = function() {
-        const browscap = $(this).find("main .browscap");
-		const form = $(this).find("main form");
+        const browscap = qs(this,"main .browscap");
+		const form = qs(this,"main form");
+        const cookieDisabled = qs(browscap,".cookie-disabled");
+        const unsupportedBrowser = qs(browscap,".unsupported-browser");
         
 		triggerFunc(form,'form:focusFirst');
 		
 		if(!Browser.allowsCookie())
-		browscap.find(".cookie-disabled").show();
+		$(cookieDisabled).show();
         
         if(Browser.isUnsupported())
-		browscap.find(".unsupported-browser").show();
+		$(unsupportedBrowser).show();
     };
 });

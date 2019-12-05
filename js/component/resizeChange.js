@@ -11,16 +11,21 @@ const ResizeChange = function(persistent)
     // nodes
     const $nodes = this;
     
-    
-    // type
-    const type = (persistent === true)? 'resize':'resize.doc-mount';
-    
-    
+
     // event
-    $(window).on(type,function(event) {
+    const handler = ael(window,'resize',function(event) {
         event.stopPropagation();
         triggerCustom($nodes,'resize:change');
     });
+    
+    
+    // persistent
+    if(persistent !== true)
+    {
+        aelOnce(document,'doc:unmount',function() {
+            rel(window,handler);
+        });
+    }
     
     return this;
 }

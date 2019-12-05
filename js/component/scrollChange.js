@@ -12,15 +12,20 @@ const ScrollChange = function(persistent)
     const $nodes = this;
     
     
-    // type
-    const type = (persistent === true)? 'scroll':'scroll.doc-mount';
-    
-    
     // event
-    $(window).on(type,function(event) {
+    const handler = ael(window,'scroll',function(event) {
         event.stopPropagation();
         triggerCustom($nodes,'scroll:change');
     });
+    
+    
+    // persistent
+    if(persistent !== true)
+    {
+        aelOnce(document,'doc:unmount',function() {
+            rel(window,handler);
+        });
+    }
     
     return this;
 }

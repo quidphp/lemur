@@ -131,6 +131,21 @@ const Arr = new function()
     }
     
     
+    // valueFirst
+    // retourne le première valeur dans le tableau
+    this.valueFirst = function(array)
+    {
+        let r = null;
+        
+        $inst.each(array,function(value) {
+            r = value;
+            return false;
+        });
+        
+        return r;
+    }
+    
+    
     // valueStrip
     // permet de retourner un nouveau tableau sans la valeur donné en argument
     this.valueStrip = function(value,array) 
@@ -157,7 +172,7 @@ const Arr = new function()
     {   
         let r = null;
         
-        $inst.isLike(loop)
+        if($inst.isLike(loop))
         loop = Array.from(loop);
         
         if($inst.is(loop) && Func.is(callback))
@@ -182,7 +197,7 @@ const Arr = new function()
         }
         
         return r;
-    };
+    }
 }
 
 // export

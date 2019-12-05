@@ -10,7 +10,7 @@ Component.textareaExtra = function()
 {
     // triggerHandler
     $(this).on('textareaExtra:getTextarea',function() {
-        return $(this).find("textarea").first();
+        return $(this).find("textarea").get(0);
     })
     .on('textareaExtra:getFilters',function() {
         return $(this).find(".table-relation");

@@ -47,7 +47,7 @@ const Input = function()
     });
     
     
-    // custom
+    // event
     ael(this,'input:enable',function() {
         $(this).prop('disabled',false);
     });
@@ -100,13 +100,12 @@ const Input = function()
     // setup validate
     aelOnce(this,'input:validate:setup',function() {
         
+        if(!triggerFunc(this,'validate:isBinded'))
         Component.Validate.call(this);
         
         setFunc(this,'validate:getValue',function() {
             return triggerFunc(this,'input:getValue');
         });
-        
-        triggerCustom(this,'validate:setup');
     });
     
     return this;
