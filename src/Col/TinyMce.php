@@ -80,7 +80,7 @@ class TinyMce extends TextareaAlias
         {
             if(is_string($value))
             {
-                $value = str_replace("%type%",$boot->type(),$value);
+                $value = str_replace('%type%',$boot->type(),$value);
                 $return['content_css'][$key] = Base\Uri::absolute($value);
             }
 

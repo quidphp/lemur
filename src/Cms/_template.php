@@ -43,7 +43,7 @@ trait _template
         $r = '';
         $flush = $this->docOpen();
         $hasNav = $this->hasNav();
-        
+
         $flush .= Html::div($this->makeLoader(),'loading-fixed');
         $flush .= Html::div(null,'background');
         $flush .= Html::divCond($this->makeModal(),['modal']);
