@@ -52,6 +52,56 @@ const Evt = new function()
     }
     
     
+    // checkType
+    // envoie une erreur si le type n'est pas une string
+    this.checkType = function(type,message)
+    {
+        if(!Str.isNotEmpty(type))
+        logError(message+':invalidType');
+        
+        return;
+    }
+    
+    
+    // nameFromType
+    // retourne event ou custom event selon le type
+    // un nom de type avec un . ou : est custom
+    this.nameFromType = function(type)
+    {
+        let r = null;
+        
+        if(Str.isNotEmpty(type) && type.length)
+        {
+            r = 'event';
+            
+            if(Str.in('.',type) || Str.in(':',type))
+            r = 'customEvent';
+        }
+        
+        return r;
+    }
+    
+    
+    // createFromType
+    // crée l'objet event à partir d'un type
+    this.createFromType = function(type,option)
+    {
+        let r = null;
+        const name = $inst.nameFromType(type);
+        
+        if(name != null)
+        {
+            if(name === 'customEvent')
+            r = new CustomEvent(type,option);
+            
+            else if(name === 'event')
+            r = new Event(type,option);
+        }
+        
+        return r;
+    }
+    
+    
     // getTriggerTarget
     // retourne la trigger target
     // les bindings delegate, créés la propirété triggerTarget sur l'objet event
@@ -77,10 +127,8 @@ const Evt = new function()
     // retourne un tableau avec les paramètres pour retirer le listener
     this.addEventListener = function(node,type,func,register,delegate,option) 
     {
+        Evt.checkType(type,'ael');
         option = Object.assign({capture: false, once: false},option);
-        
-        if(!Str.isNotEmpty(type))
-        logError('invalidType');
         
         const handler = $inst.addEventListenerHandler(type,func,delegate);
         
@@ -131,7 +179,7 @@ const Evt = new function()
                 args = args.concat(detail);
                 
                 if(debug > 0)
-                console.log('listener',this,type,delegate,detail,event);
+                console.log('listener',this,type,event,delegate,detail);
                 
                 func.apply(context,args);
             }
@@ -194,15 +242,13 @@ const Evt = new function()
         });
     }
     
-    
+
     // trigger
-    // function utilisé par triggerEvent et triggerCustom pour envoyer des événements
-    this.trigger = function(node,type,custom,option)
+    // function utilisé par triggerEvent et triggerBubble pour envoyer des événements
+    this.trigger = function(node,type,option)
     {
-        if(!Str.isNotEmpty(type))
-        logError('invalidType');
-        
-        const event = (custom === true)? new CustomEvent(type,option):new Event(type,option);
+        Evt.checkType(type,'trigger');
+        const event = $inst.createFromType(type,option);
         
         if(debug > 1)
         console.log('trigger',type,node);
@@ -216,26 +262,26 @@ const Evt = new function()
     
     
     // triggerEvent
-    // permet de lancer des événements standards sur chaque node
-    // ces événements buble
-    this.triggerEvent = function(node,type) 
-    {
-        const data = Arr.sliceStart(2,arguments);
-        const option = {bubbles: true, cancelable: true, detail: data};
-        
-        return $inst.trigger(node,type,false,option);
-    }
-    
-    
-    // triggerCustom
-    // permet de lancer les événements customs sur chaque node
+    // permet de lancer des événements sur chaque node
     // ces événements ne bubble pas
-    this.triggerCustom = function(node,type) 
+    this.triggerEvent = function(node,type) 
     {
         const data = Arr.sliceStart(2,arguments);
         const option = {bubbles: false, cancelable: true, detail: data};
         
-        return $inst.trigger(node,type,true,option);
+        return $inst.trigger(node,type,option);
+    }
+    
+    
+    // triggerBubble
+    // permet de lancer des événements sur chaque node
+    // ces événements bubble
+    this.triggerBubble = function(node,type) 
+    {
+        const data = Arr.sliceStart(2,arguments);
+        const option = {bubbles: true, cancelable: true, detail: data};
+        
+        return $inst.trigger(node,type,option);
     }
     
     
@@ -245,7 +291,7 @@ const Evt = new function()
     this.triggerSetup = function(node) 
     {
         const args = [node,'component:setup'].concat(Arr.sliceStart(1,arguments));
-        return $inst.triggerCustom.apply(null,args);
+        return $inst.triggerEvent.apply(null,args);
     }
     
     
@@ -279,6 +325,8 @@ const Evt = new function()
     // permet d'emmagasiné une fonction dans chaque node fournit en argument
     this.setFunc = function(node,type,func) 
     {
+        Evt.checkType(type,'setFunc');
+        
         $(node).each(function() {
             const all = $inst.allFunc(this);
             Obj.setRef(type,func,all);
@@ -306,6 +354,7 @@ const Evt = new function()
     this.triggerFunc = function(node,type) 
     {
         let r = null;
+        Evt.checkType(type,'triggerFunc:set');
         const func = $inst.getFunc(node,type);
         
         if(Func.is(func))
@@ -318,7 +367,7 @@ const Evt = new function()
             r = func.apply(node,args);
         }
         
-        else if(debug > 0)
+        else if(debug > 0 && Dom.isNode(node))
         console.log('triggerFunc',type,'notFound',node);
         
         return r;

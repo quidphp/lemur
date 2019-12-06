@@ -20,9 +20,9 @@
         border-radius: 10px 10px 0 0;
     }
 
-    .active.popup,
-    .active > .popup,
-    .active > * > .popup {
+    [data-active='1'].popup,
+    [data-active='1'] > .popup,
+    [data-active='1'] > * > .popup {
         display: block;
     }
     [data-status='loading'].popup,
@@ -87,7 +87,7 @@
         padding: 5px;
     }
 
-    &[data-absolute-placeholder='ready'].active .popup-title {
+    &[data-absolute-placeholder='ready'][data-active='1'] .popup-title {
         z-index: 3;
         @include abs(0, null, null, 0);
         white-space: nowrap;
@@ -121,7 +121,7 @@
             }
         }
 
-        &.active,
+        &[data-active='1'],
         &:hover {
             .popup-title {
                 color: $white;
@@ -129,7 +129,7 @@
             }
         }
 
-        &.active {
+        &[data-active='1'] {
             .popup-title {
                 background-color: $darkerColor;
             }

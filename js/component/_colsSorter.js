@@ -65,11 +65,11 @@ Component.colsSorter = function()
         Component.verticalSorter.call(popup,".choice",'.choice-in');
         
         popup.on('verticalSorter:stop',function() {
-            triggerCustom(this,'popup:validate');
+            triggerEvent(this,'popup:validate');
         })
         .on('popup:validate',function() {
             const checkboxes = triggerFunc($this,'colsSorter:getCheckboxes');
-            triggerCustom(checkboxes,'validate:trigger');
+            triggerEvent(checkboxes,'validate:trigger');
         })
         .on('popup:invalid',function() {
             $(this).attr('data-validate','invalid');
@@ -90,10 +90,10 @@ Component.colsSorter = function()
         Component.inputValidate.call(checkboxes);
         
         checkboxes.on('validate:invalid',function() {
-            triggerCustom(popup,'popup:invalid');
+            triggerEvent(popup,'popup:invalid');
         })
         .on('validate:valid',function() {
-            triggerCustom(popup,'popup:valid');
+            triggerEvent(popup,'popup:valid');
         });
     };
     
@@ -114,8 +114,8 @@ Component.colsSorter = function()
             
             if(Str.isNotEmpty(href) && href !== Request.relative())
             {
-                triggerCustom(this,'block');
-                triggerCustom(document,'doc:go',href,clickEvent);
+                triggerEvent(this,'block');
+                triggerEvent(document,'doc:go',href,clickEvent);
             }
         }
     };

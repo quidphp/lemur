@@ -66,14 +66,15 @@ const Win = function(type,timeout)
     
     // event
     ael(this,'beforeunload',function(event) {
-        let r = '';
+        let r = undefined;
         event = event || window.event;
         const text = triggerFunc(this,'win:unloadText');
         
         if(Str.isNotEmpty(text))
-        r = text;
-        
-        event.returnValue = r;
+        {
+            r = text;
+            event.returnValue = r;
+        }
         
         return r;
     });

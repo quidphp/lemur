@@ -111,18 +111,18 @@ Component.rowsChecker = function()
         const toggleAll = triggerFunc(this,'rowsChecker:getToggleAll');
         
         toggleAll.on('click',function() {
-            triggerCustom(this,'toggleAll:toggle');
+            triggerEvent(this,'toggleAll:toggle');
         })
         .on('toggleAll:toggle',function() {
-            triggerCustom(this,($this.triggerHandler('rowsChecker:areAllChecked'))? 'toggleAll:uncheck':'toggleAll:check');
+            triggerEvent(this,($this.triggerHandler('rowsChecker:areAllChecked'))? 'toggleAll:uncheck':'toggleAll:check');
         })
         .on('toggleAll:check',function() {
             $this.triggerHandler('rowsChecker:getCheckboxes').trigger('checkbox:check');
-            triggerCustom($this,'rowsChecker:refresh');
+            triggerEvent($this,'rowsChecker:refresh');
         })
         .on('toggleAll:uncheck',function() {
             $this.triggerHandler('rowsChecker:getCheckboxes').trigger('checkbox:uncheck');
-            triggerCustom($this,'rowsChecker:refresh');
+            triggerEvent($this,'rowsChecker:refresh');
         })
     };
     
@@ -133,7 +133,7 @@ Component.rowsChecker = function()
         
         // checkboxes
         checkboxes.on('change',function() {
-            triggerCustom(this,($(this).is(":checked"))? 'checkbox:check':'checkbox:uncheck',true);
+            triggerEvent(this,($(this).is(":checked"))? 'checkbox:check':'checkbox:uncheck',true);
         })
         .on('checkbox:getTr',function() {
             return $(this).parents("tr").get(0);
@@ -144,7 +144,7 @@ Component.rowsChecker = function()
             tr.addClass('selected');
             
             if(refresh === true)
-            triggerCustom($this,'rowsChecker:refresh');
+            triggerEvent($this,'rowsChecker:refresh');
         })
         .on('checkbox:uncheck',function(event,refresh) {
             const tr = triggerFunc(this,'checkbox:getTr');
@@ -152,7 +152,7 @@ Component.rowsChecker = function()
             tr.removeClass('selected');
             
             if(refresh === true)
-            triggerCustom($this,'rowsChecker:refresh');
+            triggerEvent($this,'rowsChecker:refresh');
         })
     };
     
@@ -176,7 +176,7 @@ Component.rowsChecker = function()
         Component.BlockEvent.call(button,'click');
         
         button.on('click',function(event) {
-            triggerCustom(this,'toolButton:redirect',event);
+            triggerEvent(this,'toolButton:redirect',event);
         })
         .on('toolButton:redirect',function(event,clickEvent) {
             const separator = $(this).data("separator");
@@ -185,7 +185,7 @@ Component.rowsChecker = function()
             
             if(Str.isNotEmpty(href))
             {
-                triggerCustom(this,'block');
+                triggerEvent(this,'block');
                 $(document).trigger('doc:go',[href,clickEvent]);
             }
         });
@@ -219,7 +219,7 @@ Component.rowsChecker = function()
             if(Str.isNotEmpty(set))
             {
                 input.val(set);
-                triggerCustom(this,'block');
+                triggerEvent(this,'block');
             }
             
             else

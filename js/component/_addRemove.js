@@ -43,7 +43,7 @@ Component.addRemove = function()
             container.append(html);
             const inserted = triggerFunc(this,'addRemove:getLast');
             bindElement.call(this,inserted);
-            triggerCustom(this,'addRemove:inserted',inserted);
+            triggerEvent(this,'addRemove:inserted',inserted);
         }
     })
     .on('addRemove:remove',function(event,index) {
@@ -53,7 +53,7 @@ Component.addRemove = function()
             ele.remove();
             
             if(!triggerFunc(this,'addRemove:getCount'))
-            triggerCustom(this,'addRemove:insert');
+            triggerEvent(this,'addRemove:insert');
         }
     })
     
@@ -74,7 +74,7 @@ Component.addRemove = function()
         const insert = triggerFunc(this,'addRemove:getInsert');
         
         insert.on('click',function() {
-            triggerCustom($this,'addRemove:insert');
+            triggerEvent($this,'addRemove:insert');
         });
     };
     
@@ -95,7 +95,7 @@ Component.addRemove = function()
         
         remove.on('confirmed',function() {
             const index = $this.triggerHandler('addRemove:findIndex',[element]);
-            triggerCustom($this,'addRemove:remove',[index]);
+            triggerEvent($this,'addRemove:remove',[index]);
         });
     };
     

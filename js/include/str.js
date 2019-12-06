@@ -51,7 +51,32 @@ const Str = new function()
         return ($inst.is(needle) && $inst.is(value))? (value.slice(-needle.length) == needle):false;
     }
 
-
+    
+    // in
+    // retourne vrai si la valeur est dans la string
+    // retourne un boolean
+    this.in = function(value,string) 
+    {
+        return ($inst.is(string) && string.includes(value))? true:false;
+    }
+    
+    
+    // pos
+    // retourne l'index de la valeur dans la string
+    this.pos = function(value,string) 
+    {
+        let r = null;
+        
+        if($inst.is(string))
+        {
+            r = string.indexOf(value);
+            r = (r === -1)? null:r;
+        }
+        
+        return r;
+    }
+    
+    
     // lowerFirst
     // met la première lettre de la string lowercase
     this.lowerFirst = function(value)
@@ -67,7 +92,7 @@ const Str = new function()
         return ($inst.isNotEmpty(value))? value.charAt(0).toUpperCase() + value.slice(1):null;
     }
 
-
+    
     // trim
     // trim une string
     this.trim = function(value)

@@ -22,39 +22,54 @@ const AjaxBlock = function(type)
     
     
     // func
+    setFunc(this,'ajaxBlock:isReady',function() {
+        const node = triggerFunc(this,'ajaxBlock:getStatusNode');
+        return ($(node).attr("data-status") === 'ready')? true:false;
+    });
+    
     setFunc(this,'ajaxBlock:getStatusNode',function() {
         return this;
     });
     
+    setFunc(this,'ajaxBlock:getContentNode',function() {
+        return triggerFunc(this,'ajaxBlock:getStatusNode');
+    });
+    
     setFunc(this,'ajaxBlock:setContent',function(html,isError) {
-        const node = triggerFunc(this,'ajaxBlock:getStatusNode');
+        const node = triggerFunc(this,'ajaxBlock:getContentNode');
         $(node).html(html);
+    });
+    
+    setFunc(this,'ajaxBlock:bindContent',function() {
+        const node = triggerFunc(this,'ajaxBlock:getContentNode');
+        triggerEvent(document,'doc:mountCommon',node);
     });
     
     setFunc(this,'ajax:before',function(jqXHR,setting) {
         const node = triggerFunc(this,'ajaxBlock:getStatusNode');
         $(node).attr('data-status','loading');
         triggerFunc(this,'blockEvent:block',type);
-        triggerCustom(this,'ajaxBlock:before',jqXHR,setting);
+        triggerEvent(this,'ajaxBlock:before',jqXHR,setting);
     });
     
     setFunc(this,'ajax:error',function(parsedError,jqXHR,textStatus,errorThrown) {
         const node = triggerFunc(this,'ajaxBlock:getStatusNode');
         $(node).attr("data-status",'error');
         triggerFunc(this,'ajaxBlock:setContent',parsedError,true);
-        triggerCustom(this,'ajaxBlock:error',parsedError,jqXHR,textStatus,errorThrown);
+        triggerEvent(this,'ajaxBlock:error',parsedError,jqXHR,textStatus,errorThrown);
     });
     
     setFunc(this,'ajax:success',function(data,textStatus,jqXHR) {
         const node = triggerFunc(this,'ajaxBlock:getStatusNode');
         $(node).attr("data-status",'ready');
         triggerFunc(this,'ajaxBlock:setContent',data,false);
-        triggerCustom(this,'ajaxBlock:success',data,textStatus,jqXHR);
+        triggerFunc(this,'ajaxBlock:bindContent');
+        triggerEvent(this,'ajaxBlock:success',data,textStatus,jqXHR);
     });
     
     setFunc(this,'ajax:complete',function(jqXHR,textStatus) {
         triggerFunc(this,'blockEvent:unblock',type);
-        triggerCustom(this,'ajaxBlock:complete',jqXHR,textStatus);
+        triggerEvent(this,'ajaxBlock:complete',jqXHR,textStatus);
     });
     
     return this;

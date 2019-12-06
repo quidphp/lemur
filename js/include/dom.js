@@ -93,11 +93,13 @@ const Dom = new function()
     // si la valeur est null et qu'un fallback est spécifié, créer la propriété data
     this.getData = function(node,key,fallback)
     {
-        let r = $(node).data(key);
+        let r = null;
+        const firstNode = $(node).get(0);
+        r = $(firstNode).data(key);
         
         if(r == null && fallback != null)
         {
-            $(node).data(key,fallback);
+            $(firstNode).data(key,fallback);
             r = fallback;
         }
         

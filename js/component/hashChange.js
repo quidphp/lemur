@@ -15,7 +15,7 @@ const HashChange = function(persistent)
     // event
     const handler = ael(window,'hashchange',function(event,sourceEvent) {
         event.stopPropagation();
-        triggerCustom($nodes,'hash:change',Request.fragment(),sourceEvent);
+        triggerEvent($nodes,'hash:change',Request.fragment(),sourceEvent);
     });
     
     

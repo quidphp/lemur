@@ -58,13 +58,13 @@ Component.slider = function(timeout,navs,className,showIfOne)
                 Component.Timeout.call(this,'tab:change',timeout);
                 
                 $(this).on('tab:change:onTimeout',function(event) {
-                    triggerCustom(this,'tab:loopNext');
+                    triggerEvent(this,'tab:loopNext');
                 })
                 .on('mouseover',function(event) {
-                    triggerCustom(this,'tab:change:clearTimeout');
+                    triggerEvent(this,'tab:change:clearTimeout');
                 })
                 .on('mouseleave',function(event) {
-                    triggerCustom(this,'tab:change:setTimeout');
+                    triggerEvent(this,'tab:change:setTimeout');
                 });
             }
         }
@@ -85,7 +85,7 @@ Component.slider = function(timeout,navs,className,showIfOne)
             return target;
         });
         Component.tab.call(this);
-        triggerCustom(this,'tab:changeOrFirst');
+        triggerEvent(this,'tab:changeOrFirst');
     };
     
     $(this).each(function(index, el) {

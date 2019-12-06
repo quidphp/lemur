@@ -46,9 +46,9 @@ const aelDelegate = Evt.addDelegatedEventListener;
 const aelOnce = Evt.addEventListenerOnce;
 const rel = Evt.removeEventListener;
 const triggerEvent = Evt.triggerEvent;
-const triggerFunc = Evt.triggerFunc;
-const triggerCustom = Evt.triggerCustom;
+const triggerBubble = Evt.triggerBubble;
 const triggerSetup = Evt.triggerSetup;
+const triggerFunc = Evt.triggerFunc;
 
 // selector
 const qsa = Selector.scopedQuerySelectorAll;

@@ -21,7 +21,7 @@ Component.backToTop = function()
     })
     .on('scroll:change',function(event) {
         const scrollTop = $(window).scrollTop();
-        triggerCustom(this,(scrollTop === 0)? 'backToTop:hide':'backToTop:show');
+        triggerEvent(this,(scrollTop === 0)? 'backToTop:hide':'backToTop:show');
     })
     .trigger('scroll:change');
     

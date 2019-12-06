@@ -16,7 +16,7 @@ const ClickOpenBase = function(option)
     const $option = Object.assign({
         target: true,
         background: 'clickOpen',
-        attr: 'data-click-open',
+        attr: 'data-active',
         multiple: false
     },option);
     
@@ -31,7 +31,7 @@ const ClickOpenBase = function(option)
     });
     
     setFunc(this,'clickOpen:isOpen',function() {
-        return $(this).hasClass("active");
+        return (Num.castInt($(this).attr($option.attr)) === 1)? true:false;
     });
     
     setFunc(this,'clickOpen:isClose',function() {
@@ -39,7 +39,7 @@ const ClickOpenBase = function(option)
     });
     
     setFunc(this,'clickOpen:isEmpty',function() {
-        const target = triggerFunc(this,'clickOpen:getTarget');
+        const target = triggerFunc(this,'clickOpen:getTargetContent');
         return $(target).is(":empty");
     });
     
@@ -67,13 +67,21 @@ const ClickOpenBase = function(option)
         return r;
     });
     
+    setFunc(this,'clickOpen:getTargetFocus',function() {
+        return triggerFunc(this,'clickOpen:getTarget');
+    });
+    
+    setFunc(this,'clickOpen:getTargetContent',function() {
+        return triggerFunc(this,'clickOpen:getTarget');
+    });
+    
     setFunc(this,'clickOpen:setTargetContent',function(data) {
-        const target = triggerFunc(this,'clickOpen:getTarget');
+        const target = triggerFunc(this,'clickOpen:getTargetContent');
         $(target).html(data);
     });
     
     setFunc(this,'clickOpen:unsetTargetContent',function() {
-        const target = triggerFunc(this,'clickOpen:getTarget');
+        const target = triggerFunc(this,'clickOpen:getTargetContent');
         $(target).html('');
     });
     
@@ -104,26 +112,26 @@ const ClickOpenBase = function(option)
     setFunc(this,'clickOpen:closeAll',function() {
         const all = triggerFunc(this,'clickOpen:getAll');
         d(all);
-        triggerCustom(all,'clickOpen:close');
+        triggerEvent(all,'clickOpen:close');
     });
     
     setFunc(this,'clickOpen:closeOthers',function() {
         const all = triggerFunc(this,'clickOpen:getAll');
         const others = $(all).not(this);
-        triggerCustom(others,'clickOpen:close');
+        triggerEvent(others,'clickOpen:close');
     });
     
     setFunc(this,'clickOpen:closeChilds',function() {
         const childs = triggerFunc(this,'clickOpen:getChilds');
-        triggerCustom(childs,'clickOpen:close');
+        triggerEvent(childs,'clickOpen:close');
     });
     
     setFunc(this,'clickOpen:toggle',function() {
         const isOpen = triggerFunc(this,'clickOpen:isOpen');
-        triggerCustom(this,(isOpen === true)? 'clickOpen:close':'clickOpen:open');
+        triggerEvent(this,(isOpen === true)? 'clickOpen:close':'clickOpen:open');
     });
     
-    setFunc(this,'keyboard:escape:prevent',function() {
+    setFunc(this,'keyboardEscape:prevent',function() {
         return (triggerFunc(this,'clickOpen:isOpen'))? true:false;
     });
     
@@ -142,9 +150,8 @@ const ClickOpenBase = function(option)
             }
             
             const attr = triggerFunc(this,'clickOpen:getAttr');
-            $(this).addClass('active');
             $(this).attr(attr,1);
-            triggerCustom(this,'clickOpen:focus');
+            triggerEvent(this,'clickOpen:focus');
         }
         
         const background = triggerFunc(document,'doc:getBackground');
@@ -156,7 +163,6 @@ const ClickOpenBase = function(option)
         if(triggerFunc(this,'clickOpen:isOpen') === true)
         {
             const attr = triggerFunc(this,'clickOpen:getAttr');
-            $(this).removeClass('active');
             $(this).removeAttr(attr);
             
             const background = triggerFunc(document,'doc:getBackground');
@@ -166,14 +172,14 @@ const ClickOpenBase = function(option)
     });
     
     ael(this,'clickOpen:focus',function() {
-        const container = triggerFunc(this,'clickOpen:getTarget');
+        const target = triggerFunc(this,'clickOpen:getTargetFocus');
         
-        if($(container).is('[tabindex]'))
-        $(container).focus();
+        if($(target).is('[tabindex]'))
+        $(target).focus();
     });
     
-    ael(this,'keyboard:escape:blocked',function() {
-        triggerCustom(this,'clickOpen:close');
+    ael(this,'keyboardEscape:blocked',function() {
+        triggerEvent(this,'clickOpen:close');
     });
     
     
@@ -189,7 +195,7 @@ const ClickOpenBase = function(option)
             event.stopPropagation();
         });
         
-        ael(container,'keyboard:enter:blocked',function(event,keyEvent) {
+        ael(container,'keyboardEnter:blocked',function(event,keyEvent) {
             const target = keyEvent.target;
             const tagName = Dom.tag(target);
             

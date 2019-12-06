@@ -23,7 +23,7 @@ Component.verticalSorter = function(items,handle,containment)
                 containment: containment,
                 cancel: Selector.input(),
                 stop: function(event,ui) {
-                    triggerCustom(this,'verticalSorter:stop');
+                    triggerEvent(this,'verticalSorter:stop');
                     ui.item.css('z-index','auto');
                 }
             });

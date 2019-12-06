@@ -67,8 +67,9 @@ abstract class Boot extends Core\Boot
                     'to'=>'[publicCss]/cms.css',
                     'from'=>[
                         0=>'[vendorLemur]/css/include',
-                        1=>'[vendorLemur]/css/cms-mixin',
-                        6=>'[vendorLemur]/css/cms']],
+                        1=>'[vendorLemur]/css/component',
+                        2=>'[vendorLemur]/css/cms-mixin',
+                        8=>'[vendorLemur]/css/cms']],
                 'icon'=>[
                     'to'=>'[publicCss]/cms-icon.css',
                     'from'=>[

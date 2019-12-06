@@ -26,13 +26,13 @@ const Confirm = function(type)
         {
             event.stopImmediatePropagation();
             event.preventDefault();
-            triggerCustom(this,'confirm:no',event);
+            triggerEvent(this,'confirm:no',event);
             
             return false;
         }
         
         else
-        triggerCustom(this,'confirm:yes',event);
+        triggerEvent(this,'confirm:yes',event);
     });
     
     return this;

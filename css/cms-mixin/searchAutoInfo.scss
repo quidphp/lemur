@@ -6,9 +6,9 @@
  * License: https://github.com/quidphp/lemur/blob/master/LICENSE
  */
 
-// mainSearch
+// searchAutoInfo
 // stylesheet for the main search component
-@mixin mainSearch() {
+@mixin searchAutoInfo() {
     margin: auto;
     position: relative;
 
@@ -26,14 +26,14 @@
         border-bottom: 2px solid $color;
     }
 
-    &.active-search-in [data-absolute-placeholder='ready'] input[type='text'],
-    &.active [data-absolute-placeholder='ready'] input[type='text'] {
+    &[data-search-info='1'] [data-absolute-placeholder='ready'] input[type='text'],
+    &[data-active='1'] [data-absolute-placeholder='ready'] input[type='text'] {
         z-index: 3;
         @include abs(0, null, null, 0);
     }
 
-    &.active-search-in input[type='text'],
-    &.active input[type='text'] {
+    &[data-search-info='1'] input[type='text'],
+    &[data-active='1'] input[type='text'] {
         background-color: $lightYellow;
     }
 
@@ -47,7 +47,7 @@
         @include popupList();
     }
 
-    .search-in {
+    .search-info {
         @include popupBase();
         padding: 15px;
 
@@ -63,13 +63,13 @@
             }
         }
 
-        &.active {
+        &[data-active='1'] {
             display: block;
         }
     }
 
     .popup,
-    .search-in {
+    .search-info {
         width: 100%;
         max-width: inherit;
         max-height: 225px;

@@ -29,9 +29,9 @@ Component.fragment = function()
             }
             
             else
-            triggerCustom(this,'fragment:remove',replaceState);
+            triggerEvent(this,'fragment:remove',replaceState);
             
-            triggerCustom(this,'fragment:updated',fragment);
+            triggerEvent(this,'fragment:updated',fragment);
         }
     })
     .on('fragment:remove',function(event) {

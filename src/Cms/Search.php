@@ -159,7 +159,7 @@ class Search extends Core\RouteAlias
             $lang = static::lang();
             $minLength = $tables->searchMinLength();
             $name = $this->getSearchName();
-            $data = ['keyupDelay'=>800,'required'=>true,'pattern'=>['minLength'=>$minLength]];
+            $data = ['required'=>true,'pattern'=>['minLength'=>$minLength]];
 
             $r .= $this->formOpen();
             $r .= Html::divOp(['data'=>['absolute-placeholder'=>true,'only-height'=>true]]);
@@ -167,7 +167,7 @@ class Search extends Core\RouteAlias
             $r .= Html::submit(true,['button','icon-solo','search']);
             $r .= Html::divCl();
             $r .= Html::div(null,'popup');
-            $r .= Html::div($this->makeSearchIn($minLength,$tables),'search-in');
+            $r .= Html::div($this->makeSearchInfo($minLength,$tables),'search-info');
             $r .= Html::formClose();
         }
 
@@ -175,9 +175,9 @@ class Search extends Core\RouteAlias
     }
 
 
-    // makeSearchIn
-    // génère le html pour le searchIn
-    final protected function makeSearchIn(int $minLength,Orm\Tables $tables):string
+    // makeSearchInfo
+    // génère le html pour le searchInfo
+    final protected function makeSearchInfo(int $minLength,Orm\Tables $tables):string
     {
         $r = '';
         $lang = static::lang();

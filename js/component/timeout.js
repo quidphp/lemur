@@ -22,18 +22,20 @@ const Timeout = function(type,timeout)
     });
     
     setFunc(this,'timeout:set',function(type) {
+        Evt.checkType(type,'timeout:set');
         const $this = $(this);
         const duration = triggerFunc(this,'timeout:duration',type);
         const timeoutObj = getTimeoutObj.call(this);
         const timeout = setTimeout(function() {
-            triggerCustom($this,'timeout:'+type);
+            triggerEvent($this,'timeout:'+type);
         },duration);
         
         triggerFunc(this,'timeout:clear',type);
-        Obj.set(type,timeout,timeoutObj);
+        Obj.setRef(type,timeout,timeoutObj);
     })
     
     setFunc(this,'timeout:clear',function(type) {
+        Evt.checkType(type,'timeout:clear');
         const oldTimeout = getTimeout.call(this,type);
         
         if(oldTimeout != null)

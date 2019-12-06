@@ -17,7 +17,7 @@ const KeyboardTab = function(prevent,type)
     
     
     // func
-    setFunc(this,'keyboard:tab:prevent',function() {
+    setFunc(this,'keyboardTab:prevent',function() {
         return (prevent === true)? true:false;
     });    
     

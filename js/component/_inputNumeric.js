@@ -38,14 +38,14 @@ Component.inputNumeric = function(option)
     
     // custom
     ael(this,'keyup:onTimeout',function() {
-        triggerCustom(this,'validate:process');
+        triggerEvent(this,'validate:process');
         refresh.call(this);
     });
     
     ael(this,'validate:invalid',function() {
         const current = triggerFunc(this,'inputNumeric:getCurrent');
         triggerFunc(this,'input:setValue',current);
-        triggerCustom(this,'validate:valid');
+        triggerEvent(this,'validate:valid');
     });
     
     // event
@@ -59,7 +59,7 @@ Component.inputNumeric = function(option)
     });
     
     ael(this,'change',function() {
-        triggerCustom(this,'inputNumeric:refresh');
+        triggerEvent(this,'inputNumeric:refresh');
     });
     
     
@@ -70,7 +70,7 @@ Component.inputNumeric = function(option)
         const current = triggerFunc(this,'inputNumeric:getCurrent');
         
         if(!val)
-        triggerCustom(this,'validate:invalid');
+        triggerEvent(this,'validate:invalid');
         
         else
         {
@@ -93,8 +93,8 @@ Component.inputNumeric = function(option)
         
         if(Str.isNotEmpty(href))
         {
-            triggerCustom(this,'block');
-            triggerCustom(document,'doc:go',href)
+            triggerEvent(this,'block');
+            triggerEvent(document,'doc:go',href)
         }
     };
     

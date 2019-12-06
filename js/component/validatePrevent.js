@@ -40,11 +40,11 @@ const ValidatePrevent = function(type)
         {
             event.stopImmediatePropagation();
             event.preventDefault();
-            triggerCustom(this,'validatePrevent:deny',event);
+            triggerEvent(this,'validatePrevent:deny',event);
         }
         
         else
-        triggerCustom(this,'validatePrevent:allow',event);
+        triggerEvent(this,'validatePrevent:allow',event);
         
         return r;
     });
@@ -59,7 +59,7 @@ const ValidatePrevent = function(type)
             Component.Validate.call(this);
         });
         
-        triggerCustom(targets,'validate:setup');
+        triggerEvent(targets,'component:setup');
     });
     
     return this;

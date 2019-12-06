@@ -41,22 +41,22 @@ Component.calendar = function()
     // trigger
     .on('ajax:before',function() {
         $(this).find("> *").hide();
-        triggerCustom(this,'block');
-        triggerCustom(this,'calendar:loading');
+        triggerEvent(this,'block');
+        triggerEvent(this,'calendar:loading');
     })
     .on('ajax:success',function(event,data,textStatus,jqXHR) {
         $(this).html(data);
-        triggerCustom(this,'calendar:loaded');
-        triggerCustom(this,'calendar:bind');
-        triggerCustom(this,'calendar:ready');
+        triggerEvent(this,'calendar:loaded');
+        triggerEvent(this,'calendar:bind');
+        triggerEvent(this,'calendar:ready');
     })
     .on('ajax:error',function(event,parsedError,jqXHR,textStatus,errorThrown) {
         $(this).html(parsedError);
-        triggerCustom(this,'calendar:removeSelected');
-        triggerCustom(this,'calendar:loaded');
+        triggerEvent(this,'calendar:removeSelected');
+        triggerEvent(this,'calendar:loaded');
     })
     .on('calendar:loaded',function(event) {
-        triggerCustom(this,'unblock');
+        triggerEvent(this,'unblock');
     })
     .on('calendar:bind',function() {
         bindNav.call(this);
@@ -65,7 +65,7 @@ Component.calendar = function()
         triggerFunc(this,'calendar:getSelected').removeClass('selected');
     })
     .on('calendar:select',function(event,value,reload) {
-        triggerCustom(this,'calendar:removeSelected');
+        triggerEvent(this,'calendar:removeSelected');
         const tds = triggerFunc(this,'calendar:getCells');
         const td = null;
         value = prepareValue.call(this,value);
@@ -133,15 +133,15 @@ Component.calendar = function()
         Component.Ajax.call(prevNext,'click');
 
         prevNext.on('ajax:before',function() {
-            triggerCustom($this,'ajax:before');
-            triggerCustom(this,'block');
+            triggerEvent($this,'ajax:before');
+            triggerEvent(this,'block');
         })
         .on('ajax:success',function(event,data,textStatus,jqXHR) {
-            triggerCustom($this,'ajax:success',[data,textStatus,jqXHR]);
-            triggerCustom(this,'unblock');
+            triggerEvent($this,'ajax:success',[data,textStatus,jqXHR]);
+            triggerEvent(this,'unblock');
         })
         .on('ajax:error',function(event,parsedError,jqXHR,textStatus,errorThrown) {
-            triggerCustom($this,'ajax:error',[parsedError,jqXHR,textStatus,errorThrown]);
+            triggerEvent($this,'ajax:error',[parsedError,jqXHR,textStatus,errorThrown]);
         });
     };
     

@@ -33,6 +33,17 @@ const ClickOpenTriggerBase = function(option)
         return r;
     });
     
+    setFunc(this,'clickOpen:triggerClick',function(clickEvent) {
+        if($option.triggerToggle === true && triggerFunc(this,'clickOpen:isOpen'))
+        triggerEvent(this,'clickOpen:close');
+        else
+        triggerFunc(this,'clickOpen:triggerClickOpen');
+    });
+    
+    setFunc(this,'clickOpen:triggerClickOpen',function() {
+        triggerEvent(this,'clickOpen:open');
+    });
+    
     
     // setup
     aelOnce(this,'component:setup',function(event) {
@@ -42,20 +53,15 @@ const ClickOpenTriggerBase = function(option)
         if(trigger != null)
         {
             ael(trigger,$option.triggerEvent,function(event) {
-                if($option.triggerToggle === true)
-                triggerFunc($this,'clickOpen:toggle');
-                else
-                triggerCustom($this,'clickOpen:open');
-                
+                triggerFunc($this,'clickOpen:triggerClick',event);
                 event.stopPropagation();
                 event.preventDefault();
+                return false;
             });
             
             aelDelegate(trigger,'click','a',function(event) {
                 triggerFunc(document,'doc:clickEvent',event);
-                event.stopPropagation();
-            })
-            
+            });
         }
     });
     

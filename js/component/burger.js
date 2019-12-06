@@ -19,7 +19,7 @@ const Burger = function()
     });
     
     setFunc(this,'burger:toggle',function() {
-        triggerCustom(this,triggerFunc(this,'burger:isOpen')? 'burger:close':'burger:open');
+        triggerEvent(this,triggerFunc(this,'burger:isOpen')? 'burger:close':'burger:open');
     });
     
     
@@ -41,13 +41,13 @@ const Burger = function()
     
     // setup
     aelOnce(this,'component:setup',function() {
-        triggerCustom(this,'burger:close');
+        triggerEvent(this,'burger:close');
     })
     
     
     // teardown
     aelOnce(this,'component:teardown',function() {
-        triggerCustom(this,'burger:close');
+        triggerEvent(this,'burger:close');
     });
     
     return this;

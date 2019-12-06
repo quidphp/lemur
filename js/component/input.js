@@ -58,7 +58,7 @@ const Input = function()
     
     
     // setup form
-    aelOnce(this,'input:form:setup',function() {
+    aelOnce(this,'input:formPrepare',function() {
         
         setFunc(this,'input:isSystem',function() {
             return $(this).is("[name^='-']");
@@ -98,7 +98,7 @@ const Input = function()
     });
     
     // setup validate
-    aelOnce(this,'input:validate:setup',function() {
+    aelOnce(this,'input:validatePrepare',function() {
         
         if(!triggerFunc(this,'validate:isBinded'))
         Component.Validate.call(this);

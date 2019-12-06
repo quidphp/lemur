@@ -14,8 +14,7 @@ const Carousel = function(option)
     
     // option
     const $option = Object.assign({
-        background: 'carousel',
-        attr: 'data-carousel',
+        background: false,
         multiple: true
     },option);
     

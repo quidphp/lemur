@@ -24,11 +24,11 @@ const ClickOutside = function(value,persistent)
         const parent = triggerFunc(this,'clickOutside:getParent');
         
         const handler = ael(parent,'click',function() {
-            triggerCustom($this,value);
+            triggerEvent($this,value);
         });
         
         const handlerCustom = ael(parent,'clickOutside:click',function() {
-            triggerCustom($this,value);
+            triggerEvent($this,value);
         });
         
         // persistent

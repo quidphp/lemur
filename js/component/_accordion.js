@@ -12,13 +12,13 @@ Component.accordion = function(until,closeAll,wrap)
     
     $(this).on('click',function(event) {
         if(closeAll === true)
-        triggerCustom($this,'accordion:close');
+        triggerEvent($this,'accordion:close');
         
         if(triggerFunc(this,'accordion:isOpen'))
-        triggerCustom(this,'accordion:close');
+        triggerEvent(this,'accordion:close');
         
         else
-        triggerCustom(this,'accordion:open');
+        triggerEvent(this,'accordion:open');
     })
     .on('accordion:getContents',function(event) {
         return $(this).nextUntil(until);

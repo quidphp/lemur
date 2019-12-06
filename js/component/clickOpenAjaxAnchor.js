@@ -12,26 +12,24 @@ const ClickOpenAjaxAnchor = function(option)
     const $nodes = this;
     
     
+    // option
+    const $option = Object.assign({
+        triggerToggle: true
+    },option);
+    
+    
     // components
     Component.ClickOpenTriggerBase.call(this,option);
     Component.ClickOpenAjax.call(this,option);
     
     
     // func
-    setFunc(this,'ajax:getNodeConfig',function(triggerEvent,config,tag) {
+    setFunc(this,'ajax:getConfig',function(triggerEvent) {
         return triggerFunc(this,'clickOpen:getTrigger');
     });
     
-    
-    // setup
-    aelOnce(this,'component:setup',function() {
-        const $this = this;
-        const trigger = triggerFunc(this,'clickOpen:getTrigger');
-        
-        ael(trigger,'click',function(event) {
-            triggerCustom($this,'ajax:init');
-            event.preventDefault();
-        });
+    setFunc(this,'clickOpen:triggerClickOpen',function() {
+        triggerEvent(this,'ajax:init');
     });
     
     return this;

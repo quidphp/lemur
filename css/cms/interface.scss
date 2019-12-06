@@ -215,7 +215,7 @@ header {
             flex-grow: 2;
 
             > form {
-                @include mainSearch();
+                @include searchAutoInfo();
             }
         }
 

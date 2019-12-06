@@ -31,8 +31,8 @@
                 background-color: $color;
             }
 
-            &:active > a:first-child,
-            &:active > .trigger {
+            &[data-active='1'] > a:first-child,
+            &[data-active='1'] > .trigger {
                 background-color: $darkColor;
             }
 
@@ -41,7 +41,7 @@
                 border-bottom: 0;
             }
 
-            &.active > a:first-child,
+            &[data-active='1'] > a:first-child,
             > a:first-child.selected {
                 background-color: $color;
                 text-decoration: underline;
@@ -88,7 +88,7 @@
             }
         }
 
-        &.active > .trigger {
+        &[data-active='1'] > .trigger {
             background-color: $darkerColor;
 
             .triangle {
@@ -97,7 +97,7 @@
             }
         }
 
-        &.active > .target {
+        &[data-active='1'] > .target {
             display: block;
         }
 

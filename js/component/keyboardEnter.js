@@ -17,7 +17,7 @@ const KeyboardEnter = function(prevent,type)
     
     
     // func
-    setFunc(this,'keyboard:enter:prevent',function() {
+    setFunc(this,'keyboardEnter:prevent',function() {
         return (prevent === true)? true:false;
     });        
     

@@ -72,7 +72,7 @@ Component.textareaExtra = function()
             return 'tableRelation';
         })
         .one('component:setup',function(event) {
-            triggerCustom(this,'component:setup');
+            triggerEvent(this,'component:setup');
             
             const clickOpen = triggerFunc(this,'clickOpen:getTarget');
             const result = triggerFunc(this,'filter:getResult');

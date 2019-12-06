@@ -15,7 +15,7 @@ const ScrollChange = function(persistent)
     // event
     const handler = ael(window,'scroll',function(event) {
         event.stopPropagation();
-        triggerCustom($nodes,'scroll:change');
+        triggerEvent($nodes,'scroll:change');
     });
     
     

@@ -17,23 +17,25 @@ const ClickOpenAjax = function(option)
         ajaxEvent: 'ajax:init',
     },option);
     
-    
+
     // components
     Component.AjaxBlock.call(this,$option.ajaxEvent);    
     Component.ClickOpen.call(this,$option);
     
     
     // func
-    setFunc(this,'ajaxBlock:before',function() {
-        triggerCustom(this,'clickOpen:open');
+    setFunc(this,'ajaxBlock:getContentNode',function() {
+        return triggerFunc(this,'clickOpen:getTargetContent');
     });
     
-    setFunc(this,'ajaxBlock:setContent',function(html,isError) {
-        triggerFunc(this,'clickOpen:setTargetContent',html);
+    
+    // ael
+    ael(this,'ajaxBlock:before',function() {
+        triggerEvent(this,'clickOpen:open');
     });
     
-    setFunc(this,'ajaxBlock:success',function(data,textStatus,jqXHR) {
-        triggerCustom(this,'clickOpen:loaded');
+    ael(this,'ajaxBlock:success',function() {
+        triggerEvent(this,'clickOpen:loaded');
     });
     
     

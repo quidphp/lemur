@@ -13,8 +13,7 @@ const Feed = function()
     
     
     // blockEvent + ajax
-    Component.BlockEvent.call(this,'ajax:init');
-    Component.Ajax.call(this,'ajax:init');
+    Component.AjaxBlock.call(this,'ajax:init');
     
     
     // func
@@ -42,25 +41,6 @@ const Feed = function()
         feedSet.call(this,'overwrite',data);
     });
     
-    setFunc(this,'ajax:before',function() {
-        $(this).attr('data-status','loading');
-        triggerFunc(this,'blockEvent:block','ajax:init');
-    });
-    
-    setFunc(this,'ajax:success',function(data,textStatus,jqXHR) {
-        triggerFunc(this,'feed:overwrite',data);
-    });
-    
-    setFunc(this,'ajax:error',function(parsedError,jqXHR,textStatus,errorThrown) {
-        const target = triggerFunc(this,'feed:getTarget');
-        $(this).attr('data-status','error');
-        $(target).html(parsedError);
-    });
-    
-    setFunc(this,'ajax:complete',function() {
-        $(this).removeAttr('data-status');
-    });
-    
     
     // event
     ael(this,'feed:bind',function() {
@@ -70,7 +50,7 @@ const Feed = function()
     
     // setup
     aelOnce(this,'component:setup',function() {
-        triggerCustom(this,'feed:bind');
+        triggerEvent(this,'feed:bind');
     });
 
     
@@ -85,7 +65,7 @@ const Feed = function()
         else
         $(target).html(data);
         
-        triggerCustom(this,'feed:bind');
+        triggerEvent(this,'feed:bind');
     }
     
     
@@ -94,27 +74,15 @@ const Feed = function()
     {
         const $this = this;
         const loadMore = triggerFunc(this,'feed:loadMore');
+        Component.AjaxBlock.call(loadMore,'ajax:init');
         
-        Component.BlockEvent.call(loadMore,'ajax:init');
-        Component.Ajax.call(loadMore,'ajax:init');
-        
-        setFunc(loadMore,'ajax:before',function() {
-            $(this).attr('data-status','loading');
-            triggerFunc(this,'blockEvent:block','ajax:init');
-        });
-        
-        setFunc(loadMore,'ajax:success',function(data,textStatus,jqXHR) {
+        setFunc(loadMore,'ajaxBlock:setContent',function(html,isError) {
             removeLoadMore.call($this);
-            triggerFunc($this,'feed:append',data);
-        });
-        
-        setFunc(loadMore,'ajax:error',function(parsedError,jqXHR,textStatus,errorThrown) {
-            removeLoadMore.call($this);
-            triggerFunc($this,'ajax:error',parsedError,jqXHR,textStatus);
+            triggerFunc($this,(isError === true)? 'feed:overwrite':'feed:append',html);
         });
         
         aelOnce(loadMore,'click',function(event) {
-            triggerCustom(this,'ajax:init');
+            triggerEvent(this,'ajax:init');
             event.stopPropagation();
             event.preventDefault();
         });

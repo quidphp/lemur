@@ -17,9 +17,15 @@ const Ajax = function(type)
         return (triggerFunc(document,'doc:isLoading') === true)? false:true;
     });
     
-    setFunc(this,'ajax:trigger',function(triggerEvent) {
-        const configNode = triggerFunc(this,'ajax:getNodeConfig',triggerEvent);
-        const config = Xhr.configFromNode(configNode);
+    setFunc(this,'ajax:trigger',function(triggerEvent,config) {
+        
+        if(!Obj.isNotEmpty(config))
+        {
+            config = triggerFunc(this,'ajax:getConfig',triggerEvent);
+            if(Dom.isNode(config))
+            config = Xhr.configFromNode(config);
+        }
+        
         const r = Xhr.trigger(this,config);
         
         if(r !== false && triggerEvent != null)
@@ -31,15 +37,15 @@ const Ajax = function(type)
         return r;
     });
     
-    setFunc(this,'ajax:getNodeConfig',function(triggerEvent) {
+    setFunc(this,'ajax:getConfig',function(triggerEvent) {
         return this;
     });
     
     
     // event
-    ael(this,type,function(event) {
+    ael(this,type,function(event,config) {
         event.stopPropagation();
-        triggerFunc(this,'ajax:trigger',event);
+        triggerFunc(this,'ajax:trigger',event,config);
     });
     
     return this;

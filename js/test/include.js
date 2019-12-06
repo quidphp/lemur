@@ -104,6 +104,11 @@ const TestInclude = function()
         // domChange
 
         // evt
+        assert(Evt.checkType('ok') === undefined);
+        assert(Evt.nameFromType('ok') === 'event');
+        assert(Evt.nameFromType('ok:what') === 'customEvent');
+        assert(Evt.createFromType('ok') instanceof Event);
+        assert(Evt.createFromType('ok:what') instanceof CustomEvent);
         Evt.setFunc(htmlNode,'what',function(value) { $(this).data('OK',value); return true; });
         assert(Func.is(Evt.getFunc(htmlNode,'what')));
         assert($(htmlNode).data('OK') == null);
@@ -290,6 +295,11 @@ const TestInclude = function()
         assert(!Str.isStart(3,'3s'));
         assert(Str.isEnd('s','as'));
         assert(!Str.isEnd('a','as'));
+        assert(Str.in('a','as') === true);
+        assert(Str.in('é','aÉè') === false);
+        assert(Str.pos('a','as') === 0);
+        assert(Str.pos('é','aéè') === 1);
+        assert(Str.pos('é','aÉè') === null);
         assert(Str.lowerFirst('as') === 'as');
         assert(Str.lowerFirst('As') === 'as');
         assert(Str.lowerFirst('És') === 'és');

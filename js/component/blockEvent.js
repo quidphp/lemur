@@ -31,23 +31,29 @@ const BlockEvent = function(type)
     });
     
     setFunc(this,'blockEvent:register',function(type) {
-        const blockObj = getBlockObj.call(this);
-        const handler = getHandler.call(this,type);
-        
-        Obj.setRef(type,0,blockObj);
-        ael(this,type,handler,'blockEvent-register-'+type);
+        if(!triggerFunc(this,'blockEvent:isRegistered',type))
+        {
+            const blockObj = getBlockObj.call(this);
+            const handler = getHandler.call(this,type);
+            Obj.setRef(type,0,blockObj);
+            ael(this,type,handler,'blockEvent-register-'+type);
+        }
     });
     
     setFunc(this,'blockEvent:unregister',function(type) {
-        const blockObj = getBlockObj.call(this);
-        Obj.unsetRef(type,blockObj);
-        rel(this,'blockEvent-register-'+type);
+        if(triggerFunc(this,'blockEvent:isRegistered',type))
+        {
+            const blockObj = getBlockObj.call(this);
+            Obj.unsetRef(type,blockObj);
+            rel(this,'blockEvent-register-'+type);
+        }
     });
     
     setFunc(this,'blockEvent:block',function(type) {
+        Evt.checkType(type,'blockEvent:block');
         const blockObj = getBlockObj.call(this);
         
-        if(evtDebug() > 0)
+        if(Evt.debug() > 0)
         console.log('blockEvent:block',type);
         
         if(Obj.keyExists(type,blockObj))
@@ -64,9 +70,10 @@ const BlockEvent = function(type)
     });
     
     setFunc(this,'blockEvent:unblock',function(type) {
+        Evt.checkType(type,'blockEvent:unblock');
         const blockObj = getBlockObj.call(this);
         
-        if(evtDebug() > 0)
+        if(Evt.debug() > 0)
         console.log('blockEvent:unblock',type);
         
         if(Obj.keyExists(type,blockObj))
@@ -93,7 +100,7 @@ const BlockEvent = function(type)
             {
                 event.stopImmediatePropagation();
                 event.preventDefault();
-                triggerCustom(this,'blockEvent:'+type);
+                triggerEvent(this,'blockEvent:'+type);
                 
                 return false;
             }

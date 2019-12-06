@@ -100,7 +100,7 @@ Component.fakeSelect = function()
         
         // trigger
         .on('enter:blocked',function() {
-            triggerCustom(this,'clickOpen:toggle');
+            triggerEvent(this,'clickOpen:toggle');
         })
         .on('fakeselect:setTitle',function(event,value) {
             triggerFunc(this,'fakeselect:getTitle').text(value);
@@ -180,13 +180,13 @@ Component.fakeSelect = function()
             selected.addClass('selected');
             input.val(value);
             
-            triggerCustom(this,'fakeselect:setTitle',selected.text());
-            triggerCustom(this,'clickOpen:close');
+            triggerEvent(this,'fakeselect:setTitle',selected.text());
+            triggerEvent(this,'clickOpen:close');
             
             if(Str.cast(value) !== Str.cast(current))
             {
-                triggerCustom(this,'fakeselect:changed',value,selected);
-                triggerCustom(this,'change');
+                triggerEvent(this,'fakeselect:changed',value,selected);
+                triggerEvent(this,'change');
                 input.trigger('change');
             }
         }

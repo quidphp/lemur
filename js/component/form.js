@@ -65,6 +65,14 @@ const Form = function()
         });
     });
     
+    setFunc(this,'form:getSubmits',function() {
+        const fields = triggerFunc(this,'form:getFields');
+        
+        return fields.filter(function(value) {
+            return triggerFunc(value,'input:isSubmit');
+        });
+    });
+    
     setFunc(this,'form:getCsrfField',function() {
         const fields = triggerFunc(this,'form:getFields');
         
@@ -78,14 +86,6 @@ const Form = function()
         
         return fields.find(function(value) {
             return triggerFunc(value,'input:isGenuine');
-        });
-    });
-    
-    setFunc(this,'form:getSubmits',function() {
-        const fields = triggerFunc(this,'form:getFields');
-        
-        return fields.find(function(value) {
-            return triggerFunc(value,'input:isSubmit');
         });
     });
     
@@ -166,7 +166,7 @@ const Form = function()
         
         // genuine + hasChanged
         if(!$(this).is("[data-skip-form-prepare='1']"))
-        triggerCustom(this,'form:prepare');
+        triggerEvent(this,'form:prepare');
         
         // submit
         prepareSubmit.call(this);
@@ -193,7 +193,7 @@ const Form = function()
     const prepareInput = function()
     {
         const fields = triggerFunc(this,'form:getFields');
-        triggerCustom(fields,'input:form:setup');
+        triggerEvent(fields,'input:formPrepare');
     }
     
     
@@ -254,7 +254,7 @@ const Form = function()
         
         triggerSetup(this);
         
-        triggerCustom(validateFields,'input:validate:setup');
+        triggerEvent(validateFields,'input:validatePrepare');
     }
     
     

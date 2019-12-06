@@ -84,7 +84,7 @@ Component.calendarInput = function()
         
         calendar.on('calendar:ready',function(event) {
             const val = input.triggerHandler('input:getValue');
-            triggerCustom(this,'calendar:select',val);
+            triggerEvent(this,'calendar:select',val);
         })
         .on('calendar:loading',function(event) {
             target.attr('data-status','loading');
@@ -97,7 +97,7 @@ Component.calendarInput = function()
             const timestamp = $(this).data("timestamp");
             calendar.trigger('calendar:select',timestamp);
             input.val(format);
-            triggerCustom($this,"clickOpen:close");
+            triggerEvent($this,"clickOpen:close");
         })
     };
         

@@ -22,6 +22,8 @@ const TestComponent = function()
         
         // ajax
         
+        // ajaxBlock
+        
         // alert
         
         // anchorCorner
@@ -46,41 +48,61 @@ const TestComponent = function()
         assert(triggerFunc(bodyNode,'blockEvent:isUnblocked','test:suite'));
         assert(!triggerFunc(bodyNode,'blockEvent:isBlocked','test:suite'));
         assert(i === 0);
-        triggerCustom(bodyNode,'test:suite');
+        triggerEvent(bodyNode,'test:suite');
         assert(i === 1);
         assert(i2 === 1);
         triggerFunc(bodyNode,'blockEvent:block-all');
         assert(triggerFunc(bodyNode,'blockEvent:isBlocked','test:suite'));
-        triggerCustom(bodyNode,'test:suite');
-        triggerCustom(bodyNode,'test:suite');
+        triggerEvent(bodyNode,'test:suite');
+        triggerEvent(bodyNode,'test:suite');
         assert(i === 1);
         assert(i2 === 3);
         triggerFunc(bodyNode,'blockEvent:unblock','test:suite');
-        triggerCustom(bodyNode,'test:suite');
+        triggerEvent(bodyNode,'test:suite');
         assert(i === 2);
         triggerFunc(bodyNode,'blockEvent:unregister','test:suite');
         assert(Obj.isEqual(triggerFunc(bodyNode,'blockEvent:getObj'),{}));
         assert(!triggerFunc(bodyNode,'blockEvent:isBlocked','test:suite'));
         assert(!triggerFunc(bodyNode,'blockEvent:isRegistered','test:suite'));
-        triggerCustom(bodyNode,'test:suite');
+        triggerEvent(bodyNode,'test:suite');
         assert(i === 3);
         assert(i2 === 5);
         rel(bodyNode,'handlerRel');
         rel(bodyNode,handlerRel2);
         rel(htmlNode,handlerRelHtml);
-        triggerCustom(bodyNode,'test:suite');
+        triggerEvent(bodyNode,'test:suite');
         assert(i2 === 5);
         assert(i === 3);
         
         // burger
         
+        // carousel
+        
+        // clickOpen
+        
+        // clickOpenAjax
+        
+        // clickOpenAjaxAnchor
+        
+        // clickOpenBase
+        
+        // clickOpenTrigger
+        
+        // clickOpenTriggerBase
+        
+        // clickOutside
+        
         // clickPrint
         
         // clickRemove
         
+        // com
+        
         // confirm
         
-        // document
+        // doc
+        
+        // feed
         
         // form
         
@@ -95,9 +117,9 @@ const TestComponent = function()
         assert(triggerFunc(inputNode,'input:getValueInt') === 2);
         triggerFunc(inputNode,'input:setValue',3);
         assert(triggerFunc(inputNode,'input:getValue') === '3');
-        triggerCustom(inputNode,'input:disable');
+        triggerEvent(inputNode,'input:disable');
         assert(triggerFunc(inputNode,'input:isDisabled'));
-        assert(triggerCustom(inputNode,'input:enable') === undefined);
+        assert(triggerEvent(inputNode,'input:enable') === undefined);
         assert(!triggerFunc(inputNode,'input:isDisabled'));
         triggerFunc(inputNode,'input:setValue','2');
         
@@ -124,11 +146,11 @@ const TestComponent = function()
         ael(bodyNode,'timeout:test:suite',function() {
             assert(i == 1);
         });
-        triggerCustom(bodyNode,'test:suite');
+        triggerEvent(bodyNode,'test:suite');
         assert(i === 1);
         
         // validate
-        triggerCustom(inputNode,'input:validate:setup');
+        triggerEvent(inputNode,'input:validatePrepare');
         assert(triggerFunc(inputNode,'validate:isBinded'));
         assert(triggerFunc(inputNode,'validate:getValue') === '2');
         assert(triggerFunc(inputNode,'validate:isRequired'));
@@ -143,6 +165,10 @@ const TestComponent = function()
         assert(triggerFunc(inputNode,'validate:trigger'));
         assert(Dom.getDataAttr('validate',inputNode) === 'valid');
         assert(Dom.getDataAttr('empty',inputNode) === '0');
+        
+        // validatePrevent
+        
+        // win
         
         // cleanup 
         $(inputNode).remove();

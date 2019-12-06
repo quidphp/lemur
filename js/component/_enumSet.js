@@ -61,12 +61,12 @@ Component.enumSet = function()
                 else
                 {
                     if(mode === 'enum')
-                    triggerCustom(this,'choice:empty');
+                    triggerEvent(this,'choice:empty');
                     else
                     button.removeClass('already-in');
                     
                     triggerFunc(this,'getCurrent').append(html);
-                    triggerCustom(this,'clickOpen:close');
+                    triggerEvent(this,'clickOpen:close');
                 }
             }
         })
@@ -96,17 +96,17 @@ Component.enumSet = function()
         
         $(this).on('enter:blocked',function(event,keyEvent) {
             if(keyEvent.type === 'keyup')
-            triggerCustom(this,'ajax:beforeInit',false);
+            triggerEvent(this,'ajax:beforeInit',false);
         })
         .on('keyup:onTimeout',function(event) {
             if($(this).is(":focus"))
-            triggerCustom(this,'ajax:beforeInit',true);
+            triggerEvent(this,'ajax:beforeInit',true);
         })
         .on('click',function(event) {
             event.stopPropagation();
 
             if(triggerFunc(this,'validate:isNotEmptyAndValid') && triggerFunc(this,'enumSetInput:hasChanged'))
-            triggerCustom(this,'ajax:beforeInit',true);
+            triggerEvent(this,'ajax:beforeInit',true);
         })
         .on('enumSetInput:hasChanged',function(event) {
             let r = false;
@@ -119,12 +119,12 @@ Component.enumSet = function()
         })
         .on('ajax:beforeInit',function(event,validate) {
             const val = Dom.value(this,true);            
-            triggerCustom(this,'validate:valid');
+            triggerEvent(this,'validate:valid');
             
             if(validate !== true || Str.isNotEmpty(val))
             {
-                triggerCustom(this,'keyup:clearTimeout');
-                triggerCustom(this,'ajax:init');
+                triggerEvent(this,'keyup:clearTimeout');
+                triggerEvent(this,'ajax:init');
             }
             
             else
@@ -163,7 +163,7 @@ Component.enumSet = function()
             return r;
         })
         .on('ajax:before',function() {
-            triggerCustom(this,'block');
+            triggerEvent(this,'block');
             triggerFunc(this,'enumSetInput:getParent').trigger('clickOpen:open');
         })
         .on('ajax:success',function(event,data,textStatus,jqXHR) {
@@ -177,7 +177,7 @@ Component.enumSet = function()
         })
         .on('ajax:complete',function() {
             triggerFunc(this,'enumSetInput:getParent').removeAttr('data-status');
-            triggerCustom(this,'unblock');
+            triggerEvent(this,'unblock');
         })
         
         return this;

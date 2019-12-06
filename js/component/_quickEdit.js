@@ -46,7 +46,7 @@ Component.quickEdit = function()
             $(document).trigger('specificForm:unmount',[editContainer]);
             editContainer.html("");
             td.removeAttr('data-editing');
-            triggerCustom(this,'dragScroll:refresh');
+            triggerEvent(this,'dragScroll:refresh');
         }
     })
     .on('ajax:success',function(event,data,textStatus,jqXHR) {
@@ -60,7 +60,7 @@ Component.quickEdit = function()
             editContainer.html(data);
             $(document).trigger('doc:mountCommon',[editContainer]);
             $(document).trigger('specificForm:mount',[editContainer]);
-            triggerCustom(this,'dragScroll:refresh');
+            triggerEvent(this,'dragScroll:refresh');
         }
     })
     
@@ -70,7 +70,7 @@ Component.quickEdit = function()
         const inner = triggerFunc(this,'quickEdit:getCellInner');
         
         inner.on('click', '> .quick-edit-container > form > .tools .revert',function() {
-            triggerCustom($this,'quickEdit:revert');
+            triggerEvent($this,'quickEdit:revert');
         });
     });
     

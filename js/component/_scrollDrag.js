@@ -31,7 +31,7 @@ Component.scrollDrag = function(option) {
     
     // trigger
     .on('resize:change',function() {
-        triggerCustom(this,'scrollDrag:refresh');
+        triggerEvent(this,'scrollDrag:refresh');
     })
     .on('scrollDrag:refresh',function() {
         if(triggerFunc(this,'scrollDrag:required'))
@@ -72,7 +72,7 @@ Component.scrollDrag = function(option) {
     })
     .on('mouseup', $option.selector,function(event) {
         const $this = $(event.delegateTarget);
-        triggerCustom($this,'scrollDrag:stop');
+        triggerEvent($this,'scrollDrag:stop');
     })
     .on('mouseout', $option.selector,function(event) {
         event.stopPropagation();
@@ -86,10 +86,10 @@ Component.scrollDrag = function(option) {
         $(this).data('cursorPositionX',0);
         
         $(document).on('mouseout.doc-mount',function() {
-            triggerCustom($this,'scrollDrag:stop');
+            triggerEvent($this,'scrollDrag:stop');
         });
         
-        triggerCustom(this,'scrollDrag:refresh');
+        triggerEvent(this,'scrollDrag:refresh');
     });
     
     return this;

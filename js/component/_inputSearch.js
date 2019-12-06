@@ -32,11 +32,11 @@ Component.inputSearch = function(option)
     
     // event
     .on('change enter:blocked inputSeach:buttonClick',function() {
-        triggerCustom(this,'validate:process');
+        triggerEvent(this,'validate:process');
         refresh.call(this);
     })
     .on('keyup:onTimeout',function() {
-        triggerCustom(this,'validate:pattern');
+        triggerEvent(this,'validate:pattern');
     })
     
     // setup
@@ -50,7 +50,7 @@ Component.inputSearch = function(option)
         const current = triggerFunc(this,'inputSearch:getCurrent');
         
         if(val === current)
-        triggerCustom(this,'validate:invalid');
+        triggerEvent(this,'validate:invalid');
         
         else if(triggerFunc(this,'validate:isValid'))
         redirect.call(this);
@@ -68,7 +68,7 @@ Component.inputSearch = function(option)
             href += "?"+char+"="+val;
         }
         
-        triggerCustom(this,'block');
+        triggerEvent(this,'block');
         $(document).trigger('doc:go',[href])
     };
     
@@ -80,7 +80,7 @@ Component.inputSearch = function(option)
         if(button != null)
         {
             button.on('click',function(event) {
-                triggerCustom($this,'inputSeach:buttonClick');
+                triggerEvent($this,'inputSeach:buttonClick');
             });
         }
     };

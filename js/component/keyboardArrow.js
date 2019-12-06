@@ -17,24 +17,24 @@ const KeyboardArrow = function(prevent,type)
     
     
     // func
-    setFunc(this,'keyboard:arrow:prevent',function() {
+    setFunc(this,'keyboardArrow:prevent',function() {
         return (prevent === true)? true:false;
     }); 
     
     
     // event
-    ael(this,'keyboard:arrow:catched',function(event,keyEvent,isInput,keyCode) {
+    ael(this,'keyboardArrow:catched',function(event,keyEvent,isInput,keyCode) {
         if(keyCode === 38)
-        triggerCustom(this,'keyboard:arrowUp:catched',keyEvent,isInput);
+        triggerEvent(this,'keyboardArrow:up',keyEvent,isInput);
         
         else if(keyCode === 40)
-        triggerCustom(this,'keyboard:arrowDown:catched',keyEvent,isInput);
+        triggerEvent(this,'keyboardArrow:down',keyEvent,isInput);
         
         else if(ekeyCode === 37)
-        triggerCustom(this,'keyboard:arrowLeft:catched',keyEvent,isInput);
+        triggerEvent(this,'keyboardArrow:left',keyEvent,isInput);
         
         else if(keyCode === 39)
-        triggerCustom(this,'keyboard:arrowRight:catched',keyEvent,isInput);
+        triggerEvent(this,'keyboardArrow:right',keyEvent,isInput);
     });
         
     return this;

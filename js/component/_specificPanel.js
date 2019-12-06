@@ -20,7 +20,7 @@ Component.specificPanel = function()
         Component.fragment.call(panel);
         
         panel.on('tab:init',function(event) {
-            triggerCustom(this,'specificForm:bindView',this);
+            triggerEvent(this,'specificForm:bindView',this);
         })
         .on('tab:open',function() {
             const nav = triggerFunc(this,'link:getNav');
@@ -39,11 +39,11 @@ Component.specificPanel = function()
             if($(this).is("[data-current-panel='1']") === true && !current)
             {
                 $(this).removeAttr('data-current-panel');
-                triggerCustom(this,'fragment:update',true);
+                triggerEvent(this,'fragment:update',true);
             }
             
             else if(Str.isNotEmpty(current))
-            triggerCustom(this,'fragment:update');
+            triggerEvent(this,'fragment:update');
             
             DomChange.hrefChangeHash(fragment,$("a.hashFollow"));
             form.triggerHandler('tab:getInput').val((Str.isNotEmpty(fragment))? fragment:'');
@@ -86,12 +86,12 @@ Component.specificPanel = function()
         })
         .on('tab:showFirst',function(event) {
             const target = triggerFunc(this,'tab:findHash',Request.fragment());
-            triggerCustom(this,'tab:changeOrFirst',target);
+            triggerEvent(this,'tab:changeOrFirst',target);
         });
         
         Component.tab.call(this,Component.tab);
-        triggerCustom(this,'tab:closeAll');
-        triggerCustom(this,'tab:showFirst');
+        triggerEvent(this,'tab:closeAll');
+        triggerEvent(this,'tab:showFirst');
     });
     
     return this;

@@ -15,10 +15,10 @@ Component.react = function()
         $that.bind.call(this);
         
         $(this).on('doc:mount',function(event) {
-            triggerCustom(this,'reactContainer:mount');
+            triggerEvent(this,'reactContainer:mount');
         })
         .on('doc:unmount',function(event) {
-            triggerCustom(this,'reactContainer:unmount');
+            triggerEvent(this,'reactContainer:unmount');
         });
         
         return this;

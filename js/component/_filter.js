@@ -39,7 +39,7 @@ Component.filter = function()
         return r;
     })
     .on('ajax:before',function() {
-        triggerCustom(this,'block');
+        triggerEvent(this,'block');
         $(this).attr('data-status','loading');
         triggerFunc(this,'filter:getResult').html("");
     })
@@ -50,7 +50,7 @@ Component.filter = function()
         triggerFunc(this,'filter:getResult').html(parsedError);
     })
     .on('ajax:complete',function() {
-        triggerCustom(this,'unblock');
+        triggerEvent(this,'unblock');
         $(this).removeAttr('data-status');
         triggerFunc(this,'filter:getInput').focus();
     })
@@ -63,7 +63,7 @@ Component.filter = function()
         Component.Timeout.call(input,'keyup',500);
 
         input.on('keyup:onTimeout',function(event) {
-            triggerCustom(this,'ajax:input');
+            triggerEvent(this,'ajax:input');
         })
         .on('ajax:input',function(event) {
             filter.trigger('ajax:init');
@@ -78,13 +78,13 @@ Component.filter = function()
         triggerFunc(this,'clickOpen:getTarget').trigger('feed:bind');
     })
     .on('clickOpen:open',function(event) {
-        triggerCustom(this,'ajax:init');
+        triggerEvent(this,'ajax:init');
     })
     .on('clickOpen:close',function(event) {
         triggerFunc(this,'filter:getResult').html("");
     })
     .on('component:setup',function(event) {
-        triggerCustom(this,'filter:bind');
+        triggerEvent(this,'filter:bind');
         
         const target = triggerFunc(this,'clickOpen:getTarget');
         Component.appendContainer.call(target);

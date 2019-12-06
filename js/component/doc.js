@@ -215,9 +215,9 @@ const Doc = function(option)
         if(r === true && sourceEvent != null)
         {
             sourceEvent.preventDefault();
-            const target = $(sourceEvent.target);
+            const target = Evt.getTriggerTarget(sourceEvent);
             
-            if(target)
+            if(target != null)
             {
                 if(sourceEvent.type === 'click')
                 $(target).attr('data-triggered',1);
@@ -241,8 +241,8 @@ const Doc = function(option)
     // mountNodeCommon
     // trigger mountNode et mountCommon en même temps
     ael(this,'doc:mountNodeCommon',function(event,node) {
-        triggerCustom(this,'doc:mountNode',node);
-        triggerCustom(this,'doc:mountCommon',node);
+        triggerEvent(this,'doc:mountNode',node);
+        triggerEvent(this,'doc:mountCommon',node);
     });
     
 
@@ -295,7 +295,7 @@ const Doc = function(option)
             else if(Uri.isSamePathQuery(state.url,previous.url) && (Uri.hasFragment(state.url) || Uri.hasFragment(previous.url)))
             {
                 $previous = state;
-                triggerCustom(this,'hashchange',event);
+                triggerEvent(this,'hashchange',event);
             }
         });
         
@@ -341,25 +341,25 @@ const Doc = function(option)
         if(initial === true)
         {
             const body = triggerFunc(this,'doc:getBody');
-            triggerCustom(this,'doc:mountInitial',body);
-            triggerCustom(this,'doc:mountCommon',body);
+            triggerEvent(this,'doc:mountInitial',body);
+            triggerEvent(this,'doc:mountCommon',body);
         }
         
         
         else
-        triggerCustom(this,'doc:mountCommon',routeWrap);
+        triggerEvent(this,'doc:mountCommon',routeWrap);
         
-        triggerCustom(this,'doc:mount',routeWrap);
+        triggerEvent(this,'doc:mount',routeWrap);
         
         const group = $(html).attr("data-group");
         if(Str.isNotEmpty(group))
-        triggerCustom(this,'group:'+group,routeWrap);
+        triggerEvent(this,'group:'+group,routeWrap);
         
         const route = $(html).attr("data-route");
         if(Str.isNotEmpty(route))
-        triggerCustom(this,'route:'+route,routeWrap);
+        triggerEvent(this,'route:'+route,routeWrap);
         
-        triggerCustom(this,'doc:mounted',routeWrap);
+        triggerEvent(this,'doc:mounted',routeWrap);
         
         setTimeout(function() {
             $(html).attr('data-status','ready');
@@ -375,17 +375,17 @@ const Doc = function(option)
         const body = triggerFunc(this,'doc:getBody');
         const routeWrap = triggerFunc(this,'doc:getRouteWrap');
         
-        triggerCustom(this,'doc:unmount',routeWrap);
+        triggerEvent(this,'doc:unmount',routeWrap);
         
         const group = $(html).attr("data-group");
         if(Str.isNotEmpty(group))
-        triggerCustom(this,'group:'+group+':unmount',routeWrap);
+        triggerEvent(this,'group:'+group+':unmount',routeWrap);
         
         const route = $(html).attr("data-route");
         if(Str.isNotEmpty(route))
-        triggerCustom(this,'route:'+route+':unmount',routeWrap);
+        triggerEvent(this,'route:'+route+':unmount',routeWrap);
                 
-        triggerCustom(this,'doc:unmounted',routeWrap);
+        triggerEvent(this,'doc:unmounted',routeWrap);
     }
     
     
@@ -437,7 +437,7 @@ const Doc = function(option)
                     afterAjax.call($nodes,type,state,jqXHR);
                 },
                 progress: function(percent,event) {
-                    triggerCustom($nodes,'doc:ajaxProgress',percent,event);
+                    triggerEvent($nodes,'doc:ajaxProgress',percent,event);
                 },
                 error: function(jqXHR,textStatus,errorThrown) {
                     if(Str.isNotEmpty(jqXHR.responseText))

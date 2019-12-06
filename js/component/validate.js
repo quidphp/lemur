@@ -75,8 +75,8 @@ const ComponentValidate = function()
         let r = triggerFunc(this,'validate:isValid',type);
         const empty = triggerFunc(this,'validate:isEmpty');
         
-        triggerCustom(this,(r === true)? 'validate:valid':'validate:invalid');
-        triggerCustom(this,(empty === true)? 'validate:empty':'validate:notEmpty');
+        triggerEvent(this,(r === true)? 'validate:valid':'validate:invalid');
+        triggerEvent(this,(empty === true)? 'validate:empty':'validate:notEmpty');
         
         return r;
     });
@@ -101,7 +101,7 @@ const ComponentValidate = function()
     
     
     // setup
-    aelOnce(this,'validate:setup',function() {
+    aelOnce(this,'component:setup',function() {
 
         ael(this,'change',function() {
             triggerFunc(this,'validate:process');
@@ -112,7 +112,7 @@ const ComponentValidate = function()
         });
         
         ael(this,'focus',function() {
-            triggerCustom(this,"validate:valid");
+            triggerEvent(this,"validate:valid");
         });
     });
     

@@ -17,7 +17,7 @@ const KeyboardEscape = function(prevent,type)
     
     
     // func
-    setFunc(this,'keyboard:escape:prevent',function() {
+    setFunc(this,'keyboardEscape:prevent',function() {
         return (prevent === true)? true:false;
     });    
     

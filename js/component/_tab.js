@@ -22,31 +22,31 @@ Component.tab = function()
     .on('tab:indexer',function(event,value,loop) {
         const index = triggerFunc(this,'tab:getIndex',value,loop);
         if(Num.is(index))
-        triggerCustom(this,'tab:change',index);
+        triggerEvent(this,'tab:change',index);
     })
     .on('tab:first',function() {
-        triggerCustom(this,'tab:indexer','first');
+        triggerEvent(this,'tab:indexer','first');
     })
     .on('tab:prev',function() {
-        triggerCustom(this,'tab:indexer','prev');
+        triggerEvent(this,'tab:indexer','prev');
     })
     .on('tab:next',function() {
-        triggerCustom(this,'tab:indexer','next');
+        triggerEvent(this,'tab:indexer','next');
     })
     .on('tab:last',function() {
-        triggerCustom(this,'tab:indexer','last');
+        triggerEvent(this,'tab:indexer','last');
     })
     .on('tab:index',function(event,index) {
-        triggerCustom(this,'tab:indexer','index');
+        triggerEvent(this,'tab:indexer','index');
     })
     .on('tab:loopNext',function(event) {
-        triggerCustom(this,'tab:indexer','next',true);
+        triggerEvent(this,'tab:indexer','next',true);
     })
     .on('tab:loopPrev',function(event) {
-        triggerCustom(this,'tab:indexer','prev',true);
+        triggerEvent(this,'tab:indexer','prev',true);
     })
     .on('tab:target',function(event,target) {
-        triggerCustom(this,'tab:indexer',target);
+        triggerEvent(this,'tab:indexer',target);
     })
     .on('tab:getCurrent',function() {
         return $(this).data('tab-current');
@@ -60,7 +60,7 @@ Component.tab = function()
         const target = triggerFunc(this,'tab:getTarget');
         $(this).data('tab-current',null);
         target.each(function(index) {
-            triggerCustom(this,'tab:close');
+            triggerEvent(this,'tab:close');
         });
     })
     .on('tab:change',function(event,index) {
@@ -90,18 +90,18 @@ Component.tab = function()
                 }
                 
                 else
-                triggerCustom(this,'tab:notExist');
+                triggerEvent(this,'tab:notExist');
             }
             
             else
-            triggerCustom(this,'tab:noChange');
+            triggerEvent(this,'tab:noChange');
         }
     })
     .on('tab:changeOrFirst',function(event,target) {
         if(target != null && target.length === 1)
         target.trigger('tab:change');
         else
-        triggerCustom(this,'tab:first');
+        triggerEvent(this,'tab:first');
     })
     .on('tab:prepare',function() {
         const tab = $(this);

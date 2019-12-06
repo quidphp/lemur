@@ -15,7 +15,7 @@ const ResizeChange = function(persistent)
     // event
     const handler = ael(window,'resize',function(event) {
         event.stopPropagation();
-        triggerCustom($nodes,'resize:change');
+        triggerEvent($nodes,'resize:change');
     });
     
     

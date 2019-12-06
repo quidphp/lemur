@@ -34,8 +34,8 @@ const Com = function()
     
     
     // event
-    ael(this,'keyboard:escape:blocked',function() {
-        triggerCustom(this,'com:close');
+    ael(this,'keyboardEscape:blocked',function() {
+        triggerEvent(this,'com:close');
     });
     
     ael(this,'com:close',function() {
@@ -46,7 +46,7 @@ const Com = function()
     // delegate
     aelDelegate(this,'click','.close',function(event) {
         const delegate = event.delegateTarget;
-        triggerCustom(delegate,'com:close');
+        triggerEvent(delegate,'com:close');
     });
     
     aelDelegate(this,'click','.date',function(event) {

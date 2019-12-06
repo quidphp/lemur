@@ -32,7 +32,7 @@ $(document).ready(function() {
 
         // form
         const form = qsa(node,"form");
-        triggerCustom(Component.Form.call(form),'component:setup');
+        triggerEvent(Component.Form.call(form),'component:setup');
 
         // autre
         const anchorCorner = qsa(node,"[data-anchor-corner='1']");
@@ -88,10 +88,8 @@ $(document).ready(function() {
             return 'submenu';
         });
         
-        /*
         // mainSearch
-        triggerSetup(Component.mainSearch.call(mainSearch));
-        */
+        triggerSetup(Component.SearchAutoInfo.call(mainSearch,{target: ".popup"}));
 	});
     
     
@@ -100,7 +98,7 @@ $(document).ready(function() {
         const burger = qsa(routeWrap,"header .burger-menu, .nav-fixed .nav-close");
         
         // burger
-        triggerCustom(burger,'component:teardown');
+        triggerEvent(burger,'component:teardown');
     });
     
     
@@ -152,8 +150,10 @@ $(document).ready(function() {
         const feedTogglers = qsa(feed,".block-head .feed-togglers > a");
         const feedBody = qs(feed,".block-body");
         
+        // feedBody
         triggerSetup(Component.Feed.call(feedBody));
         
+        // feedTogglers
         Component.AjaxBlock.call(feedTogglers);
         
         setFunc(feedTogglers,'ajaxBlock:getStatusNode',function(event) {
@@ -166,7 +166,7 @@ $(document).ready(function() {
         });
         
         ael(feedTogglers,'ajaxBlock:success',function(event) {
-            triggerCustom(feedBody,'feed:bind');
+            triggerEvent(feedBody,'feed:bind');
         });
 	});
     
@@ -198,7 +198,7 @@ $(document).ready(function() {
         
 		// colsSorter
         Component.colsSorter.call(colsSorter);
-		triggerCustom(colsSorter,'component:setup');
+		triggerEvent(colsSorter,'component:setup');
         
         // filter
 		triggerSetup(Component.filter.call(filter));
@@ -233,7 +233,7 @@ $(document).ready(function() {
         const quickEdit = qsa(table,"td[data-quick-edit='1'] a.quick-edit");
         
         // quickEdit
-        triggerCustom(quickEdit,'quickEdit:revert');
+        triggerEvent(quickEdit,'quickEdit:revert');
         */
     });
     
@@ -241,8 +241,8 @@ $(document).ready(function() {
     // specificForm mount
     // permet de faire tous les bindings des champs (simples et complexes)
     ael(this,'specificForm:mount',function(event,node) {
-        triggerCustom(this,'specificForm:bindMount',node);
-        triggerCustom(this,'specificForm:bindView',node);
+        triggerEvent(this,'specificForm:bindMount',node);
+        triggerEvent(this,'specificForm:bindView',node);
     });
     
     
@@ -288,7 +288,7 @@ $(document).ready(function() {
     ael(this,'specificForm:unmount',function(event,node) {
         /*
         const textarea = qsa(node,"[data-tag='textarea'] .specific-component");
-        triggerCustom(textarea,'component:teardown');
+        triggerEvent(textarea,'component:teardown');
         */
     });
     
@@ -305,14 +305,14 @@ $(document).ready(function() {
         Component.confirm.call(submitConfirm,'click');
 		
         // champs simples
-        triggerCustom(this,'specificForm:bindMount',form);
+        triggerEvent(this,'specificForm:bindMount',form);
         
         // avec panel
         if(panel.length > 1)
         Component.specificPanel.call(form);
         
         else
-        triggerCustom(this,'specificForm:bindView',form);
+        triggerEvent(this,'specificForm:bindView',form);
         */
 	});
 	
@@ -322,7 +322,7 @@ $(document).ready(function() {
     ael(this,'group:specific:unmount',function(event,routeWrap) {
         /*
         const form = qs(routeWrap,"main .inner > form.specific-form");
-        triggerCustom(this,'specificForm:unmount',form);
+        triggerEvent(this,'specificForm:unmount',form);
         */
     });
     
@@ -352,7 +352,7 @@ $(document).ready(function() {
             const isActive = triggerFunc(this,'specificMulti:isActive');
             const inputs = triggerFunc(this,'specificMulti:getInputs');
             $(this).attr('data-disabled',(isActive === true)? 0:1);
-            triggerCustom(inputs,(isActive === true)? 'input:enable':'input:disable');
+            triggerEvent(inputs,(isActive === true)? 'input:enable':'input:disable');
         });
         
         aelOnce(formElement,'specificMulti:setup',function(event) {
@@ -360,15 +360,15 @@ $(document).ready(function() {
             const checkbox = triggerFunc(this,'specificMulti:getCheckbox');
             
             ael(checkbox,'change',function(event) {
-                triggerCustom($this,'specificMulti:refresh');
+                triggerEvent($this,'specificMulti:refresh');
             });
             
-            triggerCustom(this,'specificMulti:refresh');
+            triggerEvent(this,'specificMulti:refresh');
         });
         
-        triggerCustom(formElement,'specificMulti:setup');
+        triggerEvent(formElement,'specificMulti:setup');
         
-        triggerCustom(form,'form:prepare');
+        triggerEvent(form,'form:prepare');
         */
 	});
     

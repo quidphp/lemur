@@ -71,12 +71,12 @@ const Background = function()
         });
         
         ael(document,'doc:unmount',function() {
-            triggerCustom(background,'background:unset');
+            triggerEvent(background,'background:unset');
         });
 
         // docClick, ferme le background
         ael(this,'click',function() {
-            triggerCustom(this,'background:unset');
+            triggerEvent(this,'background:unset');
         });
     }
     
