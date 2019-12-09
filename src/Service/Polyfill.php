@@ -24,7 +24,7 @@ class Polyfill extends Main\Service
     // config
     public static $config = [];
 
-    
+
     // docOpenJs
     // retourne le javascript à lier en début de document
     final public function docOpenJs()
