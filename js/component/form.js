@@ -164,6 +164,9 @@ const Form = function()
         // block
         if(!$(this).is("[data-block='0']"))
         prepareBlock.call(this);
+        
+        // setup
+        triggerSetup(this);
     });
     
     
@@ -221,8 +224,6 @@ const Form = function()
         setFunc(this,'validatePrevent:getTargets',function() {
             return validateFields;
         });
-        
-        triggerSetup(this);
     }
     
     

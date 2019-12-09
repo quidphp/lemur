@@ -31,9 +31,16 @@ const SearchAutoInfo = function(option)
     
     
     // setup
-    aelOnce(this,'component:setup',function(event) {
+    aelOnce(this,'component:setup',function() {
         bindInfo.call(this);
         bindField.call(this);
+    });
+    
+    
+    // init
+    aelOnce(this,'component:init',function() {
+        const info = triggerFunc(this,'searchAutoInfo:getInfo');
+        Component.ClickOpen.call(info,$option.info)
     });
     
     
@@ -42,7 +49,6 @@ const SearchAutoInfo = function(option)
     {
         const $this = this;
         const info = triggerFunc(this,'searchAutoInfo:getInfo');
-        triggerSetup(Component.ClickOpen.call(info,$option.info));
         
         ael(info,'clickOpen:open',function() {
             $($this).attr($option.attrInfo,1);
@@ -79,7 +85,7 @@ const SearchAutoInfo = function(option)
         });
     }
     
-    return this;
+    return triggerInit(this);
 }
 
 // export

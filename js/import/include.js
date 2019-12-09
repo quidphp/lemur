@@ -50,6 +50,7 @@ const aelOnce = Evt.addEventListenerOnce.bind(Evt);
 const rel = Evt.removeEventListener.bind(Evt);
 const triggerEvent = Evt.triggerEvent.bind(Evt);
 const triggerBubble = Evt.triggerBubble.bind(Evt);
+const triggerInit = Evt.triggerInit.bind(Evt);
 const triggerSetup = Evt.triggerSetup.bind(Evt);
 const triggerFunc = Evt.triggerFunc.bind(Evt);
 

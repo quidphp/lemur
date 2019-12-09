@@ -189,6 +189,9 @@ $(document).ready(function() {
         // page + limit
         Component.InputNumeric.call(pageLimit);
         
+        // search
+		triggerSetup(Component.SearchSlide.call(search,{inputTarget: "> .form input[type='text']", infoTarget: "> .in"}));
+        
         /*
         // dragScroll
         triggerSetup(Component.scrollDrag.call(scroller,{selector: 'tbody',targetTag: 'div'}));
@@ -202,15 +205,6 @@ $(document).ready(function() {
         
         // filter
 		triggerSetup(Component.filter.call(filter));
-        
-		// search
-		if(search.length)
-		{
-			const searchInput = qs(search,".form input[type='text']");
-			const searchSlide = qs(search,".in");
-			triggerSetup(Component.inputSearch.call(searchInput));
-            Component.focusSlide.call(searchInput,searchSlide);
-		}
         
         // filesSlider
         Component.slider.call(filesSlider,null,null,'.slider-element',false);

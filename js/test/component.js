@@ -120,7 +120,7 @@ const TestComponent = function()
         assert(triggerFunc(inputNode,'input:getValue') === '3');
         triggerEvent(inputNode,'input:disable');
         assert(triggerFunc(inputNode,'input:isDisabled'));
-        assert(triggerEvent(inputNode,'input:enable') === undefined);
+        assert(triggerEvent(inputNode,'input:enable') === inputNode);
         assert(!triggerFunc(inputNode,'input:isDisabled'));
         triggerFunc(inputNode,'input:setValue','2');
         

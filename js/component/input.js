@@ -34,6 +34,15 @@ const Input = function()
         return Dom.value(this,trim);
     });
     
+    setFunc(this,'input:getValueEncoded',function(trim) {
+        let r = triggerFunc(this,'input:getValue',trim);
+        
+        if(Str.isNotEmpty(r))
+        r = encodeURIComponent(r);
+        
+        return r;
+    });
+    
     setFunc(this,'input:getValueInt',function() {
         return Integer.cast(triggerFunc(this,'input:getValue',true));
     });

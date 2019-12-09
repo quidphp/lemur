@@ -272,6 +272,7 @@ const Evt = new function()
 
     // trigger
     // function utilisé par triggerEvent et triggerBubble pour envoyer des événements
+    // retourne les nodes
     this.trigger = function(node,type,option)
     {
         Str.check(type,true);
@@ -284,7 +285,7 @@ const Evt = new function()
             this.dispatchEvent(event);
         });
         
-        return;
+        return node;
     }
     
     
@@ -314,10 +315,21 @@ const Evt = new function()
     
     // triggerSetup
     // fonction utilisé pour lancer le setup sur un component
+    // cette appel se lance à travers tous les components à setup
     // ces événements ne bubble pas
     this.triggerSetup = function(node) 
     {
         const args = [node,'component:setup'].concat(ArrLike.sliceStart(1,arguments));
+        return this.triggerEvent.apply(this,args);
+    }
+    
+    
+    // triggerInit
+    // fonction utilisé pour init un component, avant le setup
+    // ces événements ne bubble pas
+    this.triggerInit = function(node) 
+    {
+        const args = [node,'component:init'].concat(ArrLike.sliceStart(1,arguments));
         return this.triggerEvent.apply(this,args);
     }
     

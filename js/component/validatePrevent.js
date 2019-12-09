@@ -21,12 +21,15 @@ const ValidatePrevent = function(type)
         let r = true;
         const targets = triggerFunc(this,'validatePrevent:getTargets');
         
-        $(targets).each(function(index, el) {
-            const val = triggerFunc(this,"validate:trigger");
-            
-            if(val === false)
-            r = val;
-        });
+        if(Vari.isNotEmpty(targets))
+        {
+            $(targets).each(function(index, el) {
+                const val = triggerFunc(this,"validate:trigger");
+                
+                if(val === false)
+                r = val;
+            });
+        }
         
         return r;
     });
@@ -58,7 +61,7 @@ const ValidatePrevent = function(type)
             Component.Validate.call(this);
         });
         
-        triggerEvent(targets,'component:setup');
+        triggerSetup(targets);
     });
     
     return this;
