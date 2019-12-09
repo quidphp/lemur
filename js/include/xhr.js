@@ -8,10 +8,6 @@
 // script with some logic for ajax calls and xhr object
 const Xhr = new function() 
 {
-    // instance
-    const $inst = this;
-    
-    
     // trigger
     // fonction utilisé pour lancer une requête ajax
     // retourne false ou un objet promise ajax
@@ -57,7 +53,7 @@ const Xhr = new function()
                 Evt.triggerFunc(node,'ajax:success',data,textStatus,jqXHR);
             },
             error: function(jqXHR,textStatus,errorThrown) {
-                const parsedError = $inst.parseError(jqXHR.responseText,textStatus);
+                const parsedError = this.parseError(jqXHR.responseText,textStatus);
                 Evt.triggerFunc(node,'ajax:error',parsedError,jqXHR,textStatus,errorThrown);
             },
             complete: function(jqXHR,textStatus) {
@@ -89,7 +85,7 @@ const Xhr = new function()
     // met à jour le tableau de config à partir de la tag
     this.configFromNode = function(node,config)
     {
-        let r = (Obj.isPlain(config))? config:{};
+        let r = (Pojo.is(config))? config:{};
         const tagName = Dom.tag(node);
 
         if(r.url == null)
@@ -105,8 +101,16 @@ const Xhr = new function()
                 const formData = new FormData($(node)[0]);
                 const clicked = Evt.triggerFunc(node,'form:getClickedSubmit');
                 
-                if(clicked != null && clicked.length && Str.isNotEmpty(clicked.attr('name')))
-                formData.append(clicked.attr('name'),clicked.val());
+                if(clicked != null)
+                {
+                    const clickedName = $(clicked).attr('name');
+                    
+                    if(Str.isNotEmpty(clickedName))
+                    {
+                        const clickedVal = Dom.value(clicked);
+                        formData.append(clickedName,clickedVal);
+                    }
+                }
                 
                 r.data = formData;
             }

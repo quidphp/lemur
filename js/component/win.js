@@ -46,7 +46,7 @@ const Win = function(type,timeout)
     });
     
     setFunc(this,'win:getUnloadNodes',function(node) {
-        return Dom.getData(this,'win-unload-nodes',[]);
+        return Dom.getOrSetData(this,'win-unload-nodes',[]);
     });
     
     setFunc(this,'win:unloadText',function() {

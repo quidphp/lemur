@@ -83,8 +83,7 @@ const Feed = function()
         
         aelOnce(loadMore,'click',function(event) {
             triggerEvent(this,'ajax:init');
-            event.stopPropagation();
-            event.preventDefault();
+            Evt.preventStop(event);
         });
         
         // removeLoadMore

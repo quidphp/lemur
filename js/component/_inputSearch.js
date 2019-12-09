@@ -9,7 +9,7 @@
 Component.inputSearch = function(option)
 {
     // settings
-    const $option = Obj.replace({
+    const $option = Pojo.replace({
         timeout: 100
     },option);
     
@@ -32,7 +32,7 @@ Component.inputSearch = function(option)
     
     // event
     .on('change enter:blocked inputSeach:buttonClick',function() {
-        triggerEvent(this,'validate:process');
+        triggerFunc(this,'validate:process');
         refresh.call(this);
     })
     .on('keyup:onTimeout',function() {

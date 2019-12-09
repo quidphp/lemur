@@ -32,12 +32,6 @@ const Doc = function(option)
     // isLoading
     // retourne vrai si le chargement de la navigation est présentement active
     setFunc(this,'doc:isLoading',function() {
-        return ($(this).data('doc-active') === true)? true:false;
-    });
-    
-    // hasAjax
-    // retourne vrai s'il y a présentement un objet ajax en train de s'effectuer
-    setFunc(this,'doc:hasAjax',function() {
         let r = false;
         const ajax = $(this).data('doc-ajax');
         
@@ -98,10 +92,10 @@ const Doc = function(option)
     setFunc(this,'doc:cancelAjax',function() {
         let r = false;
         
-        if(triggerFunc(this,'doc:hasAjax') === true)
+        if(triggerFunc(this,'doc:isLoading') === true)
         {
             const ajax = $(this).data('doc-ajax');
-            ajax.onreadystatechange = $.noop;
+            ajax.onreadystatechange = Func.noop();
             ajax.abort();
         }
         
@@ -185,8 +179,11 @@ const Doc = function(option)
     setFunc(this,'doc:go',function(uri,sourceEvent) {
         let r = false;
         
-        if(triggerFunc(this,'doc:hasAjax'))
-        r = true;
+        if(triggerFunc(this,'doc:isLoading'))
+        {
+            if(sourceEvent != null)
+            sourceEvent.preventDefault();
+        }
         
         else if(Str.is(uri) && Uri.isInternal(uri))
         {
@@ -210,25 +207,11 @@ const Doc = function(option)
                 $previous = state;
                 triggerEvent(window,'hashchange',sourceEvent);
             }
-        }
-        
-        if(r === true && sourceEvent != null)
-        {
-            sourceEvent.preventDefault();
-            const target = Evt.getTriggerTarget(sourceEvent);
             
-            if(target != null)
+            if(r === true && sourceEvent != null)
             {
-                if(sourceEvent.type === 'click')
-                $(target).attr('data-triggered',1);
-                
-                else if(sourceEvent.type === 'submit')
-                {
-                    const clickedSubmit = triggerFunc(target,'form:getClickedSubmits');
-                    
-                    if(clickedSubmit != null)
-                    $(clickedSubmit).attr('data-triggered',1);
-                }
+                sourceEvent.preventDefault();
+                targetTriggered.call(this,sourceEvent);
             }
         }
         
@@ -259,7 +242,7 @@ const Doc = function(option)
         {
             $history.scrollRestoration = 'manual';
             bindDocument.call(this);
-            bindWindow.call(this);
+            Component.Win.call(window);
         }
         
         mountDocument.call(this,true); 
@@ -322,15 +305,7 @@ const Doc = function(option)
         });
     }
     
-    
-    // bindWindow
-    // ajoute certains événements à l'objet window
-    const bindWindow = function()
-    {
-        Component.Win.call(window);
-    }
-    
-    
+
     // mountDocument
     // lance les évènements pour monter le document dans le bon order
     const mountDocument = function(initial)
@@ -418,6 +393,29 @@ const Doc = function(option)
     }
     
     
+    // targetTriggered
+    // fonction utilisé pour marquer un lien ou form comme raison du chargement de page
+    // permet d'appliquer un style à l'élément pendant le chargement
+    const targetTriggered = function(sourceEvent)
+    {
+        const target = Evt.getTriggerTarget(sourceEvent);
+        
+        if(target != null)
+        {
+            if(sourceEvent.type === 'click')
+            $(target).attr('data-triggered',1);
+            
+            else if(sourceEvent.type === 'submit')
+            {
+                const clickedSubmit = triggerFunc(target,'form:getClickedSubmits');
+                
+                if(clickedSubmit != null)
+                $(clickedSubmit).attr('data-triggered',1);
+            }
+        }
+    }
+    
+    
     // makeAjax
     // crée et retourne l'objet ajax
     const makeAjax = function(state,sourceEvent)
@@ -427,8 +425,7 @@ const Doc = function(option)
         if(HistoryApi.isState(state))
         {
             const html = triggerFunc(this,'doc:getHtml');
-            triggerFunc(this,'doc:cancelAjax');
-            beforeAjax.call(this);
+            $(html).attr('data-status','loading');
             
             const config = {
                 url: state.url,
@@ -450,6 +447,7 @@ const Doc = function(option)
             const type = makeHistoryType(config,sourceEvent);
             
             r = Xhr.trigger(this,config);
+            triggerFunc(this,'doc:cancelAjax');
             
             if(r != null)
             $(this).data('doc-ajax',r);
@@ -459,23 +457,11 @@ const Doc = function(option)
     }
     
 
-    // beforeAjax
-    // callback avant le ajax
-    const beforeAjax = function()
-    {
-        $(this).data('doc-active',true);
-        
-        // loading
-        const html = triggerFunc(this,'doc:getHtml');
-        $(html).attr('data-status','loading');
-    }
-    
-    
     // afterAjax
     // callback après le ajax
     const afterAjax = function(type,state,jqXHR)
     {
-        if(Obj.isPlain(jqXHR) && HistoryApi.isState(state) && Str.isNotEmpty(type))
+        if(Pojo.is(jqXHR) && HistoryApi.isState(state) && Str.isNotEmpty(type))
         {
             const data = jqXHR.responseText;
             const currentUri = jqXHR.getResponseHeader('QUID-URI');
@@ -484,7 +470,6 @@ const Doc = function(option)
             if(Str.is(data))
             {
                 const doc = Html.doc(data);
-                $(this).removeData('doc-active');
                 
                 if(type === 'push' || type === 'form')
                 {
@@ -520,7 +505,7 @@ const Doc = function(option)
     {
         let r = false;
         
-        if(Obj.isPlain(doc) && doc.body != null)
+        if(Pojo.is(doc) && doc.body != null)
         {
             r = true;
             

@@ -6,15 +6,11 @@
  
 // scalar
 // script with functions related to scalar values
-const Scalar = new function() 
-{    
-    // instance
-    const $inst = this;
-    
+const ScalarPrimitive = {    
     
     // is
     // retourne vrai si la valeur est scalar
-    this.is = function(value) 
+    is: function(value) 
     {
         let r = false;
         const type = typeof value;
@@ -23,8 +19,13 @@ const Scalar = new function()
         r = true;
         
         return r;
+    },
+    
+    
+    // isNotBool
+    // retourne vrai si scalar mais pas bool
+    isNotBool: function(value)
+    {
+        return (this.is(value) && !Bool.is(value))? true:false;
     }
 }
-
-// export
-Lemur.Scalar = Scalar;

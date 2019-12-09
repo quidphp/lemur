@@ -8,15 +8,11 @@
 // script with behaviours related to validation
 const Validate = new function() 
 {
-    // instance
-    const $inst = this;
-    
-    
     // isNumericDash
     // retourne vrai si la valeur contient seulement des caractères numérique ou -
     this.isNumericDash = function(value)
     {
-        return $inst.regex(value,"^[0-9\-]+$");
+        return this.regex(value,"^[0-9\-]+$");
     }
     
     
@@ -24,7 +20,7 @@ const Validate = new function()
     // retourne vrai si la valeur est un email
     this.isEmail = function(value)
     {
-        return $inst.regex(value,/^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{1,4})+$/);
+        return this.regex(value,/^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{1,4})+$/);
     }
     
     
@@ -50,10 +46,10 @@ const Validate = new function()
     // lance la validation required et ensuite pattern
     this.trigger = function(value,required,pattern)
     {
-        let r = $inst.required(value,required);
+        let r = this.required(value,required);
         
         if(r === true)
-        r = $inst.pattern(value,pattern);
+        r = this.pattern(value,pattern);
         
         return r;
     }
@@ -66,7 +62,7 @@ const Validate = new function()
         let r = true;
         
         if(Bool.is(required))
-        required = Bool.num(required);
+        required = Bool.fromInt(required);
         
         if(Num.is(required) && required > 0)
         {
@@ -91,7 +87,7 @@ const Validate = new function()
         {
             value = Str.cast(value);
             
-            if(value.length && !$inst.regex(value,pattern))
+            if(value.length && !this.regex(value,pattern))
             r = false;
         }
         

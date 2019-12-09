@@ -6,40 +6,35 @@
  
 // inputNumeric
 // script with logic for an input containing a number
-Component.inputNumeric = function(option)
+const InputNumeric = function(option)
 {
+    // nodes
+    const $nodes = this;
+    
+    
     // option
-    option = Object.assign({timeout: 500},option);
+    const $option = Object.assign({
+        timeout: 500
+    },option);
     
     
     // bindings
-    Component.BlockEvent.call(this,'change');
-    Component.Timeout.call(this,'keyup',option.timeout);
-    Component.inputValidate.call(this);
+    Component.Timeout.call(this,'keyup',$option.timeout);
 
 
     // func
-    setFunc(this,'inputNumeric:getValue',function() {
-        return parseInt(triggerFunc(this,'input:getValue'));
-    });
-    
-    setFunc(this,'inputNumeric:getValue',function() {
-        return triggerFunc(this,'input:getValueInt');
-    });
-    
     setFunc(this,'inputNumeric:getCurrent',function() {
-        return parseInt($(this).data("current"));
+        return Integer.cast($(this).data("current"));
     });
     
     setFunc(this,'inputNumeric:getMax',function() {
-        return parseInt($(this).data('max'));
+        return Integer.cast($(this).data('max'));
     });
     
     
-    // custom
-    ael(this,'keyup:onTimeout',function() {
-        triggerEvent(this,'validate:process');
-        refresh.call(this);
+    // event
+    ael(this,'timeout:keyup',function() {
+        inputRefresh.call(this);
     });
     
     ael(this,'validate:invalid',function() {
@@ -48,24 +43,22 @@ Component.inputNumeric = function(option)
         triggerEvent(this,'validate:valid');
     });
     
-    // event
     ael(this,'focus',function() {
         triggerFunc(this,'input:setEmpty');
     });
     
-    ael(this,'focusout',function(event) {
-        refresh.call(this);
-        event.stopImmediatePropagation();
+    ael(this,'focusout',function() {
+        inputRefresh.call(this);
     });
     
     ael(this,'change',function() {
-        triggerEvent(this,'inputNumeric:refresh');
+        inputRefresh.call(this);
     });
     
     
     // refresh
-    const refresh = function() {
-        const val = triggerFunc(this,'inputNumeric:getValue');
+    const inputRefresh = function() {
+        let val = triggerFunc(this,'input:getValueInt');
         const max = triggerFunc(this,'inputNumeric:getMax');
         const current = triggerFunc(this,'inputNumeric:getCurrent');
         
@@ -83,20 +76,21 @@ Component.inputNumeric = function(option)
             if(triggerFunc(this,'validate:isValid') && val !== current)
             redirect.call(this);
         }
-    };
+    }
     
     
     // redirect
-    const redirect = function() {
-        const val = triggerFunc(this,'inputNumeric:getValue');
+    const redirect = function() 
+    {
+        const val = triggerFunc(this,'input:getValueInt');
         const href = Dom.dataHrefReplaceChar(this,val);
         
         if(Str.isNotEmpty(href))
-        {
-            triggerEvent(this,'block');
-            triggerEvent(document,'doc:go',href)
-        }
-    };
+        triggerFunc(document,'doc:go',href);
+    }
     
     return this;
 }
+
+// export
+Component.InputNumeric = InputNumeric;

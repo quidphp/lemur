@@ -29,10 +29,7 @@ const Ajax = function(type)
         const r = Xhr.trigger(this,config);
         
         if(r !== false && triggerEvent != null)
-        {
-            triggerEvent.stopImmediatePropagation();
-            triggerEvent.preventDefault();
-        }
+        Evt.preventStop(triggerEvent,true);
         
         return r;
     });

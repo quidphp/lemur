@@ -8,10 +8,6 @@
 // script with functions related to debugging
 const Debug = new function() 
 {   
-    // instance
-    const $inst = this;
-    
-    
     // assertThrow
     // comme assert mais lance une errur
     this.assertThrow = function(value) 

@@ -53,7 +53,7 @@ class React extends Main\Service
     // inclut le polyfill pour support ie11
     final public function docOpenJs()
     {
-        return [4=>'js/vendor/react/react.js',5=>'js/vendor/react/react-dom.js'];
+        return [5=>'js/vendor/react/react.js',6=>'js/vendor/react/react-dom.js'];
     }
 }
 

@@ -8,10 +8,6 @@
 // script with behaviours related to dom nodes
 const Dom = new function() 
 {
-    // instance
-    const $inst = this;
-    
-    
     // isNode
     // retourne vrai si la valeur est une node
     this.isNode = function(value) 
@@ -22,18 +18,19 @@ const Dom = new function()
     
     // isNodes
     // retourne vrai si la valeur est une collection de node
-    // accepte jquery, nodeList ou un tableau de nodes
+    // accepte jquery, nodeList ou un tableau de nodes non vide
     this.isNodes = function(value)
     {
         let r = false;
+        const $inst = this;
         
         if(value instanceof jQuery && value.length)
         r = true;
         
-        else if(value instanceof NodeList)
+        else if(value instanceof NodeList && value.length)
         r = true;
         
-        else if(Array.isArray(value) && value.length)
+        else if(Arr.isNotEmpty(value))
         {
             r = Arr.each(value,function(v) {
                 return $inst.isNode(v);
@@ -56,7 +53,7 @@ const Dom = new function()
     // retourne vrai si  la tag est celle donnée en argument
     this.isTag = function(value,node)
     {
-        return ($inst.tag(node) === value);
+        return (this.tag(node) === value);
     }
     
     
@@ -89,19 +86,28 @@ const Dom = new function()
 
     
     // getData
-    // permet de retourner une date d'une node
-    // si la valeur est null et qu'un fallback est spécifié, créer la propriété data
-    this.getData = function(node,key,fallback)
+    // permet de retourner une data d'une node
+    this.getData = function(node,key)
     {
-        let r = null;
         const firstNode = $(node).get(0);
-        r = $(firstNode).data(key);
+        return $(firstNode).data(key);
+    }
+    
+    
+    // getOrSetData
+    // crée une data dans une node si la valeur est présenement inexistante
+    // sinon retourne la data de la node
+    this.getOrSetData = function(node,key,value)
+    {
+        let r = value;
+        const firstNode = $(node).get(0);
+        const current = $(firstNode).data(key);
         
-        if(r == null && fallback != null)
-        {
-            $(firstNode).data(key,fallback);
-            r = fallback;
-        }
+        if(current == null)
+        $(firstNode).data(key,value);
+        
+        else
+        r = current;
         
         return r;
     }
@@ -156,7 +162,7 @@ const Dom = new function()
     this.attrStr = function(node,start)
     {
         let r = null;
-        const attr = $inst.attr(node,start);
+        const attr = this.attr(node,start);
         
         if(attr != null)
         r = Obj.str(attr,'=',true);
@@ -169,7 +175,7 @@ const Dom = new function()
     // retourne un attribut
     this.getAttr = function(key,node)
     {
-        return Obj.get(key,$inst.attr(node));
+        return Pojo.get(key,this.attr(node));
     }
     
     
@@ -177,7 +183,7 @@ const Dom = new function()
     // retourne un objet contenant tous les data-attributs d'une balise
     this.dataAttr = function(node)
     {
-        return $inst.attr(node,'data-');
+        return this.attr(node,'data-');
     }
     
     
@@ -185,7 +191,7 @@ const Dom = new function()
     // retourne un attribut data
     this.getDataAttr = function(key,node)
     {
-        return (Str.isNotEmpty(key))? Obj.get('data-'+key,$inst.attr(node)):null;
+        return (Str.isNotEmpty(key))? Pojo.get('data-'+key,this.attr(node)):null;
     }
     
     
@@ -194,7 +200,7 @@ const Dom = new function()
     // la valeur retourné peut être trim
     this.value = function(node,trim)
     {
-        let r = null;
+        let r = undefined;
 
         r = $(node).val();
         
@@ -222,7 +228,7 @@ const Dom = new function()
         {
             $(node).each(function(index) {
                 r += (r.length)? separator:"";
-                r += $inst.value(this,trim);
+                r += this.value(this,trim);
             });
         }
         

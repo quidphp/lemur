@@ -8,17 +8,13 @@
 // script with helper functions related to navigation and pagination
 const Nav = new function() 
 {    
-    // instance
-    const $inst = this;
-    
-    
     // index
     // retourne l'index du nouvel élément
     this.index = function(value,current,max,loop)
     {
-        let r = null;
+        let r = undefined;
         
-        if(Num.isInt(max) && max > 0)
+        if(Integer.is(max) && max > 0)
         {
             const first = 0;
             const last = (max - 1);
@@ -29,7 +25,7 @@ const Nav = new function()
             else if(value ==='last')
             r = last;
             
-            else if(value === 'next' && Num.isInt(current))
+            else if(value === 'next' && Integer.is(current))
             {
                 r = (current + 1);
                 
@@ -43,7 +39,7 @@ const Nav = new function()
                 }
             }
             
-            else if(value === 'prev' && Num.isInt(current))
+            else if(value === 'prev' && Integer.is(current))
             {
                 r = (current - 1);
                 
@@ -57,7 +53,7 @@ const Nav = new function()
                 }
             }
             
-            else if(Num.isInt(value) && value >= 0 && value < max)
+            else if(Integer.is(value) && value >= 0 && value < max)
             r = value;
         }
         

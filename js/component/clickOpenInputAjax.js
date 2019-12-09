@@ -95,7 +95,6 @@ const ClickOpenInputAjax = function(option)
         });
     }
     
-    
     return this;
 }
 

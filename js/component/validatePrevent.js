@@ -38,8 +38,7 @@ const ValidatePrevent = function(type)
         
         if(r !== true)
         {
-            event.stopImmediatePropagation();
-            event.preventDefault();
+            Evt.preventStop(event,true);
             triggerEvent(this,'validatePrevent:deny',event);
         }
         

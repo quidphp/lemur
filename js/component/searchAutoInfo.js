@@ -13,7 +13,7 @@ const SearchAutoInfo = function(option)
     
     
     // option
-    const $option = Obj.replaceRecursive({
+    const $option = Pojo.replaceRecursive({
         targetInfo: ".search-info",
         attrInfo: 'data-search-info',
         info: {}

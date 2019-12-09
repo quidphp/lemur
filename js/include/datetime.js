@@ -8,10 +8,6 @@
 // script with functions related to date and time
 const Datetime = new function() 
 {   
-    // instance
-    const $inst = this;
-    
-    
     // now
     // retourne le timestamp courant
     this.now = function() 

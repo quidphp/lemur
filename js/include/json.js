@@ -8,10 +8,6 @@
 // script with functions related to json
 const Json = new function() 
 {    
-    // instance
-    const $inst = this;
-    
-    
     // encode
     // encode une valeur en json
     this.encode = function(value) 

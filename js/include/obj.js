@@ -6,82 +6,41 @@
  
 // obj
 // script with a set of helper functions related to objects
-const Obj = new function() 
+
+// objBase
+// base methods for objects
+const ObjBase =
 {    
-    // instance
-    const $inst = this;
-    
-    
     // is
     // retourne vrai si c'est un objet
-    this.is = function(value)
+    is: function(value)
     {
         return Vari.type(value) === 'object';
-    }
+    },
 
-    
-    // isPlain
-    // retourne vrai si c'est un objet plain
-    this.isPlain = function(value)
-    {
-        return $.isPlainObject(value);
-    }
-    
-    
-    // isEmpty
-    // retourne vrai si c'est un objet vide
-    this.isEmpty = function(value)
-    {
-        return $inst.is(value) && Vari.isEmpty(value);
-    }
-    
-    
-    // isNotEmpty
-    // retourne vrai si c'est un objet non-vide
-    this.isNotEmpty = function(value)
-    {
-        return $inst.is(value) && Vari.isNotEmpty(value);
-    }
-    
     
     // isEqual
     // compare plusieurs objets (ou array)
     // retourne vrai si les valeurs contenus sont égales
-    this.isEqual = function() 
+    isEqual: function() 
     {
         let r = false;
         const args = Array.from(arguments);
         
-        if(args.length > 1 && $inst.is(args[0]))
+        if(args.length > 1 && this.is(args[0]))
         r = Vari.isEqual.apply(null,args);
         
         return r;
-    }
-    
-    
-    // isKey
-    // retourne vrai si la valeur est une clé de propriété valide
-    this.isKey = function(prop)
-    {
-        return Scalar.is(prop);
-    }
-    
-    
-    // keyExists
-    // retourne vrai si l'objet a la propriété
-    this.keyExists = function(prop,obj)
-    {
-        return ($inst.isKey(prop) && $inst.is(obj))? obj.hasOwnProperty(prop):false
-    }
+    },
     
     
     // length
     // retourne la longueur de l'objet
-    this.length = function(value) 
+    length: function(value) 
     {
         let r = null;
-        
-        if($inst.is(value))
+
+        if(this.is(value))
         {
             const keys = Object.keys(value);
             r = keys.length;
@@ -89,90 +48,104 @@ const Obj = new function()
         
         return r;
     }
+}
+
+
+// objKeyValue
+// method related to keys and values within an object
+const ObjKeyValue =
+{
+    // isKey
+    // retourne vrai si la valeur est une clé de propriété valide
+    isKey: function(prop)
+    {
+        return Scalar.isNotBool(prop);
+    },
+    
+    
+    // keyExists
+    // retourne vrai si l'objet a la propriété
+    keyExists: function(prop,obj)
+    {
+        return (this.isKey(prop) && this.is(obj))? obj.hasOwnProperty(prop):false
+    },
+    
+    
+    // keys
+    // retourne les clés de l'objet
+    keys: function(obj)
+    {
+        return (this.is(obj))? Object.keys(obj):null;
+    },
     
     
     // get
-    // permet de retourner la valeur d'une propriété d'un objet
-    this.get = function(prop,obj)
+    // permet de retourner la valeur d'une propriété d'un objet plain
+    get: function(prop,obj)
     {
-        return ($inst.keyExists(prop,obj))? obj[prop]:null;
-    }
+        return (this.keyExists(prop,obj))? obj[prop]:undefined;
+    },
     
     
-    // set
-    // permet d'ajouter une nouvelle propriété à un objet
-    // l'objet retourner est une copie
-    this.set = function(prop,value,obj)
+    // valueFirst
+    // retourne le première valeur dans le tableau
+    valueFirst: function(obj)
     {
-        let r = null;
+        let r = undefined;
         
-        if($inst.is(obj))
-        r = $inst.setRef(prop,value,$inst.replace(obj));
+        this.each(obj,function(value) {
+            r = value;
+            return false;
+        });
         
         return r;
-    }
+    },
     
     
-    // setRef
-    // permet d'ajouter une nouvelle propriété à un objet
-    // l'objet retourner est le même (pas une copie)
-    this.setRef = function(prop,value,obj)
+    // find
+    // retourne la première valeur de l'objet dont le callback retourne true
+    find: function(loop,callback)
     {
-        let r = null;
+        let r = undefined;
         
-        if($inst.is(obj))
+        if(this.is(loop) && Func.is(callback))
         {
-            obj[prop] = value;
-            r = obj;
+            this.each(loop,function(value,key) {
+                const result = callback.call(this,value,key,loop);
+                
+                if(result)
+                {
+                    r = value;
+                    return false;
+                }
+            });
         }
         
         return r;
-    }
+    },
     
     
-    // unset
-    // permet de retirer une propriété d'un objet
-    // l'objet retourner est une copie
-    this.unset = function(prop,obj)
+    // values
+    // retourne les valeurs de l'objet
+    values: function(obj)
     {
-        let r = null;
-        
-        if($inst.is(obj))
-        r = $inst.unsetRef(prop,$inst.replace(obj));
-        
-        return r;
-    }
-    
-    
-    // unsetRef
-    // permet de retirer une propriété d'un objet
-    // l'objet retourner est le même (pas une copie)
-    this.unsetRef = function(prop,obj)
-    {
-        let r = null;
-        
-        if($inst.keyExists(prop,obj))
-        {
-            delete obj[prop];
-            r = obj;
-        }
-        
-        return r;
-    }
+        return (this.is(obj))? Object.values(obj):null;
+    },
     
     
     // str
     // permet de convertir un objet en string
     // possible de spécifier un séparateur et s'il faut quote les valeurs
-    this.str = function(obj,separator,quote) 
+    str: function(obj,separator,quote) 
     {
         let r = '';
+        const $inst = this;
         separator = (Str.isNotEmpty(separator))? separator:'=';
         
-        $inst.each(obj,function(value,key) {
+        this.each(obj,function(value,key) {
             if(Str.isNotEmpty(key))
             {
-                if($inst.is(value))
+                if(Obj.is(value))
                 value = Json.encode(value);                
                 
                 else
@@ -191,86 +164,32 @@ const Obj = new function()
         });
 
         return r;
-    }
+    },
     
     
-    // copy
-    // retourne une copie de l'objet
-    this.copy = function(obj)
+    // arr
+    // retourne un array à partir de la valeur
+    arr: function(value)
     {
-        return $inst.replace(obj);
+        return (this.is(value))? Array.from(this.values(value)):null;
     }
-    
-    
-    // replace
-    // retourne un nouvel objet contenant le résultat d'un merge unidimensionnel de tous les objets données en argument
-    this.replace = function() 
-    {
-        let r = {};
-        let args = Array.from(arguments);
-        
-        if(args.length > 0 && $inst.is(args[0]))
-        {
-            args = [r].concat(args);
-            r = Object.assign.apply(null,args);
-        }
-        
-        return r;
-    }
-    
-    
-    // replaceRecursive
-    // retourne un nouvel objet contenant le résultat d'un merge multidimensionnel de tous les objets données en argument
-    this.replaceRecursive = function() 
-    {
-        let r = {};
-        let args = Array.from(arguments);
-        
-        if(args.length > 0 && $inst.is(args[0]))
-        {
-            args = [true,r].concat(args);
-            r = $.extend.apply(null,args);
-        }
-        
-        return r;
-    }
-    
-    
-    // climb
-    // permet de grimper dans un objet à partir d'un tableau
-    this.climb = function(array,r) 
-    {
-        if(Arr.is(array) && $inst.is(r))
-        {
-            var i;
-            
-            Arr.each(array,function(value) {
-                if($inst.keyExists(value,r))
-                r = r[value];
-                
-                else
-                {
-                    r = null;
-                    return false;
-                }
-            });
-        }
-        
-        return r;
-    }
-    
-    
+}
+
+
+// objEach
+// function for looping over an object
+const ObjEach =
+{
     // each
-    // permet de faire un foreach sur un objet, utilise obj.keys
-    // ne loop pas sur les propriétés du prototype
-    // la valeur est binder comme this
-    this.each = function(loop,callback)
+    // méthode utilisé pour faire un for each sur un array, array like, un objet ou une string
+    // retourne true si le loop a complêté
+    each: function(loop,callback) 
     {
         let r = null;
+        let keys = this.keys(loop);
         
-        if($inst.is(loop) && Func.is(callback))
+        if(Arr.is(keys) && Func.is(callback))
         {
-            const keys = Object.keys(loop);
             r = true;
             let key;
             let value;
@@ -294,5 +213,162 @@ const Obj = new function()
     }
 }
 
-// export
-Lemur.Obj = Obj;
+
+// objCopyFilterMap
+// functions for copying, filtering and map an object
+const ObjCopyFilterMap =
+{
+    // copy
+    // permet de copier un objet
+    copy: function(value)
+    {
+        return (this.is(value))? Object.assign(this.new(),value):null;
+    },
+    
+    
+    // new
+    // retourne la cible pour créer un nouvel objet du même type
+    new: function()
+    {
+        return {};
+    },
+    
+    
+    // filter
+    // permet de créer un nouvel objet avec seulement les entrées qui retournent oui
+    filter: function(loop,callback)
+    {
+        let r = null;
+        
+        if(this.is(loop) && Func.is(callback))
+        {
+            r = this.new();
+            const keepKey = (Array.isArray(r))? false:true;
+            
+            this.each(loop,function(value,key) {
+                const result = callback.call(this,value,key,loop);
+                key = (keepKey === false)? r.length:key;
+                
+                if(result)
+                r[key] = value;
+            });
+        }
+        
+        return r;
+    },
+    
+    
+    // map
+    // permet de créer un nouvel objet avec les valeurs changés selon la fonction de rappel
+    map: function(loop,callback)
+    {
+        let r = null;
+        
+        if(this.is(loop) && Func.is(callback))
+        {
+            r = this.new();
+            
+            this.each(loop,function(value,key) {
+                const result = callback.call(this,value,key,loop);
+                r[key] = result;
+            });
+        }
+        
+        return r;
+    }
+}
+
+
+// objWrite
+// functions for written on a copy of the object
+const ObjWrite =
+{    
+    // set
+    // permet d'ajouter une nouvelle propriété à un objet
+    // l'objet retourner est une copie
+    set: function(prop,value,obj)
+    {
+        let r = null;
+        
+        if(this.is(obj))
+        {
+            r = this.copy(obj);
+            r[prop] = value;
+        }
+        
+        return r;
+    },
+    
+    
+    // unset
+    // permet de retirer une propriété d'un objet
+    // l'objet retourner est une copie
+    unset: function(prop,obj)
+    {
+        let r = null;
+        
+        if(this.keyExists(prop,obj))
+        {
+            r = this.copy(obj);
+            delete r[prop];
+        }
+        
+        return r;
+    },
+
+
+    // replace
+    // retourne un nouvel objet contenant le résultat d'un merge unidimensionnel de tous les objets données en argument
+    replace: function() 
+    {
+        let r = {};
+        let args = Array.from(arguments);
+        
+        if(args.length > 1 && this.is(args[0]))
+        {
+            args = [r].concat(args);
+            r = Object.assign.apply(null,args);
+        }
+        
+        return r;
+    }
+}
+
+
+// objWriteSelf
+// functions for writing within the object without copying it
+const ObjWriteSelf =
+{    
+    // setRef
+    // permet d'ajouter une nouvelle propriété à un objet
+    // l'objet retourner est le même (pas une copie)
+    setRef: function(prop,value,obj)
+    {
+        let r = null;
+        
+        if(this.is(obj))
+        {
+            r = obj;
+            r[prop] = value;
+        }
+        
+        return r;
+    },
+    
+    
+    // unsetRef
+    // permet de retirer une propriété d'un objet
+    // l'objet retourner est le même (pas une copie)
+    unsetRef: function(prop,obj)
+    {
+        let r = null;
+        
+        if(this.keyExists(prop,obj))
+        {
+            delete obj[prop];
+            r = obj;
+        }
+        
+        return r;
+    }
+}

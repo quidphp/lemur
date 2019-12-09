@@ -8,10 +8,6 @@
 // script with a some functions related to browsers
 const Browser = new function() 
 {    
-    // instance
-    const $inst = this;
-    
-    
     // isOldIe
     // retourne vrai si le navigateur est une vieille version de IE (IE 10 ou moins)
     this.isOldIe = function() 
@@ -30,7 +26,7 @@ const Browser = new function()
     // retourne vrai si le navigateur est insupporté
     this.isUnsupported = function() 
     {
-        return $inst.isOldIe();
+        return this.isOldIe();
     }
 
 

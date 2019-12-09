@@ -175,23 +175,23 @@ $(document).ready(function() {
     // comportement pour la page de navigation
 	ael(this,'route:general',function(event,routeWrap) {
 		
-        /*
         const main = qsa(routeWrap,"main");
         const scroller = qs(main,".scroller");
 		const search = qs(main,".left > .search");
 		const pageLimit = qsa(main,"input[name='limit'],input[name='page']");
-        const table = qs(scroller,"table").get(0);
+        const table = qs(scroller,"table");
         const filter = qsa(table,"th.filterable .filter-outer");
 		const colsSorter = qs(table,"th.action");
 		const filesSlider = qsa(table,"td[data-group='media'] .slider");
         const quickEdit = qsa(table,"td[data-quick-edit='1'] a.quick-edit");
         const highlight = qsa(table,"tr.highlight");
         
+        // page + limit
+        Component.InputNumeric.call(pageLimit);
+        
+        /*
         // dragScroll
         triggerSetup(Component.scrollDrag.call(scroller,{selector: 'tbody',targetTag: 'div'}));
-        
-        // page + limit
-        Component.inputNumeric.call(pageLimit.get());
         
         // rowsChecker
         triggerSetup(Component.rowsChecker.call(main));
@@ -229,7 +229,7 @@ $(document).ready(function() {
     // unmount
     ael(this,'route:general:unmount',function(event,routeWrap) {
         /*
-        const table = qs(routeWrap,"main .scroller table").get(0);
+        const table = qs(routeWrap,"main .scroller table");
         const quickEdit = qsa(table,"td[data-quick-edit='1'] a.quick-edit");
         
         // quickEdit

@@ -31,7 +31,7 @@ const ClickOpenBase = function(option)
     });
     
     setFunc(this,'clickOpen:isOpen',function() {
-        return (Num.castInt($(this).attr($option.attr)) === 1)? true:false;
+        return (Integer.cast($(this).attr($option.attr)) === 1)? true:false;
     });
     
     setFunc(this,'clickOpen:isClose',function() {

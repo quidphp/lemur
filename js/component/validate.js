@@ -100,22 +100,6 @@ const ComponentValidate = function()
     });
     
     
-    // setup
-    aelOnce(this,'component:setup',function() {
-
-        ael(this,'change',function() {
-            triggerFunc(this,'validate:process');
-        });
-        
-        ael(this,'focusout',function() {
-            triggerFunc(this,'validate:process');
-        });
-        
-        ael(this,'focus',function() {
-            triggerEvent(this,"validate:valid");
-        });
-    });
-    
     return this;
 };
 

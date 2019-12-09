@@ -8,10 +8,6 @@
 // script with functions for parsing html
 const Html = new function() 
 {
-    // instance
-    const $inst = this;
-    
-    
     // parse
     // parse une string html, retourne un objet avec les nodes
     // remplace les balises sensibles par des div (comme dans head et script)
@@ -46,7 +42,7 @@ const Html = new function()
             body: null,
             bodyAttr: null
         };
-        const doc = $inst.parse(html);
+        const doc = this.parse(html);
         
         r.html = Arr.valueFirst(doc);
         $(r.html).removeAttr('data-tag');

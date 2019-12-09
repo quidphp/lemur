@@ -3,57 +3,53 @@
  * Website: https://quidphp.com
  * License: https://github.com/quidphp/lemur/blob/master/LICENSE
  */
- 
-// number
+
+// num
 // script with functions related to numbers
-const Num = new function() 
-{   
-    // instance
-    const $inst = this;
-    
-    
+const NumPrimitive = 
+{       
     // is
     // retourne vrai si la valeur est un nombre
-    this.is = function(value)
+    is: function(value)
     {
-        return $.isNumeric(value);
-    }
+        let r = false;
+        const type = Vari.type(value);
+        
+        if(type === "number" || type === "string")
+        r = !isNaN(value - parseFloat(value));
+        
+        return r;
+    },
     
     
-    // isInt
-    // retourne vrai si la valeur est un int
-    this.isInt = function(value)
+    // isEmpty
+    // retourne vrai si c'est une variable numérique vide
+    isEmpty: function(value)
     {
-        return ($inst.is(value) && (parseInt(value) === value))? true:false;
-    }
+        return (this.is(value))? Vari.isEmpty(this.cast(value)):false;
+    },
     
     
-    // castInt
-    // retourne le nombre sous forme de int
-    this.castInt = function(value)
+    // isNotEmpty
+    // retourne vrai si c'est une variable numérique non-vide
+    isNotEmpty: function(value)
     {
-        return ($inst.is(value))? parseInt(value):null;
-    }
+        return (this.is(value))? Vari.isNotEmpty(this.cast(value)):false;
+    },
     
     
-    // castStr
+    // cast
+    // retourne la variable sous forme de nombre
+    cast: function(value)
+    {
+        return (this.is(value))? parseFloat(value):null;
+    },
+    
+    
+    // str
     // retourne le nombre sous forme de string
-    this.castStr = function(value)
+    str: function(value)
     {
-        return ($inst.is(value))? Number(value).toString():null;
+        return (this.is(value))? Number(value).toString():null;
     }
-    
-    
-    // uniqueInt
-    // retourne un int jamais utilisé, utile pour générer des ids unique
-    this.uniqueInt = (function(value)
-    {
-        let i = 0;
-        return function() {
-            return i++;
-        };
-    })();
 }
-
-// export
-Lemur.Num = Num;

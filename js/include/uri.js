@@ -8,10 +8,6 @@
 // script with a set of helper functions related to uri management
 const Uri = new function() 
 {
-    // instance
-    const $inst = this;
-    
-        
     // isInternal
     // retourne vrai si l'uri et la comparaison ont le même scheme et host
     this.isInternal = function(uri,compare)
@@ -20,8 +16,8 @@ const Uri = new function()
         
         if(Str.is(uri))
         {
-            compare = (Str.is(compare))? $inst.parse(compare):Request.parse();			
-            const parse = $inst.parse(uri);
+            compare = (Str.is(compare))? this.parse(compare):Request.parse();			
+            const parse = this.parse(uri);
             
             if(parse.scheme === compare.scheme && parse.host === compare.host)
             r = true;
@@ -35,7 +31,7 @@ const Uri = new function()
     // retourne vrai si l'uri et la comparaison n'ont pas le même scheme et host
     this.isExternal = function(uri,compare)
     {
-        return ($inst.isInternal(uri,compare))? false:true;
+        return (this.isInternal(uri,compare))? false:true;
     }
 
 
@@ -43,7 +39,7 @@ const Uri = new function()
     // retourne vrai si l'uri a une extension
     this.hasExtension = function(uri)
     {
-        return ($inst.extension(uri) != null)? true:false;
+        return (this.extension(uri) != null)? true:false;
     }
 
 
@@ -55,7 +51,7 @@ const Uri = new function()
         
         if(Str.is(uri))
         {
-            const parse = $inst.parse(uri);
+            const parse = this.parse(uri);
             
             if(Str.isNotEmpty(parse.hash))
             r = true;
@@ -74,8 +70,8 @@ const Uri = new function()
         
         if(Str.is(uri))
         {
-            compare = (Str.is(compare))? $inst.parse(compare):Request.parse();			
-            const parse = $inst.parse(uri);
+            compare = (Str.is(compare))? this.parse(compare):Request.parse();			
+            const parse = this.parse(uri);
             
             if(parse.path === compare.path && parse.query === compare.query)
             r = true;
@@ -94,8 +90,8 @@ const Uri = new function()
         
         if(Str.is(uri))
         {
-            compare = (Str.is(compare))? $inst.parse(compare):Request.parse();			
-            const parse = $inst.parse(uri);
+            compare = (Str.is(compare))? this.parse(compare):Request.parse();			
+            const parse = this.parse(uri);
             
             if(parse.path === compare.path && parse.query === compare.query && parse.hash === compare.hash)
             r = true;
@@ -113,8 +109,8 @@ const Uri = new function()
         
         if(Str.is(uri))
         {
-            compare = (Str.is(compare))? $inst.parse(compare):Request.parse();
-            const parse = $inst.parse(uri);
+            compare = (Str.is(compare))? this.parse(compare):Request.parse();
+            const parse = this.parse(uri);
             
             if(parse.scheme === compare.scheme && parse.host === compare.host && parse.path === compare.path && parse.query === compare.query)
             {
@@ -131,7 +127,7 @@ const Uri = new function()
     // retourne vrai si l'uri est la même que la comparaison, que l'uri a un hash et que le hash est identique
     this.isSameWithHash = function(uri,compare)
     {
-        return ($inst.hasFragment(uri) && uri === compare)? true:false;
+        return (this.hasFragment(uri) && uri === compare)? true:false;
     }
 
 
@@ -143,7 +139,7 @@ const Uri = new function()
         
         if(Str.is(uri))
         {
-            const parse = $inst.parse(uri);
+            const parse = this.parse(uri);
             r = parse.path;
             
             if(parse.query)
@@ -166,7 +162,7 @@ const Uri = new function()
         if(Str.is(uri))
         {
             const regex = /(?:\.([^.]+))?$/;
-            const parse = $inst.parse(uri);
+            const parse = this.parse(uri);
             const result = regex.exec(parse.path);
             
             if(Arr.is(result) && result.length === 2)

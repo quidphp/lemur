@@ -23,6 +23,7 @@ const Modal = function(option)
     Component.ClickOpenAjax.call(this,$option);
     
     
+    // func
     setFunc(this,'modal:getBox',function() {
         return qs(this,'.box');
     });
@@ -121,6 +122,22 @@ const Modal = function(option)
     });
     
     
+    // boxBind
+    const boxBind = function() 
+    {
+        const modal = this;
+        const box = triggerFunc(this,'modal:getBox');
+        
+        ael(box,'click',function() {
+            event.stopPropagation();
+        });
+        
+        aelDelegate(box,'click','button.close',function(event) {
+            triggerEvent(modal,'clickOpen:close');
+        });
+    }
+    
+    
     // documentBind
     const documentBind = function() 
     {
@@ -136,22 +153,6 @@ const Modal = function(option)
         });
         
         ael(document,'doc:unmount',function() {
-            triggerEvent(modal,'clickOpen:close');
-        });
-    }
-    
-
-    // boxBind
-    const boxBind = function() 
-    {
-        const modal = this;
-        const box = triggerFunc(this,'modal:getBox');
-        
-        ael(box,'click',function() {
-            event.stopPropagation();
-        });
-        
-        aelDelegate(box,'click','button.close',function(event) {
             triggerEvent(modal,'clickOpen:close');
         });
     }
@@ -176,8 +177,7 @@ const Modal = function(option)
             
             if(result === true)
             {
-                event.preventDefault();
-                event.stopPropagation();
+                Evt.preventStop(event);
                 r = false;
             }
             

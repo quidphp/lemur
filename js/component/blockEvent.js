@@ -15,7 +15,7 @@ const BlockEvent = function(type)
     
     // func
     setFunc(this,'blockEvent:isRegistered',function(type) {
-        return (Num.isInt(getBlock.call(this,type)))? true:false;
+        return (Integer.is(getBlock.call(this,type)))? true:false;
     });
     
     setFunc(this,'blockEvent:isUnblocked',function(type) {
@@ -27,7 +27,7 @@ const BlockEvent = function(type)
     });
     
     setFunc(this,'blockEvent:getObj',function() {
-        return Obj.copy(getBlockObj.call(this));
+        return Pojo.copy(getBlockObj.call(this));
     });
     
     setFunc(this,'blockEvent:register',function(type) {
@@ -35,7 +35,7 @@ const BlockEvent = function(type)
         {
             const blockObj = getBlockObj.call(this);
             const handler = getHandler.call(this,type);
-            Obj.setRef(type,0,blockObj);
+            Pojo.setRef(type,0,blockObj);
             ael(this,type,handler,'blockEvent-register-'+type);
         }
     });
@@ -44,20 +44,20 @@ const BlockEvent = function(type)
         if(triggerFunc(this,'blockEvent:isRegistered',type))
         {
             const blockObj = getBlockObj.call(this);
-            Obj.unsetRef(type,blockObj);
+            Pojo.unsetRef(type,blockObj);
             rel(this,'blockEvent-register-'+type);
         }
     });
     
     setFunc(this,'blockEvent:block',function(type) {
-        Evt.checkType(type,'blockEvent:block');
+        Str.check(type,true);
         const blockObj = getBlockObj.call(this);
         
         if(Evt.debug() > 0)
         console.log('blockEvent:block',type);
         
-        if(Obj.keyExists(type,blockObj))
-        Obj.setRef(type,1,blockObj);
+        if(Pojo.keyExists(type,blockObj))
+        Pojo.setRef(type,1,blockObj);
     });
     
     setFunc(this,'blockEvent:block-all',function() {
@@ -70,14 +70,14 @@ const BlockEvent = function(type)
     });
     
     setFunc(this,'blockEvent:unblock',function(type) {
-        Evt.checkType(type,'blockEvent:unblock');
+        Str.check(type,true);
         const blockObj = getBlockObj.call(this);
         
         if(Evt.debug() > 0)
         console.log('blockEvent:unblock',type);
         
-        if(Obj.keyExists(type,blockObj))
-        Obj.setRef(type,0,blockObj);
+        if(Pojo.keyExists(type,blockObj))
+        Pojo.setRef(type,0,blockObj);
     });
     
     setFunc(this,'blockEvent:unblock-all',function() {
@@ -98,8 +98,7 @@ const BlockEvent = function(type)
             
             if(status === 1)
             {
-                event.stopImmediatePropagation();
-                event.preventDefault();
+                Evt.preventStop(event,true);
                 triggerEvent(this,'blockEvent:'+type);
                 
                 return false;
@@ -111,14 +110,14 @@ const BlockEvent = function(type)
     // getBlock
     const getBlock = function(type)
     {
-        return Obj.get(type,getBlockObj.call(this));
+        return Pojo.get(type,getBlockObj.call(this));
     }
     
     
     // getBlockObj
     const getBlockObj = function() 
     {
-        return Dom.getData(this,'blockEvent-obj',{});
+        return Dom.getOrSetData(this,'blockEvent-obj',{});
     }
 
 

@@ -8,10 +8,6 @@
 // script with functions related to the history API
 const HistoryApi = new function() 
 {    
-    // instance
-    const $inst = this;
-    
-    
     // supported
     // retourne vrai si le navigateur courant supporte history API
     this.supported = function()
@@ -34,7 +30,7 @@ const HistoryApi = new function()
     {
         let r = false;
         
-        if(Obj.isPlain(state) && Str.is(state.url) && Num.is(state.timestamp))
+        if(Pojo.is(state) && Str.is(state.url) && Num.is(state.timestamp))
         r = true;
         
         return r;
@@ -47,7 +43,7 @@ const HistoryApi = new function()
     {
         let r = false;
         
-        if($inst.isState(state) && $inst.isState(previous))
+        if(this.isState(state) && this.isState(previous))
         {
             const isInternal = Uri.isInternal(state.url,previous.url);
             const hasExtension = Uri.hasExtension(state.url);

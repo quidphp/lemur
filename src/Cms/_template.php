@@ -327,7 +327,7 @@ trait _template
                         }
 
                         if($this->isTableTop($keys))
-                        $attr[] = ['active','top'];
+                        $attr = Base\Arr::append($attr,['data-active'=>1,'top']);
                     }
 
                     else

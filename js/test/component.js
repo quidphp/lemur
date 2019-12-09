@@ -36,6 +36,7 @@ const TestComponent = function()
         ael(bodyNode,'test:suite',function() {
             i2++;
         },'handlerRel');
+        
         Component.BlockEvent.call(bodyNode,'test:suite');
         const handlerRel2 = ael(bodyNode,'test:suite',function() {
             i++;
@@ -150,7 +151,6 @@ const TestComponent = function()
         assert(i === 1);
         
         // validate
-        triggerEvent(inputNode,'input:validatePrepare');
         assert(triggerFunc(inputNode,'validate:isBinded'));
         assert(triggerFunc(inputNode,'validate:getValue') === '2');
         assert(triggerFunc(inputNode,'validate:isRequired'));

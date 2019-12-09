@@ -5,24 +5,20 @@
  */
  
 // bool
-// script with functions related to booleans
-const Bool = new function() 
-{
-    // instance
-    const $inst = this;
-    
+// methods for bool primitive type
+const BoolPrimitive = {
     
     // is
     // retourne vrai si la valeur est une fonction
-    this.is = function(value) 
+    is: function(value) 
     {
         return typeof(value) === 'boolean';
-    }
+    },
     
     
-    // num
-    // retourne un booléean sous forme de int
-    this.num = function(value)
+    // fromInt
+    // retourne un booléean à partir d'un int
+    fromInt: function(value)
     {
         let r = null;
         
@@ -33,12 +29,12 @@ const Bool = new function()
         r = 0;
         
         return r;
-    }
+    },
     
     
     // toggle
-    // permet de faire un toggle sur une valeur boolean, ou similaire à boolean
-    this.toggle = function(value)
+    // permet de faire un toggle sur une valeur boolean
+    toggle: function(value)
     {
         let r = null;
 
@@ -48,22 +44,6 @@ const Bool = new function()
         else if(value === false)
         r = true;
 
-        else if(value === 1)
-        r = 0;
-
-        else if(value === 0)
-        r = 1;
-
-        else if(value === '1')
-        r = '0';
-
-        else if(value === '0')
-        r = '1';
-
         return r;
     }
-    
 }
-
-// export
-Lemur.Bool = Bool;

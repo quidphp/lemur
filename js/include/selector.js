@@ -8,23 +8,11 @@
 // script with behaviours related to selecting nodes
 const Selector = new function() 
 {
-    // instance
-    const $inst = this;
-    
-    
     // input
     // retourne un selector commun à utiliser pour les inputs
     this.input = function() 
     {
         return "input,select,textarea,button[type='submit']";
-    }
-    
-    
-    // scopedQuerySelectorAll
-    // méthode utilisé pour faire une recherche et retourner les enfants d'une target qui match le selector
-    this.scopedQuerySelectorAll = function(node,selector)
-    {
-        return $(node).first().find(selector).get();
     }
     
     
@@ -36,36 +24,12 @@ const Selector = new function()
     }
     
     
-    // inputGroup
-    // retourne une sélection avec tous les inputs de même type et même nom
-    this.inputGroup = function(node)
+    // scopedQuerySelectorAll
+    // méthode utilisé pour faire une recherche et retourner les enfants d'une target qui match le selector
+    // doit retourner un array, pas une node list
+    this.scopedQuerySelectorAll = function(node,selector)
     {
-        let r = $();
-        
-        $(node).each(function(index) {
-            const name = $(this).prop("name");
-            const type = $(this).prop("type");
-            
-            if(Str.isNotEmpty(name) && Str.isNotEmpty(type))
-            r = r.add($("[type='"+type+"'][name='"+name+"']"));
-        });
-        
-        return r;
-    }
-
-
-    // labels
-    // retourne le ou les labels liés à l'élément
-    this.labels = function(node)
-    {
-        let r = $();
-        const id = $(node).prop('id');
-        d(id);
-        
-        if(Scalar.is(id))
-        r = $inst.scopedQuerySelectorAll(document,"label[for='"+id+"']");
-        
-        return r;
+        return $(node).first().find(selector).get();
     }
 }
 

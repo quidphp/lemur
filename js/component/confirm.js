@@ -24,8 +24,7 @@ const Confirm = function(type)
         
         if(Str.isNotEmpty(confirmText) && !confirm(confirmText))
         {
-            event.stopImmediatePropagation();
-            event.preventDefault();
+            Evt.preventStop(event,true);
             triggerEvent(this,'confirm:no',event);
             
             return false;

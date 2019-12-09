@@ -54,8 +54,7 @@ const ClickOpenTriggerBase = function(option)
         {
             ael(trigger,$option.triggerEvent,function(event) {
                 triggerFunc($this,'clickOpen:triggerClick',event);
-                event.stopPropagation();
-                event.preventDefault();
+                Evt.preventStop(event);
                 return false;
             });
             

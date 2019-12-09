@@ -33,7 +33,7 @@ Component.react = function()
         const namespace = $(this).attr('data-namespace');
         const content = $(this).attr('data-content');
         const path = (namespace+"."+component).split('.');
-        const callable = Obj.climb(path,window);
+        const callable = Pojo.climb(path,window);
         props = props || Json.decode($(this).attr('data-props'));
         props.parentNode = this;
         
@@ -73,7 +73,7 @@ Component.react = function()
         })
         .on('react:updateProps',function(event,props) {
             const initialProps = Json.decode($(this).attr('data-props'));
-            props = Obj.replace(initialProps,props);
+            props = Pojo.replace(initialProps,props);
             renderReactComponent.call(this,props);
         })
         .on('react:replaceProps',function(event,props) {

@@ -5,200 +5,125 @@
  */
  
 // arr
-// script with a set of helper functions related to arrays
-const Arr = new function() 
+// script with some objects related to arr manipulation
+
+// arrRead
+// fonctions relatives à la lecture de tableau
+const ArrRead = 
 {    
-    // instance
-    const $inst = this;
-    
-    
     // is
     // retourne vrai si la valeur est un tableau
-    this.is = function(value) 
+    is: function(value) 
     {
         return Array.isArray(value);
-    }
-    
-    
-    // isLike
-    // retourne vrai si la variable est comme un tableau mais pas un tableau
-    this.isLike = function(value)
-    {
-        let r = false;
-        
-        if(!$inst.is(value) && !Scalar.is(value) && !Func.is(value) && !Dom.isWindow(value))
-        {
-            const type = Vari.type(value);
-            const length = !!value && "length" in value && value.length;
-            r = type === 'array' || length === 0 || typeof length === "number" && length > 0 && (length - 1) in value;
-        }
-        
-        return r;
-    }
-    
-    
-    // isEmpty
-    // retourne vrai si la valeur est un array vide
-    this.isEmpty = function(value) 
-    {
-        return ($inst.is(value) && !value.length)? true:false;
-    }
-    
-    
-    // isNotEmpty
-    // retourne vrai si la valeur est un array non vide
-    this.isNotEmpty = function(value) 
-    {
-        return ($inst.is(value) && value.length)? true:false;
-    }
+    },
     
     
     // in
     // retourne vrai si la valeur est dans le tableau
     // retourne un boolean
-    this.in = function(value,array) 
+    in: function(value,array) 
     {
-        return ($inst.search(value,array) !== null)? true:false;
-    }
+        return (this.is(array))? Array.prototype.includes.call(array,value):null;
+    },
     
     
-    // isEqual
-    // compare plusieurs array
-    // retourne vrai si les valeurs contenus sont égales
-    this.isEqual = function() 
+    // keys
+    // retourne un tableau avec clés du présent tableau
+    keys: function(array)
     {
-        let r = false;
-        const args = Array.from(arguments);
-        
-        if(args.length > 1 && $inst.is(args[0]))
-        r = Vari.isEqual.apply(null,args);
-        
-        return r;
-    }
+        return (this.is(array))? Array.from(Array.prototype.keys.call(array)):null;
+    },
     
     
     // search
     // retourne l'index de la valeur dans le tableau
-    this.search = function(value,array) 
+    search: function(value,array) 
     {
         let r = null;
         
-        if($inst.is(array))
+        if(this.is(array))
         {
-            r = array.indexOf(value);
+            r = Array.prototype.indexOf.call(array,value);
             r = (r === -1)? null:r;
         }
         
         return r;
-    }
+    },
     
     
     // slice
     // fait un slice sur un tableau avec un start et un end
-    this.slice = function(start,end,array)
+    slice: function(start,end,array)
     {
-        start = Num.isInt(start)? start:0;
-        end = Num.isInt(end)? end:undefined;
-        return Array.prototype.slice.call(array,start,end);
-    };
+        let r = null;
+        
+        if(this.is(array))
+        {
+            start = Integer.is(start)? start:0;
+            end = Integer.is(end)? end:undefined;
+            r = Array.prototype.slice.call(array,start,end);
+        }
+        
+        return r;
+    },
     
     
     // sliceStart
     // fait un slice à partir du début d'un tableau
-    this.sliceStart = function(start,array)
+    sliceStart: function(start,array)
     {
-        return $inst.slice(start,true,array);
-    }
+        return this.slice(start,true,array);
+    },
     
-    
-    // spliceValue
-    // permet de retourner le même tableau sans la valeur donné en argument
-    // retourne la valeur splice
-    this.spliceValue = function(value,array,replace)
+
+    // valueStrip
+    // permet de retourner un nouveau tableau sans la valeur donné en argument
+    valueStrip: function(value,array) 
     {
         let r = null;
-        let index = $inst.search(value,array);
-        
-        if(index !== null)
+
+        if(this.is(array))
         {
-            if(typeof(replace) !== 'undefined')
-            r = array.splice(index,1,replace);
-            else
-            r = array.splice(index,1);
+            r = Array.prototype.filter.call(array,function(v) {
+                return (v === value)? false:true;
+            });
         }
         
         return r;
+    },
+    
+    
+    // new
+    // retourne la cible pour la copie
+    new: function()
+    {
+        return [];
     }
-    
-    
-    // valueFirst
-    // retourne le première valeur dans le tableau
-    this.valueFirst = function(array)
+}
+
+
+// arrWrite
+// fonctions relatives à l'écriture sur des tableaux (en référence)
+const ArrWrite = 
+{
+    // spliceValue
+    // permet de retourner le même tableau sans la valeur donné en argument
+    // retourne la valeur splice
+    spliceValue: function(value,array,replace)
     {
         let r = null;
+        let index = this.search(value,array);
         
-        $inst.each(array,function(value) {
-            r = value;
-            return false;
-        });
-        
-        return r;
-    }
-    
-    
-    // valueStrip
-    // permet de retourner un nouveau tableau sans la valeur donné en argument
-    this.valueStrip = function(value,array) 
-    {
-        return array.filter(function(v) {
-            return (v === value)? false:true;
-        })
-    }
-    
-    
-    // copy
-    // permet de copier un tableau dans une nouvelle valeur
-    this.copy = function(array)
-    {
-        return ($inst.is(array))? [].concat(array):null;
-    }
-    
-    
-    // each
-    // méthode utilisé pour faire un for each sur un array
-    // permet de faire le break si le callback retourne false
-    // retourne true si le loop a complêté
-    this.each = function(loop,callback) 
-    {   
-        let r = null;
-        
-        if($inst.isLike(loop))
-        loop = Array.from(loop);
-        
-        if($inst.is(loop) && Func.is(callback))
+        if(this.is(array))
         {
-            r = true;
-            let key;
-            let value;
-            let result;
+            let args = [index,1];
+            if(typeof(replace) !== 'undefined')
+            args.push(replace);
             
-            for (var i = 0; i < loop.length; i++) 
-            {
-                key = i;
-                value = loop[i];
-                result = callback.call(value,value,key,loop);
-                
-                if(result === false)
-                {
-                    r = false;
-                    break;
-                }
-            }
+            r = Array.prototype.splice.apply(array,args);
         }
         
         return r;
     }
 }
-
-// export
-Lemur.Arr = Arr;

@@ -25,7 +25,7 @@ class JQueryUi extends Main\Service
     // inclut aussi touchpunch pour que sortable marche avec mobile
     final public function docOpenJs()
     {
-        return [2=>'js/vendor/jquery/jquery-ui.js',3=>'js/vendor/jquery/touch-punch.js'];
+        return [3=>'js/vendor/jquery/jquery-ui.js',4=>'js/vendor/jquery/touch-punch.js'];
     }
 }
 

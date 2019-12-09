@@ -6,19 +6,20 @@
  
 // func
 // script with functions related to functions
-const Func = new function() 
+const FuncObj =
 {    
-    // instance
-    const $inst = this;
-    
-    
     // is
     // retourne vrai si la valeur est une fonction
-    this.is = function(value) 
+    is: function(value) 
     {
         return typeof value === "function" && typeof value.nodeType !== "number";
+    },
+    
+    
+    // noop
+    // retourne une fonction vide
+    noop: function() 
+    {
+        return function() {};
     }
 }
-
-// export
-Lemur.Func = Func;

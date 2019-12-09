@@ -8,16 +8,12 @@
 // script with functions for manipulating the dom
 const DomChange = new function() 
 {
-    // instance
-    const $inst = this;
-    
-    
     // setsAttr
     // remplace tous les attributs d'une balise, il faut fournir un plain object
     // possible de retirer les attributs existants
     this.setsAttr = function(value,node)
     {
-        if(Obj.isPlain(value))
+        if(Pojo.is(value))
         {
             $(node).each(function() {
                 const $this = $(this);
@@ -53,16 +49,17 @@ const DomChange = new function()
     
     // addId
     // ajoute un id aux éléments contenus dans l'objet qui n'en ont pas
-    // change aussi aux labels associés si existants
-    this.addId = function(base,node)
+    // possible de fournir un callback pour chaque changement, par exemple pour ajuster les id des labels si c'est un input
+    this.addId = function(base,node,callback)
     {
         if(Str.isNotEmpty(base))
         {
             $(node).not("[id]").each(function(index, el) {
-                const newId = base+Num.uniqueInt();
-                const labels = Selector.labels(this);
+                const newId = base+Integer.unique();
                 $(this).prop('id',newId);
-                labels.prop('for',newId);
+                
+                if(Func.is(callback))
+                callback.call(this,newId);
             });
         }
         

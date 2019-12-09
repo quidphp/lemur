@@ -12,6 +12,10 @@ const Input = function()
     const $nodes = this;
     
     
+    // components
+    Component.Validate.call(this);
+    
+    
     // func
     setFunc(this,'input:isBinded',function() {
         return true;
@@ -31,11 +35,23 @@ const Input = function()
     });
     
     setFunc(this,'input:getValueInt',function() {
-        return Num.castInt(triggerFunc(this,'input:getValue',true));
+        return Integer.cast(triggerFunc(this,'input:getValue',true));
+    });
+    
+    setFunc(this,'input:getId',function() {
+        return $(this).prop('id');
     });
     
     setFunc(this,'input:getName',function() {
         return $(this).prop('name');
+    });
+    
+    setFunc(this,'input:getType',function() {
+        return ($(this).is("input"))? $(this).prop('type'):null;
+    });
+        
+    setFunc(this,'input:getTag',function() {
+        return Dom.tag(this);
     });
     
     setFunc(this,'input:setValue',function(value) {
@@ -46,6 +62,75 @@ const Input = function()
         $(this).val('');
     });
     
+    setFunc(this,'validate:getValue',function() {
+        return triggerFunc(this,'input:getValue');
+    });
+    
+    setFunc(this,'input:isSystem',function() {
+        return $(this).is("[name^='-']");
+    });
+    
+    setFunc(this,'input:isTarget',function() {
+        return (!triggerFunc(this,'input:isDisabled') && $(this).is("[name]"))? true:false;
+    });
+    
+    setFunc(this,'input:isTargetVisible',function() {
+        return (triggerFunc(this,'input:isTarget') && $(this).is(":visible"))? true:false;
+    });
+    
+    setFunc(this,'input:isValidate',function() {
+        return (triggerFunc(this,'input:isTarget') && $(this).is("[data-required],[data-pattern]"))? true:false;
+    });
+    
+    setFunc(this,'input:isFile',function() {
+        return $(this).is("input[type='file']");
+    });
+    
+    setFunc(this,'input:isCsrf',function() {
+        return (triggerFunc(this,'input:isSystem') && $(this).is("[data-csrf='1']"))? true:false;
+    });
+    
+    setFunc(this,'input:isGenuine',function() {
+        return (triggerFunc(this,'input:isSystem') && $(this).is("[data-genuine='1']"))? true:false;
+    });
+    
+    setFunc(this,'input:isSubmit',function() {
+        return $(this).is("[type='submit'],[type='image']");
+    });
+    
+    setFunc(this,'input:isClickedSubmit',function() {
+        return (triggerFunc(this,'input:isSubmit') && $(this).is("[data-submit-click]"))? true:false;
+    });
+    
+    setFunc(this,'input:getParent',function() {
+        let r = $(this).parents("form").get(0);
+        
+        if(r == null)
+        r = document;
+        
+        return r;
+    });
+    
+    setFunc(this,'input:getLabels',function() {
+        const parent = triggerFunc(this,'input:getParent');
+        const id = triggerFunc(this,'input:getId');
+        
+        if(Str.isNotEmpty(id))
+        return qsa(parent,"label[for='"+id+"']");
+    });
+    
+    setFunc(this,'input:getGroup',function() {
+        const parent = triggerFunc(this,'input:getParent');
+        const name = triggerFunc(this,'input:getName');
+        const type =triggerFunc(this,'input:getType');
+        const tag =triggerFunc(this,'input:getTag');
+        
+        if(Str.isNotEmpty(name) && Str.isNotEmpty(tag))
+        {
+            const typeSearch = (Str.isNotEmpty(type))? "[type='"+type+"']":tag;
+            return qsa(parent,typeSearch+"[name='"+name+"']");
+        }
+    });
     
     // event
     ael(this,'input:enable',function() {
@@ -57,54 +142,19 @@ const Input = function()
     });
     
     
-    // setup form
-    aelOnce(this,'input:formPrepare',function() {
-        
-        setFunc(this,'input:isSystem',function() {
-            return $(this).is("[name^='-']");
+    // setup
+    aelOnce(this,'component:setup',function() {
+
+        ael(this,'change',function() {
+            triggerFunc(this,'validate:process');
         });
         
-        setFunc(this,'input:isTarget',function() {
-            return (!triggerFunc(this,'input:isDisabled') && $(this).is("[name]"))? true:false;
+        ael(this,'focusout',function() {
+            triggerFunc(this,'validate:process');
         });
         
-        setFunc(this,'input:isTargetVisible',function() {
-            return (triggerFunc(this,'input:isTarget') && $(this).is(":visible"))? true:false;
-        });
-        
-        setFunc(this,'input:isValidate',function() {
-            return (triggerFunc(this,'input:isTarget') && $(this).is("[data-required],[data-pattern]"))? true:false;
-        });
-        
-        setFunc(this,'input:isFile',function() {
-            return $(this).is("input[type='file']");
-        });
-        
-        setFunc(this,'input:isCsrf',function() {
-            return (triggerFunc(this,'input:isSystem') && $(this).is("[data-csrf='1']"))? true:false;
-        });
-        
-        setFunc(this,'input:isGenuine',function() {
-            return (triggerFunc(this,'input:isSystem') && $(this).is("[data-genuine='1']"))? true:false;
-        });
-        
-        setFunc(this,'input:isSubmit',function() {
-            return $(this).is("[type='submit'],[type='image']");
-        });
-        
-        setFunc(this,'input:isClickedSubmit',function() {
-            return (triggerFunc(this,'input:isSubmit') && $(this).is("[data-submit-click]"))? true:false;
-        });
-    });
-    
-    // setup validate
-    aelOnce(this,'input:validatePrepare',function() {
-        
-        if(!triggerFunc(this,'validate:isBinded'))
-        Component.Validate.call(this);
-        
-        setFunc(this,'validate:getValue',function() {
-            return triggerFunc(this,'input:getValue');
+        ael(this,'focus',function() {
+            triggerEvent(this,"validate:valid");
         });
     });
     

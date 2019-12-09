@@ -9,7 +9,7 @@
 Component.scrollDrag = function(option) {
     
     // settings
-    const $option = Obj.replace({
+    const $option = Pojo.replace({
         selector: null,
         targetTag: null,
         dividor: 4

@@ -8,10 +8,6 @@
 // script with functions related to the current request
 const Request = new function() 
 {    
-    // instance
-    const $inst = this;
-    
-    
     // relative
     // retourne l'uri relative courante
     this.relative = function() 

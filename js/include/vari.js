@@ -8,10 +8,6 @@
 // script with a set of helper functions related to variables
 const Vari = new function() 
 {    
-    // instance
-    const $inst = this;
-    
-    
     // is
     // vrai si pas non défini
     this.is = function(value)
@@ -29,9 +25,9 @@ const Vari = new function()
         if(Scalar.is(value))
         r = (!value)? true:false;
         
-        else
+        else (value != null)
         {
-            $inst.eachProto(value,function() {
+            this.eachProto(value,function() {
                 return r = false;
             });
         }
@@ -44,10 +40,26 @@ const Vari = new function()
     // retourne vrai si la variable est non vide
     this.isNotEmpty = function(value)
     {
-        return !$inst.isEmpty(value);
+        return !this.isEmpty(value);
     }
     
 
+    // isNull
+    // retourne vrai si la valeur est null
+    this.isNull = function(value)
+    {
+        return value === null;
+    }
+    
+    
+    // isUndefined
+    // retourne vrai si la valeur est undefined
+    this.isUndefined = function(value)
+    {
+        return value === undefined;
+    }
+    
+    
     // isEqual
     // compare plusieurs variables
     // retourne vrai si les valeurs contenus sont égales
@@ -57,7 +69,7 @@ const Vari = new function()
         let json = null;
         let jsonOld = undefined;
         
-        r = Arr.each(arguments,function(value) {
+        r = ArrLike.each(arguments,function(value) {
             json = Json.encode(value);
             
             if(typeof jsonOld === 'undefined')
@@ -78,7 +90,7 @@ const Vari = new function()
         let r = false;
         let first = undefined;
         
-        r = Arr.each(arguments,function(value) {
+        r = ArrLike.each(arguments,function(value) {
             if(typeof first === 'undefined')
             first = value;
             
@@ -91,7 +103,7 @@ const Vari = new function()
     
     
     // type
-    // retourne le vrai type d'un objet ou d'une variable
+    // retourne le vrai type d'une variable
     this.type = function(value)
     {
         let r = typeof value;
@@ -108,26 +120,6 @@ const Vari = new function()
         
         return r;
     }
-    
-    
-    // each
-    // méthode utilisé pour faire un for each sur un array, un objet ou une string
-    // retourne true si le loop a complêté
-    this.each = function(loop,callback) 
-    {
-        let r = null;
-        
-        if(Arr.is(loop) || Arr.isLike(loop))
-        r = Arr.each(loop,callback);
-        
-        else if(Obj.is(loop))
-        r = Obj.each(loop,callback);
-        
-        else if(Str.is(loop))
-        r = Str.each(loop,callback);
-        
-        return r;
-    };
     
     
     // eachProto

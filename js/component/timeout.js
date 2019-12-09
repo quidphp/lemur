@@ -18,11 +18,11 @@ const Timeout = function(type,timeout)
     });
     
     setFunc(this,'timeout:getObj',function() {
-        return Obj.copy(getTimeoutObj.call(this));
+        return Pojo.copy(getTimeoutObj.call(this));
     });
     
     setFunc(this,'timeout:set',function(type) {
-        Evt.checkType(type,'timeout:set');
+        Str.check(type,true);
         const $this = $(this);
         const duration = triggerFunc(this,'timeout:duration',type);
         const timeoutObj = getTimeoutObj.call(this);
@@ -31,11 +31,11 @@ const Timeout = function(type,timeout)
         },duration);
         
         triggerFunc(this,'timeout:clear',type);
-        Obj.setRef(type,timeout,timeoutObj);
+        Pojo.setRef(type,timeout,timeoutObj);
     })
     
     setFunc(this,'timeout:clear',function(type) {
-        Evt.checkType(type,'timeout:clear');
+        Str.check(type,true);
         const oldTimeout = getTimeout.call(this,type);
         
         if(oldTimeout != null)
@@ -52,14 +52,14 @@ const Timeout = function(type,timeout)
     // getTimeout
     const getTimeout = function(type)
     {
-        return Obj.get(type,getTimeoutObj.call(this));
+        return Pojo.get(type,getTimeoutObj.call(this));
     }
     
     
     // getTimeoutObj
     const getTimeoutObj = function() 
     {
-        return Dom.getData(this,'timeout-obj',{});
+        return Dom.getOrSetData(this,'timeout-obj',{});
     }
     
     return this;

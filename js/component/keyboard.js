@@ -31,8 +31,7 @@ const Keyboard = function(key,values,type)
                 if(triggerFunc(this,prevent,event,isInput,event.keyCode) === true)
                 {
                     const blocked = "keyboard"+ucKey+":blocked";
-                    event.stopImmediatePropagation();
-                    event.preventDefault();
+                    Evt.preventStop(event,true);
                     triggerEvent(this,blocked,event,isInput,event.keyCode);
                     
                     return false;

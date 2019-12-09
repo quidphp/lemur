@@ -13,19 +13,19 @@ const Evt = new function()
     
     
     // debug
-    // si true affiche les événements dans la console
+    // si true affiche les informations de débogagge événements dans la console
     let debug = 0;
     
     
     // debug
     // active ou désactive le débogagge
-    // il faut spécifier un chiffre pour le niveau d'éléments à afficher
+    // il faut spécifier un chiffre pour le niveau de débogagge
     this.debug = function(value)
     {
         if(Bool.is(value))
-        value = Bool.num(value);
+        value = Bool.fromInt(value);
         
-        if(Num.isInt(value))
+        if(Integer.is(value))
         debug = value;
         
         return debug;
@@ -37,11 +37,11 @@ const Evt = new function()
     this.isTriggerFuncEqual = function(equal,type,node)
     {
         let r = false;
-        const args = [type].concat(Arr.sliceStart(3,arguments));
+        const args = [type].concat(ArrLike.sliceStart(3,arguments));
         
         $(node).each(function(index) {
             const funcArgs = [this].concat(args);
-            const result = $inst.triggerFunc.apply(null,funcArgs);
+            const result = $inst.triggerFunc.apply($inst,funcArgs);
             r = (result === equal);
             
             if(r === false)
@@ -52,14 +52,19 @@ const Evt = new function()
     }
     
     
-    // checkType
-    // envoie une erreur si le type n'est pas une string
-    this.checkType = function(type,message)
+    // preventStop
+    // permet de faire un prevent default et stop propagation à un événement
+    this.preventStop = function(event,immediate)
     {
-        if(!Str.isNotEmpty(type))
-        logError(message+':invalidType');
+        event.preventDefault();
         
-        return;
+        if(immediate === true)
+        event.stopImmediatePropagation();
+        
+        else
+        event.stopPropagation();
+        
+        return false;
     }
     
     
@@ -87,7 +92,7 @@ const Evt = new function()
     this.createFromType = function(type,option)
     {
         let r = null;
-        const name = $inst.nameFromType(type);
+        const name = this.nameFromType(type);
         
         if(name != null)
         {
@@ -103,8 +108,8 @@ const Evt = new function()
     
     
     // getTriggerTarget
-    // retourne la trigger target
-    // les bindings delegate, créés la propirété triggerTarget sur l'objet event
+    // retourne la trigger target, en lien avec les bindings delegate
+    // créés la propirété triggerTarget sur l'objet event
     this.getTriggerTarget = function(event)
     {
         let r = null;
@@ -123,14 +128,14 @@ const Evt = new function()
     
     
     // addEventListener
-    // méthode qui permet d'ajouter un nouveau listener d'événement custom
+    // méthode qui permet d'ajouter un nouveau listener d'événement
     // retourne un tableau avec les paramètres pour retirer le listener
     this.addEventListener = function(node,type,func,register,delegate,option) 
     {
-        Evt.checkType(type,'ael');
+        Str.check(type,true);
         option = Object.assign({capture: false, once: false},option);
         
-        const handler = $inst.addEventListenerHandler(type,func,delegate);
+        const handler = addEventListenerHandler(type,func,delegate);
         
         $(node).each(function() {
             this.addEventListener(type,handler,option);
@@ -145,31 +150,16 @@ const Evt = new function()
     
     // addEventListenerHandler
     // retourne le handler utilisé par addEventListener
-    this.addEventListenerHandler = function(type,func,delegate) 
+    const addEventListenerHandler = function(type,func,delegate) 
     {
         return function(event) {
-            
             let go = (delegate == null)? true:false;
             let context = this;
             
             if(Str.isNotEmpty(delegate) && event.target != null)
             {
-                context = event.target;
-                const nodes = Selector.scopedQuerySelectorAll(this,delegate);
-                const delegateTarget = this;
-                let triggerTarget = context;
-                
-                if($(nodes).filter(context).length)
-                go = true;
-                
-                else if(Arr.isNotEmpty(Selector.scopedQuerySelectorAll(nodes,context)))
-                {
-                    triggerTarget = $(context).parents(delegate).get(0);
-                    go = true;
-                }
-                
-                event.delegateTarget = delegateTarget;
-                event.triggerTarget = triggerTarget;
+                go = prepareEventDelegate.call(this,event,delegate);
+                context = event.triggerTarget;
             }
             
             if(go === true)
@@ -187,14 +177,51 @@ const Evt = new function()
     }
     
     
+    // prepareEventDelegate
+    // function protégé
+    // gère la délégation et le changement à l'objet event
+    const prepareEventDelegate = function(event,delegate)
+    {
+        let r = false;
+        const context = event.target;
+        const nodes = Selector.scopedQuerySelectorAll(this,delegate);
+        const delegateTarget = this;
+        let triggerTarget = context;
+        
+        if($(nodes).filter(context).length)
+        r = true;
+        
+        else
+        {
+            let query;
+            
+            Arr.each(nodes,function(node) {
+                query = Selector.scopedQuerySelectorAll(node,context);
+                
+                if(Arr.isNotEmpty(query))
+                {
+                    triggerTarget = $(context).parents(delegate).get(0);
+                    r = true;
+                    return false;
+                }
+            });
+        }
+        
+        event.delegateTarget = delegateTarget;
+        event.triggerTarget = triggerTarget;
+        
+        return r;
+    }
+    
+    
     // registerEventListener
     // permet d'enregistrer un event listener dans la node
     // ceci permet de le retirer par la suite
     this.registerEventListener = function(node,register,type,handler,option) 
     {
-        const data = Dom.getData(node,'rel',{});
+        const data = Dom.getOrSetData(node,'rel',{});
         const entry = [type,handler,option];
-        Obj.setRef(register,entry,data);
+        Pojo.setRef(register,entry,data);
         
         return;
     }
@@ -204,7 +231,7 @@ const Evt = new function()
     // comme ael, mais le listener ne peut être déclenché qu'une seule fois
     this.addEventListenerOnce = function(node,type,func,register,delegate,option) 
     {
-        return $inst.addEventListener(node,type,func,register,delegate,Object.assign({},option,{once: true}));
+        return this.addEventListener(node,type,func,register,delegate,Object.assign({},option,{once: true}));
     }
     
     
@@ -212,7 +239,7 @@ const Evt = new function()
     // permet d'ajouter un event listener qui se trigge seulement selon le delegate
     this.addDelegatedEventListener = function(node,type,delegate,func,register,option)
     {
-        return $inst.addEventListener(node,type,func,register,delegate,option);
+        return this.addEventListener(node,type,func,register,delegate,option);
     }
     
     
@@ -233,8 +260,8 @@ const Evt = new function()
             {
                 const key = args;
                 const data = Dom.getData(node,'rel');
-                args = Obj.get(key,data);
-                Obj.unsetRef(key,data);
+                args = Pojo.get(key,data);
+                Pojo.unsetRef(key,data);
             }
             
             if(Arr.is(args))
@@ -247,8 +274,8 @@ const Evt = new function()
     // function utilisé par triggerEvent et triggerBubble pour envoyer des événements
     this.trigger = function(node,type,option)
     {
-        Evt.checkType(type,'trigger');
-        const event = $inst.createFromType(type,option);
+        Str.check(type,true);
+        const event = this.createFromType(type,option);
         
         if(debug > 1)
         console.log('trigger',type,node);
@@ -266,10 +293,10 @@ const Evt = new function()
     // ces événements ne bubble pas
     this.triggerEvent = function(node,type) 
     {
-        const data = Arr.sliceStart(2,arguments);
+        const data = ArrLike.sliceStart(2,arguments);
         const option = {bubbles: false, cancelable: true, detail: data};
         
-        return $inst.trigger(node,type,option);
+        return this.trigger(node,type,option);
     }
     
     
@@ -278,10 +305,10 @@ const Evt = new function()
     // ces événements bubble
     this.triggerBubble = function(node,type) 
     {
-        const data = Arr.sliceStart(2,arguments);
+        const data = ArrLike.sliceStart(2,arguments);
         const option = {bubbles: true, cancelable: true, detail: data};
         
-        return $inst.trigger(node,type,option);
+        return this.trigger(node,type,option);
     }
     
     
@@ -290,23 +317,17 @@ const Evt = new function()
     // ces événements ne bubble pas
     this.triggerSetup = function(node) 
     {
-        const args = [node,'component:setup'].concat(Arr.sliceStart(1,arguments));
-        return $inst.triggerEvent.apply(null,args);
+        const args = [node,'component:setup'].concat(ArrLike.sliceStart(1,arguments));
+        return this.triggerEvent.apply(this,args);
     }
     
     
     // allFunc
     // retourne de l'objet avec toutes les func lié à la node
     // si plusieurs nodes, retourne seulement pour la première node
-    // possible de retourner une copie, plus facile pour le débogagge
-    this.allFunc = function(node,copy)
+    this.allFunc = function(node)
     {
-        let r = Dom.getData(node,'lemur-func',{});
-        
-        if(copy === true)
-        r = Obj.copy(r);
-        
-        return r;
+        return Dom.getOrSetData(node,'lemur-func',{});
     }
     
     
@@ -315,9 +336,9 @@ const Evt = new function()
     // si plusieurs nodes, retourne la fonction de la première node
     this.getFunc = function(node,type,func) 
     {
-        const all = $inst.allFunc(node);
+        const all = this.allFunc(node);
         
-        return Obj.get(type,all);
+        return Pojo.get(type,all);
     }
     
     
@@ -325,11 +346,11 @@ const Evt = new function()
     // permet d'emmagasiné une fonction dans chaque node fournit en argument
     this.setFunc = function(node,type,func) 
     {
-        Evt.checkType(type,'setFunc');
+        Str.check(type,true);
         
         $(node).each(function() {
             const all = $inst.allFunc(this);
-            Obj.setRef(type,func,all);
+            Pojo.setRef(type,func,all);
         });
         
         return;
@@ -342,7 +363,7 @@ const Evt = new function()
     {
         $(node).each(function() {
             const all = $inst.allFunc(this);
-            Obj.unsetRef(type,all);
+            Pojo.unsetRef(type,all);
         });
         
         return;
@@ -354,12 +375,12 @@ const Evt = new function()
     this.triggerFunc = function(node,type) 
     {
         let r = null;
-        Evt.checkType(type,'triggerFunc:set');
-        const func = $inst.getFunc(node,type);
+        Str.check(type,true);
+        const func = this.getFunc(node,type);
         
         if(Func.is(func))
         {
-            const args = Arr.sliceStart(2,arguments);
+            const args = ArrLike.sliceStart(2,arguments);
             
             if(debug > 2)
             console.log('triggerFunc',type,'found',node);
