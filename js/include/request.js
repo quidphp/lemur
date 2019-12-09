@@ -6,35 +6,35 @@
  
 // request
 // script with functions related to the current request
-const Request = new function() 
+const Request = Lemur.Request = Factory(true,
 {    
     // relative
     // retourne l'uri relative courante
-    this.relative = function() 
+    relative: function() 
     {
         return window.location.pathname + window.location.search;
-    }
+    },
 
 
     // scheme
     // retourne le scheme courant
-    this.scheme = function()
+    scheme: function()
     {
         return location.protocol.substr(0, location.protocol.indexOf(':'));
-    }
+    },
 
 
     // fragment
     // retourne le fragment de l'uri sans le hash
-    this.fragment = function() 
+    fragment: function() 
     {
         return Uri.makeHash(window.location.hash);
-    }
+    },
 
 
     // parse
     // retourne un objet avec les différentes parties de l'uri courante séparés
-    this.parse = function()
+    parse: function()
     {
         return {
             scheme: this.scheme(), 
@@ -44,7 +44,4 @@ const Request = new function()
             hash: location.hash
         };
     }
-}
-
-// export
-Lemur.Request = Request;
+});

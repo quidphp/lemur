@@ -6,12 +6,8 @@
  
 // keyboardEnter
 // component to catch or prevent the enter key on the keyboard
-const KeyboardEnter = function(prevent,type)
+const KeyboardEnter = Component.KeyboardEnter = function(prevent,type)
 {
-    // nodes
-    const $nodes = this;
-    
-    
     // keyboard
     Component.Keyboard.call(this,'enter',[10,13],type);
     
@@ -23,6 +19,3 @@ const KeyboardEnter = function(prevent,type)
     
     return this;
 }
-
-// export
-Component.KeyboardEnter = KeyboardEnter;

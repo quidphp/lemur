@@ -6,12 +6,8 @@
  
 // win
 // behaviours for managing the events and unload notification with the window object
-const Win = function(type,timeout)
+const Win = Component.Win = function(type,timeout)
 {
-    // nodes
-    const $nodes = this;
-    
-    
     // func
     
     // retourne vrai si la fenêtre courante est responsive
@@ -81,6 +77,3 @@ const Win = function(type,timeout)
     
     return this;
 }
-
-// export
-Component.Win = Win;

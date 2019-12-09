@@ -6,19 +6,19 @@
  
 // vari
 // script with a set of helper functions related to variables
-const Vari = new function() 
+const Vari = Lemur.Vari = Factory(true,
 {    
     // is
     // vrai si pas non défini
-    this.is = function(value)
+    is: function(value)
     {
         return typeof(value) !== 'undefined';
-    }
+    },
 
     
     // isEmpty
     // retourne vrai si la variable est vide
-    this.isEmpty = function(value)
+    isEmpty: function(value)
     {
         let r = true;
         
@@ -33,37 +33,37 @@ const Vari = new function()
         }
         
         return r;
-    }
+    },
     
     
     // isNotEmpty
     // retourne vrai si la variable est non vide
-    this.isNotEmpty = function(value)
+    isNotEmpty: function(value)
     {
         return !this.isEmpty(value);
-    }
+    },
     
 
     // isNull
     // retourne vrai si la valeur est null
-    this.isNull = function(value)
+    isNull: function(value)
     {
         return value === null;
-    }
+    },
     
     
     // isUndefined
     // retourne vrai si la valeur est undefined
-    this.isUndefined = function(value)
+    isUndefined: function(value)
     {
         return value === undefined;
-    }
+    },
     
     
     // isEqual
     // compare plusieurs variables
     // retourne vrai si les valeurs contenus sont égales
-    this.isEqual = function() 
+    isEqual: function() 
     {
         let r = false;
         let json = null;
@@ -80,12 +80,12 @@ const Vari = new function()
         });
         
         return r;
-    }
+    },
     
     
     // isEqualStrict
     // comme isEqual, mais les objects et array doivent être les mêmes variables
-    this.isEqualStrict = function()
+    isEqualStrict: function()
     {
         let r = false;
         let first = undefined;
@@ -99,12 +99,12 @@ const Vari = new function()
         });
         
         return r;
-    }
+    },
     
     
     // type
     // retourne le vrai type d'une variable
-    this.type = function(value)
+    type: function(value)
     {
         let r = typeof value;
         const obj = {};
@@ -119,13 +119,13 @@ const Vari = new function()
         }
         
         return r;
-    }
+    },
     
     
     // eachProto
     // fait un each en incluant les propriétés du prototype
     // retourne true si le loop a complêté
-    this.eachProto = function(loop,callback)
+    eachProto: function(loop,callback)
     {
         let r = null;
         
@@ -151,7 +151,4 @@ const Vari = new function()
         
         return r;
     }
-}
-
-// export
-Lemur.Vari = Vari;
+});

@@ -6,12 +6,8 @@
  
 // timeout
 // behaviours for a timeout component, triggers an event once a timeout has completed
-const Timeout = function(type,timeout)
+const Timeout = Component.Timeout = function(type,timeout)
 {
-    // nodes
-    const $nodes = this;
-    
-    
     // func
     setFunc(this,'timeout:duration',function(type) {
         return timeout || $(this).data('timeout-'+type) || 500;
@@ -64,6 +60,3 @@ const Timeout = function(type,timeout)
     
     return this;
 }
-
-// export
-Component.Timeout = Timeout;

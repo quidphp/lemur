@@ -6,12 +6,8 @@
 
 // ajax
 // script to activate ajax with an event on the nodes
-const Ajax = function(type) 
+const Ajax = Component.Ajax = function(type) 
 {
-    // nodes
-    const $nodes = this;
-    
-    
     // func
     setFunc(this,'ajax:confirm',function() {
         return (triggerFunc(document,'doc:isLoading') === true)? false:true;
@@ -47,6 +43,3 @@ const Ajax = function(type)
     
     return this;
 }
-
-// export
-Component.Ajax = Ajax;

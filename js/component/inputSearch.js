@@ -6,12 +6,8 @@
  
 // inputSearch
 // script containing logic for a search input which redirects
-const InputSearch = function(option)
+const InputSearch = Component.InputSearch = function(option)
 {
-    // nodes
-    const $nodes = this;
-    
-    
     // option
     const $option = Object.assign({
         timeout: 500
@@ -108,6 +104,3 @@ const InputSearch = function(option)
     
     return this;
 }
-
-// export
-Component.InputSearch = InputSearch;

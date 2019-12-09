@@ -6,11 +6,11 @@
  
 // historyApi
 // script with functions related to the history API
-const HistoryApi = new function() 
+const HistoryApi = Lemur.HistoryApi = Factory(true,
 {    
     // supported
     // retourne vrai si le navigateur courant supporte history API
-    this.supported = function()
+    supported: function()
     {
         let r = false;
         
@@ -21,12 +21,12 @@ const HistoryApi = new function()
         }
         
         return r;
-    }
+    },
 
     
     // isState
     // retourne vrai si la valeur est un objet compatible pour un état d'historique
-    this.isState = function(state)
+    isState: function(state)
     {
         let r = false;
         
@@ -34,12 +34,12 @@ const HistoryApi = new function()
         r = true;
         
         return r;
-    }
+    },
     
     
     // isStateChangeValid
     // retourne vrai si le changement de state est valide
-    this.isStateChangeValid = function(state,previous,differentPathQuery)
+    isStateChangeValid: function(state,previous,differentPathQuery)
     {
         let r = false;
         
@@ -58,12 +58,12 @@ const HistoryApi = new function()
         }
         
         return r;
-    }
+    },
     
     
     // makeState
     // retourne un objet état d'historique (avec url, title et timestamp)
-    this.makeState = function(uri,title) 
+    makeState: function(uri,title) 
     {
         let r = null;
         
@@ -78,7 +78,4 @@ const HistoryApi = new function()
         
         return r;
     }
-};
-
-// export
-Lemur.HistoryApi = HistoryApi;
+});

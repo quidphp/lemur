@@ -6,13 +6,9 @@
  
 // feed
 // script of behaviours for a feed component with a load-more button
-const Feed = function()
+const Feed = Component.Feed = function()
 {
-    // nodes
-    const $nodes = this;
-    
-    
-    // blockEvent + ajax
+    // components
     Component.AjaxBlock.call(this,'ajax:init');
     
     
@@ -96,6 +92,3 @@ const Feed = function()
     
     return this;
 }
-
-// export
-Component.Feed = Feed;

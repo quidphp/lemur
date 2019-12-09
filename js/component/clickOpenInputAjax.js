@@ -6,12 +6,8 @@
 
 // clickOpenInputAjax
 // component for a one field form which triggers an ajax request that shows in a clickOpen
-const ClickOpenInputAjax = function(option)
+const ClickOpenInputAjax = Component.ClickOpenInputAjax = function(option)
 {
-    // nodes
-    const $nodes = this;
-    
-    
     // option
     const $option = Object.assign({
         ajaxEvent: 'submit',
@@ -97,6 +93,3 @@ const ClickOpenInputAjax = function(option)
     
     return this;
 }
-
-// export
-Component.ClickOpenInputAjax = ClickOpenInputAjax;

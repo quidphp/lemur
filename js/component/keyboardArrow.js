@@ -6,12 +6,8 @@
  
 // keyboardArrow
 // component to catch or prevent the arrow keys on the keyboard
-const KeyboardArrow = function(prevent,type) 
+const KeyboardArrow = Component.KeyboardArrow = function(prevent,type) 
 {
-    // nodes
-    const $nodes = this;
-    
-    
     // keyboard
     Component.Keyboard.call(this,'arrow',[37,38,39,40],type);
     
@@ -39,6 +35,3 @@ const KeyboardArrow = function(prevent,type)
         
     return this;
 }
-
-// export
-Component.KeyboardArrow = KeyboardArrow;

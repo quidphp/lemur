@@ -6,11 +6,11 @@
  
 // nav
 // script with helper functions related to navigation and pagination
-const Nav = new function() 
+const Nav = Lemur.Nav = Factory(true,
 {    
     // index
     // retourne l'index du nouvel élément
-    this.index = function(value,current,max,loop)
+    index: function(value,current,max,loop)
     {
         let r = undefined;
         
@@ -59,7 +59,4 @@ const Nav = new function()
         
         return r;
     }
-}
-
-// export
-Lemur.Nav = Nav;
+});

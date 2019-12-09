@@ -6,12 +6,8 @@
  
 // keyboardTab
 // component to catch or prevent the tab key on the keyboard
-const KeyboardTab = function(prevent,type)
+const KeyboardTab = Component.KeyboardTab = function(prevent,type)
 {
-    // nodes
-    const $nodes = this;
-    
-    
     // keyboard
     Component.Keyboard.call(this,'tab',[9],type);
     
@@ -23,6 +19,3 @@ const KeyboardTab = function(prevent,type)
     
     return this;
 }
-
-// export
-Component.KeyboardTab = KeyboardTab;

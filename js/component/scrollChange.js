@@ -6,7 +6,7 @@
  
 // scrollChange
 // component to notify nodes when window scroll has changed
-const ScrollChange = function(persistent)
+const ScrollChange = Component.ScrollChange = function(persistent)
 {
     // nodes
     const $nodes = this;
@@ -29,6 +29,3 @@ const ScrollChange = function(persistent)
     
     return this;
 }
-
-// export
-Component.ScrollChange = ScrollChange;

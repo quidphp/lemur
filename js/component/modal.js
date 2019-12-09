@@ -6,12 +6,8 @@
  
 // modal
 // script for a modal component (popup in a fixed div)
-const Modal = function(option)
+const Modal = Component.Modal = function(option)
 {
-    // nodes
-    const $nodes = this;
-    
-    
     // option
     const $option = Object.assign({
         background: 'modal',
@@ -187,6 +183,3 @@ const Modal = function(option)
     
     return this;
 }
-
-// export
-Component.Modal = Modal;

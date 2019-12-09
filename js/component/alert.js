@@ -6,12 +6,8 @@
  
 // alert
 // component to launch an alert notification when an event is triggered
-const Alert = function(type)
+const Alert = Component.Alert = function(type)
 {
-    // nodes
-    const $nodes = this;
-    
-    
     // func
     setFunc(this,'alert:getText',function() {
         return $(this).data('alert');
@@ -28,6 +24,3 @@ const Alert = function(type)
     
     return this;
 }
-
-// export
-Component.Alert = Alert;

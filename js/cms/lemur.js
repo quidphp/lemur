@@ -8,8 +8,8 @@
 // script of common behaviours for all pages of the CMS
 
 // ready
-$(document).ready(function() {
-	
+$(document).ready(function() 
+{    
     // initial mount
     // comportements bindés une seule fois au tout début
     ael(this,'doc:mountInitial',function(event,body) {

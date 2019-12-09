@@ -6,12 +6,8 @@
  
 // input
 // script with behaviours for an input component
-const Input = function() 
+const Input = Component.Input = function() 
 {    
-    // nodes
-    const $nodes = this;
-    
-    
     // components
     Component.Validate.call(this);
     
@@ -168,7 +164,4 @@ const Input = function()
     });
     
     return this;
-};
-
-// export
-Component.Input = Input;
+}

@@ -6,12 +6,8 @@
  
 // searchAutoInfo
 // script with logic for an auto-complete search component with another info popup when value is empty
-const SearchAutoInfo = function(option)
+const SearchAutoInfo = Component.SearchAutoInfo = function(option)
 {
-    // nodes
-    const $nodes = this;
-    
-    
     // option
     const $option = Pojo.replaceRecursive({
         targetInfo: ".search-info",
@@ -87,6 +83,3 @@ const SearchAutoInfo = function(option)
     
     return triggerInit(this);
 }
-
-// export
-Component.SearchAutoInfo = SearchAutoInfo;

@@ -6,12 +6,8 @@
 
 // clickOpenAjax
 // manages a clickOpen component which triggers an ajax request when open
-const ClickOpenAjax = function(option)
+const ClickOpenAjax = Component.ClickOpenAjax = function(option)
 {
-    // nodes
-    const $nodes = this;
-    
-    
     // option
     const $option = Object.assign({
         ajaxEvent: 'ajax:init',
@@ -50,6 +46,3 @@ const ClickOpenAjax = function(option)
     
     return this;
 }
-
-// export
-Component.ClickOpenAjax = ClickOpenAjax;

@@ -6,12 +6,8 @@
  
 // ajaxBlock
 // intègre la logique ajax, block et loading via une même méthode
-const AjaxBlock = function(type)
+const AjaxBlock = Component.AjaxBlock = function(type)
 {
-    // nodes
-    const $nodes = this;
-    
-    
     // type
     type = type || 'click';
     
@@ -74,6 +70,3 @@ const AjaxBlock = function(type)
     
     return this;
 }
-
-// export
-Component.AjaxBlock = AjaxBlock;

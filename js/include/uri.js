@@ -6,11 +6,11 @@
  
 // uri
 // script with a set of helper functions related to uri management
-const Uri = new function() 
+const Uri = Lemur.Uri = Factory(true,
 {
     // isInternal
     // retourne vrai si l'uri et la comparaison ont le même scheme et host
-    this.isInternal = function(uri,compare)
+    isInternal: function(uri,compare)
     {
         let r = false;
         
@@ -24,28 +24,28 @@ const Uri = new function()
         }
         
         return r;
-    }
+    },
 
 
     // isExternal
     // retourne vrai si l'uri et la comparaison n'ont pas le même scheme et host
-    this.isExternal = function(uri,compare)
+    isExternal: function(uri,compare)
     {
         return (this.isInternal(uri,compare))? false:true;
-    }
+    },
 
 
     // hasExtension
     // retourne vrai si l'uri a une extension
-    this.hasExtension = function(uri)
+    hasExtension: function(uri)
     {
         return (this.extension(uri) != null)? true:false;
-    }
+    },
 
 
     // hasFragment
     // retourne vrai si l'uri a un hash
-    this.hasFragment = function(uri)
+    hasFragment: function(uri)
     {
         let r = false;
         
@@ -58,13 +58,13 @@ const Uri = new function()
         }
         
         return r;
-    }
+    },
 
 
     // isSamePathQuery
     // retourne vrai si l'uri est la même que la comparaison
     // compare path et query
-    this.isSamePathQuery = function(uri,compare)
+    isSamePathQuery: function(uri,compare)
     {
         let r = false;
         
@@ -78,13 +78,13 @@ const Uri = new function()
         }
         
         return r;
-    }
+    },
 
 
     // isSamePathQueryHash
     // retourne vrai si l'uri est la même que la comparaison
     // compare path, query et hash
-    this.isSamePathQueryHash = function(uri,compare)
+    isSamePathQueryHash: function(uri,compare)
     {
         let r = false;
         
@@ -98,12 +98,12 @@ const Uri = new function()
         }
         
         return r;
-    }
+    },
 
 
     // isHashChange
     // retourne vrai si l'uri est la même que la comparaison mais que le hash change
-    this.isHashChange = function(uri,compare)
+    isHashChange: function(uri,compare)
     {
         let r = false;
         
@@ -120,20 +120,20 @@ const Uri = new function()
         }
         
         return r;
-    }
+    },
 
 
     // isSameWithHash
     // retourne vrai si l'uri est la même que la comparaison, que l'uri a un hash et que le hash est identique
-    this.isSameWithHash = function(uri,compare)
+    isSameWithHash: function(uri,compare)
     {
         return (this.hasFragment(uri) && uri === compare)? true:false;
-    }
+    },
 
 
     // relative
     // retourne une uri relative à partir d'une uri absolut
-    this.relative = function(uri,hash)
+    relative: function(uri,hash)
     {
         let r = null;
         
@@ -150,12 +150,12 @@ const Uri = new function()
         }
         
         return r;
-    }
+    },
 
 
     // extension
     // retourne l'extension du path de l'uri
-    this.extension = function(uri)
+    extension: function(uri)
     {
         let r = null;
         
@@ -170,12 +170,12 @@ const Uri = new function()
         }
         
         return r;
-    }
+    },
 
 
     // parse
     // retourne un objet avec les différentes parties d'une uri séparés
-    this.parse = function(uri)
+    parse: function(uri)
     {
         let r = {};
         
@@ -195,12 +195,12 @@ const Uri = new function()
         }
         
         return r;
-    }
+    },
 
 
     // makeHash
     // permet de faire une hash avec ou sans le hash
-    this.makeHash = function(value,symbol)
+    makeHash: function(value,symbol)
     {
         let r = null;
         
@@ -217,12 +217,12 @@ const Uri = new function()
         }
         
         return r;
-    }
+    },
     
     
     // getMailto
     // permet d'obtenir un email à partir d'un mailto (comme dans un href)
-    this.getMailto = function(value)
+    getMailto: function(value)
     {
         let r = null;
         
@@ -236,7 +236,4 @@ const Uri = new function()
         
         return r;
     }
-}
-
-// export
-Lemur.Uri = Uri;
+});

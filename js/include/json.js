@@ -6,23 +6,20 @@
  
 // json
 // script with functions related to json
-const Json = new function() 
+const Json = Lemur.Json = Factory(
 {    
     // encode
     // encode une valeur en json
-    this.encode = function(value) 
+    encode: function(value) 
     {
         return JSON.stringify(value);
-    }
+    },
     
     
     // decode
     // decode une valeur à partir d'un json
-    this.decode = function(value) 
+    decode: function(value) 
     {
         return JSON.parse(value);
     }
-};
-
-// export
-Lemur.Json = Json;
+});

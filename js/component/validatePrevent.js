@@ -6,12 +6,8 @@
  
 // validatePrevent
 // component that blocks an event if the validation is not successfull
-const ValidatePrevent = function(type) 
+const ValidatePrevent = Component.ValidatePrevent = function(type) 
 {
-    // nodes
-    const $nodes = this;
-    
-    
     // func
     setFunc(this,'validatePrevent:getTargets',function(event) {
         return this;
@@ -66,6 +62,3 @@ const ValidatePrevent = function(type)
     
     return this;
 }
-
-// export
-Component.ValidatePrevent = ValidatePrevent;

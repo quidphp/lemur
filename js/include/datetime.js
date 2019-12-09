@@ -6,15 +6,12 @@
  
 // datetime
 // script with functions related to date and time
-const Datetime = new function() 
+const Datetime = Lemur.Datetime = Factory(true,
 {   
     // now
     // retourne le timestamp courant
-    this.now = function() 
+    now: function() 
     {
         return (new Date).getTime();
     }
-}
-
-// export
-Lemur.Datetime = Datetime;
+});

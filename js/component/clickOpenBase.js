@@ -6,12 +6,8 @@
 
 // clickOpenBase
 // grants base methods and events for a clickOpen component
-const ClickOpenBase = function(option)
+const ClickOpenBase = Component.ClickOpenBase = function(option)
 {
-    // nodes
-    const $nodes = this;
-    
-    
     // option
     const $option = Object.assign({
         target: true,
@@ -214,6 +210,3 @@ const ClickOpenBase = function(option)
     
     return this;
 }
-
-// export
-Component.ClickOpenBase = ClickOpenBase;

@@ -6,12 +6,12 @@
 
 // xhr
 // script with some logic for ajax calls and xhr object
-const Xhr = new function() 
+const Xhr = Lemur.Xhr = Factory(true,
 {
     // trigger
     // fonction utilisé pour lancer une requête ajax
     // retourne false ou un objet promise ajax
-    this.trigger = function(node,option)
+    trigger: function(node,option)
     {
         let r = null;
         const config = Object.assign({
@@ -78,12 +78,12 @@ const Xhr = new function()
         }
         
         return r;
-    }
+    },
 
 
     // configFromNode
     // met à jour le tableau de config à partir de la tag
-    this.configFromNode = function(node,config)
+    configFromNode: function(node,config)
     {
         let r = (Pojo.is(config))? config:{};
         const tagName = Dom.tag(node);
@@ -120,12 +120,12 @@ const Xhr = new function()
         }
         
         return r;
-    }
+    },
     
     
     // parseError
     // cette méthode gère l'affichage pour un xhr en erreur
-    this.parseError = function(responseText,textStatus)
+    parseError: function(responseText,textStatus)
     {
         let r = textStatus;
         
@@ -153,7 +153,4 @@ const Xhr = new function()
 
         return r;
     }
-}
-
-// export
-Lemur.Xhr = Xhr;
+});

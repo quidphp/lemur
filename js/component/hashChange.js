@@ -6,7 +6,7 @@
  
 // hashChange
 // renvoie l'événement haschange aux nodes
-const HashChange = function(persistent)
+const HashChange = Component.HashChange = function(persistent)
 {
     // nodes
     const $nodes = this;
@@ -29,6 +29,3 @@ const HashChange = function(persistent)
     
     return this;
 }
-
-// export
-Component.HashChange = HashChange;

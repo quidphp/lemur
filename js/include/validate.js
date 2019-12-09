@@ -6,27 +6,27 @@
  
 // validate
 // script with behaviours related to validation
-const Validate = new function() 
+const Validate = Lemur.Validate = Factory(true,
 {
     // isNumericDash
     // retourne vrai si la valeur contient seulement des caractères numérique ou -
-    this.isNumericDash = function(value)
+    isNumericDash: function(value)
     {
         return this.regex(value,"^[0-9\-]+$");
-    }
+    },
     
     
     // isEmail
     // retourne vrai si la valeur est un email
-    this.isEmail = function(value)
+    isEmail: function(value)
     {
         return this.regex(value,/^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{1,4})+$/);
-    }
+    },
     
     
     // regex
     // permet de lancer un test d'expression régulière
-    this.regex = function(value,exp)
+    regex: function(value,exp)
     {
         let r = false;
         
@@ -39,12 +39,12 @@ const Validate = new function()
         }
         
         return r;
-    }
+    },
     
     
     // trigger
     // lance la validation required et ensuite pattern
-    this.trigger = function(value,required,pattern)
+    trigger: function(value,required,pattern)
     {
         let r = this.required(value,required);
         
@@ -52,12 +52,12 @@ const Validate = new function()
         r = this.pattern(value,pattern);
         
         return r;
-    }
+    },
     
     
     // required
     // fait le test required sur la valeur
-    this.required = function(value,required)
+    required: function(value,required)
     {
         let r = true;
         
@@ -74,12 +74,12 @@ const Validate = new function()
         }
         
         return r;
-    }
+    },
     
     
     // pattern
     // fait le test required sur la valeur
-    this.pattern = function(value,pattern)
+    pattern: function(value,pattern)
     {
         let r = true;
         
@@ -93,7 +93,4 @@ const Validate = new function()
         
         return r;
     }
-}
-
-// export
-Lemur.Validate = Validate;
+});

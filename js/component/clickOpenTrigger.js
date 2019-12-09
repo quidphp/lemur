@@ -6,18 +6,11 @@
  
 // ClickOpenTrigger
 // manages a clickOpen component which has a trigger
-const ClickOpenTrigger = function(option)
+const ClickOpenTrigger = Component.ClickOpenTrigger = function(option)
 {
-    // nodes
-    const $nodes = this;
-    
-    
-    // clickOpenTriggerBase + clickOpen
+    // components
     Component.ClickOpenTriggerBase.call(this,option);
     Component.ClickOpen.call(this,option);
     
     return this;
 }
-
-// export
-Component.ClickOpenTrigger = ClickOpenTrigger;

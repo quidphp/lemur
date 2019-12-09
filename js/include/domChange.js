@@ -6,12 +6,12 @@
   
 // domChange
 // script with functions for manipulating the dom
-const DomChange = new function() 
+const DomChange = Lemur.DomChange = Factory(true,
 {
     // setsAttr
     // remplace tous les attributs d'une balise, il faut fournir un plain object
     // possible de retirer les attributs existants
-    this.setsAttr = function(value,node)
+    setsAttr: function(value,node)
     {
         if(Pojo.is(value))
         {
@@ -25,12 +25,12 @@ const DomChange = new function()
         }
         
         return this;
-    }
+    },
 
 
     // emptyAttr
     // permet de retirer tous les attributs à une tag
-    this.emptyAttr = function(node)
+    emptyAttr: function(node)
     {
         $(node).each(function(index, el) {
             const $this = $(this);
@@ -44,13 +44,13 @@ const DomChange = new function()
         });
         
         return this;
-    }
+    },
     
     
     // addId
     // ajoute un id aux éléments contenus dans l'objet qui n'en ont pas
     // possible de fournir un callback pour chaque changement, par exemple pour ajuster les id des labels si c'est un input
-    this.addId = function(base,node,callback)
+    addId: function(base,node,callback)
     {
         if(Str.isNotEmpty(base))
         {
@@ -64,12 +64,12 @@ const DomChange = new function()
         }
         
         return this;
-    }
+    },
 
 
     // aExternalBlank
     // ajout target _blank à tous les liens externes qui n'ont pas la target
-    this.aExternalBlank = function(node)
+    aExternalBlank: function(node)
     {
         const anchor = Selector.scopedQuerySelectorAll(node,"a[target!='_blank']");
         
@@ -81,12 +81,12 @@ const DomChange = new function()
         });
         
         return this;
-    }
+    },
     
     
     // hrefChangeHash
     // change le hash sur des balises avec attribut href
-    this.hrefChangeHash = function(fragment,node)
+    hrefChangeHash: function(fragment,node)
     {
         if(Str.is(fragment))
         {
@@ -96,12 +96,12 @@ const DomChange = new function()
         }
         
         return this;
-    }
+    },
     
     
     // wrapConsecutiveSiblings
     // permet d'enrobber toutes les prochaines balises répondant à until dans une balise html
-    this.wrapConsecutiveSiblings = function(node,until,html)
+    wrapConsecutiveSiblings: function(node,until,html)
     {
         if(until && Str.isNotEmpty(html))
         {
@@ -113,7 +113,4 @@ const DomChange = new function()
         
         return this;
     }
-}
-
-// export
-Lemur.DomChange = DomChange;
+});

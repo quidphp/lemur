@@ -6,7 +6,7 @@
  
 // resizeChange
 // component to notify nodes when window size has changed
-const ResizeChange = function(persistent)
+const ResizeChange = Component.ResizeChange = function(persistent)
 {
     // nodes
     const $nodes = this;
@@ -29,6 +29,3 @@ const ResizeChange = function(persistent)
     
     return this;
 }
-
-// export
-Component.ResizeChange = ResizeChange;

@@ -6,12 +6,8 @@
  
 // carousel
 // script for a carousel component based on the clickOpen logic
-const Carousel = function(option)
+const Carousel = Component.Carousel = function(option)
 {
-    // nodes
-    const $nodes = this;
-    
-    
     // option
     const $option = Object.assign({
         background: false,
@@ -26,6 +22,3 @@ const Carousel = function(option)
     
     return this;
 }
-
-// export
-Component.Carousel = Carousel;

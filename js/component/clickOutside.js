@@ -6,12 +6,8 @@
  
 // clickOutside
 // component to manage click outside a node, uses the direct parent of the node
-const ClickOutside = function(value,persistent) 
+const ClickOutside = Component.ClickOutside = function(value,persistent) 
 {
-    // nodes
-    const $nodes = this;
-    
-    
     // func
     setFunc(this,'clickOutside:getParent',function() {
         return document;
@@ -43,6 +39,3 @@ const ClickOutside = function(value,persistent)
     
     return this;
 }
-
-// export
-Component.ClickOutside = ClickOutside;

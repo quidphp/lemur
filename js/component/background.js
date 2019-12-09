@@ -6,12 +6,8 @@
  
 // background
 // component for a background that can fadein or out
-const Background = function()
+const Background = Component.Background = function()
 {
-    // nodes
-    const $nodes = this;
-    
-    
     // func
     
     // isActive
@@ -82,6 +78,3 @@ const Background = function()
     
     return this;
 }
-
-// export
-Component.Background = Background;

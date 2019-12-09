@@ -7,12 +7,8 @@
 // blockEvent
 // script of behaviours for a component which blocks event propagation
 // this component can only block events added after the block was registered
-const BlockEvent = function(type) 
+const BlockEvent = Component.BlockEvent = function(type) 
 {
-    // nodes
-    const $nodes = this;
-    
-    
     // func
     setFunc(this,'blockEvent:isRegistered',function(type) {
         return (Integer.is(getBlock.call(this,type)))? true:false;
@@ -125,9 +121,5 @@ const BlockEvent = function(type)
     if(Str.isNotEmpty(type))
     triggerFunc(this,'blockEvent:register',type);
     
-    
     return this;
 }
-
-// block
-Component.BlockEvent = BlockEvent;

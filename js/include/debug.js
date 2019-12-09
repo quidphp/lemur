@@ -6,24 +6,21 @@
  
 // debug
 // script with functions related to debugging
-const Debug = new function() 
+const Debug = Lemur.Debug = Factory(true,
 {   
     // assertThrow
     // comme assert mais lance une errur
-    this.assertThrow = function(value) 
+    assertThrow: function(value) 
     {
         if(value !== true)
         throw new Error();
-    };
+    },
     
     
     // logError
     // permet de logger une erreur
-    this.logError = function(value)
+    logError: function(value)
     {
         console.error('Catched',value);
     }
-}
-
-// export
-Lemur.Debug = Debug;
+});

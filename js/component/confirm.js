@@ -6,12 +6,8 @@
  
 // confirm
 // component to request a confirmation once an event has triggered
-const Confirm = function(type) 
+const Confirm = Component.Confirm = function(type) 
 {
-    // nodes
-    const $nodes = this;
-    
-    
     // func
     setFunc(this,'confirm:getText',function() {
         return $(this).data('confirm');
@@ -36,6 +32,3 @@ const Confirm = function(type)
     
     return this;
 }
-
-// export
-Component.Confirm = Confirm;

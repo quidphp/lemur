@@ -64,5 +64,8 @@ const each = Obj.each.bind(Obj);
 // component
 const Component = Lemur.Component;
 
+// factory
+const Factory = Lemur.Factory;
+
 // test
 const Test = Lemur.Test;

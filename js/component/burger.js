@@ -6,12 +6,8 @@
  
 // burger
 // script for a burger menu component
-const Burger = function()
+const Burger = Component.Burger = function()
 {
-    // nodes
-    const $nodes = this;
-    
-    
     // func
     setFunc(this,'burger:isOpen',function() {
         const html = triggerFunc(document,'doc:getHtml');
@@ -52,6 +48,3 @@ const Burger = function()
     
     return this;
 }
-
-// block
-Component.Burger = Burger;

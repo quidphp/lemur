@@ -6,30 +6,29 @@
  
 // event
 // script containing event management functions
-const Evt = new function() 
+const Evt = Lemur.Evt = new function()
 {    
-    // instance
+    // inst
     const $inst = this;
-    
-    
-    // debug
-    // si true affiche les informations de débogagge événements dans la console
-    let debug = 0;
     
     
     // debug
     // active ou désactive le débogagge
     // il faut spécifier un chiffre pour le niveau de débogagge
-    this.debug = function(value)
+    this.debug = (function()
     {
-        if(Bool.is(value))
-        value = Bool.fromInt(value);
+        let debug = 0;
         
-        if(Integer.is(value))
-        debug = value;
-        
-        return debug;
-    }
+        return function(value) {
+            if(Bool.is(value))
+            value = Bool.fromInt(value);
+            
+            if(Integer.is(value))
+            debug = value;
+            
+            return debug;
+        }
+    })();
     
     
     // isTriggerFuncEqual
@@ -168,7 +167,7 @@ const Evt = new function()
                 const detail = event.detail;
                 args = args.concat(detail);
                 
-                if(debug > 0)
+                if($inst.debug() > 0)
                 console.log('listener',this,type,event,delegate,detail);
                 
                 func.apply(context,args);
@@ -248,7 +247,7 @@ const Evt = new function()
     // args est le tableau retournée par addEventListener (contient type, handler et option)
     this.removeEventListener = function(node,args)
     {
-        if(debug > 0)
+        if(this.debug > 0)
         {
             let consoleArgs = ['removeListener',node,Arr.copy(args).shift()];
             console.log.apply(this,consoleArgs);
@@ -278,7 +277,7 @@ const Evt = new function()
         Str.check(type,true);
         const event = this.createFromType(type,option);
         
-        if(debug > 1)
+        if(this.debug() > 1)
         console.log('trigger',type,node);
         
         $(node).each(function(index, el) {
@@ -394,18 +393,15 @@ const Evt = new function()
         {
             const args = ArrLike.sliceStart(2,arguments);
             
-            if(debug > 2)
+            if(this.debug() > 2)
             console.log('triggerFunc',type,'found',node);
             
             r = func.apply(node,args);
         }
         
-        else if(debug > 0 && Dom.isNode(node))
+        else if(this.debug() > 0 && Dom.isNode(node))
         console.log('triggerFunc',type,'notFound',node);
         
         return r;
     }
-}
-
-// export
-Lemur.Evt = Evt;
+};

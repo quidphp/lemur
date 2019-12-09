@@ -6,12 +6,8 @@
  
 // absolutePlaceholder
 // script of behaviours for an absolute placeholder component
-const AbsolutePlaceholder = function()
+const AbsolutePlaceholder = Component.AbsolutePlaceholder = function()
 {
-    // nodes
-    const $nodes = this;
-    
-    
     // resizeChange
     Component.ResizeChange.call(this);
     
@@ -63,9 +59,5 @@ const AbsolutePlaceholder = function()
         triggerFunc(this,'absolutePlaceholder:refresh');
     });
     
-    
     return this;
 }
-
-// export
-Component.AbsolutePlaceholder = AbsolutePlaceholder;

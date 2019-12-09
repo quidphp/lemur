@@ -6,12 +6,12 @@
   
 // html
 // script with functions for parsing html
-const Html = new function() 
+const Html = Lemur.Html = Factory(true,
 {
     // parse
     // parse une string html, retourne un objet avec les nodes
     // remplace les balises sensibles par des div (comme dans head et script)
-    this.parse = function(html)
+    parse: function(html)
     {
         let r = null;
         html = Str.cast(html);
@@ -23,13 +23,13 @@ const Html = new function()
         r = $.parseHTML(html);
 
         return r;
-    }
+    },
 
 
     // doc
     // prend une string html
     // retourne un objet avec les différents éléments d'un document décortiqués
-    this.doc = function(html)
+    doc: function(html)
     {
         let r = {
             html: null,
@@ -78,7 +78,4 @@ const Html = new function()
         
         return r;
     }
-}
-
-// export
-Lemur.Html = Html;
+});

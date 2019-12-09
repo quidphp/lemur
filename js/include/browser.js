@@ -6,11 +6,11 @@
  
 // browser
 // script with a some functions related to browsers
-const Browser = new function() 
+const Browser = Lemur.Browser = Factory(true,
 {    
     // isOldIe
     // retourne vrai si le navigateur est une vieille version de IE (IE 10 ou moins)
-    this.isOldIe = function() 
+    isOldIe: function() 
     {
         let r = false;
         const msie = window.navigator.userAgent.indexOf('MSIE ');
@@ -19,20 +19,20 @@ const Browser = new function()
         r = true;
         
         return r;
-    }
+    },
 
 
     // isUnsupported
     // retourne vrai si le navigateur est insupporté
-    this.isUnsupported = function() 
+    isUnsupported: function() 
     {
         return this.isOldIe();
-    }
+    },
 
 
     // allowsCookie
     // retourne vrai si les cookies sont activés
-    this.allowsCookie = function()
+    allowsCookie: function()
     {
         let r = false;
         
@@ -48,7 +48,4 @@ const Browser = new function()
 
         return r;
     }
-};
-
-// export
-Lemur.Browser = Browser;
+});

@@ -603,8 +603,6 @@ const TestInclude = function()
         assert(Xhr.parseError('<html><body><div class="ajax-parse-error"><div>TEST</div></div></body></html>','error') === '<div class="ajax-parse-error"><div>TEST</div></div>');
         assert(Xhr.parseError('','error') === 'error');
         
-        // zProto
-        
         // js
         assert(!(false == null));
         assert(!(0 == null));

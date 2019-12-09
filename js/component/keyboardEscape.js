@@ -6,12 +6,8 @@
  
 // keyboardEscape
 // component to catch or prevent the escape key on the keyboard
-const KeyboardEscape = function(prevent,type)
+const KeyboardEscape = Component.KeyboardEscape = function(prevent,type)
 {
-    // nodes
-    const $nodes = this;
-    
-    
     // keyboard
     Component.Keyboard.call(this,'escape',[27],type);
     
@@ -23,6 +19,3 @@ const KeyboardEscape = function(prevent,type)
     
     return this;
 }
-
-// export
-Component.KeyboardEscape = KeyboardEscape;

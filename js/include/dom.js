@@ -6,20 +6,20 @@
 
 // dom
 // script with behaviours related to dom nodes
-const Dom = new function() 
+const Dom = Lemur.Dom = Factory(true,
 {
     // isNode
     // retourne vrai si la valeur est une node
-    this.isNode = function(value) 
+    isNode: function(value) 
     {
         return (value === document || value instanceof HTMLElement)? true:false;
-    }
+    },
     
     
     // isNodes
     // retourne vrai si la valeur est une collection de node
     // accepte jquery, nodeList ou un tableau de nodes non vide
-    this.isNodes = function(value)
+    isNodes: function(value)
     {
         let r = false;
         const $inst = this;
@@ -38,28 +38,28 @@ const Dom = new function()
         }
         
         return r;
-    }
+    },
     
     
     // isWindow
     // retourne vrai si la valeur est une node window
-    this.isWindow = function(value) 
+    isWindow: function(value) 
     {
         return value != null && value === value.window;
-    }
+    },
     
     
     // isTag
     // retourne vrai si  la tag est celle donnée en argument
-    this.isTag = function(value,node)
+    isTag: function(value,node)
     {
         return (this.tag(node) === value);
-    }
+    },
     
     
     // matchAll
     // retourne vrai si toutes les nodes retournent vrai à is
-    this.matchAll = function(value,node)
+    matchAll: function(value,node)
     {
         let r = false;
         
@@ -68,12 +68,12 @@ const Dom = new function()
         });
         
         return r;
-    }
+    },
     
     
     // tag
     // retourne le nom de la tag en lowerCase
-    this.tag = function(node) 
+    tag: function(node) 
     {
         let r = null;
         const tag = $(node).prop("tagName");
@@ -82,22 +82,22 @@ const Dom = new function()
         r = tag.toLowerCase();
         
         return r;
-    };
+    },
 
     
     // getData
     // permet de retourner une data d'une node
-    this.getData = function(node,key)
+    getData: function(node,key)
     {
         const firstNode = $(node).get(0);
         return $(firstNode).data(key);
-    }
+    },
     
     
     // getOrSetData
     // crée une data dans une node si la valeur est présenement inexistante
     // sinon retourne la data de la node
-    this.getOrSetData = function(node,key,value)
+    getOrSetData: function(node,key,value)
     {
         let r = value;
         const firstNode = $(node).get(0);
@@ -110,13 +110,13 @@ const Dom = new function()
         r = current;
         
         return r;
-    }
+    },
     
     
     // outerHtml
     // retourne le outerHtml d'une ou plusieurs nodes
     // si pas de outerHtml, peut aussi retourner le html ou le texte
-    this.outerHtml = function(node)
+    outerHtml: function(node)
     {
         let r = '';
         
@@ -125,20 +125,20 @@ const Dom = new function()
         });
         
         return r;
-    }
+    },
 
 
     // heightWithPadding
     // retourne la hauteur avec le padding top et bottom
-    this.heightWithPadding = function(node)
+    heightWithPadding: function(node)
     {
         return $(node).height() + parseInt($(node).css("padding-top")) + parseInt($(node).css("padding-bottom"));
-    }
+    },
     
     
     // attr
     // retourne un objet contenant tous les attributs d'une balise
-    this.attr = function(node,start)
+    attr: function(node,start)
     {
         let r = null;
         node = $(node).get(0);
@@ -154,12 +154,12 @@ const Dom = new function()
         }
         
         return r;
-    }
+    },
 
     
     // attrStr
     // retourne les attributs d'une node sous forme de string
-    this.attrStr = function(node,start)
+    attrStr: function(node,start)
     {
         let r = null;
         const attr = this.attr(node,start);
@@ -168,37 +168,37 @@ const Dom = new function()
         r = Obj.str(attr,'=',true);
         
         return r;
-    }
+    },
     
     
     // getAttr
     // retourne un attribut
-    this.getAttr = function(key,node)
+    getAttr: function(key,node)
     {
         return Pojo.get(key,this.attr(node));
-    }
+    },
     
     
     // dataAttr
     // retourne un objet contenant tous les data-attributs d'une balise
-    this.dataAttr = function(node)
+    dataAttr: function(node)
     {
         return this.attr(node,'data-');
-    }
+    },
     
     
     // getDataAttr
     // retourne un attribut data
-    this.getDataAttr = function(key,node)
+    getDataAttr: function(key,node)
     {
         return (Str.isNotEmpty(key))? Pojo.get('data-'+key,this.attr(node)):null;
-    }
+    },
     
     
     // value
     // retourne la valeur pour une node, surtout pour les formulaires
     // la valeur retourné peut être trim
-    this.value = function(node,trim)
+    value: function(node,trim)
     {
         let r = undefined;
 
@@ -213,13 +213,13 @@ const Dom = new function()
         }
         
         return r;
-    }
+    },
     
     
     // valueSeparator
     // prend un ensemble de input et crée un set avec les valeurs
     // un séparateur peut être fourni, sinon utilise -
-    this.valueSeparator = function(node,separator,trim) 
+    valueSeparator: function(node,separator,trim) 
     {
         let r = '';
         separator = (Str.isNotEmpty(separator))? separator:'-';
@@ -233,12 +233,12 @@ const Dom = new function()
         }
         
         return r;
-    }
+    },
     
     
     // dataHrefReplaceChar
     // permet de changer le caractère de remplacement sur une balise avec attribut data-href
-    this.dataHrefReplaceChar = function(node,replace,replace2) 
+    dataHrefReplaceChar: function(node,replace,replace2) 
     {
         let r = null;
         node = $(node).get(0);
@@ -265,7 +265,4 @@ const Dom = new function()
         
         return r;
     }
-}
-
-// export
-Lemur.Dom = Dom;
+});

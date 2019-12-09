@@ -6,13 +6,9 @@
  
 // anchorCorner
 // script of behaviours for an absolute anchorCorner component
-const AnchorCorner = function()
+const AnchorCorner = Component.AnchorCorner = function()
 {
-    // nodes
-    const $nodes = this;
-    
-    
-    // resizeChange
+    // components
     Component.ResizeChange.call(this);
     
     
@@ -56,6 +52,3 @@ const AnchorCorner = function()
     
     return this;
 }
-
-// export
-Component.AnchorCorner = AnchorCorner;

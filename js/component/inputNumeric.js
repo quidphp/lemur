@@ -6,12 +6,8 @@
  
 // inputNumeric
 // script with logic for an input containing a number
-const InputNumeric = function(option)
+const InputNumeric = Component.InputNumeric = function(option)
 {
-    // nodes
-    const $nodes = this;
-    
-    
     // option
     const $option = Object.assign({
         timeout: 500
@@ -91,6 +87,3 @@ const InputNumeric = function(option)
     
     return this;
 }
-
-// export
-Component.InputNumeric = InputNumeric;

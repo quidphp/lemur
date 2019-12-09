@@ -6,12 +6,8 @@
  
 // form
 // script with behaviours for a form component
-const Form = function() 
+const Form = Component.Form = function() 
 {    
-    // nodes
-    const $nodes = this;
-    
-    
     // block
     Component.BlockEvent.call(this,'submit');
     
@@ -260,6 +256,3 @@ const Form = function()
     
     return this;
 }
-
-// export
-Component.Form = Form;

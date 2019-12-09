@@ -6,10 +6,10 @@
  
 // doc
 // script for a document component managing site navigation with the HistoryAPI
-const Doc = function(option)
+const Doc = Component.Doc = function(option)
 {
-    // nodes
-    const $nodes = this;
+    // document
+    const $document = this;
     
 
     // variable
@@ -261,14 +261,14 @@ const Doc = function(option)
         
         // popstate
         ael(window,'popstate',function(event) {
-            const state = event.state || triggerFunc($nodes,'doc:getCurrentState');
-            const previous = triggerFunc($nodes,'doc:getPreviousState');
+            const state = event.state || triggerFunc($document,'doc:getCurrentState');
+            const previous = triggerFunc($document,'doc:getPreviousState');
             const isValid = HistoryApi.isStateChangeValid(state,previous,true);
             
             if(isValid === true)
             {
                 if(triggerFunc(this,'win:isUnloadValid') === true)
-                makeAjax.call($nodes,state,event);
+                makeAjax.call($document,state,event);
                 
                 else
                 $history.pushState($previous,$previous.title,$previous.url);
@@ -285,7 +285,7 @@ const Doc = function(option)
         // anchor click
         aelDelegate(this,'click',$option.anchor,function(event) { 
             let r = true;
-            triggerFunc($nodes,'doc:clickEvent',event);
+            triggerFunc($document,'doc:clickEvent',event);
             
             if(event.defaultPrevented === true)
             r = false;
@@ -296,7 +296,7 @@ const Doc = function(option)
         // submit
         aelDelegate(this,'submit',$option.form,function(event) { 
             let r = true;
-            triggerFunc($nodes,'doc:submitEvent',event);
+            triggerFunc($document,'doc:submitEvent',event);
             
             if(event.defaultPrevented === true)
             r = false;
@@ -431,16 +431,16 @@ const Doc = function(option)
                 url: state.url,
                 timeout: $option.timeout,
                 success: function(data,textStatus,jqXHR) {
-                    afterAjax.call($nodes,type,state,jqXHR);
+                    afterAjax.call($document,type,state,jqXHR);
                 },
                 progress: function(percent,event) {
-                    triggerEvent($nodes,'doc:ajaxProgress',percent,event);
+                    triggerEvent($document,'doc:ajaxProgress',percent,event);
                 },
                 error: function(jqXHR,textStatus,errorThrown) {
                     if(Str.isNotEmpty(jqXHR.responseText))
-                    afterAjax.call($nodes,type,state,jqXHR);
+                    afterAjax.call($document,type,state,jqXHR);
                     else
-                    triggerFunc($nodes,'doc:hardRedirect',state.url);
+                    triggerFunc($document,'doc:hardRedirect',state.url);
                 }
             };
             
@@ -560,6 +560,3 @@ const Doc = function(option)
     
     return this;
 }
-
-// export
-Component.Doc = Doc;

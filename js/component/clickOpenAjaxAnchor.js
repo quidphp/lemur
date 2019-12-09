@@ -6,12 +6,8 @@
 
 // clickOpenAjaxAnchor
 // clickOpen component which opens by an anchor click and triggers an ajax calls
-const ClickOpenAjaxAnchor = function(option) 
+const ClickOpenAjaxAnchor = Component.ClickOpenAjaxAnchor = function(option) 
 {
-    // nodes
-    const $nodes = this;
-    
-    
     // option
     const $option = Object.assign({
         triggerToggle: true
@@ -34,6 +30,3 @@ const ClickOpenAjaxAnchor = function(option)
     
     return this;
 }
-
-// export
-Component.ClickOpenAjaxAnchor = ClickOpenAjaxAnchor;

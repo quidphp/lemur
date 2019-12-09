@@ -6,12 +6,8 @@
  
 // clickOpen
 // manages a clickOpen component, links clickOpenBase and clickOutside
-const ClickOpen = function(option)
+const ClickOpen = Component.ClickOpen = function(option)
 {   
-    // nodes
-    const $nodes = this;
-    
-    
     // components
     Component.ClickOutside.call(this,'clickOpen:close');
     Component.ClickOpenBase.call(this,option);
@@ -24,6 +20,3 @@ const ClickOpen = function(option)
     
     return this;
 }
-
-// export
-Component.ClickOpen = ClickOpen;

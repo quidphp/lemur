@@ -6,11 +6,8 @@
  
 // validation
 // component with functions related to validation (pattern and required)
-const ComponentValidate = function() 
+const ComponentValidate = Component.Validate = function() 
 {    
-    // nodes
-    const $nodes = this;
-    
     // func
     setFunc(this,'validate:isBinded',function() {
         return true;
@@ -101,7 +98,4 @@ const ComponentValidate = function()
     
     
     return this;
-};
-
-// export
-Component.Validate = ComponentValidate;
+}

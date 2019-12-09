@@ -44,3 +44,33 @@ const Type = {
         return value;
     }
 }
+
+// arr
+const Arr = Lemur.Arr = Factory(Type,ObjBase,ObjKeyValue,ObjEach,ObjCopyFilterMap,ObjWrite,ObjWriteSelf,ArrRead,ArrWrite);
+
+// arrLike
+const ArrLike = Lemur.ArrLike = Factory(Type,ObjBase,ObjKeyValue,ObjEach,ObjCopyFilterMap,ArrRead,ArrLikeRead);
+
+// bool
+const Bool = Lemur.Bool = Factory(Type,BoolPrimitive);
+
+// func
+const Func = Lemur.Func = Factory(Type,ObjBase,FuncObj);
+
+// integer
+const Integer = Lemur.Integer = Factory(Type,NumPrimitive,IntegerPrimitive);
+
+// num
+const Num = Lemur.Num = Factory(Type,NumPrimitive);
+
+// obj
+const Obj = Lemur.Obj = Factory(Type,ObjBase,ObjKeyValue,ObjEach,ObjCopyFilterMap,ObjWrite);
+
+// pojo
+const Pojo = Lemur.Pojo = Factory(Type,ObjBase,ObjKeyValue,ObjEach,ObjCopyFilterMap,ObjWrite,ObjWriteSelf,PojoObj);
+
+// scalar
+const Scalar = Lemur.Scalar = Factory(Type,ScalarPrimitive);
+
+// str
+const Str = Lemur.Str = Factory(Type,ObjBase,ObjKeyValue,ObjEach,StrPrimitive);

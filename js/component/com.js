@@ -6,13 +6,9 @@
  
 // com
 // script of behaviours for the communication component of the CMS
-const Com = function()
+const Com = Component.Com = function()
 {
-    // nodes
-    const $nodes = this;
-    
-    
-    // main
+    // components
     Component.BlockEvent.call(this,'click');
     Component.KeyboardEscape.call(this,true);
     
@@ -85,6 +81,3 @@ const Com = function()
     
     return this;
 }
-
-// export
-Component.Com = Com;

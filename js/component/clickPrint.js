@@ -6,20 +6,12 @@
  
 // clickPrint
 // component that triggers a window print on click
-const ClickPrint = function()
+const ClickPrint = Component.ClickPrint = function()
 {
-    // nodes
-    const $nodes = this;
-    
-    
     // event
     ael(this,'click',function() {
         window.print();
     });
     
-    
     return this;
 }
-
-// export
-Component.ClickPrint = ClickPrint;

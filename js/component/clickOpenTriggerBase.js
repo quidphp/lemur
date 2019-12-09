@@ -6,12 +6,8 @@
  
 // ClickOpenTriggerBase
 // grants base functions for a clickOpen component which has a trigger to open/close
-const ClickOpenTriggerBase = function(option)
+const ClickOpenTriggerBase = Component.ClickOpenTriggerBase = function(option)
 {
-    // nodes
-    const $nodes = this;
-    
-    
     // option
     const $option = Object.assign({
         trigger: true,
@@ -66,6 +62,3 @@ const ClickOpenTriggerBase = function(option)
     
     return this;
 }
-
-// export
-Component.ClickOpenTriggerBase = ClickOpenTriggerBase;
