@@ -6,8 +6,8 @@
  
 // validate
 // script with behaviours related to validation
-const Validate = Lemur.Validate = Factory(true,
-{
+const Validate = Lemur.Validate = {
+    
     // isNumericDash
     // retourne vrai si la valeur contient seulement des caractères numérique ou -
     isNumericDash: function(value)
@@ -93,4 +93,4 @@ const Validate = Lemur.Validate = Factory(true,
         
         return r;
     }
-});
+}

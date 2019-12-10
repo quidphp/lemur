@@ -6,8 +6,8 @@
  
 // selector
 // script with behaviours related to selecting nodes
-const Selector = Lemur.Selector = Factory(true,
-{
+const Selector = Lemur.Selector = {
+    
     // input
     // retourne un selector commun à utiliser pour les inputs
     input: function() 
@@ -31,4 +31,4 @@ const Selector = Lemur.Selector = Factory(true,
     {
         return $(node).first().find(selector).get();
     }
-});
+}

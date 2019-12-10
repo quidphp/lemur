@@ -6,8 +6,8 @@
  
 // func
 // script with functions related to functions
-const FuncObj =
-{    
+const FuncObj = {
+    
     // is
     // retourne vrai si la valeur est une fonction
     is: function(value) 

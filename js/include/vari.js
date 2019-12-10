@@ -6,8 +6,8 @@
  
 // vari
 // script with a set of helper functions related to variables
-const Vari = Lemur.Vari = Factory(true,
-{    
+const Vari = Lemur.Vari = {    
+    
     // is
     // vrai si pas non défini
     is: function(value)
@@ -151,4 +151,4 @@ const Vari = Lemur.Vari = Factory(true,
         
         return r;
     }
-});
+}

@@ -6,8 +6,8 @@
  
 // json
 // script with functions related to json
-const Json = Lemur.Json = Factory(
-{    
+const Json = Lemur.Json = {
+    
     // encode
     // encode une valeur en json
     encode: function(value) 
@@ -22,4 +22,4 @@ const Json = Lemur.Json = Factory(
     {
         return JSON.parse(value);
     }
-});
+}

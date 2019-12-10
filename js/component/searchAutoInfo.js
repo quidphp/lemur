@@ -53,6 +53,8 @@ const SearchAutoInfo = Component.SearchAutoInfo = function(option)
         ael(info,'clickOpen:close',function() {
             $($this).removeAttr($option.attrInfo);
         });
+        
+        triggerSetup(info);
     }
     
     

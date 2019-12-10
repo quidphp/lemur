@@ -6,8 +6,8 @@
  
 // arrLike
 // script with some functions related to arr-like management
-const ArrLikeRead =
-{        
+const ArrLikeRead = {
+    
     // is
     // retourne vrai si la variable est comme un tableau (array-like)
     // retourne faux si la valeur est un array

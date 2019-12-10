@@ -6,8 +6,8 @@
 
 // num
 // script with functions related to numbers
-const NumPrimitive = 
-{       
+const NumPrimitive =  {
+    
     // is
     // retourne vrai si la valeur est un nombre
     is: function(value)

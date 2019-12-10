@@ -36,10 +36,10 @@ const Evt = Lemur.Evt = new function()
     this.isTriggerFuncEqual = function(equal,type,node)
     {
         let r = false;
-        const args = [type].concat(ArrLike.sliceStart(3,arguments));
+        const args = Arr.merge([type],ArrLike.sliceStart(3,arguments));
         
         $(node).each(function(index) {
-            const funcArgs = [this].concat(args);
+            const funcArgs = Arr.merge([this],args);
             const result = $inst.triggerFunc.apply($inst,funcArgs);
             r = (result === equal);
             
@@ -165,7 +165,7 @@ const Evt = Lemur.Evt = new function()
             {
                 let args = [event];
                 const detail = event.detail;
-                args = args.concat(detail);
+                args = Arr.merge(args,detail);
                 
                 if($inst.debug() > 0)
                 console.log('listener',this,type,event,delegate,detail);
@@ -318,7 +318,7 @@ const Evt = Lemur.Evt = new function()
     // ces événements ne bubble pas
     this.triggerSetup = function(node) 
     {
-        const args = [node,'component:setup'].concat(ArrLike.sliceStart(1,arguments));
+        const args = Arr.merge([node,'component:setup'],ArrLike.sliceStart(1,arguments));
         return this.triggerEvent.apply(this,args);
     }
     
@@ -328,7 +328,7 @@ const Evt = Lemur.Evt = new function()
     // ces événements ne bubble pas
     this.triggerInit = function(node) 
     {
-        const args = [node,'component:init'].concat(ArrLike.sliceStart(1,arguments));
+        const args = Arr.merge([node,'component:init'],ArrLike.sliceStart(1,arguments));
         return this.triggerEvent.apply(this,args);
     }
     

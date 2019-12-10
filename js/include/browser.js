@@ -6,8 +6,8 @@
  
 // browser
 // script with a some functions related to browsers
-const Browser = Lemur.Browser = Factory(true,
-{    
+const Browser = Lemur.Browser = {
+    
     // isOldIe
     // retourne vrai si le navigateur est une vieille version de IE (IE 10 ou moins)
     isOldIe: function() 
@@ -48,4 +48,4 @@ const Browser = Lemur.Browser = Factory(true,
 
         return r;
     }
-});
+}

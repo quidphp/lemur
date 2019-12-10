@@ -6,8 +6,8 @@
 
 // integer
 // methods related to integer numbers
-const IntegerPrimitive = 
-{   
+const IntegerPrimitive = {
+    
     // is
     // retourne vrai si la valeur est un int
     is: function(value)

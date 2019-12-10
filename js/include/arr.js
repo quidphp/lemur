@@ -7,10 +7,10 @@
 // arr
 // script with some objects related to arr manipulation
 
-// arrRead
+// arrBase
 // fonctions relatives à la lecture de tableau
-const ArrRead = 
-{    
+const ArrBase = {
+    
     // is
     // retourne vrai si la valeur est un tableau
     is: function(value) 
@@ -76,21 +76,30 @@ const ArrRead =
         return this.slice(start,true,array);
     },
     
-
+    
+    // merge
+    // retourne un nouveau tableau avec le contenu de tous les tableaux merged (concat)
+    merge: function(array)
+    {
+        let r = null;
+        
+        if(this.is(array))
+        {
+            const args = ArrLike.sliceStart(1,arguments);
+            r = Array.prototype.concat.apply(array,args);
+        }
+        
+        return r;
+    },
+    
+    
     // valueStrip
     // permet de retourner un nouveau tableau sans la valeur donné en argument
     valueStrip: function(value,array) 
     {
-        let r = null;
-
-        if(this.is(array))
-        {
-            r = Array.prototype.filter.call(array,function(v) {
-                return (v === value)? false:true;
-            });
-        }
-        
-        return r;
+        return this.filter(array,function(v) {
+            return (v === value)? false:true;
+        });
     },
     
     
@@ -103,10 +112,34 @@ const ArrRead =
 }
 
 
-// arrWrite
+// arrWriteSelf
 // fonctions relatives à l'écriture sur des tableaux (en référence)
-const ArrWrite = 
-{
+const ArrWriteSelf = {
+    
+    // mergeRef
+    // permet de fusionner plusieurs tableaux dans le premier tableau
+    // le premier tableau est modifié
+    mergeRef: function(array)
+    {
+        let r = null;
+        
+        if(this.is(array))
+        {
+            r = array;
+            const inst = this;
+            
+            this.each(ArrLike.sliceStart(1,arguments),function(value) {
+                if(!Arr.is(value))
+                value = [value];
+                
+                Array.prototype.push.apply(r,value);
+            });
+        }
+        
+        return r;
+    },
+    
+    
     // spliceValue
     // permet de retourner le même tableau sans la valeur donné en argument
     // retourne la valeur splice

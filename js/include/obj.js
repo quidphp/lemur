@@ -9,8 +9,8 @@
 
 // objBase
 // base methods for objects
-const ObjBase =
-{    
+const ObjBase = {
+    
     // is
     // retourne vrai si c'est un objet
     is: function(value)
@@ -53,8 +53,8 @@ const ObjBase =
 
 // objKeyValue
 // method related to keys and values within an object
-const ObjKeyValue =
-{
+const ObjKeyValue = {
+    
     // isKey
     // retourne vrai si la valeur est une clé de propriété valide
     isKey: function(prop)
@@ -178,8 +178,8 @@ const ObjKeyValue =
 
 // objEach
 // function for looping over an object
-const ObjEach =
-{
+const ObjEach = {
+    
     // each
     // méthode utilisé pour faire un for each sur un array, array like, un objet ou une string
     // retourne true si le loop a complêté
@@ -216,8 +216,8 @@ const ObjEach =
 
 // objCopyFilterMap
 // functions for copying, filtering and map an object
-const ObjCopyFilterMap =
-{
+const ObjCopyFilterMap = {
+    
     // copy
     // permet de copier un objet
     copy: function(value)
@@ -281,8 +281,8 @@ const ObjCopyFilterMap =
 
 // objWrite
 // functions for written on a copy of the object
-const ObjWrite =
-{    
+const ObjWrite = {
+    
     // set
     // permet d'ajouter une nouvelle propriété à un objet
     // l'objet retourner est une copie
@@ -321,12 +321,12 @@ const ObjWrite =
     // retourne un nouvel objet contenant le résultat d'un merge unidimensionnel de tous les objets données en argument
     replace: function() 
     {
-        let r = {};
+        let r = this.new();
         let args = Array.from(arguments);
         
         if(args.length > 1 && this.is(args[0]))
         {
-            args = [r].concat(args);
+            args = Arr.merge([r],args);
             r = Object.assign.apply(null,args);
         }
         
@@ -337,8 +337,8 @@ const ObjWrite =
 
 // objWriteSelf
 // functions for writing within the object without copying it
-const ObjWriteSelf =
-{    
+const ObjWriteSelf = {
+    
     // setRef
     // permet d'ajouter une nouvelle propriété à un objet
     // l'objet retourner est le même (pas une copie)

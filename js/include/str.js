@@ -6,8 +6,8 @@
  
 // str
 // script with a set of helper functions related to strings
-const StrPrimitive =
-{    
+const StrPrimitive = {
+    
     // is
     // retourne vrai si la valeur est une string
     is: function(value) 

@@ -6,7 +6,7 @@
  
 // include
 // script to test the include.js file
-const TestInclude = function()
+const TestInclude = Test.Include = function()
 {   
     let r = true;
     
@@ -69,7 +69,14 @@ const TestInclude = function()
         assert(Arr.isEqual(Arr.set(1,'z',['a','b','c']),['a','z','c']));
         assert(Arr.isEqual(arrCopy,[1,2,3]));
         assert(Arr.setRef(2,4,arrCopy) === arrCopy);
+        let mergeRef = [1,2,3];
+        assert(Arr.mergeRef(mergeRef,'what',[4,5,6],arguments,selectorAll) === mergeRef);
+        assert(Arr.isEqual(Arr.merge([1,2,3],'what',[4,5,6],arguments,selectorAll),mergeRef));
+        assert(Arr.merge(mergeRef) !== mergeRef);
+        assert(Arr.mergeRef(mergeRef) === mergeRef);
+        assert(Arr.length(mergeRef) === 9);
         assert(Arr.isEqual(arrCopy,[1,2,4]));
+        assert(Arr.length(Arr.merge([1,2,3],[4,5,6],arguments,selectorAll)) === 8);
         assert(Arr.filter([1,2,3],function(value,key,array) {
             assert(Arr.length(array) === 3);
             if(this === 1)
@@ -80,6 +87,7 @@ const TestInclude = function()
             
             return (this === 2)? true:false;
         }).length === 1);
+        assert(Arr.isEqual(Arr.replace([1,2,2],[4,5],[0]),[0,5,2]));
         
         // arrLike
         assert(!ArrLike.is([]));
@@ -362,7 +370,9 @@ const TestInclude = function()
         assert(!Pojo.is(undefined));
         let replace = {test:2, ok: {what: true}};
         let pojoGetSet = {};
-        assert(Pojo.isEqual(Pojo.replaceRecursive({test:2, ok: {what: true}},{ok: {james: false}}),{test: 2, ok: {what: true, james: false}}));
+        assert(Pojo.isEqual(Pojo.replaceRecursive({test:2, ok: {what: true}},null,false,{ok: {james: false}}),{test: 2, ok: {what: true, james: false}}));
+        assert(Pojo.replaceRecursive([true],{test: 2}) === null);
+        assert(Pojo.isEqual(Pojo.replaceRecursive({test: 2},{test: { ok: 3}},'meh',{test: { ok: {ok: 1}, ok2: [1,2,3]}}),{test: {ok: {ok: 1}, ok2: [1, 2, 3]}}));
         assert(Pojo.climb(['test','what'],{test: {what: 'LOL'}}) === 'LOL');
         assert(Pojo.climb(['test','whatz'],{test: {what: 'LOL'}}) === undefined);
         assert(Pojo.isEqual(Pojo.replace(replace,{ok: {james: false}}),{test: 2, ok: {james: false}}));
@@ -604,6 +614,9 @@ const TestInclude = function()
         assert(Xhr.parseError('','error') === 'error');
         
         // js
+        assert(Arr.is !== Obj.is);
+        assert(Obj.each === Str.each);
+        assert(Object.getPrototypeOf(Obj) === Object.getPrototypeOf(Str));
         assert(!(false == null));
         assert(!(0 == null));
         assert(!('' == null));
@@ -620,6 +633,3 @@ const TestInclude = function()
     
     return r;
 }
-
-// export
-Test.Include = TestInclude;

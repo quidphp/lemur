@@ -6,8 +6,8 @@
   
 // domChange
 // script with functions for manipulating the dom
-const DomChange = Lemur.DomChange = Factory(true,
-{
+const DomChange = Lemur.DomChange = {
+    
     // setsAttr
     // remplace tous les attributs d'une balise, il faut fournir un plain object
     // possible de retirer les attributs existants
@@ -18,7 +18,7 @@ const DomChange = Lemur.DomChange = Factory(true,
             $(node).each(function() {
                 const $this = $(this);
                 
-                $.each(value,function(k,v) {
+                Pojo.each(value,function(v,k) {
                     $this.attr(k,v);
                 });
             });
@@ -36,7 +36,7 @@ const DomChange = Lemur.DomChange = Factory(true,
             const $this = $(this);
             const node = $(this)[0];
             
-            $.each(node.attributes,function(index,value) 
+            ArrLike.each(node.attributes,function(value) 
             {
                 if(value != null)
                 $this.removeAttr(value.name);
@@ -113,4 +113,4 @@ const DomChange = Lemur.DomChange = Factory(true,
         
         return this;
     }
-});
+}

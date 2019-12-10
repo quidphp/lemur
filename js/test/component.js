@@ -6,7 +6,7 @@
  
 // include
 // script to test the component.js file
-const TestComponent = function()
+const TestComponent = Test.Component = function()
 {   
     let r = true;
     
@@ -182,6 +182,3 @@ const TestComponent = function()
     
     return r;
 }
-
-// export
-Test.Component = TestComponent;

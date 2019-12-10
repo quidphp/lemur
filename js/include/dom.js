@@ -6,8 +6,8 @@
 
 // dom
 // script with behaviours related to dom nodes
-const Dom = Lemur.Dom = Factory(true,
-{
+const Dom = Lemur.Dom = {
+    
     // isNode
     // retourne vrai si la valeur est une node
     isNode: function(value) 
@@ -147,7 +147,7 @@ const Dom = Lemur.Dom = Factory(true,
         {   
             r = {};
             
-            $.each(node.attributes,function() {
+            ArrLike.each(node.attributes,function() {
                 if(start == null || Str.isStart(start,this.name))
                 r[this.name] = this.value;
             });
@@ -265,4 +265,4 @@ const Dom = Lemur.Dom = Factory(true,
         
         return r;
     }
-});
+}

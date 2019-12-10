@@ -6,8 +6,8 @@
 
 // xhr
 // script with some logic for ajax calls and xhr object
-const Xhr = Lemur.Xhr = Factory(true,
-{
+const Xhr = Lemur.Xhr = {
+    
     // trigger
     // fonction utilisé pour lancer une requête ajax
     // retourne false ou un objet promise ajax
@@ -153,4 +153,4 @@ const Xhr = Lemur.Xhr = Factory(true,
 
         return r;
     }
-});
+}

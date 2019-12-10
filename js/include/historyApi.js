@@ -6,8 +6,8 @@
  
 // historyApi
 // script with functions related to the history API
-const HistoryApi = Lemur.HistoryApi = Factory(true,
-{    
+const HistoryApi = Lemur.HistoryApi = {
+    
     // supported
     // retourne vrai si le navigateur courant supporte history API
     supported: function()
@@ -78,4 +78,4 @@ const HistoryApi = Lemur.HistoryApi = Factory(true,
         
         return r;
     }
-});
+}

@@ -6,8 +6,8 @@
  
 // request
 // script with functions related to the current request
-const Request = Lemur.Request = Factory(true,
-{    
+const Request = Lemur.Request = {
+    
     // relative
     // retourne l'uri relative courante
     relative: function() 
@@ -44,4 +44,4 @@ const Request = Lemur.Request = Factory(true,
             hash: location.hash
         };
     }
-});
+}

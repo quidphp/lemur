@@ -16,6 +16,7 @@ const ClickOutside = Component.ClickOutside = function(value,persistent)
     
     // setup
     aelOnce(this,'component:setup',function() {
+        
         const $this = this;
         const parent = triggerFunc(this,'clickOutside:getParent');
         

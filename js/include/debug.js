@@ -6,8 +6,8 @@
  
 // debug
 // script with functions related to debugging
-const Debug = Lemur.Debug = Factory(true,
-{   
+const Debug = Lemur.Debug = {
+    
     // assertThrow
     // comme assert mais lance une errur
     assertThrow: function(value) 
@@ -23,4 +23,4 @@ const Debug = Lemur.Debug = Factory(true,
     {
         console.error('Catched',value);
     }
-});
+}

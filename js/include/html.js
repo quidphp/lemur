@@ -6,8 +6,8 @@
   
 // html
 // script with functions for parsing html
-const Html = Lemur.Html = Factory(true,
-{
+const Html = Lemur.Html = {
+    
     // parse
     // parse une string html, retourne un objet avec les nodes
     // remplace les balises sensibles par des div (comme dans head et script)
@@ -78,4 +78,4 @@ const Html = Lemur.Html = Factory(true,
         
         return r;
     }
-});
+}
