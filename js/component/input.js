@@ -30,6 +30,10 @@ const Input = Component.Input = function()
         return Dom.value(this,trim);
     });
     
+    setFunc(this,'input:getValueTrim',function() {
+        return triggerFunc(this,'input:getValue',true);
+    });
+    
     setFunc(this,'input:getValueEncoded',function(trim) {
         let r = triggerFunc(this,'input:getValue',trim);
         
@@ -54,9 +58,13 @@ const Input = Component.Input = function()
     setFunc(this,'input:getType',function() {
         return ($(this).is("input"))? $(this).prop('type'):null;
     });
-        
+    
     setFunc(this,'input:getTag',function() {
         return Dom.tag(this);
+    });
+    
+    setFunc(this,'input:isRadioCheckbox',function() {
+        return Arr.in(triggerFunc(this,'input:getType'),['radio','checkbox']);
     });
     
     setFunc(this,'input:setValue',function(value) {
@@ -124,18 +132,58 @@ const Input = Component.Input = function()
         return qsa(parent,"label[for='"+id+"']");
     });
     
+    setFunc(this,'input:isGroup',function() {
+        return triggerFunc(this,'input:isRadioCheckbox');
+    });
+    
     setFunc(this,'input:getGroup',function() {
+        let r = null;
         const parent = triggerFunc(this,'input:getParent');
         const name = triggerFunc(this,'input:getName');
-        const type =triggerFunc(this,'input:getType');
-        const tag =triggerFunc(this,'input:getTag');
+        const type = triggerFunc(this,'input:getType');
+        const tag = triggerFunc(this,'input:getTag');
         
         if(Str.isNotEmpty(name) && Str.isNotEmpty(tag))
         {
             const typeSearch = (Str.isNotEmpty(type))? "[type='"+type+"']":tag;
-            return qsa(parent,typeSearch+"[name='"+name+"']");
+            r = qsa(parent,typeSearch+"[name='"+name+"']");
         }
+        
+        return r;
     });
+    
+    setFunc(this,'input:getGroupChecked',function() {
+        let r = null;
+        const group = triggerFunc(this,'input:getGroup');
+        
+        if(Arr.isNotEmpty(group))
+        {
+            r = [];
+            Arr.each(group,function() {
+                if($(this).is(':checked'))
+                r.push(this);
+            });
+        }
+        
+        return r;
+    });
+    
+    setFunc(this,'input:getGroupValue',function() {
+        let r = undefined;
+        const group = triggerFunc(this,'input:getGroupChecked');
+        
+        if(Arr.isNotEmpty(group))
+        {
+            r = [];
+            Arr.each(group,function() {
+                const value = triggerFunc(this,'input:getValue');
+                r.push(value);
+            });
+        }
+        
+        return r;
+    });
+    
     
     // event
     ael(this,'input:enable',function() {
@@ -149,17 +197,24 @@ const Input = Component.Input = function()
     
     // setup
     aelOnce(this,'component:setup',function() {
-
+        
+        const isGroup = triggerFunc(this,'input:isGroup');
+        
         ael(this,'change',function() {
-            triggerFunc(this,'validate:process');
+            const target = (isGroup === true)? triggerFunc(this,'input:getGroup'):this;
+            triggerFuncs(target,(isGroup === true)? 'validate:trigger':'validate:process');
         });
         
         ael(this,'focusout',function() {
-            triggerFunc(this,'validate:process');
+            triggerFuncs(this,'validate:process');
         });
         
         ael(this,'focus',function() {
             triggerEvent(this,"validate:valid");
+        });
+        
+        setFunc(this,'validate:getValue',function() {
+            return triggerFunc(this,(isGroup === true)? 'input:getGroupValue':'input:getValue');
         });
     });
     

@@ -12,7 +12,7 @@ const Dom = Lemur.Dom = {
     // retourne vrai si la valeur est une node
     isNode: function(value) 
     {
-        return (value === document || value instanceof HTMLElement)? true:false;
+        return (value === document || value instanceof HTMLElement || this.isWindow(value))? true:false;
     },
     
     
@@ -24,10 +24,7 @@ const Dom = Lemur.Dom = {
         let r = false;
         const $inst = this;
         
-        if(value instanceof jQuery && value.length)
-        r = true;
-        
-        else if(value instanceof NodeList && value.length)
+        if(value instanceof NodeList && value.length)
         r = true;
         
         else if(Arr.isNotEmpty(value))
@@ -38,6 +35,28 @@ const Dom = Lemur.Dom = {
         }
         
         return r;
+    },
+    
+    
+    // checkNode
+    // envoie une exception si la valeur n'est pas une node
+    checkNode: function(value,type,message)
+    {
+        if(!(this.isNode(value) || (type === false && value == null)))
+        throw new Error([value,type,message]);
+        
+        return value;
+    },
+    
+    
+    // checkNodes
+    // envoie une exception si la valeur n'est pas un tableau de nodes
+    checkNodes: function(value,type,message)
+    {
+        if(!(this.isNodes(value) || (type === false && (value == null || Arr.isEmpty(value)))))
+        throw new Error([value,type,message]);
+        
+        return value;
     },
     
     
@@ -54,6 +73,21 @@ const Dom = Lemur.Dom = {
     isTag: function(value,node)
     {
         return (this.tag(node) === value);
+    },
+    
+    
+    // nodeWrap
+    // wrap une node dans un array, si ce n'est pas un array
+    // transforme une node list en array
+    nodeWrap: function(value)
+    {
+        if(Dom.isNode(value))
+        value = [value];
+        
+        else if(value instanceof NodeList)
+        value = ArrLike.arr(value);
+        
+        return value;
     },
     
     
@@ -87,10 +121,11 @@ const Dom = Lemur.Dom = {
     
     // getData
     // permet de retourner une data d'une node
+    // envoie une exception si plus d'une node
     getData: function(node,key)
     {
-        const firstNode = $(node).get(0);
-        return $(firstNode).data(key);
+        Dom.checkNode(node);
+        return $(node).data(key);
     },
     
     
@@ -99,12 +134,14 @@ const Dom = Lemur.Dom = {
     // sinon retourne la data de la node
     getOrSetData: function(node,key,value)
     {
-        let r = value;
-        const firstNode = $(node).get(0);
-        const current = $(firstNode).data(key);
+        let r = undefined;
+        const current = this.getData(node,key);
         
-        if(current == null)
-        $(firstNode).data(key,value);
+        if(current == null && value != null)
+        {
+            $(node).data(key,value);
+            r = value;
+        }
         
         else
         r = current;
@@ -226,9 +263,11 @@ const Dom = Lemur.Dom = {
         
         if(Str.isNotEmpty(separator))
         {
-            $(node).each(function(index) {
+            const $inst = this;
+            
+            $(node).each(function() {
                 r += (r.length)? separator:"";
-                r += this.value(this,trim);
+                r += $inst.value(this,trim);
             });
         }
         

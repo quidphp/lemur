@@ -43,18 +43,13 @@ const SearchSlide = Component.SearchSlide = function(option)
     });
     
     
-    // init
-    aelOnce(this,'component:init',function() {
-        const input = triggerFunc(this,'searchSlide:getInput');
-        Component.InputSearch.call(input,$option.inputSearch);
-    });
-    
-    
     // bindInput
     const bindInput = function()
     {
         const $this = this;
         const input = triggerFunc(this,'searchSlide:getInput');
+        
+        Component.InputSearch.call(input,$option.inputSearch);
         
         // event
         ael(input,'focus',function() {
@@ -64,7 +59,9 @@ const SearchSlide = Component.SearchSlide = function(option)
         ael(input,'focusout',function() {
             triggerFunc($this,'searchSlide:hideInfo');
         });
+        
+        triggerSetup(input);
     }
     
-    return triggerInit(this);
+    return this;
 }

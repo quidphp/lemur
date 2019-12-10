@@ -42,6 +42,7 @@ body {
 body > .background {
     &[data-from='modal'],
     &[data-from='clickOpen'],
+    &[data-from='searchAutoInfo'],
     &[data-from='calendar'],
     &[data-from='fakeselect'],
     &[data-from='enumSet'],

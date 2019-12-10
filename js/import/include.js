@@ -50,13 +50,14 @@ const aelOnce = Evt.addEventListenerOnce.bind(Evt);
 const rel = Evt.removeEventListener.bind(Evt);
 const triggerEvent = Evt.triggerEvent.bind(Evt);
 const triggerBubble = Evt.triggerBubble.bind(Evt);
-const triggerInit = Evt.triggerInit.bind(Evt);
 const triggerSetup = Evt.triggerSetup.bind(Evt);
 const triggerFunc = Evt.triggerFunc.bind(Evt);
+const triggerFuncs = Evt.triggerFuncs.bind(Evt);
 
 // selector
-const qsa = Selector.scopedQuerySelectorAll.bind(Selector);
 const qs = Selector.scopedQuerySelector.bind(Selector);
+const qsa = Selector.scopedQuerySelectorAll.bind(Selector);
+const mergedQsa = Selector.mergedQuerySelectorAll.bind(Selector);
 
 // vari
 const each = Obj.each.bind(Obj);

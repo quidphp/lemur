@@ -42,7 +42,6 @@ const ClickOpenInputAjax = Component.ClickOpenInputAjax = function(option)
         
         
         // components
-        Component.KeyboardEnter.call(field,true,$option.keyEvent);
         Component.KeyboardEscape.call(field,true,$option.keyEvent);
         Component.Timeout.call(field,$option.keyEvent,$option.timeout);
         
@@ -79,7 +78,6 @@ const ClickOpenInputAjax = Component.ClickOpenInputAjax = function(option)
             triggerEvent($this,'clickOpen:close');
         });
     }
-    
     
     // bindSubmit
     const bindSubmit = function()

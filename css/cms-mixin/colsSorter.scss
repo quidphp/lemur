@@ -14,13 +14,13 @@
         z-index: 5;
     }
 
-    &.active .cell-inner .trigger,
+    &[data-active='1'] .cell-inner .trigger,
     .cell-inner:hover .trigger,
     .cell-inner .trigger.selected {
         background-color: $darkerColor;
     }
 
-    &.active .cell-inner > .trigger {
+    &[data-active='1'] .cell-inner > .trigger {
         z-index: 3;
     }
 

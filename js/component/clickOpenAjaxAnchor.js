@@ -9,23 +9,21 @@
 const ClickOpenAjaxAnchor = Component.ClickOpenAjaxAnchor = function(option) 
 {
     // option
-    const $option = Object.assign({
-        triggerToggle: true
-    },option);
+    const $option = Object.assign({},option);
     
     
     // components
-    Component.ClickOpenTriggerBase.call(this,option);
-    Component.ClickOpenAjax.call(this,option);
+    Component.ClickOpenTriggerBase.call(this,$option);
+    Component.ClickOpenAjax.call(this,$option);
     
     
     // func
-    setFunc(this,'ajax:getConfig',function(triggerEvent) {
+    setFunc(this,'ajax:config',function() {
         return triggerFunc(this,'clickOpen:getTrigger');
     });
     
     setFunc(this,'clickOpen:triggerClickOpen',function() {
-        triggerEvent(this,'ajax:init');
+        triggerFunc(this,'ajax:init');
     });
     
     return this;

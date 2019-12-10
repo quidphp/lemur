@@ -15,7 +15,7 @@ const ClickOpenTriggerBase = Component.ClickOpenTriggerBase = function(option)
         triggerToggle: true
     },option);
     
-    
+
     // func
     setFunc(this,'clickOpen:getTrigger',function() {
         let r = $option.trigger;
@@ -29,15 +29,17 @@ const ClickOpenTriggerBase = Component.ClickOpenTriggerBase = function(option)
         return r;
     });
     
-    setFunc(this,'clickOpen:triggerClick',function(clickEvent) {
+    setFunc(this,'clickOpen:triggerClickOpen',function() {
+        triggerEvent(this,'clickOpen:open');
+    });
+    
+    
+    // event
+    ael(this,'clickOpen:triggerClick',function(clickEvent) {
         if($option.triggerToggle === true && triggerFunc(this,'clickOpen:isOpen'))
         triggerEvent(this,'clickOpen:close');
         else
         triggerFunc(this,'clickOpen:triggerClickOpen');
-    });
-    
-    setFunc(this,'clickOpen:triggerClickOpen',function() {
-        triggerEvent(this,'clickOpen:open');
     });
     
     
@@ -49,7 +51,7 @@ const ClickOpenTriggerBase = Component.ClickOpenTriggerBase = function(option)
         if(trigger != null)
         {
             ael(trigger,$option.triggerEvent,function(event) {
-                triggerFunc($this,'clickOpen:triggerClick',event);
+                triggerEvent($this,'clickOpen:triggerClick',event);
                 Evt.preventStop(event);
                 return false;
             });

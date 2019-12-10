@@ -6,19 +6,36 @@
 
 // xhr
 // script with some logic for ajax calls and xhr object
-const Xhr = Lemur.Xhr = {
+const Xhr = Lemur.Xhr = new function()
+{
+    // inst
+    const $inst = this;
+    
     
     // trigger
     // fonction utilisé pour lancer une requête ajax
-    // retourne false ou un objet promise ajax
-    trigger: function(node,option)
+    // retourne null ou un objet promise ajax
+    this.trigger = function(config)
     {
         let r = null;
-        const config = Object.assign({
-            url: Evt.triggerFunc(node,'ajax:getHref'),
-            method: Evt.triggerFunc(node,'ajax:getMethod'),
-            timeout: Evt.triggerFunc(node,'ajax:getTimeout') || 5000,
-            data: Evt.triggerFunc(node,'ajax:getData'),
+        config = prepareConfig(config);
+        
+        if(Str.isNotEmpty(config.url))
+        r = $.ajax(config);
+        
+        return r;
+    }
+
+    
+    // defaultConfig
+    // retourne la configuration par défaut pour une requête ajax
+    const defaultConfig = function()
+    {
+        return {
+            url: undefined,
+            method: undefined,
+            data: undefined,
+            timeout: 5000,
             processData: true,
             contentType: "application/x-www-form-urlencoded; charset=UTF-8",
             xhr: function() {
@@ -39,93 +56,167 @@ const Xhr = Lemur.Xhr = {
                     if(event.lengthComputable === true)
                     {
                         const percent = parseInt((event.loaded / event.total * 100));
+                        
+                        if($this.progress != null)
                         $this.progress(percent,event);
                     }
                 });
             },
-            progress: function(percent,progressEvent) {
-                Evt.triggerFunc(node,'ajax:progress',percent,progressEvent);
-            },
-            beforeSend: function(jqXHR,settings) {
-                Evt.triggerFunc(node,'ajax:before',jqXHR,settings);
-            },
-            success: function(data,textStatus,jqXHR) {
-                Evt.triggerFunc(node,'ajax:success',data,textStatus,jqXHR);
-            },
-            error: function(jqXHR,textStatus,errorThrown) {
-                const parsedError = this.parseError(jqXHR.responseText,textStatus);
-                Evt.triggerFunc(node,'ajax:error',parsedError,jqXHR,textStatus,errorThrown);
-            },
-            complete: function(jqXHR,textStatus) {
-                Evt.triggerFunc(node,'ajax:complete',jqXHR,textStatus);
-            }
-        },option);
+            progress: null
+        };
+    }
+    
+    
+    // prepareConfig
+    // dernière préparation à la configuration ajax
+    const prepareConfig = function(config)
+    {
+        config = Pojo.replace(defaultConfig(),config);
         
-        if(Str.isNotEmpty(config.url) && Evt.triggerFunc(node,'ajax:confirm') !== false)
+        if(!Str.is(config.method))
+        config.method = 'get';
+        config.method = config.method.toUpperCase();
+        
+        if(config.data instanceof FormData)
         {
-            if(config.method == null)
-            config.method = 'get';
-            
-            config.method = config.method.toUpperCase();
-            
-            if(config.data instanceof FormData)
-            {
-                config.processData = false;
-                config.contentType = false;
-            }
-            
-            r = $.ajax(config);
+            config.processData = false;
+            config.contentType = false;
         }
         
-        return r;
-    },
-
-
+        return config;
+    }
+    
+    
     // configFromNode
     // met à jour le tableau de config à partir de la tag
-    configFromNode: function(node,config)
+    // retourne null si ajax:confirm est false
+    this.configFromNode = function(node,config,events)
     {
-        let r = (Pojo.is(config))? config:{};
-        const tagName = Dom.tag(node);
-
-        if(r.url == null)
-        r.url = (tagName === 'form')? $(node).attr("action"):($(node).prop("href") || $(node).data('href'));
-
-        if(r.method == null)
-        r.method = (tagName === 'form')? $(node).attr("method"):$(node).data("method");
+        let r = null;
         
-        if(r.data == null)
+        if(Dom.isNode(node) && Evt.triggerFunc(node,'ajax:confirm') !== false)
         {
-            if(tagName === 'form')
-            {
-                const formData = new FormData($(node)[0]);
-                const clicked = Evt.triggerFunc(node,'form:getClickedSubmit');
-                
-                if(clicked != null)
-                {
-                    const clickedName = $(clicked).attr('name');
-                    
-                    if(Str.isNotEmpty(clickedName))
-                    {
-                        const clickedVal = Dom.value(clicked);
-                        formData.append(clickedName,clickedVal);
-                    }
-                }
-                
-                r.data = formData;
-            }
+            r = (Pojo.is(config))? config:{};
+            const tagName = Dom.tag(node);
             
-            else
-            r.data = $(node).data('data');
+            if(r.url == null)
+            r = configNodeUrl(r,node,tagName);
+
+            if(r.method == null)
+            r = configNodeMethod(r,node,tagName);
+            
+            if(r.data == null)
+            r = configNodeData(r,node,tagName);
+            
+            if(events === true)
+            r = this.configNodeEvents(node,r);
+            
+            r = prepareConfig(r);
         }
         
         return r;
-    },
+    }
+    
+    
+    // configNodeUrl
+    // fait la configuration de l'url pour une node
+    const configNodeUrl = function(r,node,tagName)
+    {
+        r.url = Evt.triggerFunc(node,'ajax:getUrl');
+        
+        if(r.url == null)
+        {
+            if(tagName === 'form')
+            r.url = $(node).attr("action");
+            
+            else
+            r.url = $(node).prop("href") || $(node).data('href');
+        }
+        
+        return r;
+    }
+    
+    
+    // configNodeMethod
+    // fait la configuration de la méthode pour une node
+    const configNodeMethod = function(r,node,tagName)
+    {
+        r.method = Evt.triggerFunc(node,'ajax:getMethod');
+        
+        if(r.method == null)
+        {
+            if(tagName === 'form')
+            r.method = $(node).attr("method") || 'get';
+            
+            else
+            r.method = $(node).data("method") || 'get';
+        }
+        
+        return r;
+    }
+    
+    
+    // configNodeData
+    // fait la configuration des datas pour une node
+    const configNodeData = function(r,node,tagName)
+    {
+        r.data = Evt.triggerFunc(node,'ajax:getData');
+        
+        if(r.data == null && tagName === 'form')
+        {
+            const formData = new FormData($(node)[0]);
+            const clicked = Evt.triggerFunc(node,'form:getClickedSubmit');
+            
+            if(clicked != null)
+            {
+                const clickedName = $(clicked).attr('name');
+                
+                if(Str.isNotEmpty(clickedName))
+                {
+                    const clickedVal = Dom.value(clicked);
+                    formData.append(clickedName,clickedVal);
+                }
+            }
+            
+            r.data = formData;
+        }
+        
+        return r;
+    }
+    
+    
+    // configNodeEvents
+    // fait la configuration des événements à envoyer à la node pour la requête ajax
+    this.configNodeEvents = function(node,config)
+    {
+        config.progress = function(percent,progressEvent) {
+            Evt.triggerFunc(node,'ajax:progress',percent,progressEvent);
+        };
+        
+        config.beforeSend = function(jqXHR,settings) {
+            Evt.triggerFunc(node,'ajax:before',jqXHR,settings);
+        };
+        
+        config.success = function(data,textStatus,jqXHR) {
+            Evt.triggerFunc(node,'ajax:success',data,textStatus,jqXHR);
+        };
+        
+        config.error = function(jqXHR,textStatus,errorThrown) {
+            const parsedError = $inst.parseError(jqXHR.responseText,textStatus);
+            Evt.triggerFunc(node,'ajax:error',parsedError,jqXHR,textStatus,errorThrown);
+        };
+        
+        config.complete = function(jqXHR,textStatus) {
+            Evt.triggerFunc(node,'ajax:complete',jqXHR,textStatus);
+        };
+        
+        return config;
+    }
     
     
     // parseError
     // cette méthode gère l'affichage pour un xhr en erreur
-    parseError: function(responseText,textStatus)
+    this.parseError = function(responseText,textStatus)
     {
         let r = textStatus;
         

@@ -153,7 +153,7 @@ const TestInclude = Test.Include = function()
         // debug
         
         // dom
-        assert(!Dom.isNode(window));
+        assert(Dom.isNode(window));
         assert(Dom.isNode(document));
         assert(!Dom.isNode($("html")));
         assert(!Dom.isNode($("html,body").get()));
@@ -608,7 +608,8 @@ const TestInclude = Test.Include = function()
         assert(length === 34);
 
         // xhr
-        assert(Obj.length(Xhr.configFromNode(htmlNode)) === 3);
+        assert(Pojo.length(Xhr.configFromNode(htmlNode)) === 9);
+        assert(Pojo.length(Xhr.configFromNode(htmlNode,null,true)) === 13);
         assert(Xhr.parseError('<html><body><div>TEST</div></body></html>','error') === '<div>TEST</div>');
         assert(Xhr.parseError('<html><body><div class="ajax-parse-error"><div>TEST</div></div></body></html>','error') === '<div class="ajax-parse-error"><div>TEST</div></div>');
         assert(Xhr.parseError('','error') === 'error');

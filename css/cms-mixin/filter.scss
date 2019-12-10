@@ -22,11 +22,11 @@
 
     &:hover,
     &.filtering,
-    &.active {
+    &[data-active='1'] {
         background-color: $darkerColor;
     }
 
-    &.active.trigger {
+    &[data-active='1'].trigger {
         z-index: 3;
     }
 

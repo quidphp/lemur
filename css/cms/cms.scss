@@ -17,12 +17,13 @@
 /* HTML */
 :root {
     @include Document('.route-wrap');
-}
-body {
-    font-size: 1.4rem;
-    font-weight: 300;
-    line-height: 1.5;
-    @include scrollbar();
+    
+    body {
+        font-size: 1.4rem;
+        font-weight: 300;
+        line-height: 1.5;
+        @include scrollbar();
+    }
 }
 
 /* TITRE */

@@ -16,10 +16,10 @@ const DomChange = Lemur.DomChange = {
         if(Pojo.is(value))
         {
             $(node).each(function() {
-                const $this = $(this);
+                const $this = this;
                 
                 Pojo.each(value,function(v,k) {
-                    $this.attr(k,v);
+                    $($this).attr(k,v);
                 });
             });
         }
@@ -33,13 +33,12 @@ const DomChange = Lemur.DomChange = {
     emptyAttr: function(node)
     {
         $(node).each(function(index, el) {
-            const $this = $(this);
-            const node = $(this)[0];
+            const $this = this;
             
-            ArrLike.each(node.attributes,function(value) 
+            ArrLike.each(this.attributes,function(value) 
             {
                 if(value != null)
-                $this.removeAttr(value.name);
+                $($this).removeAttr(value.name);
             });
         });
         

@@ -36,10 +36,10 @@ const Type = {
     // envoie une erreur si la valeur n'est pas un primitif
     // si type est true, doit être un primitif non vide
     // si type est false, accepte null + undefined
-    check: function(value,type)
+    check: function(value,type,message)
     {
         if(((type === true && !this.isNotEmpty(value)) || (type !== true && !this.is(value))) && !(type === false && value == null))
-        throw new Error(value,type);
+        throw new Error([value,type,message]);
         
         return value;
     }

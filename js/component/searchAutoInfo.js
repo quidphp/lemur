@@ -12,12 +12,15 @@ const SearchAutoInfo = Component.SearchAutoInfo = function(option)
     const $option = Pojo.replaceRecursive({
         targetInfo: ".search-info",
         attrInfo: 'data-search-info',
-        info: {}
+        background: "searchAutoInfo",
+        info: {
+            background: "searchAutoInfo",
+        }
     },option);
     
     
     // components
-    Component.ClickOpenInputAjax.call(this,option);
+    Component.ClickOpenInputAjax.call(this,$option);
     
     
     // func
@@ -33,18 +36,13 @@ const SearchAutoInfo = Component.SearchAutoInfo = function(option)
     });
     
     
-    // init
-    aelOnce(this,'component:init',function() {
-        const info = triggerFunc(this,'searchAutoInfo:getInfo');
-        Component.ClickOpen.call(info,$option.info)
-    });
-    
-    
     // bindInfo
     const bindInfo = function() 
     {
         const $this = this;
         const info = triggerFunc(this,'searchAutoInfo:getInfo');
+        
+        Component.ClickOpen.call(info,$option.info)
         
         ael(info,'clickOpen:open',function() {
             $($this).attr($option.attrInfo,1);
@@ -83,5 +81,5 @@ const SearchAutoInfo = Component.SearchAutoInfo = function(option)
         });
     }
     
-    return triggerInit(this);
+    return this;
 }

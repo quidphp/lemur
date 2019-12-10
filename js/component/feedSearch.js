@@ -4,26 +4,84 @@
  * License: https://github.com/quidphp/lemur/blob/master/LICENSE
  */
  
-// filter
-// gère les comportements complets pour un filtre general avec popup
-// appendContainer et vide tout on close
-Component.filter = function()
+// feedSearch
+// component for a feed with search and order tools
+const FeedSearch = Component.FeedSearch = function(option)
 {
-    Component.clickOpenWithTrigger.call(this,"> .trigger");
-    Component.BlockEvent.call(this,'ajax:init');
-    Component.Ajax.call(this,'ajax:init');
+    // option
+    const $option = Object.assign({
+        result: '.results',
+        search: "input[type='text']",
+        order: ".order select"
+    },option);
     
-    $(this).on('filter:getResult',function(event) {
-        return $(this).find(".results");
+    
+    // components
+    Component.Feed.call(this);
+    
+    
+    // func
+    setFunc(this,'feedSearch:getResult',function() {
+        return qs(this,$option.result);
+    });
+    
+    setFunc(this,'feedSearch:getSearch',function() {
+        return qs(this,$option.search);
+    });
+    
+    setFunc(this,'feedSearch:getSearchValue',function() {
+        return triggerFunc(triggerFunc(this,'feedSearch:getSearch'),'input:getValueTrim');
+    });
+    
+    setFunc(this,'feedSearch:getOrder',function() {
+        return qs(this,$option.order);
+    });
+
+    setFunc(this,'feedSearch:getOrderValue',function() {
+        return triggerFunc(triggerFunc(this,'feedSearch:getOrder'),'input:getValueInt');
+    });
+    
+    setFunc(this,'feed:getTarget',function() {
+        return triggerFunc(this,'feedSearch:getResult');
+    });
+    
+    /*
+    target.on('feed:loadMoreRemove',function(event,loadMore) {
+        return loadMore.parent('li');
     })
-    .on('filter:getInput',function(event) {
-        return $(this).find("input[type='text']");
+    .on('feed:target',function(event) {
+        return $(this).find(".results ul:last-child");
     })
-    .on('filter:getOrder',function(event) {
-        return $(this).find(".order :input").last();
-    })
-    .on('ajax:getHref',function(event) {
+    .on('feed:parseData',function(event,data) {
+        return Html.parse(data).find("ul:last-child li");
+    });
+    */
+    
+    setFunc(this,'ajaxBlock:setContent',function(html,isError) {
+        triggerFunc(this,'feed:overwrite',html);
+    });
+    
+    setFunc(this,'ajax:config',function() {
         const separator = $(this).data('separator');
+        const search = triggerFunc(this,'feedSearch:getSearchValue');
+        const order = triggerFunc(this,'feedSearch:getOrderValue') || separator;
+        
+        return Dom.dataHrefReplaceChar(this,order);
+    });
+    
+    
+    // event
+    
+    
+    // setup
+    aelOnce(this,'component:setup',function() {
+        
+    });
+    
+    
+    /*
+    .on('ajax:getHref',function(event) {
+        
         const select = triggerFunc(this,'filter:getOrder');
         const selectVal = Dom.value(select,true);
         const order = (select.length && selectVal)? selectVal:separator;
@@ -83,22 +141,7 @@ Component.filter = function()
     .on('clickOpen:close',function(event) {
         triggerFunc(this,'filter:getResult').html("");
     })
-    .on('component:setup',function(event) {
-        triggerEvent(this,'filter:bind');
-        
-        const target = triggerFunc(this,'clickOpen:getTarget');
-        Component.appendContainer.call(target);
-        
-        target.on('feed:loadMoreRemove',function(event,loadMore) {
-            return loadMore.parent('li');
-        })
-        .on('feed:target',function(event) {
-            return $(this).find(".results ul:last-child");
-        })
-        .on('feed:parseData',function(event,data) {
-            return Html.parse(data).find("ul:last-child li");
-        });
-    });
+    */
     
     return this;
 }

@@ -31,25 +31,31 @@ const ComponentValidate = Component.Validate = function()
     });
     
     setFunc(this,'validate:isEmpty',function() {
-        return (!triggerFunc(this,'validate:getValue'))? true:false;
+        return (Vari.isEmpty(triggerFunc(this,'validate:getValue')))? true:false;
     });
     
-    setFunc(this,'validate:isValid',function(type) {
-        let r = false;
+    setFunc(this,'validate:validEmptyArray',function(type) {
+        let r = [];
+        let validate = null;
         const value = triggerFunc(this,'validate:getValue');
+        const empty = (Vari.isEmpty(value))? true:false;
         const required = triggerFunc(this,'validate:getRequired');
         const pattern = triggerFunc(this,'validate:getPattern');
         
         if(type === 'required')
-        r = Validate.required(value,required);
+        validate = Validate.required(value,required);
         
         else if(type === 'pattern')
-        r = Validate.pattern(value,pattern);
+        validate = Validate.pattern(value,pattern);
         
         else
-        r = Validate.trigger(value,required,pattern);
+        validate = Validate.trigger(value,required,pattern);
         
-        return r;
+        return [validate,empty];
+    });
+    
+    setFunc(this,'validate:isValid',function(type) {
+        return Arr.valueFirst(triggerFunc(this,'validate:validEmptyArray',type));
     });
     
     setFunc(this,'validate:isNotEmptyAndValid',function(type) {
@@ -69,8 +75,9 @@ const ComponentValidate = Component.Validate = function()
     });
     
     setFunc(this,'validate:trigger',function(type) {
-        let r = triggerFunc(this,'validate:isValid',type);
-        const empty = triggerFunc(this,'validate:isEmpty');
+        const validEmpty = triggerFunc(this,'validate:validEmptyArray',type);
+        const r = validEmpty[0];
+        const empty = validEmpty[1];
         
         triggerEvent(this,(r === true)? 'validate:valid':'validate:invalid');
         triggerEvent(this,(empty === true)? 'validate:empty':'validate:notEmpty');
@@ -95,7 +102,6 @@ const ComponentValidate = Component.Validate = function()
     ael(this,'validate:notEmpty',function() {
         $(this).attr('data-empty',0);
     });
-    
     
     return this;
 }

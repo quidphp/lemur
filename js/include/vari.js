@@ -22,7 +22,10 @@ const Vari = Lemur.Vari = {
     {
         let r = true;
         
-        if(Scalar.is(value))
+        if(Arr.is(value) || Str.is(value))
+        r = (value.length > 0)? false:true;
+        
+        else if(Scalar.is(value))
         r = (!value)? true:false;
         
         else (value != null)

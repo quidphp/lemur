@@ -20,7 +20,7 @@ abstract class Route extends Core\Route
     public static $config = [
         '@cms'=>[
             'metaTitle'=>['typeLabel'=>true],
-            'jsInit'=>'$(document).ready(function() { Lemur.Evt.triggerSetup(Lemur.Component.Doc.call(this)); });',
+            'jsInit'=>'document.addEventListener("DOMContentLoaded", function() { Lemur.Evt.triggerSetup(Lemur.Component.Doc.call(this)); });',
             'docOpen'=>[
                 'head'=>[
                     'css'=>[

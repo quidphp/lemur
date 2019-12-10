@@ -119,7 +119,7 @@ const BlockEvent = Component.BlockEvent = function(type)
 
     // addType
     if(Str.isNotEmpty(type))
-    triggerFunc(this,'blockEvent:register',type);
+    triggerFuncs(this,'blockEvent:register',type);
     
     return this;
 }

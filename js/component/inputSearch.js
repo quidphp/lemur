@@ -30,7 +30,7 @@ const InputSearch = Component.InputSearch = function(option)
     
     setFunc(this,'inputSearch:validate',function() {
         let r = triggerFunc(this,'validate:process');
-        const val = triggerFunc(this,'input:getValue',true);
+        const val = triggerFunc(this,'input:getValueTrim');
         const current = triggerFunc(this,'inputSearch:getCurrent');
         
         if(r === true && val === current)
@@ -42,6 +42,10 @@ const InputSearch = Component.InputSearch = function(option)
         return r;
     });
     
+    setFunc(this,'inputSeach:buttonClick',function() {
+        refresh.call(this);
+    });
+    
     
     // event
     ael(this,'keyboardEnter:blocked',function() {
@@ -50,10 +54,6 @@ const InputSearch = Component.InputSearch = function(option)
         
     ael(this,'timeout:keyup',function() {
         triggerFunc(this,'inputSearch:validate');
-    });
-    
-    ael(this,'inputSeach:buttonClick',function() {
-        refresh.call(this);
     });
     
     ael(this,'change',function() {
@@ -74,7 +74,7 @@ const InputSearch = Component.InputSearch = function(option)
         const button = triggerFunc(this,'inputSearch:getButton');
         
         ael(button,'click',function() {
-            triggerEvent($this,'inputSeach:buttonClick');
+            triggerFunc($this,'inputSeach:buttonClick');
         });
     }
     

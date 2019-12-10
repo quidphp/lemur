@@ -7,4 +7,5 @@
 // import default
 const d = console.log;
 const dd = console.dir;
+const backtrace = console.trace;
 const $$ = alert;

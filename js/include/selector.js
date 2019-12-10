@@ -30,5 +30,21 @@ const Selector = Lemur.Selector = {
     scopedQuerySelectorAll: function(node,selector)
     {
         return $(node).first().find(selector).get();
+    },
+    
+    
+    // mergedQuerySelectorAll
+    // permet de faire un querySelectorAll sur plusieurs nodes
+    // retourne un array avec les résultats merged
+    mergedQuerySelectorAll: function(node,selector)
+    {
+        const r = [];
+        const $inst = this;
+        
+        $(node).each(function() {
+            Arr.mergeRef(r,$inst.scopedQuerySelectorAll(this,selector));
+        });
+        
+        return r;
     }
 }

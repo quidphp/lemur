@@ -19,7 +19,7 @@ const Timeout = Component.Timeout = function(type,timeout)
     
     setFunc(this,'timeout:set',function(type) {
         Str.check(type,true);
-        const $this = $(this);
+        const $this = this;
         const duration = triggerFunc(this,'timeout:duration',type);
         const timeoutObj = getTimeoutObj.call(this);
         const timeout = setTimeout(function() {

@@ -446,7 +446,7 @@ const Doc = Component.Doc = function(option)
             
             const type = makeHistoryType(config,sourceEvent);
             
-            r = Xhr.trigger(this,config);
+            r = Xhr.trigger(config);
             triggerFunc(this,'doc:cancelAjax');
             
             if(r != null)

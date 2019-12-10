@@ -129,21 +129,30 @@ const Evt = Lemur.Evt = new function()
     // addEventListener
     // méthode qui permet d'ajouter un nouveau listener d'événement
     // retourne un tableau avec les paramètres pour retirer le listener
-    this.addEventListener = function(node,type,func,register,delegate,option) 
+    this.addEventListener = function(nodes,type,func,register,delegate,option) 
     {
+        let r = null;
         Str.check(type,true);
-        option = Object.assign({capture: false, once: false},option);
+        nodes = Dom.nodeWrap(nodes);
+        Dom.checkNodes(nodes,false,type);
         
-        const handler = addEventListenerHandler(type,func,delegate);
-        
-        $(node).each(function() {
-            this.addEventListener(type,handler,option);
+        if(Arr.isNotEmpty(nodes))
+        {
+            option = Object.assign({capture: false, once: false},option);
             
-            if(Str.isNotEmpty(register))
-            $inst.registerEventListener(this,register,type,handler,option);
-        });
+            const handler = addEventListenerHandler(type,func,delegate);
+            
+            Arr.each(nodes,function() {
+                this.addEventListener(type,handler,option);
+                
+                if(Str.isNotEmpty(register))
+                $inst.registerEventListener(this,register,type,handler,option);
+            });
+            
+            r = [type,handler,option];
+        }
         
-        return [type,handler,option];
+        return r;
     }
     
     
@@ -245,70 +254,82 @@ const Evt = Lemur.Evt = new function()
     // removeEventListener
     // permet de retirer un event listener
     // args est le tableau retournée par addEventListener (contient type, handler et option)
-    this.removeEventListener = function(node,args)
+    this.removeEventListener = function(nodes,args)
     {
-        if(this.debug > 0)
-        {
-            let consoleArgs = ['removeListener',node,Arr.copy(args).shift()];
-            console.log.apply(this,consoleArgs);
-        }
+        nodes = Dom.nodeWrap(nodes);
+        Dom.checkNodes(nodes,false,'removeEventListener');
         
-        $(node).each(function() {
-            
-            if(Str.isNotEmpty(args))
+        if(Arr.isNotEmpty(nodes))
+        {
+            if(this.debug > 0)
             {
-                const key = args;
-                const data = Dom.getData(node,'rel');
-                args = Pojo.get(key,data);
-                Pojo.unsetRef(key,data);
+                let consoleArgs = ['removeListener',node,Arr.copy(args).shift()];
+                console.log.apply(this,consoleArgs);
             }
             
-            if(Arr.is(args))
-            this.removeEventListener.apply(this,args);
-        });
+            Arr.each(nodes,function() {
+                if(Str.isNotEmpty(args))
+                {
+                    const key = args;
+                    const data = Dom.getData(this,'rel');
+                    args = Pojo.get(key,data);
+                    Pojo.unsetRef(key,data);
+                }
+                
+                if(Arr.is(args))
+                this.removeEventListener.apply(this,args);
+            });
+        }
+        
+        return;
     }
     
 
     // trigger
     // function utilisé par triggerEvent et triggerBubble pour envoyer des événements
-    // retourne les nodes
-    this.trigger = function(node,type,option)
+    this.trigger = function(nodes,type,option)
     {
         Str.check(type,true);
-        const event = this.createFromType(type,option);
+        nodes = Dom.nodeWrap(nodes);
+        Dom.checkNodes(nodes,false,type);
         
-        if(this.debug() > 1)
-        console.log('trigger',type,node);
+        if(Arr.isNotEmpty(nodes))
+        {
+            const event = this.createFromType(type,option);
+            
+            if(this.debug() > 1)
+            console.log('trigger',type,nodes);
+            
+            Arr.each(nodes,function() {
+                this.dispatchEvent(event);
+            });
+        }
         
-        $(node).each(function(index, el) {
-            this.dispatchEvent(event);
-        });
-        
-        return node;
+        return;
     }
     
     
     // triggerEvent
     // permet de lancer des événements sur chaque node
     // ces événements ne bubble pas
-    this.triggerEvent = function(node,type) 
+    this.triggerEvent = function(nodes,type) 
     {
         const data = ArrLike.sliceStart(2,arguments);
         const option = {bubbles: false, cancelable: true, detail: data};
         
-        return this.trigger(node,type,option);
+        return this.trigger(nodes,type,option);
     }
     
     
     // triggerBubble
     // permet de lancer des événements sur chaque node
     // ces événements bubble
-    this.triggerBubble = function(node,type) 
+    this.triggerBubble = function(nodes,type) 
     {
         const data = ArrLike.sliceStart(2,arguments);
         const option = {bubbles: true, cancelable: true, detail: data};
         
-        return this.trigger(node,type,option);
+        return this.trigger(nodes,type,option);
     }
     
     
@@ -316,53 +337,47 @@ const Evt = Lemur.Evt = new function()
     // fonction utilisé pour lancer le setup sur un component
     // cette appel se lance à travers tous les components à setup
     // ces événements ne bubble pas
-    this.triggerSetup = function(node) 
+    this.triggerSetup = function(nodes) 
     {
-        const args = Arr.merge([node,'component:setup'],ArrLike.sliceStart(1,arguments));
-        return this.triggerEvent.apply(this,args);
-    }
-    
-    
-    // triggerInit
-    // fonction utilisé pour init un component, avant le setup
-    // ces événements ne bubble pas
-    this.triggerInit = function(node) 
-    {
-        const args = Arr.merge([node,'component:init'],ArrLike.sliceStart(1,arguments));
+        const args = Arr.merge([nodes,'component:setup'],ArrLike.sliceStart(1,arguments));
         return this.triggerEvent.apply(this,args);
     }
     
     
     // allFunc
     // retourne de l'objet avec toutes les func lié à la node
-    // si plusieurs nodes, retourne seulement pour la première node
-    this.allFunc = function(node)
+    // possible de créer l'objet si non existant
+    // envoie une erreur si plusieurs nodes
+    this.allFunc = function(node,create)
     {
-        return Dom.getOrSetData(node,'lemur-func',{});
+        return Dom.getOrSetData(node,'lemur-func',(create === true)? {}:undefined);
     }
     
     
     // getFunc
     // méthode qui retourne une fonction emmagasiné dans une node
-    // si plusieurs nodes, retourne la fonction de la première node
+    // envoie une erreur si plusieurs nodes
     this.getFunc = function(node,type,func) 
     {
-        const all = this.allFunc(node);
-        
-        return Pojo.get(type,all);
+        return Pojo.get(type,this.allFunc(node));
     }
     
     
     // setFunc
     // permet d'emmagasiné une fonction dans chaque node fournit en argument
-    this.setFunc = function(node,type,func) 
+    this.setFunc = function(nodes,type,func) 
     {
         Str.check(type,true);
-        
-        $(node).each(function() {
-            const all = $inst.allFunc(this);
-            Pojo.setRef(type,func,all);
-        });
+        nodes = Dom.nodeWrap(nodes);
+        Dom.checkNodes(nodes,false,type);
+
+        if(Arr.isNotEmpty(nodes))
+        {
+            Arr.each(nodes,function() {
+                const all = $inst.allFunc(this,true);
+                Pojo.setRef(type,func,all);
+            });
+        }
         
         return;
     }
@@ -370,38 +385,75 @@ const Evt = Lemur.Evt = new function()
     
     // removeFunc
     // permet de retirer une fonction emmagasiné dans une ou plusiuers node
-    this.removeFunc = function(node,type) 
+    this.removeFunc = function(nodes,type) 
     {
-        $(node).each(function() {
-            const all = $inst.allFunc(this);
-            Pojo.unsetRef(type,all);
-        });
+        Str.check(type,true);
+        nodes = Dom.nodeWrap(nodes);
+        Dom.checkNodes(nodes,false,type);
+        
+        if(Arr.isNotEmpty(nodes))
+        {
+            Arr.each(nodes,function() {
+                const all = $inst.allFunc(this,true);
+                Pojo.unsetRef(type,all);
+            });
+        }
         
         return;
     }
     
     
     // triggerFunc
-    // permet de lancer la fonction sur la première node donnée en argumetn
+    // permet de lancer la fonction sur la première node donnée en argument
+    // retourne le résultat de la méthode ou undefined
     this.triggerFunc = function(node,type) 
     {
-        let r = null;
+        let r = undefined;
+        Dom.checkNode(node,false,type);
         Str.check(type,true);
-        const func = this.getFunc(node,type);
         
-        if(Func.is(func))
+        if(node != null)
         {
-            const args = ArrLike.sliceStart(2,arguments);
+            const func = this.getFunc(node,type);
             
-            if(this.debug() > 2)
-            console.log('triggerFunc',type,'found',node);
+            if(Func.is(func))
+            {
+                const args = ArrLike.sliceStart(2,arguments);
+                
+                if(this.debug() > 2)
+                console.log('triggerFunc',type,'found',node);
+                
+                r = func.apply(node,args);
+            }
             
-            r = func.apply(node,args);
+            else if(this.debug() > 0)
+            console.log('triggerFunc',type,'notFound',node);
         }
         
-        else if(this.debug() > 0 && Dom.isNode(node))
-        console.log('triggerFunc',type,'notFound',node);
+        return r;
+    }
+    
+    
+    // triggerFuncs
+    // permet de lancer une fonction sur plusieurs nodes
+    // retorne un tableau avec tous les résultats
+    this.triggerFuncs = function(nodes,type)
+    {
+        let r = null;
+        nodes = Dom.nodeWrap(nodes);
+        Dom.checkNodes(nodes,false,type);
         
+        if(Arr.isNotEmpty(nodes))
+        {
+            r = [];
+            const args = ArrLike.sliceStart(2,arguments);
+            
+            Arr.each(nodes,function() {
+                let result = $inst.triggerFunc.apply($inst,Arr.merge([this,type],args));
+                r.push(result);
+            });
+        }
+
         return r;
     }
 };

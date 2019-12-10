@@ -13,32 +13,45 @@ const Ajax = Component.Ajax = function(type)
         return (triggerFunc(document,'doc:isLoading') === true)? false:true;
     });
     
-    setFunc(this,'ajax:trigger',function(triggerEvent,config) {
+    setFunc(this,'ajax:trigger',function(config,triggerEvent) {
+        let r = null;
         
-        if(!Obj.isNotEmpty(config))
+        if(!Pojo.isNotEmpty(config))
         {
-            config = triggerFunc(this,'ajax:getConfig',triggerEvent);
+            config = triggerFunc(this,'ajax:config');
+            
             if(Dom.isNode(config))
             config = Xhr.configFromNode(config);
+            
+            else if(Str.is(config))
+            config = {url: config};
         }
         
-        const r = Xhr.trigger(this,config);
+        if(Pojo.isNotEmpty(config))
+        {
+            Xhr.configNodeEvents(this,config);
+            r = Xhr.trigger(config);
+        }
         
-        if(r !== false && triggerEvent != null)
+        if(r != null && triggerEvent != null)
         Evt.preventStop(triggerEvent,true);
         
         return r;
     });
     
-    setFunc(this,'ajax:getConfig',function(triggerEvent) {
+    setFunc(this,'ajax:config',function(triggerEvent) {
         return this;
+    });
+    
+    setFunc(this,'ajax:init',function(config) {
+        triggerEvent(this,type,config);
     });
     
     
     // event
     ael(this,type,function(event,config) {
         event.stopPropagation();
-        triggerFunc(this,'ajax:trigger',event,config);
+        triggerFunc(this,'ajax:trigger',config,event);
     });
     
     return this;

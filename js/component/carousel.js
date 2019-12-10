@@ -15,7 +15,7 @@ const Carousel = Component.Carousel = function(option)
         multiple: true
     },option);
     
-    
+
     // components
     Component.ClickOpenBase.call(this,$option);
     Component.ClickOpenTriggerBase.call(this,$option);

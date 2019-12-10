@@ -60,19 +60,18 @@ const Background = Component.Background = function()
     // documentBind
     const documentBind = function() 
     {
-        const background = $(this);
+        const background = this;
         
         setFunc(document,'doc:getBackground',function() {
             return background;
         });
         
         ael(document,'doc:unmount',function() {
-            triggerEvent(background,'background:unset');
+            triggerFunc(background,'background:unset');
         });
 
-        // docClick, ferme le background
         ael(this,'click',function() {
-            triggerEvent(this,'background:unset');
+            triggerFunc(this,'background:unset');
         });
     }
     

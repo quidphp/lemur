@@ -8,7 +8,7 @@
 // script of common behaviours for all pages of the CMS
 
 // ready
-$(document).ready(function() 
+ael(document,"DOMContentLoaded", function()
 {    
     // initial mount
     // comportements bindés une seule fois au tout début
@@ -192,20 +192,19 @@ $(document).ready(function()
         // search
 		triggerSetup(Component.SearchSlide.call(search,{inputTarget: "> .form input[type='text']", infoTarget: "> .in"}));
         
+        // rowsChecker
+        triggerSetup(Component.RowsChecker.call(main));
+        
+        // colsSorter
+        triggerSetup(Component.ColsSorter.call(colsSorter));
+        
+        // filter
+        triggerSetup(Component.Filter.call(filter));
+
         /*
         // dragScroll
         triggerSetup(Component.scrollDrag.call(scroller,{selector: 'tbody',targetTag: 'div'}));
-        
-        // rowsChecker
-        triggerSetup(Component.rowsChecker.call(main));
-        
-		// colsSorter
-        Component.colsSorter.call(colsSorter);
-		triggerEvent(colsSorter,'component:setup');
-        
-        // filter
-		triggerSetup(Component.filter.call(filter));
-        
+                
         // filesSlider
         Component.slider.call(filesSlider,null,null,'.slider-element',false);
         
@@ -350,7 +349,7 @@ $(document).ready(function()
         });
         
         aelOnce(formElement,'specificMulti:setup',function(event) {
-            const $this = $(this);
+            const $this = this;
             const checkbox = triggerFunc(this,'specificMulti:getCheckbox');
             
             ael(checkbox,'change',function(event) {

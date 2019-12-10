@@ -16,7 +16,7 @@ const TestComponent = Test.Component = function()
         const htmlNode = $("html").get(0);
         const bodyNode = $("body").get(0);
         $("body").prepend("<input type='text' value='2' name='test-suite' data-required='1' data-pattern='^[0-9\-]+$' />");
-        const inputNode = $("body > input[name='test-suite']");
+        const inputNode = $("body > input[name='test-suite']").get(0);
         
         // absolutePlaceholder
         
@@ -120,7 +120,7 @@ const TestComponent = Test.Component = function()
         assert(triggerFunc(inputNode,'input:getValue') === '3');
         triggerEvent(inputNode,'input:disable');
         assert(triggerFunc(inputNode,'input:isDisabled'));
-        assert(triggerEvent(inputNode,'input:enable') === inputNode);
+        assert(triggerEvent(inputNode,'input:enable') == null);
         assert(!triggerFunc(inputNode,'input:isDisabled'));
         triggerFunc(inputNode,'input:setValue','2');
         

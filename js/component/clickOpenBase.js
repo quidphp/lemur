@@ -111,10 +111,10 @@ const ClickOpenBase = Component.ClickOpenBase = function(option)
         triggerEvent(all,'clickOpen:close');
     });
     
-    setFunc(this,'clickOpen:closeOthers',function() {
+    setFunc(this,'clickOpen:closeOthers',function(keepBackground) {
         const all = triggerFunc(this,'clickOpen:getAll');
-        const others = $(all).not(this);
-        triggerEvent(others,'clickOpen:close');
+        const others = $(all).not(this).get();
+        triggerEvent(others,'clickOpen:close',keepBackground);
     });
     
     setFunc(this,'clickOpen:closeChilds',function() {
@@ -135,7 +135,7 @@ const ClickOpenBase = Component.ClickOpenBase = function(option)
     // event
     ael(this,'clickOpen:open',function() {
         if(!triggerFunc(this,'clickOpen:allowMultiple'))
-        triggerFunc(this,'clickOpen:closeOthers');
+        triggerFunc(this,'clickOpen:closeOthers',true);
         
         if(triggerFunc(this,'clickOpen:isOpen') !== true)
         {
@@ -155,15 +155,18 @@ const ClickOpenBase = Component.ClickOpenBase = function(option)
         triggerFunc(background,'background:set',bgFrom,false);
     });
     
-    ael(this,'clickOpen:close',function() {
+    ael(this,'clickOpen:close',function(event,keepBackground) {
         if(triggerFunc(this,'clickOpen:isOpen') === true)
         {
             const attr = triggerFunc(this,'clickOpen:getAttr');
             $(this).removeAttr(attr);
             
-            const background = triggerFunc(document,'doc:getBackground');
-            const bgFrom = triggerFunc(this,'clickOpen:getBackgroundFrom');
-            triggerFunc(background,'background:unset',bgFrom);
+            if(keepBackground !== true)
+            {
+                const background = triggerFunc(document,'doc:getBackground');
+                const bgFrom = triggerFunc(this,'clickOpen:getBackgroundFrom');
+                triggerFunc(background,'background:unset',bgFrom);
+            }
         }
     });
     
@@ -181,7 +184,7 @@ const ClickOpenBase = Component.ClickOpenBase = function(option)
     
     // setup
     aelOnce(this,'component:setup',function() {
-        const $this = $(this);
+        const $this = this;
         const container = triggerFunc(this,'clickOpen:getTarget');
         Component.KeyboardEnter.call(container,true);
         

@@ -51,16 +51,16 @@ const Modal = Component.Modal = function(option)
     setFunc(this,'modal:fetchNode',function(node) {
         const config = Xhr.configFromNode(node);
         const route = $(node).attr('data-modal');
-        return triggerFunc(this,'modal:fetch',route,config);
+        return triggerFunc(this,'modal:fetch',config,route);
     });
     
-    setFunc(this,'modal:fetch',function(route,config) {
+    setFunc(this,'modal:fetch',function(config,route) {
         let r = false;
         
-        if(Obj.isNotEmpty(config))
+        if(Pojo.isNotEmpty(config))
         {
             triggerFunc(this,'modal:setRoute',route);
-            triggerEvent(this,'ajax:init',config);
+            triggerFunc(this,'ajax:init',config);
             r = true;
         }
         
@@ -83,7 +83,7 @@ const Modal = Component.Modal = function(option)
         if(Str.isNotEmpty(route))
         {
             const anchors = triggerFunc(this,'modal:getRouteAnchors',route);
-            triggerFunc(anchors,'modal:open');
+            triggerFuncs(anchors,'modal:open');
         }
     });
     
@@ -100,7 +100,7 @@ const Modal = Component.Modal = function(option)
         if(Str.isNotEmpty(route))
         {
             const anchors = triggerFunc(this,'modal:getRouteAnchors',route);
-            triggerFunc(anchors,'modal:close');
+            triggerFuncs(anchors,'modal:close');
         }
         
         triggerFunc(this,'modal:setRoute',null);
