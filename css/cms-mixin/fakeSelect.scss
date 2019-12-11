@@ -14,12 +14,12 @@
 @mixin fakeSelect() {
     @include fakeSelectTrigger();
     @include inbl();
-    
+
     &[data-absolute-placeholder='ready'][data-active='1'] > .trigger {
         @include abs(0, null, null, 0);
         z-index: 3;
     }
-    
+
     > .popup {
         @include fakeSelectPopup();
     }

@@ -336,12 +336,12 @@ trait _generalRelation
                 $searchMinLength = $col->searchMinLength();
                 $html .= Html::divOp('top');
                 $placeholder = static::langText('common/filter')." ($size)";
-                
+
                 $html .= Html::divOp('input-search');
                 $html .= Html::inputText(null,['name'=>true,'data-pattern'=>['minLength'=>$searchMinLength],'placeholder'=>$placeholder]);
                 $html .= Html::button(null,['icon-solo','search']);
                 $html .= Html::divCl();
-                
+
                 if(!empty($order))
                 {
                     $html .= Html::div(null,'spacing');

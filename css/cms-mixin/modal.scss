@@ -44,8 +44,7 @@
 
 // modalBox
 // mixin avec styles pour la boîte du modal
-@mixin modalBox()
-{
+@mixin modalBox() {
     border-radius: 10px;
     @include flex(center);
 

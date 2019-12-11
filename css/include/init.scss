@@ -52,8 +52,7 @@ $media: $uriMedia;
 
 // defaultAnimation
 // mixin qui génère certaines animations par défaut
-@mixin defaultAnimation()
-{
+@mixin defaultAnimation() {
     @include keyframes(fadein) {
         from {
             opacity: 0;

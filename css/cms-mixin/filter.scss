@@ -53,17 +53,17 @@
 @mixin filterPopupTop() {
     padding: 10px;
     display: block;
-    
+
     .input-search {
         position: relative;
-        
+
         input[type='text'] {
             width: 100%;
             padding-right: 25px;
         }
-        
+
         button {
-            @include abs(50%,8px);
+            @include abs(50%, 8px);
             margin-top: -8px;
         }
     }
