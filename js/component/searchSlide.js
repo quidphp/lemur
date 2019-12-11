@@ -12,28 +12,32 @@ const SearchSlide = Component.SearchSlide = function(option)
     const $option = Pojo.replaceRecursive({
         inputTarget: "> input[type='text']",
         infoTarget: '> div',
-        inputSearch: {},
+        inputSearch: {
+            timeoutEvent: 'inputSearch:validate'
+        },
         speed: 300
     },option);
     
     
-    // func
-    setFunc(this,'searchSlide:getInput',function() {
-        return qs(this,$option.inputTarget);
-    });
-    
-    setFunc(this,'searchSlide:getInfo',function() {
-        return qs(this,$option.infoTarget);
-    });
-    
-    setFunc(this,'searchSlide:showInfo',function() {
-        const info = triggerFunc(this,'searchSlide:getInfo');
-        $(info).stop(true,true).slideDown($option.speed);
-    });
-    
-    setFunc(this,'searchSlide:hideInfo',function() {
-        const info = triggerFunc(this,'searchSlide:getInfo');
-        $(info).stop(true,true).slideUp($option.speed);
+    // handler
+    setHandlers(this,'searchSlide:',{
+        getInput: function() {
+            return qs(this,$option.inputTarget);
+        },
+        
+        getInfo: function() {
+            return qs(this,$option.infoTarget);
+        },
+        
+        showInfo: function() {
+            const info = trigHandler(this,'searchSlide:getInfo');
+            $(info).stop(true,true).slideDown($option.speed);
+        },
+        
+        hideInfo: function() {
+            const info = trigHandler(this,'searchSlide:getInfo');
+            $(info).stop(true,true).slideUp($option.speed);
+        }
     });
     
 
@@ -47,20 +51,25 @@ const SearchSlide = Component.SearchSlide = function(option)
     const bindInput = function()
     {
         const $this = this;
-        const input = triggerFunc(this,'searchSlide:getInput');
+        const input = trigHandler(this,'searchSlide:getInput');
         
-        Component.InputSearch.call(input,$option.inputSearch);
+        Component.InputSearchHref.call(input,$option.inputSearch);
+        
+        // handler
+        setHandler(input,'inputSearch:getButton',function() {
+            return $(this).parent().next("button[type='button']").get(0);
+        });
         
         // event
         ael(input,'focus',function() {
-            triggerFunc($this,'searchSlide:showInfo');
+            trigHandler($this,'searchSlide:showInfo');
         });
         
         ael(input,'focusout',function() {
-            triggerFunc($this,'searchSlide:hideInfo');
+            trigHandler($this,'searchSlide:hideInfo');
         });
         
-        triggerSetup(input);
+        trigSetup(input);
     }
     
     return this;

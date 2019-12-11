@@ -15,15 +15,20 @@ const ScrollChange = Component.ScrollChange = function(persistent)
     // event
     const handler = ael(window,'scroll',function(event) {
         event.stopPropagation();
-        triggerEvent($nodes,'scroll:change');
+        trigEvt($nodes,'scroll:change');
     });
     
     
     // persistent
     if(persistent !== true)
     {
-        aelOnce(document,'doc:unmount',function() {
+        const handlerDocument = aelOnce(document,'doc:unmount',function() {
             rel(window,handler);
+        });
+        
+        aelOnce(this,'component:teardown',function() {
+            rel(window,handler);
+            rel(document,handlerDocument);
         });
     }
     

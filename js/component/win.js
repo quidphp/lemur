@@ -8,16 +8,20 @@
 // behaviours for managing the events and unload notification with the window object
 const Win = Component.Win = function(type,timeout)
 {
-    // func
+    // une node
+    Dom.checkNode(this);
+    
+    
+    // handler
     
     // retourne vrai si la fenêtre courante est responsive
-    setFunc(this,'win:isResponsive',function() {
+    setHandler(this,'win:isResponsive',function() {
         return ($(window).width() < 900)? true:false;
     });
 
-    setFunc(this,'win:isUnloadValid',function() {
+    setHandler(this,'win:isUnloadValid',function() {
         let r = false;
-        const unload = triggerFunc(this,'win:unloadText');
+        const unload = trigHandler(this,'win:unloadText');
         
         if(!Str.isNotEmpty(unload) || confirm(unload))
         r = true;
@@ -25,32 +29,32 @@ const Win = Component.Win = function(type,timeout)
         return r;
     });
     
-    setFunc(this,'win:addUnloadNode',function(node) {
-        const nodes = triggerFunc(this,'win:getUnloadNodes');
+    setHandler(this,'win:addUnloadNode',function(node) {
+        const nodes = trigHandler(this,'win:getUnloadNodes');
         
         $(node).each(function() {
             nodes.push(this);
         });
     });
     
-    setFunc(this,'win:removeUnloadNode',function(node) {
-        const nodes = triggerFunc(this,'win:getUnloadNodes');
+    setHandler(this,'win:removeUnloadNode',function(node) {
+        const nodes = trigHandler(this,'win:getUnloadNodes');
         
         $(node).each(function() {
             Arr.spliceValue(this,nodes);
         });
     });
     
-    setFunc(this,'win:getUnloadNodes',function(node) {
+    setHandler(this,'win:getUnloadNodes',function(node) {
         return Dom.getOrSetData(this,'win-unload-nodes',[]);
     });
     
-    setFunc(this,'win:unloadText',function() {
+    setHandler(this,'win:unloadText',function() {
         let r = null;
-        const nodes = triggerFunc(this,'win:getUnloadNodes');
+        const nodes = trigHandler(this,'win:getUnloadNodes');
         
         $(nodes).each(function() {
-            r = triggerFunc(this,'win:unloadText');
+            r = trigHandler(this,'win:unloadText');
             
             if(Str.isNotEmpty(r))
             return false;
@@ -64,7 +68,7 @@ const Win = Component.Win = function(type,timeout)
     ael(this,'beforeunload',function(event) {
         let r = undefined;
         event = event || window.event;
-        const text = triggerFunc(this,'win:unloadText');
+        const text = trigHandler(this,'win:unloadText');
         
         if(Str.isNotEmpty(text))
         {
@@ -73,6 +77,10 @@ const Win = Component.Win = function(type,timeout)
         }
         
         return r;
+    });
+    
+    ael(this,'unload',function() {
+        trigHandler(document,'doc:unload');
     });
     
     return this;

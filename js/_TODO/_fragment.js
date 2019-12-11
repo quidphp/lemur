@@ -13,8 +13,8 @@ Component.fragment = function()
     })
     .on('fragment:update',function(event,replaceState) {
         const current = Request.fragment();
-        const fragment = triggerFunc(this,'fragment:get');
-        const hasHistoryApi = triggerFunc(document,'doc:hasHistoryApi');
+        const fragment = trigHandler(this,'fragment:get');
+        const hasHistoryApi = trigHandler(document,'doc:hasHistoryApi');
         
         if(current !== fragment)
         {
@@ -23,20 +23,20 @@ Component.fragment = function()
                 const fragmentHash = '#'+fragment;
                 
                 if(hasHistoryApi === true && replaceState === true)
-                triggerFunc(document,'doc:replaceState',Request.relative()+fragmentHash);
+                trigHandler(document,'doc:replaceState',Request.relative()+fragmentHash);
                 else
                 window.location.hash = fragmentHash;
             }
             
             else
-            triggerEvent(this,'fragment:remove',replaceState);
+            trigEvt(this,'fragment:remove',replaceState);
             
-            triggerEvent(this,'fragment:updated',fragment);
+            trigEvt(this,'fragment:updated',fragment);
         }
     })
     .on('fragment:remove',function(event) {
         if(hasHistoryApi === true && replaceState === true)
-        triggerFunc(document,'doc:replaceState',Request.relative());
+        trigHandler(document,'doc:replaceState',Request.relative());
         else
         window.location.hash = '';
     });

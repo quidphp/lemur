@@ -9,8 +9,8 @@
 Component.tab = function()
 {
     $(this).on('tab:getIndex',function(event,value,loop) {
-        const current = triggerFunc(this,'tab:getCurrent');
-        const target = triggerFunc(this,'tab:getTarget');
+        const current = trigHandler(this,'tab:getCurrent');
+        const target = trigHandler(this,'tab:getTarget');
         
         if(Dom.isNode(value))
         value = target.index(value);
@@ -20,52 +20,52 @@ Component.tab = function()
         return Nav.index(value,current,max,loop);
     })
     .on('tab:indexer',function(event,value,loop) {
-        const index = triggerFunc(this,'tab:getIndex',value,loop);
+        const index = trigHandler(this,'tab:getIndex',value,loop);
         if(Num.is(index))
-        triggerEvent(this,'tab:change',index);
+        trigEvt(this,'tab:change',index);
     })
     .on('tab:first',function() {
-        triggerEvent(this,'tab:indexer','first');
+        trigEvt(this,'tab:indexer','first');
     })
     .on('tab:prev',function() {
-        triggerEvent(this,'tab:indexer','prev');
+        trigEvt(this,'tab:indexer','prev');
     })
     .on('tab:next',function() {
-        triggerEvent(this,'tab:indexer','next');
+        trigEvt(this,'tab:indexer','next');
     })
     .on('tab:last',function() {
-        triggerEvent(this,'tab:indexer','last');
+        trigEvt(this,'tab:indexer','last');
     })
     .on('tab:index',function(event,index) {
-        triggerEvent(this,'tab:indexer','index');
+        trigEvt(this,'tab:indexer','index');
     })
     .on('tab:loopNext',function(event) {
-        triggerEvent(this,'tab:indexer','next',true);
+        trigEvt(this,'tab:indexer','next',true);
     })
     .on('tab:loopPrev',function(event) {
-        triggerEvent(this,'tab:indexer','prev',true);
+        trigEvt(this,'tab:indexer','prev',true);
     })
     .on('tab:target',function(event,target) {
-        triggerEvent(this,'tab:indexer',target);
+        trigEvt(this,'tab:indexer',target);
     })
     .on('tab:getCurrent',function() {
         return $(this).data('tab-current');
     })
     .on('tab:isCurrent',function(event,value) {
-        const current = triggerFunc(this,'tab:getCurrent');
-        const index = (Num.is(value))? value:triggerFunc(this,'tab:getTarget').index(value);
+        const current = trigHandler(this,'tab:getCurrent');
+        const index = (Num.is(value))? value:trigHandler(this,'tab:getTarget').index(value);
         return (Num.is(current) && index === current)? true:false;
     })
     .on('tab:closeAll',function() {
-        const target = triggerFunc(this,'tab:getTarget');
+        const target = trigHandler(this,'tab:getTarget');
         $(this).data('tab-current',null);
         target.each(function(index) {
-            triggerEvent(this,'tab:close');
+            trigEvt(this,'tab:close');
         });
     })
     .on('tab:change',function(event,index) {
-        const target = triggerFunc(this,'tab:getTarget');
-        const current = triggerFunc(this,'tab:getCurrent');
+        const target = trigHandler(this,'tab:getTarget');
+        const current = trigHandler(this,'tab:getCurrent');
         
         if(target.length && Num.is(index))
         {
@@ -90,22 +90,22 @@ Component.tab = function()
                 }
                 
                 else
-                triggerEvent(this,'tab:notExist');
+                trigEvt(this,'tab:notExist');
             }
             
             else
-            triggerEvent(this,'tab:noChange');
+            trigEvt(this,'tab:noChange');
         }
     })
     .on('tab:changeOrFirst',function(event,target) {
         if(target != null && target.length === 1)
         target.trigger('tab:change');
         else
-        triggerEvent(this,'tab:first');
+        trigEvt(this,'tab:first');
     })
     .on('tab:prepare',function() {
         const tab = $(this);
-        const target = triggerFunc(this,'tab:getTarget');
+        const target = trigHandler(this,'tab:getTarget');
         
         target.on('tab:getIndex',function() {
             return target.index($(this));
@@ -114,7 +114,7 @@ Component.tab = function()
             return target;
         })
         .on('tab:getCurrent',function() {
-            return tab.triggerHandler('tab:getCurrent');
+            return tab.trigHandler('tab:getCurrent');
         })
         .on('tab:get',function() {
             return tab;
@@ -123,7 +123,7 @@ Component.tab = function()
             tab.trigger('tab:target',[$(this)]);
         })
         .on('tab:open',function() {
-            const index = triggerFunc(this,'tab:getIndex');
+            const index = trigHandler(this,'tab:getIndex');
             tab.data('tab-current',index);
         });
     }).trigger('tab:prepare');

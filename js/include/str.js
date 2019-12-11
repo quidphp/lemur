@@ -32,6 +32,14 @@ const StrPrimitive = {
     },
 
     
+    // isEqual
+    // retourne vrai si les deux valeurs sont égales si comparés comme string
+    isEqual: function(value,value2)
+    {
+        return Str.cast(value) === Str.cast(value2);
+    },
+    
+    
     // in
     // retourne vrai si la valeur est dans la string
     // retourne un boolean

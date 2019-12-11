@@ -12,8 +12,8 @@ const KeyboardEnter = Component.KeyboardEnter = function(prevent,type)
     Component.Keyboard.call(this,'enter',[10,13],type);
     
     
-    // func
-    setFunc(this,'keyboardEnter:prevent',function() {
+    // handler
+    setHandler(this,'keyboardEnter:prevent',function() {
         return (prevent === true)? true:false;
     });        
     

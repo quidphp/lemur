@@ -20,12 +20,12 @@ Component.specificPanel = function()
         Component.fragment.call(panel);
         
         panel.on('tab:init',function(event) {
-            triggerEvent(this,'specificForm:bindView',this);
+            trigEvt(this,'specificForm:bindView',this);
         })
         .on('tab:open',function() {
-            const nav = triggerFunc(this,'link:getNav');
+            const nav = trigHandler(this,'link:getNav');
             const description = nav.data('description') || '';
-            const fragment = triggerFunc(this,'fragment:get');
+            const fragment = trigHandler(this,'fragment:get');
             const current = Request.fragment();
             
             panelNav.removeClass('selected');
@@ -39,14 +39,14 @@ Component.specificPanel = function()
             if($(this).is("[data-current-panel='1']") === true && !current)
             {
                 $(this).removeAttr('data-current-panel');
-                triggerEvent(this,'fragment:update',true);
+                trigEvt(this,'fragment:update',true);
             }
             
             else if(Str.isNotEmpty(current))
-            triggerEvent(this,'fragment:update');
+            trigEvt(this,'fragment:update');
             
             DomChange.hrefChangeHash(fragment,$("a.hashFollow"));
-            form.triggerHandler('tab:getInput').val((Str.isNotEmpty(fragment))? fragment:'');
+            form.trigHandler('tab:getInput').val((Str.isNotEmpty(fragment))? fragment:'');
             
             $(document).trigger('doc:outsideClick');
         })
@@ -79,19 +79,19 @@ Component.specificPanel = function()
             return r;
         })
         .on('hash:change',function(event,fragment) {
-            const target = triggerFunc(this,'tab:findHash',fragment);
+            const target = trigHandler(this,'tab:findHash',fragment);
             
-            if(target.length === 1 && !triggerFunc(this,'tab:isCurrent',target))
+            if(target.length === 1 && !trigHandler(this,'tab:isCurrent',target))
             target.trigger('tab:change');
         })
         .on('tab:showFirst',function(event) {
-            const target = triggerFunc(this,'tab:findHash',Request.fragment());
-            triggerEvent(this,'tab:changeOrFirst',target);
+            const target = trigHandler(this,'tab:findHash',Request.fragment());
+            trigEvt(this,'tab:changeOrFirst',target);
         });
         
         Component.tab.call(this,Component.tab);
-        triggerEvent(this,'tab:closeAll');
-        triggerEvent(this,'tab:showFirst');
+        trigEvt(this,'tab:closeAll');
+        trigEvt(this,'tab:showFirst');
     });
     
     return this;

@@ -20,7 +20,16 @@ const Selector = Lemur.Selector = {
     // méthode utilisé pour faire une recherche et retourner le premier enfant d'une target qui match le selector
     scopedQuerySelector: function(node,selector)
     {
-        return $(node).first().find(selector).get(0);
+        let r = null;
+        Dom.checkNode(node,false);
+        
+        if(Debug.is('selector'))
+        console.log(node,selector,'scopedQuerySelector');
+        
+        if(node != null)
+        r = $(node).find(selector).get(0);
+        
+        return r;
     },
     
     
@@ -29,21 +38,38 @@ const Selector = Lemur.Selector = {
     // doit retourner un array, pas une node list
     scopedQuerySelectorAll: function(node,selector)
     {
-        return $(node).first().find(selector).get();
+        let r = null;
+        Dom.checkNode(node,false);
+        
+        if(Debug.is('selector'))
+        console.log(node,selector,'scopedQuerySelectorAll');
+        
+        if(node != null)
+        r = $(node).find(selector).get();
+        
+        return r;
     },
     
     
     // mergedQuerySelectorAll
     // permet de faire un querySelectorAll sur plusieurs nodes
     // retourne un array avec les résultats merged
-    mergedQuerySelectorAll: function(node,selector)
+    mergedQuerySelectorAll: function(nodes,selector)
     {
-        const r = [];
+        let r = null;
         const $inst = this;
+        Dom.checkNodes(nodes,false);
         
-        $(node).each(function() {
-            Arr.mergeRef(r,$inst.scopedQuerySelectorAll(this,selector));
-        });
+        if(Debug.is('selector'))
+        console.log(nodes,selector,'mergedQuerySelectorAll');
+        
+        if(nodes != null)
+        {
+            r = [];
+            $(nodes).each(function() {
+                Arr.mergeRef(r,$inst.scopedQuerySelectorAll(this,selector));
+            });
+        }
         
         return r;
     }

@@ -16,44 +16,44 @@ Component.addRemove = function()
         return $(this).find(".playground").get(0);
     })
     .on('addRemove:getCount',function() {
-        return triggerFunc(this,'addRemove:getAll').length;
+        return trigHandler(this,'addRemove:getAll').length;
     })
     .on('addRemove:getAll',function() {
-        return triggerFunc(this,'addRemove:getPlayground').find(".ele");
+        return trigHandler(this,'addRemove:getPlayground').find(".ele");
     })
     .on('addRemove:getIndex',function(event,index) {
-        return triggerFunc(this,'addRemove:getAll').eq(index);
+        return trigHandler(this,'addRemove:getAll').eq(index);
     })
     .on('addRemove:getLast',function() {
-        return triggerFunc(this,'addRemove:getAll').last()
+        return trigHandler(this,'addRemove:getAll').last()
     })
     .on('addRemove:findIndex',function(event,element) {
-        const all = triggerFunc(this,'addRemove:getAll');
+        const all = trigHandler(this,'addRemove:getAll');
         return all.index(element);
     })
     
     // trigger
     .on('addRemove:insert',function() {
-        const insert = triggerFunc(this,'addRemove:getInsert');
-        const container = triggerFunc(this,'addRemove:getPlayground');
+        const insert = trigHandler(this,'addRemove:getInsert');
+        const container = trigHandler(this,'addRemove:getPlayground');
         const html = insert.data('html');
         
         if(Str.isNotEmpty(html))
         {
             container.append(html);
-            const inserted = triggerFunc(this,'addRemove:getLast');
+            const inserted = trigHandler(this,'addRemove:getLast');
             bindElement.call(this,inserted);
-            triggerEvent(this,'addRemove:inserted',inserted);
+            trigEvt(this,'addRemove:inserted',inserted);
         }
     })
     .on('addRemove:remove',function(event,index) {
         if(Num.is(index))
         {
-            const ele = triggerFunc(this,'addRemove:getIndex',index);
+            const ele = trigHandler(this,'addRemove:getIndex',index);
             ele.remove();
             
-            if(!triggerFunc(this,'addRemove:getCount'))
-            triggerEvent(this,'addRemove:insert');
+            if(!trigHandler(this,'addRemove:getCount'))
+            trigEvt(this,'addRemove:insert');
         }
     })
     
@@ -63,7 +63,7 @@ Component.addRemove = function()
         bindInsert.call(this);
         bindSorter.call(this);
         
-        triggerFunc(this,'addRemove:getAll').each(function() {
+        trigHandler(this,'addRemove:getAll').each(function() {
             bindElement.call($this,$(this));
         });
     });
@@ -71,17 +71,17 @@ Component.addRemove = function()
     // bindInsert
     const bindInsert = function() {
         const $this = $(this);
-        const insert = triggerFunc(this,'addRemove:getInsert');
+        const insert = trigHandler(this,'addRemove:getInsert');
         
         insert.on('click',function() {
-            triggerEvent($this,'addRemove:insert');
+            trigEvt($this,'addRemove:insert');
         });
     };
     
     // bindSorter
     const bindSorter = function() {
         const move = $(this).find(".move");
-        const playground = triggerFunc(this,'addRemove:getPlayground');
+        const playground = trigHandler(this,'addRemove:getPlayground');
         
         if(move.length)
         Component.verticalSorter.call(playground,'.ele','.move');
@@ -94,8 +94,8 @@ Component.addRemove = function()
         Component.confirm.call(remove,'click');
         
         remove.on('confirmed',function() {
-            const index = $this.triggerHandler('addRemove:findIndex',[element]);
-            triggerEvent($this,'addRemove:remove',[index]);
+            const index = $this.trigHandler('addRemove:findIndex',[element]);
+            trigEvt($this,'addRemove:remove',[index]);
         });
     };
     

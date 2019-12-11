@@ -23,8 +23,8 @@ const SearchAutoInfo = Component.SearchAutoInfo = function(option)
     Component.ClickOpenInputAjax.call(this,$option);
     
     
-    // func
-    setFunc(this,'searchAutoInfo:getInfo',function() {
+    // handler
+    setHandler(this,'searchAutoInfo:getInfo',function() {
         return qs(this,$option.targetInfo);
     });
     
@@ -40,7 +40,7 @@ const SearchAutoInfo = Component.SearchAutoInfo = function(option)
     const bindInfo = function() 
     {
         const $this = this;
-        const info = triggerFunc(this,'searchAutoInfo:getInfo');
+        const info = trigHandler(this,'searchAutoInfo:getInfo');
         
         Component.ClickOpen.call(info,$option.info)
         
@@ -52,32 +52,32 @@ const SearchAutoInfo = Component.SearchAutoInfo = function(option)
             $($this).removeAttr($option.attrInfo);
         });
         
-        triggerSetup(info);
+        trigSetup(info);
     }
     
     
     // bindField
     const bindField = function() 
     {
-        const info = triggerFunc(this,'searchAutoInfo:getInfo');
-        const field = triggerFunc(this,'form:getValidateField');
+        const info = trigHandler(this,'searchAutoInfo:getInfo');
+        const field = trigHandler(this,'form:getValidateField');
         
         ael(field,'click',function() {
-            if(triggerFunc(this,'validate:isEmpty'))
-            triggerEvent(info,'clickOpen:open');
+            if(trigHandler(this,'validate:isEmpty'))
+            trigEvt(info,'clickOpen:open');
         });
         
         ael(field,'validate:empty',function() {
             if($(this).is(":focus"))
-            triggerEvent(info,'clickOpen:open');
+            trigEvt(info,'clickOpen:open');
         });
         
         ael(field,'validate:notEmpty',function() {
-            triggerEvent(info,'clickOpen:close');
+            trigEvt(info,'clickOpen:close');
         });
         
         ael(field,'keyboardEscape:blocked',function(event) {
-            triggerEvent(info,'clickOpen:close');
+            trigEvt(info,'clickOpen:close');
         });
     }
     

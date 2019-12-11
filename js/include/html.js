@@ -14,13 +14,16 @@ const Html = Lemur.Html = {
     parse: function(html)
     {
         let r = null;
-        html = Str.cast(html);
-        html = html.replace(/<\!DOCTYPE[^>]*>/i, '');
-        html = html.replace(/<(html|head|body|script)([\s\>])/gi,'<div data-tag="$1"$2');
-        html = html.replace(/<\/(html|head|body|script)\>/gi,'</div>');
         
-        html = Str.trim(html);
-        r = $.parseHTML(html);
+        if(Str.isNotEmpty(html))
+        {
+            html = html.replace(/<\!DOCTYPE[^>]*>/i, '');
+            html = html.replace(/<(html|head|body|script)([\s\>])/gi,'<div data-tag="$1"$2');
+            html = html.replace(/<\/(html|head|body|script)\>/gi,'</div>');
+            
+            html = Str.trim(html);
+            r = $.parseHTML(html);
+        }
 
         return r;
     },
@@ -48,8 +51,8 @@ const Html = Lemur.Html = {
         $(r.html).removeAttr('data-tag');
         r.htmlAttr = Dom.attr(r.html);
         
-        r.head = Selector.scopedQuerySelector(doc,"[data-tag='head']");
-        r.body = Selector.scopedQuerySelector(doc,"[data-tag='body']");
+        r.head = Selector.scopedQuerySelector(r.html,"[data-tag='head']");
+        r.body = Selector.scopedQuerySelector(r.html,"[data-tag='body']");
         
         if(r.head != null)
         {

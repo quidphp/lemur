@@ -13,25 +13,25 @@ const Com = Component.Com = function()
     Component.KeyboardEscape.call(this,true);
     
     
-    // func
-    setFunc(this,'com:getBottom',function() {
+    // handler
+    setHandler(this,'com:getBottom',function() {
         return qs(this,'.bottom');
     });
 
-    setFunc(this,'com:slideUp',function() {
+    setHandler(this,'com:slideUp',function() {
         $(this).addClass('slide-close');
-        triggerFunc(this,'com:getBottom').stop(true,true).slideUp('fast');
+        trigHandler(this,'com:getBottom').stop(true,true).slideUp('fast');
     });
     
-    setFunc(this,'com:slideDown',function() {
+    setHandler(this,'com:slideDown',function() {
         $(this).removeClass('slide-close');
-        triggerFunc(this,'com:getBottom').stop(true,true).slideDown('fast');
+        trigHandler(this,'com:getBottom').stop(true,true).slideDown('fast');
     });
     
     
     // event
     ael(this,'keyboardEscape:blocked',function() {
-        triggerEvent(this,'com:close');
+        trigEvt(this,'com:close');
     });
     
     ael(this,'com:close',function() {
@@ -42,12 +42,12 @@ const Com = Component.Com = function()
     // delegate
     aelDelegate(this,'click','.close',function(event) {
         const delegate = event.delegateTarget;
-        triggerEvent(delegate,'com:close');
+        trigEvt(delegate,'com:close');
     });
     
     aelDelegate(this,'click','.date',function(event) {
         const delegate = event.delegateTarget;
-        triggerFunc(delegate,$(delegate).hasClass('slide-close')? 'com:slideDown':'com:slideUp');
+        trigHandler(delegate,$(delegate).hasClass('slide-close')? 'com:slideDown':'com:slideUp');
     });
     
     aelDelegate(this,'click',".row.insert > span,.row.update > span",function(event) {
@@ -73,9 +73,9 @@ const Com = Component.Com = function()
         
         if(Str.isNotEmpty(href))
         {
-            triggerFunc(this,'blockEvent:block','click');
+            trigHandler(this,'blockEvent:block','click');
             href = href.replace($(this).data('char'),primary);
-            triggerFunc(document,'doc:go',[href,clickEvent]);
+            trigHandler(document,'doc:go',[href,clickEvent]);
         }
     }
     

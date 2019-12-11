@@ -4,60 +4,78 @@
  * License: https://github.com/quidphp/lemur/blob/master/LICENSE
  */
  
-// inputSearch
-// script containing logic for a search input which redirects
+// inputSearchHref
+// script containing logic for a search input with a button
 const InputSearch = Component.InputSearch = function(option)
 {
     // option
     const $option = Object.assign({
-        timeout: 500
+        timeout: 500,
+        keyEvent: 'keyup',
+        timeoutEvent: 'inputSearch:process'
     },option);
     
     
     // components
-    Component.KeyboardEnter.call(this,true,'keyup');
-    Component.Timeout.call(this,'keyup',$option.timeout);
+    Component.KeyboardEnter.call(this,true,$option.keyEvent);
+    Component.Timeout.call(this,$option.keyEvent,$option.timeout);
+    Component.ValidatePrevent.call(this,'inputSearch:change');
     
     
-    // func
-    setFunc(this,'inputSearch:getCurrent',function() {
-        return Str.cast($(this).data("current"));
+    // handler
+    setHandler(this,'inputSearch:getCurrent',function() {
+        return $(this).data("current");
     });
     
-    setFunc(this,'inputSearch:getButton',function() {
-        return $(this).parent().next("button[type='button']").get(0);
+    setHandler(this,'inputSearch:setCurrent',function(value) {
+        $(this).data("current",value);
     });
     
-    setFunc(this,'inputSearch:validate',function() {
-        let r = triggerFunc(this,'validate:process');
-        const val = triggerFunc(this,'input:getValueTrim');
-        const current = triggerFunc(this,'inputSearch:getCurrent');
+    setHandler(this,'inputSearch:getButton',function() {
+        return $(this).next("button[type='button']").get(0);
+    });
+    
+    setHandler(this,'inputSearch:validate',function() {
+        let r = trigHandler(this,'validate:process');
+        const val = trigHandler(this,'input:getValueTrim');
+        const current = trigHandler(this,'inputSearch:getCurrent');
         
-        if(r === true && val === current)
+        if(r === true && Str.isEqual(val,current))
         {
             r = false;
-            triggerEvent(this,'validate:invalid');
+            trigEvt(this,'validate:invalid');
         }
         
         return r;
     });
     
-    setFunc(this,'inputSeach:buttonClick',function() {
-        refresh.call(this);
+    setHandler(this,'inputSearch:process',function() {
+        const validate = trigHandler(this,'inputSearch:validate');
+        
+        if(validate === true)
+        trigEvt(this,'inputSearch:change');
+    });
+    
+    setHandler(this,'inputSearch:buttonClick',function() {
+        trigHandler(this,'inputSearch:process');
     });
     
     
     // event
     ael(this,'keyboardEnter:blocked',function() {
-        refresh.call(this);
+        trigHandler(this,'inputSearch:process');
     });
         
-    ael(this,'timeout:keyup',function() {
-        triggerFunc(this,'inputSearch:validate');
+    ael(this,'timeout:'+$option.keyEvent,function() {
+        trigHandler(this,$option.timeoutEvent);
     });
     
     ael(this,'change',function() {
-        refresh.call(this);
+        trigHandler(this,'inputSearch:process');
+    });
+    
+    ael(this,'inputSearch:change',function() {
+        trigHandler(this,'timeout:clear',$option.keyEvent);
     });
     
     
@@ -71,35 +89,11 @@ const InputSearch = Component.InputSearch = function(option)
     const bindButton = function() 
     {
         const $this = this;
-        const button = triggerFunc(this,'inputSearch:getButton');
+        const button = trigHandler(this,'inputSearch:getButton');
         
         ael(button,'click',function() {
-            triggerFunc($this,'inputSeach:buttonClick');
+            trigHandler($this,'inputSearch:buttonClick');
         });
-    }
-    
-    
-    // refresh
-    const refresh = function() 
-    {
-        const validate = triggerFunc(this,'inputSearch:validate');
-        
-        if(validate === true)
-        redirect.call(this);
-    }
-    
-    
-    // redirect
-    const redirect = function() 
-    {
-        const char = $(this).attr("data-char");
-        let val = triggerFunc(this,'input:getValueEncoded',true);
-        let href = $(this).attr("data-href");
-        
-        if(Str.isNotEmpty(val))
-        href += "?"+char+"="+val;
-        
-        triggerFunc(document,'doc:go',href);
     }
     
     return this;

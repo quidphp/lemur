@@ -1,0 +1,15 @@
+// compileOnSave: false
+
+/*
+ * This file is part of the QuidPHP package.
+ * Website: https://quidphp.com
+ * License: https://github.com/quidphp/lemur/blob/master/LICENSE
+ */
+
+// form
+// mixin for forms components
+@mixin Form() {
+    input[name='-genuine-'] {
+        display: none !important;
+    }
+}

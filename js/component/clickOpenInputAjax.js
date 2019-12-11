@@ -22,8 +22,8 @@ const ClickOpenInputAjax = Component.ClickOpenInputAjax = function(option)
     
     // event
     ael(this,'ajaxBlock:complete',function() {
-        const field = triggerFunc(this,'form:getValidateField');
-        triggerFunc(field,'timeout:clear',$option.keyEvent);
+        const field = trigHandler(this,'form:getValidateField');
+        trigHandler(field,'timeout:clear',$option.keyEvent);
     });
     
     
@@ -38,7 +38,7 @@ const ClickOpenInputAjax = Component.ClickOpenInputAjax = function(option)
     const bindField = function()
     {
         const $this = this;
-        const field = triggerFunc(this,'form:getValidateField');
+        const field = trigHandler(this,'form:getValidateField');
         
         
         // components
@@ -46,43 +46,43 @@ const ClickOpenInputAjax = Component.ClickOpenInputAjax = function(option)
         Component.Timeout.call(field,$option.keyEvent,$option.timeout);
         
         
-        // func
-        setFunc(field,'inputAjax:submit',function() {
-            if(triggerFunc(this,'validate:isNotEmptyAndValid'))
-            triggerEvent($this,$option.ajaxEvent);
+        // handler
+        setHandler(field,'inputAjax:submit',function() {
+            if(trigHandler(this,'validate:isNotEmptyAndValid'))
+            trigEvt($this,$option.ajaxEvent);
         });
         
         
         // event
         ael(field,'validate:invalid',function() {
-            triggerEvent($this,'clickOpen:close');
+            trigEvt($this,'clickOpen:close');
         });
 
         ael(field,'click',function(event) {
-            triggerFunc($this,'clickOpen:closeOthers');
+            trigHandler($this,'clickOpen:closeOthers');
             
-            if(!triggerFunc($this,'clickOpen:isOpen'))
-            triggerFunc(this,'inputAjax:submit');
+            if(!trigHandler($this,'clickOpen:isOpen'))
+            trigHandler(this,'inputAjax:submit');
             
             event.stopPropagation();
         });
         
         ael(field,'timeout:keyup',function() {
-            triggerFunc(this,'validate:process');
+            trigHandler(this,'validate:process');
             
             if($(this).is(":focus"))
-            triggerFunc(this,'inputAjax:submit');
+            trigHandler(this,'inputAjax:submit');
         });
         
         ael(field,'keyboardEscape:blocked',function(event) {
-            triggerEvent($this,'clickOpen:close');
+            trigEvt($this,'clickOpen:close');
         });
     }
     
     // bindSubmit
     const bindSubmit = function()
     {
-        const submit = triggerFunc(this,'form:getSubmit');
+        const submit = trigHandler(this,'form:getSubmit');
         
         ael(submit,'click',function(event) {
             event.stopPropagation();

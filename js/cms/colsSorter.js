@@ -25,36 +25,31 @@ const ColsSorter = Component.ColsSorter = function(option)
     Component.ClickOpenTrigger.call(this,$option.clickOpen);
     
     
-    // func
-    setFunc(this,'colsSorter:getCheckboxes',function() {
+    // handler
+    setHandler(this,'colsSorter:getCheckboxes',function() {
         return qsa(this,"input[type='checkbox']");
     });
     
-    setFunc(this,'colsSorter:getCheckedCheckboxes',function() {
-        return Arr.filter(triggerFunc(this,'colsSorter:getCheckboxes'),function() {
+    setHandler(this,'colsSorter:getCheckedCheckboxes',function() {
+        return Arr.filter(trigHandler(this,'colsSorter:getCheckboxes'),function() {
             return $(this).is(':checked');
         });
     });
     
-    setFunc(this,'colsSorter:getButton',function() {
-        return qs(triggerFunc(this,'clickOpen:getTarget'),"button[name='cols']");
+    setHandler(this,'colsSorter:getButton',function() {
+        return qs(trigHandler(this,'clickOpen:getTarget'),"button[name='cols']");
     });
     
-    setFunc(this,'colsSorter:isValid',function() {
-        const checkboxes = triggerFunc(this,'colsSorter:getCheckboxes');
-        return triggerFuncEqual(checkboxes,true,'validate:isValid');
-    });
-    
-    setFunc(this,'colsSorter:getCheckedSet',function() {
-        const button = triggerFunc(this,'colsSorter:getButton');
-        const checkbox = triggerFunc(this,'colsSorter:getCheckedCheckboxes');
+    setHandler(this,'colsSorter:getCheckedSet',function() {
+        const button = trigHandler(this,'colsSorter:getButton');
+        const checkbox = trigHandler(this,'colsSorter:getCheckedCheckboxes');
         
         return Dom.valueSeparator(checkbox,$(button).data('separator'),true);
     });
     
-    setFunc(this,'colsSorter:isCurrent',function() {
-        const button = triggerFunc(this,'colsSorter:getButton');
-        const set = triggerFunc(this,'colsSorter:getCheckedSet');
+    setHandler(this,'colsSorter:isCurrent',function() {
+        const button = trigHandler(this,'colsSorter:getButton');
+        const set = trigHandler(this,'colsSorter:getCheckedSet');
         
         return (set === $(button).data('current'))? true:false;
     });
@@ -72,26 +67,26 @@ const ColsSorter = Component.ColsSorter = function(option)
     const bindColsPopup = function() 
     {
         const $this = this;
-        const popup = triggerFunc(this,'clickOpen:getTarget');
+        const popup = trigHandler(this,'clickOpen:getTarget');
         
-        triggerSetup(Component.Sorter.call(popup,$option.sorter));
+        trigSetup(Component.Sorter.call(popup,$option.sorter));
         
-        // func
-        setFunc(popup,'verticalSorter:stop',function() {
-            triggerFunc(this,'popup:refresh');
+        // handler
+        setHandler(popup,'verticalSorter:stop',function() {
+            trigHandler(this,'popup:refresh');
         });
         
-        setFunc(popup,'popup:refresh',function() {
-            const checkboxes = triggerFunc($this,'colsSorter:getCheckboxes');
-            triggerFuncs(checkboxes,'validate:trigger');
+        setHandler(popup,'popup:refresh',function() {
+            const checkboxes = trigHandler($this,'colsSorter:getCheckboxes');
+            trigHandlers(checkboxes,'validate:trigger');
         });
         
-        setFunc(popup,'popup:invalid',function() {
+        setHandler(popup,'popup:invalid',function() {
             $(this).attr('data-validate','invalid');
         });
         
-        setFunc(popup,'popup:valid',function() {
-            if(triggerFunc($this,'colsSorter:isCurrent'))
+        setHandler(popup,'popup:valid',function() {
+            if(trigHandler($this,'colsSorter:isCurrent'))
             $(this).removeAttr("data-validate");
             else
             $(this).attr('data-validate','valid');
@@ -102,17 +97,17 @@ const ColsSorter = Component.ColsSorter = function(option)
     // bindColsCheckboxes
     const bindColsCheckboxes = function() 
     {
-        const checkboxes = triggerFunc(this,'colsSorter:getCheckboxes');
-        const popup = triggerFunc(this,'clickOpen:getTarget');
+        const checkboxes = trigHandler(this,'colsSorter:getCheckboxes');
+        const popup = trigHandler(this,'clickOpen:getTarget');
         
-        triggerSetup(checkboxes);
+        trigSetup(checkboxes);
         
         ael(checkboxes,'validate:invalid',function() {
-            triggerFunc(popup,'popup:invalid');
+            trigHandler(popup,'popup:invalid');
         });
         
         ael(checkboxes,'validate:valid',function() {
-            triggerFunc(popup,'popup:valid');
+            trigHandler(popup,'popup:valid');
         });
     }
     
@@ -121,20 +116,20 @@ const ColsSorter = Component.ColsSorter = function(option)
     const bindColsButton = function() 
     {
         const $this = this;
-        const button = triggerFunc(this,'colsSorter:getButton');
+        const button = trigHandler(this,'colsSorter:getButton');
         
-        // func
-        setFunc(button,'button:redirect',function(clickEvent) {
-            const set = triggerFunc($this,'colsSorter:getCheckedSet');
+        // handler
+        setHandler(button,'button:redirect',function(clickEvent) {
+            const set = trigHandler($this,'colsSorter:getCheckedSet');
             const href = Dom.dataHrefReplaceChar(this,set);
             
             if(Str.isNotEmpty(href) && href !== Request.relative())
-            triggerFunc(document,'doc:go',href,clickEvent);
+            trigHandler(document,'doc:go',href,clickEvent);
         });
         
         // event
         ael(button,'click',function(event) {
-            triggerFunc(this,'button:redirect',event);
+            trigHandler(this,'button:redirect',event);
         });
     }
 

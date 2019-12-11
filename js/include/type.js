@@ -54,7 +54,7 @@ const ArrLike = Lemur.ArrLike = Factory(Type,ObjBase,ObjKeyValue,ObjEach,ObjCopy
 // bool
 const Bool = Lemur.Bool = Factory(Type,BoolPrimitive);
 
-// func
+// handler
 const Func = Lemur.Func = Factory(Type,ObjBase,FuncObj);
 
 // integer

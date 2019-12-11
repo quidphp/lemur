@@ -10,21 +10,19 @@
 // stylesheet containing the root styling rules as well as common classes for the CMS
 
 /* INIT */
-@include reset();
-@include default();
-@include jqueryUi();
+@include defaultClasses();
+@include defaultAnimation();
+
 
 /* HTML */
-:root {
-    @include Document('.route-wrap');
-
-    body {
-        font-size: 1.4rem;
-        font-weight: 300;
-        line-height: 1.5;
-        @include scrollbar();
-    }
+@include Document('.route-wrap');
+body {
+    font-size: 1.4rem;
+    font-weight: 300;
+    line-height: 1.5;
+    @include scrollbar();
 }
+
 
 /* TITRE */
 h1 {
@@ -128,11 +126,11 @@ td[data-quick-edit='1'][data-status='loading'] > .cell-inner > a.quick-edit {
 body {
     @include clickOpen();
 }
-body > .background {
-    @include Background();
+form {
+    @include Form();
 }
 body > .modal {
-    @include Modal();
+    @include modal();
 }
 [data-absolute-placeholder] {
     @include AbsolutePlaceholder();

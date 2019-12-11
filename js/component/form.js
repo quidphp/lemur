@@ -8,124 +8,127 @@
 // script with behaviours for a form component
 const Form = Component.Form = function() 
 {    
-    // block
+    // component
     Component.BlockEvent.call(this,'submit');
     
     
-    // func
-    setFunc(this,'form:isSubmitted',function() {
-        return ($(this).data('form-submitted') === 1)? true:false;
-    });
-    
-    setFunc(this,'form:getFields',function() {
-        return qsa(this,Selector.input());
-    });
-    
-    setFunc(this,'form:getSystemFields',function() {
-        return Arr.filter(triggerFunc(this,'form:getFields'),function() {
-            return triggerFunc(this,'input:isSystem');
-        });
-    });
-    
-    setFunc(this,'form:getTargetFields',function() {
-        return Arr.filter(triggerFunc(this,'form:getFields'),function() {
-            return triggerFunc(this,'input:isTarget');
-        });
-    });
-    
-    setFunc(this,'form:getTargetVisibleFields',function() {
-        return Arr.filter(triggerFunc(this,'form:getFields'),function() {
-            return triggerFunc(this,'input:isTargetVisible');
-        });
-    });
-    
-    setFunc(this,'form:getValidateFields',function() {
-        return Arr.filter(triggerFunc(this,'form:getFields'),function() {
-            return triggerFunc(this,'input:isValidate');
-        });
-    });
-    
-    setFunc(this,'form:getFiles',function() {
-        return Arr.filter(triggerFunc(this,'form:getFields'),function() {
-            return triggerFunc(this,'input:isFile');
-        });
-    });
-    
-    setFunc(this,'form:getSubmits',function() {
-        return Arr.filter(triggerFunc(this,'form:getFields'),function() {
-            return triggerFunc(this,'input:isSubmit');
-        });
-    });
-    
-    setFunc(this,'form:getCsrfField',function() {
-        return Arr.find(triggerFunc(this,'form:getFields'),function() {
-            return triggerFunc(this,'input:isCsrf');
-        });
-    });
-    
-    setFunc(this,'form:getGenuineField',function() {
-        return Arr.find(triggerFunc(this,'form:getFields'),function() {
-            return triggerFunc(this,'input:isGenuine');
-        });
-    });
-    
-    setFunc(this,'form:getClickedSubmit',function() {
-        return Arr.find(triggerFunc(this,'form:getFields'),function() {
-            return triggerFunc(this,'input:isClickedSubmit');
-        });
-    });
-    
-    setFunc(this,'form:getValidateField',function() {
-        return Arr.valueFirst(triggerFunc(this,'form:getValidateFields'));
-    });
-    
-    setFunc(this,'form:getSubmit',function() {
-        return Arr.valueFirst(triggerFunc(this,'form:getSubmits'));
-    });
-    
-    setFunc(this,'form:hasFiles',function() {
-        return (triggerFunc(this,'form:getFiles').length)? true:false;
-    });
-    
-    setFunc(this,'form:getClickedSubmits',function() {
-        let r = triggerFunc(this,'form:getClickedSubmit');
+    // handler
+    setHandlers(this,'form:',{
         
-        if(r != null)
-        {
-            const name = triggerFunc(r,'input:getName');
+        isSubmitted: function() {
+            return ($(this).data('form-submitted') === 1)? true:false;
+        },
+        
+        getFields: function() {
+            return qsa(this,Selector.input());
+        },
+        
+        getSystemFields: function() {
+            return Arr.filter(trigHandler(this,'form:getFields'),function() {
+                return trigHandler(this,'input:isSystem');
+            });
+        },
+        
+        getTargetFields: function() {
+            return Arr.filter(trigHandler(this,'form:getFields'),function() {
+                return trigHandler(this,'input:isTarget');
+            });
+        },
+        
+        getTargetVisibleFields: function() {
+            return Arr.filter(trigHandler(this,'form:getFields'),function() {
+                return trigHandler(this,'input:isTargetVisible');
+            });
+        },
+        
+        getValidateFields: function() {
+            return Arr.filter(trigHandler(this,'form:getFields'),function() {
+                return trigHandler(this,'input:isValidate');
+            });
+        },
+        
+        getFiles: function() {
+            return Arr.filter(trigHandler(this,'form:getFields'),function() {
+                return trigHandler(this,'input:isFile');
+            });
+        },
+        
+        getSubmits: function() {
+            return Arr.filter(trigHandler(this,'form:getFields'),function() {
+                return trigHandler(this,'input:isSubmit');
+            });
+        },
+        
+        getCsrfField: function() {
+            return Arr.find(trigHandler(this,'form:getFields'),function() {
+                return trigHandler(this,'input:isCsrf');
+            });
+        },
+        
+        getGenuineField: function() {
+            return Arr.find(trigHandler(this,'form:getFields'),function() {
+                return trigHandler(this,'input:isGenuine');
+            });
+        },
+        
+        getClickedSubmit: function() {
+            return Arr.find(trigHandler(this,'form:getFields'),function() {
+                return trigHandler(this,'input:isClickedSubmit');
+            });
+        },
+        
+        getValidateField: function() {
+            return Arr.valueFirst(trigHandler(this,'form:getValidateFields'));
+        },
+        
+        getSubmit: function() {
+            return Arr.valueFirst(trigHandler(this,'form:getSubmits'));
+        },
+        
+        hasFiles: function() {
+            return (Arr.isNotEmpty(trigHandler(this,'form:getFiles')))? true:false;
+        },
+        
+        getClickedSubmits: function() {
+            let r = trigHandler(this,'form:getClickedSubmit');
             
-            if(Str.isNotEmpty(name))
+            if(r != null)
             {
-                r = Arr.filter(triggerFunc(this,'form:getSubmits'),function() {
-                    return $(this).is("[name='"+name+"']");
-                });
+                const name = trigHandler(r,'input:getName');
+                
+                if(Str.isNotEmpty(name))
+                {
+                    r = Arr.filter(trigHandler(this,'form:getSubmits'),function() {
+                        return $(this).is("[name='"+name+"']");
+                    });
+                }
             }
-        }
+            
+            return r;
+        },
         
-        return r;
-    });
-    
-    setFunc(this,'form:hasChanged',function() {
-        let r = false;
-        const target = triggerFunc(this,'form:getTargetFields');
-        const serialize = $(target).serialize();
-        const original = $(this).data('form-serialize');
+        hasChanged: function() {
+            let r = false;
+            const target = trigHandler(this,'form:getTargetFields');
+            const serialize = $(target).serialize();
+            const original = $(this).data('form-serialize');
+            
+            if(original && serialize !== original)
+            r = true;
+            
+            return r;
+        },
         
-        if(original && serialize !== original)
-        r = true;
-        
-        return r;
-    });
-    
-    setFunc(this,'form:focusFirst',function() {
-        const target = Arr.find(triggerFunc(this,'form:getTargetVisibleFields'),function() {
-            return triggerFunc(this,'input:isEmpty');
-        });
+        focusFirst: function() {
+            const target = Arr.find(trigHandler(this,'form:getTargetVisibleFields'),function() {
+                return trigHandler(this,'input:isEmpty');
+            });
 
-        if(target != null)
-        $(target).focus();
-        
-        return this;
+            if(target != null)
+            $(target).focus();
+            
+            return this;
+        }
     });
     
     
@@ -140,7 +143,7 @@ const Form = Component.Form = function()
     aelOnce(this,'component:setup',function() {
         // genuine + hasChanged
         if(!$(this).is("[data-skip-form-prepare='1']"))
-        triggerEvent(this,'form:prepare');
+        trigEvt(this,'form:prepare');
         
         // submit
         prepareSubmit.call(this);
@@ -162,17 +165,17 @@ const Form = Component.Form = function()
         prepareBlock.call(this);
         
         // setup
-        triggerSetup(this);
+        trigSetup(this);
     });
     
     
     // prepareGenuine
     const prepareGenuine = function() 
     {
-        const genuine = triggerFunc(this,'form:getGenuineField');
+        const genuine = trigHandler(this,'form:getGenuineField');
         if(genuine != null)
         {
-            const name = triggerFunc(genuine,'input:getName');
+            const name = trigHandler(genuine,'input:getName');
             const newName = name+"2-";
             const newValue = 1;
             const genuine2 = "<input type='hidden' name='"+newName+"' value='"+newValue+"' />";
@@ -184,7 +187,7 @@ const Form = Component.Form = function()
     // prepareHasChanged
     const prepareHasChanged = function() 
     {
-        const target = triggerFunc(this,'form:getTargetFields');
+        const target = trigHandler(this,'form:getTargetFields');
         const serialize = $(target).serialize();
         $(this).data('form-serialize',serialize);
     }
@@ -194,7 +197,7 @@ const Form = Component.Form = function()
     // click sur submit, met un attribut data-clicked
     const prepareSubmit = function() 
     {
-        const submits = triggerFunc(this,'form:getSubmits');
+        const submits = trigHandler(this,'form:getSubmits');
         
         ael(submits,'click',function() {
             $(submits).removeAttr('data-submit-click');
@@ -213,11 +216,11 @@ const Form = Component.Form = function()
     // prepareValidate
     const prepareValidate = function() 
     {
-        const validateFields = triggerFunc(this,'form:getValidateFields');
+        const validateFields = trigHandler(this,'form:getValidateFields');
         
         Component.ValidatePrevent.call(this,'submit');
         
-        setFunc(this,'validatePrevent:getTargets',function() {
+        setHandler(this,'validatePrevent:getTargets',function() {
             return validateFields;
         });
     }
@@ -229,8 +232,8 @@ const Form = Component.Form = function()
     {
         const $this = this;
         
-        setFunc(this,'win:unloadText',function() {
-            if(!triggerFunc(this,'form:isSubmitted') && triggerFunc(this,'form:hasChanged'))
+        setHandler(this,'win:unloadText',function() {
+            if(!trigHandler(this,'form:isSubmitted') && trigHandler(this,'form:hasChanged'))
             return $(this).attr('data-unload');
         });
         
@@ -238,10 +241,10 @@ const Form = Component.Form = function()
             $(this).data('form-submitted',1);
         });
         
-        triggerFunc(window,'win:addUnloadNode',this);
+        trigHandler(window,'win:addUnloadNode',this);
         
         aelOnce(document,'doc:unmount',function() {
-            triggerFunc(window,'win:removeUnloadNode',$this);
+            trigHandler(window,'win:removeUnloadNode',$this);
         });
     }
     
@@ -250,7 +253,7 @@ const Form = Component.Form = function()
     const prepareBlock = function()
     {
         ael(this,'submit',function() {
-            triggerFunc(this,'blockEvent:block','submit');
+            trigHandler(this,'blockEvent:block','submit');
         });
     }
     

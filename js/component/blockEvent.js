@@ -9,25 +9,25 @@
 // this component can only block events added after the block was registered
 const BlockEvent = Component.BlockEvent = function(type) 
 {
-    // func
-    setFunc(this,'blockEvent:isRegistered',function(type) {
+    // handler
+    setHandler(this,'blockEvent:isRegistered',function(type) {
         return (Integer.is(getBlock.call(this,type)))? true:false;
     });
     
-    setFunc(this,'blockEvent:isUnblocked',function(type) {
+    setHandler(this,'blockEvent:isUnblocked',function(type) {
         return (getBlock.call(this,type) === 0)? true:false;
     });
     
-    setFunc(this,'blockEvent:isBlocked',function(type) {
+    setHandler(this,'blockEvent:isBlocked',function(type) {
         return (getBlock.call(this,type) === 1)? true:false;
     });
     
-    setFunc(this,'blockEvent:getObj',function() {
+    setHandler(this,'blockEvent:getObj',function() {
         return Pojo.copy(getBlockObj.call(this));
     });
     
-    setFunc(this,'blockEvent:register',function(type) {
-        if(!triggerFunc(this,'blockEvent:isRegistered',type))
+    setHandler(this,'blockEvent:register',function(type) {
+        if(!trigHandler(this,'blockEvent:isRegistered',type))
         {
             const blockObj = getBlockObj.call(this);
             const handler = getHandler.call(this,type);
@@ -36,8 +36,8 @@ const BlockEvent = Component.BlockEvent = function(type)
         }
     });
     
-    setFunc(this,'blockEvent:unregister',function(type) {
-        if(triggerFunc(this,'blockEvent:isRegistered',type))
+    setHandler(this,'blockEvent:unregister',function(type) {
+        if(trigHandler(this,'blockEvent:isRegistered',type))
         {
             const blockObj = getBlockObj.call(this);
             Pojo.unsetRef(type,blockObj);
@@ -45,43 +45,43 @@ const BlockEvent = Component.BlockEvent = function(type)
         }
     });
     
-    setFunc(this,'blockEvent:block',function(type) {
+    setHandler(this,'blockEvent:block',function(type) {
         Str.check(type,true);
         const blockObj = getBlockObj.call(this);
         
-        if(Evt.debug() > 0)
+        if(Debug.is('blockEvent'))
         console.log('blockEvent:block',type);
         
         if(Pojo.keyExists(type,blockObj))
         Pojo.setRef(type,1,blockObj);
     });
     
-    setFunc(this,'blockEvent:block-all',function() {
+    setHandler(this,'blockEvent:block-all',function() {
         const $this = this;
         const blockObj = getBlockObj.call(this);
         
         Obj.each(blockObj,function(value,type) {
-            triggerFunc($this,'blockEvent:block',type);
+            trigHandler($this,'blockEvent:block',type);
         });
     });
     
-    setFunc(this,'blockEvent:unblock',function(type) {
+    setHandler(this,'blockEvent:unblock',function(type) {
         Str.check(type,true);
         const blockObj = getBlockObj.call(this);
         
-        if(Evt.debug() > 0)
+        if(Debug.is('blockEvent'))
         console.log('blockEvent:unblock',type);
         
         if(Pojo.keyExists(type,blockObj))
         Pojo.setRef(type,0,blockObj);
     });
     
-    setFunc(this,'blockEvent:unblock-all',function() {
+    setHandler(this,'blockEvent:unblock-all',function() {
         const $this = this;
-        const blockObj = triggerFunc(this,'blockEvent:obj');
+        const blockObj = trigHandler(this,'blockEvent:obj');
         
         Obj.each(blockObj,function(value,type) {
-            triggerFunc($this,'blockEvent:unblock',type);
+            trigHandler($this,'blockEvent:unblock',type);
         });
     });
     
@@ -95,7 +95,7 @@ const BlockEvent = Component.BlockEvent = function(type)
             if(status === 1)
             {
                 Evt.preventStop(event,true);
-                triggerEvent(this,'blockEvent:'+type);
+                trigEvt(this,'blockEvent:'+type);
                 
                 return false;
             }
@@ -119,7 +119,7 @@ const BlockEvent = Component.BlockEvent = function(type)
 
     // addType
     if(Str.isNotEmpty(type))
-    triggerFuncs(this,'blockEvent:register',type);
+    trigHandlers(this,'blockEvent:register',type);
     
     return this;
 }

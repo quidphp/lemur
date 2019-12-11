@@ -20,6 +20,17 @@ const TestInclude = Test.Include = function()
         const isEmpty = Str.isEmpty.bind(Str);
         const noop = function() { };
         
+        // js
+        assert(Arr.is !== Obj.is);
+        assert(Obj.each === Str.each);
+        assert(Object.getPrototypeOf(Obj) === Object.getPrototypeOf(Str));
+        assert(!(false == null));
+        assert(!(0 == null));
+        assert(!('' == null));
+        assert(null == null);
+        assert(undefined == null);
+        assert(!([] == true));
+        
         // arr
         assert(Arr.is([]));
         assert(!Arr.is({}));
@@ -183,26 +194,30 @@ const TestInclude = Test.Include = function()
         assert(Evt.nameFromType('ok:what') === 'customEvent');
         assert(Evt.createFromType('ok') instanceof Event);
         assert(Evt.createFromType('ok:what') instanceof CustomEvent);
-        Evt.setFunc(htmlNode,'what',function(value) { $(this).data('OK',value); return true; });
-        assert(Func.is(Evt.getFunc(htmlNode,'what')));
-        assert($(htmlNode).data('OK') == null);
-        assert(Evt.isTriggerFuncEqual(true,'what',[htmlNode],'james'));
-        assert($(htmlNode).data('OK') == 'james');
-        assert(Evt.triggerFunc(htmlNode,'what','no') === true);
-        assert(Evt.triggerFunc(htmlNode,'what','yes') === true);
-        assert($(htmlNode).data('OK') === 'yes');
-        Evt.setFunc(htmlNode,'what',function() { return false; });
-        assert(Evt.triggerFunc(htmlNode,'what') === false);
-        Evt.removeFunc(htmlNode,'what');
-        assert(Evt.getFunc(htmlNode,'what') === undefined);
         
-        // func
+        // handler
         assert(!Func.is('test'));
         assert(Func.is(noop));
         assert(Func.length(noop) === 0);
         Func.check(noop);
         Func.check(null,false);
         
+        // handler
+        Handler.set(htmlNode,'what',function(value) { $(this).data('OK',value); return true; });
+        assert(Func.is(Handler.get(htmlNode,'what')));
+        assert($(htmlNode).data('OK') == null);
+        assert(Handler.isTriggerEqual([htmlNode],'what',true,'james'));
+        assert(Handler.isTriggerEqual(htmlNode,'what',true,'james'));
+        assert(!Handler.isTriggerEqual(htmlNode,'what',false,'james'));
+        assert($(htmlNode).data('OK') == 'james');
+        assert(Handler.trigger(htmlNode,'what','no') === true);
+        assert(Handler.trigger(htmlNode,'what','yes') === true);
+        assert($(htmlNode).data('OK') === 'yes');
+        Handler.set(htmlNode,'what',function() { return false; });
+        assert(Handler.trigger(htmlNode,'what') === false);
+        Handler.remove(htmlNode,'what');
+        assert(Handler.get(htmlNode,'what') === undefined);
+
         // historyApi
         assert(HistoryApi.supported());
         assert(HistoryApi.isState({ url: 'test', timestamp: 1234 }));
@@ -452,6 +467,11 @@ const TestInclude = Test.Include = function()
         assert(!Str.isStart(3,'3s'));
         assert(Str.isEnd('s','as'));
         assert(!Str.isEnd('a','as'));
+        assert(Str.isEqual('test','test'));
+        assert(Str.isEqual('2',2));
+        assert(Str.isEqual(true,'true'));
+        assert(Str.isEqual(undefined,''));
+        assert(Str.isEqual(undefined,null));
         assert(Str.in('a','as') === true);
         assert(Str.in('é','aÉè') === false);
         assert(Str.cast(2) === '2');
@@ -613,17 +633,6 @@ const TestInclude = Test.Include = function()
         assert(Xhr.parseError('<html><body><div>TEST</div></body></html>','error') === '<div>TEST</div>');
         assert(Xhr.parseError('<html><body><div class="ajax-parse-error"><div>TEST</div></div></body></html>','error') === '<div class="ajax-parse-error"><div>TEST</div></div>');
         assert(Xhr.parseError('','error') === 'error');
-        
-        // js
-        assert(Arr.is !== Obj.is);
-        assert(Obj.each === Str.each);
-        assert(Object.getPrototypeOf(Obj) === Object.getPrototypeOf(Str));
-        assert(!(false == null));
-        assert(!(0 == null));
-        assert(!('' == null));
-        assert(null == null);
-        assert(undefined == null);
-        assert(!([] == true));
     } 
     
     catch (e) 

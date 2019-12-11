@@ -16,12 +16,12 @@ Component.inputFiles = function()
     // bind
     .one('component:setup',function() {
         bindBlock.call(this);
-        triggerFunc(this,'inputFiles:getBlock').trigger('component:setup');
+        trigHandler(this,'inputFiles:getBlock').trigger('component:setup');
     });
     
     // bindBlock 
     const bindBlock = function() {
-        const blocks = triggerFunc(this,'inputFiles:getBlock');
+        const blocks = trigHandler(this,'inputFiles:getBlock');
         
         // triggerHandler
         blocks.on('block:getAction',function() {
@@ -34,7 +34,7 @@ Component.inputFiles = function()
             return $(this).find("input[type='file']").get(0);
         })
         .on('block:getInputHidden',function() {
-            const inputFile = triggerFunc(this,'block:getInputFile');
+            const inputFile = trigHandler(this,'block:getInputFile');
             const name = inputFile.attr('name');
             return $(this).find("input[type='hidden']").filter("[name='"+name+"']").get(0);
         })
@@ -51,10 +51,10 @@ Component.inputFiles = function()
         // bindBlockAction
         const bindBlockAction = function() {
             const block = $(this);
-            const mediaAction = block.triggerHandler('block:getAction');
-            const input = block.triggerHandler('block:getInputFile');
-            const hidden =  block.triggerHandler('block:getInputHidden');
-            const actionText = block.triggerHandler('block:getActionText');
+            const mediaAction = block.trigHandler('block:getAction');
+            const input = block.trigHandler('block:getInputFile');
+            const hidden =  block.trigHandler('block:getInputHidden');
+            const actionText = block.trigHandler('block:getActionText');
             Component.confirm.call(mediaAction,'click');
             
             mediaAction.on('confirmed',function() {
@@ -71,10 +71,10 @@ Component.inputFiles = function()
         // bindBlockCancelAction
         const bindBlockCancelAction = function() {
             const block = $(this);
-            const mediaCancelAction = block.triggerHandler('block:getCancelAction');
-            const input = block.triggerHandler('block:getInputFile');
-            const hidden =  block.triggerHandler('block:getInputHidden');
-            const actionText = block.triggerHandler('block:getActionText');
+            const mediaCancelAction = block.trigHandler('block:getCancelAction');
+            const input = block.trigHandler('block:getInputFile');
+            const hidden =  block.trigHandler('block:getInputHidden');
+            const actionText = block.trigHandler('block:getActionText');
             
             mediaCancelAction.on('click',function() {
                 const name = input.attr('name');

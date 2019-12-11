@@ -177,7 +177,7 @@ const ObjKeyValue = {
 
 
 // objEach
-// function for looping over an object
+// handlertion for looping over an object
 const ObjEach = {
     
     // each
@@ -215,7 +215,7 @@ const ObjEach = {
 
 
 // objCopyFilterMap
-// functions for copying, filtering and map an object
+// handlertions for copying, filtering and map an object
 const ObjCopyFilterMap = {
     
     // copy
@@ -280,7 +280,7 @@ const ObjCopyFilterMap = {
 
 
 // objWrite
-// functions for written on a copy of the object
+// handlertions for written on a copy of the object
 const ObjWrite = {
     
     // set
@@ -336,7 +336,7 @@ const ObjWrite = {
 
 
 // objWriteSelf
-// functions for writing within the object without copying it
+// handlertions for writing within the object without copying it
 const ObjWriteSelf = {
     
     // setRef

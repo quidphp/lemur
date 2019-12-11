@@ -12,8 +12,8 @@ const KeyboardEscape = Component.KeyboardEscape = function(prevent,type)
     Component.Keyboard.call(this,'escape',[27],type);
     
     
-    // func
-    setFunc(this,'keyboardEscape:prevent',function() {
+    // handler
+    setHandler(this,'keyboardEscape:prevent',function() {
         return (prevent === true)? true:false;
     });    
     

@@ -8,42 +8,42 @@
 // script for a burger menu component
 const Burger = Component.Burger = function()
 {
-    // func
-    setFunc(this,'burger:isOpen',function() {
-        const html = triggerFunc(document,'doc:getHtml');
+    // handler
+    setHandler(this,'burger:isOpen',function() {
+        const html = trigHandler(document,'doc:getHtml');
         return ($(html).attr('data-burger') === 'open')? true:false;
     });
     
-    setFunc(this,'burger:toggle',function() {
-        triggerEvent(this,triggerFunc(this,'burger:isOpen')? 'burger:close':'burger:open');
+    setHandler(this,'burger:toggle',function() {
+        trigEvt(this,trigHandler(this,'burger:isOpen')? 'burger:close':'burger:open');
     });
     
     
     // event
     ael(this,'click',function() {
-        triggerFunc(this,'burger:toggle');
+        trigHandler(this,'burger:toggle');
     });
     
     ael(this,'burger:open',function() {
-        const html = triggerFunc(document,'doc:getHtml');
+        const html = trigHandler(document,'doc:getHtml');
         $(html).attr('data-burger','open');
     });
     
     ael(this,'burger:close',function() {
-        const html = triggerFunc(document,'doc:getHtml');
+        const html = trigHandler(document,'doc:getHtml');
         $(html).attr('data-burger','close');
     });
     
     
     // setup
     aelOnce(this,'component:setup',function() {
-        triggerEvent(this,'burger:close');
+        trigEvt(this,'burger:close');
     })
     
     
     // teardown
     aelOnce(this,'component:teardown',function() {
-        triggerEvent(this,'burger:close');
+        trigEvt(this,'burger:close');
     });
     
     return this;

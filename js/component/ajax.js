@@ -8,17 +8,17 @@
 // script to activate ajax with an event on the nodes
 const Ajax = Component.Ajax = function(type) 
 {
-    // func
-    setFunc(this,'ajax:confirm',function() {
-        return (triggerFunc(document,'doc:isLoading') === true)? false:true;
+    // handler
+    setHandler(this,'ajax:confirm',function() {
+        return (trigHandler(document,'doc:isLoading') === true)? false:true;
     });
     
-    setFunc(this,'ajax:trigger',function(config,triggerEvent) {
+    setHandler(this,'ajax:trigger',function(config,triggerEvent) {
         let r = null;
         
         if(!Pojo.isNotEmpty(config))
         {
-            config = triggerFunc(this,'ajax:config');
+            config = trigHandler(this,'ajax:config');
             
             if(Dom.isNode(config))
             config = Xhr.configFromNode(config);
@@ -39,19 +39,19 @@ const Ajax = Component.Ajax = function(type)
         return r;
     });
     
-    setFunc(this,'ajax:config',function(triggerEvent) {
+    setHandler(this,'ajax:config',function(triggerEvent) {
         return this;
     });
     
-    setFunc(this,'ajax:init',function(config) {
-        triggerEvent(this,type,config);
+    setHandler(this,'ajax:init',function(config) {
+        trigEvt(this,type,config);
     });
     
     
     // event
     ael(this,type,function(event,config) {
         event.stopPropagation();
-        triggerFunc(this,'ajax:trigger',config,event);
+        trigHandler(this,'ajax:trigger',config,event);
     });
     
     return this;

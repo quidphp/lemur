@@ -12,34 +12,37 @@ const AbsolutePlaceholder = Component.AbsolutePlaceholder = function()
     Component.ResizeChange.call(this);
     
     
-    // func
-    setFunc(this,'absolutePlaceholder:getChild',function() {
-        return $(this).children().get(0);
+    // handler
+    setHandler(this,'absolutePlaceholder:getChild',function() {
+        return Arr.find($(this).children().get(),function() {
+            return $(this).is(':visible');
+        });
     });
     
-    setFunc(this,'absolutePlaceholder:onlyHeight',function() {
+    setHandler(this,'absolutePlaceholder:onlyHeight',function() {
         return $(this).is('[data-only-height]');
     });
     
-    setFunc(this,'absolutePlaceholder:onlyWidth',function() {
+    setHandler(this,'absolutePlaceholder:onlyWidth',function() {
         return $(this).is('[data-only-width]');
     });
     
-    setFunc(this,'absolutePlaceholder:refresh',function() {
-        const child = triggerFunc(this,'absolutePlaceholder:getChild');
+    setHandler(this,'absolutePlaceholder:refresh',function() {
+        const child = trigHandler(this,'absolutePlaceholder:getChild');
+        
         if(child != null)
         {
-            if(!triggerFunc(this,'absolutePlaceholder:onlyHeight'))
+            if(!trigHandler(this,'absolutePlaceholder:onlyHeight'))
             {
-                const outerWidth = $(child).outerWidth();
                 $(this).width('auto');
+                const outerWidth = $(child).outerWidth();
                 $(this).width(outerWidth);
             }
             
-            if(!triggerFunc(this,'absolutePlaceholder:onlyWidth'))
+            if(!trigHandler(this,'absolutePlaceholder:onlyWidth'))
             {
-                const outerHeight = $(child).outerHeight();
                 $(this).height('auto');
+                const outerHeight = $(child).outerHeight();
                 $(this).height(outerHeight);
             }
             
@@ -50,13 +53,13 @@ const AbsolutePlaceholder = Component.AbsolutePlaceholder = function()
     
     // event
     ael(this,'resize:change',function() {
-        triggerFunc(this,'absolutePlaceholder:refresh');
+        trigHandler(this,'absolutePlaceholder:refresh');
     });
     
     
     // setup
     aelOnce(this,'component:setup',function() {
-        triggerFunc(this,'absolutePlaceholder:refresh');
+        trigHandler(this,'absolutePlaceholder:refresh');
     });
     
     return this;

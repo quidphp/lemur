@@ -12,45 +12,6 @@ const Evt = Lemur.Evt = new function()
     const $inst = this;
     
     
-    // debug
-    // active ou désactive le débogagge
-    // il faut spécifier un chiffre pour le niveau de débogagge
-    this.debug = (function()
-    {
-        let debug = 0;
-        
-        return function(value) {
-            if(Bool.is(value))
-            value = Bool.fromInt(value);
-            
-            if(Integer.is(value))
-            debug = value;
-            
-            return debug;
-        }
-    })();
-    
-    
-    // isTriggerFuncEqual
-    // retourne vrai si la fonction de chaque node retourne la valeur donné en argument
-    this.isTriggerFuncEqual = function(equal,type,node)
-    {
-        let r = false;
-        const args = Arr.merge([type],ArrLike.sliceStart(3,arguments));
-        
-        $(node).each(function(index) {
-            const funcArgs = Arr.merge([this],args);
-            const result = $inst.triggerFunc.apply($inst,funcArgs);
-            r = (result === equal);
-            
-            if(r === false)
-            return false;
-        });
-        
-        return r;
-    }
-    
-    
     // preventStop
     // permet de faire un prevent default et stop propagation à un événement
     this.preventStop = function(event,immediate)
@@ -176,7 +137,7 @@ const Evt = Lemur.Evt = new function()
                 const detail = event.detail;
                 args = Arr.merge(args,detail);
                 
-                if($inst.debug() > 0)
+                if(Debug.is('evt'))
                 console.log('listener',this,type,event,delegate,detail);
                 
                 func.apply(context,args);
@@ -186,7 +147,7 @@ const Evt = Lemur.Evt = new function()
     
     
     // prepareEventDelegate
-    // function protégé
+    // handlertion protégé
     // gère la délégation et le changement à l'objet event
     const prepareEventDelegate = function(event,delegate)
     {
@@ -204,9 +165,7 @@ const Evt = Lemur.Evt = new function()
             let query;
             
             Arr.each(nodes,function(node) {
-                query = Selector.scopedQuerySelectorAll(node,context);
-                
-                if(Arr.isNotEmpty(query))
+                if(node.contains(context))
                 {
                     triggerTarget = $(context).parents(delegate).get(0);
                     r = true;
@@ -261,9 +220,9 @@ const Evt = Lemur.Evt = new function()
         
         if(Arr.isNotEmpty(nodes))
         {
-            if(this.debug > 0)
+            if(Debug.is('evt'))
             {
-                let consoleArgs = ['removeListener',node,Arr.copy(args).shift()];
+                let consoleArgs = ['removeListener',nodes,Arr.copy(args).shift()];
                 console.log.apply(this,consoleArgs);
             }
             
@@ -286,7 +245,7 @@ const Evt = Lemur.Evt = new function()
     
 
     // trigger
-    // function utilisé par triggerEvent et triggerBubble pour envoyer des événements
+    // handlertion utilisé par triggerEvent et triggerBubble pour envoyer des événements
     this.trigger = function(nodes,type,option)
     {
         Str.check(type,true);
@@ -297,7 +256,7 @@ const Evt = Lemur.Evt = new function()
         {
             const event = this.createFromType(type,option);
             
-            if(this.debug() > 1)
+            if(Debug.is('evt'))
             console.log('trigger',type,nodes);
             
             Arr.each(nodes,function() {
@@ -335,7 +294,6 @@ const Evt = Lemur.Evt = new function()
     
     // triggerSetup
     // fonction utilisé pour lancer le setup sur un component
-    // cette appel se lance à travers tous les components à setup
     // ces événements ne bubble pas
     this.triggerSetup = function(nodes) 
     {
@@ -344,116 +302,12 @@ const Evt = Lemur.Evt = new function()
     }
     
     
-    // allFunc
-    // retourne de l'objet avec toutes les func lié à la node
-    // possible de créer l'objet si non existant
-    // envoie une erreur si plusieurs nodes
-    this.allFunc = function(node,create)
+    // triggerTeardown
+    // fonction utilisé pour lancer le démontange d'un component
+    // ces événements ne bubble pas
+    this.triggerTeardown = function(nodes) 
     {
-        return Dom.getOrSetData(node,'lemur-func',(create === true)? {}:undefined);
-    }
-    
-    
-    // getFunc
-    // méthode qui retourne une fonction emmagasiné dans une node
-    // envoie une erreur si plusieurs nodes
-    this.getFunc = function(node,type,func) 
-    {
-        return Pojo.get(type,this.allFunc(node));
-    }
-    
-    
-    // setFunc
-    // permet d'emmagasiné une fonction dans chaque node fournit en argument
-    this.setFunc = function(nodes,type,func) 
-    {
-        Str.check(type,true);
-        nodes = Dom.nodeWrap(nodes);
-        Dom.checkNodes(nodes,false,type);
-
-        if(Arr.isNotEmpty(nodes))
-        {
-            Arr.each(nodes,function() {
-                const all = $inst.allFunc(this,true);
-                Pojo.setRef(type,func,all);
-            });
-        }
-        
-        return;
-    }
-    
-    
-    // removeFunc
-    // permet de retirer une fonction emmagasiné dans une ou plusiuers node
-    this.removeFunc = function(nodes,type) 
-    {
-        Str.check(type,true);
-        nodes = Dom.nodeWrap(nodes);
-        Dom.checkNodes(nodes,false,type);
-        
-        if(Arr.isNotEmpty(nodes))
-        {
-            Arr.each(nodes,function() {
-                const all = $inst.allFunc(this,true);
-                Pojo.unsetRef(type,all);
-            });
-        }
-        
-        return;
-    }
-    
-    
-    // triggerFunc
-    // permet de lancer la fonction sur la première node donnée en argument
-    // retourne le résultat de la méthode ou undefined
-    this.triggerFunc = function(node,type) 
-    {
-        let r = undefined;
-        Dom.checkNode(node,false,type);
-        Str.check(type,true);
-        
-        if(node != null)
-        {
-            const func = this.getFunc(node,type);
-            
-            if(Func.is(func))
-            {
-                const args = ArrLike.sliceStart(2,arguments);
-                
-                if(this.debug() > 2)
-                console.log('triggerFunc',type,'found',node);
-                
-                r = func.apply(node,args);
-            }
-            
-            else if(this.debug() > 0)
-            console.log('triggerFunc',type,'notFound',node);
-        }
-        
-        return r;
-    }
-    
-    
-    // triggerFuncs
-    // permet de lancer une fonction sur plusieurs nodes
-    // retorne un tableau avec tous les résultats
-    this.triggerFuncs = function(nodes,type)
-    {
-        let r = null;
-        nodes = Dom.nodeWrap(nodes);
-        Dom.checkNodes(nodes,false,type);
-        
-        if(Arr.isNotEmpty(nodes))
-        {
-            r = [];
-            const args = ArrLike.sliceStart(2,arguments);
-            
-            Arr.each(nodes,function() {
-                let result = $inst.triggerFunc.apply($inst,Arr.merge([this,type],args));
-                r.push(result);
-            });
-        }
-
-        return r;
+        const args = Arr.merge([nodes,'component:teardown'],ArrLike.sliceStart(1,arguments));
+        return this.triggerEvent.apply(this,args);
     }
 };

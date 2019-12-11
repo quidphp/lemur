@@ -156,3 +156,27 @@
         height: 350px !important;
     }
 }
+
+// componentDateSpecific
+// mixin pour le champ de date avec calendrier
+@mixin componentDateSpecific() {
+    &[data-absolute-placeholder='ready'].active > input[type='text'] {
+        @include abs(0, null, null, 0);
+        z-index: 3;
+    }
+
+    > .popup {
+        width: 250px;
+        padding: 0;
+        border: 0;
+        overflow: hidden;
+
+        .calendar {
+            @include calendar();
+        }
+
+        &:after {
+            display: none;
+        }
+    }
+}

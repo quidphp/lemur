@@ -9,28 +9,6 @@
 // include
 // stylesheet with various mixins
 
-// jqueryUi
-// quelques styles reliés à jquery-ui pour les draggable
-@mixin jqueryUi() {
-    .ui-draggable-handle {
-        -ms-touch-action: none;
-        touch-action: none;
-    }
-    .ui-selectable {
-        -ms-touch-action: none;
-        touch-action: none;
-    }
-    .ui-selectable-helper {
-        @include abs();
-        z-index: 100;
-        border: 1px dotted black;
-    }
-    .ui-sortable-handle {
-        -ms-touch-action: none;
-        touch-action: none;
-    }
-}
-
 // icon
 // mixin pour gérer un icon
 @mixin icon() {

@@ -12,7 +12,8 @@ const FeedSearch = Component.FeedSearch = function(option)
     const $option = Object.assign({
         result: '.results',
         search: "input[type='text']",
-        order: ".order select"
+        order: ".order select",
+        inputSearch: {}
     },option);
     
     
@@ -20,128 +21,110 @@ const FeedSearch = Component.FeedSearch = function(option)
     Component.Feed.call(this);
     
     
-    // func
-    setFunc(this,'feedSearch:getResult',function() {
+    // handler
+    setHandler(this,'feedSearch:getResult',function() {
         return qs(this,$option.result);
     });
     
-    setFunc(this,'feedSearch:getSearch',function() {
+    setHandler(this,'feedSearch:getSearch',function() {
         return qs(this,$option.search);
     });
     
-    setFunc(this,'feedSearch:getSearchValue',function() {
-        return triggerFunc(triggerFunc(this,'feedSearch:getSearch'),'input:getValueTrim');
+    setHandler(this,'feedSearch:getSearchValue',function() {
+        return trigHandler(trigHandler(this,'feedSearch:getSearch'),'input:getValueTrim');
     });
     
-    setFunc(this,'feedSearch:getOrder',function() {
+    setHandler(this,'feedSearch:getOrder',function() {
         return qs(this,$option.order);
     });
 
-    setFunc(this,'feedSearch:getOrderValue',function() {
-        return triggerFunc(triggerFunc(this,'feedSearch:getOrder'),'input:getValueInt');
+    setHandler(this,'feedSearch:getOrderValue',function() {
+        return trigHandler(trigHandler(this,'feedSearch:getOrder'),'input:getValueInt');
     });
     
-    setFunc(this,'feed:getTarget',function() {
-        return triggerFunc(this,'feedSearch:getResult');
+    setHandler(this,'feed:getTarget',function() {
+        return trigHandler(this,'feedSearch:getResult');
     });
     
-    /*
-    target.on('feed:loadMoreRemove',function(event,loadMore) {
-        return loadMore.parent('li');
-    })
-    .on('feed:target',function(event) {
-        return $(this).find(".results ul:last-child");
-    })
-    .on('feed:parseData',function(event,data) {
-        return Html.parse(data).find("ul:last-child li");
-    });
-    */
-    
-    setFunc(this,'ajaxBlock:setContent',function(html,isError) {
-        triggerFunc(this,'feed:overwrite',html);
+    setHandler(this,'feed:getAppendTarget',function() {
+        const target = trigHandler(this,'feed:getTarget');
+        return qs(target,'ul:last-child');
     });
     
-    setFunc(this,'ajax:config',function() {
-        const separator = $(this).data('separator');
-        const search = triggerFunc(this,'feedSearch:getSearchValue');
-        const order = triggerFunc(this,'feedSearch:getOrderValue') || separator;
+    setHandler(this,'feed:loadMoreRemove',function() {
+        const loadMore = trigHandler(this,'feed:loadMore');
+        return $(loadMore).parent('li').get(0);
+    });
+    
+    setHandler(this,'feed:parseData',function(data,type) {
+        if(type === 'append')
+        {
+            data = Html.parse(data);
+            data = $(data).find("ul:last-child").html();
+        }
         
-        return Dom.dataHrefReplaceChar(this,order);
+        return data;
     });
     
+    setHandler(this,'ajaxBlock:setContent',function(html,isError) {
+        trigHandler(this,'feed:overwrite',html);
+    });
     
-    // event
+    setHandler(this,'ajax:config',function() {
+        const separator = $(this).data('separator');
+        const query = $(this).data('query');
+        const search = trigHandler(this,'feedSearch:getSearchValue');
+        const order = trigHandler(this,'feedSearch:getOrderValue') || separator;
+        const data = {};
+        data[query] = search;
+        
+        return {
+            url: Dom.dataHrefReplaceChar(this,order),
+            data: data
+        }
+    });
     
     
     // setup
     aelOnce(this,'component:setup',function() {
-        
+        bindSearch.call(this);
+        bindOrder.call(this);
     });
     
     
-    /*
-    .on('ajax:getHref',function(event) {
+    // bindSearch
+    const bindSearch = function()
+    {
+        const $this = this;
+        const search = trigHandler(this,'feedSearch:getSearch');
         
-        const select = triggerFunc(this,'filter:getOrder');
-        const selectVal = Dom.value(select,true);
-        const order = (select.length && selectVal)? selectVal:separator;
+        // components
+        Component.InputSearch.call(search,$option.inputSearch);
         
-        return Dom.dataHrefReplaceChar(this,order);
-    })
-    .on('ajax:getData',function(event) {
-        let r = {};
-        const input = triggerFunc(this,'filter:getInput');
-        
-        r[$(this).data('query')] = Dom.value(input,true);
-        
-        return r;
-    })
-    .on('ajax:before',function() {
-        triggerEvent(this,'block');
-        $(this).attr('data-status','loading');
-        triggerFunc(this,'filter:getResult').html("");
-    })
-    .on('ajax:success',function(event,data,textStatus,jqXHR) {
-        triggerFunc(this,'filter:getResult').html(data);
-    })
-    .on('ajax:error',function(event,parsedError,jqXHR,textStatus,errorThrown) {
-        triggerFunc(this,'filter:getResult').html(parsedError);
-    })
-    .on('ajax:complete',function() {
-        triggerEvent(this,'unblock');
-        $(this).removeAttr('data-status');
-        triggerFunc(this,'filter:getInput').focus();
-    })
-    .on('filter:bind',function(event) {
-        const filter = $(this);
-        const input = triggerFunc(this,'filter:getInput');
-        const order = triggerFunc(this,'filter:getOrder');
-        
-        Component.validatePrevent.call(input,'ajax:input');
-        Component.Timeout.call(input,'keyup',500);
-
-        input.on('keyup:onTimeout',function(event) {
-            triggerEvent(this,'ajax:input');
-        })
-        .on('ajax:input',function(event) {
-            filter.trigger('ajax:init');
+        ael(search,'inputSearch:change',function() {
+            trigEvt($this,'ajax:init');
         });
         
-        order.on('change',function(event) {
-            filter.trigger('ajax:init');
+        ael(this,'feed:bind',function() {
+            const searchValue = trigHandler(this,'feedSearch:getSearchValue');
+            trigHandler(search,'inputSearch:setCurrent',searchValue);
         });
-    });
+        
+        trigSetup(search);
+    }
     
-    $(this).on('ajax:complete',function(event) {
-        triggerFunc(this,'clickOpen:getTarget').trigger('feed:bind');
-    })
-    .on('clickOpen:open',function(event) {
-        triggerEvent(this,'ajax:init');
-    })
-    .on('clickOpen:close',function(event) {
-        triggerFunc(this,'filter:getResult').html("");
-    })
-    */
+    
+    // bindOrder
+    const bindOrder = function()
+    {
+        const $this = this;
+        const order = trigHandler(this,'feedSearch:getOrder');
+        
+        // event
+        ael(order,'change',function() {
+            trigEvt($this,'ajax:init');
+        });
+    }
     
     return this;
 }

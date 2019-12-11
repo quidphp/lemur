@@ -16,8 +16,8 @@ ael(document,"DOMContentLoaded", function()
         const background = qs(body,"> .background");
         const modal = qs(body,"> .modal");
         
-        triggerSetup(Component.Background.call(background));
-        triggerSetup(Component.Modal.call(modal));
+        trigSetup(Component.Background.call(background));
+        trigSetup(Component.Modal.call(modal));
     });
     
     
@@ -32,8 +32,12 @@ ael(document,"DOMContentLoaded", function()
 
         // form
         const form = qsa(node,"form");
-        triggerEvent(Component.Form.call(form),'component:setup');
-
+        trigEvt(Component.Form.call(form),'component:setup');
+        
+        // select
+        const select = qsa(node,"select");
+        trigSetup(Component.FakeSelect.call(select));
+        
         // autre
         const anchorCorner = qsa(node,"[data-anchor-corner='1']");
         const absolutePlaceholder = qsa(node,"[data-absolute-placeholder='1']");
@@ -42,26 +46,32 @@ ael(document,"DOMContentLoaded", function()
         const popupTriggerAjax = qsa(node,".popup-trigger.with-popup.with-ajax");
         
         // anchorCorner
-        triggerSetup(Component.AnchorCorner.call(anchorCorner));
+        trigSetup(Component.AnchorCorner.call(anchorCorner));
         
         // absolutePlaceholder
-        triggerSetup(Component.AbsolutePlaceholder.call(absolutePlaceholder));
+        trigSetup(Component.AbsolutePlaceholder.call(absolutePlaceholder));
         
         // aConfirm
 		Component.Confirm.call(aConfirm,'click');
         
         // popupTrigger
-        triggerSetup(Component.ClickOpenTrigger.call(popupTrigger,{trigger: ".popup-title", target: ".popup"}));
+        trigSetup(Component.ClickOpenTrigger.call(popupTrigger,{trigger: ".popup-title", target: ".popup"}));
         
         // popupTriggerAjax
-        triggerSetup(Component.ClickOpenAjaxAnchor.call(popupTriggerAjax,{trigger: ".popup-title", target: ".popup"}));
-        
-        /*
-        // select
-        const select = qsa(node,"select");
-        triggerSetup(Component.fakeSelect.call(select));
-        */
+        trigSetup(Component.ClickOpenAjaxAnchor.call(popupTriggerAjax,{trigger: ".popup-title", target: ".popup"}));
 	});
+    
+    
+    // doc:unmountCommon
+    // événement appelé pour enlever des bindings globaux
+    ael(this,'doc:unmountCommon',function(event,node) {
+        
+        const anchorCorner = qsa(node,"[data-anchor-corner]");
+        const absolutePlaceholder = qsa(node,"[data-absolute-placeholder]");
+        
+        trigTeardown(anchorCorner);
+        trigTeardown(absolutePlaceholder);
+    });
     
     
 	// document mount
@@ -74,22 +84,22 @@ ael(document,"DOMContentLoaded", function()
         const mainSearch = qs(routeWrap,"header .top form");
         
         // burger
-        triggerSetup(Component.Burger.call(burger));
+        trigSetup(Component.Burger.call(burger));
         
         // com
-		triggerSetup(Component.Com.call(com));
+		trigSetup(Component.Com.call(com));
         
         // carousel
-        triggerSetup(Component.Carousel.call(carousel,{trigger: ".trigger", target: ".target"}));
+        trigSetup(Component.Carousel.call(carousel,{trigger: ".trigger", target: ".target"}));
         
         // subMenu
-        triggerSetup(Component.ClickOpenTrigger.call(subMenu,{trigger: ".trigger", target: ".popup"}));
-        setFunc(subMenu,'clickOpen:getBackgroundFrom',function(event) {
+        trigSetup(Component.ClickOpenTrigger.call(subMenu,{trigger: ".trigger", target: ".popup"}));
+        setHandler(subMenu,'clickOpen:getBackgroundFrom',function(event) {
             return 'submenu';
         });
         
         // mainSearch
-        triggerSetup(Component.SearchAutoInfo.call(mainSearch,{target: ".popup"}));
+        trigSetup(Component.SearchAutoInfo.call(mainSearch,{target: ".popup"}));
 	});
     
     
@@ -98,7 +108,7 @@ ael(document,"DOMContentLoaded", function()
         const burger = qsa(routeWrap,"header .burger-menu, .nav-fixed .nav-close");
         
         // burger
-        triggerEvent(burger,'component:teardown');
+        trigEvt(burger,'component:teardown');
     });
     
     
@@ -138,7 +148,7 @@ ael(document,"DOMContentLoaded", function()
     // comportement pour le popup changer mon mot de passe
 	ael(this,'modal:accountChangePassword',function(event,modal) {
 		const form = qs(modal,"form");
-        triggerFunc(form,'form:focusFirst');
+        trigHandler(form,'form:focusFirst');
 	});
     
     
@@ -151,22 +161,23 @@ ael(document,"DOMContentLoaded", function()
         const feedBody = qs(feed,".block-body");
         
         // feedBody
-        triggerSetup(Component.Feed.call(feedBody));
+        trigSetup(Component.Feed.call(feedBody));
         
         // feedTogglers
-        Component.AjaxBlock.call(feedTogglers);
+        Component.AjaxBlock.call(feedTogglers,{autoUnbind: true});
         
-        setFunc(feedTogglers,'ajaxBlock:getStatusNode',function(event) {
+        setHandler(feedTogglers,'ajaxBlock:getStatusNode',function(event) {
             return feedBody;
         });
         
-        ael(feedTogglers,'ajaxBlock:before',function(event) {
+        ael(feedTogglers,'ajaxBlock:before',function() {
             $(feedTogglers).removeClass('selected');
+            trigEvt(feedBody,'ajaxBlock:unmountContent');
             $(this).addClass('selected');
         });
         
-        ael(feedTogglers,'ajaxBlock:success',function(event) {
-            triggerEvent(feedBody,'feed:bind');
+        ael(feedTogglers,'ajaxBlock:success',function() {
+            trigEvt(feedBody,'feed:bind');
         });
 	});
     
@@ -175,8 +186,8 @@ ael(document,"DOMContentLoaded", function()
     // comportement pour la page de navigation
 	ael(this,'route:general',function(event,routeWrap) {
 		
-        const main = qsa(routeWrap,"main");
-        const scroller = qs(main,".scroller");
+        const main = qs(routeWrap,"main");
+        const scroller = qs(main,".container .scroller");
 		const search = qs(main,".left > .search");
 		const pageLimit = qsa(main,"input[name='limit'],input[name='page']");
         const table = qs(scroller,"table");
@@ -187,55 +198,53 @@ ael(document,"DOMContentLoaded", function()
         const highlight = qsa(table,"tr.highlight");
         
         // page + limit
-        Component.InputNumeric.call(pageLimit);
+        Component.InputNumericHref.call(pageLimit);
         
         // search
-		triggerSetup(Component.SearchSlide.call(search,{inputTarget: "> .form input[type='text']", infoTarget: "> .in"}));
+		trigSetup(Component.SearchSlide.call(search,{inputTarget: "> .form input[type='text']", infoTarget: "> .in"}));
         
         // rowsChecker
-        triggerSetup(Component.RowsChecker.call(main));
+        trigSetup(Component.RowsChecker.call(main));
         
         // colsSorter
-        triggerSetup(Component.ColsSorter.call(colsSorter));
+        trigSetup(Component.ColsSorter.call(colsSorter));
         
         // filter
-        triggerSetup(Component.Filter.call(filter));
-
-        /*
-        // dragScroll
-        triggerSetup(Component.scrollDrag.call(scroller,{selector: 'tbody',targetTag: 'div'}));
-                
-        // filesSlider
-        Component.slider.call(filesSlider,null,null,'.slider-element',false);
+        trigSetup(Component.Filter.call(filter,{trigger: ".trigger", target: ".popup"}));
         
         // quickEdit
-        triggerSetup(Component.quickEdit.call(quickEdit));
+        trigSetup(Component.QuickEdit.call(quickEdit));
         
         // highlight 
         ael(highlight,'mouseover',function(event) {
             $(this).removeClass('highlight');
         });
+        
+        // dragScroll
+        trigSetup(Component.ScrollDrag.call(scroller,{selector: 'tbody',targetTag: 'div'}));
+
+        /*                
+        // filesSlider
+        Component.slider.call(filesSlider,null,null,'.slider-element',false);
         */
 	});
     
     
     // unmount
     ael(this,'route:general:unmount',function(event,routeWrap) {
-        /*
         const table = qs(routeWrap,"main .scroller table");
         const quickEdit = qsa(table,"td[data-quick-edit='1'] a.quick-edit");
         
         // quickEdit
-        triggerEvent(quickEdit,'quickEdit:revert');
-        */
+        trigHandlers(quickEdit,'quickEdit:revert');
     });
     
     
     // specificForm mount
     // permet de faire tous les bindings des champs (simples et complexes)
     ael(this,'specificForm:mount',function(event,node) {
-        triggerEvent(this,'specificForm:bindMount',node);
-        triggerEvent(this,'specificForm:bindView',node);
+        trigEvt(this,'specificForm:bindMount',node);
+        trigEvt(this,'specificForm:bindView',node);
     });
     
     
@@ -253,7 +262,7 @@ ael(document,"DOMContentLoaded", function()
         const anchorCorner = qsa(node,"[data-anchor-corner]");
         
         // date
-        triggerSetup(Component.calendarInput.call(date));
+        trigSetup(Component.calendarInput.call(date));
         
         // enumSet
         Component.enumSet.call(enumSet);
@@ -262,16 +271,16 @@ ael(document,"DOMContentLoaded", function()
         Component.verticalSorter.call(checkboxSortable,".choice",'.choice-in');
         
         // files
-        triggerSetup(Component.inputFiles.call(files));
+        trigSetup(Component.inputFiles.call(files));
         
         // addRemove
-        triggerSetup(Component.addRemove.call(addRemove));
+        trigSetup(Component.addRemove.call(addRemove));
         
         // textarea
-        triggerSetup(Component.textareaExtra.call(textarea));
+        trigSetup(Component.textareaExtra.call(textarea));
         
         // anchorCorner
-        triggerFunc(anchorCorner,'anchorCorner:refresh');
+        trigHandler(anchorCorner,'anchorCorner:refresh');
         */
     });
     
@@ -281,7 +290,7 @@ ael(document,"DOMContentLoaded", function()
     ael(this,'specificForm:unmount',function(event,node) {
         /*
         const textarea = qsa(node,"[data-tag='textarea'] .specific-component");
-        triggerEvent(textarea,'component:teardown');
+        trigEvt(textarea,'component:teardown');
         */
     });
     
@@ -298,14 +307,14 @@ ael(document,"DOMContentLoaded", function()
         Component.confirm.call(submitConfirm,'click');
 		
         // champs simples
-        triggerEvent(this,'specificForm:bindMount',form);
+        trigEvt(this,'specificForm:bindMount',form);
         
         // avec panel
         if(panel.length > 1)
         Component.specificPanel.call(form);
         
         else
-        triggerEvent(this,'specificForm:bindView',form);
+        trigEvt(this,'specificForm:bindView',form);
         */
 	});
 	
@@ -315,7 +324,7 @@ ael(document,"DOMContentLoaded", function()
     ael(this,'group:specific:unmount',function(event,routeWrap) {
         /*
         const form = qs(routeWrap,"main .inner > form.specific-form");
-        triggerEvent(this,'specificForm:unmount',form);
+        trigEvt(this,'specificForm:unmount',form);
         */
     });
     
@@ -327,41 +336,41 @@ ael(document,"DOMContentLoaded", function()
         const form = qs(this,"main .inner > form.specific-form");
         const formElement = qsa(form,".form-element");
         
-        setFunc(formElement,'specificMulti:isActive',function(event) {
-            const checkbox = triggerFunc(this,'specificMulti:getCheckbox');
+        setHandler(formElement,'specificMulti:isActive',function(event) {
+            const checkbox = trigHandler(this,'specificMulti:getCheckbox');
             return $(checkbox).is(':checked');
         });
         
-        setFunc(formElement,'specificMulti:getCheckbox',function(event) {
+        setHandler(formElement,'specificMulti:getCheckbox',function(event) {
             return qs(this,".disabler input[type='checkbox']");
         });
         
-        setFunc(formElement,'specificMulti:getInputs',function(event) {
+        setHandler(formElement,'specificMulti:getInputs',function(event) {
             const right = qs(this,"> .right");
             return qsa(right,Selector.input());
         });
         
         ael(formElement,'specificMulti:refresh',function(event) {
-            const isActive = triggerFunc(this,'specificMulti:isActive');
-            const inputs = triggerFunc(this,'specificMulti:getInputs');
+            const isActive = trigHandler(this,'specificMulti:isActive');
+            const inputs = trigHandler(this,'specificMulti:getInputs');
             $(this).attr('data-disabled',(isActive === true)? 0:1);
-            triggerEvent(inputs,(isActive === true)? 'input:enable':'input:disable');
+            trigEvt(inputs,(isActive === true)? 'input:enable':'input:disable');
         });
         
         aelOnce(formElement,'specificMulti:setup',function(event) {
             const $this = this;
-            const checkbox = triggerFunc(this,'specificMulti:getCheckbox');
+            const checkbox = trigHandler(this,'specificMulti:getCheckbox');
             
             ael(checkbox,'change',function(event) {
-                triggerEvent($this,'specificMulti:refresh');
+                trigEvt($this,'specificMulti:refresh');
             });
             
-            triggerEvent(this,'specificMulti:refresh');
+            trigEvt(this,'specificMulti:refresh');
         });
         
-        triggerEvent(formElement,'specificMulti:setup');
+        trigEvt(formElement,'specificMulti:setup');
         
-        triggerEvent(form,'form:prepare');
+        trigEvt(form,'form:prepare');
         */
 	});
     
@@ -373,7 +382,7 @@ ael(document,"DOMContentLoaded", function()
         const cookieDisabled = qs(browscap,".cookie-disabled");
         const unsupportedBrowser = qs(browscap,".unsupported-browser");
         
-		triggerFunc(form,'form:focusFirst');
+		trigHandler(form,'form:focusFirst');
 		
 		if(!Browser.allowsCookie())
 		$(cookieDisabled).show();

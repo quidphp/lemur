@@ -15,10 +15,10 @@ Component.react = function()
         $that.bind.call(this);
         
         $(this).on('doc:mount',function(event) {
-            triggerEvent(this,'reactContainer:mount');
+            trigEvt(this,'reactContainer:mount');
         })
         .on('doc:unmount',function(event) {
-            triggerEvent(this,'reactContainer:unmount');
+            trigEvt(this,'reactContainer:unmount');
         });
         
         return this;
@@ -63,7 +63,7 @@ Component.react = function()
     }
     
     $(this).on('reactContainer:mount',function(event,uri) {
-        const components = triggerFunc(this,'reactContainer:getComponents');
+        const components = trigHandler(this,'reactContainer:getComponents');
         
         components.on('react:mount',function(event) {
             renderReactComponent.call(this);
@@ -82,7 +82,7 @@ Component.react = function()
         .trigger('react:mount');
     })
     .on('reactContainer:unmount',function(event) {
-        const components = triggerFunc(this,'reactContainer:getComponents');
+        const components = trigHandler(this,'reactContainer:getComponents');
         components.trigger('react:unmount');
     })
     .on('reactContainer:getComponents',function(event) {

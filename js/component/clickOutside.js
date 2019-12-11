@@ -8,8 +8,8 @@
 // component to manage click outside a node, uses the direct parent of the node
 const ClickOutside = Component.ClickOutside = function(value,persistent) 
 {
-    // func
-    setFunc(this,'clickOutside:getParent',function() {
+    // handler
+    setHandler(this,'clickOutside:getParent',function() {
         return document;
     });
     
@@ -18,22 +18,28 @@ const ClickOutside = Component.ClickOutside = function(value,persistent)
     aelOnce(this,'component:setup',function() {
         
         const $this = this;
-        const parent = triggerFunc(this,'clickOutside:getParent');
+        const parent = trigHandler(this,'clickOutside:getParent');
         
         const handler = ael(parent,'click',function() {
-            triggerEvent($this,value);
+            trigEvt($this,value);
         });
         
         const handlerCustom = ael(parent,'clickOutside:click',function() {
-            triggerEvent($this,value);
+            trigEvt($this,value);
         });
         
         // persistent
         if(persistent !== true)
         {
-            aelOnce(document,'doc:unmount',function() {
+            const handlerDocument = aelOnce(document,'doc:unmount',function() {
                 rel(parent,handler);
                 rel(parent,handlerCustom);
+            });
+            
+            aelOnce(this,'component:teardown',function() {
+                rel(parent,handler);
+                rel(parent,handlerCustom);
+                rel(document,handlerDocument);
             });
         }
     });

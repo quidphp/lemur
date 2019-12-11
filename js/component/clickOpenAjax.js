@@ -11,37 +11,28 @@ const ClickOpenAjax = Component.ClickOpenAjax = function(option)
     // option
     const $option = Object.assign({
         ajaxEvent: 'ajax:init',
+        closeUnsetContent: true
     },option);
     
 
     // components
-    Component.AjaxBlock.call(this,$option.ajaxEvent);    
+    Component.AjaxBlock.call(this,{ajaxEvent: $option.ajaxEvent});    
     Component.ClickOpen.call(this,$option);
     
     
-    // func
-    setFunc(this,'ajaxBlock:getContentNode',function() {
-        return triggerFunc(this,'clickOpen:getTargetContent');
+    // handler
+    setHandler(this,'ajaxBlock:getContentNode',function() {
+        return trigHandler(this,'clickOpen:getTargetContent');
     });
     
     
     // ael
     ael(this,'ajaxBlock:before',function() {
-        triggerEvent(this,'clickOpen:open');
+        trigEvt(this,'clickOpen:open');
     });
     
     ael(this,'ajaxBlock:success',function() {
-        triggerEvent(this,'clickOpen:loaded');
-    });
-    
-    
-    // event
-    ael(this,'clickOpen:open',function() {
-        triggerFunc(this,'clickOpen:unsetTargetContent');
-    });
-    
-    ael(this,'clickOpen:close',function() {
-        triggerFunc(this,'clickOpen:unsetTargetContent');
+        trigEvt(this,'clickOpen:loaded');
     });
     
     return this;

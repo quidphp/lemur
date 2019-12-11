@@ -16,74 +16,81 @@ const InputNumeric = Component.InputNumeric = function(option)
     
     // bindings
     Component.Timeout.call(this,'keyup',$option.timeout);
+    Component.ValidatePrevent.call(this,'inputNumeric:change');
+    
 
-
-    // func
-    setFunc(this,'inputNumeric:getCurrent',function() {
+    // handler
+    setHandler(this,'inputNumeric:getCurrent',function() {
         return Integer.cast($(this).data("current"));
     });
     
-    setFunc(this,'inputNumeric:getMax',function() {
+    setHandler(this,'inputSearch:setCurrent',function(value) {
+        $(this).data("current",value);
+    });
+    
+    setHandler(this,'inputNumeric:getMax',function() {
         return Integer.cast($(this).data('max'));
     });
     
-    
-    // event
-    ael(this,'timeout:keyup',function() {
-        inputRefresh.call(this);
-    });
-    
-    ael(this,'validate:invalid',function() {
-        const current = triggerFunc(this,'inputNumeric:getCurrent');
-        triggerFunc(this,'input:setValue',current);
-        triggerEvent(this,'validate:valid');
-    });
-    
-    ael(this,'focus',function() {
-        triggerFunc(this,'input:setEmpty');
-    });
-    
-    ael(this,'focusout',function() {
-        inputRefresh.call(this);
-    });
-    
-    ael(this,'change',function() {
-        inputRefresh.call(this);
-    });
-    
-    
-    // refresh
-    const inputRefresh = function() {
-        let val = triggerFunc(this,'input:getValueInt');
-        const max = triggerFunc(this,'inputNumeric:getMax');
-        const current = triggerFunc(this,'inputNumeric:getCurrent');
+    setHandler(this,'inputNumeric:validate',function() {
+        let r = false;
+        let val = trigHandler(this,'input:getValueInt');
+        const max = trigHandler(this,'inputNumeric:getMax');
+        const current = trigHandler(this,'inputNumeric:getCurrent');
         
         if(!val)
-        triggerEvent(this,'validate:invalid');
+        trigEvt(this,'validate:invalid');
         
         else
         {
             if(val > max)
             {
-                triggerFunc(this,'input:setValue',max);
+                trigHandler(this,'input:setValue',max);
                 val = max;
             }
             
-            if(triggerFunc(this,'validate:isValid') && val !== current)
-            redirect.call(this);
+            if(trigHandler(this,'validate:isValid') && val !== current)
+            r = true;
         }
-    }
-    
-    
-    // redirect
-    const redirect = function() 
-    {
-        const val = triggerFunc(this,'input:getValueInt');
-        const href = Dom.dataHrefReplaceChar(this,val);
         
-        if(Str.isNotEmpty(href))
-        triggerFunc(document,'doc:go',href);
-    }
+        return r;
+    });
+    
+    setHandler(this,'inputNumeric:process',function() {
+        const validate = trigHandler(this,'inputNumeric:validate');
+        
+        if(validate === true)
+        trigEvt(this,'inputNumeric:change');
+    });
+    
+    
+    // event
+    ael(this,'timeout:keyup',function() {
+        trigHandler(this,'inputNumeric:process');
+    });
+    
+    ael(this,'validate:invalid',function() {
+        const current = trigHandler(this,'inputNumeric:getCurrent');
+        trigHandler(this,'input:setValue',current);
+        trigEvt(this,'validate:valid');
+    });
+    
+    ael(this,'focus',function() {
+        trigHandler(this,'input:setEmpty');
+    });
+    
+    ael(this,'focusout',function() {
+        trigHandler(this,'inputNumeric:process');
+    });
+    
+    ael(this,'change',function() {
+        trigHandler(this,'inputNumeric:process');
+    });
+    
+    ael(this,'inputNumeric:change',function() {
+        trigHandler(this,'timeout:clear','keyup');
+    });
+    
     
     return this;
 }

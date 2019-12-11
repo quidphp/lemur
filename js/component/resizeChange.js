@@ -15,15 +15,20 @@ const ResizeChange = Component.ResizeChange = function(persistent)
     // event
     const handler = ael(window,'resize',function(event) {
         event.stopPropagation();
-        triggerEvent($nodes,'resize:change');
+        trigEvt($nodes,'resize:change');
     });
     
     
     // persistent
     if(persistent !== true)
     {
-        aelOnce(document,'doc:unmount',function() {
+        const handlerDocument = aelOnce(document,'doc:unmount',function() {
             rel(window,handler);
+        });
+        
+        aelOnce(this,'component:teardown',function() {
+            rel(window,handler);
+            rel(document,handlerDocument);
         });
     }
     

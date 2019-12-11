@@ -8,17 +8,17 @@
 // component for a background that can fadein or out
 const Background = Component.Background = function()
 {
-    // func
+    // handler
     
     // isActive
     // retourne vrai si le background existe et est présentement actif
-    setFunc(this,'background:isActive',function() {
+    setHandler(this,'background:isActive',function() {
         return ($(this).attr('data-from') != null)? true:false;
     });
     
     // set
     // permet d'ajouter une attribut data au background
-    setFunc(this,'background:set',function(value,replace) {
+    setHandler(this,'background:set',function(value,replace) {
         let r = false;
         
         if(Str.isNotEmpty(value))
@@ -35,10 +35,10 @@ const Background = Component.Background = function()
     
     // unset
     // enlève les attributs du background
-    setFunc(this,'background:unset',function(value) {
+    setHandler(this,'background:unset',function(value) {
         let r = false;
         
-        if(triggerFunc(this,'background:isActive'))
+        if(trigHandler(this,'background:isActive'))
         {
             if(value == null || value === $(this).attr('data-from'))
             {
@@ -62,16 +62,16 @@ const Background = Component.Background = function()
     {
         const background = this;
         
-        setFunc(document,'doc:getBackground',function() {
+        setHandler(document,'doc:getBackground',function() {
             return background;
         });
         
         ael(document,'doc:unmount',function() {
-            triggerFunc(background,'background:unset');
+            trigHandler(background,'background:unset');
         });
 
         ael(this,'click',function() {
-            triggerFunc(this,'background:unset');
+            trigHandler(this,'background:unset');
         });
     }
     

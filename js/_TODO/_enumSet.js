@@ -15,10 +15,10 @@ Component.enumSet = function()
             return $(this).find(".current");
         })
         .on('enumSet:getResult',function(event) {
-            return triggerFunc(this,'clickOpen:getTarget').find(".results");
+            return trigHandler(this,'clickOpen:getTarget').find(".results");
         })
         .on('enumSet:getChoice',function(event) {
-            return triggerFunc(this,'getCurrent').find('.choice');
+            return trigHandler(this,'getCurrent').find('.choice');
         })
         .on('enumSet:getInput',function(event) {
             return $(this).find(".input input[type='text']");
@@ -27,52 +27,52 @@ Component.enumSet = function()
             return $(this).find(".input button[type='button']");
         })
         .on('enumSet:getOrder',function(event) {
-            return triggerFunc(this,'clickOpen:getTarget').find(".order :input").last();
+            return trigHandler(this,'clickOpen:getTarget').find(".order :input").last();
         })
         .on('enumSet:getRadioCheckbox',function(event) {
-            return triggerFunc(this,'enumSet:getChoice').find("input[type='checkbox'],input[type='radio']");
+            return trigHandler(this,'enumSet:getChoice').find("input[type='checkbox'],input[type='radio']");
         })
         .on('enumSet:getMode',function(event) {
             return $(this).data('mode');
         })
         .on('enumSet:getChoiceCount',function(event) {
-            return triggerFunc(this,'enumSet:getChoice').length;
+            return trigHandler(this,'enumSet:getChoice').length;
         })
         .on('enumSet:isChoiceIn',function(event,value) {
-            return ((Scalar.is(value)) && triggerFunc(this,'enumSet:getRadioCheckbox').filter("[value='"+value+"']").length)? true:false;
+            return ((Scalar.is(value)) && trigHandler(this,'enumSet:getRadioCheckbox').filter("[value='"+value+"']").length)? true:false;
         })
         .on('clickOpen:open',function(event) {
             $(this).attr('data-status','loading');
-            triggerFunc(this,'enumSet:getResult').html('');
+            trigHandler(this,'enumSet:getResult').html('');
         })
         .on('clickOpen:close',function(event) {
             $(this).removeAttr('data-status');
-            triggerFunc(this,'enumSet:getResult').html('');
+            trigHandler(this,'enumSet:getResult').html('');
         })
         .on('choice:append',function(event,value,html) {
-            const mode = triggerFunc(this,'enumSet:getMode');
+            const mode = trigHandler(this,'enumSet:getMode');
             
             if(Str.isNotEmpty(html) && Scalar.is(value) && Str.isNotEmpty(mode))
             {
-                const button = triggerFunc(this,'clickOpen:getTarget').find("li > button[data-value='"+value+"']");
-                if(triggerFunc(this,'enumSet:isChoiceIn',[value]))
+                const button = trigHandler(this,'clickOpen:getTarget').find("li > button[data-value='"+value+"']");
+                if(trigHandler(this,'enumSet:isChoiceIn',[value]))
                 button.addClass('already-in');
                 
                 else
                 {
                     if(mode === 'enum')
-                    triggerEvent(this,'choice:empty');
+                    trigEvt(this,'choice:empty');
                     else
                     button.removeClass('already-in');
                     
-                    triggerFunc(this,'getCurrent').append(html);
-                    triggerEvent(this,'clickOpen:close');
+                    trigHandler(this,'getCurrent').append(html);
+                    trigEvt(this,'clickOpen:close');
                 }
             }
         })
         .on('choice:empty',function(event) {
-            triggerFunc(this,'enumSet:getChoice').remove();
-            triggerFunc(this,'clickOpen:getTarget').find("li.already-in").removeClass('already-in');
+            trigHandler(this,'enumSet:getChoice').remove();
+            trigHandler(this,'clickOpen:getTarget').find("li.already-in").removeClass('already-in');
         })
         .on('click', "input[type='radio']",function(event) {
             $(this).prop('checked',false);
@@ -96,21 +96,21 @@ Component.enumSet = function()
         
         $(this).on('enter:blocked',function(event,keyEvent) {
             if(keyEvent.type === 'keyup')
-            triggerEvent(this,'ajax:beforeInit',false);
+            trigEvt(this,'ajax:beforeInit',false);
         })
         .on('keyup:onTimeout',function(event) {
             if($(this).is(":focus"))
-            triggerEvent(this,'ajax:beforeInit',true);
+            trigEvt(this,'ajax:beforeInit',true);
         })
         .on('click',function(event) {
             event.stopPropagation();
 
-            if(triggerFunc(this,'validate:isNotEmptyAndValid') && triggerFunc(this,'enumSetInput:hasChanged'))
-            triggerEvent(this,'ajax:beforeInit',true);
+            if(trigHandler(this,'validate:isNotEmptyAndValid') && trigHandler(this,'enumSetInput:hasChanged'))
+            trigEvt(this,'ajax:beforeInit',true);
         })
         .on('enumSetInput:hasChanged',function(event) {
             let r = false;
-            const isOpen = triggerFunc(this,'enumSetInput:getParent').triggerHandler('clickOpen:isOpen');
+            const isOpen = trigHandler(this,'enumSetInput:getParent').trigHandler('clickOpen:isOpen');
             
             if(isOpen === false || (Dom.value(this,true) !== $(this).data('valueLast')))
             r = true;
@@ -119,38 +119,38 @@ Component.enumSet = function()
         })
         .on('ajax:beforeInit',function(event,validate) {
             const val = Dom.value(this,true);            
-            triggerEvent(this,'validate:valid');
+            trigEvt(this,'validate:valid');
             
             if(validate !== true || Str.isNotEmpty(val))
             {
-                triggerEvent(this,'keyup:clearTimeout');
-                triggerEvent(this,'ajax:init');
+                trigEvt(this,'keyup:clearTimeout');
+                trigEvt(this,'ajax:init');
             }
             
             else
-            triggerFunc(this,'enumSetInput:getParent').trigger('clickOpen:close');
+            trigHandler(this,'enumSetInput:getParent').trigger('clickOpen:close');
             
             $(this).data('valueLast',val);
         })
         .on('validate:failed',function(event) {
-            triggerFunc(this,'enumSetInput:getTarget').trigger('clickOpen:close');
+            trigHandler(this,'enumSetInput:getTarget').trigger('clickOpen:close');
         })
         .on('enumSetInput:getParent',function(event) {
             return $(this).parents(".specific-component");
         })
         .on('enumSetInput:getTarget',function(event) {
-            return triggerFunc(this,'enumSetInput:getParent').triggerHandler('clickOpen:getTarget');
+            return trigHandler(this,'enumSetInput:getParent').trigHandler('clickOpen:getTarget');
         })
         .on('enumSetInput:getResult',function(event) {
-            return triggerFunc(this,'enumSetInput:getParent').triggerHandler('enumSet:getResult');
+            return trigHandler(this,'enumSetInput:getParent').trigHandler('enumSet:getResult');
         })
         .on('enumSetInput:getOrder',function(event) {
-            return triggerFunc(this,'enumSetInput:getParent').triggerHandler('enumSet:getOrder');
+            return trigHandler(this,'enumSetInput:getParent').trigHandler('enumSet:getOrder');
         })
         .on('ajax:getHref',function(event) {
-            const parent = triggerFunc(this,'enumSetInput:getParent');
-            const select = triggerFunc(this,'enumSetInput:getOrder');
-            const radioCheckbox = parent.triggerHandler('enumSet:getRadioCheckbox');
+            const parent = trigHandler(this,'enumSetInput:getParent');
+            const select = trigHandler(this,'enumSetInput:getOrder');
+            const radioCheckbox = parent.trigHandler('enumSet:getRadioCheckbox');
             const separator = $(this).data("separator");
             const selected = Dom.valueSeparator(radioCheckbox.filter(":checked"),separator,true) || separator;
             const selectVal = Dom.value(select,true);
@@ -163,21 +163,21 @@ Component.enumSet = function()
             return r;
         })
         .on('ajax:before',function() {
-            triggerEvent(this,'block');
-            triggerFunc(this,'enumSetInput:getParent').trigger('clickOpen:open');
+            trigEvt(this,'block');
+            trigHandler(this,'enumSetInput:getParent').trigger('clickOpen:open');
         })
         .on('ajax:success',function(event,data,textStatus,jqXHR) {
-            const target = triggerFunc(this,'enumSetInput:getTarget');
-            const result = triggerFunc(this,'enumSetInput:getResult');
+            const target = trigHandler(this,'enumSetInput:getTarget');
+            const result = trigHandler(this,'enumSetInput:getResult');
             result.html(data);
             target.trigger('clickOpen:ready');
         })
         .on('ajax:error',function(event,parsedError,jqXHR,textStatus,errorThrown) {
-            triggerFunc(this,'enumSetInput:getResult').html(parsedError);
+            trigHandler(this,'enumSetInput:getResult').html(parsedError);
         })
         .on('ajax:complete',function() {
-            triggerFunc(this,'enumSetInput:getParent').removeAttr('data-status');
-            triggerEvent(this,'unblock');
+            trigHandler(this,'enumSetInput:getParent').removeAttr('data-status');
+            trigEvt(this,'unblock');
         })
         
         return this;
@@ -195,13 +195,13 @@ Component.enumSet = function()
             return $(this).parents(".form-element").data('mode');
         })
         .on('clickOpen:ready',function(event) {
-            triggerFunc(this,'clickOpen:getTarget').trigger('feed:bind');
+            trigHandler(this,'clickOpen:getTarget').trigger('feed:bind');
         }).on('clickOpen:getBackgroundFrom',function(event) {
             return 'enumSet';
         })
         
         // target
-        const target = triggerFunc(this,'clickOpen:getTarget');
+        const target = trigHandler(this,'clickOpen:getTarget');
         Component.appendContainer.call(target);
         
         target.on('feed:target',function(event) {
@@ -219,14 +219,14 @@ Component.enumSet = function()
         });
         
         // input
-        const input = triggerFunc(this,'enumSet:getInput');
+        const input = trigHandler(this,'enumSet:getInput');
         bindEnumSetInput.call(input);
-        triggerFunc(this,'enumSet:getOrder').on('change',function(event) {
-            enumSet.triggerHandler('enumSet:getInput').trigger('ajax:beforeInit',[false]);
+        trigHandler(this,'enumSet:getOrder').on('change',function(event) {
+            enumSet.trigHandler('enumSet:getInput').trigger('ajax:beforeInit',[false]);
         });
         
         // button
-        triggerFunc(this,'enumSet:getButton').on('click',function(event) {
+        trigHandler(this,'enumSet:getButton').on('click',function(event) {
             event.stopPropagation();
             input.val("");
             input.trigger('ajax:beforeInit');

@@ -6,11 +6,36 @@
  
 // debug
 // script with functions related to debugging
-const Debug = Lemur.Debug = {
+const Debug = Lemur.Debug = new function()
+{   
+    // status debug, peut être scalar
+    let debug = false;
+    
+    
+    // is
+    // retourne vrai si la valeur pour le débogagge est le même
+    this.is = function(value)
+    {
+        return debug === true || debug === value;
+    }
+    
+    
+    // status
+    // active ou désactive le débogagge
+    this.status = (function()
+    {
+        return function(value) {
+            if(Scalar.is(value))
+            debug = value;
+            
+            return debug;
+        }
+    })()
+    
     
     // assertThrow
     // comme assert mais lance une errur
-    assertThrow: function(value) 
+    this.assertThrow = function(value) 
     {
         if(value !== true)
         throw new Error();
@@ -19,7 +44,7 @@ const Debug = Lemur.Debug = {
     
     // logError
     // permet de logger une erreur
-    logError: function(value)
+    this.logError = function(value)
     {
         console.error('Catched',value);
     }

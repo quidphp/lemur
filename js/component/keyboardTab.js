@@ -12,8 +12,8 @@ const KeyboardTab = Component.KeyboardTab = function(prevent,type)
     Component.Keyboard.call(this,'tab',[9],type);
     
     
-    // func
-    setFunc(this,'keyboardTab:prevent',function() {
+    // handler
+    setHandler(this,'keyboardTab:prevent',function() {
         return (prevent === true)? true:false;
     });    
     

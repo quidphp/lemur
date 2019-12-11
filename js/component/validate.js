@@ -8,39 +8,39 @@
 // component with functions related to validation (pattern and required)
 const ComponentValidate = Component.Validate = function() 
 {    
-    // func
-    setFunc(this,'validate:isBinded',function() {
+    // handler
+    setHandler(this,'validate:isBinded',function() {
         return true;
     });
     
-    setFunc(this,'validate:getValue',function() {
+    setHandler(this,'validate:getValue',function() {
         return Dom.value(this,true);
     });
     
-    setFunc(this,'validate:isRequired',function() {
-        const dataRequired = triggerFunc(this,'validate:getRequired');
+    setHandler(this,'validate:isRequired',function() {
+        const dataRequired = trigHandler(this,'validate:getRequired');
         return (Num.is(dataRequired) && dataRequired > 0)? true:false;
     });
     
-    setFunc(this,'validate:getRequired',function() {
+    setHandler(this,'validate:getRequired',function() {
         return $(this).attr("data-required");
     });
     
-    setFunc(this,'validate:getPattern',function() {
+    setHandler(this,'validate:getPattern',function() {
         return $(this).attr("data-pattern");
     });
     
-    setFunc(this,'validate:isEmpty',function() {
-        return (Vari.isEmpty(triggerFunc(this,'validate:getValue')))? true:false;
+    setHandler(this,'validate:isEmpty',function() {
+        return (Vari.isEmpty(trigHandler(this,'validate:getValue')))? true:false;
     });
     
-    setFunc(this,'validate:validEmptyArray',function(type) {
+    setHandler(this,'validate:validEmptyArray',function(type) {
         let r = [];
         let validate = null;
-        const value = triggerFunc(this,'validate:getValue');
+        const value = trigHandler(this,'validate:getValue');
         const empty = (Vari.isEmpty(value))? true:false;
-        const required = triggerFunc(this,'validate:getRequired');
-        const pattern = triggerFunc(this,'validate:getPattern');
+        const required = trigHandler(this,'validate:getRequired');
+        const pattern = trigHandler(this,'validate:getPattern');
         
         if(type === 'required')
         validate = Validate.required(value,required);
@@ -54,33 +54,33 @@ const ComponentValidate = Component.Validate = function()
         return [validate,empty];
     });
     
-    setFunc(this,'validate:isValid',function(type) {
-        return Arr.valueFirst(triggerFunc(this,'validate:validEmptyArray',type));
+    setHandler(this,'validate:isValid',function(type) {
+        return Arr.valueFirst(trigHandler(this,'validate:validEmptyArray',type));
     });
     
-    setFunc(this,'validate:isNotEmptyAndValid',function(type) {
-        return (!triggerFunc(this,'validate:isEmpty') && triggerFunc(this,'validate:isValid',type))? true:false;
+    setHandler(this,'validate:isNotEmptyAndValid',function(type) {
+        return (!trigHandler(this,'validate:isEmpty') && trigHandler(this,'validate:isValid',type))? true:false;
     });
     
-    setFunc(this,'validate:process',function() {
-        return triggerFunc(this,triggerFunc(this,'validate:isEmpty')? 'validate:pattern':'validate:trigger');
+    setHandler(this,'validate:process',function() {
+        return trigHandler(this,trigHandler(this,'validate:isEmpty')? 'validate:pattern':'validate:trigger');
     });
     
-    setFunc(this,'validate:required',function() {
-        return triggerFunc(this,'validate:trigger','required');
+    setHandler(this,'validate:required',function() {
+        return trigHandler(this,'validate:trigger','required');
     });
     
-    setFunc(this,'validate:pattern',function() {
-        return triggerFunc(this,'validate:trigger','pattern');
+    setHandler(this,'validate:pattern',function() {
+        return trigHandler(this,'validate:trigger','pattern');
     });
     
-    setFunc(this,'validate:trigger',function(type) {
-        const validEmpty = triggerFunc(this,'validate:validEmptyArray',type);
+    setHandler(this,'validate:trigger',function(type) {
+        const validEmpty = trigHandler(this,'validate:validEmptyArray',type);
         const r = validEmpty[0];
         const empty = validEmpty[1];
         
-        triggerEvent(this,(r === true)? 'validate:valid':'validate:invalid');
-        triggerEvent(this,(empty === true)? 'validate:empty':'validate:notEmpty');
+        trigEvt(this,(r === true)? 'validate:valid':'validate:invalid');
+        trigEvt(this,(empty === true)? 'validate:empty':'validate:notEmpty');
         
         return r;
     });

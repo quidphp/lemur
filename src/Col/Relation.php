@@ -376,7 +376,7 @@ abstract class Relation extends Core\Col\Relation
     // retourne vrai s'il faut mettre l'attribut anchor-corner
     final public static function hasAnchorCorner(self $col):bool
     {
-        return in_array($col->complexTag(),['select','search'],true);
+        return in_array($col->complexTag(),['search'],true);
     }
 
 
@@ -384,13 +384,7 @@ abstract class Relation extends Core\Col\Relation
     // retourne vrai s'il faut mettre l'attribut absolute-placeholder
     final public static function hasAbsolutePlaceholder(self $col):bool
     {
-        $return = false;
-        $tag = $col->complexTag();
-
-        if($tag === 'select')
-        $return = true;
-
-        return $return;
+        return false;
     }
 }
 

@@ -19,7 +19,7 @@ const Sorter = Component.Sorter = function(option)
         opacity: 0.5,
         cancel: Selector.input(),
         stop: function(event,ui) {
-            triggerFunc(this,'verticalSorter:stop');
+            trigHandler(this,'verticalSorter:stop');
             ui.item.css('z-index','auto');
         }
     },option);

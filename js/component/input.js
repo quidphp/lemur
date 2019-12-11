@@ -12,30 +12,43 @@ const Input = Component.Input = function()
     Component.Validate.call(this);
     
     
-    // func
-    setFunc(this,'input:isBinded',function() {
+    // handler
+    setHandler(this,'input:isBinded',function() {
         return true;
     });
     
-    setFunc(this,'input:isEmpty',function() {
-        const value = triggerFunc(this,'input:getValue');
+    setHandler(this,'input:isControlled',function() {
+        return $(this).attr('data-controlled') === '1';
+    });
+    
+    // handler    
+    setHandler(this,'input:isGroup',function() {
+        return trigHandler(this,'input:isRadioCheckbox');
+    });
+    
+    setHandler(this,'input:isEmpty',function() {
+        const value = trigHandler(this,'input:getValue');
         return Str.isEmpty(value,true);
     });
     
-    setFunc(this,'input:isDisabled',function() {
+    setHandler(this,'input:isDisabled',function() {
         return ($(this).prop('disabled') === true)? true:false;
     });
     
-    setFunc(this,'input:getValue',function(trim) {
+    setHandler(this,'input:allowMultiple',function() {
+        return ($(this).prop('multiple') === true)? true:false;
+    });
+    
+    setHandler(this,'input:getValue',function(trim) {
         return Dom.value(this,trim);
     });
     
-    setFunc(this,'input:getValueTrim',function() {
-        return triggerFunc(this,'input:getValue',true);
+    setHandler(this,'input:getValueTrim',function() {
+        return trigHandler(this,'input:getValue',true);
     });
     
-    setFunc(this,'input:getValueEncoded',function(trim) {
-        let r = triggerFunc(this,'input:getValue',trim);
+    setHandler(this,'input:getValueEncoded',function(trim) {
+        let r = trigHandler(this,'input:getValue',trim);
         
         if(Str.isNotEmpty(r))
         r = encodeURIComponent(r);
@@ -43,79 +56,83 @@ const Input = Component.Input = function()
         return r;
     });
     
-    setFunc(this,'input:getValueInt',function() {
-        return Integer.cast(triggerFunc(this,'input:getValue',true));
+    setHandler(this,'input:getValueInt',function() {
+        return Integer.cast(trigHandler(this,'input:getValue',true));
     });
     
-    setFunc(this,'input:getId',function() {
+    setHandler(this,'input:getId',function() {
         return $(this).prop('id');
     });
     
-    setFunc(this,'input:getName',function() {
+    setHandler(this,'input:getName',function() {
         return $(this).prop('name');
     });
     
-    setFunc(this,'input:getType',function() {
+    setHandler(this,'input:getType',function() {
         return ($(this).is("input"))? $(this).prop('type'):null;
     });
     
-    setFunc(this,'input:getTag',function() {
+    setHandler(this,'input:getTag',function() {
         return Dom.tag(this);
     });
     
-    setFunc(this,'input:isRadioCheckbox',function() {
-        return Arr.in(triggerFunc(this,'input:getType'),['radio','checkbox']);
+    setHandler(this,'input:isRadioCheckbox',function() {
+        return Arr.in(trigHandler(this,'input:getType'),['radio','checkbox']);
     });
     
-    setFunc(this,'input:setValue',function(value) {
+    setHandler(this,'input:isSelect',function() {
+        return trigHandler(this,'input:getType') === 'select';
+    });
+    
+    setHandler(this,'input:setValue',function(value) {
         $(this).val(value);
     });
     
-    setFunc(this,'input:setEmpty',function() {
+    setHandler(this,'input:setEmpty',function() {
         $(this).val('');
     });
     
-    setFunc(this,'validate:getValue',function() {
-        return triggerFunc(this,'input:getValue');
+    setHandler(this,'validate:getValue',function() {
+        return trigHandler(this,'input:getValue');
     });
     
-    setFunc(this,'input:isSystem',function() {
+    setHandler(this,'input:isSystem',function() {
         return $(this).is("[name^='-']");
     });
     
-    setFunc(this,'input:isTarget',function() {
-        return (!triggerFunc(this,'input:isDisabled') && $(this).is("[name]"))? true:false;
+    setHandler(this,'input:isTarget',function() {
+        return (!trigHandler(this,'input:isDisabled') && $(this).is("[name]"))? true:false;
     });
     
-    setFunc(this,'input:isTargetVisible',function() {
-        return (triggerFunc(this,'input:isTarget') && $(this).is(":visible"))? true:false;
+    setHandler(this,'input:isTargetVisible',function() {
+        return (trigHandler(this,'input:isTarget') && $(this).is(":visible"))? true:false;
     });
     
-    setFunc(this,'input:isValidate',function() {
-        return (triggerFunc(this,'input:isTarget') && $(this).is("[data-required],[data-pattern]"))? true:false;
+    setHandler(this,'input:isValidate',function() {
+        return (trigHandler(this,'input:isTarget') && $(this).is("[data-required],[data-pattern]"))? true:false;
     });
     
-    setFunc(this,'input:isFile',function() {
+    setHandler(this,'input:isFile',function() {
         return $(this).is("input[type='file']");
     });
     
-    setFunc(this,'input:isCsrf',function() {
-        return (triggerFunc(this,'input:isSystem') && $(this).is("[data-csrf='1']"))? true:false;
+    setHandler(this,'input:isCsrf',function() {
+        return (trigHandler(this,'input:isSystem') && $(this).is("[data-csrf='1']"))? true:false;
     });
     
-    setFunc(this,'input:isGenuine',function() {
-        return (triggerFunc(this,'input:isSystem') && $(this).is("[data-genuine='1']"))? true:false;
+    setHandler(this,'input:isGenuine',function() {
+        return (trigHandler(this,'input:isSystem') && $(this).is("[data-genuine='1']"))? true:false;
     });
     
-    setFunc(this,'input:isSubmit',function() {
+    setHandler(this,'input:isSubmit',function() {
         return $(this).is("[type='submit'],[type='image']");
     });
     
-    setFunc(this,'input:isClickedSubmit',function() {
-        return (triggerFunc(this,'input:isSubmit') && $(this).is("[data-submit-click]"))? true:false;
+    setHandler(this,'input:isClickedSubmit',function() {
+        return (trigHandler(this,'input:isSubmit') && $(this).is("[data-submit-click]"))? true:false;
     });
     
-    setFunc(this,'input:getParent',function() {
+    setHandler(this,'input:getParent',function() {
         let r = $(this).parents("form").get(0);
         
         if(r == null)
@@ -124,64 +141,12 @@ const Input = Component.Input = function()
         return r;
     });
     
-    setFunc(this,'input:getLabels',function() {
-        const parent = triggerFunc(this,'input:getParent');
-        const id = triggerFunc(this,'input:getId');
+    setHandler(this,'input:getLabels',function() {
+        const parent = trigHandler(this,'input:getParent');
+        const id = trigHandler(this,'input:getId');
         
         if(Str.isNotEmpty(id))
         return qsa(parent,"label[for='"+id+"']");
-    });
-    
-    setFunc(this,'input:isGroup',function() {
-        return triggerFunc(this,'input:isRadioCheckbox');
-    });
-    
-    setFunc(this,'input:getGroup',function() {
-        let r = null;
-        const parent = triggerFunc(this,'input:getParent');
-        const name = triggerFunc(this,'input:getName');
-        const type = triggerFunc(this,'input:getType');
-        const tag = triggerFunc(this,'input:getTag');
-        
-        if(Str.isNotEmpty(name) && Str.isNotEmpty(tag))
-        {
-            const typeSearch = (Str.isNotEmpty(type))? "[type='"+type+"']":tag;
-            r = qsa(parent,typeSearch+"[name='"+name+"']");
-        }
-        
-        return r;
-    });
-    
-    setFunc(this,'input:getGroupChecked',function() {
-        let r = null;
-        const group = triggerFunc(this,'input:getGroup');
-        
-        if(Arr.isNotEmpty(group))
-        {
-            r = [];
-            Arr.each(group,function() {
-                if($(this).is(':checked'))
-                r.push(this);
-            });
-        }
-        
-        return r;
-    });
-    
-    setFunc(this,'input:getGroupValue',function() {
-        let r = undefined;
-        const group = triggerFunc(this,'input:getGroupChecked');
-        
-        if(Arr.isNotEmpty(group))
-        {
-            r = [];
-            Arr.each(group,function() {
-                const value = triggerFunc(this,'input:getValue');
-                r.push(value);
-            });
-        }
-        
-        return r;
     });
     
     
@@ -198,23 +163,31 @@ const Input = Component.Input = function()
     // setup
     aelOnce(this,'component:setup',function() {
         
-        const isGroup = triggerFunc(this,'input:isGroup');
+        const isGroup = trigHandler(this,'input:isGroup');
         
-        ael(this,'change',function() {
-            const target = (isGroup === true)? triggerFunc(this,'input:getGroup'):this;
-            triggerFuncs(target,(isGroup === true)? 'validate:trigger':'validate:process');
+        // isGroup
+        if(isGroup === true)
+        Component.InputGroup.call(this);
+        
+        
+        // handler
+        setHandler(this,'validate:getValue',function() {
+            return trigHandler(this,(isGroup === true)? 'inputGroup:getValue':'input:getValue');
         });
         
+        
+        // ael
         ael(this,'focusout',function() {
-            triggerFuncs(this,'validate:process');
+            trigHandler(this,'validate:process');
         });
         
         ael(this,'focus',function() {
-            triggerEvent(this,"validate:valid");
+            trigEvt(this,"validate:valid");
         });
-        
-        setFunc(this,'validate:getValue',function() {
-            return triggerFunc(this,(isGroup === true)? 'input:getGroupValue':'input:getValue');
+                
+        ael(this,'change',function() {
+            const target = (isGroup === true)? trigHandler(this,'inputGroup:get'):this;
+            trigHandlers(target,(isGroup === true)? 'validate:trigger':'validate:process');
         });
     });
     

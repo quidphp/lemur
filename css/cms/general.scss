@@ -106,7 +106,7 @@
     }
 
     > .scroller {
-        @include scrollDrag(tbody);
+        @include ScrollDrag(tbody);
         padding-top: 10px;
         min-height: 400px;
     }

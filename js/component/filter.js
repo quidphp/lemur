@@ -10,8 +10,9 @@ const Filter = Component.Filter = function(option)
 {
     // option
     const $option = Object.assign({
-        trigger: ".trigger",
-        target: ".popup"
+        trigger: true,
+        target: true,
+        closeUnsetContent: true
     },option);
     
     
@@ -20,20 +21,20 @@ const Filter = Component.Filter = function(option)
     Component.ClickOpenTrigger.call(this,$option);
     
     
-    // func
+    // handler
+    setHandler(this,'ajaxBlock:getContentNode',function() {
+        return trigHandler(this,'feedSearch:getResult');
+    });
+    
+    setHandler(this,'clickOpen:getTargetContent',function() {
+        return trigHandler(this,'feedSearch:getResult');
+    });
     
     
     // event
     ael(this,'clickOpen:triggerClick',function(clickEvent) {
-        triggerFunc(this,'ajax:init');
+        trigHandler(this,'ajax:init');
     });
-    
-    
-    // setup
-    aelOnce(this,'component:setup',function() {
-        
-    });
-    
     
     return this;
 }

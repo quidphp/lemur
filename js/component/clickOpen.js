@@ -13,9 +13,9 @@ const ClickOpen = Component.ClickOpen = function(option)
     Component.ClickOpenBase.call(this,option);
     
     
-    // func
-    setFunc(this,'clickOutside:getParent',function() {
-        return triggerFunc(this,'clickOpen:getParentContainer');
+    // handler
+    setHandler(this,'clickOutside:getParent',function() {
+        return trigHandler(this,'clickOpen:getParentContainer');
     });
     
     return this;

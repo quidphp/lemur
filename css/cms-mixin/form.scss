@@ -169,6 +169,40 @@
     }
 }
 
+// inputNumeric
+// stylesheet for the inputNumeric component
+@mixin inputNumeric() {
+    input[type='text'] {
+        width: 40px;
+        padding: 2px 5px;
+        margin: 0 5px;
+        text-align: center;
+    }
+}
+
+// inputSearch
+// mixin for the inputSearch component
+@mixin inputSearch() {
+    > .input {
+        position: relative;
+        margin-right: 10px;
+
+        input[type='text'] {
+            width: 200px;
+        }
+
+        > .close {
+            @include abs(-8px, -8px);
+
+            &:hover,
+            &[data-triggered='1'] {
+                opacity: 0.8;
+            }
+        }
+    }
+}
+
+
 // button
 // mixin pour le bouton
 @mixin button() {

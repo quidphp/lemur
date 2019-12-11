@@ -8,6 +8,10 @@
 // script for a document component managing site navigation with the HistoryAPI
 const Doc = Component.Doc = function(option)
 {
+    // une node
+    Dom.checkNode(this);
+    
+    
     // document
     const $document = this;
     
@@ -27,11 +31,16 @@ const Doc = Component.Doc = function(option)
     },option);
     
     
-    // func
+    // components
+    Component.Win.call(window);
+    Component.KeyboardEscape.call(this);
+    
+    
+    // handler
     
     // isLoading
     // retourne vrai si le chargement de la navigation est présentement active
-    setFunc(this,'doc:isLoading',function() {
+    setHandler(this,'doc:isLoading',function() {
         let r = false;
         const ajax = $(this).data('doc-ajax');
         
@@ -43,36 +52,36 @@ const Doc = Component.Doc = function(option)
     
     // hasHistoryApi
     // retourne vrai si history api est activé
-    setFunc(this,'doc:hasHistoryApi',function() {
+    setHandler(this,'doc:hasHistoryApi',function() {
         return HistoryApi.supported();
     });
     
     // isTouch
     // retourne vrai si le navigateur courant supporte le touch
-    setFunc(this,'doc:isTouch',function() {
+    setHandler(this,'doc:isTouch',function() {
         return ($(this).data('doc-isTouch') === true)? true:false;
     });
 
     // getInitialState
     // retourne l'état initial
-    setFunc(this,'doc:getInitialState',function() {
+    setHandler(this,'doc:getInitialState',function() {
         return $initial;
     });
     
     // getPreviousState
     // retourne l'état précédent
-    setFunc(this,'doc:getPreviousState',function() {
+    setHandler(this,'doc:getPreviousState',function() {
         return $previous || $initial;
     });
     
     // getCurrentState
     // retourne l'état courant
-    setFunc(this,'doc:getCurrentState',function() {
+    setHandler(this,'doc:getCurrentState',function() {
         return HistoryApi.makeState(location.href,document.title);
     });
     
     // replaceState
-    setFunc(this,'doc:replaceState',function(uri,title) {
+    setHandler(this,'doc:replaceState',function(uri,title) {
         let r = HistoryApi.makeState(uri,title);
         
         if($history != null && Str.isNotEmpty(uri))
@@ -83,16 +92,16 @@ const Doc = Component.Doc = function(option)
     
     // hardRedirect
     // fait une redirection dure vers une nouvelle uri
-    setFunc(this,'doc:hardRedirect',function(uri) {
+    setHandler(this,'doc:hardRedirect',function(uri) {
         location.href = uri;
     });
     
     // cancelAjax
     // annule et détruit l'objet ajax si existant
-    setFunc(this,'doc:cancelAjax',function() {
+    setHandler(this,'doc:cancelAjax',function() {
         let r = false;
         
-        if(triggerFunc(this,'doc:isLoading') === true)
+        if(trigHandler(this,'doc:isLoading') === true)
         {
             const ajax = $(this).data('doc-ajax');
             ajax.onreadystatechange = Func.noop();
@@ -106,34 +115,34 @@ const Doc = Component.Doc = function(option)
     
     // scrollTo
     // permet de scroller la page
-    setFunc(this,'doc:scrollTo',function(top) {
+    setHandler(this,'doc:scrollTo',function(top) {
         const htmlBody = qsa(this,"html,body");
         $(htmlBody).stop(true,true).scrollTop(top);
     });
     
     // getWindow
     // retourne l'objet window
-    setFunc(this,'doc:getWindow',function() {
+    setHandler(this,'doc:getWindow',function() {
         return window;
     });
     
     // getHtml
     // retourne la node html
-    setFunc(this,'doc:getHtml',function() {
+    setHandler(this,'doc:getHtml',function() {
         return qs(this,'html');
     });
     
     // getBody
     // retourne la node body
-    setFunc(this,'doc:getBody',function() {
+    setHandler(this,'doc:getBody',function() {
         return qs(this,'body');
     });
     
     // getRouteWrap
     // retourne la node du route wrap
     // seul le contenu dans cette node est remplacé au chargement d'une nouvelle page
-    setFunc(this,'doc:getRouteWrap',function() {
-        let r = triggerFunc(this,'doc:getBody');
+    setHandler(this,'doc:getRouteWrap',function() {
+        let r = trigHandler(this,'doc:getBody');
 
         if($option.routeWrap)
         r = qs(r,$option.routeWrap);
@@ -143,7 +152,7 @@ const Doc = Component.Doc = function(option)
     
     // clickEvent
     // gère un nouvel historique déclenché par un clic
-    setFunc(this,'doc:clickEvent',function(click) {
+    setHandler(this,'doc:clickEvent',function(click) {
         let r = false;
         const target = Evt.getTriggerTarget(click);
         
@@ -152,7 +161,7 @@ const Doc = Component.Doc = function(option)
             if(!(click.which > 1 || click.metaKey || click.ctrlKey || click.shiftKey || click.altKey))
             {
                 const uri = $(target).prop('href');
-                r = triggerFunc(this,'doc:go',uri,click);
+                r = trigHandler(this,'doc:go',uri,click);
             }
         }
         
@@ -161,14 +170,14 @@ const Doc = Component.Doc = function(option)
     
     // doc:submitEvent
     // gère un nouvel historique déclenché par l'envoie d'un formulaire
-    setFunc(this,'doc:submitEvent',function(submit) {
+    setHandler(this,'doc:submitEvent',function(submit) {
         let r = false;
         const target = Evt.getTriggerTarget(submit);
         
         if(target != null && $(target).is($option.form))
         {
             const uri = $(target).prop('action');
-            r = triggerFunc(this,'doc:go',uri,submit);
+            r = trigHandler(this,'doc:go',uri,submit);
         }
         
         return r;
@@ -176,10 +185,10 @@ const Doc = Component.Doc = function(option)
     
     // doc:go
     // pousse ou replace une nouvelle entrée dans l'historique
-    setFunc(this,'doc:go',function(uri,sourceEvent) {
+    setHandler(this,'doc:go',function(uri,sourceEvent) {
         let r = false;
         
-        if(triggerFunc(this,'doc:isLoading'))
+        if(trigHandler(this,'doc:isLoading'))
         {
             if(sourceEvent != null)
             sourceEvent.preventDefault();
@@ -187,13 +196,13 @@ const Doc = Component.Doc = function(option)
         
         else if(Str.is(uri) && Uri.isInternal(uri))
         {
-            const current = triggerFunc(this,'doc:getCurrentState');
+            const current = trigHandler(this,'doc:getCurrentState');
             const state = HistoryApi.makeState(uri);
             const isValid = HistoryApi.isStateChangeValid(state,current);
             
             if(isValid === true)
             {
-                if(triggerFunc(window,'win:isUnloadValid') === true)
+                if(trigHandler(window,'win:isUnloadValid') === true)
                 r = (makeAjax.call(this,state,sourceEvent))? true:false;
                 else
                 r = true;
@@ -205,7 +214,7 @@ const Doc = Component.Doc = function(option)
                 r = true;
                 $history.pushState(state,state.title,state.url);
                 $previous = state;
-                triggerEvent(window,'hashchange',sourceEvent);
+                trigEvt(window,'hashchange',sourceEvent);
             }
             
             if(r === true && sourceEvent != null)
@@ -218,31 +227,57 @@ const Doc = Component.Doc = function(option)
         return r;
     });
     
+    // unload 
+    // lance les évènements pour démonter le document dans le bon order
+    setHandler(this,'doc:unload',function() {
+        const html = trigHandler(this,'doc:getHtml');
+        const body = trigHandler(this,'doc:getBody');
+        const routeWrap = trigHandler(this,'doc:getRouteWrap');
+        
+        trigEvt(this,'doc:unmountCommon',routeWrap);
+        trigEvt(this,'doc:unmount',routeWrap);
+        
+        const group = $(html).attr("data-group");
+        if(Str.isNotEmpty(group))
+        trigEvt(this,'group:'+group+':unmount',routeWrap);
+        
+        const route = $(html).attr("data-route");
+        if(Str.isNotEmpty(route))
+        trigEvt(this,'route:'+route+':unmount',routeWrap);
+                
+        trigEvt(this,'doc:unmounted',routeWrap);
+    });
+    
     
     // custom
     
     // mountNodeCommon
     // trigger mountNode et mountCommon en même temps
     ael(this,'doc:mountNodeCommon',function(event,node) {
-        triggerEvent(this,'doc:mountNode',node);
-        triggerEvent(this,'doc:mountCommon',node);
+        trigEvt(this,'doc:mountNode',node);
+        trigEvt(this,'doc:mountCommon',node);
     });
     
-
+    // keyboardEscape
+    // trigger un click
+    ael(this,'keyboardEscape:catched',function() {
+        trigEvt(this,'click');
+    });
+    
+    
     // setup
     aelOnce(this,'component:setup',function() {
         
-        if(triggerFunc(this,'doc:hasHistoryApi'))
+        if(trigHandler(this,'doc:hasHistoryApi'))
         $history = window.history;
 
-        triggerFunc(this,'doc:cancelAjax');
-        $initial = triggerFunc(this,'doc:replaceState',location.href,document.title);
+        trigHandler(this,'doc:cancelAjax');
+        $initial = trigHandler(this,'doc:replaceState',location.href,document.title);
         
         if($history)
         {
             $history.scrollRestoration = 'manual';
             bindDocument.call(this);
-            Component.Win.call(window);
         }
         
         mountDocument.call(this,true); 
@@ -261,13 +296,13 @@ const Doc = Component.Doc = function(option)
         
         // popstate
         ael(window,'popstate',function(event) {
-            const state = event.state || triggerFunc($document,'doc:getCurrentState');
-            const previous = triggerFunc($document,'doc:getPreviousState');
+            const state = event.state || trigHandler($document,'doc:getCurrentState');
+            const previous = trigHandler($document,'doc:getPreviousState');
             const isValid = HistoryApi.isStateChangeValid(state,previous,true);
             
             if(isValid === true)
             {
-                if(triggerFunc(this,'win:isUnloadValid') === true)
+                if(trigHandler(this,'win:isUnloadValid') === true)
                 makeAjax.call($document,state,event);
                 
                 else
@@ -278,14 +313,14 @@ const Doc = Component.Doc = function(option)
             else if(Uri.isSamePathQuery(state.url,previous.url) && (Uri.hasFragment(state.url) || Uri.hasFragment(previous.url)))
             {
                 $previous = state;
-                triggerEvent(this,'hashchange',event);
+                trigEvt(this,'hashchange',event);
             }
         });
         
         // anchor click
         aelDelegate(this,'click',$option.anchor,function(event) { 
             let r = true;
-            triggerFunc($document,'doc:clickEvent',event);
+            trigHandler($document,'doc:clickEvent',event);
             
             if(event.defaultPrevented === true)
             r = false;
@@ -296,7 +331,7 @@ const Doc = Component.Doc = function(option)
         // submit
         aelDelegate(this,'submit',$option.form,function(event) { 
             let r = true;
-            triggerFunc($document,'doc:submitEvent',event);
+            trigHandler($document,'doc:submitEvent',event);
             
             if(event.defaultPrevented === true)
             r = false;
@@ -310,57 +345,35 @@ const Doc = Component.Doc = function(option)
     // lance les évènements pour monter le document dans le bon order
     const mountDocument = function(initial)
     {
-        const html = triggerFunc(this,'doc:getHtml');
-        const routeWrap = triggerFunc(this,'doc:getRouteWrap');
+        const html = trigHandler(this,'doc:getHtml');
+        const routeWrap = trigHandler(this,'doc:getRouteWrap');
         
         if(initial === true)
         {
-            const body = triggerFunc(this,'doc:getBody');
-            triggerEvent(this,'doc:mountInitial',body);
-            triggerEvent(this,'doc:mountCommon',body);
+            const body = trigHandler(this,'doc:getBody');
+            trigEvt(this,'doc:mountInitial',body);
+            trigEvt(this,'doc:mountCommon',body);
         }
         
         
         else
-        triggerEvent(this,'doc:mountCommon',routeWrap);
+        trigEvt(this,'doc:mountCommon',routeWrap);
         
-        triggerEvent(this,'doc:mount',routeWrap);
+        trigEvt(this,'doc:mount',routeWrap);
         
         const group = $(html).attr("data-group");
         if(Str.isNotEmpty(group))
-        triggerEvent(this,'group:'+group,routeWrap);
+        trigEvt(this,'group:'+group,routeWrap);
         
         const route = $(html).attr("data-route");
         if(Str.isNotEmpty(route))
-        triggerEvent(this,'route:'+route,routeWrap);
+        trigEvt(this,'route:'+route,routeWrap);
         
-        triggerEvent(this,'doc:mounted',routeWrap);
+        trigEvt(this,'doc:mounted',routeWrap);
         
         setTimeout(function() {
             $(html).attr('data-status','ready');
         }, 100);
-    }
-    
-    
-    // unmountDocument
-    // lance les évènements pour démonter le document dans le bon order
-    const unmountDocument = function()
-    {
-        const html = triggerFunc(this,'doc:getHtml');
-        const body = triggerFunc(this,'doc:getBody');
-        const routeWrap = triggerFunc(this,'doc:getRouteWrap');
-        
-        triggerEvent(this,'doc:unmount',routeWrap);
-        
-        const group = $(html).attr("data-group");
-        if(Str.isNotEmpty(group))
-        triggerEvent(this,'group:'+group+':unmount',routeWrap);
-        
-        const route = $(html).attr("data-route");
-        if(Str.isNotEmpty(route))
-        triggerEvent(this,'route:'+route+':unmount',routeWrap);
-                
-        triggerEvent(this,'doc:unmounted',routeWrap);
     }
     
     
@@ -379,7 +392,7 @@ const Doc = Component.Doc = function(option)
             {
                 Xhr.configFromNode(target,config);
                 
-                if(triggerFunc(target,'form:hasFiles'))
+                if(trigHandler(target,'form:hasFiles'))
                 config.timeout = 0;
                 
                 r = 'form';
@@ -407,7 +420,7 @@ const Doc = Component.Doc = function(option)
             
             else if(sourceEvent.type === 'submit')
             {
-                const clickedSubmit = triggerFunc(target,'form:getClickedSubmits');
+                const clickedSubmit = trigHandler(target,'form:getClickedSubmits');
                 
                 if(clickedSubmit != null)
                 $(clickedSubmit).attr('data-triggered',1);
@@ -424,7 +437,7 @@ const Doc = Component.Doc = function(option)
 
         if(HistoryApi.isState(state))
         {
-            const html = triggerFunc(this,'doc:getHtml');
+            const html = trigHandler(this,'doc:getHtml');
             $(html).attr('data-status','loading');
             
             const config = {
@@ -434,20 +447,20 @@ const Doc = Component.Doc = function(option)
                     afterAjax.call($document,type,state,jqXHR);
                 },
                 progress: function(percent,event) {
-                    triggerEvent($document,'doc:ajaxProgress',percent,event);
+                    trigEvt($document,'doc:ajaxProgress',percent,event);
                 },
                 error: function(jqXHR,textStatus,errorThrown) {
                     if(Str.isNotEmpty(jqXHR.responseText))
                     afterAjax.call($document,type,state,jqXHR);
                     else
-                    triggerFunc($document,'doc:hardRedirect',state.url);
+                    trigHandler($document,'doc:hardRedirect',state.url);
                 }
             };
             
             const type = makeHistoryType(config,sourceEvent);
             
             r = Xhr.trigger(config);
-            triggerFunc(this,'doc:cancelAjax');
+            trigHandler(this,'doc:cancelAjax');
             
             if(r != null)
             $(this).data('doc-ajax',r);
@@ -465,7 +478,7 @@ const Doc = Component.Doc = function(option)
         {
             const data = jqXHR.responseText;
             const currentUri = jqXHR.getResponseHeader('QUID-URI');
-            const current = triggerFunc(this,'doc:getCurrentState');
+            const current = trigHandler(this,'doc:getCurrentState');
             
             if(Str.is(data))
             {
@@ -485,13 +498,13 @@ const Doc = Component.Doc = function(option)
                 if(state.url !== currentUri)
                 {
                     if(!Uri.isInternal(state.url,currentUri) || !Uri.isSamePathQuery(state.url,currentUri))
-                    state = triggerFunc(this,'doc:replaceState',currentUri,state.title);
+                    state = trigHandler(this,'doc:replaceState',currentUri,state.title);
                 }	
                 
-                unmountDocument.call(this);
+                trigHandler(this,'doc:unload');
                 makeDocument.call(this,doc);
                 $(doc.html).remove();
-                triggerFunc(this,'doc:scrollTo',0);
+                trigHandler(this,'doc:scrollTo',0);
                 mountDocument.call(this);
                 $previous = state;
             }
@@ -511,7 +524,7 @@ const Doc = Component.Doc = function(option)
             
             // html
             // les attributs de html sont remplacés (les attributs existants ne sont pas effacés)
-            const html = triggerFunc(this,'doc:getHtml');
+            const html = trigHandler(this,'doc:getHtml');
             DomChange.setsAttr(doc.htmlAttr,html);
             
             // head
@@ -532,13 +545,13 @@ const Doc = Component.Doc = function(option)
             
             // body
             // les attributs de body sont effacés et remplacés
-            const body = triggerFunc(this,'doc:getBody');
+            const body = trigHandler(this,'doc:getBody');
             DomChange.emptyAttr(body);
             DomChange.setsAttr(doc.bodyAttr,body);
             
             // routeWrap
             // les attributs de routeWrap sont effacés et remplacés seulement si routeWrap n'est pas body
-            const routeWrap = triggerFunc(this,'doc:getRouteWrap');
+            const routeWrap = trigHandler(this,'doc:getRouteWrap');
             let contentTarget = doc.body;
             if($option.routeWrap && !$(routeWrap).is("body"))
             {

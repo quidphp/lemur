@@ -8,19 +8,19 @@
 // component that blocks an event if the validation is not successfull
 const ValidatePrevent = Component.ValidatePrevent = function(type) 
 {
-    // func
-    setFunc(this,'validatePrevent:getTargets',function(event) {
+    // handler
+    setHandler(this,'validatePrevent:getTargets',function(event) {
         return this;
     });
     
-    setFunc(this,'validatePrevent:trigger',function(event) {
+    setHandler(this,'validatePrevent:trigger',function(event) {
         let r = true;
-        const targets = triggerFunc(this,'validatePrevent:getTargets');
+        const targets = trigHandler(this,'validatePrevent:getTargets');
         
         if(Vari.isNotEmpty(targets))
         {
             $(targets).each(function(index, el) {
-                const val = triggerFunc(this,"validate:trigger");
+                const val = trigHandler(this,"validate:trigger");
                 
                 if(val === false)
                 r = val;
@@ -33,16 +33,16 @@ const ValidatePrevent = Component.ValidatePrevent = function(type)
     
     // event
     ael(this,type,function(event) {
-        let r = triggerFunc(this,'validatePrevent:trigger')
+        let r = trigHandler(this,'validatePrevent:trigger')
         
         if(r !== true)
         {
             Evt.preventStop(event,true);
-            triggerEvent(this,'validatePrevent:deny',event);
+            trigEvt(this,'validatePrevent:deny',event);
         }
         
         else
-        triggerEvent(this,'validatePrevent:allow',event);
+        trigEvt(this,'validatePrevent:allow',event);
         
         return r;
     });
@@ -50,14 +50,14 @@ const ValidatePrevent = Component.ValidatePrevent = function(type)
     
     // setup
     aelOnce(this,'component:setup', function(event) {
-        const targets = triggerFunc(this,'validatePrevent:getTargets');
+        const targets = trigHandler(this,'validatePrevent:getTargets');
         
         $(targets).each(function() {
-            if(!triggerFunc(this,'validate:isBinded'))
+            if(!trigHandler(this,'validate:isBinded'))
             Component.Validate.call(this);
         });
         
-        triggerSetup(targets);
+        trigSetup(targets);
     });
     
     return this;

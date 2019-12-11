@@ -43,12 +43,12 @@ Component.slider = function(timeout,navs,className,showIfOne)
             {
                 Component.tabNav.call(target,navs);
                 target.on('tab:open',function(event) {
-                    const nav = triggerFunc(this,'link:getNav');
+                    const nav = trigHandler(this,'link:getNav');
                     navs.removeClass('active');
                     nav.addClass('active');
                 });
                 navs.on('click',function(event) {
-                    const target = triggerFunc(this,'link:getTarget');
+                    const target = trigHandler(this,'link:getTarget');
                     target.trigger('tab:change');
                 });
             }
@@ -58,13 +58,13 @@ Component.slider = function(timeout,navs,className,showIfOne)
                 Component.Timeout.call(this,'tab:change',timeout);
                 
                 $(this).on('tab:change:onTimeout',function(event) {
-                    triggerEvent(this,'tab:loopNext');
+                    trigEvt(this,'tab:loopNext');
                 })
                 .on('mouseover',function(event) {
-                    triggerEvent(this,'tab:change:clearTimeout');
+                    trigEvt(this,'tab:change:clearTimeout');
                 })
                 .on('mouseleave',function(event) {
-                    triggerEvent(this,'tab:change:setTimeout');
+                    trigEvt(this,'tab:change:setTimeout');
                 });
             }
         }
@@ -85,7 +85,7 @@ Component.slider = function(timeout,navs,className,showIfOne)
             return target;
         });
         Component.tab.call(this);
-        triggerEvent(this,'tab:changeOrFirst');
+        trigEvt(this,'tab:changeOrFirst');
     };
     
     $(this).each(function(index, el) {

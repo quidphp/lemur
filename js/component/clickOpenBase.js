@@ -13,6 +13,7 @@ const ClickOpenBase = Component.ClickOpenBase = function(option)
         target: true,
         background: 'clickOpen',
         attr: 'data-active',
+        closeUnsetContent: false,
         multiple: false
     },option);
     
@@ -21,37 +22,37 @@ const ClickOpenBase = Component.ClickOpenBase = function(option)
     Component.KeyboardEscape.call(this);
     
     
-    // func
-    setFunc(this,'clickOpen:isInit',function() {
+    // handler
+    setHandler(this,'clickOpen:isInit',function() {
         return ($(this).data('clickOpen-init') === true)? true:false;
     });
     
-    setFunc(this,'clickOpen:isOpen',function() {
+    setHandler(this,'clickOpen:isOpen',function() {
         return (Integer.cast($(this).attr($option.attr)) === 1)? true:false;
     });
     
-    setFunc(this,'clickOpen:isClose',function() {
-        return (!triggerFunc(this,'clickOpen:isOpen'))? true:false;
+    setHandler(this,'clickOpen:isClose',function() {
+        return (!trigHandler(this,'clickOpen:isOpen'))? true:false;
     });
     
-    setFunc(this,'clickOpen:isEmpty',function() {
-        const target = triggerFunc(this,'clickOpen:getTargetContent');
+    setHandler(this,'clickOpen:isEmpty',function() {
+        const target = trigHandler(this,'clickOpen:getTargetContent');
         return $(target).is(":empty");
     });
     
-    setFunc(this,'clickOpen:getAttr',function() {
+    setHandler(this,'clickOpen:getAttr',function() {
         return $option.attr;
     });
     
-    setFunc(this,'clickOpen:allowMultiple',function() {
+    setHandler(this,'clickOpen:allowMultiple',function() {
         return $option.multiple;
     });
     
-    setFunc(this,'clickOpen:getBackgroundFrom',function() {
+    setHandler(this,'clickOpen:getBackgroundFrom',function() {
         return $option.background;
     });
     
-    setFunc(this,'clickOpen:getTarget',function() {
+    setHandler(this,'clickOpen:getTarget',function() {
         let r = $option.target;
         
         if(r === true)
@@ -63,134 +64,145 @@ const ClickOpenBase = Component.ClickOpenBase = function(option)
         return r;
     });
     
-    setFunc(this,'clickOpen:getTargetFocus',function() {
-        return triggerFunc(this,'clickOpen:getTarget');
+    setHandler(this,'clickOpen:getTargetFocus',function() {
+        return trigHandler(this,'clickOpen:getTarget');
     });
     
-    setFunc(this,'clickOpen:getTargetContent',function() {
-        return triggerFunc(this,'clickOpen:getTarget');
+    setHandler(this,'clickOpen:getTargetContent',function() {
+        return trigHandler(this,'clickOpen:getTarget');
     });
     
-    setFunc(this,'clickOpen:setTargetContent',function(data) {
-        const target = triggerFunc(this,'clickOpen:getTargetContent');
+    setHandler(this,'clickOpen:setTargetContent',function(data) {
+        const target = trigHandler(this,'clickOpen:getTargetContent');
         $(target).html(data);
     });
     
-    setFunc(this,'clickOpen:unsetTargetContent',function() {
-        const target = triggerFunc(this,'clickOpen:getTargetContent');
-        $(target).html('');
+    setHandler(this,'clickOpen:unsetTargetContent',function() {
+        if(!trigHandler(this,'clickOpen:isEmpty'))
+        {
+            const target = trigHandler(this,'clickOpen:getTargetContent');
+            trigEvt(this,'clickOpen:unmountContent');
+            $(target).html('');
+        }
     });
     
-    setFunc(this,'clickOpen:getParentClickOpen',function() {
-        const attr = triggerFunc(this,'clickOpen:getAttr');
+    setHandler(this,'clickOpen:getParentClickOpen',function() {
+        const attr = trigHandler(this,'clickOpen:getAttr');
         
         return $(this).parents("["+attr+"='1']").get(0);
     });
     
-    setFunc(this,'clickOpen:getParentContainer',function() {
-        return triggerFunc(this,'clickOpen:getParentClickOpen') || document;
+    setHandler(this,'clickOpen:getParentContainer',function() {
+        return trigHandler(this,'clickOpen:getParentClickOpen') || document;
     });
     
-    setFunc(this,'clickOpen:getAll',function() {
-        const parent = triggerFunc(this,'clickOpen:getParentContainer');
-        const attr = triggerFunc(this,'clickOpen:getAttr');
+    setHandler(this,'clickOpen:getAll',function() {
+        const parent = trigHandler(this,'clickOpen:getParentContainer');
+        const attr = trigHandler(this,'clickOpen:getAttr');
         
         return qsa(parent,"["+attr+"='1']");
     });
     
-    setFunc(this,'clickOpen:getChilds',function() {
-        const target = triggerFunc(this,'clickOpen:getTarget');
-        const attr = triggerFunc(this,'clickOpen:getAttr');
+    setHandler(this,'clickOpen:getChilds',function() {
+        const target = trigHandler(this,'clickOpen:getTarget');
+        const attr = trigHandler(this,'clickOpen:getAttr');
         
         return qsa(target,"["+attr+"='1']");
     });
     
-    setFunc(this,'clickOpen:closeAll',function() {
-        const all = triggerFunc(this,'clickOpen:getAll');
+    setHandler(this,'clickOpen:closeAll',function() {
+        const all = trigHandler(this,'clickOpen:getAll');
         d(all);
-        triggerEvent(all,'clickOpen:close');
+        trigEvt(all,'clickOpen:close');
     });
     
-    setFunc(this,'clickOpen:closeOthers',function(keepBackground) {
-        const all = triggerFunc(this,'clickOpen:getAll');
+    setHandler(this,'clickOpen:closeOthers',function(newBg) {
+        const all = trigHandler(this,'clickOpen:getAll');
         const others = $(all).not(this).get();
-        triggerEvent(others,'clickOpen:close',keepBackground);
+        trigEvt(others,'clickOpen:close',newBg);
     });
     
-    setFunc(this,'clickOpen:closeChilds',function() {
-        const childs = triggerFunc(this,'clickOpen:getChilds');
-        triggerEvent(childs,'clickOpen:close');
+    setHandler(this,'clickOpen:closeChilds',function() {
+        const childs = trigHandler(this,'clickOpen:getChilds');
+        trigEvt(childs,'clickOpen:close');
     });
     
-    setFunc(this,'clickOpen:toggle',function() {
-        const isOpen = triggerFunc(this,'clickOpen:isOpen');
-        triggerEvent(this,(isOpen === true)? 'clickOpen:close':'clickOpen:open');
+    setHandler(this,'clickOpen:toggle',function() {
+        const isOpen = trigHandler(this,'clickOpen:isOpen');
+        trigEvt(this,(isOpen === true)? 'clickOpen:close':'clickOpen:open');
     });
     
-    setFunc(this,'keyboardEscape:prevent',function() {
-        return (triggerFunc(this,'clickOpen:isOpen'))? true:false;
+    setHandler(this,'keyboardEscape:prevent',function() {
+        return (trigHandler(this,'clickOpen:isOpen'))? true:false;
     });
     
     
     // event
+    ael(this,'clickOpen:unmountContent',function() {
+        const node = trigHandler(this,'clickOpen:getTargetContent');
+        trigEvt(document,'doc:unmountCommon',node);
+    });
+    
     ael(this,'clickOpen:open',function() {
-        if(!triggerFunc(this,'clickOpen:allowMultiple'))
-        triggerFunc(this,'clickOpen:closeOthers',true);
+        const bgFrom = trigHandler(this,'clickOpen:getBackgroundFrom');
         
-        if(triggerFunc(this,'clickOpen:isOpen') !== true)
+        if(!trigHandler(this,'clickOpen:allowMultiple'))
+        trigHandler(this,'clickOpen:closeOthers',bgFrom);
+        
+        if(trigHandler(this,'clickOpen:isOpen') !== true)
         {
-            if(triggerFunc(this,'clickOpen:isInit') !== true)
+            if(trigHandler(this,'clickOpen:isInit') !== true)
             {
-                triggerFunc(this,'clickOpen:init');
+                trigHandler(this,'clickOpen:init');
                 $(this).data('clickOpen-init',true);
             }
             
-            const attr = triggerFunc(this,'clickOpen:getAttr');
+            const attr = trigHandler(this,'clickOpen:getAttr');
             $(this).attr(attr,1);
-            triggerEvent(this,'clickOpen:focus');
+            trigEvt(this,'clickOpen:focus');
         }
         
-        const background = triggerFunc(document,'doc:getBackground');
-        const bgFrom = triggerFunc(this,'clickOpen:getBackgroundFrom');
-        triggerFunc(background,'background:set',bgFrom,false);
+        const background = trigHandler(document,'doc:getBackground');
+        trigHandler(background,'background:set',bgFrom,false);
     });
     
-    ael(this,'clickOpen:close',function(event,keepBackground) {
-        if(triggerFunc(this,'clickOpen:isOpen') === true)
+    ael(this,'clickOpen:close',function(event,newBg) {
+        if(trigHandler(this,'clickOpen:isOpen') === true)
         {
-            const attr = triggerFunc(this,'clickOpen:getAttr');
+            const attr = trigHandler(this,'clickOpen:getAttr');
             $(this).removeAttr(attr);
             
-            if(keepBackground !== true)
-            {
-                const background = triggerFunc(document,'doc:getBackground');
-                const bgFrom = triggerFunc(this,'clickOpen:getBackgroundFrom');
-                triggerFunc(background,'background:unset',bgFrom);
-            }
+            if($option.closeUnsetContent === true)
+            trigHandler(this,'clickOpen:unsetTargetContent');
+            
+            const background = trigHandler(document,'doc:getBackground');
+            const bgFrom = trigHandler(this,'clickOpen:getBackgroundFrom');
+            if(newBg !== bgFrom)
+            trigHandler(background,'background:unset',bgFrom);
         }
     });
     
     ael(this,'clickOpen:focus',function() {
-        const target = triggerFunc(this,'clickOpen:getTargetFocus');
+        const target = trigHandler(this,'clickOpen:getTargetFocus');
         
         if($(target).is('[tabindex]'))
         $(target).focus();
     });
     
     ael(this,'keyboardEscape:blocked',function() {
-        triggerEvent(this,'clickOpen:close');
+        trigEvt(this,'clickOpen:close');
     });
     
     
     // setup
     aelOnce(this,'component:setup',function() {
         const $this = this;
-        const container = triggerFunc(this,'clickOpen:getTarget');
+        const container = trigHandler(this,'clickOpen:getTarget');
         Component.KeyboardEnter.call(container,true);
         
         // event
         ael(container,'click',function(event) {
-            triggerFunc($this,'clickOpen:closeChilds');
+            trigHandler($this,'clickOpen:closeChilds');
             event.stopPropagation();
         });
         
@@ -199,13 +211,13 @@ const ClickOpenBase = Component.ClickOpenBase = function(option)
             const tagName = Dom.tag(target);
             
             if(Arr.in(tagName,['a','button']))
-            triggerEvent(target,'click');
+            trigEvt(target,'click');
         });
         
         
         // delegate
         aelDelegate(container,'click','a',function(event) {
-            triggerFunc(document,'doc:clickEvent',event);
+            trigHandler(document,'doc:clickEvent',event);
             
             event.stopPropagation();
         });

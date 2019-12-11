@@ -9,31 +9,35 @@
 const Feed = Component.Feed = function()
 {
     // components
-    Component.AjaxBlock.call(this,'ajax:init');
+    Component.AjaxBlock.call(this,{ajaxEvent: 'ajax:init'});
     
     
-    // func
-    setFunc(this,'feed:getTarget',function() {
+    // handler
+    setHandler(this,'feed:getTarget',function() {
         return this;
     });
     
-    setFunc(this,'feed:parseData',function(data) {
+    setHandler(this,'feed:getAppendTarget',function() {
+        return this;
+    });
+    
+    setHandler(this,'feed:parseData',function(data,type) {
         return data;
     });
     
-    setFunc(this,'feed:loadMore',function() {
+    setHandler(this,'feed:loadMore',function() {
         return qs(this,'.load-more');
     });
     
-    setFunc(this,'feed:loadMoreRemove',function() {
-        return triggerFunc(this,'feed:loadMore');
+    setHandler(this,'feed:loadMoreRemove',function() {
+        return trigHandler(this,'feed:loadMore');
     })
     
-    setFunc(this,'feed:append',function(data) {
+    setHandler(this,'feed:append',function(data) {
         feedSet.call(this,'append',data);
     });
     
-    setFunc(this,'feed:overwrite',function(data) {
+    setHandler(this,'feed:overwrite',function(data) {
         feedSet.call(this,'overwrite',data);
     });
     
@@ -46,22 +50,28 @@ const Feed = Component.Feed = function()
     
     // setup
     aelOnce(this,'component:setup',function() {
-        triggerEvent(this,'feed:bind');
+        trigEvt(this,'feed:bind');
     });
 
     
     // feedSet
     const feedSet = function(type,data)
     {
-        data = triggerFunc(this,'feed:parseData',data);
-        const target = triggerFunc(this,'feed:getTarget');
+        data = trigHandler(this,'feed:parseData',data,type);
         
         if(type === 'append')
-        $(target).append(data);
-        else
-        $(target).html(data);
+        {
+            const target = trigHandler(this,'feed:getAppendTarget');
+            $(target).append(data);
+        }
         
-        triggerEvent(this,'feed:bind');
+        else
+        {
+            const target = trigHandler(this,'feed:getTarget');
+            $(target).html(data);
+        }
+        
+        trigEvt(this,'feed:bind');
     }
     
     
@@ -69,24 +79,24 @@ const Feed = Component.Feed = function()
     const bindLoadMore = function()
     {
         const $this = this;
-        const loadMore = triggerFunc(this,'feed:loadMore');
-        Component.AjaxBlock.call(loadMore,'ajax:init');
+        const loadMore = trigHandler(this,'feed:loadMore');
+        Component.AjaxBlock.call(loadMore,{ajaxEvent: 'ajax:init'});
         
-        setFunc(loadMore,'ajaxBlock:setContent',function(html,isError) {
+        setHandler(loadMore,'ajaxBlock:setContent',function(html,isError) {
             removeLoadMore.call($this);
-            triggerFunc($this,(isError === true)? 'feed:overwrite':'feed:append',html);
+            trigHandler($this,(isError === true)? 'feed:overwrite':'feed:append',html);
         });
         
         aelOnce(loadMore,'click',function(event) {
-            triggerEvent(this,'ajax:init');
+            trigEvt(this,'ajax:init');
             Evt.preventStop(event);
         });
         
         // removeLoadMore
         const removeLoadMore = function()
         {
-            const node = triggerFunc(this,'feed:loadMoreRemove');
-            node.remove();
+            const node = trigHandler(this,'feed:loadMoreRemove');
+            $(node).remove();
         }
     }
     

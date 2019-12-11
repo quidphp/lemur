@@ -12,8 +12,8 @@ const KeyboardArrow = Component.KeyboardArrow = function(prevent,type)
     Component.Keyboard.call(this,'arrow',[37,38,39,40],type);
     
     
-    // func
-    setFunc(this,'keyboardArrow:prevent',function() {
+    // handler
+    setHandler(this,'keyboardArrow:prevent',function() {
         return (prevent === true)? true:false;
     }); 
     
@@ -21,16 +21,16 @@ const KeyboardArrow = Component.KeyboardArrow = function(prevent,type)
     // event
     ael(this,'keyboardArrow:catched',function(event,keyEvent,isInput,keyCode) {
         if(keyCode === 38)
-        triggerEvent(this,'keyboardArrow:up',keyEvent,isInput);
+        trigEvt(this,'keyboardArrow:up',keyEvent,isInput);
         
         else if(keyCode === 40)
-        triggerEvent(this,'keyboardArrow:down',keyEvent,isInput);
+        trigEvt(this,'keyboardArrow:down',keyEvent,isInput);
         
         else if(ekeyCode === 37)
-        triggerEvent(this,'keyboardArrow:left',keyEvent,isInput);
+        trigEvt(this,'keyboardArrow:left',keyEvent,isInput);
         
         else if(keyCode === 39)
-        triggerEvent(this,'keyboardArrow:right',keyEvent,isInput);
+        trigEvt(this,'keyboardArrow:right',keyEvent,isInput);
     });
         
     return this;

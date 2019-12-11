@@ -15,15 +15,20 @@ const HashChange = Component.HashChange = function(persistent)
     // event
     const handler = ael(window,'hashchange',function(event,sourceEvent) {
         event.stopPropagation();
-        triggerEvent($nodes,'hash:change',Request.fragment(),sourceEvent);
+        trigEvt($nodes,'hash:change',Request.fragment(),sourceEvent);
     });
     
     
     // persistent
     if(persistent !== true)
     {
-        aelOnce(document,'doc:unmount',function() {
+        const handlerDocument = aelOnce(document,'doc:unmount',function() {
             rel(window,handler);
+        });
+        
+        aelOnce(this,'component:teardown',function() {
+            rel(window,handler);
+            rel(document,handlerDocument);
         });
     }
     

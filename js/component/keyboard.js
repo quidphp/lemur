@@ -21,14 +21,14 @@ const Keyboard = Component.Keyboard = function(key,values,type)
                 const isInput = $(event.target).is(Selector.input());
                 const ucKey = Str.upperFirst(key);
                 const catched = "keyboard"+ucKey+":catched";
-                triggerEvent(this,catched,event,isInput,event.keyCode);
+                trigEvt(this,catched,event,isInput,event.keyCode);
                 
                 const prevent = "keyboard"+ucKey+":prevent";
-                if(triggerFunc(this,prevent,event,isInput,event.keyCode) === true)
+                if(trigHandler(this,prevent,event,isInput,event.keyCode) === true)
                 {
                     const blocked = "keyboard"+ucKey+":blocked";
                     Evt.preventStop(event,true);
-                    triggerEvent(this,blocked,event,isInput,event.keyCode);
+                    trigEvt(this,blocked,event,isInput,event.keyCode);
                     
                     return false;
                 }

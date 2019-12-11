@@ -17,13 +17,13 @@ const ClickOpenAjaxAnchor = Component.ClickOpenAjaxAnchor = function(option)
     Component.ClickOpenAjax.call(this,$option);
     
     
-    // func
-    setFunc(this,'ajax:config',function() {
-        return triggerFunc(this,'clickOpen:getTrigger');
+    // handler
+    setHandler(this,'ajax:config',function() {
+        return trigHandler(this,'clickOpen:getTrigger');
     });
     
-    setFunc(this,'clickOpen:triggerClickOpen',function() {
-        triggerFunc(this,'ajax:init');
+    setHandler(this,'clickOpen:triggerClickOpen',function() {
+        trigHandler(this,'ajax:init');
     });
     
     return this;

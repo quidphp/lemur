@@ -37,6 +37,22 @@ const Dom = Lemur.Dom = {
         return r;
     },
     
+
+    // isWindow
+    // retourne vrai si la valeur est une node window
+    isWindow: function(value) 
+    {
+        return value != null && value === value.window;
+    },
+    
+    
+    // isTag
+    // retourne vrai si  la tag est celle donnée en argument
+    isTag: function(value,node)
+    {
+        return (this.tag(node) === value);
+    },
+    
     
     // checkNode
     // envoie une exception si la valeur n'est pas une node
@@ -57,22 +73,6 @@ const Dom = Lemur.Dom = {
         throw new Error([value,type,message]);
         
         return value;
-    },
-    
-    
-    // isWindow
-    // retourne vrai si la valeur est une node window
-    isWindow: function(value) 
-    {
-        return value != null && value === value.window;
-    },
-    
-    
-    // isTag
-    // retourne vrai si  la tag est celle donnée en argument
-    isTag: function(value,node)
-    {
-        return (this.tag(node) === value);
     },
     
     

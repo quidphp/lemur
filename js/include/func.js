@@ -4,7 +4,7 @@
  * License: https://github.com/quidphp/lemur/blob/master/LICENSE
  */
  
-// func
+// handler
 // script with functions related to functions
 const FuncObj = {
     

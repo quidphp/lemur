@@ -94,7 +94,7 @@ const Xhr = Lemur.Xhr = new function()
     {
         let r = null;
         
-        if(Dom.isNode(node) && Evt.triggerFunc(node,'ajax:confirm') !== false)
+        if(Dom.isNode(node) && Handler.trigger(node,'ajax:confirm') !== false)
         {
             r = (Pojo.is(config))? config:{};
             const tagName = Dom.tag(node);
@@ -122,7 +122,7 @@ const Xhr = Lemur.Xhr = new function()
     // fait la configuration de l'url pour une node
     const configNodeUrl = function(r,node,tagName)
     {
-        r.url = Evt.triggerFunc(node,'ajax:getUrl');
+        r.url = Handler.trigger(node,'ajax:getUrl');
         
         if(r.url == null)
         {
@@ -141,7 +141,7 @@ const Xhr = Lemur.Xhr = new function()
     // fait la configuration de la méthode pour une node
     const configNodeMethod = function(r,node,tagName)
     {
-        r.method = Evt.triggerFunc(node,'ajax:getMethod');
+        r.method = Handler.trigger(node,'ajax:getMethod');
         
         if(r.method == null)
         {
@@ -160,12 +160,12 @@ const Xhr = Lemur.Xhr = new function()
     // fait la configuration des datas pour une node
     const configNodeData = function(r,node,tagName)
     {
-        r.data = Evt.triggerFunc(node,'ajax:getData');
+        r.data = Handler.trigger(node,'ajax:getData');
         
         if(r.data == null && tagName === 'form')
         {
             const formData = new FormData($(node)[0]);
-            const clicked = Evt.triggerFunc(node,'form:getClickedSubmit');
+            const clicked = Handler.trigger(node,'form:getClickedSubmit');
             
             if(clicked != null)
             {
@@ -190,24 +190,24 @@ const Xhr = Lemur.Xhr = new function()
     this.configNodeEvents = function(node,config)
     {
         config.progress = function(percent,progressEvent) {
-            Evt.triggerFunc(node,'ajax:progress',percent,progressEvent);
+            Handler.trigger(node,'ajax:progress',percent,progressEvent);
         };
         
         config.beforeSend = function(jqXHR,settings) {
-            Evt.triggerFunc(node,'ajax:before',jqXHR,settings);
+            Handler.trigger(node,'ajax:before',jqXHR,settings);
         };
         
         config.success = function(data,textStatus,jqXHR) {
-            Evt.triggerFunc(node,'ajax:success',data,textStatus,jqXHR);
+            Handler.trigger(node,'ajax:success',data,textStatus,jqXHR);
         };
         
         config.error = function(jqXHR,textStatus,errorThrown) {
             const parsedError = $inst.parseError(jqXHR.responseText,textStatus);
-            Evt.triggerFunc(node,'ajax:error',parsedError,jqXHR,textStatus,errorThrown);
+            Handler.trigger(node,'ajax:error',parsedError,jqXHR,textStatus,errorThrown);
         };
         
         config.complete = function(jqXHR,textStatus) {
-            Evt.triggerFunc(node,'ajax:complete',jqXHR,textStatus);
+            Handler.trigger(node,'ajax:complete',jqXHR,textStatus);
         };
         
         return config;
@@ -224,9 +224,9 @@ const Xhr = Lemur.Xhr = new function()
         {
             r = responseText;
             let html;
-            const parse = Html.parse(responseText);
-            
-            if(Arr.isNotEmpty(parse))
+            const parse = Arr.valueFirst(Html.parse(responseText));
+
+            if(parse != null)
             {
                 const ajaxParse = Selector.scopedQuerySelector(parse,".ajax-parse-error");
                 html = Dom.outerHtml(ajaxParse);

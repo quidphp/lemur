@@ -15,6 +15,7 @@ const Dom = Lemur.Dom;
 const DomChange = Lemur.DomChange;
 const Evt = Lemur.Evt;
 const Func = Lemur.Func;
+const Handler = Lemur.Handler;
 const HistoryApi = Lemur.HistoryApi;
 const Html = Lemur.Html;
 const Integer = Lemur.Integer;
@@ -33,6 +34,7 @@ const Vari = Lemur.Vari;
 const Xhr = Lemur.Xhr;
 
 // debug
+const debug = Debug.status.bind(Debug);
 const assert = Debug.assertThrow.bind(Debug);
 const logError = Debug.logError.bind(Debug);
 
@@ -40,19 +42,21 @@ const logError = Debug.logError.bind(Debug);
 const getData = Dom.getData.bind(Dom);
 
 // event
-const evtDebug = Evt.debug.bind(Evt);
-const setFunc = Evt.setFunc.bind(Evt);
-const removeFunc = Evt.removeFunc.bind(Evt);
-const allFunc = Evt.allFunc.bind(Evt);
 const ael = Evt.addEventListener.bind(Evt);
 const aelDelegate = Evt.addDelegatedEventListener.bind(Evt);
 const aelOnce = Evt.addEventListenerOnce.bind(Evt);
 const rel = Evt.removeEventListener.bind(Evt);
-const triggerEvent = Evt.triggerEvent.bind(Evt);
-const triggerBubble = Evt.triggerBubble.bind(Evt);
-const triggerSetup = Evt.triggerSetup.bind(Evt);
-const triggerFunc = Evt.triggerFunc.bind(Evt);
-const triggerFuncs = Evt.triggerFuncs.bind(Evt);
+const trigEvt = Evt.triggerEvent.bind(Evt);
+const trigBubble = Evt.triggerBubble.bind(Evt);
+const trigSetup = Evt.triggerSetup.bind(Evt);
+const trigTeardown = Evt.triggerTeardown.bind(Evt);
+
+// handler
+const setHandler = Handler.set.bind(Handler);
+const setHandlers = Handler.sets.bind(Handler);
+const allHandlers = Handler.all.bind(Handler);
+const trigHandler = Handler.trigger.bind(Handler);
+const trigHandlers = Handler.triggers.bind(Handler);
 
 // selector
 const qs = Selector.scopedQuerySelector.bind(Selector);

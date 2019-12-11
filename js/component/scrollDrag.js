@@ -6,8 +6,9 @@
  
 // scrollDrag
 // component to allow scrolling while dragging with the mouse
-Component.scrollDrag = function(option) {
-    
+const ScrollDrag = Component.ScrollDrag = function(option) 
+{    
+    /*
     // settings
     const $option = Pojo.replace({
         selector: null,
@@ -23,7 +24,7 @@ Component.scrollDrag = function(option) {
         return ($(this).attr('data-grabbable') == 1)? true:false;
     })
     .on('scrollDrag:required',function() {
-        return ((triggerFunc(this,'scrollDrag:getChildren').width() - $(this).width()) > 0)? true:false;
+        return ((trigHandler(this,'scrollDrag:getChildren').width() - $(this).width()) > 0)? true:false;
     })
     .on('scrollDrag:getChildren',function() {
         return $(this).children().get(0);
@@ -31,10 +32,10 @@ Component.scrollDrag = function(option) {
     
     // trigger
     .on('resize:change',function() {
-        triggerEvent(this,'scrollDrag:refresh');
+        trigEvt(this,'scrollDrag:refresh');
     })
     .on('scrollDrag:refresh',function() {
-        if(triggerFunc(this,'scrollDrag:required'))
+        if(trigHandler(this,'scrollDrag:required'))
         $(this).attr('data-grabbable',1);
         else
         $(this).removeAttr('data-grabbable');
@@ -57,7 +58,7 @@ Component.scrollDrag = function(option) {
     })
     .on('mousedown', $option.selector,function(event) {
         const $this = $(event.delegateTarget);
-        if($this.triggerHandler('scrollDrag:can') && $this.triggerHandler('scrollDrag:required') && event.which === 1)
+        if($this.trigHandler('scrollDrag:can') && $this.trigHandler('scrollDrag:required') && event.which === 1)
         {
             const target = $(event.target);
             
@@ -72,7 +73,7 @@ Component.scrollDrag = function(option) {
     })
     .on('mouseup', $option.selector,function(event) {
         const $this = $(event.delegateTarget);
-        triggerEvent($this,'scrollDrag:stop');
+        trigEvt($this,'scrollDrag:stop');
     })
     .on('mouseout', $option.selector,function(event) {
         event.stopPropagation();
@@ -86,11 +87,12 @@ Component.scrollDrag = function(option) {
         $(this).data('cursorPositionX',0);
         
         $(document).on('mouseout.doc-mount',function() {
-            triggerEvent($this,'scrollDrag:stop');
+            trigEvt($this,'scrollDrag:stop');
         });
         
-        triggerEvent(this,'scrollDrag:refresh');
+        trigEvt(this,'scrollDrag:refresh');
     });
+    */
     
     return this;
 }
