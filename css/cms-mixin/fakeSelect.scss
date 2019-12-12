@@ -30,7 +30,7 @@
 @mixin fakeSelectTrigger() {
     position: relative;
     min-width: 150px;
-    
+
     &[data-validate='invalid'] {
         > .trigger {
             background-color: $red;
@@ -54,7 +54,7 @@
         border-radius: 5px;
         border: 1px solid $gray;
         background-color: $white;
-        
+
         > .title {
             text-align: left;
             display: block;
@@ -73,7 +73,7 @@
     > .trigger:hover {
         background-color: $lightYellow;
     }
-    
+
     > .trigger:active {
         background-color: $lightGray;
     }

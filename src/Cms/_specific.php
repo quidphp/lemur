@@ -261,7 +261,7 @@ trait _specific
                         $data['hash'] = $key;
                     }
                     $attr = ['panel','data'=>$data];
-                    
+
                     $description = '';
                     if($table->hasPermission('panelDescription') && is_string($key))
                     {
@@ -269,17 +269,17 @@ trait _specific
                         if(!empty($description))
                         $attr[] = 'with-description';
                     }
-                    
+
                     $r .= Html::divOp($attr);
                     $r .= $description;
-                    
+
                     $fields = '';
                     foreach ($cols as $col)
                     {
                         $fields .= $this->makeFormOne($col);
                     }
                     $r .= Html::divCond($fields,'form-fields');
-                    
+
                     $r .= Html::divCl();
                 }
             }

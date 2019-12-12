@@ -344,8 +344,8 @@ class Specific extends Core\RouteAlias
         $r = '';
         $dispatch = $this->isUpdateableOrDeleteable();
         $hasPanel = $this->hasPanel();
-        $attr = array('specific-form',($hasPanel === true)? 'with-panel':null);
-        
+        $attr = ['specific-form',($hasPanel === true)? 'with-panel':null];
+
         if($dispatch === true)
         {
             $r .= SpecificDispatch::make($this->segments())->formOpen($attr);

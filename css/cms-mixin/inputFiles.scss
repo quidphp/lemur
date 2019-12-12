@@ -37,7 +37,7 @@
             @include trianglePrevNext(14px);
             margin-top: -5px;
             display: none;
-            
+
             &[data-direction='1'] {
                 display: block;
             }
