@@ -14,18 +14,27 @@ const Com = Component.Com = function()
     
     
     // handler
-    setHandler(this,'com:getBottom',function() {
-        return qs(this,'.bottom');
-    });
-
-    setHandler(this,'com:slideUp',function() {
-        $(this).addClass('slide-close');
-        trigHandler(this,'com:getBottom').stop(true,true).slideUp('fast');
-    });
-    
-    setHandler(this,'com:slideDown',function() {
-        $(this).removeClass('slide-close');
-        trigHandler(this,'com:getBottom').stop(true,true).slideDown('fast');
+    setHdlrs(this,'com:',{
+        
+        isOpen: function() {
+            return ($(this).attr('data-status') !== 'close')? true:false;
+        },
+        
+        getBottom: function() {
+            return qs(this,'.bottom');
+        },
+        
+        slideUp: function() {
+            $(this).attr('data-status','close');
+            const bottom = trigHdlr(this,'com:getBottom');
+            $(bottom).stop(true,true).slideUp('fast');
+        },
+        
+        slideDown: function() {
+            $(this).attr('data-status','open');
+            const bottom = trigHdlr(this,'com:getBottom');
+            $(bottom).stop(true,true).slideDown('fast');
+        }
     });
     
     
@@ -47,7 +56,8 @@ const Com = Component.Com = function()
     
     aelDelegate(this,'click','.date',function(event) {
         const delegate = event.delegateTarget;
-        trigHandler(delegate,$(delegate).hasClass('slide-close')? 'com:slideDown':'com:slideUp');
+        const isOpen = trigHdlr(delegate,'com:isOpen');
+        trigHdlr(delegate,(isOpen)? 'com:slideUp':'com:slideDown');
     });
     
     aelDelegate(this,'click',".row.insert > span,.row.update > span",function(event) {
@@ -73,9 +83,9 @@ const Com = Component.Com = function()
         
         if(Str.isNotEmpty(href))
         {
-            trigHandler(this,'blockEvent:block','click');
+            trigHdlr(this,'blockEvent:block','click');
             href = href.replace($(this).data('char'),primary);
-            trigHandler(document,'doc:go',[href,clickEvent]);
+            trigHdlr(document,'doc:go',[href,clickEvent]);
         }
     }
     

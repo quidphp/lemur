@@ -49,11 +49,6 @@
                 }
             }
         }
-
-        .description {
-            padding-top: 10px;
-            font-size: 90%;
-        }
     }
 
     > .right .operation-element {
@@ -87,6 +82,23 @@
 [data-group='specific'] main .inner > .specific-form > .form-inner {
     margin-bottom: 20px;
 }
+
+
+/* PANEL */
+[data-group='specific'] main .inner > .specific-form.with-panel .panel {
+    display: none;
+    
+    &[data-active='1'] {
+        display: block;
+    }
+}
+[data-group='specific'] main .inner > .specific-form.with-panel .panel.with-description {
+    > .panel-description {
+        font-size: 90%;
+        margin-bottom: 10px;
+    }
+}
+
 [data-group='specific'] main .inner > .specific-form .panel {
     @include print() {
         display: block !important;

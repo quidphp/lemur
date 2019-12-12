@@ -16,10 +16,10 @@ Component.textareaExtra = function()
         return $(this).find(".table-relation");
     })
     .on('textareaExtra:getTinymceEditor',function() {
-        return trigHandler(this,'textareaExtra:getTextarea').data('tinymceEditor');
+        return trigHdlr(this,'textareaExtra:getTextarea').data('tinymceEditor');
     })
     .on('textareaExtra:hasFilters',function() {
-        return (trigHandler(this,'textareaExtra:getFilters').length)? true:false;
+        return (trigHdlr(this,'textareaExtra:getFilters').length)? true:false;
     })
     .on('textareaExtra:hasTinymce',function() {
         return ($(this).parents(".form-element").is("[data-group='tinymce']"))? true:false;
@@ -29,16 +29,16 @@ Component.textareaExtra = function()
     .one('component:setup',function() {
         bindTextarea.call(this);
         
-        if(trigHandler(this,'textareaExtra:hasFilters'))
+        if(trigHdlr(this,'textareaExtra:hasFilters'))
         bindFilter.call(this);
         
-        if(trigHandler(this,'textareaExtra:hasTinymce'))
+        if(trigHdlr(this,'textareaExtra:hasTinymce'))
         bindTinymce.call(this);
     })
     
     // teardown
     .one('component:teardown',function() {
-        const editor = trigHandler(this,"textareaExtra:getTinymceEditor");
+        const editor = trigHdlr(this,"textareaExtra:getTinymceEditor");
         
         if(editor != null)
         editor.remove();
@@ -46,7 +46,7 @@ Component.textareaExtra = function()
     
     // bindTextarea
     const bindTextarea = function() {
-        const textarea = trigHandler(this,'textareaExtra:getTextarea');
+        const textarea = trigHdlr(this,'textareaExtra:getTextarea');
         
         textarea.on('textareaInput:insert',function(event,html) {
             let r = false;
@@ -64,8 +64,8 @@ Component.textareaExtra = function()
     
     // bindFilter
     const bindFilter = function() {
-        const filters = trigHandler(this,'textareaExtra:getFilters');
-        const textarea = trigHandler(this,'textareaExtra:getTextarea');
+        const filters = trigHdlr(this,'textareaExtra:getFilters');
+        const textarea = trigHdlr(this,'textareaExtra:getTextarea');
         
         Component.filter.call(filters);
         filters.on('clickOpen:getBackgroundFrom',function() {
@@ -74,12 +74,12 @@ Component.textareaExtra = function()
         .one('component:setup',function(event) {
             trigEvt(this,'component:setup');
             
-            const clickOpen = trigHandler(this,'clickOpen:getTarget');
-            const result = trigHandler(this,'filter:getResult');
+            const clickOpen = trigHdlr(this,'clickOpen:getTarget');
+            const result = trigHdlr(this,'filter:getResult');
             
             result.on('click', '.insert',function(event) {
                 const html = $(this).data('html');
-                textarea.trigHandler('textareaInput:insert',html);
+                textarea.trigHdlr('textareaInput:insert',html);
                 clickOpen.trigger('clickOpen:close');
                 event.stopPropagation();
             });
@@ -87,7 +87,7 @@ Component.textareaExtra = function()
             event.stopPropagation();
         })
         .on('feed:bind',function() {
-            const target = trigHandler(this,'clickOpen:getTarget');
+            const target = trigHdlr(this,'clickOpen:getTarget');
             
             target.on('feed:parseData',function(event,data) {
                 return Html.parse(data).find("li");
@@ -98,7 +98,7 @@ Component.textareaExtra = function()
     
     // bindTinymce
     const bindTinymce = function() {
-        const textarea = trigHandler(this,'textareaExtra:getTextarea');
+        const textarea = trigHdlr(this,'textareaExtra:getTextarea');
         const editor = createTinymce.call(textarea);
         textarea.data('tinymceEditor',editor);
         

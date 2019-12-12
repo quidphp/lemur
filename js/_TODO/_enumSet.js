@@ -15,10 +15,10 @@ Component.enumSet = function()
             return $(this).find(".current");
         })
         .on('enumSet:getResult',function(event) {
-            return trigHandler(this,'clickOpen:getTarget').find(".results");
+            return trigHdlr(this,'clickOpen:getTarget').find(".results");
         })
         .on('enumSet:getChoice',function(event) {
-            return trigHandler(this,'getCurrent').find('.choice');
+            return trigHdlr(this,'getCurrent').find('.choice');
         })
         .on('enumSet:getInput',function(event) {
             return $(this).find(".input input[type='text']");
@@ -27,35 +27,35 @@ Component.enumSet = function()
             return $(this).find(".input button[type='button']");
         })
         .on('enumSet:getOrder',function(event) {
-            return trigHandler(this,'clickOpen:getTarget').find(".order :input").last();
+            return trigHdlr(this,'clickOpen:getTarget').find(".order :input").last();
         })
         .on('enumSet:getRadioCheckbox',function(event) {
-            return trigHandler(this,'enumSet:getChoice').find("input[type='checkbox'],input[type='radio']");
+            return trigHdlr(this,'enumSet:getChoice').find("input[type='checkbox'],input[type='radio']");
         })
         .on('enumSet:getMode',function(event) {
             return $(this).data('mode');
         })
         .on('enumSet:getChoiceCount',function(event) {
-            return trigHandler(this,'enumSet:getChoice').length;
+            return trigHdlr(this,'enumSet:getChoice').length;
         })
         .on('enumSet:isChoiceIn',function(event,value) {
-            return ((Scalar.is(value)) && trigHandler(this,'enumSet:getRadioCheckbox').filter("[value='"+value+"']").length)? true:false;
+            return ((Scalar.is(value)) && trigHdlr(this,'enumSet:getRadioCheckbox').filter("[value='"+value+"']").length)? true:false;
         })
         .on('clickOpen:open',function(event) {
             $(this).attr('data-status','loading');
-            trigHandler(this,'enumSet:getResult').html('');
+            trigHdlr(this,'enumSet:getResult').html('');
         })
         .on('clickOpen:close',function(event) {
             $(this).removeAttr('data-status');
-            trigHandler(this,'enumSet:getResult').html('');
+            trigHdlr(this,'enumSet:getResult').html('');
         })
         .on('choice:append',function(event,value,html) {
-            const mode = trigHandler(this,'enumSet:getMode');
+            const mode = trigHdlr(this,'enumSet:getMode');
             
             if(Str.isNotEmpty(html) && Scalar.is(value) && Str.isNotEmpty(mode))
             {
-                const button = trigHandler(this,'clickOpen:getTarget').find("li > button[data-value='"+value+"']");
-                if(trigHandler(this,'enumSet:isChoiceIn',[value]))
+                const button = trigHdlr(this,'clickOpen:getTarget').find("li > button[data-value='"+value+"']");
+                if(trigHdlr(this,'enumSet:isChoiceIn',[value]))
                 button.addClass('already-in');
                 
                 else
@@ -65,14 +65,14 @@ Component.enumSet = function()
                     else
                     button.removeClass('already-in');
                     
-                    trigHandler(this,'getCurrent').append(html);
+                    trigHdlr(this,'getCurrent').append(html);
                     trigEvt(this,'clickOpen:close');
                 }
             }
         })
         .on('choice:empty',function(event) {
-            trigHandler(this,'enumSet:getChoice').remove();
-            trigHandler(this,'clickOpen:getTarget').find("li.already-in").removeClass('already-in');
+            trigHdlr(this,'enumSet:getChoice').remove();
+            trigHdlr(this,'clickOpen:getTarget').find("li.already-in").removeClass('already-in');
         })
         .on('click', "input[type='radio']",function(event) {
             $(this).prop('checked',false);
@@ -105,12 +105,12 @@ Component.enumSet = function()
         .on('click',function(event) {
             event.stopPropagation();
 
-            if(trigHandler(this,'validate:isNotEmptyAndValid') && trigHandler(this,'enumSetInput:hasChanged'))
+            if(trigHdlr(this,'validate:isNotEmptyAndValid') && trigHdlr(this,'enumSetInput:hasChanged'))
             trigEvt(this,'ajax:beforeInit',true);
         })
         .on('enumSetInput:hasChanged',function(event) {
             let r = false;
-            const isOpen = trigHandler(this,'enumSetInput:getParent').trigHandler('clickOpen:isOpen');
+            const isOpen = trigHdlr(this,'enumSetInput:getParent').trigHdlr('clickOpen:isOpen');
             
             if(isOpen === false || (Dom.value(this,true) !== $(this).data('valueLast')))
             r = true;
@@ -128,29 +128,29 @@ Component.enumSet = function()
             }
             
             else
-            trigHandler(this,'enumSetInput:getParent').trigger('clickOpen:close');
+            trigHdlr(this,'enumSetInput:getParent').trigger('clickOpen:close');
             
             $(this).data('valueLast',val);
         })
         .on('validate:failed',function(event) {
-            trigHandler(this,'enumSetInput:getTarget').trigger('clickOpen:close');
+            trigHdlr(this,'enumSetInput:getTarget').trigger('clickOpen:close');
         })
         .on('enumSetInput:getParent',function(event) {
             return $(this).parents(".specific-component");
         })
         .on('enumSetInput:getTarget',function(event) {
-            return trigHandler(this,'enumSetInput:getParent').trigHandler('clickOpen:getTarget');
+            return trigHdlr(this,'enumSetInput:getParent').trigHdlr('clickOpen:getTarget');
         })
         .on('enumSetInput:getResult',function(event) {
-            return trigHandler(this,'enumSetInput:getParent').trigHandler('enumSet:getResult');
+            return trigHdlr(this,'enumSetInput:getParent').trigHdlr('enumSet:getResult');
         })
         .on('enumSetInput:getOrder',function(event) {
-            return trigHandler(this,'enumSetInput:getParent').trigHandler('enumSet:getOrder');
+            return trigHdlr(this,'enumSetInput:getParent').trigHdlr('enumSet:getOrder');
         })
         .on('ajax:getHref',function(event) {
-            const parent = trigHandler(this,'enumSetInput:getParent');
-            const select = trigHandler(this,'enumSetInput:getOrder');
-            const radioCheckbox = parent.trigHandler('enumSet:getRadioCheckbox');
+            const parent = trigHdlr(this,'enumSetInput:getParent');
+            const select = trigHdlr(this,'enumSetInput:getOrder');
+            const radioCheckbox = parent.trigHdlr('enumSet:getRadioCheckbox');
             const separator = $(this).data("separator");
             const selected = Dom.valueSeparator(radioCheckbox.filter(":checked"),separator,true) || separator;
             const selectVal = Dom.value(select,true);
@@ -164,19 +164,19 @@ Component.enumSet = function()
         })
         .on('ajax:before',function() {
             trigEvt(this,'block');
-            trigHandler(this,'enumSetInput:getParent').trigger('clickOpen:open');
+            trigHdlr(this,'enumSetInput:getParent').trigger('clickOpen:open');
         })
         .on('ajax:success',function(event,data,textStatus,jqXHR) {
-            const target = trigHandler(this,'enumSetInput:getTarget');
-            const result = trigHandler(this,'enumSetInput:getResult');
+            const target = trigHdlr(this,'enumSetInput:getTarget');
+            const result = trigHdlr(this,'enumSetInput:getResult');
             result.html(data);
             target.trigger('clickOpen:ready');
         })
         .on('ajax:error',function(event,parsedError,jqXHR,textStatus,errorThrown) {
-            trigHandler(this,'enumSetInput:getResult').html(parsedError);
+            trigHdlr(this,'enumSetInput:getResult').html(parsedError);
         })
         .on('ajax:complete',function() {
-            trigHandler(this,'enumSetInput:getParent').removeAttr('data-status');
+            trigHdlr(this,'enumSetInput:getParent').removeAttr('data-status');
             trigEvt(this,'unblock');
         })
         
@@ -195,13 +195,13 @@ Component.enumSet = function()
             return $(this).parents(".form-element").data('mode');
         })
         .on('clickOpen:ready',function(event) {
-            trigHandler(this,'clickOpen:getTarget').trigger('feed:bind');
+            trigHdlr(this,'clickOpen:getTarget').trigger('feed:bind');
         }).on('clickOpen:getBackgroundFrom',function(event) {
             return 'enumSet';
         })
         
         // target
-        const target = trigHandler(this,'clickOpen:getTarget');
+        const target = trigHdlr(this,'clickOpen:getTarget');
         Component.appendContainer.call(target);
         
         target.on('feed:target',function(event) {
@@ -219,14 +219,14 @@ Component.enumSet = function()
         });
         
         // input
-        const input = trigHandler(this,'enumSet:getInput');
+        const input = trigHdlr(this,'enumSet:getInput');
         bindEnumSetInput.call(input);
-        trigHandler(this,'enumSet:getOrder').on('change',function(event) {
-            enumSet.trigHandler('enumSet:getInput').trigger('ajax:beforeInit',[false]);
+        trigHdlr(this,'enumSet:getOrder').on('change',function(event) {
+            enumSet.trigHdlr('enumSet:getInput').trigger('ajax:beforeInit',[false]);
         });
         
         // button
-        trigHandler(this,'enumSet:getButton').on('click',function(event) {
+        trigHdlr(this,'enumSet:getButton').on('click',function(event) {
             event.stopPropagation();
             input.val("");
             input.trigger('ajax:beforeInit');

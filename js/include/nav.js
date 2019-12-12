@@ -8,53 +8,171 @@
 // script with helper functions related to navigation and pagination
 const Nav = Lemur.Nav = {
     
+    // isFirst
+    // retourne vrai si la valeur est la première
+    isFirst: function(value,max) 
+    {
+        return (value === this.getFirst(max));
+    },
+    
+    
+    // hasPrev
+    // retourne vrai s'il y a une valeur précédente
+    hasPrev: function(value,max,loop) 
+    {
+        return (this.getPrev(value,max,loop) != null);
+    },
+    
+    
+    // hasNext
+    // retourne vrai s'il y a une valeur suivante
+    hasNext: function(value,max,loop) 
+    {
+        return (this.getNext(value,max,loop) != null);
+    },
+    
+    
+    // isLast
+    // retourne vrai si la valeur est la dernière
+    isLast: function(value,max) 
+    {
+        return (value === this.getLast(max));
+    },
+    
+    
+    // isIndex
+    // retourne vrai si la valeur est comprise dans le maximum
+    isIndex: function(value,max)
+    {
+        return (this.getIndex(value,max) === value);
+    },
+    
+    
+    // getFirst
+    // retourne la premier valeur
+    getFirst: function(max)
+    {
+        return (Integer.is(max) && max > 0)? 0:null;
+    },
+    
+    
+    // getPrev
+    // retourne la valeur précédente
+    getPrev: function(value,max,loop)
+    {
+        let r = null;
+        
+        if(Integer.is(max) && max > 0)
+        {
+            const last = (max - 1);
+            value = (Integer.is(value))? value:last;
+            const newVal = (value - 1);
+            
+            if(newVal < 0)
+            {
+                if(loop === true)
+                r = last;
+            }
+            
+            else
+            r = newVal;
+        }
+        
+        return r;
+    },
+    
+    
+    // getNext
+    // retourne la valeur suivante
+    getNext: function(value,max,loop)
+    {
+        let r = null;
+        
+        if(Integer.is(max) && max > 0)
+        {
+            const last = (max - 1);
+            value = (Integer.is(value))? value:-1;
+            const newVal = (value + 1);
+            
+            if(newVal > last)
+            {
+                if(loop === true)
+                r = 0;
+            }
+            
+            else
+            r = newVal;
+        }
+        
+        return r;
+    },
+    
+    
+    // getLast
+    // retourne la dernière valeur
+    getLast: function(max)
+    {
+        return (Integer.is(max) && max > 0)? (max - 1):null;
+    },
+    
+    
+    // getIndex
+    // retourne la valeur si elle elle comprise dans le maximum
+    getIndex: function(value,max)
+    {
+        return (Integer.is(value) && value >= 0 && Integer.is(max) && max > 0 && value < max)? value:null;
+    },
+    
+    
     // index
     // retourne l'index du nouvel élément
     index: function(value,current,max,loop)
     {
-        let r = undefined;
+        let r = null;
         
         if(Integer.is(max) && max > 0)
         {
-            const first = 0;
-            const last = (max - 1);
-            
             if(value === 'first')
-            r = first;
+            r = this.getFirst(max);
             
             else if(value ==='last')
-            r = last;
+            r = this.getLast(max);
             
-            else if(value === 'next' && Integer.is(current))
-            {
-                r = (current + 1);
-                
-                if(r > last)
-                {
-                    if(loop === true)
-                    r = first;
-                    
-                    else
-                    r = null;
-                }
-            }
+            else if(value ==='prev')
+            r = this.getPrev(current,max,loop);
             
-            else if(value === 'prev' && Integer.is(current))
-            {
-                r = (current - 1);
-                
-                if(r < 0)
-                {
-                    if(loop === true)
-                    r = last;
-                    
-                    else
-                    r = null;
-                }
-            }
+            else if(value ==='next')
+            r = this.getNext(current,max,loop);
             
-            else if(Integer.is(value) && value >= 0 && value < max)
-            r = value;
+            else if(Integer.is(value))
+            r = this.getIndex(value,max);
+        }
+        
+        return r;
+    },
+    
+    
+    // indexNode
+    // retourne la node de l'index du nouvel élément
+    indexNode: function(value,current,nodes,loop)
+    {
+        let r = null;
+        Dom.checkNodes(nodes,false);
+        
+        if(nodes != null)
+        {
+            const max = Arr.length(nodes);
+            
+            if(Dom.isNode(value))
+            value = Arr.search(value,nodes);
+            
+            if(Dom.isNode(current))
+            current = Arr.search(current,nodes);
+            
+            const index = this.index(value,current,max,loop);
+            
+            if(Integer.is(index))
+            r = Arr.get(index,nodes);
         }
         
         return r;

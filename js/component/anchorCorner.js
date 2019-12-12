@@ -8,12 +8,17 @@
 // script of behaviours for an absolute anchorCorner component
 const AnchorCorner = Component.AnchorCorner = function()
 {
+    // not empty
+    if(Vari.isEmpty(this)) 
+    return null;
+    
+    
     // components
     Component.ResizeChange.call(this);
     
     
     // handler
-    setHandler(this,'anchorCorner:refresh',function() {
+    setHdlr(this,'anchorCorner:refresh',function() {
         const offset = offsetCorner.call(this);
         $(this).attr('data-anchor-corner',offset.corner);
     });
@@ -21,18 +26,18 @@ const AnchorCorner = Component.AnchorCorner = function()
     
     // event
     ael(this,'mouseenter',function(event) {
-        trigHandler(this,'anchorCorner:refresh');
+        trigHdlr(this,'anchorCorner:refresh');
         event.stopPropagation();
     });
     
     ael(this,'resize:change',function() {
-        trigHandler(this,'anchorCorner:refresh');
+        trigHdlr(this,'anchorCorner:refresh');
     });
     
     
     // setup
     aelOnce(this,'component:setup',function() {
-        trigHandler(this,'anchorCorner:refresh');
+        trigHdlr(this,'anchorCorner:refresh');
     });
     
     

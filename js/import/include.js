@@ -52,11 +52,11 @@ const trigSetup = Evt.triggerSetup.bind(Evt);
 const trigTeardown = Evt.triggerTeardown.bind(Evt);
 
 // handler
-const setHandler = Handler.set.bind(Handler);
-const setHandlers = Handler.sets.bind(Handler);
-const allHandlers = Handler.all.bind(Handler);
-const trigHandler = Handler.trigger.bind(Handler);
-const trigHandlers = Handler.triggers.bind(Handler);
+const setHdlr = Handler.set.bind(Handler);
+const setHdlrs = Handler.sets.bind(Handler);
+const allHdlr = Handler.all.bind(Handler);
+const trigHdlr = Handler.trigger.bind(Handler);
+const trigHdlrs = Handler.triggers.bind(Handler);
 
 // selector
 const qs = Selector.scopedQuerySelector.bind(Selector);

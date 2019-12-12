@@ -22,18 +22,18 @@ const Filter = Component.Filter = function(option)
     
     
     // handler
-    setHandler(this,'ajaxBlock:getContentNode',function() {
-        return trigHandler(this,'feedSearch:getResult');
+    setHdlr(this,'ajaxBlock:getContentNode',function() {
+        return trigHdlr(this,'feedSearch:getResult');
     });
     
-    setHandler(this,'clickOpen:getTargetContent',function() {
-        return trigHandler(this,'feedSearch:getResult');
+    setHdlr(this,'clickOpen:getTargetContent',function() {
+        return trigHdlr(this,'feedSearch:getResult');
     });
     
     
     // event
     ael(this,'clickOpen:triggerClick',function(clickEvent) {
-        trigHandler(this,'ajax:init');
+        trigHdlr(this,'ajax:init');
     });
     
     return this;

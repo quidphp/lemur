@@ -9,14 +9,14 @@
 const Confirm = Component.Confirm = function(type) 
 {
     // handler
-    setHandler(this,'confirm:getText',function() {
+    setHdlr(this,'confirm:getText',function() {
         return $(this).data('confirm');
     });
     
     
     // event
     ael(this,type,function(event) {
-        const confirmText = trigHandler(this,'confirm:getText');
+        const confirmText = trigHdlr(this,'confirm:getText');
         
         if(Str.isNotEmpty(confirmText) && !confirm(confirmText))
         {

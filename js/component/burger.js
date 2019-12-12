@@ -8,29 +8,37 @@
 // script for a burger menu component
 const Burger = Component.Burger = function()
 {
-    // handler
-    setHandler(this,'burger:isOpen',function() {
-        const html = trigHandler(document,'doc:getHtml');
-        return ($(html).attr('data-burger') === 'open')? true:false;
-    });
+    // not empty
+    if(Vari.isEmpty(this)) 
+    return null;
     
-    setHandler(this,'burger:toggle',function() {
-        trigEvt(this,trigHandler(this,'burger:isOpen')? 'burger:close':'burger:open');
+    
+    // handler
+    setHdlrs(this,'burger:',{
+        
+        isOpen: function() {
+            const html = trigHdlr(document,'doc:getHtml');
+            return ($(html).attr('data-burger') === 'open')? true:false;
+        },
+        
+        toggle: function() {
+            trigEvt(this,trigHdlr(this,'burger:isOpen')? 'burger:close':'burger:open');
+        }
     });
     
     
     // event
     ael(this,'click',function() {
-        trigHandler(this,'burger:toggle');
+        trigHdlr(this,'burger:toggle');
     });
     
     ael(this,'burger:open',function() {
-        const html = trigHandler(document,'doc:getHtml');
+        const html = trigHdlr(document,'doc:getHtml');
         $(html).attr('data-burger','open');
     });
     
     ael(this,'burger:close',function() {
-        const html = trigHandler(document,'doc:getHtml');
+        const html = trigHdlr(document,'doc:getHtml');
         $(html).attr('data-burger','close');
     });
     

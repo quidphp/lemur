@@ -291,7 +291,7 @@
             background-color: $lightestGray;
         }
         &.highlight,
-        &.selected {
+        &[data-checked='1'] {
             background-color: $lightYellow !important;
         }
 

@@ -210,8 +210,8 @@ class Home extends Core\Route\Home
             foreach ($homeFeed::getFeedTypesRelation() as $type => $label)
             {
                 $route = $homeFeed->changeSegment('type',$type);
-                $selected = ($type === $currentType)? 'selected':null;
-                $toggler .= $route->a($label,[$selected,'toggler-element','data'=>['type'=>$type]]);
+                $selected = ($type === $currentType)? 1:0;
+                $toggler .= $route->a($label,['toggler-element','data'=>['selected'=>$selected,'type'=>$type]]);
             }
 
             $head .= Html::div($toggler,'feed-togglers');

@@ -13,7 +13,7 @@ const Form = Component.Form = function()
     
     
     // handler
-    setHandlers(this,'form:',{
+    setHdlrs(this,'form:',{
         
         isSubmitted: function() {
             return ($(this).data('form-submitted') === 1)? true:false;
@@ -24,81 +24,81 @@ const Form = Component.Form = function()
         },
         
         getSystemFields: function() {
-            return Arr.filter(trigHandler(this,'form:getFields'),function() {
-                return trigHandler(this,'input:isSystem');
+            return Arr.filter(trigHdlr(this,'form:getFields'),function() {
+                return trigHdlr(this,'input:isSystem');
             });
         },
         
         getTargetFields: function() {
-            return Arr.filter(trigHandler(this,'form:getFields'),function() {
-                return trigHandler(this,'input:isTarget');
+            return Arr.filter(trigHdlr(this,'form:getFields'),function() {
+                return trigHdlr(this,'input:isTarget');
             });
         },
         
         getTargetVisibleFields: function() {
-            return Arr.filter(trigHandler(this,'form:getFields'),function() {
-                return trigHandler(this,'input:isTargetVisible');
+            return Arr.filter(trigHdlr(this,'form:getFields'),function() {
+                return trigHdlr(this,'input:isTargetVisible');
             });
         },
         
         getValidateFields: function() {
-            return Arr.filter(trigHandler(this,'form:getFields'),function() {
-                return trigHandler(this,'input:isValidate');
+            return Arr.filter(trigHdlr(this,'form:getFields'),function() {
+                return trigHdlr(this,'input:isValidate');
             });
         },
         
         getFiles: function() {
-            return Arr.filter(trigHandler(this,'form:getFields'),function() {
-                return trigHandler(this,'input:isFile');
+            return Arr.filter(trigHdlr(this,'form:getFields'),function() {
+                return trigHdlr(this,'input:isFile');
             });
         },
         
         getSubmits: function() {
-            return Arr.filter(trigHandler(this,'form:getFields'),function() {
-                return trigHandler(this,'input:isSubmit');
+            return Arr.filter(trigHdlr(this,'form:getFields'),function() {
+                return trigHdlr(this,'input:isSubmit');
             });
         },
         
         getCsrfField: function() {
-            return Arr.find(trigHandler(this,'form:getFields'),function() {
-                return trigHandler(this,'input:isCsrf');
+            return Arr.find(trigHdlr(this,'form:getFields'),function() {
+                return trigHdlr(this,'input:isCsrf');
             });
         },
         
         getGenuineField: function() {
-            return Arr.find(trigHandler(this,'form:getFields'),function() {
-                return trigHandler(this,'input:isGenuine');
+            return Arr.find(trigHdlr(this,'form:getFields'),function() {
+                return trigHdlr(this,'input:isGenuine');
             });
         },
         
         getClickedSubmit: function() {
-            return Arr.find(trigHandler(this,'form:getFields'),function() {
-                return trigHandler(this,'input:isClickedSubmit');
+            return Arr.find(trigHdlr(this,'form:getFields'),function() {
+                return trigHdlr(this,'input:isClickedSubmit');
             });
         },
         
         getValidateField: function() {
-            return Arr.valueFirst(trigHandler(this,'form:getValidateFields'));
+            return Arr.valueFirst(trigHdlr(this,'form:getValidateFields'));
         },
         
         getSubmit: function() {
-            return Arr.valueFirst(trigHandler(this,'form:getSubmits'));
+            return Arr.valueFirst(trigHdlr(this,'form:getSubmits'));
         },
         
         hasFiles: function() {
-            return (Arr.isNotEmpty(trigHandler(this,'form:getFiles')))? true:false;
+            return (Arr.isNotEmpty(trigHdlr(this,'form:getFiles')))? true:false;
         },
         
         getClickedSubmits: function() {
-            let r = trigHandler(this,'form:getClickedSubmit');
+            let r = trigHdlr(this,'form:getClickedSubmit');
             
             if(r != null)
             {
-                const name = trigHandler(r,'input:getName');
+                const name = trigHdlr(r,'input:getName');
                 
                 if(Str.isNotEmpty(name))
                 {
-                    r = Arr.filter(trigHandler(this,'form:getSubmits'),function() {
+                    r = Arr.filter(trigHdlr(this,'form:getSubmits'),function() {
                         return $(this).is("[name='"+name+"']");
                     });
                 }
@@ -109,7 +109,7 @@ const Form = Component.Form = function()
         
         hasChanged: function() {
             let r = false;
-            const target = trigHandler(this,'form:getTargetFields');
+            const target = trigHdlr(this,'form:getTargetFields');
             const serialize = $(target).serialize();
             const original = $(this).data('form-serialize');
             
@@ -120,8 +120,8 @@ const Form = Component.Form = function()
         },
         
         focusFirst: function() {
-            const target = Arr.find(trigHandler(this,'form:getTargetVisibleFields'),function() {
-                return trigHandler(this,'input:isEmpty');
+            const target = Arr.find(trigHdlr(this,'form:getTargetVisibleFields'),function() {
+                return trigHdlr(this,'input:isEmpty');
             });
 
             if(target != null)
@@ -172,10 +172,10 @@ const Form = Component.Form = function()
     // prepareGenuine
     const prepareGenuine = function() 
     {
-        const genuine = trigHandler(this,'form:getGenuineField');
+        const genuine = trigHdlr(this,'form:getGenuineField');
         if(genuine != null)
         {
-            const name = trigHandler(genuine,'input:getName');
+            const name = trigHdlr(genuine,'input:getName');
             const newName = name+"2-";
             const newValue = 1;
             const genuine2 = "<input type='hidden' name='"+newName+"' value='"+newValue+"' />";
@@ -187,7 +187,7 @@ const Form = Component.Form = function()
     // prepareHasChanged
     const prepareHasChanged = function() 
     {
-        const target = trigHandler(this,'form:getTargetFields');
+        const target = trigHdlr(this,'form:getTargetFields');
         const serialize = $(target).serialize();
         $(this).data('form-serialize',serialize);
     }
@@ -195,14 +195,20 @@ const Form = Component.Form = function()
     
     // prepareSubmit
     // click sur submit, met un attribut data-clicked
+    // bind le message de confirmation s'il y a data-confirm
     const prepareSubmit = function() 
     {
-        const submits = trigHandler(this,'form:getSubmits');
+        const submits = trigHdlr(this,'form:getSubmits');
         
         ael(submits,'click',function() {
             $(submits).removeAttr('data-submit-click');
             $(this).attr('data-submit-click',true);
         });
+        
+        const submitsConfirm =  Arr.filter(submits,function() {
+            return $(this).is('[data-confirm]');
+        });
+        Component.Confirm.call(submitsConfirm,'click');
     }
     
     
@@ -216,11 +222,11 @@ const Form = Component.Form = function()
     // prepareValidate
     const prepareValidate = function() 
     {
-        const validateFields = trigHandler(this,'form:getValidateFields');
+        const validateFields = trigHdlr(this,'form:getValidateFields');
         
         Component.ValidatePrevent.call(this,'submit');
         
-        setHandler(this,'validatePrevent:getTargets',function() {
+        setHdlr(this,'validatePrevent:getTargets',function() {
             return validateFields;
         });
     }
@@ -232,8 +238,8 @@ const Form = Component.Form = function()
     {
         const $this = this;
         
-        setHandler(this,'win:unloadText',function() {
-            if(!trigHandler(this,'form:isSubmitted') && trigHandler(this,'form:hasChanged'))
+        setHdlr(this,'win:unloadText',function() {
+            if(!trigHdlr(this,'form:isSubmitted') && trigHdlr(this,'form:hasChanged'))
             return $(this).attr('data-unload');
         });
         
@@ -241,10 +247,10 @@ const Form = Component.Form = function()
             $(this).data('form-submitted',1);
         });
         
-        trigHandler(window,'win:addUnloadNode',this);
+        trigHdlr(window,'win:addUnloadNode',this);
         
         aelOnce(document,'doc:unmount',function() {
-            trigHandler(window,'win:removeUnloadNode',$this);
+            trigHdlr(window,'win:removeUnloadNode',$this);
         });
     }
     
@@ -253,7 +259,7 @@ const Form = Component.Form = function()
     const prepareBlock = function()
     {
         ael(this,'submit',function() {
-            trigHandler(this,'blockEvent:block','submit');
+            trigHdlr(this,'blockEvent:block','submit');
         });
     }
     

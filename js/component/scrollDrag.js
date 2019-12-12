@@ -8,91 +8,123 @@
 // component to allow scrolling while dragging with the mouse
 const ScrollDrag = Component.ScrollDrag = function(option) 
 {    
-    /*
-    // settings
+    // option
     const $option = Pojo.replace({
         selector: null,
         targetTag: null,
         dividor: 4
     },option);
     
-    // resizeChange
-    Component.resizeChange.call(this);
     
-    // triggerHandler
-    $(this).on('scrollDrag:can',function() {
-        return ($(this).attr('data-grabbable') == 1)? true:false;
-    })
-    .on('scrollDrag:required',function() {
-        return ((trigHandler(this,'scrollDrag:getChildren').width() - $(this).width()) > 0)? true:false;
-    })
-    .on('scrollDrag:getChildren',function() {
-        return $(this).children().get(0);
-    })
+    // components
+    Component.ResizeChange.call(this);
     
-    // trigger
-    .on('resize:change',function() {
-        trigEvt(this,'scrollDrag:refresh');
-    })
-    .on('scrollDrag:refresh',function() {
-        if(trigHandler(this,'scrollDrag:required'))
-        $(this).attr('data-grabbable',1);
-        else
-        $(this).removeAttr('data-grabbable');
-    })
-    .on('scrollDrag:stop',function() {
-        $(this).data('cursorDown',false);
-        $(this).removeAttr('data-status');
-    })
     
-    // mouse
-    .on('mousemove', $option.selector,function(event) {
-        const $this = $(event.delegateTarget);
-        if($this.data('cursorDown') === true)
-        {
-            const newY = (($this.data('cursorPositionY') - event.pageY) / $option.dividor);
-            const newX = (($this.data('cursorPositionX') - event.pageX) / $option.dividor);
-            $this.scrollTop($this.scrollTop() + newY); 
-            $this.scrollLeft($this.scrollLeft() + newX);
+    // handler
+    setHdlrs(this,'scrollDrag:',{
+        can: function() {
+            return ($(this).attr('data-grabbable') == 1)? true:false;
+        },
+        
+        required: function() {
+            const children = trigHdlr(this,'scrollDrag:getChildren');
+            return (($(children).width() - $(this).width()) > 0)? true:false;
+        },
+        
+        getChildren: function() {
+            return $(this).children(":visible").get(0);
+        },
+        
+        refresh: function() {
+            if(trigHdlr(this,'scrollDrag:required'))
+            $(this).attr('data-grabbable',1);
+            else
+            $(this).attr('data-grabbable',0);
+        },
+        
+        stop: function() {
+            $(this).data('scrollDrag-cursorDown',false);
+            $(this).attr('data-status','ready');
         }
-    })
-    .on('mousedown', $option.selector,function(event) {
-        const $this = $(event.delegateTarget);
-        if($this.trigHandler('scrollDrag:can') && $this.trigHandler('scrollDrag:required') && event.which === 1)
+    });
+    
+    
+    // event
+    ael(this,'resize:change',function() {
+        trigHdlr(this,'scrollDrag:refresh');
+    });
+    
+    
+    // delegate
+    aelDelegate(this,'mousemove',$option.selector,function(event) {
+        const delegate = event.delegateTarget;
+        
+        if($(delegate).data('scrollDrag-cursorDown') === true)
         {
-            const target = $(event.target);
-            
-            if(target.length && ($option.targetTag == null || Dom.isTag($option.targetTag,target)))
+            const delY = $(delegate).data('scrollDrag-cursorPositionY');
+            const delX = $(delegate).data('scrollDrag-cursorPositionX');
+            const delTop = $(delegate).scrollTop();
+            const delLeft = $(delegate).scrollLeft();
+            const newY = ((delY - event.pageY) / $option.dividor);
+            const newX = ((delX - event.pageX) / $option.dividor);
+            $(delegate).scrollTop(delTop + newY); 
+            $(delegate).scrollLeft(delLeft + newX);
+        }
+    });
+    
+    aelDelegate(this,'mousedown',$option.selector,function(event) {
+        const delegate = event.delegateTarget;
+        const target = event.target;
+        
+        if(trigHdlr(delegate,'scrollDrag:can') && trigHdlr(delegate,'scrollDrag:required') && event.which === 1)
+        {
+            if($option.targetTag == null || Dom.isTag($option.targetTag,target))
             {
-                $this.data('cursorDown',true);
-                $this.data('cursorPositionY',event.pageY);
-                $this.data('cursorPositionX',event.pageX);
-                $this.attr('data-status','grabbing');
+                $(delegate).data('scrollDrag-cursorDown',true);
+                $(delegate).data('scrollDrag-cursorPositionY',event.pageY);
+                $(delegate).data('scrollDrag-cursorPositionX',event.pageX);
+                $(delegate).attr('data-status','grabbing');
             }
         }
-    })
-    .on('mouseup', $option.selector,function(event) {
-        const $this = $(event.delegateTarget);
-        trigEvt($this,'scrollDrag:stop');
-    })
-    .on('mouseout', $option.selector,function(event) {
+    });
+    
+    aelDelegate(this,'mouseup',$option.selector,function(event) {
+        const delegate = event.delegateTarget;
+        trigHdlr(delegate,'scrollDrag:stop');
+    });
+    
+    aelDelegate(this,'mouseout',$option.selector,function(event) {
         event.stopPropagation();
     })
     
+    
     // setup
-    .on('component:setup',function() {
-        const $this = $(this);
-        $(this).data('cursorDown',false);
-        $(this).data('cursorPositionY',0);
-        $(this).data('cursorPositionX',0);
+    aelOnce(this,'component:setup',function() {
+        const $this = this;
         
-        $(document).on('mouseout.doc-mount',function() {
-            trigEvt($this,'scrollDrag:stop');
+        $(this).data('scrollDrag-cursorDown',false);
+        $(this).data('scrollDrag-cursorPositionY',0);
+        $(this).data('scrollDrag-cursorPositionX',0);
+        trigHdlr(this,'scrollDrag:refresh');
+        
+        bindDocument.call(this);
+    });
+    
+    
+    // bindDocument
+    const bindDocument = function()
+    {
+        const $this = this;
+        
+        // document
+        const handler = ael(document,'mouseout',function() {
+            trigHdlr($this,'scrollDrag:stop');
         });
         
-        trigEvt(this,'scrollDrag:refresh');
-    });
-    */
+        aelOnce(document,'doc:unmount',function() {
+            rel(document,handler);
+        });
+    }
     
     return this;
 }

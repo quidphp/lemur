@@ -5,7 +5,7 @@
  */
  
 // hashChange
-// renvoie l'événement haschange aux nodes
+// sends the hash change event back to the nodes
 const HashChange = Component.HashChange = function(persistent)
 {
     // nodes
@@ -14,8 +14,7 @@ const HashChange = Component.HashChange = function(persistent)
     
     // event
     const handler = ael(window,'hashchange',function(event,sourceEvent) {
-        event.stopPropagation();
-        trigEvt($nodes,'hash:change',Request.fragment(),sourceEvent);
+        trigEvt($nodes,'hash:change',sourceEvent);
     });
     
     
@@ -27,7 +26,6 @@ const HashChange = Component.HashChange = function(persistent)
         });
         
         aelOnce(this,'component:teardown',function() {
-            rel(window,handler);
             rel(document,handlerDocument);
         });
     }

@@ -104,13 +104,13 @@
     border: 1px solid $lightGray;
 
     &:hover,
-    &.selected {
+    &[data-selected='1'] {
         background-color: $color;
         border: 1px solid $darkColor;
         color: $white;
     }
 
-    &.selected {
+    &[data-selected='1'] {
         text-decoration: underline;
     }
 
@@ -129,7 +129,7 @@
     border: 1px solid $lightGray;
 
     &:hover,
-    &.selected {
+    &[data-selected='1'] {
         background-color: $lightYellow;
     }
 

@@ -22,7 +22,7 @@
         }
     }
 
-    &.slide-close > .scroller .top .triangle {
+    &[data-status='close'] > .scroller .top .triangle {
         @include triangle(right, $darkColor, 10px);
     }
 

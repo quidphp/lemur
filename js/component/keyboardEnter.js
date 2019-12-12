@@ -13,7 +13,7 @@ const KeyboardEnter = Component.KeyboardEnter = function(prevent,type)
     
     
     // handler
-    setHandler(this,'keyboardEnter:prevent',function() {
+    setHdlr(this,'keyboardEnter:prevent',function() {
         return (prevent === true)? true:false;
     });        
     

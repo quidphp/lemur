@@ -19,90 +19,90 @@ const Modal = Component.Modal = function(option)
     
     
     // handler
-    setHandler(this,'modal:getBox',function() {
+    setHdlr(this,'modal:getBox',function() {
         return qs(this,'.box');
     });
     
-    setHandler(this,'modal:getInner',function() {
-        const box = trigHandler(this,'modal:getBox');
+    setHdlr(this,'modal:getInner',function() {
+        const box = trigHdlr(this,'modal:getBox');
         return qs(box,".inner");
     });
     
-    setHandler(this,'modal:getRoute',function() {
+    setHdlr(this,'modal:getRoute',function() {
         return $(this).attr('data-route');
     });
     
-    setHandler(this,'modal:setRoute',function(route) {
+    setHdlr(this,'modal:setRoute',function(route) {
         if(Str.isNotEmpty(route))
         $(this).attr('data-route',route);
         else
         $(this).removeAttr('data-route');
     });
     
-    setHandler(this,'modal:getRouteAnchors',function(route) {
+    setHdlr(this,'modal:getRouteAnchors',function(route) {
         return qsa(document,"a[data-modal='"+route+"']");
     });
     
-    setHandler(this,'modal:anchorBind',function(anchor) {
+    setHdlr(this,'modal:anchorBind',function(anchor) {
         anchorBind.call(this,anchor);
     });
     
-    setHandler(this,'modal:fetchNode',function(node) {
+    setHdlr(this,'modal:fetchNode',function(node) {
         const config = Xhr.configFromNode(node);
         const route = $(node).attr('data-modal');
-        return trigHandler(this,'modal:fetch',config,route);
+        return trigHdlr(this,'modal:fetch',config,route);
     });
     
-    setHandler(this,'modal:fetch',function(config,route) {
+    setHdlr(this,'modal:fetch',function(config,route) {
         let r = false;
         
         if(Pojo.isNotEmpty(config))
         {
-            trigHandler(this,'modal:setRoute',route);
-            trigHandler(this,'ajax:init',config);
+            trigHdlr(this,'modal:setRoute',route);
+            trigHdlr(this,'ajax:init',config);
             r = true;
         }
         
         return r;
     });
     
-    setHandler(this,'clickOpen:getTargetContent',function() {
-        return trigHandler(this,'modal:getInner');
+    setHdlr(this,'clickOpen:getTargetContent',function() {
+        return trigHdlr(this,'modal:getInner');
     });
     
-    setHandler(this,'clickOpen:getTargetFocus',function() {
-        return trigHandler(this,'modal:getBox');
+    setHdlr(this,'clickOpen:getTargetFocus',function() {
+        return trigHdlr(this,'modal:getBox');
     });
     
     
     // event
-    ael(this,'clickOpen:open',function() {
-        const route = trigHandler(this,'modal:getRoute');
+    ael(this,'clickOpen:opened',function() {
+        const route = trigHdlr(this,'modal:getRoute');
         
         if(Str.isNotEmpty(route))
         {
-            const anchors = trigHandler(this,'modal:getRouteAnchors',route);
-            trigHandlers(anchors,'modal:open');
+            const anchors = trigHdlr(this,'modal:getRouteAnchors',route);
+            trigHdlrs(anchors,'modal:open');
         }
     });
     
-    ael(this,'clickOpen:loaded',function() {
-        const route = trigHandler(this,'modal:getRoute');
+    ael(this,'clickOpen:ajaxSuccess',function() {
+        const route = trigHdlr(this,'modal:getRoute');
         trigEvt(document,'modal:common',this);
         
         if(Str.isNotEmpty(route))
         trigEvt(document,'modal:'+route,this);
     });
     
-    ael(this,'clickOpen:close',function() {
-        const route = trigHandler(this,'modal:getRoute');
+    ael(this,'clickOpen:closed',function() {
+        const route = trigHdlr(this,'modal:getRoute');
         if(Str.isNotEmpty(route))
         {
-            const anchors = trigHandler(this,'modal:getRouteAnchors',route);
-            trigHandlers(anchors,'modal:close');
+            const anchors = trigHdlr(this,'modal:getRouteAnchors',route);
+            trigHdlrs(anchors,'modal:close');
         }
         
-        trigHandler(this,'modal:setRoute',null);
+        trigHdlr(this,'modal:setRoute',null);
     });
     
     ael(this,'click',function() {
@@ -121,7 +121,7 @@ const Modal = Component.Modal = function(option)
     const boxBind = function() 
     {
         const modal = this;
-        const box = trigHandler(this,'modal:getBox');
+        const box = trigHdlr(this,'modal:getBox');
         
         ael(box,'click',function() {
             event.stopPropagation();
@@ -138,13 +138,13 @@ const Modal = Component.Modal = function(option)
     {
         const modal = this;
         
-        setHandler(document,'doc:getModal',function() {
+        setHdlr(document,'doc:getModal',function() {
             return modal;
         });
         
         ael(document,'doc:mountCommon',function(event,node) {
             const anchor = qsa(node,"a[data-modal]");
-            trigHandler(modal,'modal:anchorBind',anchor);
+            trigHdlr(modal,'modal:anchorBind',anchor);
         });
         
         ael(document,'doc:unmount',function() {
@@ -158,17 +158,17 @@ const Modal = Component.Modal = function(option)
     {
         const modal = this;
         
-        setHandler(anchor,'modal:open',function() {
+        setHdlr(anchor,'modal:open',function() {
             $(this).addClass('selected');
         });
         
-        setHandler(anchor,'modal:close',function() {
+        setHdlr(anchor,'modal:close',function() {
             $(this).removeClass('selected');
         });
         
         ael(anchor,'click',function(event) {
             let r = true;
-            const result = trigHandler(modal,'modal:fetchNode',this);
+            const result = trigHdlr(modal,'modal:fetchNode',this);
             
             if(result === true)
             {

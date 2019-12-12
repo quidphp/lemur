@@ -13,31 +13,31 @@ const Feed = Component.Feed = function()
     
     
     // handler
-    setHandler(this,'feed:getTarget',function() {
+    setHdlr(this,'feed:getTarget',function() {
         return this;
     });
     
-    setHandler(this,'feed:getAppendTarget',function() {
+    setHdlr(this,'feed:getAppendTarget',function() {
         return this;
     });
     
-    setHandler(this,'feed:parseData',function(data,type) {
+    setHdlr(this,'feed:parseData',function(data,type) {
         return data;
     });
     
-    setHandler(this,'feed:loadMore',function() {
+    setHdlr(this,'feed:loadMore',function() {
         return qs(this,'.load-more');
     });
     
-    setHandler(this,'feed:loadMoreRemove',function() {
-        return trigHandler(this,'feed:loadMore');
+    setHdlr(this,'feed:loadMoreRemove',function() {
+        return trigHdlr(this,'feed:loadMore');
     })
     
-    setHandler(this,'feed:append',function(data) {
+    setHdlr(this,'feed:append',function(data) {
         feedSet.call(this,'append',data);
     });
     
-    setHandler(this,'feed:overwrite',function(data) {
+    setHdlr(this,'feed:overwrite',function(data) {
         feedSet.call(this,'overwrite',data);
     });
     
@@ -57,17 +57,17 @@ const Feed = Component.Feed = function()
     // feedSet
     const feedSet = function(type,data)
     {
-        data = trigHandler(this,'feed:parseData',data,type);
+        data = trigHdlr(this,'feed:parseData',data,type);
         
         if(type === 'append')
         {
-            const target = trigHandler(this,'feed:getAppendTarget');
+            const target = trigHdlr(this,'feed:getAppendTarget');
             $(target).append(data);
         }
         
         else
         {
-            const target = trigHandler(this,'feed:getTarget');
+            const target = trigHdlr(this,'feed:getTarget');
             $(target).html(data);
         }
         
@@ -79,12 +79,12 @@ const Feed = Component.Feed = function()
     const bindLoadMore = function()
     {
         const $this = this;
-        const loadMore = trigHandler(this,'feed:loadMore');
+        const loadMore = trigHdlr(this,'feed:loadMore');
         Component.AjaxBlock.call(loadMore,{ajaxEvent: 'ajax:init'});
         
-        setHandler(loadMore,'ajaxBlock:setContent',function(html,isError) {
+        setHdlr(loadMore,'ajaxBlock:setContent',function(html,isError) {
             removeLoadMore.call($this);
-            trigHandler($this,(isError === true)? 'feed:overwrite':'feed:append',html);
+            trigHdlr($this,(isError === true)? 'feed:overwrite':'feed:append',html);
         });
         
         aelOnce(loadMore,'click',function(event) {
@@ -95,7 +95,7 @@ const Feed = Component.Feed = function()
         // removeLoadMore
         const removeLoadMore = function()
         {
-            const node = trigHandler(this,'feed:loadMoreRemove');
+            const node = trigHdlr(this,'feed:loadMoreRemove');
             $(node).remove();
         }
     }

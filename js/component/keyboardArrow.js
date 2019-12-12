@@ -13,7 +13,7 @@ const KeyboardArrow = Component.KeyboardArrow = function(prevent,type)
     
     
     // handler
-    setHandler(this,'keyboardArrow:prevent',function() {
+    setHdlr(this,'keyboardArrow:prevent',function() {
         return (prevent === true)? true:false;
     }); 
     

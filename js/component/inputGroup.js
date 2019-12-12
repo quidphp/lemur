@@ -8,19 +8,19 @@
 // script with behaviours for an input group component (like checkbox and radio)
 const InputGroup = Component.InputGroup = function() 
 {    
-    setHandler(this,'inputGroup:isChecked',function() {
+    setHdlr(this,'inputGroup:isChecked',function() {
         return ($(this).prop('checked') === true)? true:false;
     });
     
-    setHandler(this,'inputGroup:getValue',function() {
+    setHdlr(this,'inputGroup:getValue',function() {
         let r = undefined;
-        const group = trigHandler(this,'inputGroup:getChecked');
+        const group = trigHdlr(this,'inputGroup:getChecked');
         
         if(Arr.isNotEmpty(group))
         {
             r = [];
             Arr.each(group,function() {
-                const value = trigHandler(this,'input:getValue');
+                const value = trigHdlr(this,'input:getValue');
                 r.push(value);
             });
         }
@@ -28,12 +28,12 @@ const InputGroup = Component.InputGroup = function()
         return r;
     });
     
-    setHandler(this,'inputGroup:get',function() {
+    setHdlr(this,'inputGroup:get',function() {
         let r = null;
-        const parent = trigHandler(this,'input:getParent');
-        const name = trigHandler(this,'input:getName');
-        const type = trigHandler(this,'input:getType');
-        const tag = trigHandler(this,'input:getTag');
+        const parent = trigHdlr(this,'input:getParent');
+        const name = trigHdlr(this,'input:getName');
+        const type = trigHdlr(this,'input:getType');
+        const tag = trigHdlr(this,'input:getTag');
         
         if(Str.isNotEmpty(name) && Str.isNotEmpty(tag))
         {
@@ -44,15 +44,15 @@ const InputGroup = Component.InputGroup = function()
         return r;
     });
     
-    setHandler(this,'inputGroup:getChecked',function() {
+    setHdlr(this,'inputGroup:getChecked',function() {
         let r = null;
-        const group = trigHandler(this,'inputGroup:get');
+        const group = trigHdlr(this,'inputGroup:get');
         
         if(Arr.isNotEmpty(group))
         {
             r = [];
             Arr.each(group,function() {
-                if(trigHandler(this,'inputGroup:isChecked'))
+                if(trigHdlr(this,'inputGroup:isChecked'))
                 r.push(this);
             });
         }

@@ -13,14 +13,14 @@ const SearchSlide = Component.SearchSlide = function(option)
         inputTarget: "> input[type='text']",
         infoTarget: '> div',
         inputSearch: {
-            timeoutEvent: 'inputSearch:validate'
+            timeoutHandler: 'inputSearch:validate'
         },
         speed: 300
     },option);
     
     
     // handler
-    setHandlers(this,'searchSlide:',{
+    setHdlrs(this,'searchSlide:',{
         getInput: function() {
             return qs(this,$option.inputTarget);
         },
@@ -30,12 +30,12 @@ const SearchSlide = Component.SearchSlide = function(option)
         },
         
         showInfo: function() {
-            const info = trigHandler(this,'searchSlide:getInfo');
+            const info = trigHdlr(this,'searchSlide:getInfo');
             $(info).stop(true,true).slideDown($option.speed);
         },
         
         hideInfo: function() {
-            const info = trigHandler(this,'searchSlide:getInfo');
+            const info = trigHdlr(this,'searchSlide:getInfo');
             $(info).stop(true,true).slideUp($option.speed);
         }
     });
@@ -51,22 +51,22 @@ const SearchSlide = Component.SearchSlide = function(option)
     const bindInput = function()
     {
         const $this = this;
-        const input = trigHandler(this,'searchSlide:getInput');
+        const input = trigHdlr(this,'searchSlide:getInput');
         
         Component.InputSearchHref.call(input,$option.inputSearch);
         
         // handler
-        setHandler(input,'inputSearch:getButton',function() {
+        setHdlr(input,'inputSearch:getButton',function() {
             return $(this).parent().next("button[type='button']").get(0);
         });
         
         // event
         ael(input,'focus',function() {
-            trigHandler($this,'searchSlide:showInfo');
+            trigHdlr($this,'searchSlide:showInfo');
         });
         
         ael(input,'focusout',function() {
-            trigHandler($this,'searchSlide:hideInfo');
+            trigHdlr($this,'searchSlide:hideInfo');
         });
         
         trigSetup(input);

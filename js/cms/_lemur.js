@@ -93,10 +93,7 @@ ael(document,"DOMContentLoaded", function()
         trigSetup(Component.Carousel.call(carousel,{trigger: ".trigger", target: ".target"}));
         
         // subMenu
-        trigSetup(Component.ClickOpenTrigger.call(subMenu,{trigger: ".trigger", target: ".popup"}));
-        setHandler(subMenu,'clickOpen:getBackgroundFrom',function(event) {
-            return 'submenu';
-        });
+        trigSetup(Component.ClickOpenTrigger.call(subMenu,{trigger: ".trigger", target: ".popup", background: "submenu"}));
         
         // mainSearch
         trigSetup(Component.SearchAutoInfo.call(mainSearch,{target: ".popup"}));
@@ -148,7 +145,7 @@ ael(document,"DOMContentLoaded", function()
     // comportement pour le popup changer mon mot de passe
 	ael(this,'modal:accountChangePassword',function(event,modal) {
 		const form = qs(modal,"form");
-        trigHandler(form,'form:focusFirst');
+        trigHdlr(form,'form:focusFirst');
 	});
     
     
@@ -166,14 +163,14 @@ ael(document,"DOMContentLoaded", function()
         // feedTogglers
         Component.AjaxBlock.call(feedTogglers,{autoUnbind: true});
         
-        setHandler(feedTogglers,'ajaxBlock:getStatusNode',function(event) {
+        setHdlr(feedTogglers,'ajaxBlock:getStatusNode',function(event) {
             return feedBody;
         });
         
         ael(feedTogglers,'ajaxBlock:before',function() {
-            $(feedTogglers).removeClass('selected');
+            $(feedTogglers).attr('data-selected',0);
             trigEvt(feedBody,'ajaxBlock:unmountContent');
-            $(this).addClass('selected');
+            $(this).attr('data-selected',1);
         });
         
         ael(feedTogglers,'ajaxBlock:success',function() {
@@ -223,10 +220,8 @@ ael(document,"DOMContentLoaded", function()
         // dragScroll
         trigSetup(Component.ScrollDrag.call(scroller,{selector: 'tbody',targetTag: 'div'}));
 
-        /*                
         // filesSlider
-        Component.slider.call(filesSlider,null,null,'.slider-element',false);
-        */
+        trigEvt(Component.TabsNav.call(filesSlider,{target: ".slider-element", prev: ".prev", next: ".next"}),'component:setupAndGo');
 	});
     
     
@@ -236,7 +231,7 @@ ael(document,"DOMContentLoaded", function()
         const quickEdit = qsa(table,"td[data-quick-edit='1'] a.quick-edit");
         
         // quickEdit
-        trigHandlers(quickEdit,'quickEdit:revert');
+        trigHdlrs(quickEdit,'quickEdit:revert');
     });
     
     
@@ -280,7 +275,7 @@ ael(document,"DOMContentLoaded", function()
         trigSetup(Component.textareaExtra.call(textarea));
         
         // anchorCorner
-        trigHandler(anchorCorner,'anchorCorner:refresh');
+        trigHdlr(anchorCorner,'anchorCorner:refresh');
         */
     });
     
@@ -298,34 +293,27 @@ ael(document,"DOMContentLoaded", function()
 	// specific
     // comportement communs pour les pages spécifiques
 	ael(this,'group:specific',function(event,routeWrap) {
-        /*
+        
         const form = qs(routeWrap,"main .inner > form.specific-form");
         const panel = qsa(form,"> .form-inner > .panel");
-        const submitConfirm = qsa(form,"button[type='submit'][data-confirm]");
-        
-		// submitConfirm
-        Component.confirm.call(submitConfirm,'click');
-		
+
         // champs simples
         trigEvt(this,'specificForm:bindMount',form);
         
         // avec panel
-        if(panel.length > 1)
-        Component.specificPanel.call(form);
+        if(Arr.length(panel) > 1)
+        trigEvt(Component.SpecificPanel.call(form),'component:setupAndGo',true);
         
         else
         trigEvt(this,'specificForm:bindView',form);
-        */
 	});
 	
     
     // unmount
     // comportements communs pour démonter la page spécifique
     ael(this,'group:specific:unmount',function(event,routeWrap) {
-        /*
         const form = qs(routeWrap,"main .inner > form.specific-form");
         trigEvt(this,'specificForm:unmount',form);
-        */
     });
     
     
@@ -336,30 +324,30 @@ ael(document,"DOMContentLoaded", function()
         const form = qs(this,"main .inner > form.specific-form");
         const formElement = qsa(form,".form-element");
         
-        setHandler(formElement,'specificMulti:isActive',function(event) {
-            const checkbox = trigHandler(this,'specificMulti:getCheckbox');
+        setHdlr(formElement,'specificMulti:isActive',function(event) {
+            const checkbox = trigHdlr(this,'specificMulti:getCheckbox');
             return $(checkbox).is(':checked');
         });
         
-        setHandler(formElement,'specificMulti:getCheckbox',function(event) {
+        setHdlr(formElement,'specificMulti:getCheckbox',function(event) {
             return qs(this,".disabler input[type='checkbox']");
         });
         
-        setHandler(formElement,'specificMulti:getInputs',function(event) {
+        setHdlr(formElement,'specificMulti:getInputs',function(event) {
             const right = qs(this,"> .right");
             return qsa(right,Selector.input());
         });
         
         ael(formElement,'specificMulti:refresh',function(event) {
-            const isActive = trigHandler(this,'specificMulti:isActive');
-            const inputs = trigHandler(this,'specificMulti:getInputs');
+            const isActive = trigHdlr(this,'specificMulti:isActive');
+            const inputs = trigHdlr(this,'specificMulti:getInputs');
             $(this).attr('data-disabled',(isActive === true)? 0:1);
             trigEvt(inputs,(isActive === true)? 'input:enable':'input:disable');
         });
         
         aelOnce(formElement,'specificMulti:setup',function(event) {
             const $this = this;
-            const checkbox = trigHandler(this,'specificMulti:getCheckbox');
+            const checkbox = trigHdlr(this,'specificMulti:getCheckbox');
             
             ael(checkbox,'change',function(event) {
                 trigEvt($this,'specificMulti:refresh');
@@ -382,7 +370,7 @@ ael(document,"DOMContentLoaded", function()
         const cookieDisabled = qs(browscap,".cookie-disabled");
         const unsupportedBrowser = qs(browscap,".unsupported-browser");
         
-		trigHandler(form,'form:focusFirst');
+		trigHdlr(form,'form:focusFirst');
 		
 		if(!Browser.allowsCookie())
 		$(cookieDisabled).show();

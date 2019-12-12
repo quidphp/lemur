@@ -44,27 +44,27 @@ const TestComponent = Test.Component = function()
         const handlerRelHtml = ael(htmlNode,'test:suite',function() {
             i++;
         });
-        assert(Obj.length(allHandlers(bodyNode)) === 10);
-        assert(trigHandler(bodyNode,'blockEvent:isRegistered','test:suite'));
-        assert(trigHandler(bodyNode,'blockEvent:isUnblocked','test:suite'));
-        assert(!trigHandler(bodyNode,'blockEvent:isBlocked','test:suite'));
+        assert(Obj.length(allHdlr(bodyNode)) === 10);
+        assert(trigHdlr(bodyNode,'blockEvent:isRegistered','test:suite'));
+        assert(trigHdlr(bodyNode,'blockEvent:isUnblocked','test:suite'));
+        assert(!trigHdlr(bodyNode,'blockEvent:isBlocked','test:suite'));
         assert(i === 0);
         trigEvt(bodyNode,'test:suite');
         assert(i === 1);
         assert(i2 === 1);
-        trigHandler(bodyNode,'blockEvent:block-all');
-        assert(trigHandler(bodyNode,'blockEvent:isBlocked','test:suite'));
+        trigHdlr(bodyNode,'blockEvent:blockAll');
+        assert(trigHdlr(bodyNode,'blockEvent:isBlocked','test:suite'));
         trigEvt(bodyNode,'test:suite');
         trigEvt(bodyNode,'test:suite');
         assert(i === 1);
         assert(i2 === 3);
-        trigHandler(bodyNode,'blockEvent:unblock','test:suite');
+        trigHdlr(bodyNode,'blockEvent:unblock','test:suite');
         trigEvt(bodyNode,'test:suite');
         assert(i === 2);
-        trigHandler(bodyNode,'blockEvent:unregister','test:suite');
-        assert(Obj.isEqual(trigHandler(bodyNode,'blockEvent:getObj'),{}));
-        assert(!trigHandler(bodyNode,'blockEvent:isBlocked','test:suite'));
-        assert(!trigHandler(bodyNode,'blockEvent:isRegistered','test:suite'));
+        trigHdlr(bodyNode,'blockEvent:unregister','test:suite');
+        assert(Obj.isEqual(trigHdlr(bodyNode,'blockEvent:getObj'),{}));
+        assert(!trigHdlr(bodyNode,'blockEvent:isBlocked','test:suite'));
+        assert(!trigHdlr(bodyNode,'blockEvent:isRegistered','test:suite'));
         trigEvt(bodyNode,'test:suite');
         assert(i === 3);
         assert(i2 === 5);
@@ -117,18 +117,18 @@ const TestComponent = Test.Component = function()
         
         // input
         Component.Input.call(inputNode);
-        assert(trigHandler(inputNode,'input:isBinded'));
-        assert(!trigHandler(inputNode,'input:isEmpty'));
-        assert(!trigHandler(inputNode,'input:isDisabled'));
-        assert(trigHandler(inputNode,'input:getValue') === '2');
-        assert(trigHandler(inputNode,'input:getValueInt') === 2);
-        trigHandler(inputNode,'input:setValue',3);
-        assert(trigHandler(inputNode,'input:getValue') === '3');
+        assert(trigHdlr(inputNode,'input:isBinded'));
+        assert(!trigHdlr(inputNode,'input:isEmpty'));
+        assert(!trigHdlr(inputNode,'input:isDisabled'));
+        assert(trigHdlr(inputNode,'input:getValue') === '2');
+        assert(trigHdlr(inputNode,'input:getValueInt') === 2);
+        trigHdlr(inputNode,'input:setValue',3);
+        assert(trigHdlr(inputNode,'input:getValue') === '3');
         trigEvt(inputNode,'input:disable');
-        assert(trigHandler(inputNode,'input:isDisabled'));
+        assert(trigHdlr(inputNode,'input:isDisabled'));
         assert(trigEvt(inputNode,'input:enable') == null);
-        assert(!trigHandler(inputNode,'input:isDisabled'));
-        trigHandler(inputNode,'input:setValue','2');
+        assert(!trigHdlr(inputNode,'input:isDisabled'));
+        trigHdlr(inputNode,'input:setValue','2');
         
         // inputNumeric
         
@@ -169,18 +169,18 @@ const TestComponent = Test.Component = function()
         assert(i === 1);
         
         // validate
-        assert(trigHandler(inputNode,'validate:isBinded'));
-        assert(trigHandler(inputNode,'validate:getValue') === '2');
-        assert(trigHandler(inputNode,'validate:isRequired'));
-        assert(trigHandler(inputNode,'validate:getRequired') === '1');
-        assert(trigHandler(inputNode,'validate:getPattern') === '^[0-9-]+$');
-        assert(!trigHandler(inputNode,'validate:isEmpty'));
-        assert(trigHandler(inputNode,'validate:isValid'));
-        assert(trigHandler(inputNode,'validate:isNotEmptyAndValid'));
-        assert(trigHandler(inputNode,'validate:process'));
-        assert(trigHandler(inputNode,'validate:required'));
-        assert(trigHandler(inputNode,'validate:pattern'));
-        assert(trigHandler(inputNode,'validate:trigger'));
+        assert(trigHdlr(inputNode,'validate:isBinded'));
+        assert(trigHdlr(inputNode,'validate:getValue') === '2');
+        assert(trigHdlr(inputNode,'validate:isRequired'));
+        assert(trigHdlr(inputNode,'validate:getRequired') === '1');
+        assert(trigHdlr(inputNode,'validate:getPattern') === '^[0-9-]+$');
+        assert(!trigHdlr(inputNode,'validate:isEmpty'));
+        assert(trigHdlr(inputNode,'validate:isValid'));
+        assert(trigHdlr(inputNode,'validate:isNotEmptyAndValid'));
+        assert(trigHdlr(inputNode,'validate:process'));
+        assert(trigHdlr(inputNode,'validate:required'));
+        assert(trigHdlr(inputNode,'validate:pattern'));
+        assert(trigHdlr(inputNode,'validate:trigger'));
         assert(Dom.getDataAttr('validate',inputNode) === 'valid');
         assert(Dom.getDataAttr('empty',inputNode) === '0');
         

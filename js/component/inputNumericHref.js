@@ -14,11 +14,11 @@ const InputNumericHref = Component.InputNumericHref = function(option)
     
     // redirect
     ael(this,'inputNumeric:change',function() {
-        const val = trigHandler(this,'input:getValueInt');
+        const val = trigHdlr(this,'input:getValueInt');
         const href = Dom.dataHrefReplaceChar(this,val);
         
         if(Str.isNotEmpty(href))
-        trigHandler(document,'doc:go',href);
+        trigHdlr(document,'doc:go',href);
     });
     
     return this;

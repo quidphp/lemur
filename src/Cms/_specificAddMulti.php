@@ -77,8 +77,10 @@ trait _specificAddMulti
     {
         $r = '';
         $route = $this->routeSubmit();
-
-        $r .= $route->formOpen('specific-form');
+        $hasPanel = $this->hasPanel();
+        $attr = array('specific-form',($hasPanel === true)? 'with-panel':null);
+        
+        $r .= $route->formOpen($attr);
         $r .= $this->makeFormHidden();
         $r .= Html::div($this->makeFormTop(),'form-top');
         $r .= Html::div($this->makeFormInner(),'form-inner');

@@ -40,11 +40,6 @@ class Boot extends Base\Test
         assert($user->hasPermission('cmsLogin') === false);
         assert($session->user()->hasPermission('cmsLogin'));
 
-        // service
-        assert(Lemur\Service\React::monami('what',['test'=>2],['id'=>false]) === "<div data-component='Monami' data-namespace='quid.react' data-content='what' data-props='{&quot;test&quot;:2}' class='react-component'></div>");
-        assert(strlen(Lemur\Service\React::monami(false,['test'=>false])) === 158);
-        assert(strlen(Lemur\Service\React::monAmi(null,['test'=>null],['id'=>false])) === 124);
-
         return true;
     }
 }

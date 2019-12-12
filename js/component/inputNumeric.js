@@ -10,7 +10,8 @@ const InputNumeric = Component.InputNumeric = function(option)
 {
     // option
     const $option = Object.assign({
-        timeout: 500
+        timeout: 500,
+        timeoutHandler: 'inputNumeric:process'
     },option);
     
     
@@ -20,23 +21,23 @@ const InputNumeric = Component.InputNumeric = function(option)
     
 
     // handler
-    setHandler(this,'inputNumeric:getCurrent',function() {
+    setHdlr(this,'inputNumeric:getCurrent',function() {
         return Integer.cast($(this).data("current"));
     });
     
-    setHandler(this,'inputSearch:setCurrent',function(value) {
+    setHdlr(this,'inputNumeric:setCurrent',function(value) {
         $(this).data("current",value);
     });
     
-    setHandler(this,'inputNumeric:getMax',function() {
+    setHdlr(this,'inputNumeric:getMax',function() {
         return Integer.cast($(this).data('max'));
     });
     
-    setHandler(this,'inputNumeric:validate',function() {
+    setHdlr(this,'inputNumeric:validate',function() {
         let r = false;
-        let val = trigHandler(this,'input:getValueInt');
-        const max = trigHandler(this,'inputNumeric:getMax');
-        const current = trigHandler(this,'inputNumeric:getCurrent');
+        let val = trigHdlr(this,'input:getValueInt');
+        const max = trigHdlr(this,'inputNumeric:getMax');
+        const current = trigHdlr(this,'inputNumeric:getCurrent');
         
         if(!val)
         trigEvt(this,'validate:invalid');
@@ -45,50 +46,58 @@ const InputNumeric = Component.InputNumeric = function(option)
         {
             if(val > max)
             {
-                trigHandler(this,'input:setValue',max);
+                trigHdlr(this,'input:setValue',max);
                 val = max;
             }
             
-            if(trigHandler(this,'validate:isValid') && val !== current)
+            if(trigHdlr(this,'validate:isValid') && val !== current)
             r = true;
         }
         
         return r;
     });
     
-    setHandler(this,'inputNumeric:process',function() {
-        const validate = trigHandler(this,'inputNumeric:validate');
+    setHdlr(this,'inputNumeric:process',function() {
+        const validate = trigHdlr(this,'inputNumeric:validate');
         
         if(validate === true)
-        trigEvt(this,'inputNumeric:change');
+        {
+            trigHdlr(this,'input:valueRemember');
+            trigEvt(this,'inputNumeric:change');
+        }
     });
     
     
     // event
     ael(this,'timeout:keyup',function() {
-        trigHandler(this,'inputNumeric:process');
+        if($(this).is(":focus"))
+        {
+            trigHdlr(this,'input:valueRemember');
+            trigHdlr(this,$option.timeoutHandler);
+        }
     });
     
     ael(this,'validate:invalid',function() {
-        const current = trigHandler(this,'inputNumeric:getCurrent');
-        trigHandler(this,'input:setValue',current);
+        const current = trigHdlr(this,'inputNumeric:getCurrent');
+        trigHdlr(this,'input:setValue',current);
         trigEvt(this,'validate:valid');
     });
     
     ael(this,'focus',function() {
-        trigHandler(this,'input:setEmpty');
+        trigHdlr(this,'input:setEmpty');
     });
     
     ael(this,'focusout',function() {
-        trigHandler(this,'inputNumeric:process');
+        trigHdlr(this,'inputNumeric:process');
     });
     
     ael(this,'change',function() {
-        trigHandler(this,'inputNumeric:process');
+        if(trigHdlr(this,'input:isRealChange'))
+        trigHdlr(this,'inputNumeric:process');
     });
     
     ael(this,'inputNumeric:change',function() {
-        trigHandler(this,'timeout:clear','keyup');
+        trigHdlr(this,'timeout:clear','keyup');
     });
     
     

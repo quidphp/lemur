@@ -9,85 +9,93 @@
 // this component can only block events added after the block was registered
 const BlockEvent = Component.BlockEvent = function(type) 
 {
+    // not empty
+    if(Vari.isEmpty(this)) 
+    return null;
+    
+    
     // handler
-    setHandler(this,'blockEvent:isRegistered',function(type) {
-        return (Integer.is(getBlock.call(this,type)))? true:false;
-    });
-    
-    setHandler(this,'blockEvent:isUnblocked',function(type) {
-        return (getBlock.call(this,type) === 0)? true:false;
-    });
-    
-    setHandler(this,'blockEvent:isBlocked',function(type) {
-        return (getBlock.call(this,type) === 1)? true:false;
-    });
-    
-    setHandler(this,'blockEvent:getObj',function() {
-        return Pojo.copy(getBlockObj.call(this));
-    });
-    
-    setHandler(this,'blockEvent:register',function(type) {
-        if(!trigHandler(this,'blockEvent:isRegistered',type))
-        {
+    setHdlrs(this,'blockEvent:',{
+        
+        isRegistered: function(type) {
+            return (Integer.is(getBlock.call(this,type)))? true:false;
+        },
+        
+        isUnblocked: function(type) {
+            return (getBlock.call(this,type) === 0)? true:false;
+        },
+        
+        isBlocked: function(type) {
+            return (getBlock.call(this,type) === 1)? true:false;
+        },
+        
+        getObj: function() {
+            return Pojo.copy(getBlockObj.call(this));
+        },
+        
+        register: function(type) {
+            if(!trigHdlr(this,'blockEvent:isRegistered',type))
+            {
+                const blockObj = getBlockObj.call(this);
+                const handler = getFunc.call(this,type);
+                Pojo.setRef(type,0,blockObj);
+                ael(this,type,handler,'blockEvent-register-'+type);
+            }
+        },
+        
+        unregister: function(type) {
+            if(trigHdlr(this,'blockEvent:isRegistered',type))
+            {
+                const blockObj = getBlockObj.call(this);
+                Pojo.unsetRef(type,blockObj);
+                rel(this,'blockEvent-register-'+type);
+            }
+        },
+        
+        block: function(type) {
+            Str.check(type,true);
             const blockObj = getBlockObj.call(this);
-            const handler = getHandler.call(this,type);
+            
+            if(Debug.is('blockEvent'))
+            console.log('blockEvent:block',type);
+            
+            if(Pojo.keyExists(type,blockObj))
+            Pojo.setRef(type,1,blockObj);
+        },
+        
+        blockAll: function() {
+            const $this = this;
+            const blockObj = getBlockObj.call(this);
+            
+            Obj.each(blockObj,function(value,type) {
+                trigHdlr($this,'blockEvent:block',type);
+            });
+        },
+        
+        unblock: function(type) {
+            Str.check(type,true);
+            const blockObj = getBlockObj.call(this);
+            
+            if(Debug.is('blockEvent'))
+            console.log('blockEvent:unblock',type);
+            
+            if(Pojo.keyExists(type,blockObj))
             Pojo.setRef(type,0,blockObj);
-            ael(this,type,handler,'blockEvent-register-'+type);
+        },
+        
+        unblockAll: function() {
+            const $this = this;
+            const blockObj = trigHdlr(this,'blockEvent:obj');
+            
+            Obj.each(blockObj,function(value,type) {
+                trigHdlr($this,'blockEvent:unblock',type);
+            });
         }
     });
     
-    setHandler(this,'blockEvent:unregister',function(type) {
-        if(trigHandler(this,'blockEvent:isRegistered',type))
-        {
-            const blockObj = getBlockObj.call(this);
-            Pojo.unsetRef(type,blockObj);
-            rel(this,'blockEvent-register-'+type);
-        }
-    });
     
-    setHandler(this,'blockEvent:block',function(type) {
-        Str.check(type,true);
-        const blockObj = getBlockObj.call(this);
-        
-        if(Debug.is('blockEvent'))
-        console.log('blockEvent:block',type);
-        
-        if(Pojo.keyExists(type,blockObj))
-        Pojo.setRef(type,1,blockObj);
-    });
-    
-    setHandler(this,'blockEvent:block-all',function() {
-        const $this = this;
-        const blockObj = getBlockObj.call(this);
-        
-        Obj.each(blockObj,function(value,type) {
-            trigHandler($this,'blockEvent:block',type);
-        });
-    });
-    
-    setHandler(this,'blockEvent:unblock',function(type) {
-        Str.check(type,true);
-        const blockObj = getBlockObj.call(this);
-        
-        if(Debug.is('blockEvent'))
-        console.log('blockEvent:unblock',type);
-        
-        if(Pojo.keyExists(type,blockObj))
-        Pojo.setRef(type,0,blockObj);
-    });
-    
-    setHandler(this,'blockEvent:unblock-all',function() {
-        const $this = this;
-        const blockObj = trigHandler(this,'blockEvent:obj');
-        
-        Obj.each(blockObj,function(value,type) {
-            trigHandler($this,'blockEvent:unblock',type);
-        });
-    });
-    
-    
-    // getHandler
-    const getHandler = function(type) 
+    // getFunc
+    const getFunc = function(type) 
     {
         return function(event) {
             const status = getBlock.call(this,type);
@@ -117,9 +125,9 @@ const BlockEvent = Component.BlockEvent = function(type)
     }
 
 
-    // addType
+    // register
     if(Str.isNotEmpty(type))
-    trigHandlers(this,'blockEvent:register',type);
+    trigHdlrs(this,'blockEvent:register',type);
     
     return this;
 }

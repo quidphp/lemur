@@ -8,58 +8,66 @@
 // script of behaviours for an absolute placeholder component
 const AbsolutePlaceholder = Component.AbsolutePlaceholder = function()
 {
-    // resizeChange
+    // not empty
+    if(Vari.isEmpty(this)) 
+    return null;
+    
+    
+    // components
     Component.ResizeChange.call(this);
     
     
     // handler
-    setHandler(this,'absolutePlaceholder:getChild',function() {
-        return Arr.find($(this).children().get(),function() {
-            return $(this).is(':visible');
-        });
-    });
-    
-    setHandler(this,'absolutePlaceholder:onlyHeight',function() {
-        return $(this).is('[data-only-height]');
-    });
-    
-    setHandler(this,'absolutePlaceholder:onlyWidth',function() {
-        return $(this).is('[data-only-width]');
-    });
-    
-    setHandler(this,'absolutePlaceholder:refresh',function() {
-        const child = trigHandler(this,'absolutePlaceholder:getChild');
+    setHdlrs(this,'absolutePlaceholder:',{
         
-        if(child != null)
-        {
-            if(!trigHandler(this,'absolutePlaceholder:onlyHeight'))
-            {
-                $(this).width('auto');
-                const outerWidth = $(child).outerWidth();
-                $(this).width(outerWidth);
-            }
+        getChild: function() {
+            return Arr.find($(this).children().get(),function() {
+                return $(this).is(':visible');
+            });
+        },
+        
+        isOnlyHeight: function() {
+            return $(this).is('[data-only-height]');
+        },
+        
+        isOnlyWidth: function() {
+            return $(this).is('[data-only-width]');
+        },
+        
+        refresh: function() {
+            const child = trigHdlr(this,'absolutePlaceholder:getChild');
             
-            if(!trigHandler(this,'absolutePlaceholder:onlyWidth'))
+            if(child != null)
             {
-                $(this).height('auto');
-                const outerHeight = $(child).outerHeight();
-                $(this).height(outerHeight);
+                if(!trigHdlr(this,'absolutePlaceholder:isOnlyHeight'))
+                {
+                    $(this).width('auto');
+                    const outerWidth = $(child).outerWidth();
+                    $(this).width(outerWidth);
+                }
+                
+                if(!trigHdlr(this,'absolutePlaceholder:isOnlyWidth'))
+                {
+                    $(this).height('auto');
+                    const outerHeight = $(child).outerHeight();
+                    $(this).height(outerHeight);
+                }
+                
+                $(this).attr('data-absolute-placeholder','ready');
             }
-            
-            $(this).attr('data-absolute-placeholder','ready');
         }
     });
     
     
     // event
     ael(this,'resize:change',function() {
-        trigHandler(this,'absolutePlaceholder:refresh');
+        trigHdlr(this,'absolutePlaceholder:refresh');
     });
     
     
     // setup
     aelOnce(this,'component:setup',function() {
-        trigHandler(this,'absolutePlaceholder:refresh');
+        trigHdlr(this,'absolutePlaceholder:refresh');
     });
     
     return this;

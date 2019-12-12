@@ -8,6 +8,11 @@
 // manages a clickOpen component which triggers an ajax request when open
 const ClickOpenAjax = Component.ClickOpenAjax = function(option)
 {
+    // not empty
+    if(Vari.isEmpty(this)) 
+    return null;
+    
+    
     // option
     const $option = Object.assign({
         ajaxEvent: 'ajax:init',
@@ -21,8 +26,8 @@ const ClickOpenAjax = Component.ClickOpenAjax = function(option)
     
     
     // handler
-    setHandler(this,'ajaxBlock:getContentNode',function() {
-        return trigHandler(this,'clickOpen:getTargetContent');
+    setHdlr(this,'ajaxBlock:getContentNode',function() {
+        return trigHdlr(this,'clickOpen:getTargetContent');
     });
     
     
@@ -32,7 +37,7 @@ const ClickOpenAjax = Component.ClickOpenAjax = function(option)
     });
     
     ael(this,'ajaxBlock:success',function() {
-        trigEvt(this,'clickOpen:loaded');
+        trigEvt(this,'clickOpen:ajaxSuccess');
     });
     
     return this;

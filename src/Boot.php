@@ -55,7 +55,6 @@ abstract class Boot extends Core\Boot
                 'polyfill'=>Service\Polyfill::class,
                 'jQuery'=>Service\JQuery::class,
                 'jQueryUi'=>Service\JQueryUi::class,
-                'react'=>Service\React::class,
                 'tinymce'=>Service\TinyMce::class],
             'option'=>[
                 'versionQuid'=>true,

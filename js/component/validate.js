@@ -9,38 +9,42 @@
 const ComponentValidate = Component.Validate = function() 
 {    
     // handler
-    setHandler(this,'validate:isBinded',function() {
+    setHdlr(this,'validate:isBinded',function() {
         return true;
     });
     
-    setHandler(this,'validate:getValue',function() {
+    setHdlr(this,'validate:getValue',function() {
         return Dom.value(this,true);
     });
     
-    setHandler(this,'validate:isRequired',function() {
-        const dataRequired = trigHandler(this,'validate:getRequired');
+    setHdlr(this,'validate:isRequired',function() {
+        const dataRequired = trigHdlr(this,'validate:getRequired');
         return (Num.is(dataRequired) && dataRequired > 0)? true:false;
     });
     
-    setHandler(this,'validate:getRequired',function() {
+    setHdlr(this,'validate:getRequired',function() {
         return $(this).attr("data-required");
     });
     
-    setHandler(this,'validate:getPattern',function() {
+    setHdlr(this,'validate:getPattern',function() {
         return $(this).attr("data-pattern");
     });
     
-    setHandler(this,'validate:isEmpty',function() {
-        return (Vari.isEmpty(trigHandler(this,'validate:getValue')))? true:false;
+    setHdlr(this,'validate:isEmpty',function() {
+        return (Vari.isEmpty(trigHdlr(this,'validate:getValue')))? true:false;
     });
     
-    setHandler(this,'validate:validEmptyArray',function(type) {
+    setHdlr(this,'validate:isEmptyAndRequired',function() {
+        return (trigHdlr(this,'validate:isRequired') && trigHdlr(this,'validate:isEmpty'));
+    });
+    
+    setHdlr(this,'validate:validEmptyArray',function(type) {
         let r = [];
         let validate = null;
-        const value = trigHandler(this,'validate:getValue');
+        const value = trigHdlr(this,'validate:getValue');
         const empty = (Vari.isEmpty(value))? true:false;
-        const required = trigHandler(this,'validate:getRequired');
-        const pattern = trigHandler(this,'validate:getPattern');
+        const required = trigHdlr(this,'validate:getRequired');
+        const pattern = trigHdlr(this,'validate:getPattern');
         
         if(type === 'required')
         validate = Validate.required(value,required);
@@ -54,28 +58,28 @@ const ComponentValidate = Component.Validate = function()
         return [validate,empty];
     });
     
-    setHandler(this,'validate:isValid',function(type) {
-        return Arr.valueFirst(trigHandler(this,'validate:validEmptyArray',type));
+    setHdlr(this,'validate:isValid',function(type) {
+        return Arr.valueFirst(trigHdlr(this,'validate:validEmptyArray',type));
     });
     
-    setHandler(this,'validate:isNotEmptyAndValid',function(type) {
-        return (!trigHandler(this,'validate:isEmpty') && trigHandler(this,'validate:isValid',type))? true:false;
+    setHdlr(this,'validate:isNotEmptyAndValid',function(type) {
+        return (!trigHdlr(this,'validate:isEmpty') && trigHdlr(this,'validate:isValid',type))? true:false;
     });
     
-    setHandler(this,'validate:process',function() {
-        return trigHandler(this,trigHandler(this,'validate:isEmpty')? 'validate:pattern':'validate:trigger');
+    setHdlr(this,'validate:process',function() {
+        return trigHdlr(this,trigHdlr(this,'validate:isEmpty')? 'validate:pattern':'validate:trigger');
     });
     
-    setHandler(this,'validate:required',function() {
-        return trigHandler(this,'validate:trigger','required');
+    setHdlr(this,'validate:required',function() {
+        return trigHdlr(this,'validate:trigger','required');
     });
     
-    setHandler(this,'validate:pattern',function() {
-        return trigHandler(this,'validate:trigger','pattern');
+    setHdlr(this,'validate:pattern',function() {
+        return trigHdlr(this,'validate:trigger','pattern');
     });
     
-    setHandler(this,'validate:trigger',function(type) {
-        const validEmpty = trigHandler(this,'validate:validEmptyArray',type);
+    setHdlr(this,'validate:trigger',function(type) {
+        const validEmpty = trigHdlr(this,'validate:validEmptyArray',type);
         const r = validEmpty[0];
         const empty = validEmpty[1];
         

@@ -16,32 +16,32 @@ Component.addRemove = function()
         return $(this).find(".playground").get(0);
     })
     .on('addRemove:getCount',function() {
-        return trigHandler(this,'addRemove:getAll').length;
+        return trigHdlr(this,'addRemove:getAll').length;
     })
     .on('addRemove:getAll',function() {
-        return trigHandler(this,'addRemove:getPlayground').find(".ele");
+        return trigHdlr(this,'addRemove:getPlayground').find(".ele");
     })
     .on('addRemove:getIndex',function(event,index) {
-        return trigHandler(this,'addRemove:getAll').eq(index);
+        return trigHdlr(this,'addRemove:getAll').eq(index);
     })
     .on('addRemove:getLast',function() {
-        return trigHandler(this,'addRemove:getAll').last()
+        return trigHdlr(this,'addRemove:getAll').last()
     })
     .on('addRemove:findIndex',function(event,element) {
-        const all = trigHandler(this,'addRemove:getAll');
+        const all = trigHdlr(this,'addRemove:getAll');
         return all.index(element);
     })
     
     // trigger
     .on('addRemove:insert',function() {
-        const insert = trigHandler(this,'addRemove:getInsert');
-        const container = trigHandler(this,'addRemove:getPlayground');
+        const insert = trigHdlr(this,'addRemove:getInsert');
+        const container = trigHdlr(this,'addRemove:getPlayground');
         const html = insert.data('html');
         
         if(Str.isNotEmpty(html))
         {
             container.append(html);
-            const inserted = trigHandler(this,'addRemove:getLast');
+            const inserted = trigHdlr(this,'addRemove:getLast');
             bindElement.call(this,inserted);
             trigEvt(this,'addRemove:inserted',inserted);
         }
@@ -49,10 +49,10 @@ Component.addRemove = function()
     .on('addRemove:remove',function(event,index) {
         if(Num.is(index))
         {
-            const ele = trigHandler(this,'addRemove:getIndex',index);
+            const ele = trigHdlr(this,'addRemove:getIndex',index);
             ele.remove();
             
-            if(!trigHandler(this,'addRemove:getCount'))
+            if(!trigHdlr(this,'addRemove:getCount'))
             trigEvt(this,'addRemove:insert');
         }
     })
@@ -63,7 +63,7 @@ Component.addRemove = function()
         bindInsert.call(this);
         bindSorter.call(this);
         
-        trigHandler(this,'addRemove:getAll').each(function() {
+        trigHdlr(this,'addRemove:getAll').each(function() {
             bindElement.call($this,$(this));
         });
     });
@@ -71,7 +71,7 @@ Component.addRemove = function()
     // bindInsert
     const bindInsert = function() {
         const $this = $(this);
-        const insert = trigHandler(this,'addRemove:getInsert');
+        const insert = trigHdlr(this,'addRemove:getInsert');
         
         insert.on('click',function() {
             trigEvt($this,'addRemove:insert');
@@ -81,7 +81,7 @@ Component.addRemove = function()
     // bindSorter
     const bindSorter = function() {
         const move = $(this).find(".move");
-        const playground = trigHandler(this,'addRemove:getPlayground');
+        const playground = trigHdlr(this,'addRemove:getPlayground');
         
         if(move.length)
         Component.verticalSorter.call(playground,'.ele','.move');
@@ -94,7 +94,7 @@ Component.addRemove = function()
         Component.confirm.call(remove,'click');
         
         remove.on('confirmed',function() {
-            const index = $this.trigHandler('addRemove:findIndex',[element]);
+            const index = $this.trigHdlr('addRemove:findIndex',[element]);
             trigEvt($this,'addRemove:remove',[index]);
         });
     };

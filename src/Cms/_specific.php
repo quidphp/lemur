@@ -158,13 +158,8 @@ trait _specific
             {
                 if($cols->isNotEmpty())
                 {
-                    $data = [];
-
-                    if($table->hasPermission('panelDescription'))
-                    $data['description'] = $lang->panelDescription($key);
-
                     $r .= Html::liOp();
-                    $r .= Html::aOpen("#$key",null,['data'=>$data]);
+                    $r .= Html::aOpen("#$key",null);
                     $r .= Html::h3($lang->panelLabel($key));
                     $r .= Html::aCl();
                     $r .= Html::liCl();
@@ -172,9 +167,6 @@ trait _specific
             }
 
             $r = Html::ulCond($r);
-
-            if($table->hasPermission('panelDescription'))
-            $r .= Html::div(true,'description');
         }
 
         return $r;
@@ -245,6 +237,7 @@ trait _specific
     final protected function makeFormInner():string
     {
         $r = '';
+        $table = $this->table();
         $hasPanel = $this->hasPanel();
         $panel = $this->panel();
         $lang = $this->lang();
@@ -265,16 +258,28 @@ trait _specific
                         if($key === $currentPanel)
                         $data['current-panel'] = true;
 
-                        $data['fragment'] = $key;
+                        $data['hash'] = $key;
                     }
-
-                    $r .= Html::divOp(['panel','data'=>$data]);
-
+                    $attr = ['panel','data'=>$data];
+                    
+                    $description = '';
+                    if($table->hasPermission('panelDescription') && is_string($key))
+                    {
+                        $description = Html::divCond($lang->panelDescription($key),'panel-description');
+                        if(!empty($description))
+                        $attr[] = 'with-description';
+                    }
+                    
+                    $r .= Html::divOp($attr);
+                    $r .= $description;
+                    
+                    $fields = '';
                     foreach ($cols as $col)
                     {
-                        $r .= $this->makeFormOne($col);
+                        $fields .= $this->makeFormOne($col);
                     }
-
+                    $r .= Html::divCond($fields,'form-fields');
+                    
                     $r .= Html::divCl();
                 }
             }

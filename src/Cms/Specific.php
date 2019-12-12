@@ -285,7 +285,7 @@ class Specific extends Core\RouteAlias
         {
             $row = $this->row();
             $general = $this->general();
-            $attr = ['first'=>'hashFollow','prev'=>'hashFollow','next'=>'hashFollow','last'=>'hashFollow'];
+            $attr = ['first'=>'hash-follow','prev'=>'hash-follow','next'=>'hash-follow','last'=>'hash-follow'];
             $specific = $this->makeSpecificNav($general,$row,'primary','highlight',$attr);
             $r .= Html::divOp('nav');
 
@@ -343,17 +343,19 @@ class Specific extends Core\RouteAlias
     {
         $r = '';
         $dispatch = $this->isUpdateableOrDeleteable();
-
+        $hasPanel = $this->hasPanel();
+        $attr = array('specific-form',($hasPanel === true)? 'with-panel':null);
+        
         if($dispatch === true)
         {
-            $r .= SpecificDispatch::make($this->segments())->formOpen('specific-form');
+            $r .= SpecificDispatch::make($this->segments())->formOpen($attr);
             $r .= $this->makeFormHidden();
             $r .= $this->makeFormPrimary();
             $r .= $this->makeFormSubmit('hidden');
         }
 
         else
-        $r .= Html::divOp('specific-form');
+        $r .= Html::divOp($attr);
 
         $r .= Html::div($this->makeFormTop(),'form-top');
         $r .= Html::div($this->makeFormInner(),'form-inner');

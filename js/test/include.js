@@ -258,6 +258,25 @@ const TestInclude = Test.Include = function()
         assert(Pojo.isEqual(Json.decode('{"ok":2}'),{ok: 2}));
         
         // nav
+        assert(Nav.isFirst(0,10));
+        assert(!Nav.isFirst(2,10));
+        assert(Nav.hasPrev(0,10,true));
+        assert(!Nav.hasPrev(0,10));
+        assert(Nav.hasPrev(2,10));
+        assert(Nav.hasNext(2,10));
+        assert(Nav.hasNext(8,10));
+        assert(!Nav.hasNext(9,10));
+        assert(Nav.hasNext(9,10,true));
+        assert(Nav.isLast(9,10));
+        assert(!Nav.isLast(10,10));
+        assert(Nav.isIndex(2,10));
+        assert(!Nav.isIndex(-2,10));
+        assert(Nav.getFirst(10) === 0);
+        assert(Nav.getPrev(1,10) === 0);
+        assert(Nav.getNext(9,10,true) === 0);
+        assert(Nav.getLast(10) === 9);
+        assert(Nav.getIndex(0,10) === 0);
+        assert(Nav.getIndex(20,10) === null);
         assert(Nav.index('first',2,10) === 0);
         assert(Nav.index('last',2,10) === 9);
         assert(Nav.index('prev',2,10) === 1);
@@ -268,7 +287,7 @@ const TestInclude = Test.Include = function()
         assert(Nav.index('prev',0,10,true) === 9);
         assert(Nav.index(2,0,10,true) === 2);
         assert(Nav.index(0,0,10,true) === 0);
-        assert(Nav.index(11,0,10,true) === undefined);
+        assert(Nav.index(11,0,10,true) === null);
             
         // num
         assert(!Num.is('what'));

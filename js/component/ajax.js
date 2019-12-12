@@ -8,50 +8,58 @@
 // script to activate ajax with an event on the nodes
 const Ajax = Component.Ajax = function(type) 
 {
+    // not empty
+    if(Vari.isEmpty(this)) 
+    return null;
+    
+    
     // handler
-    setHandler(this,'ajax:confirm',function() {
-        return (trigHandler(document,'doc:isLoading') === true)? false:true;
-    });
-    
-    setHandler(this,'ajax:trigger',function(config,triggerEvent) {
-        let r = null;
+    setHdlrs(this,'ajax:',{
         
-        if(!Pojo.isNotEmpty(config))
-        {
-            config = trigHandler(this,'ajax:config');
+        confirm: function() {
+            return (trigHdlr(document,'doc:isLoading') === true)? false:true;
+        },
+        
+        config: function(triggerEvent) {
+            return this;
+        },
+        
+        init: function(config) {
+            trigEvt(this,type,config);
+        },
+        
+        trigger: function(config,triggerEvent) {
+            let r = null;
             
-            if(Dom.isNode(config))
-            config = Xhr.configFromNode(config);
+            if(!Pojo.isNotEmpty(config))
+            {
+                config = trigHdlr(this,'ajax:config');
+                
+                if(Dom.isNode(config))
+                config = Xhr.configFromNode(config);
+                
+                else if(Str.is(config))
+                config = {url: config};
+            }
             
-            else if(Str.is(config))
-            config = {url: config};
+            if(Pojo.isNotEmpty(config))
+            {
+                Xhr.configNodeEvents(this,config);
+                r = Xhr.trigger(config);
+            }
+            
+            if(r != null && triggerEvent != null)
+            Evt.preventStop(triggerEvent,true);
+            
+            return r;
         }
-        
-        if(Pojo.isNotEmpty(config))
-        {
-            Xhr.configNodeEvents(this,config);
-            r = Xhr.trigger(config);
-        }
-        
-        if(r != null && triggerEvent != null)
-        Evt.preventStop(triggerEvent,true);
-        
-        return r;
-    });
-    
-    setHandler(this,'ajax:config',function(triggerEvent) {
-        return this;
-    });
-    
-    setHandler(this,'ajax:init',function(config) {
-        trigEvt(this,type,config);
     });
     
     
     // event
     ael(this,type,function(event,config) {
         event.stopPropagation();
-        trigHandler(this,'ajax:trigger',config,event);
+        trigHdlr(this,'ajax:trigger',config,event);
     });
     
     return this;

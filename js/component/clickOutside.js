@@ -9,7 +9,7 @@
 const ClickOutside = Component.ClickOutside = function(value,persistent) 
 {
     // handler
-    setHandler(this,'clickOutside:getParent',function() {
+    setHdlr(this,'clickOutside:getParent',function() {
         return document;
     });
     
@@ -18,7 +18,7 @@ const ClickOutside = Component.ClickOutside = function(value,persistent)
     aelOnce(this,'component:setup',function() {
         
         const $this = this;
-        const parent = trigHandler(this,'clickOutside:getParent');
+        const parent = trigHdlr(this,'clickOutside:getParent');
         
         const handler = ael(parent,'click',function() {
             trigEvt($this,value);

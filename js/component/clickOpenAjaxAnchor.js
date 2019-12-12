@@ -8,6 +8,11 @@
 // clickOpen component which opens by an anchor click and triggers an ajax calls
 const ClickOpenAjaxAnchor = Component.ClickOpenAjaxAnchor = function(option) 
 {
+    // not empty
+    if(Vari.isEmpty(this)) 
+    return null;
+    
+    
     // option
     const $option = Object.assign({},option);
     
@@ -18,12 +23,12 @@ const ClickOpenAjaxAnchor = Component.ClickOpenAjaxAnchor = function(option)
     
     
     // handler
-    setHandler(this,'ajax:config',function() {
-        return trigHandler(this,'clickOpen:getTrigger');
+    setHdlr(this,'ajax:config',function() {
+        return trigHdlr(this,'clickOpen:getTrigger');
     });
     
-    setHandler(this,'clickOpen:triggerClickOpen',function() {
-        trigHandler(this,'ajax:init');
+    setHdlr(this,'clickOpen:triggerClickOpen',function() {
+        trigHdlr(this,'ajax:init');
     });
     
     return this;

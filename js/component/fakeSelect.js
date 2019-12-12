@@ -21,10 +21,10 @@ const FakeSelect = Component.FakeSelect = function()
         const selectedText = (selected != null)? $(selected).text():null;
         const title = (Str.isNotEmpty(selectedText))? selectedText:"&nbsp;";
         const options = qsa(this,'option');
-        const value = trigHandler(this,'input:getValue');
+        const value = trigHdlr(this,'input:getValue');
         const datas = Dom.attrStr(this,'data-');
                 
-        r += "<div tabindex='-1' data-fake-input='1' data-anchor-corner='1' data-absolute-placeholder='1' class='fakeselect'";
+        r += "<div data-fake-input='1' data-anchor-corner='1' data-absolute-placeholder='1' class='fakeselect'";
         if(disabled)
         r += " data-disabled='1'";
         if(Str.isNotEmpty(datas))
@@ -33,7 +33,7 @@ const FakeSelect = Component.FakeSelect = function()
         r += "<span data-title'='"+title+"' class='title'>"+title+"</span>";
         r += "<span class='ico'></span>";
         r += "</button>";
-        r += "<div class='popup'>";
+        r += "<div class='popup' tabindex='0'>";
         r += "<ul>";
         
         Arr.each(options,function() {
@@ -46,7 +46,7 @@ const FakeSelect = Component.FakeSelect = function()
             if(val != null)
             {
                 if(val === value)
-                r += " class='selected'";
+                r += " data-selected='1'";
                 
                 r += " data-value='"+val+"'";
                 
@@ -71,50 +71,66 @@ const FakeSelect = Component.FakeSelect = function()
     const bindFakeSelect = function() 
     {    
         // clickOpen
-        Component.ClickOpenTrigger.call(this,{trigger: "> .trigger", target: "> .popup"});
+        Component.ClickOpenTrigger.call(this,{trigger: "> .trigger", target: "> .popup", background: "fakeselect"});
+        Component.Focusable.call(this,{target: "> .popup button"});
         Component.KeyboardEnter.call(this,true);
+        Component.KeyboardArrow.call(this,true);
         
         
         // handler
-        setHandler(this,'fakeSelect:getSelect',function() {
+        setHdlr(this,'fakeSelect:getSelect',function() {
             return $(this).prev("select").get(0);
         });
         
-        setHandler(this,'fakeSelect:getChoices',function() {
-            const target = trigHandler(this,'clickOpen:getTarget');
+        setHdlr(this,'fakeSelect:getChoices',function() {
+            const target = trigHdlr(this,'clickOpen:getTarget');
             return qsa(target,"li > button");
         });
         
-        setHandler(this,'fakeSelect:getChoice',function(value) {
-            return Arr.find(trigHandler(this,'fakeSelect:getChoices'),function() {
+        setHdlr(this,'fakeSelect:getChoice',function(value) {
+            return Arr.find(trigHdlr(this,'fakeSelect:getChoices'),function() {
                 return Str.isEqual($(this).data('value'),value);
             });
         });
         
-        setHandler(this,'fakeSelect:getSelected',function() {
-            return Arr.find(trigHandler(this,'fakeSelect:getChoices'),function() {
-                return $(this).hasClass('selected');
+        setHdlr(this,'fakeSelect:getSelected',function() {
+            return Arr.find(trigHdlr(this,'fakeSelect:getChoices'),function() {
+                return (Integer.cast($(this).attr('data-selected')) === 1);
             });
         });
         
-        setHandler(this,'fakeSelect:getTitle',function() {
-            const trigger = trigHandler(this,'clickOpen:getTrigger');
+        setHdlr(this,'fakeSelect:getTitle',function() {
+            const trigger = trigHdlr(this,'clickOpen:getTrigger');
             return qs(trigger,".title");
         });
         
-        setHandler(this,'fakeSelect:setTitle',function(value) {
-            const title = trigHandler(this,'fakeSelect:getTitle');
+        setHdlr(this,'fakeSelect:setTitle',function(value) {
+            const title = trigHdlr(this,'fakeSelect:getTitle');
             $(title).text(value);
-        });
-        
-        setHandler(this,'clickOpen:getBackgroundFrom',function() {
-            return 'fakeselect';
         });
         
         
         // event
         ael(this,'keyboardEnter:blocked',function() {
-            trigEvt(this,'clickOpen:toggle');
+            trigHdlr(this,'clickOpen:toggle');
+        });
+        
+        ael(this,'keyboardArrow:up',function() {
+            trigHdlr(this,'focusable:prev');
+        });
+        
+        ael(this,'keyboardArrow:down',function() {
+            trigHdlr(this,'focusable:next');
+        });
+        
+        ael(this,'clickOpen:opened',function() {
+            const selected = trigHdlr(this,'fakeSelect:getSelected');
+            if(selected != null)
+            $(selected).focus();
+        });
+        
+        ael(this,'clickOpen:closed',function() {
+            trigHdlr(this,'absolutePlaceholder:refresh');
         });
         
         
@@ -129,8 +145,8 @@ const FakeSelect = Component.FakeSelect = function()
         // bindTrigger
         const bindTrigger = function() 
         {
-            const trigger = trigHandler(this,'clickOpen:getTrigger');
-            const select = trigHandler(this,'fakeSelect:getSelect');
+            const trigger = trigHdlr(this,'clickOpen:getTrigger');
+            const select = trigHdlr(this,'fakeSelect:getSelect');
             
             ael(trigger,'click',function() {
                 trigEvt(select,'validate:valid');
@@ -142,11 +158,11 @@ const FakeSelect = Component.FakeSelect = function()
         const bindSelect = function() 
         {
             const $this = this;
-            const select = trigHandler(this,'fakeSelect:getSelect');
+            const select = trigHdlr(this,'fakeSelect:getSelect');
             
             ael(select,'change',function() {
-                const value = trigHandler(this,'input:getValue');
-                const choice = trigHandler($this,'fakeSelect:getChoice',value);
+                const value = trigHdlr(this,'input:getValue');
+                const choice = trigHdlr($this,'fakeSelect:getChoice',value);
                 
                 if(choice != null)
                 choose.call($this,choice);
@@ -174,8 +190,8 @@ const FakeSelect = Component.FakeSelect = function()
         const bindChoices = function() 
         {
             const $this = this;
-            const choices = trigHandler(this,'fakeSelect:getChoices');
-            const selected = trigHandler(this,'fakeSelect:getSelected');
+            const choices = trigHdlr(this,'fakeSelect:getChoices');
+            const selected = trigHdlr(this,'fakeSelect:getSelected');
             
             Component.KeyboardEnter.call(choices,true);
             
@@ -198,16 +214,16 @@ const FakeSelect = Component.FakeSelect = function()
         {
             const value = $(selected).data("value");
             const text = $(selected).text();
-            const select = trigHandler(this,'fakeSelect:getSelect');
-            const choices = trigHandler(this,'fakeSelect:getChoices');
-            const current = trigHandler(select,'input:getValue');
+            const select = trigHdlr(this,'fakeSelect:getSelect');
+            const choices = trigHdlr(this,'fakeSelect:getChoices');
+            const current = trigHdlr(select,'input:getValue');
             
-            $(choices).removeClass('selected');
-            $(selected).addClass('selected');
+            $(choices).removeAttr('data-selected');
+            $(selected).attr('data-selected',1);
             
-            trigHandler(select,'input:setValue',value);
-            trigHandler(this,'fakeSelect:setTitle',text);
-            trigHandler(this,'absolutePlaceholder:refresh');
+            trigHdlr(select,'input:setValue',value);
+            trigHdlr(this,'fakeSelect:setTitle',text);
+            trigHdlr(this,'absolutePlaceholder:refresh');
             trigEvt(this,'clickOpen:close');
             
             if(!Str.isEqual(value,current))
@@ -218,9 +234,9 @@ const FakeSelect = Component.FakeSelect = function()
     
     // htmlFromSelect
     $(this).each(function() {
-        if(trigHandler(this,'input:getTag') === 'select')
+        if(trigHdlr(this,'input:getTag') === 'select')
         {
-            if(trigHandler(this,'input:allowMultiple') === false && trigHandler(this,'input:isControlled') === false)
+            if(trigHdlr(this,'input:allowMultiple') === false && trigHdlr(this,'input:isControlled') === false)
             {
                 const html = htmlFromSelect.call(this);
                 const node = $(html).insertAfter(this).get(0);

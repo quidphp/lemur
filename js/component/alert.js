@@ -8,15 +8,20 @@
 // component to launch an alert notification when an event is triggered
 const Alert = Component.Alert = function(type)
 {
+    // not empty
+    if(Vari.isEmpty(this)) 
+    return null;
+    
+    
     // handler
-    setHandler(this,'alert:getText',function() {
+    setHdlr(this,'alert:getText',function() {
         return $(this).data('alert');
     });
     
     
     // event
     ael(this,type,function(event) {
-        const alertText = trigHandler(this,'alert:getText');
+        const alertText = trigHdlr(this,'alert:getText');
         
         if(Str.isNotEmpty(alertText))
         alert(alertText);

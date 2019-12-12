@@ -13,6 +13,9 @@ const SearchAutoInfo = Component.SearchAutoInfo = function(option)
         targetInfo: ".search-info",
         attrInfo: 'data-search-info',
         background: "searchAutoInfo",
+        inputSearch: {
+            useCurrent: false
+        },
         info: {
             background: "searchAutoInfo",
         }
@@ -24,7 +27,7 @@ const SearchAutoInfo = Component.SearchAutoInfo = function(option)
     
     
     // handler
-    setHandler(this,'searchAutoInfo:getInfo',function() {
+    setHdlr(this,'searchAutoInfo:getInfo',function() {
         return qs(this,$option.targetInfo);
     });
     
@@ -40,16 +43,16 @@ const SearchAutoInfo = Component.SearchAutoInfo = function(option)
     const bindInfo = function() 
     {
         const $this = this;
-        const info = trigHandler(this,'searchAutoInfo:getInfo');
+        const info = trigHdlr(this,'searchAutoInfo:getInfo');
         
         Component.ClickOpen.call(info,$option.info)
         
-        ael(info,'clickOpen:open',function() {
+        ael(info,'clickOpen:opened',function() {
             $($this).attr($option.attrInfo,1);
         });
         
-        ael(info,'clickOpen:close',function() {
-            $($this).removeAttr($option.attrInfo);
+        ael(info,'clickOpen:closed',function() {
+            $($this).attr($option.attrInfo,0);
         });
         
         trigSetup(info);
@@ -59,11 +62,11 @@ const SearchAutoInfo = Component.SearchAutoInfo = function(option)
     // bindField
     const bindField = function() 
     {
-        const info = trigHandler(this,'searchAutoInfo:getInfo');
-        const field = trigHandler(this,'form:getValidateField');
+        const info = trigHdlr(this,'searchAutoInfo:getInfo');
+        const field = trigHdlr(this,'form:getValidateField');
         
         ael(field,'click',function() {
-            if(trigHandler(this,'validate:isEmpty'))
+            if(trigHdlr(this,'validate:isEmpty'))
             trigEvt(info,'clickOpen:open');
         });
         

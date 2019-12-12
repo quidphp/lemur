@@ -8,14 +8,19 @@
 // manages a clickOpen component, links clickOpenBase and clickOutside
 const ClickOpen = Component.ClickOpen = function(option)
 {   
+    // not empty
+    if(Vari.isEmpty(this)) 
+    return null;
+    
+    
     // components
     Component.ClickOutside.call(this,'clickOpen:close');
     Component.ClickOpenBase.call(this,option);
     
     
     // handler
-    setHandler(this,'clickOutside:getParent',function() {
-        return trigHandler(this,'clickOpen:getParentContainer');
+    setHdlr(this,'clickOutside:getParent',function() {
+        return trigHdlr(this,'clickOpen:getParentOrRoot');
     });
     
     return this;

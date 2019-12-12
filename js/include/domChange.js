@@ -35,8 +35,7 @@ const DomChange = Lemur.DomChange = {
         $(node).each(function(index, el) {
             const $this = this;
             
-            ArrLike.each(this.attributes,function(value) 
-            {
+            ArrLike.each(this.attributes,function(value) {
                 if(value != null)
                 $($this).removeAttr(value.name);
             });
@@ -85,14 +84,14 @@ const DomChange = Lemur.DomChange = {
     
     // hrefChangeHash
     // change le hash sur des balises avec attribut href
-    hrefChangeHash: function(fragment,node)
+    hrefChangeHash: function(fragment,nodes)
     {
-        if(Str.is(fragment))
-        {
-            $(node).each(function() {
-                $(this)[0].hash = fragment;
-            });
-        }
+        Str.check(fragment);
+        nodes = Dom.nodeWrap(nodes);
+        
+        Arr.each(nodes,function() {
+            this.hash = fragment;
+        });
         
         return this;
     },

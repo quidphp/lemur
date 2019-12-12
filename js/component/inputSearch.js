@@ -12,7 +12,8 @@ const InputSearch = Component.InputSearch = function(option)
     const $option = Object.assign({
         timeout: 500,
         keyEvent: 'keyup',
-        timeoutEvent: 'inputSearch:process'
+        useCurrent: true,
+        timeoutHandler: 'inputSearch:process'
     },option);
     
     
@@ -23,59 +24,88 @@ const InputSearch = Component.InputSearch = function(option)
     
     
     // handler
-    setHandler(this,'inputSearch:getCurrent',function() {
-        return $(this).data("current");
-    });
-    
-    setHandler(this,'inputSearch:setCurrent',function(value) {
-        $(this).data("current",value);
-    });
-    
-    setHandler(this,'inputSearch:getButton',function() {
-        return $(this).next("button[type='button']").get(0);
-    });
-    
-    setHandler(this,'inputSearch:validate',function() {
-        let r = trigHandler(this,'validate:process');
-        const val = trigHandler(this,'input:getValueTrim');
-        const current = trigHandler(this,'inputSearch:getCurrent');
+    setHdlrs(this,'inputSearch:',{
         
-        if(r === true && Str.isEqual(val,current))
-        {
-            r = false;
-            trigEvt(this,'validate:invalid');
+        getCurrent: function() {
+            return $(this).data("current");
+        },
+        
+        setCurrent: function(value) {
+            $(this).data("current",value);
+        },
+        
+        unsetCurrent: function() {
+            $(this).removeData("current");
+        },
+        
+        getButton: function() {
+            return $(this).next("button[type='button']").get(0);
+        },
+        
+        validate: function() {
+            let r = trigHdlr(this,'validate:process');
+            const val = trigHdlr(this,'input:getValueTrim');
+            const current = trigHdlr(this,'inputSearch:getCurrent');
+            const isCurrent = Str.isEqual(val,current);
+            
+            if(r === true && ($option.useCurrent && isCurrent === true))
+            {
+                r = false;
+                trigEvt(this,'validate:invalid');
+            }
+            
+            return r;
+        },
+        
+        process: function() {
+            const validate = trigHdlr(this,'inputSearch:validate');
+            
+            if(validate === true)
+            {
+                trigHdlr(this,'input:valueRemember');
+                trigEvt(this,'inputSearch:change');
+            }
+        },
+        
+        success: function() {
+            const value = trigHdlr(this,'input:getValueTrim');
+            
+            if($option.useCurrent === true)
+            trigHdlr(this,'inputSearch:setCurrent',value);
+            
+            trigHdlr(this,'timeout:clear',$option.keyEvent);
+        },
+        
+        buttonClick: function() {
+            trigHdlr(this,'inputSearch:process');
         }
-        
-        return r;
-    });
-    
-    setHandler(this,'inputSearch:process',function() {
-        const validate = trigHandler(this,'inputSearch:validate');
-        
-        if(validate === true)
-        trigEvt(this,'inputSearch:change');
-    });
-    
-    setHandler(this,'inputSearch:buttonClick',function() {
-        trigHandler(this,'inputSearch:process');
     });
     
     
     // event
     ael(this,'keyboardEnter:blocked',function() {
-        trigHandler(this,'inputSearch:process');
+        trigHdlr(this,'inputSearch:buttonClick');
     });
         
     ael(this,'timeout:'+$option.keyEvent,function() {
-        trigHandler(this,$option.timeoutEvent);
+        if($(this).is(":focus"))
+        {
+            trigHdlr(this,'input:valueRemember');
+            trigHdlr(this,$option.timeoutHandler);
+        }
+    });
+    
+    ael(this,'click',function(event) {
+        event.stopPropagation();
     });
     
     ael(this,'change',function() {
-        trigHandler(this,'inputSearch:process');
+        if(trigHdlr(this,'input:isRealChange'))
+        trigHdlr(this,'inputSearch:process');
     });
     
     ael(this,'inputSearch:change',function() {
-        trigHandler(this,'timeout:clear',$option.keyEvent);
+        trigHdlr(this,'timeout:clear',$option.keyEvent);
     });
     
     
@@ -89,10 +119,13 @@ const InputSearch = Component.InputSearch = function(option)
     const bindButton = function() 
     {
         const $this = this;
-        const button = trigHandler(this,'inputSearch:getButton');
+        const button = trigHdlr(this,'inputSearch:getButton');
         
-        ael(button,'click',function() {
-            trigHandler($this,'inputSearch:buttonClick');
+        ael(button,'click',function(event) {
+            trigHdlr($this,'inputSearch:buttonClick');
+            
+            event.stopPropagation();
+            event.preventDefault();
         });
     }
     

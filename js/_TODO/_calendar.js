@@ -20,13 +20,13 @@ Component.calendar = function()
         return $(this).find(".head");
     })
     .on('calendar:getPrevNext',function() {
-        return trigHandler(this,'calendar:getHead').find(".prev,.next");
+        return trigHdlr(this,'calendar:getHead').find(".prev,.next");
     })
     .on('calendar:getCells',  function() {
         return $(this).find(".body td");
     })
     .on('calendar:getSelected',  function() {
-        return trigHandler(this,'calendar:getCells').filter(".selected");
+        return trigHdlr(this,'calendar:getCells').filter(".selected");
     })
     .on('calendar:getCurrent',function() {
         return $(this).data('current');
@@ -35,7 +35,7 @@ Component.calendar = function()
         return $(this).data('format');
     })
     .on('ajax:getHref',function() {
-        return Dom.dataHrefReplaceChar(this,trigHandler(this,'calendar:getCurrent'));
+        return Dom.dataHrefReplaceChar(this,trigHdlr(this,'calendar:getCurrent'));
     })
     
     // trigger
@@ -62,11 +62,11 @@ Component.calendar = function()
         bindNav.call(this);
     })
     .on('calendar:removeSelected',  function() {
-        trigHandler(this,'calendar:getSelected').removeClass('selected');
+        trigHdlr(this,'calendar:getSelected').removeClass('selected');
     })
     .on('calendar:select',function(event,value,reload) {
         trigEvt(this,'calendar:removeSelected');
-        const tds = trigHandler(this,'calendar:getCells');
+        const tds = trigHdlr(this,'calendar:getCells');
         const td = null;
         value = prepareValue.call(this,value);
         
@@ -84,7 +84,7 @@ Component.calendar = function()
             else if(reload === true)
             {
                 $(this).data('current',value);
-                trigHandler(this,'ajax:trigger');
+                trigHdlr(this,'ajax:trigger');
             }
         }
     })
@@ -95,7 +95,7 @@ Component.calendar = function()
         
         if(Str.isNotEmpty(value) && !Num.is(value) && Validate.isNumericDash(value))
         {
-            const format = trigHandler(this,'calendar:getFormat');
+            const format = trigHdlr(this,'calendar:getFormat');
             if(value.length == format.length)
             r = true;
         }
@@ -127,7 +127,7 @@ Component.calendar = function()
     // bindNav
     const bindNav = function() {
         const $this = $(this);
-        const prevNext = trigHandler(this,'calendar:getPrevNext');
+        const prevNext = trigHdlr(this,'calendar:getPrevNext');
         
         Component.BlockEvent.call(prevNext,'click');
         Component.Ajax.call(prevNext,'click');

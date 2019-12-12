@@ -17,7 +17,7 @@ const ClickOpenTriggerBase = Component.ClickOpenTriggerBase = function(option)
     
 
     // handler
-    setHandler(this,'clickOpen:getTrigger',function() {
+    setHdlr(this,'clickOpen:getTrigger',function() {
         let r = $option.trigger;
         
         if(r == true)
@@ -29,24 +29,29 @@ const ClickOpenTriggerBase = Component.ClickOpenTriggerBase = function(option)
         return r;
     });
     
-    setHandler(this,'clickOpen:triggerClickOpen',function() {
+    setHdlr(this,'clickOpen:triggerClickOpen',function() {
         trigEvt(this,'clickOpen:open');
     });
     
     
     // event
     ael(this,'clickOpen:triggerClick',function(clickEvent) {
-        if($option.triggerToggle === true && trigHandler(this,'clickOpen:isOpen'))
+        if($option.triggerToggle === true && trigHdlr(this,'clickOpen:isOpen'))
         trigEvt(this,'clickOpen:close');
         else
-        trigHandler(this,'clickOpen:triggerClickOpen');
+        trigHdlr(this,'clickOpen:triggerClickOpen');
+    });
+    
+    ael(this,'clickOpen:closed',function() {
+        const trigger = trigHdlr(this,'clickOpen:getTrigger');
+        $(trigger).focus();
     });
     
     
     // setup
     aelOnce(this,'component:setup',function(event) {
         const $this = this;
-        const trigger = trigHandler(this,'clickOpen:getTrigger');
+        const trigger = trigHdlr(this,'clickOpen:getTrigger');
         
         if(trigger != null)
         {
@@ -57,7 +62,7 @@ const ClickOpenTriggerBase = Component.ClickOpenTriggerBase = function(option)
             });
             
             aelDelegate(trigger,'click','a',function(event) {
-                trigHandler(document,'doc:clickEvent',event);
+                trigHdlr(document,'doc:clickEvent',event);
             });
         }
     });

@@ -8,6 +8,11 @@
 // script for a carousel component based on the clickOpen logic
 const Carousel = Component.Carousel = function(option)
 {
+    // not empty
+    if(Vari.isEmpty(this)) 
+    return null;
+    
+    
     // option
     const $option = Object.assign({
         background: false,

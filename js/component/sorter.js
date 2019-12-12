@@ -19,12 +19,12 @@ const Sorter = Component.Sorter = function(option)
         opacity: 0.5,
         cancel: Selector.input(),
         stop: function(event,ui) {
-            trigHandler(this,'verticalSorter:stop');
+            trigHdlr(this,'verticalSorter:stop');
             ui.item.css('z-index','auto');
         }
     },option);
     
-        
+    
     // setup
     aelOnce(this,'component:setup',function() {
         $(this).sortable($option);

@@ -34,8 +34,13 @@
 
         .prev,
         .next {
-            @include trianglePrevNext();
+            @include trianglePrevNext(14px);
             margin-top: -5px;
+            display: none;
+            
+            &[data-direction='1'] {
+                display: block;
+            }
         }
 
         .prev {
@@ -49,7 +54,7 @@
         .slider-element {
             display: none;
 
-            &.active {
+            &[data-active='1'] {
                 display: block;
             }
         }

@@ -41,7 +41,11 @@ body {
 }
 body > .background {
     @include Background(2, 0.1);
-
+    
+    &[data-from='modal'] {
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+    
     &[data-from='modal'],
     &[data-from='clickOpen'],
     &[data-from='searchAutoInfo'],

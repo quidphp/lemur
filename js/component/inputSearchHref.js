@@ -15,13 +15,13 @@ const InputSearchHref = Component.InputSearchHref = function(option)
     // handler
     ael(this,'inputSearch:change',function() {
         const char = $(this).attr("data-char");
-        let val = trigHandler(this,'input:getValueEncoded',true);
+        let val = trigHdlr(this,'input:getValueEncoded',true);
         let href = $(this).attr("data-href");
         
         if(Str.isNotEmpty(val))
         href += "?"+char+"="+val;
         
-        trigHandler(document,'doc:go',href);
+        trigHdlr(document,'doc:go',href);
     });
     
     return this;

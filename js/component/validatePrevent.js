@@ -9,18 +9,18 @@
 const ValidatePrevent = Component.ValidatePrevent = function(type) 
 {
     // handler
-    setHandler(this,'validatePrevent:getTargets',function(event) {
+    setHdlr(this,'validatePrevent:getTargets',function(event) {
         return this;
     });
     
-    setHandler(this,'validatePrevent:trigger',function(event) {
+    setHdlr(this,'validatePrevent:trigger',function(event) {
         let r = true;
-        const targets = trigHandler(this,'validatePrevent:getTargets');
+        const targets = trigHdlr(this,'validatePrevent:getTargets');
         
         if(Vari.isNotEmpty(targets))
         {
             $(targets).each(function(index, el) {
-                const val = trigHandler(this,"validate:trigger");
+                const val = trigHdlr(this,"validate:trigger");
                 
                 if(val === false)
                 r = val;
@@ -33,7 +33,7 @@ const ValidatePrevent = Component.ValidatePrevent = function(type)
     
     // event
     ael(this,type,function(event) {
-        let r = trigHandler(this,'validatePrevent:trigger')
+        let r = trigHdlr(this,'validatePrevent:trigger')
         
         if(r !== true)
         {
@@ -50,10 +50,10 @@ const ValidatePrevent = Component.ValidatePrevent = function(type)
     
     // setup
     aelOnce(this,'component:setup', function(event) {
-        const targets = trigHandler(this,'validatePrevent:getTargets');
+        const targets = trigHdlr(this,'validatePrevent:getTargets');
         
         $(targets).each(function() {
-            if(!trigHandler(this,'validate:isBinded'))
+            if(!trigHdlr(this,'validate:isBinded'))
             Component.Validate.call(this);
         });
         

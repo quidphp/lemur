@@ -20,7 +20,7 @@ Component.calendarInput = function()
         return $(this).find("input[type='text']");
     })
     .on('calendarInput:getCalendar',function(event) {
-        return trigHandler(this,'clickOpen:getTarget').find(".calendar");
+        return trigHdlr(this,'clickOpen:getTarget').find(".calendar");
     })
     .on('clickOpen:getBackgroundFrom',function(event) {
         return 'calendar';
@@ -28,13 +28,13 @@ Component.calendarInput = function()
     
     // trigger
     .on('clickOpen:open',function(event) {
-        const input = trigHandler(this,'calendarInput:getInput');
-        const calendar = trigHandler(this,'calendarInput:getCalendar');
+        const input = trigHdlr(this,'calendarInput:getInput');
+        const calendar = trigHdlr(this,'calendarInput:getCalendar');
         input.addClass('active');
-        calendar.trigger((calendar.trigHandler('calendar:isEmpty'))? 'calendar:load':'calendar:refresh');
+        calendar.trigger((calendar.trigHdlr('calendar:isEmpty'))? 'calendar:load':'calendar:refresh');
     })
     .on('clickOpen:close',function(event) {
-        trigHandler(this,'calendarInput:getInput').removeClass('active');
+        trigHdlr(this,'calendarInput:getInput').removeClass('active');
     })
     
     // setup
@@ -46,9 +46,9 @@ Component.calendarInput = function()
     // bindInput
     const bindInput = function() {
         const $this = $(this);
-        const input = trigHandler(this,'calendarInput:getInput');
-        const calendar = trigHandler(this,'calendarInput:getCalendar');
-        const target = trigHandler(this,'clickOpen:getTarget');
+        const input = trigHdlr(this,'calendarInput:getInput');
+        const calendar = trigHdlr(this,'calendarInput:getCalendar');
+        const target = trigHdlr(this,'clickOpen:getTarget');
         
         Component.Timeout.call(input,'keyup',600);
         Component.keyboardEnter.call(input,true);
@@ -68,7 +68,7 @@ Component.calendarInput = function()
         
         // calendarChange
         const calendarChange = function(reload) {
-            const val = trigHandler(this,'input:getValue');
+            const val = trigHdlr(this,'input:getValue');
             calendar.trigger('calendar:select',[val,reload]);
         };
     };
@@ -76,14 +76,14 @@ Component.calendarInput = function()
     // bindCalendar
     const bindCalendar = function() {
         const $this = $(this);
-        const input = trigHandler(this,'calendarInput:getInput');
-        const calendar = trigHandler(this,'calendarInput:getCalendar');
-        const target = trigHandler(this,'clickOpen:getTarget');
+        const input = trigHdlr(this,'calendarInput:getInput');
+        const calendar = trigHdlr(this,'calendarInput:getCalendar');
+        const target = trigHdlr(this,'clickOpen:getTarget');
         
         Component.calendar.call(calendar);
         
         calendar.on('calendar:ready',function(event) {
-            const val = input.trigHandler('input:getValue');
+            const val = input.trigHdlr('input:getValue');
             trigEvt(this,'calendar:select',val);
         })
         .on('calendar:loading',function(event) {

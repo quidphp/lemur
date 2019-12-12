@@ -89,7 +89,7 @@
         &.multi-delete-form {
             display: none;
 
-            &.active {
+            &[data-visible='1'] {
                 display: block;
             }
         }
