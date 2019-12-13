@@ -19,7 +19,7 @@ body {
     * {
         cursor: wait !important;
     }
-    
+
     > .loading-icon,
     > .loading-progress {
         display: block;
@@ -68,10 +68,10 @@ body > .loading-icon {
     display: none;
 }
 body > .loading-progress {
-    @include fixed(null,0,0);
+    @include fixed(null, 0, 0);
     z-index: 9;
     display: none;
-    
+
     > .percent {
         border: 1px solid $lightGray;
         @include inbl();

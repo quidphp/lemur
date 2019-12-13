@@ -13,7 +13,7 @@
 // mixin avec styles pour le modal
 @mixin modal() {
     @include Modal();
-    
+
     > .box {
         @include modalBox();
     }
