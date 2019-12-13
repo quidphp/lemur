@@ -62,13 +62,15 @@ const HistoryApi = Lemur.HistoryApi = {
     
     
     // makeState
-    // retourne un objet état d'historique (avec url, title et timestamp)
+    // retourne un objet état d'historique (avec url absolute, title et timestamp)
     makeState: function(uri,title) 
     {
         let r = null;
         
         if(Str.is(uri))
         {
+            uri = Uri.absolute(uri,true);
+            
             r = {
                 url: uri,
                 title: title || null,

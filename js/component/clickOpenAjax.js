@@ -14,7 +14,7 @@ const ClickOpenAjax = Component.ClickOpenAjax = function(option)
     
     
     // option
-    const $option = Object.assign({
+    const $option = Pojo.replace({
         ajaxEvent: 'ajax:init',
         closeUnsetContent: true
     },option);

@@ -60,7 +60,15 @@ const Uri = Lemur.Uri = {
         return r;
     },
 
-
+    
+    // isOnlyHash
+    // retourne vrai si l'uri est seulement un hash
+    isOnlyHash: function(value)
+    {
+        return (Str.length(value) > 1 && Str.isStart('#',value));
+    },
+    
+    
     // isSamePathQuery
     // retourne vrai si l'uri est la même que la comparaison
     // compare path et query
@@ -132,27 +140,21 @@ const Uri = Lemur.Uri = {
 
 
     // relative
-    // retourne une uri relative à partir d'une uri absolut
+    // retourne une uri relative
     relative: function(uri,hash)
     {
-        let r = null;
-        
-        if(Str.is(uri))
-        {
-            const parse = this.parse(uri);
-            r = parse.path;
-            
-            if(parse.query)
-            r += "?"+parse.query;
-
-            if(parse.hash && hash === true)
-            r += "#"+parse.hash;
-        }
-        
-        return r;
+        return this.build(this.parse(uri),false,hash);
     },
 
-
+    
+    // absolute
+    // retourne une uri absolute
+    absolute: function(uri,hash)
+    {
+        return this.build(this.parse(uri),true,hash);
+    },
+    
+    
     // extension
     // retourne l'extension du path de l'uri
     extension: function(uri)
@@ -197,7 +199,39 @@ const Uri = Lemur.Uri = {
         return r;
     },
 
+    
+    // build
+    // prend un objet parse et retourne une string uri
+    // possible de retourner une string relative ou absolute
+    // possible d'inclure ou non le hash
+    build: function(parse,absolute,hash)
+    {
+        let r = null;
+        
+        if(Pojo.isNotEmpty(parse))
+        {
+            r = '';
+            
+            if(absolute === true)
+            {
+                r += parse.scheme;
+                r += "://";
+                r += parse.host;
+            }
+            
+            r += parse.path;
+            
+            if(parse.query)
+            r += "?"+parse.query;
 
+            if(parse.hash && hash === true)
+            r += "#"+parse.hash;
+        }
+        
+        return r;
+    },
+    
+    
     // makeHash
     // permet de faire une hash avec ou sans le hash
     makeHash: function(value,symbol)
@@ -207,7 +241,7 @@ const Uri = Lemur.Uri = {
         if(Str.isNotEmpty(value))
         {
             r = value;
-            const hasHash = (r.charAt(0) === "#")? true:false;
+            const hasHash = (Str.isStart('#',r))? true:false;
             
             if(symbol === true)
             r = (!hasHash)? "#"+r:r;

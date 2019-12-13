@@ -9,7 +9,7 @@
 const TabsNav = Component.TabsNav = function(option) 
 {
     // option
-    const $option = Object.assign({
+    const $option = Pojo.replace({
         nav: [],
         navAttr: 'data-selected',
         first: null,

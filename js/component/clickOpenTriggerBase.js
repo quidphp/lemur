@@ -9,7 +9,7 @@
 const ClickOpenTriggerBase = Component.ClickOpenTriggerBase = function(option)
 {
     // option
-    const $option = Object.assign({
+    const $option = Pojo.replace({
         trigger: true,
         triggerEvent: 'click',
         triggerToggle: true
@@ -62,7 +62,7 @@ const ClickOpenTriggerBase = Component.ClickOpenTriggerBase = function(option)
             });
             
             aelDelegate(trigger,'click','a',function(event) {
-                trigHdlr(document,'doc:clickEvent',event);
+                trigHdlr(document,'history:event',event);
             });
         }
     });

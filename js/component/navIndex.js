@@ -9,7 +9,7 @@
 const NavIndex = Component.NavIndex = function(option) 
 {
     // option
-    const $option = Object.assign({
+    const $option = Pojo.replace({
         target: [],
         childOpen: null,
         go: null,
@@ -64,10 +64,11 @@ const NavIndex = Component.NavIndex = function(option)
         
         go: function(value) {
             let r = false;
-            const child = trigHdlr(this,type+':get',value);
+            const current = trigHdlr(this,type+':getCurrent');
+            const target = trigHdlr(this,type+':get',value);
 
-            if(child != null)
-            $option.go.call(this,child);
+            if(target != null && target != current)
+            $option.go.call(this,target);
             
             return r;
         },

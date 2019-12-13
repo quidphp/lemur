@@ -72,7 +72,7 @@ class General extends Core\RouteAlias
     final protected function onBefore()
     {
         $return = false;
-
+        
         if(parent::onBefore())
         {
             $table = $this->table();

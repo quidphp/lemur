@@ -85,7 +85,7 @@ const Com = Component.Com = function()
         {
             trigHdlr(this,'blockEvent:block','click');
             href = href.replace($(this).data('char'),primary);
-            trigHdlr(document,'doc:go',[href,clickEvent]);
+            trigHdlr(document,'history:href',href,clickEvent);
         }
     }
     

@@ -7,7 +7,7 @@
  */
 
 // form
-// stylesheet with form-related mixins
+// stylesheet with various form-related mixins
 
 // formBase
 // défini quelques styles par défaut pour les inputs de formulaire
@@ -169,39 +169,6 @@
     }
 }
 
-// inputNumeric
-// stylesheet for the inputNumeric component
-@mixin inputNumeric() {
-    input[type='text'] {
-        width: 40px;
-        padding: 2px 5px;
-        margin: 0 5px;
-        text-align: center;
-    }
-}
-
-// inputSearch
-// mixin for the inputSearch component
-@mixin inputSearch() {
-    > .input {
-        position: relative;
-        margin-right: 10px;
-
-        input[type='text'] {
-            width: 200px;
-        }
-
-        > .close {
-            @include abs(-8px, -8px);
-
-            &:hover,
-            &[data-triggered='1'] {
-                opacity: 0.8;
-            }
-        }
-    }
-}
-
 // button
 // mixin pour le bouton
 @mixin button() {
@@ -238,47 +205,5 @@
     &.no-border {
         border: 0;
         border-radius: 0;
-    }
-}
-
-// modalForm
-// mixin pour un formulaire de base dans le modal
-@mixin modalForm() {
-    @include formBase();
-
-    .info {
-        margin-bottom: 20px;
-    }
-
-    .form {
-        max-width: 500px;
-        margin: auto;
-
-        .fields {
-            padding-bottom: 10px;
-        }
-
-        .action {
-            button {
-                margin: 0 5px;
-            }
-        }
-    }
-
-    .form .fields > .field {
-        margin-bottom: 20px;
-
-        > .table {
-            width: 100%;
-            text-align: left;
-
-            .table-cell.label-cell {
-                padding-right: 15px;
-            }
-
-            .table-cell:first-child {
-                width: 30%;
-            }
-        }
     }
 }

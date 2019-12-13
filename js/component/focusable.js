@@ -9,7 +9,7 @@
 const Focusable = Component.Focusable = function(option)
 {
     // option
-    const $option = Object.assign({
+    const $option = Pojo.replace({
         target: "a,button",
         loop: false
     },option);

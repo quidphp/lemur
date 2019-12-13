@@ -22,7 +22,7 @@ const ScrollChange = Component.ScrollChange = function(persistent)
     // persistent
     if(persistent !== true)
     {
-        const handlerDocument = aelOnce(document,'doc:unmount',function() {
+        const handlerDocument = aelOnce(document,'doc:unmountPage',function() {
             rel(window,handler);
         });
         

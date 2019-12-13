@@ -14,7 +14,7 @@ const AjaxBlock = Component.AjaxBlock = function(option)
     
     
     // option
-    const $option = Object.assign({
+    const $option = Pojo.replace({
         ajaxEvent: 'click',
         autoUnbind: false
     },option);

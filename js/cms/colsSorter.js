@@ -124,7 +124,7 @@ const ColsSorter = Component.ColsSorter = function(option)
             const href = Dom.dataHrefReplaceChar(this,set);
             
             if(Str.isNotEmpty(href) && href !== Request.relative())
-            trigHdlr(document,'doc:go',href,clickEvent);
+            trigHdlr(document,'history:href',href,clickEvent);
         });
         
         // event

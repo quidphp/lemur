@@ -223,6 +223,7 @@ const TestInclude = Test.Include = function()
         assert(HistoryApi.isState({ url: 'test', timestamp: 1234 }));
         assert(HistoryApi.isStateChangeValid({ url: 'test', timestamp: 1234 },HistoryApi.makeState('what','bleh')));
         assert(Obj.length(HistoryApi.makeState('what','bleh')) === 3);
+        assert(Str.isEnd("/#what",HistoryApi.makeState('#what','bleh').url));
         
         // html
         assert(Html.parse(htmlStr).length === 1);
@@ -449,6 +450,7 @@ const TestInclude = Test.Include = function()
         
         // request
         assert(Str.isNotEmpty(Request.relative()));
+        assert(Request.absolute() !== Request.relative());
         assert(Str.isNotEmpty(Request.scheme()));
         assert(Str.is(Request.fragment()) || Request.fragment() === null);
         assert(Pojo.is(Request.parse()));
@@ -560,6 +562,9 @@ const TestInclude = Test.Include = function()
         assert(!Uri.hasFragment("http://googlez.com/test.jpg"));
         assert(Uri.hasFragment("http://googlez.com/test.jpg#james"));
         assert(Uri.hasFragment("/test.jpg#james"));
+        assert(!Uri.isOnlyHash('what'));
+        assert(Uri.isOnlyHash('#what'));
+        assert(!Uri.isOnlyHash('#'));
         assert(Uri.isSamePathQuery("/test.jpg?v=2","http://google.com/test.jpg?v=2#ok"));
         assert(!Uri.isSamePathQuery("/test.jpg?v=2","http://google.com/test.jpg?v=3#ok"));
         assert(Uri.isSamePathQueryHash("/test.jpg?v=2#ok","http://google.com/test.jpg?v=2#ok"));
@@ -572,8 +577,17 @@ const TestInclude = Test.Include = function()
         assert(!Uri.isSameWithHash("/test.jpg?v=2","/test.jpg?v=2"));
         assert(Uri.relative("http://google.com/ok?v=2#what") === '/ok?v=2');
         assert(Uri.relative("http://google.com/ok?v=2#what",true) === '/ok?v=2#what');
+        assert(Str.isEnd("#james",Uri.absolute("#james",true)));
+        assert(Str.isEnd("/testok.php",Uri.absolute("testok.php")));
+        assert(!Str.isEnd("#james",Uri.absolute("testok.php#james")));
+        assert(Str.isEnd("#james",Uri.absolute("testok.php#james",true)));
+        assert(Uri.absolute("http://google.com/testok.php") === "http://google.com/testok.php");
         assert(Uri.extension("http://google.com/ok.jpg?v=2#what") === 'jpg');
         assert(Obj.length(Uri.parse("http://google.com/ok?v=2#what")) === 6);
+        assert(Uri.build(Uri.parse("https://google.com/ok?v=2#what"),true,true) === "https://google.com/ok?v=2#what");
+        assert(Uri.build(Uri.parse("https://google.com/ok?v=2#what"),true,false) === "https://google.com/ok?v=2");
+        assert(Uri.build(Uri.parse("https://google.com/ok?v=2#what"),false,false) === "/ok?v=2");
+        assert(Uri.build(Uri.parse("https://google.com/ok?v=2#what"),false,true) === "/ok?v=2#what");
         assert(Uri.makeHash("james",true) === '#james');
         assert(Uri.makeHash("#james",true) === '#james');
         assert(Uri.makeHash("james") === 'james');

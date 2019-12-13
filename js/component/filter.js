@@ -9,7 +9,7 @@
 const Filter = Component.Filter = function(option)
 {
     // option
-    const $option = Object.assign({
+    const $option = Pojo.replace({
         trigger: true,
         target: true,
         closeUnsetContent: true

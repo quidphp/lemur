@@ -31,7 +31,7 @@ const ClickOutside = Component.ClickOutside = function(value,persistent)
         // persistent
         if(persistent !== true)
         {
-            const handlerDocument = aelOnce(document,'doc:unmount',function() {
+            const handlerDocument = aelOnce(document,'doc:unmountPage',function() {
                 rel(parent,handler);
                 rel(parent,handlerCustom);
             });

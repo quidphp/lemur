@@ -74,15 +74,21 @@
         margin-top: 0;
     }
 
-    &.with-action {
+    &[data-action='1'] {
         .info,
         .actions,
         .versions {
             display: none;
         }
 
-        .form .message {
-            @include flex(center);
+        .form {
+            input[type='file'] {
+                display: none;
+            }
+            
+            .message {
+                @include flex(center);
+            }
         }
     }
 

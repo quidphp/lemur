@@ -9,36 +9,13 @@
 // modal
 // stylesheet for the modal component
 
-// modal
-// mixin avec styles généraux pour modal
+// modalBox
+// mixin avec styles pour le modal
 @mixin modal() {
-    @include fixed(0, null, null, 0);
-    @include wh(100%);
-    z-index: 999;
-    display: none;
-
-    &[data-status='loading'] .inner {
-        background-position: center;
-    }
-
-    &[data-active='1'] {
-        display: block;
-    }
-
+    @include Modal();
+    
     > .box {
         @include modalBox();
-        @include abs(20%, null, null, 20%);
-        @include wh(60%);
-        background-color: $white;
-
-        > .close {
-            z-index: 10;
-        }
-
-        > .inner {
-            max-height: 100%;
-            overflow-y: auto;
-        }
     }
 }
 
@@ -78,5 +55,47 @@
         @include wh(80% !important);
         top: 10% !important;
         left: 10% !important;
+    }
+}
+
+// modalForm
+// mixin pour un formulaire de base dans le modal
+@mixin modalForm() {
+    @include formBase();
+
+    .info {
+        margin-bottom: 20px;
+    }
+
+    .form {
+        max-width: 500px;
+        margin: auto;
+
+        .fields {
+            padding-bottom: 10px;
+        }
+
+        .action {
+            button {
+                margin: 0 5px;
+            }
+        }
+    }
+
+    .form .fields > .field {
+        margin-bottom: 20px;
+
+        > .table {
+            width: 100%;
+            text-align: left;
+
+            .table-cell.label-cell {
+                padding-right: 15px;
+            }
+
+            .table-cell:first-child {
+                width: 30%;
+            }
+        }
     }
 }

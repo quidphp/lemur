@@ -74,9 +74,9 @@ ael(document,"DOMContentLoaded", function()
     });
     
     
-	// document mount
+	// mount page
     // comportements utilisés pour toutes les pages du CMS
-	ael(this,'doc:mount',function(event,routeWrap) {
+	ael(this,'doc:mountPage',function(event,routeWrap) {
 		const burger = qsa(routeWrap,"header .burger-menu, .nav-fixed .nav-close");
 		const com = qs(routeWrap,"main > .inner > .com");
         const subMenu = qsa(routeWrap,".with-submenu");
@@ -101,7 +101,7 @@ ael(document,"DOMContentLoaded", function()
     
     
     // document unmount
-    ael(this,'doc:unmount',function(event,routeWrap) {
+    ael(this,'doc:unmountPage',function(event,routeWrap) {
         const burger = qsa(routeWrap,"header .burger-menu, .nav-fixed .nav-close");
         
         // burger
@@ -111,12 +111,11 @@ ael(document,"DOMContentLoaded", function()
     
     // document ajax progress
     ael(this,'doc:ajaxProgress',function(event,percent,progressEvent) {
-        /*
         const body = qs(this,"body");
         const progress = qs(body,".loading-progress");
         const html = (percent >= 0 && percent < 100)? "<div class='percent'>"+percent+"%"+"</div>":"";
-        progress.html(html);
-        */
+        d(percent);
+        $(progress).html(html);
     });
     
     
@@ -247,7 +246,6 @@ ael(document,"DOMContentLoaded", function()
     // permet de faire les bindings de champs
     // ces champs seront bindés à l'initialisation du panneau, lorsqu'ils sont visibles
     ael(this,'specificForm:bindView',function(event,node) {
-        /*
         const date = qsa(node,"[data-group='date'] .specific-component");
         const enumSet = qsa(node,"[data-tag='search'] .specific-component");
         const checkboxSortable = qsa(node,"[data-group='relation'][data-sortable='1'] .specific-component");
@@ -256,26 +254,27 @@ ael(document,"DOMContentLoaded", function()
         const textarea = qsa(node,"[data-tag='textarea'] .specific-component");
         const anchorCorner = qsa(node,"[data-anchor-corner]");
         
+        // checkboxSortable
+        trigSetup(Component.Sorter.call(checkboxSortable,{items: ".choice", handle: '.choice-in'}));
+        
+        // anchorCorner
+        trigHdlrs(anchorCorner,'anchorCorner:refresh');
+        
+        // files
+        trigSetup(Component.InputFiles.call(files));
+        
+        /*
         // date
         trigSetup(Component.calendarInput.call(date));
         
         // enumSet
         Component.enumSet.call(enumSet);
         
-        // checkboxSortable
-        Component.verticalSorter.call(checkboxSortable,".choice",'.choice-in');
-        
-        // files
-        trigSetup(Component.inputFiles.call(files));
-        
         // addRemove
         trigSetup(Component.addRemove.call(addRemove));
         
         // textarea
         trigSetup(Component.textareaExtra.call(textarea));
-        
-        // anchorCorner
-        trigHdlr(anchorCorner,'anchorCorner:refresh');
         */
     });
     

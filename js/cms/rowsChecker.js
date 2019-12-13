@@ -221,7 +221,7 @@ const RowsChecker = Component.RowsChecker = function()
             const href = Dom.dataHrefReplaceChar(this,set);
             
             if(Str.isNotEmpty(href))
-            trigHdlr(document,'doc:go',href,clickEvent);
+            trigHdlr(document,'history:href',href,clickEvent);
         });
         
         // event

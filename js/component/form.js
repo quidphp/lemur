@@ -238,7 +238,7 @@ const Form = Component.Form = function()
     {
         const $this = this;
         
-        setHdlr(this,'win:unloadText',function() {
+        setHdlr(this,'winUnload:getText',function() {
             if(!trigHdlr(this,'form:isSubmitted') && trigHdlr(this,'form:hasChanged'))
             return $(this).attr('data-unload');
         });
@@ -247,10 +247,10 @@ const Form = Component.Form = function()
             $(this).data('form-submitted',1);
         });
         
-        trigHdlr(window,'win:addUnloadNode',this);
+        trigHdlr(window,'winUnload:addNode',this);
         
-        aelOnce(document,'doc:unmount',function() {
-            trigHdlr(window,'win:removeUnloadNode',$this);
+        aelOnce(document,'doc:unmountPage',function() {
+            trigHdlr(window,'winUnload:removeNode',$this);
         });
     }
     

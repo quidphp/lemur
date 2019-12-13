@@ -9,7 +9,7 @@
 const Sorter = Component.Sorter = function(option) 
 {    
     // option
-    const $option = Object.assign({
+    const $option = Pojo.replace({
         items: ".items",
         handle: '.handle',
         containment: 'parent',
@@ -23,7 +23,6 @@ const Sorter = Component.Sorter = function(option)
             ui.item.css('z-index','auto');
         }
     },option);
-    
     
     // setup
     aelOnce(this,'component:setup',function() {

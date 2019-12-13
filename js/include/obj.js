@@ -324,10 +324,14 @@ const ObjWrite = {
         let r = this.new();
         let args = Array.from(arguments);
         
-        if(args.length > 1 && this.is(args[0]))
+        if(args.length > 0)
         {
-            args = Arr.merge([r],args);
-            r = Object.assign.apply(null,args);
+            const $inst = this;
+            
+            Arr.each(args,function() {
+                if($inst.is(this))
+                r = Object.assign(r,this);
+            });
         }
         
         return r;

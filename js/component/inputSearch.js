@@ -9,7 +9,7 @@
 const InputSearch = Component.InputSearch = function(option)
 {
     // option
-    const $option = Object.assign({
+    const $option = Pojo.replace({
         timeout: 500,
         keyEvent: 'keyup',
         useCurrent: true,

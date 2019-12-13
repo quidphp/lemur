@@ -70,7 +70,7 @@ const Background = Component.Background = function()
             return background;
         });
         
-        ael(document,'doc:unmount',function() {
+        ael(document,'doc:unmountPage',function() {
             trigHdlr(background,'background:unset');
         });
 

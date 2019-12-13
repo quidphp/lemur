@@ -1,0 +1,59 @@
+// compileOnSave: false
+
+/*
+ * This file is part of the QuidPHP package.
+ * Website: https://quidphp.com
+ * License: https://github.com/quidphp/lemur/blob/master/LICENSE
+ */
+
+// searchSlide
+// mixin for the searchSlide component
+@mixin searchSlide() {
+    > .form {
+        @include flex();
+        margin-bottom: 5px;
+    }
+
+    > .form > .input {
+        position: relative;
+        margin-right: 10px;
+
+        input[type='text'] {
+            width: 200px;
+        }
+
+        > .close {
+            @include abs(-8px, -8px);
+
+            &:hover,
+            &[data-triggered='1'] {
+                opacity: 0.8;
+            }
+        }
+    }
+    
+    > .in {
+        display: none;
+        max-width: 450px;
+        font-size: 90%;
+
+        div span:first-child {
+            font-weight: bold;
+            margin-right: 3px;
+        }
+    }
+
+    @include responsive() {
+        > .form {
+            justify-content: center;
+        }
+
+        > .in {
+            margin: auto;
+        }
+    }
+
+    @include print() {
+        display: none;
+    }
+}

@@ -44,7 +44,8 @@ trait _template
         $flush = $this->docOpen();
         $hasNav = $this->hasNav();
 
-        $flush .= Html::div($this->makeLoader(),'loading-fixed');
+        $flush .= Html::div(null,'loading-progress');
+        $flush .= Html::div(null,'loading-icon');
         $flush .= Html::div(null,'background');
         $flush .= Html::divCond($this->makeModal(),['modal']);
 
@@ -80,17 +81,6 @@ trait _template
 
         $com = $this->makeCom();
         $r .= $com.$main.$close;
-
-        return $r;
-    }
-
-
-    // makeLoader
-    // génère le html pour le makeLoader
-    final protected function makeLoader():string
-    {
-        $r = Html::div(null,'loading-progress');
-        $r .= Html::div(null,'loading-icon');
 
         return $r;
     }

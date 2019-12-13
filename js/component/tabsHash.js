@@ -4,26 +4,25 @@
  * License: https://github.com/quidphp/lemur/blob/master/LICENSE
  */
  
-// tabsNavHash
-// tabNav component which triggers a hash change
-const TabsNavHash = Component.TabsNavHash = function(option)
+// tabsHash
+// adds hashchange support for the tab
+const TabsHash = Component.TabsHash = function(option)
 {
     // option
-    const $option = Object.assign({
+    const $option = Pojo.replace({
         hash: 'data-hash'
     },option);
     
     
     // components
-    Component.TabsNav.call(this,$option);
     Component.HashChange.call(this);
     
     
     // handler
-    setHdlrs(this,'tabsNavHash:',{
+    setHdlrs(this,'tabsHash:',{
         
         isHash: function(value) {
-            return (trigHdlr(this,'tabsNavHash:getHash',value) != null);
+            return (trigHdlr(this,'tabsHash:getHash',value) != null);
         },
         
         getHash: function(value) {
@@ -33,7 +32,7 @@ const TabsNavHash = Component.TabsNavHash = function(option)
         },
         
         goHash: function(value) {
-            const tab = trigHdlr(this,'tabsNavHash:getHash',value);
+            const tab = trigHdlr(this,'tabsHash:getHash',value);
             if(tab != null)
             trigHdlr(this,'tabs:go',tab);
         },
@@ -53,11 +52,11 @@ const TabsNavHash = Component.TabsNavHash = function(option)
         let r = 'first';
         
         if(value === true)
-        value = trigHdlr(this,'tabsNavHash:setupFragment');
+        value = trigHdlr(this,'tabsHash:setupFragment');
         
         if(Str.isNotEmpty(value))
         {
-            const node = trigHdlr(this,'tabsNavHash:getHash',value);
+            const node = trigHdlr(this,'tabsHash:getHash',value);
             if(node != null)
             r = node;
         }
@@ -69,10 +68,18 @@ const TabsNavHash = Component.TabsNavHash = function(option)
     // event
     ael(this,'hash:change',function() {
         const hash = Request.fragment();
-        const current = trigHdlr(this,'tabsNavHash:getCurrentHash');
+        const current = trigHdlr(this,'tabsHash:getCurrentHash');
         
         if(Str.isNotEmpty(hash) && !Str.isEqual(hash,current))
-        trigHdlr(this,'tabsNavHash:goHash',hash);
+        trigHdlr(this,'tabsHash:goHash',hash);
+    });
+    
+    ael(this,'tabs:afterChange',function(event,tab,oldTab) {
+        const hash = Request.fragment();
+        const current = trigHdlr(this,'tabsHash:getCurrentHash');
+        
+        if(hash == null && Str.isNotEmpty(current))
+        trigHdlr(document,'history:replaceHash',current);
     });
     
     

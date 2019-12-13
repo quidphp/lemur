@@ -19,9 +19,10 @@ body {
     * {
         cursor: wait !important;
     }
-
-    .loading-fixed {
-        @include flex(null, flex-start);
+    
+    > .loading-icon,
+    > .loading-progress {
+        display: block;
     }
 }
 [data-burger='open'] body > .route-wrap {
@@ -57,27 +58,28 @@ body > .background {
         @include fadeIn(0.3s);
     }
 }
-body > .loading-fixed {
+body > .loading-icon {
     @include fixed(0, 0);
     z-index: 9;
+    @include wh(24px);
+    background-position: center;
+    background-color: $white;
+    border-bottom-left-radius: 50%;
     display: none;
-
-    > .loading-progress {
-        > .percent {
-            text-align: center;
-            color: $white;
-            padding: 3px;
-            background-color: $darkColor;
-            border-bottom-left-radius: 5px;
-            border-bottom-right-radius: 5px;
-        }
-    }
-
-    > .loading-icon {
-        @include wh(20px);
-        background-position: center;
-        background-color: $white;
-        border-bottom-left-radius: 50%;
+}
+body > .loading-progress {
+    @include fixed(null,0,0);
+    z-index: 9;
+    display: none;
+    
+    > .percent {
+        border: 1px solid $lightGray;
+        @include inbl();
+        text-align: center;
+        color: $black;
+        padding: 10px;
+        font-weight: bold;
+        background-color: $lightYellow;
     }
 }
 body > .route-wrap {

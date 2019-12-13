@@ -11,38 +11,8 @@
 
 /* TOP */
 [data-route='general'] main .inner > .top .left .search {
+    @include searchSlide();
     padding-top: 5px;
-
-    > .form {
-        @include inputSearch();
-        @include flex();
-        margin-bottom: 5px;
-    }
-
-    > .in {
-        display: none;
-        max-width: 450px;
-        font-size: 90%;
-
-        div span:first-child {
-            font-weight: bold;
-            margin-right: 3px;
-        }
-    }
-
-    @include responsive() {
-        > .form {
-            justify-content: center;
-        }
-
-        > .in {
-            margin: auto;
-        }
-    }
-
-    @include print() {
-        display: none;
-    }
 }
 [data-route='general'] main .inner > .top .right {
     > .operation {
@@ -59,7 +29,7 @@
     }
 
     > .limit {
-        @include inputNumeric();
+        @include componentInputNumeric();
     }
 
     @include responsive() {
@@ -141,7 +111,7 @@
     }
 
     .center {
-        @include inputNumeric();
+        @include componentInputNumeric();
         display: flex;
     }
 }

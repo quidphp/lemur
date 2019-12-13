@@ -15,7 +15,15 @@ const Request = Lemur.Request = {
         return window.location.pathname + window.location.search;
     },
 
-
+    
+    // absolute
+    // retourne l'uri absolute courante
+    absolute: function()
+    {
+        return window.location.href;
+    },
+    
+    
     // scheme
     // retourne le scheme courant
     scheme: function()

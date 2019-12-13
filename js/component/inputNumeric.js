@@ -9,7 +9,7 @@
 const InputNumeric = Component.InputNumeric = function(option)
 {
     // option
-    const $option = Object.assign({
+    const $option = Pojo.replace({
         timeout: 500,
         timeoutHandler: 'inputNumeric:process'
     },option);

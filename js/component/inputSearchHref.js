@@ -21,7 +21,7 @@ const InputSearchHref = Component.InputSearchHref = function(option)
         if(Str.isNotEmpty(val))
         href += "?"+char+"="+val;
         
-        trigHdlr(document,'doc:go',href);
+        trigHdlr(document,'history:href',href);
     });
     
     return this;

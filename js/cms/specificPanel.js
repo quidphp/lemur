@@ -9,14 +9,15 @@
 const SpecificPanel = Component.SpecificPanel = function(option)
 {
     // option
-    const $option = Object.assign({
+    const $option = Pojo.replace({
         target: "> .form-inner > .panel",
         nav: "> .form-top .left ul li a"
     },option);
     
     
     // components
-    Component.TabsNavHash.call(this,$option);
+    Component.TabsNav.call(this,$option);
+    Component.TabsHash.call(this,$option);
     
     
     // handler
@@ -36,7 +37,7 @@ const SpecificPanel = Component.SpecificPanel = function(option)
         }
     });
     
-    setHdlr(this,'tabsNavHash:setupFragment',function() {
+    setHdlr(this,'tabsHash:setupFragment',function() {
         const currentPanel = trigHdlr(this,'specificPanel:getCurrentPanel');
         return (currentPanel != null)? trigHdlr(currentPanel,'tab:getHash'):Request.fragment();
     });
@@ -68,42 +69,6 @@ const SpecificPanel = Component.SpecificPanel = function(option)
             trigEvt(document,'specificForm:bindView',this);
         })
     }
-    
-    
-    /*
-    $(this).on('fragment:get',function(event) {
-        return $(this).data('fragment');
-    })
-    .on('fragment:update',function(event,replaceState) {
-        const current = Request.fragment();
-        const fragment = trigHdlr(this,'fragment:get');
-        const hasHistoryApi = trigHdlr(document,'doc:hasHistoryApi');
-        
-        if(current !== fragment)
-        {
-            if(Str.isNotEmpty(fragment))
-            {
-                const fragmentHash = '#'+fragment;
-                
-                if(hasHistoryApi === true && replaceState === true)
-                trigHdlr(document,'doc:replaceState',Request.relative()+fragmentHash);
-                else
-                window.location.hash = fragmentHash;
-            }
-            
-            else
-            trigEvt(this,'fragment:remove',replaceState);
-            
-            trigEvt(this,'fragment:updated',fragment);
-        }
-    })
-    .on('fragment:remove',function(event) {
-        if(hasHistoryApi === true && replaceState === true)
-        trigHdlr(document,'doc:replaceState',Request.relative());
-        else
-        window.location.hash = '';
-    });
-    */
     
     return this;
 }

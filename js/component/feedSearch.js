@@ -9,7 +9,7 @@
 const FeedSearch = Component.FeedSearch = function(option)
 {
     // option
-    const $option = Object.assign({
+    const $option = Pojo.replace({
         result: '.results',
         search: "input[type='text']",
         order: ".order select",

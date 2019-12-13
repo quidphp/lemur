@@ -18,7 +18,7 @@ const InputNumericHref = Component.InputNumericHref = function(option)
         const href = Dom.dataHrefReplaceChar(this,val);
         
         if(Str.isNotEmpty(href))
-        trigHdlr(document,'doc:go',href);
+        trigHdlr(document,'history:href',href);
     });
     
     return this;

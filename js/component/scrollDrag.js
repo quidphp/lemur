@@ -121,7 +121,7 @@ const ScrollDrag = Component.ScrollDrag = function(option)
             trigHdlr($this,'scrollDrag:stop');
         });
         
-        aelOnce(document,'doc:unmount',function() {
+        aelOnce(document,'doc:unmountPage',function() {
             rel(document,handler);
         });
     }

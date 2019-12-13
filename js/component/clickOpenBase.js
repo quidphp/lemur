@@ -14,7 +14,7 @@ const ClickOpenBase = Component.ClickOpenBase = function(option)
     
     
     // option
-    const $option = Object.assign({
+    const $option = Pojo.replace({
         target: true,
         background: 'clickOpen',
         attr: 'data-active',
@@ -165,6 +165,7 @@ const ClickOpenBase = Component.ClickOpenBase = function(option)
     aelOnce(this,'component:setup',function() {
         const $this = this;
         const container = trigHdlr(this,'clickOpen:getTarget');
+        const targetContainer = trigHdlr(this,'clickOpen:getTargetContent');
         Component.KeyboardEnter.call(container,true);
         
         // event
@@ -178,15 +179,14 @@ const ClickOpenBase = Component.ClickOpenBase = function(option)
             const tagName = Dom.tag(target);
 
             if(tagName === 'a')
-            trigHdlr(document,'doc:clickEvent',keyEvent);
+            trigHdlr(document,'history:event',keyEvent);
             else
             trigEvt(target,'click');
         });
         
-        
         // delegate
-        aelDelegate(container,'click','a',function(event) {
-            trigHdlr(document,'doc:clickEvent',event);
+        aelDelegate(targetContainer,'click','a',function(event) {
+            trigHdlr(document,'history:event',event);
             
             event.stopPropagation();
         });

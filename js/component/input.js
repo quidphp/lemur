@@ -67,6 +67,15 @@ const Input = Component.Input = function()
         return Integer.cast(trigHdlr(this,'input:getValue',true));
     });
     
+    setHdlr(this,'input:getValueJson',function() {
+        let r = trigHdlr(this,'input:getValue');
+        
+        if(Str.is(r))
+        r = Json.decode(r);
+        
+        return r;
+    });
+    
     setHdlr(this,'input:valueRemember',function() {
         const value = trigHdlr(this,'input:getValue');
         $(this).data('input-remember',value);
@@ -97,6 +106,9 @@ const Input = Component.Input = function()
     });
     
     setHdlr(this,'input:setValue',function(value) {
+        if(Obj.is(value))
+        value = Json.encode(value);
+        
         $(this).val(value);
     });
     

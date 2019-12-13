@@ -14,7 +14,7 @@ const Carousel = Component.Carousel = function(option)
     
     
     // option
-    const $option = Object.assign({
+    const $option = Pojo.replace({
         background: false,
         attr: 'data-carousel',
         multiple: true

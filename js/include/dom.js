@@ -58,7 +58,16 @@ const Dom = Lemur.Dom = {
     // envoie une exception si la valeur n'est pas une node
     checkNode: function(value,type,message)
     {
-        if(!(this.isNode(value) || (type === false && value == null)))
+        let error = false;
+        const isNode = this.isNode(value);
+        
+        if(!(isNode || (type === false && value == null)))
+        error = true; 
+        
+        if(isNode === true && type && value !== type)
+        error = true;
+        
+        if(error === true)
         throw new Error([value,type,message]);
         
         return value;

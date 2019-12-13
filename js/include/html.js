@@ -76,7 +76,7 @@ const Html = Lemur.Html = {
             const html = Dom.outerHtml(doc);
             let newBody = "<div data-tag='body'>"+html+"</div>";
             newBody = $.parseHTML(newBody);
-            r.body = newBody;
+            r.body = Arr.valueFirst(newBody);
         }
         
         return r;

@@ -14,7 +14,7 @@ const ClickOpenAjaxAnchor = Component.ClickOpenAjaxAnchor = function(option)
     
     
     // option
-    const $option = Object.assign({},option);
+    const $option = Pojo.replace({},option);
     
     
     // components

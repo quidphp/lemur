@@ -17,7 +17,7 @@ const Ajax = Component.Ajax = function(type)
     setHdlrs(this,'ajax:',{
         
         confirm: function() {
-            return (trigHdlr(document,'doc:isLoading') === true)? false:true;
+            return (trigHdlr(document,'history:isLoading') === true)? false:true;
         },
         
         config: function(triggerEvent) {

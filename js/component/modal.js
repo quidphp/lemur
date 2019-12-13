@@ -9,7 +9,7 @@
 const Modal = Component.Modal = function(option)
 {
     // option
-    const $option = Object.assign({
+    const $option = Pojo.replace({
         background: 'modal'
     },option);
     
@@ -147,7 +147,7 @@ const Modal = Component.Modal = function(option)
             trigHdlr(modal,'modal:anchorBind',anchor);
         });
         
-        ael(document,'doc:unmount',function() {
+        ael(document,'doc:unmountPage',function() {
             trigEvt(modal,'clickOpen:close');
         });
     }

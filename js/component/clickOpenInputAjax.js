@@ -9,7 +9,7 @@
 const ClickOpenInputAjax = Component.ClickOpenInputAjax = function(option)
 {
     // option
-    const $option = Object.assign({
+    const $option = Pojo.replace({
         ajaxEvent: 'submit',
         inputSearch: {
             keyEvent: 'keyup',
