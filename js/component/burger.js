@@ -18,7 +18,7 @@ const Burger = Component.Burger = function()
         
         isOpen: function() {
             const html = trigHdlr(document,'doc:getHtml');
-            return ($(html).attr('data-burger') === 'open')? true:false;
+            return (getAttr(html,'data-burger') === 'open')? true:false;
         },
         
         toggle: function() {
@@ -34,12 +34,12 @@ const Burger = Component.Burger = function()
     
     ael(this,'burger:open',function() {
         const html = trigHdlr(document,'doc:getHtml');
-        $(html).attr('data-burger','open');
+        setAttr(html,'data-burger','open');
     });
     
     ael(this,'burger:close',function() {
         const html = trigHdlr(document,'doc:getHtml');
-        $(html).attr('data-burger','close');
+        setAttr(html,'data-burger','close');
     });
     
     

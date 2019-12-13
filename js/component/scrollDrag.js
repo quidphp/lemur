@@ -23,7 +23,7 @@ const ScrollDrag = Component.ScrollDrag = function(option)
     // handler
     setHdlrs(this,'scrollDrag:',{
         can: function() {
-            return ($(this).attr('data-grabbable') == 1)? true:false;
+            return (getAttr(this,'data-grabbable') == 1)? true:false;
         },
         
         required: function() {
@@ -37,14 +37,14 @@ const ScrollDrag = Component.ScrollDrag = function(option)
         
         refresh: function() {
             if(trigHdlr(this,'scrollDrag:required'))
-            $(this).attr('data-grabbable',1);
+            setAttr(this,'data-grabbable',1);
             else
-            $(this).attr('data-grabbable',0);
+            setAttr(this,'data-grabbable',0);
         },
         
         stop: function() {
-            $(this).data('scrollDrag-cursorDown',false);
-            $(this).attr('data-status','ready');
+            setData(this,'scrollDrag-cursorDown',false);
+            setAttr(this,'data-status','ready');
         }
     });
     
@@ -59,10 +59,10 @@ const ScrollDrag = Component.ScrollDrag = function(option)
     aelDelegate(this,'mousemove',$option.selector,function(event) {
         const delegate = event.delegateTarget;
         
-        if($(delegate).data('scrollDrag-cursorDown') === true)
+        if(getData(delegate,'scrollDrag-cursorDown') === true)
         {
-            const delY = $(delegate).data('scrollDrag-cursorPositionY');
-            const delX = $(delegate).data('scrollDrag-cursorPositionX');
+            const delY = getData(delegate,'scrollDrag-cursorPositionY');
+            const delX = getData(delegate,'scrollDrag-cursorPositionX');
             const delTop = $(delegate).scrollTop();
             const delLeft = $(delegate).scrollLeft();
             const newY = ((delY - event.pageY) / $option.dividor);
@@ -80,10 +80,10 @@ const ScrollDrag = Component.ScrollDrag = function(option)
         {
             if($option.targetTag == null || Dom.isTag($option.targetTag,target))
             {
-                $(delegate).data('scrollDrag-cursorDown',true);
-                $(delegate).data('scrollDrag-cursorPositionY',event.pageY);
-                $(delegate).data('scrollDrag-cursorPositionX',event.pageX);
-                $(delegate).attr('data-status','grabbing');
+                setData(delegate,'scrollDrag-cursorDown',true);
+                setData(delegate,'scrollDrag-cursorPositionY',event.pageY);
+                setData(delegate,'scrollDrag-cursorPositionX',event.pageX);
+                setAttr(delegate,'data-status','grabbing');
             }
         }
     });
@@ -102,9 +102,9 @@ const ScrollDrag = Component.ScrollDrag = function(option)
     aelOnce(this,'component:setup',function() {
         const $this = this;
         
-        $(this).data('scrollDrag-cursorDown',false);
-        $(this).data('scrollDrag-cursorPositionY',0);
-        $(this).data('scrollDrag-cursorPositionX',0);
+        setData(this,'scrollDrag-cursorDown',false);
+        setData(this,'scrollDrag-cursorPositionY',0);
+        setData(this,'scrollDrag-cursorPositionX',0);
         trigHdlr(this,'scrollDrag:refresh');
         
         bindDocument.call(this);

@@ -170,7 +170,7 @@ const RowsChecker = Component.RowsChecker = function()
         setHdlr(checkboxes,'checkbox:check',function(refresh) {
             const tr = trigHdlr(this,'checkbox:getTr');
             $(this).prop('checked',true);
-            $(tr).attr('data-checked',1);
+            setAttr(tr,'data-checked',1);
             
             if(refresh === true)
             trigHdlr($this,'rowsChecker:refresh');
@@ -179,7 +179,7 @@ const RowsChecker = Component.RowsChecker = function()
         setHdlr(checkboxes,'checkbox:uncheck',function(refresh) {
             const tr = trigHdlr(this,'checkbox:getTr');
             $(this).prop('checked',false);
-            $(tr).attr('data-checked',0);
+            setAttr(tr,'data-checked',0);
             
             if(refresh === true)
             trigHdlr($this,'rowsChecker:refresh');
@@ -199,11 +199,11 @@ const RowsChecker = Component.RowsChecker = function()
         
         // handler
         setHdlr(container,'toolsContainer:show',function() {
-            $(this).attr('data-status','visible');
+            setAttr(this,'data-status','visible');
         });
         
         setHdlr(container,'toolsContainer:hide',function() {
-            $(this).attr('data-status','hidden');
+            setAttr(this,'data-status','hidden');
         });
     }
     
@@ -216,7 +216,7 @@ const RowsChecker = Component.RowsChecker = function()
         
         // handler
         setHdlr(button,'toolButton:redirect',function(clickEvent) {
-            const separator = $(this).data("separator");
+            const separator = getAttr(this,"data-separator");
             const set = trigHdlr($this,'rowsChecker:getCheckedSet',separator);
             const href = Dom.dataHrefReplaceChar(this,set);
             
@@ -238,11 +238,11 @@ const RowsChecker = Component.RowsChecker = function()
         
         // handler
         setHdlr(tools,'toolMulti:show',function() {
-            $(this).attr('data-visible',1);
+            setAttr(this,'data-visible',1);
         });
         
         setHdlr(tools,'toolMulti:hide',function() {
-            $(this).attr('data-visible',0);
+            setAttr(this,'data-visible',0);
         });
     }
     
@@ -261,7 +261,7 @@ const RowsChecker = Component.RowsChecker = function()
         // event 
         ael(multiDelete,'confirm:yes',function(event,submit) {
             const input = trigHdlr(this,'multiDelete:getPrimaries');
-            const separator = $(this).data('separator');
+            const separator = getAttr(this,'data-separator');
             const set = trigHdlr($this,'rowsChecker:getCheckedSet',separator);
             
             if(Str.isNotEmpty(set))

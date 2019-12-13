@@ -13,10 +13,10 @@ const TestComponent = Test.Component = function()
     try 
     {
         // prepare
-        const htmlNode = $("html").get(0);
-        const bodyNode = $("body").get(0);
-        $("body").prepend("<input type='text' value='2' name='test-suite' data-required='1' data-pattern='^[0-9\-]+$' />");
-        const inputNode = $("body > input[name='test-suite']").get(0);
+        const htmlNode = Selector.scopedQuerySelector(document,'html');
+        const bodyNode = Selector.scopedQuerySelector(htmlNode,'body');
+        $(bodyNode).prepend("<input type='text' value='2' name='test-suite' data-required='1' data-pattern='^[0-9\-]+$' />");
+        const inputNode = Selector.scopedQuerySelector(bodyNode,"> input[name='test-suite']");
         
         // absolutePlaceholder
         
@@ -181,8 +181,8 @@ const TestComponent = Test.Component = function()
         assert(trigHdlr(inputNode,'validate:required'));
         assert(trigHdlr(inputNode,'validate:pattern'));
         assert(trigHdlr(inputNode,'validate:trigger'));
-        assert(Dom.getDataAttr('validate',inputNode) === 'valid');
-        assert(Dom.getDataAttr('empty',inputNode) === '0');
+        assert(Dom.getAttr(inputNode,'data-validate') === 'valid');
+        assert(Dom.getAttr(inputNode,'data-empty') === '0');
         
         // validatePrevent
         

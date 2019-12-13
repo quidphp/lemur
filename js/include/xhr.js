@@ -127,10 +127,10 @@ const Xhr = Lemur.Xhr = new function()
         if(r.url == null)
         {
             if(tagName === 'form')
-            r.url = $(node).attr("action");
+            r.url = Dom.getAttr(node,"action");
             
             else
-            r.url = $(node).prop("href") || $(node).data('href');
+            r.url = Dom.getAttr(node,"href") || Dom.getAttr(node,'data-href');
         }
         
         return r;
@@ -146,10 +146,10 @@ const Xhr = Lemur.Xhr = new function()
         if(r.method == null)
         {
             if(tagName === 'form')
-            r.method = $(node).attr("method") || 'get';
+            r.method = Dom.getAttr(node,"method") || 'get';
             
             else
-            r.method = $(node).data("method") || 'get';
+            r.method = Dom.getAttr(node,'data-method') || 'get';
         }
         
         return r;
@@ -164,12 +164,12 @@ const Xhr = Lemur.Xhr = new function()
         
         if(r.data == null && tagName === 'form')
         {
-            const formData = new FormData($(node)[0]);
+            const formData = new FormData(node);
             const clicked = Handler.trigger(node,'form:getClickedSubmit');
             
             if(clicked != null)
             {
-                const clickedName = $(clicked).attr('name');
+                const clickedName = Dom.getAttr(clicked,'name');
                 
                 if(Str.isNotEmpty(clickedName))
                 {

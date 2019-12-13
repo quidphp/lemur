@@ -58,7 +58,7 @@ const QuickEdit = Component.QuickEdit = function()
             const scroller = trigHdlr(this,'quickEdit:getScroller');
             
             trigHdlr(this,'ajaxBlock:unsetContent');
-            $(td).attr('data-editing',0);
+            setAttr(td,'data-editing',0);
             
             trigHdlr(scroller,'scrollDrag:refresh');
         }
@@ -94,7 +94,7 @@ const QuickEdit = Component.QuickEdit = function()
             trigHdlrs(others,'quickEdit:revert');
             
             const td = trigHdlr(this,'quickEdit:getTd');
-            $(td).attr('data-editing',1);
+            setAttr(td,'data-editing',1);
         }
     });
     

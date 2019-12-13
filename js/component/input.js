@@ -18,7 +18,7 @@ const Input = Component.Input = function()
     });
     
     setHdlr(this,'input:isControlled',function() {
-        return $(this).attr('data-controlled') === '1';
+        return getAttr(this,'data-controlled') === '1';
     });
     
     // handler    
@@ -41,7 +41,7 @@ const Input = Component.Input = function()
     
     setHdlr(this,'input:isRealChange',function() {
         const value = trigHdlr(this,'input:getValue');
-        const remember = $(this).data('input-remember');
+        const remember = getData(this,'input-remember');
 
         return (Str.isEqual(value,remember)) ? false:true;
     });
@@ -78,7 +78,7 @@ const Input = Component.Input = function()
     
     setHdlr(this,'input:valueRemember',function() {
         const value = trigHdlr(this,'input:getValue');
-        $(this).data('input-remember',value);
+        setData(this,'input-remember',value);
     });
     
     setHdlr(this,'input:getId',function() {

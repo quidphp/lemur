@@ -64,7 +64,7 @@ const Validate = Lemur.Validate = {
         if(Bool.is(required))
         required = Bool.fromInt(required);
         
-        if(Num.is(required) && required > 0)
+        if(Num.isPositive(required))
         {
             value = Str.cast(value);
             value = Str.trim(value);

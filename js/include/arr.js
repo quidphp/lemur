@@ -36,6 +36,22 @@ const ArrBase = {
     },
     
     
+    // valueFirst
+    // retourne le première valeur dans le tableau
+    valueFirst: function(array)
+    {
+        return (this.is(array) && array.length)? array[0]:undefined;
+    },
+    
+    
+    // valueLast 
+    // retourne la dernière valeur dans le tableau
+    valueLast: function(array)
+    {
+        return (this.is(array) && array.length)? array[array.length-1]:undefined;
+    },
+    
+    
     // search
     // retourne l'index de la valeur dans le tableau
     search: function(value,array) 

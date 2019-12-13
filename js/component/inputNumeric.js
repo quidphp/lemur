@@ -22,15 +22,15 @@ const InputNumeric = Component.InputNumeric = function(option)
 
     // handler
     setHdlr(this,'inputNumeric:getCurrent',function() {
-        return Integer.cast($(this).data("current"));
+        return Integer.cast(getAttr(this,"data-current"));
     });
     
     setHdlr(this,'inputNumeric:setCurrent',function(value) {
-        $(this).data("current",value);
+        setAttr(this,"data-current",value);
     });
     
     setHdlr(this,'inputNumeric:getMax',function() {
-        return Integer.cast($(this).data('max'));
+        return Integer.cast(getAttr(this,'data-max'));
     });
     
     setHdlr(this,'inputNumeric:validate',function() {

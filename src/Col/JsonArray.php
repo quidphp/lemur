@@ -136,7 +136,7 @@ class JsonArray extends Core\Col\JsonAlias
         $tag = $this->complexTag($attr);
         $value = $this->prepareValueForm($value,$option);
 
-        if($tag === 'add-remove')
+        if(static::isComplexTag($tag))
         {
             $value = (empty($value))? [null]:$value;
             $cell = ($value instanceof Core\Cell)? $value:null;
@@ -165,6 +165,14 @@ class JsonArray extends Core\Col\JsonAlias
         $return = Base\Debug::export($value);
 
         return $return;
+    }
+    
+    
+    // isComplexTag
+    // retourne vrai si la tag est pour le formulaire complexe
+    protected static function isComplexTag(string $value):bool
+    {
+        return ($value === 'add-remove');
     }
 }
 

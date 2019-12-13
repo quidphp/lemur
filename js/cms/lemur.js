@@ -8,8 +8,8 @@
 // script of common behaviours for all pages of the CMS
 
 // ready
-ael(document,"DOMContentLoaded", function()
-{    
+ael(document,"DOMContentLoaded", function() {    
+    
     // initial mount
     // comportements bindés une seule fois au tout début
     ael(this,'doc:mountInitial',function(event,body) {
@@ -105,7 +105,7 @@ ael(document,"DOMContentLoaded", function()
         const burger = qsa(routeWrap,"header .burger-menu, .nav-fixed .nav-close");
         
         // burger
-        trigEvt(burger,'component:teardown');
+        trigTeardown(burger);
     });
     
     
@@ -114,7 +114,6 @@ ael(document,"DOMContentLoaded", function()
         const body = qs(this,"body");
         const progress = qs(body,".loading-progress");
         const html = (percent >= 0 && percent < 100)? "<div class='percent'>"+percent+"%"+"</div>":"";
-        d(percent);
         $(progress).html(html);
     });
     
@@ -167,9 +166,9 @@ ael(document,"DOMContentLoaded", function()
         });
         
         ael(feedTogglers,'ajaxBlock:before',function() {
-            $(feedTogglers).attr('data-selected',0);
+            setAttr(feedTogglers,'data-selected',0);
             trigEvt(feedBody,'ajaxBlock:unmountContent');
-            $(this).attr('data-selected',1);
+            setAttr(this,'data-selected',1);
         });
         
         ael(feedTogglers,'ajaxBlock:success',function() {
@@ -251,7 +250,7 @@ ael(document,"DOMContentLoaded", function()
         const checkboxSortable = qsa(node,"[data-group='relation'][data-sortable='1'] .specific-component");
         const files = qsa(node,"[data-group='media'] .specific-component");
         const addRemove = qsa(node,"[data-tag='add-remove'] .specific-component");
-        const textarea = qsa(node,"[data-tag='textarea'] .specific-component");
+        const textareaExtra = qsa(node,"[data-tag='textarea'] .specific-component");
         const anchorCorner = qsa(node,"[data-anchor-corner]");
         
         // checkboxSortable
@@ -263,18 +262,18 @@ ael(document,"DOMContentLoaded", function()
         // files
         trigSetup(Component.InputFiles.call(files));
         
+        // addRemove
+        trigSetup(Component.AddRemove.call(addRemove));
+        
+        // textareaExtra
+        trigSetup(Component.TextareaExtra.call(textareaExtra));
+        
         /*
         // date
         trigSetup(Component.calendarInput.call(date));
         
         // enumSet
         Component.enumSet.call(enumSet);
-        
-        // addRemove
-        trigSetup(Component.addRemove.call(addRemove));
-        
-        // textarea
-        trigSetup(Component.textareaExtra.call(textarea));
         */
     });
     
@@ -282,10 +281,10 @@ ael(document,"DOMContentLoaded", function()
     // specificForm unmount
     // permet démonter les champs du formulaire
     ael(this,'specificForm:unmount',function(event,node) {
-        /*
         const textarea = qsa(node,"[data-tag='textarea'] .specific-component");
-        trigEvt(textarea,'component:teardown');
-        */
+        
+        // textareaExtra
+        trigTeardown(textarea);
     });
     
     
@@ -340,7 +339,7 @@ ael(document,"DOMContentLoaded", function()
         ael(formElement,'specificMulti:refresh',function(event) {
             const isActive = trigHdlr(this,'specificMulti:isActive');
             const inputs = trigHdlr(this,'specificMulti:getInputs');
-            $(this).attr('data-disabled',(isActive === true)? 0:1);
+            setAttr(this,'data-disabled',(isActive === true)? 0:1);
             trigEvt(inputs,(isActive === true)? 'input:enable':'input:disable');
         });
         

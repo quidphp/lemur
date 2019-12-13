@@ -88,15 +88,34 @@ const ObjKeyValue = {
     
     
     // valueFirst
-    // retourne le première valeur dans le tableau
+    // retourne le première valeur dans l'object
     valueFirst: function(obj)
     {
         let r = undefined;
+        const keys = this.keys(obj);
         
-        this.each(obj,function(value) {
-            r = value;
-            return false;
-        });
+        if(keys != null)
+        {
+            const key = keys[0];
+            r = obj[key];
+        }
+        
+        return r;
+    },
+    
+    
+    // valueLast 
+    // retourne la dernière valeur dans l'objet
+    valueLast: function(obj)
+    {
+        let r = undefined;
+        const keys = this.keys(obj);
+        
+        if(keys != null)
+        {
+            const key = keys[keys.length-1];
+            r = obj[key];
+        }
         
         return r;
     },

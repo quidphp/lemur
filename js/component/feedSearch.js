@@ -71,8 +71,8 @@ const FeedSearch = Component.FeedSearch = function(option)
     });
     
     setHdlr(this,'ajax:config',function() {
-        const separator = $(this).data('separator');
-        const query = $(this).data('query');
+        const separator = getAttr(this,'data-separator');
+        const query = getAttr(this,'data-query');
         const search = trigHdlr(this,'feedSearch:getSearchValue');
         const order = trigHdlr(this,'feedSearch:getOrderValue') || separator;
         const data = {};

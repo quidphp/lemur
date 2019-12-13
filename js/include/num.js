@@ -38,6 +38,22 @@ const NumPrimitive =  {
     },
     
     
+    // isPositive
+    // retourne vrai si c'est une variable numérique positive (> 0)
+    isPositive: function(value)
+    {
+        return (this.is(value) && this.cast(value) > 0)? true:false;
+    },
+    
+    
+    // isNegative
+    // retourne vrai si c'est une variable numérique positive (< 0)
+    isNegative: function(value)
+    {
+        return (this.is(value) && this.cast(value) < 0)? true:false;
+    },
+    
+    
     // cast
     // retourne la variable sous forme de nombre
     cast: function(value)

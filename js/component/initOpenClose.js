@@ -17,11 +17,11 @@ const InitOpenClose = Component.InitOpenClose = function(type,attr)
     setHdlrs(this,type+':',{
         
         isInit: function() {
-            return ($(this).data(type+'-init') === true);
+            return (getData(this,type+'-init') === true);
         },
         
         isOpen: function() {
-            return (Integer.cast($(this).attr(attr)) === 1);
+            return (Integer.cast(getAttr(this,attr)) === 1);
         }
     });
     
@@ -33,10 +33,10 @@ const InitOpenClose = Component.InitOpenClose = function(type,attr)
             if(trigHdlr(this,type+':isInit') !== true)
             {
                 trigEvt(this,type+':init');
-                $(this).data(type+'-init',true);
+                setData(this,type+'-init',true);
             }
             
-            $(this).attr(attr,1);
+            setAttr(this,attr,1);
             
             trigEvt(this,type+':opened');
         }
@@ -45,7 +45,7 @@ const InitOpenClose = Component.InitOpenClose = function(type,attr)
     ael(this,type+':close',function() {
         if(trigHdlr(this,type+':isOpen') === true)
         {
-            $(this).attr(attr,0);
+            setAttr(this,attr,0);
             
             trigEvt(this,type+':closed');
         }

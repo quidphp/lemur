@@ -18,7 +18,7 @@ const Background = Component.Background = function()
         
         // retourne vrai si le background existe et est présentement actif
         isActive: function() {
-            return ($(this).attr('data-from') != null)? true:false;
+            return (getAttr(this,'data-from') != null)? true:false;
         },
         
         // permet d'ajouter une attribut data au background
@@ -27,10 +27,10 @@ const Background = Component.Background = function()
             
             if(Str.isNotEmpty(value))
             {
-                if(replace === true || $(this).attr('data-from') == null)
+                if(replace === true || getAttr(this,'data-from') == null)
                 {
                     r = true;
-                    $(this).attr('data-from',value);
+                    setAttr(this,'data-from',value);
                 }
             }
             
@@ -43,7 +43,7 @@ const Background = Component.Background = function()
             
             if(trigHdlr(this,'background:isActive'))
             {
-                if(value == null || value === $(this).attr('data-from'))
+                if(value == null || value === getAttr(this,'data-from'))
                 {
                     r = true;
                     $(this).removeAttr('data-from');

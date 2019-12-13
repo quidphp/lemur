@@ -30,7 +30,7 @@ const AjaxBlock = Component.AjaxBlock = function(option)
         
         isReady: function() {
             const node = trigHdlr(this,'ajaxBlock:getStatusNode');
-            return ($(node).attr("data-status") === 'ready')? true:false;
+            return (getAttr(node,"data-status") === 'ready')? true:false;
         },
         
         isEmptyContentNode: function() {
@@ -61,14 +61,14 @@ const AjaxBlock = Component.AjaxBlock = function(option)
         
         before: function(jqXHR,setting) {
             const node = trigHdlr(this,'ajaxBlock:getStatusNode');
-            $(node).attr('data-status','loading');
+            setAttr(node,'data-status','loading');
             trigHdlr(this,'blockEvent:block',$option.ajaxEvent);
             trigEvt(this,'ajaxBlock:before',jqXHR,setting);
         },
         
         error: function(parsedError,jqXHR,textStatus,errorThrown) {
             const node = trigHdlr(this,'ajaxBlock:getStatusNode');
-            $(node).attr("data-status",'error');
+            setAttr(node,"data-status",'error');
             
             if($option.autoUnbind === true && !trigHdlr(this,'ajaxBlock:isEmptyContentNode'))
             trigEvt(this,'ajaxBlock:unmountContent');
@@ -80,7 +80,7 @@ const AjaxBlock = Component.AjaxBlock = function(option)
         
         success: function(data,textStatus,jqXHR) {
             const node = trigHdlr(this,'ajaxBlock:getStatusNode');
-            $(node).attr("data-status",'ready');
+            setAttr(node,"data-status",'ready');
             
             if($option.autoUnbind === true && !trigHdlr(this,'ajaxBlock:isEmptyContentNode'))
             trigEvt(this,'ajaxBlock:unmountContent');

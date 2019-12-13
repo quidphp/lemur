@@ -13,10 +13,10 @@ const TestInclude = Test.Include = function()
     try 
     {
         // prepare
-        const htmlNode = $("html").get(0);
+        const htmlNode = Selector.scopedQuerySelector(document,'html');
         const selectorOne = htmlNode.querySelector("body");
         const selectorAll = htmlNode.querySelectorAll("body");
-        const htmlStr = Dom.outerHtml($("html"));
+        const htmlStr = Dom.outerHtml(htmlNode);
         const isEmpty = Str.isEmpty.bind(Str);
         const noop = function() { };
         
@@ -62,6 +62,7 @@ const TestInclude = Test.Include = function()
         assert(!Arr.isEqual({},{}));
         let arr = [3,2,3,1,5];
         assert(Arr.valueFirst(arr) === 3);
+        assert(Arr.valueLast(arr) === 5);
         assert(Arr.valueFirst([]) === undefined);
         assert(Arr.valueStrip('8',arr) !== arr);
         assert(Arr.isEqual(Arr.valueStrip('8',arr),arr));
@@ -166,8 +167,6 @@ const TestInclude = Test.Include = function()
         // dom
         assert(Dom.isNode(window));
         assert(Dom.isNode(document));
-        assert(!Dom.isNode($("html")));
-        assert(!Dom.isNode($("html,body").get()));
         assert(Dom.isNode(htmlNode));
         assert(Dom.isNodes([selectorOne]));
         assert(Dom.isNodes(selectorAll));
@@ -182,10 +181,10 @@ const TestInclude = Test.Include = function()
         assert(Str.isNotEmpty(Dom.outerHtml(htmlNode)));
         assert(Num.is(Dom.heightWithPadding(htmlNode)));
         assert(Pojo.is(Dom.attr(htmlNode)));
-        assert(Dom.getAttr('data-error',htmlNode) === 'none');
+        assert(Dom.getAttr(htmlNode,'data-error') === 'none');
         assert(Str.isNotEmpty(Dom.attrStr(htmlNode)));
         assert(Pojo.is(Dom.dataAttr(htmlNode)));
-        assert(Dom.getDataAttr('error',htmlNode) === 'none');
+        assert(Dom.getAttr(htmlNode,'data-error') === 'none');
         
         // domChange
 
@@ -203,16 +202,16 @@ const TestInclude = Test.Include = function()
         Func.check(null,false);
         
         // handler
-        Handler.set(htmlNode,'what',function(value) { $(this).data('OK',value); return true; });
+        Handler.set(htmlNode,'what',function(value) { setData(this,'OK',value); return true; });
         assert(Func.is(Handler.get(htmlNode,'what')));
-        assert($(htmlNode).data('OK') == null);
+        assert(Dom.getData(htmlNode,'OK') == null);
         assert(Handler.isTriggerEqual([htmlNode],'what',true,'james'));
         assert(Handler.isTriggerEqual(htmlNode,'what',true,'james'));
         assert(!Handler.isTriggerEqual(htmlNode,'what',false,'james'));
-        assert($(htmlNode).data('OK') == 'james');
+        assert(Dom.getData(htmlNode,'OK') == 'james');
         assert(Handler.trigger(htmlNode,'what','no') === true);
         assert(Handler.trigger(htmlNode,'what','yes') === true);
-        assert($(htmlNode).data('OK') === 'yes');
+        assert(Dom.getData(htmlNode,'OK') === 'yes');
         Handler.set(htmlNode,'what',function() { return false; });
         assert(Handler.trigger(htmlNode,'what') === false);
         Handler.remove(htmlNode,'what');
@@ -250,6 +249,12 @@ const TestInclude = Test.Include = function()
         assert(!Integer.isEmpty('0'));
         assert(!Integer.isNotEmpty('1'));
         assert(Integer.isNotEmpty(1));
+        assert(Integer.isNotEmpty(-1));
+        assert(Integer.isPositive(2));
+        assert(!Integer.isPositive('2'));
+        assert(!Integer.isPositive(-1));
+        assert(Integer.isNegative(-1));
+        assert(!Integer.isNegative(0));
         assert(Integer.check(1) === 1);
         assert(Integer.check(0) === 0);
         assert(Integer.check(null,false) === null);
@@ -310,6 +315,9 @@ const TestInclude = Test.Include = function()
         assert(!Num.isEmpty(true));
         assert(Num.isNotEmpty('1.1'));
         assert(Num.isNotEmpty(1.1));
+        assert(Num.isPositive('2.2'));
+        assert(!Num.isPositive('0'));
+        assert(Num.isNegative('-2.2'));
         assert(Num.check('0') === '0');
         assert(Num.check(2.1,true) === 2.1);
         
@@ -433,6 +441,8 @@ const TestInclude = Test.Include = function()
         assert(Pojo.isKey(2));
         assert(Pojo.keyExists('test',{test: 2}));
         assert(!Pojo.keyExists('test',{testz: 2}));
+        assert(Pojo.valueFirst(replace) === 2);
+        assert(Pojo.valueLast(replace) === replace.ok);
         assert(Pojo.get('what',pojoGetSet) === undefined);
         let pojoMapFilter = { test: 3, ok: 'what', james: { lol: true}, final: null, undef: undefined};
         assert(Pojo.length(Pojo.filter(pojoMapFilter,function() {

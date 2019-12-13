@@ -43,15 +43,17 @@ const ColsSorter = Component.ColsSorter = function(option)
     setHdlr(this,'colsSorter:getCheckedSet',function() {
         const button = trigHdlr(this,'colsSorter:getButton');
         const checkbox = trigHdlr(this,'colsSorter:getCheckedCheckboxes');
+        const separator = getAttr(button,'data-separator');
         
-        return Dom.valueSeparator(checkbox,$(button).data('separator'),true);
+        return Dom.valueSeparator(checkbox,separator,true);
     });
     
     setHdlr(this,'colsSorter:isCurrent',function() {
         const button = trigHdlr(this,'colsSorter:getButton');
         const set = trigHdlr(this,'colsSorter:getCheckedSet');
+        const current = getAttr(button,'data-current');
         
-        return (set === $(button).data('current'))? true:false;
+        return (set === current)? true:false;
     });
     
     
@@ -82,14 +84,14 @@ const ColsSorter = Component.ColsSorter = function(option)
         });
         
         setHdlr(popup,'popup:invalid',function() {
-            $(this).attr('data-validate','invalid');
+            setAttr(this,'data-validate','invalid');
         });
         
         setHdlr(popup,'popup:valid',function() {
             if(trigHdlr($this,'colsSorter:isCurrent'))
             $(this).removeAttr("data-validate");
             else
-            $(this).attr('data-validate','valid');
+            setAttr(this,'data-validate','valid');
         });
     }
     

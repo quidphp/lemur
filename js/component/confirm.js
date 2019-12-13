@@ -10,7 +10,7 @@ const Confirm = Component.Confirm = function(type)
 {
     // handler
     setHdlr(this,'confirm:getText',function() {
-        return $(this).data('confirm');
+        return getAttr(this,'data-confirm');
     });
     
     

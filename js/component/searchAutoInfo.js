@@ -48,11 +48,11 @@ const SearchAutoInfo = Component.SearchAutoInfo = function(option)
         Component.ClickOpen.call(info,$option.info)
         
         ael(info,'clickOpen:opened',function() {
-            $($this).attr($option.attrInfo,1);
+            setAttr($this,$option.attrInfo,1);
         });
         
         ael(info,'clickOpen:closed',function() {
-            $($this).attr($option.attrInfo,0);
+            setAttr($this,$option.attrInfo,0);
         });
         
         trigSetup(info);

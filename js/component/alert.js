@@ -15,7 +15,7 @@ const Alert = Component.Alert = function(type)
     
     // handler
     setHdlr(this,'alert:getText',function() {
-        return $(this).data('alert');
+        return getAttr(this,'data-alert');
     });
     
     

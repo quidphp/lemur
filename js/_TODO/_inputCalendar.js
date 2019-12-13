@@ -87,14 +87,14 @@ Component.calendarInput = function()
             trigEvt(this,'calendar:select',val);
         })
         .on('calendar:loading',function(event) {
-            target.attr('data-status','loading');
+            setAttr(target,'data-status','loading');
         })
         .on('calendar:loaded',function(event) {
             target.removeAttr('data-status');
         })
         .on('click', 'td',function(event) {
-            const format = $(this).data('format');
-            const timestamp = $(this).data("timestamp");
+            const format = getAttr(this,'data-format');
+            const timestamp = getAttr(this,"data-timestamp");
             calendar.trigger('calendar:select',timestamp);
             input.val(format);
             trigEvt($this,"clickOpen:close");

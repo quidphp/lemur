@@ -39,7 +39,12 @@ const assert = Debug.assertThrow.bind(Debug);
 const logError = Debug.logError.bind(Debug);
 
 // dom 
+const getAttr = Dom.getAttr.bind(Dom);
 const getData = Dom.getData.bind(Dom);
+const setData = Dom.setData.bind(Dom);
+
+// domChange
+const setAttr = DomChange.setAttr.bind(DomChange);
 
 // event
 const ael = Evt.addEventListener.bind(Evt);

@@ -14,9 +14,9 @@ const InputSearchHref = Component.InputSearchHref = function(option)
     
     // handler
     ael(this,'inputSearch:change',function() {
-        const char = $(this).attr("data-char");
+        const char = getAttr(this,"data-char");
         let val = trigHdlr(this,'input:getValueEncoded',true);
-        let href = $(this).attr("data-href");
+        let href = getAttr(this,"data-href");
         
         if(Str.isNotEmpty(val))
         href += "?"+char+"="+val;

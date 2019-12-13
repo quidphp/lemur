@@ -27,15 +27,15 @@ const InputSearch = Component.InputSearch = function(option)
     setHdlrs(this,'inputSearch:',{
         
         getCurrent: function() {
-            return $(this).data("current");
+            return getAttr(this,'data-current');
         },
         
         setCurrent: function(value) {
-            $(this).data("current",value);
+            setAttr(this,"data-current",value);
         },
         
         unsetCurrent: function() {
-            $(this).removeData("current");
+            $(this).removeAttr("data-current");
         },
         
         getButton: function() {

@@ -29,12 +29,12 @@ const Modal = Component.Modal = function(option)
     });
     
     setHdlr(this,'modal:getRoute',function() {
-        return $(this).attr('data-route');
+        return getAttr(this,'data-route');
     });
     
     setHdlr(this,'modal:setRoute',function(route) {
         if(Str.isNotEmpty(route))
-        $(this).attr('data-route',route);
+        setAttr(this,'data-route',route);
         else
         $(this).removeAttr('data-route');
     });
@@ -49,7 +49,7 @@ const Modal = Component.Modal = function(option)
     
     setHdlr(this,'modal:fetchNode',function(node) {
         const config = Xhr.configFromNode(node);
-        const route = $(node).attr('data-modal');
+        const route = getAttr(node,'data-modal');
         return trigHdlr(this,'modal:fetch',config,route);
     });
     

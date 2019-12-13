@@ -33,7 +33,7 @@ Component.enumSet = function()
             return trigHdlr(this,'enumSet:getChoice').find("input[type='checkbox'],input[type='radio']");
         })
         .on('enumSet:getMode',function(event) {
-            return $(this).data('mode');
+            return getAttr(this,'data-mode');
         })
         .on('enumSet:getChoiceCount',function(event) {
             return trigHdlr(this,'enumSet:getChoice').length;
@@ -42,7 +42,7 @@ Component.enumSet = function()
             return ((Scalar.is(value)) && trigHdlr(this,'enumSet:getRadioCheckbox').filter("[value='"+value+"']").length)? true:false;
         })
         .on('clickOpen:open',function(event) {
-            $(this).attr('data-status','loading');
+            setAttr(this,'data-status','loading');
             trigHdlr(this,'enumSet:getResult').html('');
         })
         .on('clickOpen:close',function(event) {
@@ -112,7 +112,7 @@ Component.enumSet = function()
             let r = false;
             const isOpen = trigHdlr(this,'enumSetInput:getParent').trigHdlr('clickOpen:isOpen');
             
-            if(isOpen === false || (Dom.value(this,true) !== $(this).data('valueLast')))
+            if(isOpen === false || (Dom.value(this,true) !== getData(this,'value-last')))
             r = true;
             
             return r;
@@ -130,7 +130,7 @@ Component.enumSet = function()
             else
             trigHdlr(this,'enumSetInput:getParent').trigger('clickOpen:close');
             
-            $(this).data('valueLast',val);
+            setData(this,'value-last',val);
         })
         .on('validate:failed',function(event) {
             trigHdlr(this,'enumSetInput:getTarget').trigger('clickOpen:close');
@@ -151,7 +151,7 @@ Component.enumSet = function()
             const parent = trigHdlr(this,'enumSetInput:getParent');
             const select = trigHdlr(this,'enumSetInput:getOrder');
             const radioCheckbox = parent.trigHdlr('enumSet:getRadioCheckbox');
-            const separator = $(this).data("separator");
+            const separator = getAttr(this,"data-separator");
             const selected = Dom.valueSeparator(radioCheckbox.filter(":checked"),separator,true) || separator;
             const selectVal = Dom.value(select,true);
             const order = (select.length && selectVal)? selectVal:separator;
@@ -159,7 +159,7 @@ Component.enumSet = function()
         })
         .on('ajax:getData',function(event) {
             let r = {};
-            r[$(this).data('query')] = Dom.value(this,true);
+            r[getAttr(this,'data-query')] = Dom.value(this,true);
             return r;
         })
         .on('ajax:before',function() {
@@ -192,7 +192,8 @@ Component.enumSet = function()
         bindEnumSet.call(this);
         
         $(this).on('enumSet:getMode',function(event) {
-            return $(this).parents(".form-element").data('mode');
+            const parents = $(this).parents(".form-element");
+            return getAttr(parents,'data-mode');
         })
         .on('clickOpen:ready',function(event) {
             trigHdlr(this,'clickOpen:getTarget').trigger('feed:bind');
@@ -214,7 +215,7 @@ Component.enumSet = function()
             return Html.parse(data).find("li");
         })
         .on('click', 'li > button',function(event) {
-            enumSet.trigger('choice:append',[$(this).data('value'),$(this).data('html')]);
+            enumSet.trigger('choice:append',getAttr(this,'data-value'),getAttr(this,'data-html'));
             event.stopPropagation();
         });
         

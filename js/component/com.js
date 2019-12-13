@@ -17,7 +17,7 @@ const Com = Component.Com = function()
     setHdlrs(this,'com:',{
         
         isOpen: function() {
-            return ($(this).attr('data-status') !== 'close')? true:false;
+            return (getAttr(this,'data-status') !== 'close')? true:false;
         },
         
         getBottom: function() {
@@ -25,13 +25,13 @@ const Com = Component.Com = function()
         },
         
         slideUp: function() {
-            $(this).attr('data-status','close');
+            setAttr(this,'data-status','close');
             const bottom = trigHdlr(this,'com:getBottom');
             $(bottom).stop(true,true).slideUp('fast');
         },
         
         slideDown: function() {
-            $(this).attr('data-status','open');
+            setAttr(this,'data-status','open');
             const bottom = trigHdlr(this,'com:getBottom');
             $(bottom).stop(true,true).slideDown('fast');
         }
@@ -63,8 +63,8 @@ const Com = Component.Com = function()
     aelDelegate(this,'click',".row.insert > span,.row.update > span",function(event) {
         const delegate = event.delegateTarget;
         const parent = $(this).parent();
-        const table = parent.data('table');
-        const primary = parent.data('primary');
+        const table = getAttr(parent,'data-table');
+        const primary = getAttr(parent,'data-primary');
         redirect.call(delegate,table,primary,event);
     });
     
@@ -83,8 +83,9 @@ const Com = Component.Com = function()
         
         if(Str.isNotEmpty(href))
         {
+            const char = getAttr(this,'data-char');
             trigHdlr(this,'blockEvent:block','click');
-            href = href.replace($(this).data('char'),primary);
+            href = href.replace(char,primary);
             trigHdlr(document,'history:href',href,clickEvent);
         }
     }

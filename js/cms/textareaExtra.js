@@ -6,8 +6,34 @@
  
 // textareaExtra
 // script for a component to search and insert content within a textarea, with support for tinymce
-Component.textareaExtra = function()
+const TextareaExtra = Component.TextareaExtra = function()
 {
+    // setup
+    aelOnce(this,'component:setup',function() {
+        /*
+        bindTextarea.call(this);
+        
+        if(trigHdlr(this,'textareaExtra:hasFilters'))
+        bindFilter.call(this);
+        
+        if(trigHdlr(this,'textareaExtra:hasTinymce'))
+        bindTinymce.call(this);
+        */
+    })
+    
+    
+    // teardown
+    aelOnce(this,'component:teardown',function() {
+        /*
+        const editor = trigHdlr(this,"textareaExtra:getTinymceEditor");
+        
+        if(editor != null)
+        editor.remove();
+        */
+    });
+    
+    
+    /*
     // triggerHandler
     $(this).on('textareaExtra:getTextarea',function() {
         return $(this).find("textarea").get(0);
@@ -16,7 +42,8 @@ Component.textareaExtra = function()
         return $(this).find(".table-relation");
     })
     .on('textareaExtra:getTinymceEditor',function() {
-        return trigHdlr(this,'textareaExtra:getTextarea').data('tinymceEditor');
+        const textarea = trigHdlr(this,'textareaExtra:getTextarea');
+        return getData(textarea,'tinymce-editor');
     })
     .on('textareaExtra:hasFilters',function() {
         return (trigHdlr(this,'textareaExtra:getFilters').length)? true:false;
@@ -24,25 +51,6 @@ Component.textareaExtra = function()
     .on('textareaExtra:hasTinymce',function() {
         return ($(this).parents(".form-element").is("[data-group='tinymce']"))? true:false;
     })
-    
-    // setup
-    .one('component:setup',function() {
-        bindTextarea.call(this);
-        
-        if(trigHdlr(this,'textareaExtra:hasFilters'))
-        bindFilter.call(this);
-        
-        if(trigHdlr(this,'textareaExtra:hasTinymce'))
-        bindTinymce.call(this);
-    })
-    
-    // teardown
-    .one('component:teardown',function() {
-        const editor = trigHdlr(this,"textareaExtra:getTinymceEditor");
-        
-        if(editor != null)
-        editor.remove();
-    });
     
     // bindTextarea
     const bindTextarea = function() {
@@ -78,7 +86,7 @@ Component.textareaExtra = function()
             const result = trigHdlr(this,'filter:getResult');
             
             result.on('click', '.insert',function(event) {
-                const html = $(this).data('html');
+                const html = getAttr(this,'data-html');
                 textarea.trigHdlr('textareaInput:insert',html);
                 clickOpen.trigger('clickOpen:close');
                 event.stopPropagation();
@@ -100,7 +108,7 @@ Component.textareaExtra = function()
     const bindTinymce = function() {
         const textarea = trigHdlr(this,'textareaExtra:getTextarea');
         const editor = createTinymce.call(textarea);
-        textarea.data('tinymceEditor',editor);
+        setData(textarea,'tinymce-editor',editor);
         
         textarea.on('textareaInput:insert',function(event,html) {
             let r = false;
@@ -121,7 +129,7 @@ Component.textareaExtra = function()
         
         DomChange.addId('tinymce-',this);
         const id = this.prop('id');
-        const data = this.data('tinymce') || {};
+        const data = getAttr(this,'data-tinymce') || {};
         
         data.selector = "#"+id;
         data.init_instance_callback = function (editor) {
@@ -134,6 +142,7 @@ Component.textareaExtra = function()
         
         return r;
     };
+    */
     
     return this;
 }

@@ -53,7 +53,7 @@ const AbsolutePlaceholder = Component.AbsolutePlaceholder = function()
                     $(this).height(outerHeight);
                 }
                 
-                $(this).attr('data-absolute-placeholder','ready');
+                setAttr(this,'data-absolute-placeholder','ready');
             }
         }
     });

@@ -16,7 +16,7 @@ const Win = Component.Win = function(type,timeout)
     setHdlrs(this,'win:',{
         // retourne vrai si le navigateur courant supporte le touch
         isTouch: function() {
-            return ($(this).data('win-isTouch') === true)? true:false;
+            return (getData(this,'win-isTouch') === true)? true:false;
         },
         
         // retourne vrai si la fenêtre courante est responsive
@@ -33,7 +33,7 @@ const Win = Component.Win = function(type,timeout)
     
     // sur le premier isTouch
     aelOnce(document,'touchstart',function() {
-        $(window).data('win-isTouch',true);
+        setData(window,'win-isTouch',true);
     });
         
     return this;

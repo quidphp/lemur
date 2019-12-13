@@ -50,9 +50,9 @@ const Doc = Component.Doc = function(option)
         },
         
         // met le statut de la balise html à loading
-        statusLoading: function() {
+        setStatusLoading: function() {
             const html = trigHdlr(this,'doc:getHtml');
-            $(html).attr('data-status','loading');
+            setAttr(html,'data-status','loading');
         },
         
         // crée le document à partir d'un objet doc, passé dans dom.parse
@@ -70,7 +70,7 @@ const Doc = Component.Doc = function(option)
             
             const html = trigHdlr(this,'doc:getHtml');
             setTimeout(function() {
-                $(html).attr('data-status','ready');
+                setAttr(html,'data-status','ready');
             },100);
         },
         
@@ -82,18 +82,17 @@ const Doc = Component.Doc = function(option)
         // lance les évènements pour démonter le document dans le bon order
         unmount: function() {
             docUnmount.call(this);
+        },
+        
+        // permet de faire les bindings common sur une node
+        mountNodeCommon: function(node) {
+            trigEvt(this,'doc:mountNode',node);
+            trigEvt(this,'doc:mountCommon',node);
         }
     });
     
     
     // event
-    
-    // mountNodeCommon
-    // trigger mountNode et mountCommon en même temps
-    ael(this,'doc:mountNodeCommon',function(event,node) {
-        trigEvt(this,'doc:mountNode',node);
-        trigEvt(this,'doc:mountCommon',node);
-    });
     
     // keyboardEscape
     // trigger un click
@@ -182,27 +181,27 @@ const Doc = Component.Doc = function(option)
         if(initial === true)
         {
             const body = trigHdlr(this,'doc:getBody');
-            trigEvt(this,'doc:mountInitial',body);
-            trigEvt(this,'doc:mountCommon',body);
+            trigEvt(this,'doc:mountInitial',body,isError);
+            trigEvt(this,'doc:mountCommon',body,isError);
         }
         
         else
-        trigEvt(this,'doc:mountCommon',routeWrap);
+        trigEvt(this,'doc:mountCommon',routeWrap,isError);
         
-        trigEvt(this,'doc:mountPage',routeWrap);
+        trigEvt(this,'doc:mountPage',routeWrap,isError);
         
         if(isError !== true)
         {
-            const group = $(html).attr("data-group");
+            const group = getAttr(html,"data-group");
             if(Str.isNotEmpty(group))
             trigEvt(this,'group:'+group,routeWrap);
             
-            const route = $(html).attr("data-route");
+            const route = getAttr(html,"data-route");
             if(Str.isNotEmpty(route))
             trigEvt(this,'route:'+route,routeWrap);
         }
         
-        trigEvt(this,'doc:mounted',routeWrap);
+        trigEvt(this,'doc:mounted',routeWrap,isError);
     }
     
     
@@ -216,11 +215,11 @@ const Doc = Component.Doc = function(option)
         trigEvt(this,'doc:unmountCommon',routeWrap);
         trigEvt(this,'doc:unmountPage',routeWrap);
         
-        const group = $(html).attr("data-group");
+        const group = getAttr(html,"data-group");
         if(Str.isNotEmpty(group))
         trigEvt(this,'group:'+group+':unmount',routeWrap);
         
-        const route = $(html).attr("data-route");
+        const route = getAttr(html,"data-route");
         if(Str.isNotEmpty(route))
         trigEvt(this,'route:'+route+':unmount',routeWrap);
                 

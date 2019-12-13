@@ -29,10 +29,10 @@ Component.calendar = function()
         return trigHdlr(this,'calendar:getCells').filter(".selected");
     })
     .on('calendar:getCurrent',function() {
-        return $(this).data('current');
+        return getAttr(this,'data-current');
     })
     .on('calendar:getFormat',function() {
-        return $(this).data('format');
+        return getAttr(this,'data-format');
     })
     .on('ajax:getHref',function() {
         return Dom.dataHrefReplaceChar(this,trigHdlr(this,'calendar:getCurrent'));
@@ -83,7 +83,7 @@ Component.calendar = function()
             
             else if(reload === true)
             {
-                $(this).data('current',value);
+                getAttr(this,'data-current',value);
                 trigHdlr(this,'ajax:trigger');
             }
         }

@@ -30,7 +30,7 @@ const Tabs = Component.Tabs = function(option)
     // option
     const $option = Pojo.replaceRecursive({
         target: [],
-        attr: 'data-active',
+        attr: 'data-tab',
         loop: false,
         navIndex: {
             childOpen: 'tab:isOpen',

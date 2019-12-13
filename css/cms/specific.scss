@@ -87,7 +87,7 @@
 [data-group='specific'] main .inner > .specific-form.with-panel .panel {
     display: none;
 
-    &[data-active='1'] {
+    &[data-tab='1'] {
         display: block;
     }
 }

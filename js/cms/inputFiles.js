@@ -71,10 +71,10 @@ const InputFiles = Component.InputFiles = function()
 
         ael(mediaAction,'confirm:yes',function() {
             const value = trigHdlr(hidden,'input:getValueJson');
-            value.action = $(this).data('action');
-            const text = $(this).data('text');
+            value.action = getAttr(this,'data-action');
+            const text = getAttr(this,'data-text');
             
-            $(block).attr('data-action',1);
+            setAttr(block,'data-action',1);
             $(actionText).html(text);
             
             trigEvt(hidden,'input:enable');
@@ -95,7 +95,7 @@ const InputFiles = Component.InputFiles = function()
             const value = trigHdlr(hidden,'input:getValueJson');
             value.action = null;
             
-            $(block).attr('data-action',0);
+            setAttr(block,'data-action',0);
             $(actionText).html('');
             
             trigEvt(hidden,'input:disable');

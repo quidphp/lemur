@@ -52,7 +52,7 @@ const Nav = Lemur.Nav = {
     // retourne la premier valeur
     getFirst: function(max)
     {
-        return (Integer.is(max) && max > 0)? 0:null;
+        return (Integer.isPositive(max))? 0:null;
     },
     
     
@@ -62,7 +62,7 @@ const Nav = Lemur.Nav = {
     {
         let r = null;
         
-        if(Integer.is(max) && max > 0)
+        if(Integer.isPositive(max))
         {
             const last = (max - 1);
             value = (Integer.is(value))? value:last;
@@ -88,7 +88,7 @@ const Nav = Lemur.Nav = {
     {
         let r = null;
         
-        if(Integer.is(max) && max > 0)
+        if(Integer.isPositive(max))
         {
             const last = (max - 1);
             value = (Integer.is(value))? value:-1;
@@ -112,7 +112,7 @@ const Nav = Lemur.Nav = {
     // retourne la dernière valeur
     getLast: function(max)
     {
-        return (Integer.is(max) && max > 0)? (max - 1):null;
+        return (Integer.isPositive(max))? (max - 1):null;
     },
     
     
@@ -120,7 +120,7 @@ const Nav = Lemur.Nav = {
     // retourne la valeur si elle elle comprise dans le maximum
     getIndex: function(value,max)
     {
-        return (Integer.is(value) && value >= 0 && Integer.is(max) && max > 0 && value < max)? value:null;
+        return (Integer.is(value) && value >= 0 && Integer.isPositive(max) && value < max)? value:null;
     },
     
     
@@ -130,7 +130,7 @@ const Nav = Lemur.Nav = {
     {
         let r = null;
         
-        if(Integer.is(max) && max > 0)
+        if(Integer.isPositive(max))
         {
             if(value === 'first')
             r = this.getFirst(max);

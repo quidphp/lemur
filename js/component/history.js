@@ -53,7 +53,7 @@ const HistoryComponent = Component.History = function(option)
         // retourne vrai si le chargement de la navigation est présentement active
         isLoading: function() {
             let r = false;
-            const ajax = $(this).data('doc-ajax');
+            const ajax = getData(this,'doc-ajax');
             
             if(ajax != null && ajax.readyState < 4)
             r = true;
@@ -72,7 +72,7 @@ const HistoryComponent = Component.History = function(option)
             
             if(trigHdlr(this,'history:isLoading') === true)
             {
-                const ajax = $(this).data('doc-ajax');
+                const ajax = getData(this,'doc-ajax');
                 ajax.onreadystatechange = Func.noop();
                 ajax.abort();
             }
@@ -269,10 +269,10 @@ const HistoryComponent = Component.History = function(option)
         if(Str.isNotEmpty(tag))
         {
             if(tag === 'form')
-            r = $(node).attr('action');
+            r = getAttr(node,'action');
             
             else
-            r = $(node).attr('href') || $(node).attr('data-href');
+            r = getAttr(node,'href') || getAttr(node,'data-href');
         }
         
         return r;
@@ -359,7 +359,7 @@ const HistoryComponent = Component.History = function(option)
                 if(r === true)
                 {
                     const targetsTriggered = getTargetsTriggered.call(this,nodeOrEvent);
-                    $(targetsTriggered).attr('data-triggered',1);
+                    setAttr(targetsTriggered,'data-triggered',1);
                     
                     if(srcEvent != null)
                     Evt.preventStop(srcEvent);
@@ -436,7 +436,7 @@ const HistoryComponent = Component.History = function(option)
 
         if(HistoryApi.isState(state))
         {
-            trigHdlr(this,'doc:statusLoading');
+            trigHdlr(this,'doc:setStatusLoading');
 
             const config = {
                 url: state.url,
@@ -458,7 +458,7 @@ const HistoryComponent = Component.History = function(option)
             trigHdlr(this,'history:cancelAjax');
             
             if(r != null)
-            $(this).data('doc-ajax',r);
+            setData(this,'doc-ajax',r);
         }
         
         return r;

@@ -10,7 +10,7 @@ const Timeout = Component.Timeout = function(type,timeout)
 {
     // handler
     setHdlr(this,'timeout:duration',function(type) {
-        return timeout || $(this).data('timeout-'+type) || 500;
+        return timeout || getData(this,'timeout-'+type) || 500;
     });
     
     setHdlr(this,'timeout:getObj',function() {

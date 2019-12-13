@@ -8,6 +8,15 @@
 // script with functions for manipulating the dom
 const DomChange = Lemur.DomChange = {
     
+    // setAttr
+    // change un attribut sur une ou plusieurs nodes
+    setAttr: function(nodes,key,value)
+    {
+        Str.check(key,true);
+        return $(nodes).attr(key,value);
+    },
+    
+    
     // setsAttr
     // remplace tous les attributs d'une balise, il faut fournir un plain object
     // possible de retirer les attributs existants
@@ -72,7 +81,7 @@ const DomChange = Lemur.DomChange = {
         const anchor = Selector.scopedQuerySelectorAll(node,"a[target!='_blank']");
         
         $(anchor).filter(function() {
-            return (Uri.isExternal($(this).attr("href")) && !$(this).is("[href^='mailto:']"))? true:false;
+            return (Uri.isExternal(getAttr(this,"href")) && !$(this).is("[href^='mailto:']"))? true:false;
         })
         .each(function(index, el) {
             $(this).prop('target','_blank');

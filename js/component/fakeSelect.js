@@ -15,9 +15,9 @@ const FakeSelect = Component.FakeSelect = function()
     {
         let r = '';
         const name = $(this).prop('name');
-        const required = $(this).data('required');
+        const required = getAttr(this,'data-required');
         const disabled = $(this).prop('disabled');
-        const selected = qs(this,"option:selected");
+        const selected = qs(this,"option:checked");
         const selectedText = (selected != null)? $(selected).text():null;
         const title = (Str.isNotEmpty(selectedText))? selectedText:"&nbsp;";
         const options = qsa(this,'option');
@@ -89,13 +89,13 @@ const FakeSelect = Component.FakeSelect = function()
         
         setHdlr(this,'fakeSelect:getChoice',function(value) {
             return Arr.find(trigHdlr(this,'fakeSelect:getChoices'),function() {
-                return Str.isEqual($(this).data('value'),value);
+                return Str.isEqual(getAttr(this,'data-value'),value);
             });
         });
         
         setHdlr(this,'fakeSelect:getSelected',function() {
             return Arr.find(trigHdlr(this,'fakeSelect:getChoices'),function() {
-                return (Integer.cast($(this).attr('data-selected')) === 1);
+                return (Integer.cast(getAttr(this,'data-selected')) === 1);
             });
         });
         
@@ -169,7 +169,7 @@ const FakeSelect = Component.FakeSelect = function()
             });
             
             ael(select,'input:disable',function() {
-                $($this).attr('data-disabled',1);
+                setAttr($this,'data-disabled',1);
             });
             
             ael(select,'input:enable',function() {
@@ -177,11 +177,11 @@ const FakeSelect = Component.FakeSelect = function()
             });
             
             ael(select,'validate:valid',function() {
-                $($this).attr('data-validate','valid');
+                setAttr($this,'data-validate','valid');
             });
             
             ael(select,'validate:invalid',function() {
-                $($this).attr('data-validate','invalid');
+                setAttr($this,'data-validate','invalid');
             });
         }
         
@@ -212,14 +212,14 @@ const FakeSelect = Component.FakeSelect = function()
         // choose
         const choose = function(selected)
         {
-            const value = $(selected).data("value");
+            const value = getAttr(selected,'data-value');
             const text = $(selected).text();
             const select = trigHdlr(this,'fakeSelect:getSelect');
             const choices = trigHdlr(this,'fakeSelect:getChoices');
             const current = trigHdlr(select,'input:getValue');
             
             $(choices).removeAttr('data-selected');
-            $(selected).attr('data-selected',1);
+            setAttr(selected,'data-selected',1);
             
             trigHdlr(select,'input:setValue',value);
             trigHdlr(this,'fakeSelect:setTitle',text);
@@ -241,7 +241,7 @@ const FakeSelect = Component.FakeSelect = function()
                 const html = htmlFromSelect.call(this);
                 const node = $(html).insertAfter(this).get(0);
                 bindFakeSelect.call(node);
-                $(this).attr('data-controlled',1);
+                setAttr(this,'data-controlled',1);
                 r.push(node);
             }
         }

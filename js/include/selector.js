@@ -22,13 +22,14 @@ const Selector = Lemur.Selector = {
     {
         let r = null;
         Dom.checkNode(node,false);
-        
-        if(Debug.is('selector'))
-        console.log(node,selector,'scopedQuerySelector');
+        selector = (node === document)? selector:":scope "+selector;
         
         if(node != null)
-        r = $(node).find(selector).get(0);
+        r = node.querySelector(selector);
         
+        if(Debug.is('selector'))
+        console.log(node,selector,'scopedQuerySelector',r);
+
         return r;
     },
     
@@ -40,13 +41,19 @@ const Selector = Lemur.Selector = {
     {
         let r = null;
         Dom.checkNode(node,false);
-        
-        if(Debug.is('selector'))
-        console.log(node,selector,'scopedQuerySelectorAll');
+        selector = (node === document)? selector:":scope "+selector;
         
         if(node != null)
-        r = $(node).find(selector).get();
+        {
+            r = node.querySelectorAll(selector);
+            
+            if(r instanceof NodeList)
+            r = ArrLike.arr(r);
+        }
         
+        if(Debug.is('selector'))
+        console.log(node,selector,'scopedQuerySelectorAll',r);
+
         return r;
     },
     
@@ -66,7 +73,7 @@ const Selector = Lemur.Selector = {
         if(nodes != null)
         {
             r = [];
-            $(nodes).each(function() {
+            Arr.each(nodes,function() {
                 Arr.mergeRef(r,$inst.scopedQuerySelectorAll(this,selector));
             });
         }

@@ -19,15 +19,15 @@ const ComponentValidate = Component.Validate = function()
     
     setHdlr(this,'validate:isRequired',function() {
         const dataRequired = trigHdlr(this,'validate:getRequired');
-        return (Num.is(dataRequired) && dataRequired > 0)? true:false;
+        return Num.isPositive(dataRequired);
     });
     
     setHdlr(this,'validate:getRequired',function() {
-        return $(this).attr("data-required");
+        return getAttr(this,"data-required");
     });
     
     setHdlr(this,'validate:getPattern',function() {
-        return $(this).attr("data-pattern");
+        return getAttr(this,"data-pattern");
     });
     
     setHdlr(this,'validate:isEmpty',function() {
@@ -92,19 +92,19 @@ const ComponentValidate = Component.Validate = function()
     
     // event
     ael(this,'validate:valid',function() {
-        $(this).attr('data-validate','valid');
+        setAttr(this,'data-validate','valid');
     });
     
     ael(this,'validate:invalid',function() {
-        $(this).attr('data-validate','invalid');
+        setAttr(this,'data-validate','invalid');
     });
     
     ael(this,'validate:empty',function() {
-        $(this).attr('data-empty',1);
+        setAttr(this,'data-empty',1);
     });
     
     ael(this,'validate:notEmpty',function() {
-        $(this).attr('data-empty',0);
+        setAttr(this,'data-empty',0);
     });
     
     return this;

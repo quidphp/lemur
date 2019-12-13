@@ -16,7 +16,7 @@ const Form = Component.Form = function()
     setHdlrs(this,'form:',{
         
         isSubmitted: function() {
-            return ($(this).data('form-submitted') === 1)? true:false;
+            return (getData(this,'form-submitted') === 1)? true:false;
         },
         
         getFields: function() {
@@ -111,7 +111,7 @@ const Form = Component.Form = function()
             let r = false;
             const target = trigHdlr(this,'form:getTargetFields');
             const serialize = $(target).serialize();
-            const original = $(this).data('form-serialize');
+            const original = getData(this,'form-serialize');
             
             if(original && serialize !== original)
             r = true;
@@ -189,7 +189,7 @@ const Form = Component.Form = function()
     {
         const target = trigHdlr(this,'form:getTargetFields');
         const serialize = $(target).serialize();
-        $(this).data('form-serialize',serialize);
+        setData(this,'form-serialize',serialize);
     }
     
     
@@ -202,7 +202,7 @@ const Form = Component.Form = function()
         
         ael(submits,'click',function() {
             $(submits).removeAttr('data-submit-click');
-            $(this).attr('data-submit-click',true);
+            setAttr(this,'data-submit-click',true);
         });
         
         const submitsConfirm =  Arr.filter(submits,function() {
@@ -240,11 +240,11 @@ const Form = Component.Form = function()
         
         setHdlr(this,'winUnload:getText',function() {
             if(!trigHdlr(this,'form:isSubmitted') && trigHdlr(this,'form:hasChanged'))
-            return $(this).attr('data-unload');
+            return getAttr(this,'data-unload');
         });
         
         ael(this,'submit',function() {
-            $(this).data('form-submitted',1);
+            setData(this,'form-submitted',1);
         });
         
         trigHdlr(window,'winUnload:addNode',this);

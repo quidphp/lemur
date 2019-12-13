@@ -140,10 +140,10 @@ const TabsNav = Component.TabsNav = function(option)
         
         if(Arr.isNotEmpty(navs))
         {
-            $(navs).attr($option.navAttr,0);
+            setAttr(navs,$option.navAttr,0);
             
             if(current != null)
-            $(current).attr($option.navAttr,1);
+            setAttr(current,$option.navAttr,1);
         }
     }
     
@@ -160,28 +160,28 @@ const TabsNav = Component.TabsNav = function(option)
         if(first != null)
         {
             value = (tabsLength && !trigHdlr($this,'tabs:isFirst'))? 1:0;
-            $(first).attr($option.directionAttr,value);
+            setAttr(first,$option.directionAttr,value);
         }
         
         const last = trigHdlr(this,'tabsNav:getLast');
         if(last != null)
         {
             value = (tabsLength && !trigHdlr($this,'tabs:isLast'))? 1:0;
-            $(last).attr($option.directionAttr,value);
+            setAttr(last,$option.directionAttr,value);
         }
         
         const prev = trigHdlr(this,'tabsNav:getPrev');
         if(prev != null)
         {
             value = (tabsLength && trigHdlr($this,'tabs:hasPrev'))? 1:0;
-            $(prev).attr($option.directionAttr,value);
+            setAttr(prev,$option.directionAttr,value);
         }
         
         const next = trigHdlr(this,'tabsNav:getNext');
         if(next != null)
         {
             value = (tabsLength && trigHdlr($this,'tabs:hasNext'))? 1:0;
-            $(next).attr($option.directionAttr,value);
+            setAttr(next,$option.directionAttr,value);
         }
     }
     

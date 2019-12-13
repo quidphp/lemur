@@ -95,7 +95,7 @@ const TabsHash = Component.TabsHash = function(option)
         const tabs = trigHdlr(this,'tabs:getTargets');
         
         setHdlr(tabs,'tab:getHash',function() {
-            return $(this).attr($option.hash);
+            return getAttr(this,$option.hash);
         });
     }
     

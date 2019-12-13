@@ -138,6 +138,16 @@ const Dom = Lemur.Dom = {
     },
     
     
+    // setData
+    // change de la data sur une ou plusieurs nodes
+    // ceci n'affecte pas le dom, seulement stocké dans l'objet
+    setData: function(nodes,key,value)
+    {
+        Str.check(key,true);
+        return $(nodes).data(key,value);
+    },
+    
+    
     // getOrSetData
     // crée une data dans une node si la valeur est présenement inexistante
     // sinon retourne la data de la node
@@ -219,9 +229,11 @@ const Dom = Lemur.Dom = {
     
     // getAttr
     // retourne un attribut
-    getAttr: function(key,node)
+    getAttr: function(node,key)
     {
-        return Pojo.get(key,this.attr(node));
+        Str.check(key,true);
+        Dom.checkNode(node);
+        return $(node).attr(key);
     },
     
     
@@ -230,14 +242,6 @@ const Dom = Lemur.Dom = {
     dataAttr: function(node)
     {
         return this.attr(node,'data-');
-    },
-    
-    
-    // getDataAttr
-    // retourne un attribut data
-    getDataAttr: function(key,node)
-    {
-        return (Str.isNotEmpty(key))? Pojo.get('data-'+key,this.attr(node)):null;
     },
     
     
@@ -299,8 +303,8 @@ const Dom = Lemur.Dom = {
         
         if(node != null && Str.isNotEmpty(replace))
         {
-            const href = $(node).data("href");
-            const char = $(node).data("char");
+            const href = this.getAttr(node,'data-href');
+            const char = this.getAttr(node,'data-char');
             
             if(Str.isNotEmpty(href) && Str.isNotEmpty(char))
             {

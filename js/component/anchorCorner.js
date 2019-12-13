@@ -20,7 +20,7 @@ const AnchorCorner = Component.AnchorCorner = function()
     // handler
     setHdlr(this,'anchorCorner:refresh',function() {
         const offset = offsetCorner.call(this);
-        $(this).attr('data-anchor-corner',offset.corner);
+        setAttr(this,'data-anchor-corner',offset.corner);
     });
     
     
