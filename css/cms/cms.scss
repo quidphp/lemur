@@ -63,8 +63,7 @@ button[type='submit'] {
 button[type='button'] {
     line-height: 1.5;
 }
-*[data-disabled='1']
-*:disabled {
+*[data-disabled='1'] *:disabled {
     cursor: no-drop !important;
 }
 input[type='radio']:disabled + label,

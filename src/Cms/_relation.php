@@ -12,9 +12,9 @@ declare(strict_types=1);
 namespace Quid\Lemur\Cms;
 use Quid\Base;
 use Quid\Base\Html;
+use Quid\Core;
 use Quid\Lemur;
 use Quid\Orm;
-use Quid\Core;
 
 // _relation
 // trait that provides some initial configuration for a CMS relation route
@@ -262,15 +262,15 @@ trait _relation
         return $return;
     }
 
-    
+
     // commonInsideClickOpen
     // méthode commune utilisé pour générer l'intérieur d'un clickOpen
     protected static function commonInsideClickOpen(Orm\Relation $relation,Core\Route $route)
     {
-        $return = array();
+        $return = [];
         $html = '';
-        $data = array();
-        
+        $data = [];
+
         if($route->canTrigger())
         {
             $searchMinLength = $relation->searchMinLength();
@@ -307,14 +307,14 @@ trait _relation
 
             $html .= Html::div(null,'results');
         }
-        
+
         $return[] = $html;
         $return[] = $data;
-        
+
         return $return;
     }
-    
-    
+
+
     // makeClickOpen
     // génère une balise clickOpen, qui contient un container
     // est la base pour un fakeSelect

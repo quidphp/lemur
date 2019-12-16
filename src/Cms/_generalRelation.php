@@ -319,7 +319,7 @@ trait _generalRelation
         [$html,$data] = static::commonInsideClickOpen($relation,$route);
         $attr = Base\Attr::append($attr,['data'=>$data]);
         $r .= static::makeClickOpen($html,$label,$after,$attr);
-        
+
         return $r;
     }
 

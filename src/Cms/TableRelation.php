@@ -136,7 +136,7 @@ class TableRelation extends Core\RouteAlias
         $relation = $table->relation();
         $title = Html::span($table->label(),'title');
         $title .= Html::span(null,'ico');
-        
+
         [$html,$data] = static::commonInsideClickOpen($relation,$route);
         $attr = Base\Attr::append($attr,['data'=>$data]);
         $r .= static::makeClickOpen($html,$title,null,$attr);
