@@ -19,9 +19,9 @@ const Selector = Lemur.Selector = {
     },
     
     
-    // scopedQuerySelector
+    // scopedQuery
     // méthode utilisé pour faire une recherche et retourner le premier enfant d'une target qui match le selector
-    scopedQuerySelector: function(node,selector)
+    scopedQuery: function(node,selector)
     {
         let r = null;
         Dom.checkNode(node,false);
@@ -37,10 +37,10 @@ const Selector = Lemur.Selector = {
     },
     
     
-    // scopedQuerySelectorAll
+    // scopedQueryAll
     // méthode utilisé pour faire une recherche et retourner les enfants d'une target qui match le selector
     // doit retourner un array, pas une node list
-    scopedQuerySelectorAll: function(node,selector)
+    scopedQueryAll: function(node,selector)
     {
         let r = null;
         Dom.checkNode(node,false);
@@ -61,10 +61,10 @@ const Selector = Lemur.Selector = {
     },
     
     
-    // mergedQuerySelectorAll
+    // mergedScopedQueryAll
     // permet de faire un querySelectorAll sur plusieurs nodes
     // retourne un array avec les résultats merged
-    mergedQuerySelectorAll: function(nodes,selector)
+    mergedScopedQueryAll: function(nodes,selector)
     {
         let r = null;
         const $inst = this;
@@ -77,7 +77,7 @@ const Selector = Lemur.Selector = {
         {
             r = [];
             Arr.each(nodes,function() {
-                Arr.mergeRef(r,$inst.scopedQuerySelectorAll(this,selector));
+                Arr.mergeRef(r,$inst.scopedQueryAll(this,selector));
             });
         }
         

@@ -64,9 +64,9 @@ const trigHdlr = Handler.trigger.bind(Handler);
 const trigHdlrs = Handler.triggers.bind(Handler);
 
 // selector
-const qs = Selector.scopedQuerySelector.bind(Selector);
-const qsa = Selector.scopedQuerySelectorAll.bind(Selector);
-const mergedQsa = Selector.mergedQuerySelectorAll.bind(Selector);
+const qs = Selector.scopedQuery.bind(Selector);
+const qsa = Selector.scopedQueryAll.bind(Selector);
+const mergedQsa = Selector.mergedScopedQueryAll.bind(Selector);
 
 // component
 const Component = Lemur.Component;

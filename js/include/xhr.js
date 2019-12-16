@@ -222,12 +222,12 @@ const Xhr = Lemur.Xhr = new function()
 
             if(parse != null)
             {
-                const ajaxParse = Selector.scopedQuerySelector(parse,".ajax-parse-error");
+                const ajaxParse = Selector.scopedQuery(parse,".ajax-parse-error");
                 html = Dom.outerHtml(ajaxParse);
                 
                 if(Vari.isEmpty(html))
                 {
-                    const body = Selector.scopedQuerySelector(parse,"body,[data-tag='body']");
+                    const body = Selector.scopedQuery(parse,"body,[data-tag='body']");
                     html = $(body).html();
                 }
                 

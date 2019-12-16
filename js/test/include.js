@@ -13,7 +13,7 @@ Test.Include = function()
     try 
     {
         // prepare
-        const htmlNode = Selector.scopedQuerySelector(document,'html');
+        const htmlNode = Selector.scopedQuery(document,'html');
         const selectorOne = htmlNode.querySelector("body");
         const selectorAll = htmlNode.querySelectorAll("body");
         const htmlStr = Dom.outerHtml(htmlNode);
@@ -485,10 +485,10 @@ Test.Include = function()
         // selector
         assert(Selector.input() === "input,select,textarea,button[type='submit']");
         assert(Selector.input(true) === "input,select,textarea,button");
-        assert(Dom.isNode(Selector.scopedQuerySelector(htmlNode,"body")));
-        assert(Selector.scopedQuerySelector(htmlNode,"james") == null);
-        assert(Arr.isNotEmpty(Selector.scopedQuerySelectorAll(htmlNode,"body")));
-        assert(Arr.isEmpty(Selector.scopedQuerySelectorAll(htmlNode,"james")));
+        assert(Dom.isNode(Selector.scopedQuery(htmlNode,"body")));
+        assert(Selector.scopedQuery(htmlNode,"james") == null);
+        assert(Arr.isNotEmpty(Selector.scopedQueryAll(htmlNode,"body")));
+        assert(Arr.isEmpty(Selector.scopedQueryAll(htmlNode,"james")));
         
         // str
         assert(Str.is('WHAT'));

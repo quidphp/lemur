@@ -153,7 +153,7 @@ const Evt = Lemur.Evt = new function()
     {
         let r = false;
         const context = event.target;
-        const nodes = Selector.scopedQuerySelectorAll(this,delegate);
+        const nodes = Selector.scopedQueryAll(this,delegate);
         const delegateTarget = this;
         let triggerTarget = context;
         

@@ -13,10 +13,10 @@ Test.Component = function()
     try 
     {
         // prepare
-        const htmlNode = Selector.scopedQuerySelector(document,'html');
-        const bodyNode = Selector.scopedQuerySelector(htmlNode,'body');
+        const htmlNode = Selector.scopedQuery(document,'html');
+        const bodyNode = Selector.scopedQuery(htmlNode,'body');
         $(bodyNode).prepend("<input type='text' value='2' name='test-suite' data-required='1' data-pattern='^[0-9\-]+$' />");
-        const inputNode = Selector.scopedQuerySelector(bodyNode,"> input[name='test-suite']");
+        const inputNode = Selector.scopedQuery(bodyNode,"> input[name='test-suite']");
         
         // absolutePlaceholder
         

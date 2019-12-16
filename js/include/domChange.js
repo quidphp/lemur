@@ -79,7 +79,7 @@ const DomChange = Lemur.DomChange = {
     // ajout target _blank à tous les liens externes qui n'ont pas la target
     aExternalBlank: function(node)
     {
-        const anchor = Selector.scopedQuerySelectorAll(node,"a[target!='_blank']");
+        const anchor = Selector.scopedQueryAll(node,"a[target!='_blank']");
         
         $(anchor).filter(function() {
             return (Uri.isExternal(getAttr(this,"href")) && !$(this).is("[href^='mailto:']"))? true:false;

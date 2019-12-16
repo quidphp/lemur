@@ -51,18 +51,18 @@ const Html = Lemur.Html = {
         $(r.html).removeAttr('data-tag');
         r.htmlAttr = Dom.attr(r.html);
         
-        r.head = Selector.scopedQuerySelector(r.html,"[data-tag='head']");
-        r.body = Selector.scopedQuerySelector(r.html,"[data-tag='body']");
+        r.head = Selector.scopedQuery(r.html,"[data-tag='head']");
+        r.body = Selector.scopedQuery(r.html,"[data-tag='body']");
         
         if(r.head != null)
         {
-            const title = Selector.scopedQuerySelector(r.head,"title");
+            const title = Selector.scopedQuery(r.head,"title");
             
             $(r.head).removeAttr('data-tag');
             r.headAttr = Dom.attr(r.head);
             r.title = (title != null)? $(title).text():'?';
             r.titleHtml = r.title.replace('<','&lt;').replace('>','&gt;').replace(' & ',' &amp; ');
-            r.meta = Selector.scopedQuerySelectorAll(r.head,"meta");
+            r.meta = Selector.scopedQueryAll(r.head,"meta");
         }
         
         if(r.body != null)
