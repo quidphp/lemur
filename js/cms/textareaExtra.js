@@ -6,111 +6,123 @@
  
 // textareaExtra
 // script for a component to search and insert content within a textarea, with support for tinymce
-const TextareaExtra = Component.TextareaExtra = function()
+Component.TextareaExtra = function(option)
 {
+    // not empty
+    if(Vari.isEmpty(this)) 
+    return null;
+    
+    
+    // option
+    const $option = Pojo.replaceRecursive({
+        filter: {
+            trigger: ".trigger",
+            target: ".popup",
+            background: "tableRelation"
+        }
+    },option);
+    
+    
+    // handler
+    setHdlrs(this,'textareaExtra:',{
+        
+        hasFilters: function() {
+            return (Arr.isNotEmpty(trigHdlr(this,'textareaExtra:getFilters')))? true:false;
+        },
+        
+        hasTinymce: function() {
+            return ($(this).parents(".form-element").is("[data-group='tinymce']"))? true:false;
+        },
+        
+        getTextarea: function() {
+            return qs(this,'textarea');
+        },
+        
+        getFilters: function() {
+            return qsa(this,'.table-relation');
+        }
+    });
+    
+    
+    // event
+    ael(this,'component:enable',function() {
+        if(trigHdlr(this,'textareaExtra:hasTinymce'))
+        enableTinycme.call(this);
+    });
+    
+    ael(this,'component:disable',function() {
+        if(trigHdlr(this,'textareaExtra:hasTinymce'))
+        disableTinycme.call(this);
+    });
+    
+    
     // setup
     aelOnce(this,'component:setup',function() {
-        /*
         bindTextarea.call(this);
         
         if(trigHdlr(this,'textareaExtra:hasFilters'))
         bindFilter.call(this);
         
         if(trigHdlr(this,'textareaExtra:hasTinymce'))
-        bindTinymce.call(this);
-        */
+        mountTinymce.call(this);
     })
     
     
     // teardown
     aelOnce(this,'component:teardown',function() {
-        /*
-        const editor = trigHdlr(this,"textareaExtra:getTinymceEditor");
-        
-        if(editor != null)
-        editor.remove();
-        */
+        if(trigHdlr(this,'textareaExtra:hasTinymce'))
+        unmountTinymce.call(this);
     });
     
     
-    /*
-    // triggerHandler
-    $(this).on('textareaExtra:getTextarea',function() {
-        return $(this).find("textarea").get(0);
-    })
-    .on('textareaExtra:getFilters',function() {
-        return $(this).find(".table-relation");
-    })
-    .on('textareaExtra:getTinymceEditor',function() {
-        const textarea = trigHdlr(this,'textareaExtra:getTextarea');
-        return getData(textarea,'tinymce-editor');
-    })
-    .on('textareaExtra:hasFilters',function() {
-        return (trigHdlr(this,'textareaExtra:getFilters').length)? true:false;
-    })
-    .on('textareaExtra:hasTinymce',function() {
-        return ($(this).parents(".form-element").is("[data-group='tinymce']"))? true:false;
-    })
-    
     // bindTextarea
-    const bindTextarea = function() {
+    const bindTextarea = function() 
+    {
         const textarea = trigHdlr(this,'textareaExtra:getTextarea');
         
-        textarea.on('textareaInput:insert',function(event,html) {
+        setHdlr(textarea,'textareaInput:insert',function(html) {
             let r = false;
             
             if(Str.isNotEmpty(html))
             {
                 r = true;
-                const current = $(this).val();
-                textarea.val(current+html);
+                trigHdlr(this,'input:appendValue',html);
             }
             
             return r;
         });
-    };
+    }
     
     // bindFilter
-    const bindFilter = function() {
+    const bindFilter = function() 
+    {
         const filters = trigHdlr(this,'textareaExtra:getFilters');
         const textarea = trigHdlr(this,'textareaExtra:getTextarea');
         
-        Component.filter.call(filters);
-        filters.on('clickOpen:getBackgroundFrom',function() {
-            return 'tableRelation';
-        })
-        .one('component:setup',function(event) {
-            trigEvt(this,'component:setup');
+        Component.Filter.call(filters,$option.filter);
+        
+        aelOnce(filters,'component:setup',function() {
+            const $this = this;
+            const result = trigHdlr(this,'feedSearch:getResult');
             
-            const clickOpen = trigHdlr(this,'clickOpen:getTarget');
-            const result = trigHdlr(this,'filter:getResult');
-            
-            result.on('click', '.insert',function(event) {
+            aelDelegate(result,'click','.insert',function(event) {
                 const html = getAttr(this,'data-html');
-                textarea.trigHdlr('textareaInput:insert',html);
-                clickOpen.trigger('clickOpen:close');
-                event.stopPropagation();
+                trigHdlr(textarea,'textareaInput:insert',html);
+                trigEvt($this,'clickOpen:close');
             });
-            
-            event.stopPropagation();
-        })
-        .on('feed:bind',function() {
-            const target = trigHdlr(this,'clickOpen:getTarget');
-            
-            target.on('feed:parseData',function(event,data) {
-                return Html.parse(data).find("li");
-            })
-        })
-        .trigger('component:setup');
-    };
+        });
+        
+        trigSetup(filters);
+    }
     
-    // bindTinymce
-    const bindTinymce = function() {
+    
+    // mountTinymce
+    const mountTinymce = function() 
+    {
         const textarea = trigHdlr(this,'textareaExtra:getTextarea');
         const editor = createTinymce.call(textarea);
         setData(textarea,'tinymce-editor',editor);
-        
-        textarea.on('textareaInput:insert',function(event,html) {
+        setHdlr(textarea,'textareaInput:insert',function(html) {
             let r = false;
             
             if(Str.isNotEmpty(html))
@@ -121,16 +133,52 @@ const TextareaExtra = Component.TextareaExtra = function()
             
             return r;
         });
+        
+        setHdlr(this,'textareaExtra:getTinymceEditor',function() {
+            const textarea = trigHdlr(this,'textareaExtra:getTextarea');
+            return getData(textarea,'tinymce-editor');
+        });
     }
     
+    
+    // unmountTinymce
+    const unmountTinymce = function()
+    {
+        const editor = trigHdlr(this,"textareaExtra:getTinymceEditor");
+
+        if(editor != null)
+        editor.remove();
+    }
+    
+    
+    // enableTinycme
+    const enableTinycme = function()
+    {
+        const editor = trigHdlr(this,"textareaExtra:getTinymceEditor");
+        
+        if(editor != null)
+        editor.setMode('design');
+    }
+    
+    
+    // disableTinycme
+    const disableTinycme = function()
+    {
+        const editor = trigHdlr(this,"textareaExtra:getTinymceEditor");
+        
+        if(editor != null)
+        editor.setMode('readonly');
+    }
+    
+    
     // createTinymce
-    const createTinymce = function() {
+    const createTinymce = function() 
+    {
         let r = null;
         
         DomChange.addId('tinymce-',this);
-        const id = this.prop('id');
-        const data = getAttr(this,'data-tinymce') || {};
-        
+        const id = $(this).prop('id');
+        const data = getAttr(this,'data-tinymce',true) || {};
         data.selector = "#"+id;
         data.init_instance_callback = function (editor) {
             editor.on('Blur', function (e) {
@@ -141,8 +189,7 @@ const TextareaExtra = Component.TextareaExtra = function()
         r = tinymce.get(id);
         
         return r;
-    };
-    */
+    }
     
     return this;
 }

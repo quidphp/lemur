@@ -6,10 +6,15 @@
 
 // clickOpenInputAjax
 // component for a one field form which triggers an ajax request that shows in a clickOpen
-const ClickOpenInputAjax = Component.ClickOpenInputAjax = function(option)
+Component.ClickOpenInputAjax = function(option)
 {
+    // not empty
+    if(Vari.isEmpty(this)) 
+    return null;
+    
+    
     // option
-    const $option = Pojo.replace({
+    const $option = Pojo.replaceRecursive({
         ajaxEvent: 'submit',
         inputSearch: {
             keyEvent: 'keyup',
@@ -41,8 +46,8 @@ const ClickOpenInputAjax = Component.ClickOpenInputAjax = function(option)
         const $this = this;
         const field = trigHdlr(this,'form:getValidateField');
         
-        
         // components
+        Component.KeyboardEscape.call(field,true,$option.inputSearch.keyEvent);
         Component.InputSearch.call(field,$option.inputSearch);
         
         
@@ -51,9 +56,9 @@ const ClickOpenInputAjax = Component.ClickOpenInputAjax = function(option)
             return trigHdlr($this,'form:getSubmit');
         });
         
-        
         // event
-        ael(field,'keyboardEscape:blocked',function(event) {
+        ael(field,'keyboardEscape:blocked',function(event,keyEvent) {
+            trigHdlr(this,'inputSearch:clearTimeout');
             trigEvt($this,'clickOpen:close');
         });
         

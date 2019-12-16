@@ -6,10 +6,15 @@
  
 // navIndex
 // base component that manages index navigation for many targets
-const NavIndex = Component.NavIndex = function(option) 
+Component.NavIndex = function(option) 
 {
+    // not empty
+    if(Vari.isEmpty(this)) 
+    return null;
+    
+    
     // option
-    const $option = Pojo.replace({
+    const $option = Pojo.replaceRecursive({
         target: [],
         childOpen: null,
         go: null,

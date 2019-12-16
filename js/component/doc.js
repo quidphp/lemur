@@ -6,7 +6,7 @@
  
 // doc
 // root component for a document node
-const Doc = Component.Doc = function(option)
+Component.Doc = function(option)
 {
     // document node
     Dom.checkNode(this,document);

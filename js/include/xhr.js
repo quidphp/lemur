@@ -100,7 +100,7 @@ const Xhr = Lemur.Xhr = new function()
             const tagName = Dom.tag(node);
             
             if(r.url == null)
-            r = configNodeUrl(r,node,tagName);
+            r = configNodeUrl(r,node);
 
             if(r.method == null)
             r = configNodeMethod(r,node,tagName);
@@ -120,18 +120,12 @@ const Xhr = Lemur.Xhr = new function()
     
     // configNodeUrl
     // fait la configuration de l'url pour une node
-    const configNodeUrl = function(r,node,tagName)
+    const configNodeUrl = function(r,node)
     {
         r.url = Handler.trigger(node,'ajax:getUrl');
         
         if(r.url == null)
-        {
-            if(tagName === 'form')
-            r.url = Dom.getAttr(node,"action");
-            
-            else
-            r.url = Dom.getAttr(node,"href") || Dom.getAttr(node,'data-href');
-        }
+        r.url = Dom.getUri(node);
         
         return r;
     }

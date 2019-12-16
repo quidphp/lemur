@@ -6,7 +6,7 @@
  
 // anchorCorner
 // script of behaviours for an absolute anchorCorner component
-const AnchorCorner = Component.AnchorCorner = function()
+Component.AnchorCorner = function()
 {
     // not empty
     if(Vari.isEmpty(this)) 

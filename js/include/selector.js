@@ -10,9 +10,12 @@ const Selector = Lemur.Selector = {
     
     // input
     // retourne un selector commun à utiliser pour les inputs
-    input: function() 
+    input: function(all) 
     {
-        return "input,select,textarea,button[type='submit']";
+        let r = 'input,select,textarea,button';
+        r += (all !== true)? "[type='submit']":'';
+        
+        return r;
     },
     
     

@@ -6,8 +6,13 @@
  
 // inputSearchHref
 // script containing logic for a search input with a button
-const InputSearch = Component.InputSearch = function(option)
+Component.InputSearch = function(option)
 {
+    // not empty
+    if(Vari.isEmpty(this)) 
+    return null;
+    
+    
     // option
     const $option = Pojo.replace({
         timeout: 500,
@@ -73,11 +78,15 @@ const InputSearch = Component.InputSearch = function(option)
             if($option.useCurrent === true)
             trigHdlr(this,'inputSearch:setCurrent',value);
             
-            trigHdlr(this,'timeout:clear',$option.keyEvent);
+            trigHdlr(this,'inputSearch:clearTimeout');
         },
         
         buttonClick: function() {
             trigHdlr(this,'inputSearch:process');
+        },
+        
+        clearTimeout: function() {
+            trigHdlr(this,'timeout:clear',$option.keyEvent);
         }
     });
     
@@ -86,8 +95,8 @@ const InputSearch = Component.InputSearch = function(option)
     ael(this,'keyboardEnter:blocked',function() {
         trigHdlr(this,'inputSearch:buttonClick');
     });
-        
-    ael(this,'timeout:'+$option.keyEvent,function() {
+    
+    ael(this,'timeout:'+$option.keyEvent,function(event,keyEvent) {
         if($(this).is(":focus"))
         {
             trigHdlr(this,'input:valueRemember');
@@ -105,7 +114,7 @@ const InputSearch = Component.InputSearch = function(option)
     });
     
     ael(this,'inputSearch:change',function() {
-        trigHdlr(this,'timeout:clear',$option.keyEvent);
+        trigHdlr(this,'inputSearch:clearTimeout');
     });
     
     
@@ -123,9 +132,7 @@ const InputSearch = Component.InputSearch = function(option)
         
         ael(button,'click',function(event) {
             trigHdlr($this,'inputSearch:buttonClick');
-            
-            event.stopPropagation();
-            event.preventDefault();
+            Evt.preventStop(event);
         });
     }
     

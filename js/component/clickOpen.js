@@ -6,7 +6,7 @@
  
 // clickOpen
 // manages a clickOpen component, links clickOpenBase and clickOutside
-const ClickOpen = Component.ClickOpen = function(option)
+Component.ClickOpen = function(option)
 {   
     // not empty
     if(Vari.isEmpty(this)) 

@@ -6,8 +6,13 @@
  
 // tabsNav
 // script with behaviours for a tab component with support for navigation
-const TabsNav = Component.TabsNav = function(option) 
+Component.TabsNav = function(option) 
 {
+    // not empty
+    if(Vari.isEmpty(this)) 
+    return null;
+    
+    
     // option
     const $option = Pojo.replace({
         nav: [],

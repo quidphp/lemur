@@ -6,7 +6,7 @@
  
 // history
 // component managing site navigation with the HistoryAPI
-const HistoryComponent = Component.History = function(option)
+Component.History = function(option)
 {
     // document node
     Dom.checkNode(this,document);
@@ -244,7 +244,7 @@ const HistoryComponent = Component.History = function(option)
     const isValidNode = function(node,type)
     {
         let r = false;
-        const href = getHrefFromNode(node);
+        const href = Dom.getUri(node);
         
         if(Str.isNotEmpty(href))
         {
@@ -258,27 +258,7 @@ const HistoryComponent = Component.History = function(option)
         return r;
     }
     
-    
-    // getHrefFromNode
-    // retourne le href à utiliser à partir de la node
-    const getHrefFromNode = function(node)
-    {
-        let r = null;
-        const tag = Dom.tag(node);
-        
-        if(Str.isNotEmpty(tag))
-        {
-            if(tag === 'form')
-            r = getAttr(node,'action');
-            
-            else
-            r = getAttr(node,'href') || getAttr(node,'data-href');
-        }
-        
-        return r;
-    }
-    
-    
+
     // historyEvent
     // gère une nouvelle entrée à l'historique à partir d'un event
     const historyEvent = function(srcEvent)
@@ -315,7 +295,7 @@ const HistoryComponent = Component.History = function(option)
         
         if(isValidNode.call(this,node,type))
         {
-            const href = getHrefFromNode(node);
+            const href = Dom.getUri(node);
             r = historyHref.call(this,href,nodeOrEvent);
         }
         

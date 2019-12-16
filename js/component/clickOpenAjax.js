@@ -6,7 +6,7 @@
 
 // clickOpenAjax
 // manages a clickOpen component which triggers an ajax request when open
-const ClickOpenAjax = Component.ClickOpenAjax = function(option)
+Component.ClickOpenAjax = function(option)
 {
     // not empty
     if(Vari.isEmpty(this)) 

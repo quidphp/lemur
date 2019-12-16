@@ -6,8 +6,13 @@
  
 // focusable
 // component to allow focus navigaton on a set of nodes
-const Focusable = Component.Focusable = function(option)
+Component.Focusable = function(option)
 {
+    // not empty
+    if(Vari.isEmpty(this)) 
+    return null;
+    
+    
     // option
     const $option = Pojo.replace({
         target: "a,button",

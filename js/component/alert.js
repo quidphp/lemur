@@ -6,7 +6,7 @@
  
 // alert
 // component to launch an alert notification when an event is triggered
-const Alert = Component.Alert = function(type)
+Component.Alert = function(type)
 {
     // not empty
     if(Vari.isEmpty(this)) 

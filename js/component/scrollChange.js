@@ -6,8 +6,13 @@
  
 // scrollChange
 // component to notify nodes when window scroll has changed
-const ScrollChange = Component.ScrollChange = function(persistent)
+Component.ScrollChange = function(persistent)
 {
+    // not empty
+    if(Vari.isEmpty(this)) 
+    return null;
+    
+    
     // nodes
     const $nodes = this;
     

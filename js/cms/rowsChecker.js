@@ -6,112 +6,120 @@
  
 // rowsChecker
 // script for the rows checker component in the general page of the CMS
-const RowsChecker = Component.RowsChecker = function()
+Component.RowsChecker = function()
 {
+    // not empty
+    if(Vari.isEmpty(this)) 
+    return null;
+    
+    
     // handler
-    setHdlr(this,'rowsChecker:getToolsContainer',function() {
-        return qs(this,".above .tools-container");
-    });
-    
-    setHdlr(this,'rowsChecker:getTools',function() {
-        return qsa(trigHdlr(this,'rowsChecker:getToolsContainer'),".tool-element");
-    });
-    
-    setHdlr(this,'rowsChecker:getToolsButton',function() {
-        return Arr.filter(trigHdlr(this,'rowsChecker:getTools'),function() {
-            return $(this).is('button');
-        });
-    });
-    
-    setHdlr(this,'rowsChecker:getMultiModify',function() {
-        return Arr.find(trigHdlr(this,'rowsChecker:getToolsButton'),function() {
-            return $(this).is('.multi-modify');
-        });
-    });
-    
-    setHdlr(this,'rowsChecker:getMultiDelete',function() {
-        return Arr.find(trigHdlr(this,'rowsChecker:getTools'),function() {
-            return $(this).is(".multi-delete-form");
-        }); 
-    });
-    
-    setHdlr(this,'rowsChecker:getToolsMulti',function() {
-        const multiModify = trigHdlr(this,'rowsChecker:getMultiModify');
-        const multiDelete = trigHdlr(this,'rowsChecker:getMultiDelete');
+    setHdlrs(this,'rowsChecker:',{
         
-        return (multiModify != null && multiDelete != null)? [multiModify,multiDelete]:null;
-    });
-    
-    setHdlr(this,'rowsChecker:getTable',function() {
-        return qs(this,'table');
-    });
-    
-    setHdlr(this,'rowsChecker:getToggleAll',function() {
-        return qs(trigHdlr(this,'rowsChecker:getTable'),"th.rows .toggle-all");
-    });
-    
-    setHdlr(this,'rowsChecker:getRows',function() {
-        return qsa(trigHdlr(this,'rowsChecker:getTable'),"tbody tr");
-    });
-    
-    setHdlr(this,'rowsChecker:getCheckedRows',function() {
-        const r = [];
-        const checked = trigHdlr(this,'rowsChecker:getCheckedCheckboxes');
+        getToolsContainer: function() {
+            return qs(this,".above .tools-container");
+        },
         
-        Arr.each(checked,function() {
-            const row = trigHdlr(this,'checkbox:getTr');
-            r.push(row);
-        });
+        getTools: function() {
+            return qsa(trigHdlr(this,'rowsChecker:getToolsContainer'),".tool-element");
+        },
         
-        return r;
-    });
-    
-    setHdlr(this,'rowsChecker:getCheckboxes',function() {
-        return mergedQsa(trigHdlr(this,'rowsChecker:getRows'),"td.rows input[type='checkbox']");
-    });
-    
-    setHdlr(this,'rowsChecker:getCheckedCheckboxes',function() {
-        return Arr.filter(trigHdlr(this,'rowsChecker:getCheckboxes'),function() {
-            return $(this).is(':checked');
-        });
-    });
-    
-    setHdlr(this,'rowsChecker:getCheckedSet',function(separator) {
-        return Dom.valueSeparator(trigHdlr(this,'rowsChecker:getCheckedCheckboxes'),separator,true);
-    });
-    
-    setHdlr(this,'rowsChecker:areAllChecked',function() {
-        const checkboxes = trigHdlr(this,'rowsChecker:getCheckboxes');
-        const checked = trigHdlr(this,'rowsChecker:getCheckedCheckboxes');
+        getToolsButton: function() {
+            return Arr.filter(trigHdlr(this,'rowsChecker:getTools'),function() {
+                return $(this).is('button');
+            });
+        },
         
-        return (checkboxes.length === checked.length)? true:false;
-    });
-    
-    setHdlr(this,'rowsChecker:areAllUpdateable',function() {
-        return Dom.matchAll("[data-updateable='1']",trigHdlr(this,'rowsChecker:getCheckedRows'));
-    });
-    
-    setHdlr(this,'rowsChecker:areAllDeleteable',function() {
-        return Dom.matchAll("[data-deleteable='1']",trigHdlr(this,'rowsChecker:getCheckedRows'));
-    });
-    
-    setHdlr(this,'rowsChecker:refresh',function() {
-        const checked = trigHdlr(this,'rowsChecker:getCheckedCheckboxes');
-        const toolsContainer = trigHdlr(this,'rowsChecker:getToolsContainer');
-        const toggleAll = trigHdlr(this,'rowsChecker:getToggleAll');
-        const multiModify = trigHdlr(this,'rowsChecker:getMultiModify');
-        const multiDelete = trigHdlr(this,'rowsChecker:getMultiDelete');
-        const oneChecked = (checked.length)? true:false;
-        const manyChecked = (checked.length > 1)? true:false;
-        const allChecked = trigHdlr(this,'rowsChecker:areAllChecked');
-        const showMulti = (manyChecked === true && trigHdlr(this,'rowsChecker:areAllUpdateable'))? true:false;
-        const showDelete = (oneChecked === true && trigHdlr(this,'rowsChecker:areAllDeleteable'))? true:false;
+        getMultiModify: function() {
+            return Arr.find(trigHdlr(this,'rowsChecker:getToolsButton'),function() {
+                return $(this).is('.multi-modify');
+            });
+        },
         
-        $(toggleAll).toggleClass('all-checked',allChecked);
+        getMultiDelete: function() {
+            return Arr.find(trigHdlr(this,'rowsChecker:getTools'),function() {
+                return $(this).is(".multi-delete-form");
+            }); 
+        },
         
-        trigHdlr(toolsContainer,(oneChecked === true)? 'toolsContainer:show':'toolsContainer:hide');
-        trigHdlr(multiModify,(showMulti === true)? 'toolMulti:show':'toolMulti:hide');
-        trigHdlr(multiDelete,(showDelete === true)? 'toolMulti:show':'toolMulti:hide');
+        getToolsMulti: function() {
+            const multiModify = trigHdlr(this,'rowsChecker:getMultiModify');
+            const multiDelete = trigHdlr(this,'rowsChecker:getMultiDelete');
+            
+            return (multiModify != null && multiDelete != null)? [multiModify,multiDelete]:null;
+        },
+        
+        getTable: function() {
+            return qs(this,'table');
+        },
+        
+        getToggleAll: function() {
+            return qs(trigHdlr(this,'rowsChecker:getTable'),"th.rows .toggle-all");
+        },
+        
+        getRows: function() {
+            return qsa(trigHdlr(this,'rowsChecker:getTable'),"tbody tr");
+        },
+        
+        getCheckedRows: function() {
+            const r = [];
+            const checked = trigHdlr(this,'rowsChecker:getCheckedCheckboxes');
+            
+            Arr.each(checked,function() {
+                const row = trigHdlr(this,'checkbox:getTr');
+                r.push(row);
+            });
+            
+            return r;
+        },
+        
+        getCheckboxes: function() {
+            return mergedQsa(trigHdlr(this,'rowsChecker:getRows'),"td.rows input[type='checkbox']");
+        },
+        
+        getCheckedCheckboxes: function() {
+            return Arr.filter(trigHdlr(this,'rowsChecker:getCheckboxes'),function() {
+                return $(this).is(':checked');
+            });
+        },
+        
+        getCheckedSet: function(separator) {
+            return Dom.valueSeparator(trigHdlr(this,'rowsChecker:getCheckedCheckboxes'),separator,true);
+        },
+        
+        areAllChecked: function() {
+            const checkboxes = trigHdlr(this,'rowsChecker:getCheckboxes');
+            const checked = trigHdlr(this,'rowsChecker:getCheckedCheckboxes');
+            
+            return (checkboxes.length === checked.length)? true:false;
+        },
+        
+        areAllUpdateable: function() {
+            return Dom.matchAll("[data-updateable='1']",trigHdlr(this,'rowsChecker:getCheckedRows'));
+        },
+        
+        areAllDeleteable: function() {
+            return Dom.matchAll("[data-deleteable='1']",trigHdlr(this,'rowsChecker:getCheckedRows'));
+        },
+        
+        refresh: function() {
+            const checked = trigHdlr(this,'rowsChecker:getCheckedCheckboxes');
+            const toolsContainer = trigHdlr(this,'rowsChecker:getToolsContainer');
+            const toggleAll = trigHdlr(this,'rowsChecker:getToggleAll');
+            const multiModify = trigHdlr(this,'rowsChecker:getMultiModify');
+            const multiDelete = trigHdlr(this,'rowsChecker:getMultiDelete');
+            const oneChecked = (checked.length)? true:false;
+            const manyChecked = (checked.length > 1)? true:false;
+            const allChecked = trigHdlr(this,'rowsChecker:areAllChecked');
+            const showMulti = (manyChecked === true && trigHdlr(this,'rowsChecker:areAllUpdateable'))? true:false;
+            const showDelete = (oneChecked === true && trigHdlr(this,'rowsChecker:areAllDeleteable'))? true:false;
+            
+            $(toggleAll).toggleClass('all-checked',allChecked);
+            
+            trigHdlr(toolsContainer,(oneChecked === true)? 'toolsContainer:show':'toolsContainer:hide');
+            trigHdlr(multiModify,(showMulti === true)? 'toolMulti:show':'toolMulti:hide');
+            trigHdlr(multiDelete,(showDelete === true)? 'toolMulti:show':'toolMulti:hide');
+        }
     });
     
     
@@ -133,20 +141,23 @@ const RowsChecker = Component.RowsChecker = function()
         const toggleAll = trigHdlr(this,'rowsChecker:getToggleAll');
         
         // handler
-        setHdlr(toggleAll,'toggleAll:toggle',function() {
-            trigHdlr(this,(trigHdlr($this,'rowsChecker:areAllChecked'))? 'toggleAll:uncheck':'toggleAll:check');
-        });
-        
-        setHdlr(toggleAll,'toggleAll:check',function() {
-            const checkboxes = trigHdlr($this,'rowsChecker:getCheckboxes');
-            trigHdlrs(checkboxes,'checkbox:check');
-            trigHdlr($this,'rowsChecker:refresh');
-        });
-        
-        setHdlr(toggleAll,'toggleAll:uncheck',function() {
-            const checkboxes = trigHdlr($this,'rowsChecker:getCheckboxes');
-            trigHdlrs(checkboxes,'checkbox:uncheck');
-            trigHdlr($this,'rowsChecker:refresh');
+        setHdlrs(toggleAll,'toggleAll:',{
+            
+            toggle: function() {
+                trigHdlr(this,(trigHdlr($this,'rowsChecker:areAllChecked'))? 'toggleAll:uncheck':'toggleAll:check');
+            },
+            
+            check: function() {
+                const checkboxes = trigHdlr($this,'rowsChecker:getCheckboxes');
+                trigHdlrs(checkboxes,'checkbox:check');
+                trigHdlr($this,'rowsChecker:refresh');
+            },
+            
+            uncheck: function() {
+                const checkboxes = trigHdlr($this,'rowsChecker:getCheckboxes');
+                trigHdlrs(checkboxes,'checkbox:uncheck');
+                trigHdlr($this,'rowsChecker:refresh');
+            }
         });
         
         // event
@@ -163,26 +174,29 @@ const RowsChecker = Component.RowsChecker = function()
         const checkboxes = trigHdlr(this,'rowsChecker:getCheckboxes');
         
         // handler
-        setHdlr(checkboxes,'checkbox:getTr',function() {
-            return $(this).parents("tr").get(0);
-        });
-        
-        setHdlr(checkboxes,'checkbox:check',function(refresh) {
-            const tr = trigHdlr(this,'checkbox:getTr');
-            $(this).prop('checked',true);
-            setAttr(tr,'data-checked',1);
+        setHdlrs(checkboxes,'checkbox:',{
             
-            if(refresh === true)
-            trigHdlr($this,'rowsChecker:refresh');
-        });
-        
-        setHdlr(checkboxes,'checkbox:uncheck',function(refresh) {
-            const tr = trigHdlr(this,'checkbox:getTr');
-            $(this).prop('checked',false);
-            setAttr(tr,'data-checked',0);
+            getTr: function() {
+                return $(this).parents("tr").get(0);
+            },
             
-            if(refresh === true)
-            trigHdlr($this,'rowsChecker:refresh');
+            check: function(refresh) {
+                const tr = trigHdlr(this,'checkbox:getTr');
+                $(this).prop('checked',true);
+                setAttr(tr,'data-checked',1);
+                
+                if(refresh === true)
+                trigHdlr($this,'rowsChecker:refresh');
+            },
+            
+            uncheck: function(refresh) {
+                const tr = trigHdlr(this,'checkbox:getTr');
+                $(this).prop('checked',false);
+                setAttr(tr,'data-checked',0);
+                
+                if(refresh === true)
+                trigHdlr($this,'rowsChecker:refresh');
+            }
         });
         
         // event

@@ -6,8 +6,13 @@
  
 // clickOutside
 // component to manage click outside a node, uses the direct parent of the node
-const ClickOutside = Component.ClickOutside = function(value,persistent) 
+Component.ClickOutside = function(value,persistent) 
 {
+    // not empty
+    if(Vari.isEmpty(this)) 
+    return null;
+    
+    
     // handler
     setHdlr(this,'clickOutside:getParent',function() {
         return document;

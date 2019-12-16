@@ -6,10 +6,17 @@
  
 // feedSearch
 // component for a feed with search and order tools
-const FeedSearch = Component.FeedSearch = function(option)
+Component.FeedSearch = function(option)
 {
+    // not empty
+    if(Vari.isEmpty(this)) 
+    return null;
+    
+    
     // option
-    const $option = Pojo.replace({
+    const $option = Pojo.replaceRecursive({
+        appendTarget: "ul:last-child",
+        parseData: null,
         result: '.results',
         search: "input[type='text']",
         order: ".order select",
@@ -48,7 +55,7 @@ const FeedSearch = Component.FeedSearch = function(option)
     
     setHdlr(this,'feed:getAppendTarget',function() {
         const target = trigHdlr(this,'feed:getTarget');
-        return qs(target,'ul:last-child');
+        return qs(target,$option.appendTarget);
     });
     
     setHdlr(this,'feed:loadMoreRemove',function() {
@@ -60,7 +67,11 @@ const FeedSearch = Component.FeedSearch = function(option)
         if(type === 'append')
         {
             data = Html.parse(data);
+            
+            if($option.parseData)
             data = $(data).find("ul:last-child").html();
+            
+            data = $(data).html();
         }
         
         return data;

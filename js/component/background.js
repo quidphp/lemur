@@ -6,7 +6,7 @@
  
 // background
 // component for a background that can fadein or out
-const Background = Component.Background = function()
+Component.Background = function()
 {
     // not empty
     if(Vari.isEmpty(this)) 

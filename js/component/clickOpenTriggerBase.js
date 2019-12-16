@@ -6,8 +6,13 @@
  
 // ClickOpenTriggerBase
 // grants base functions for a clickOpen component which has a trigger to open/close
-const ClickOpenTriggerBase = Component.ClickOpenTriggerBase = function(option)
+Component.ClickOpenTriggerBase = function(option)
 {
+    // not empty
+    if(Vari.isEmpty(this)) 
+    return null;
+    
+    
     // option
     const $option = Pojo.replace({
         trigger: true,

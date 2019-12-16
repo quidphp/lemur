@@ -6,8 +6,13 @@
  
 // searchSlide
 // component with a search input, and an info box that slides on focus
-const SearchSlide = Component.SearchSlide = function(option) 
+Component.SearchSlide = function(option) 
 {
+    // not empty
+    if(Vari.isEmpty(this)) 
+    return null;
+    
+    
     // option
     const $option = Pojo.replaceRecursive({
         inputTarget: "> input[type='text']",

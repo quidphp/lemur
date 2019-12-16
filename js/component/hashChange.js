@@ -6,8 +6,13 @@
  
 // hashChange
 // sends the hash change event back to the nodes
-const HashChange = Component.HashChange = function(persistent)
+Component.HashChange = function(persistent)
 {
+    // not empty
+    if(Vari.isEmpty(this)) 
+    return null;
+    
+    
     // nodes
     const $nodes = this;
     

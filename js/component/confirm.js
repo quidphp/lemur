@@ -6,8 +6,13 @@
  
 // confirm
 // component to request a confirmation once an event has triggered
-const Confirm = Component.Confirm = function(type) 
+Component.Confirm = function(type) 
 {
+    // not empty
+    if(Vari.isEmpty(this)) 
+    return null;
+    
+    
     // handler
     setHdlr(this,'confirm:getText',function() {
         return getAttr(this,'data-confirm');

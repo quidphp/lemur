@@ -14,6 +14,7 @@ use Quid\Base;
 use Quid\Base\Html;
 use Quid\Lemur;
 use Quid\Orm;
+use Quid\Core;
 
 // _relation
 // trait that provides some initial configuration for a CMS relation route
@@ -261,23 +262,75 @@ trait _relation
         return $return;
     }
 
+    
+    // commonInsideClickOpen
+    // méthode commune utilisé pour générer l'intérieur d'un clickOpen
+    protected static function commonInsideClickOpen(Orm\Relation $relation,Core\Route $route)
+    {
+        $return = array();
+        $html = '';
+        $data = array();
+        
+        if($route->canTrigger())
+        {
+            $searchMinLength = $relation->searchMinLength();
+            $size = $relation->size();
+            $limit = $route->limit();
+            $query = $route->getSearchQuery();
+            $data = ['query'=>$query,'separator'=>static::getDefaultSegment(),'char'=>static::getReplaceSegment()];
+            if($route->hasOrder())
+            $route = $route->changeSegment('order',true);
+            $data['href'] = $route;
+            $order = $route->orderSelect();
 
+            if($size > $limit)
+            {
+                $html .= Html::divOp('top');
+                $placeholder = static::langText('common/filter')." ($size)";
+
+                $html .= Html::divOp('input-search');
+                $html .= Html::inputText(null,['name'=>true,'data-pattern'=>['minLength'=>$searchMinLength],'placeholder'=>$placeholder]);
+                $html .= Html::button(null,['icon-solo','search']);
+                $html .= Html::divCl();
+
+                if(!empty($order))
+                {
+                    $html .= Html::div(null,'spacing');
+                    $html .= $order;
+                }
+
+                $html .= Html::divCl();
+            }
+
+            elseif($size > 1 && !empty($order))
+            $html .= Html::div($route->orderSelect(),'top');
+
+            $html .= Html::div(null,'results');
+        }
+        
+        $return[] = $html;
+        $return[] = $data;
+        
+        return $return;
+    }
+    
+    
     // makeClickOpen
     // génère une balise clickOpen, qui contient un container
     // est la base pour un fakeSelect
     final public static function makeClickOpen(?string $value=null,?string $title=null,?string $after=null,$attr=null,?array $option=null):string
     {
-        $return = '';
-        $return .= Html::divOp($attr);
-        $return .= Html::button($title,'trigger');
-        $return .= Html::div($value,['popup','tabindex'=>0]);
+        $r = '';
+        $r .= Html::divOp($attr);
+        $r .= Html::button($title,'trigger');
+        $r .= Html::div($value,['popup','tabindex'=>0]);
 
         if(is_string($after))
-        $return .= $after;
+        $r .= $after;
 
-        $return .= Html::divCl();
+        $r .= Html::divCl();
 
-        return $return;
+        return $r;
     }
 }
 ?>

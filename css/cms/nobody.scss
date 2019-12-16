@@ -127,13 +127,13 @@
         color: $white;
         padding: 10px;
     }
-
+    
+    > .unsupported-browser,
     > noscript {
         display: block;
     }
 
-    > .cookie-disabled,
-    > .unsupported-browser {
+    > .cookie-disabled {
         display: none;
     }
 }

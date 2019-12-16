@@ -6,9 +6,13 @@
  
 // enumSet
 // script for an enumSet component (search in a relation)
-// input enumSet compconst avec popup et bouton, aussi append container
-Component.enumSet = function()
+Component.EnumSet = function()
 {
+    // not empty
+    if(Vari.isEmpty(this)) 
+    return null;
+    
+    /*
     // bindEnumSet
     const bindEnumSet = function() {
         $(this).on('getCurrent',function(event) {
@@ -184,7 +188,7 @@ Component.enumSet = function()
     };
     
     const $this = this;
-    $(this).each(function(index, el) {
+    Dom.each(this,function() {
         const enumSet = $(this);
         
         // enumSet
@@ -233,6 +237,7 @@ Component.enumSet = function()
             input.trigger('ajax:beforeInit');
         });
     });
+    */
     
     return this;
 }

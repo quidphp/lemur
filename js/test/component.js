@@ -6,7 +6,7 @@
  
 // include
 // script to test the component.js file
-const TestComponent = Test.Component = function()
+Test.Component = function()
 {   
     let r = true;
     

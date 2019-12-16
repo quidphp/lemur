@@ -300,18 +300,14 @@ trait _generalRelation
     final public static function makeGeneralRelation(Core\Col $col,Core\Route $currentRoute,$filter,array $attr,$closeAttr=null,?string $label=null):string
     {
         $r = '';
-        $html = '';
         $name = $col->name();
         $table = $col->table();
         $relation = $col->relation();
-        $size = $relation->size();
-        $active = false;
         $selected = null;
         $after = null;
 
         if(is_array($filter) && array_key_exists($name,$filter))
         {
-            $active = true;
             $selected = $filter[$name];
             $attr[] = 'filtering';
             $closeFilter = Base\Arr::unset($name,$filter);
@@ -320,45 +316,10 @@ trait _generalRelation
         }
 
         $route = static::make(['table'=>$table,'col'=>$col,'selected'=>$selected]);
-
-        if($route->canTrigger())
-        {
-            $limit = $route->limit();
-            $query = $route->getSearchQuery();
-            $data = ['query'=>$query,'separator'=>static::getDefaultSegment(),'char'=>static::getReplaceSegment()];
-            if($route->hasOrder())
-            $route = $route->changeSegment('order',true);
-            $data['href'] = $route;
-            $order = $route->orderSelect();
-
-            if($size > $limit)
-            {
-                $searchMinLength = $col->searchMinLength();
-                $html .= Html::divOp('top');
-                $placeholder = static::langText('common/filter')." ($size)";
-
-                $html .= Html::divOp('input-search');
-                $html .= Html::inputText(null,['name'=>true,'data-pattern'=>['minLength'=>$searchMinLength],'placeholder'=>$placeholder]);
-                $html .= Html::button(null,['icon-solo','search']);
-                $html .= Html::divCl();
-
-                if(!empty($order))
-                {
-                    $html .= Html::div(null,'spacing');
-                    $html .= $order;
-                }
-
-                $html .= Html::divCl();
-            }
-
-            elseif($size > 1 && !empty($order))
-            $html .= Html::div($route->orderSelect(),'top');
-
-            $attr = Base\Attr::append($attr,['data'=>$data]);
-            $html .= Html::div(null,'results');
-            $r .= static::makeClickOpen($html,$label,$after,$attr);
-        }
-
+        [$html,$data] = static::commonInsideClickOpen($relation,$route);
+        $attr = Base\Attr::append($attr,['data'=>$data]);
+        $r .= static::makeClickOpen($html,$label,$after,$attr);
+        
         return $r;
     }
 

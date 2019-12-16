@@ -6,8 +6,13 @@
  
 // inputNumericHref
 // script with logic for an input containing a number which triggers a page change
-const InputNumericHref = Component.InputNumericHref = function(option)
+Component.InputNumericHref = function(option)
 {
+    // not empty
+    if(Vari.isEmpty(this)) 
+    return null;
+    
+    
     // component
     Component.InputNumeric.call(this,option);
     

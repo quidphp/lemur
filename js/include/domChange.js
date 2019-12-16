@@ -18,30 +18,29 @@ const DomChange = Lemur.DomChange = {
     
     
     // setsAttr
-    // remplace tous les attributs d'une balise, il faut fournir un plain object
+    // remplace tous les attributs d'une ou plusieurs nodes, il faut fournir un plain object
     // possible de retirer les attributs existants
-    setsAttr: function(value,node)
+    setsAttr: function(value,nodes)
     {
-        if(Pojo.is(value))
-        {
-            $(node).each(function() {
-                const $this = this;
-                
-                Pojo.each(value,function(v,k) {
-                    $($this).attr(k,v);
-                });
+        Pojo.check(value);
+        
+        Dom.each(nodes,function() {
+            const $this = this;
+            
+            Pojo.each(value,function(v,k) {
+                $($this).attr(k,v);
             });
-        }
+        });
         
         return this;
     },
 
 
     // emptyAttr
-    // permet de retirer tous les attributs à une tag
-    emptyAttr: function(node)
+    // permet de retirer tous les attributs à une ou plusieurs nodes
+    emptyAttr: function(nodes)
     {
-        $(node).each(function(index, el) {
+        Dom.each(nodes,function() {
             const $this = this;
             
             ArrLike.each(this.attributes,function(value) {
@@ -57,18 +56,20 @@ const DomChange = Lemur.DomChange = {
     // addId
     // ajoute un id aux éléments contenus dans l'objet qui n'en ont pas
     // possible de fournir un callback pour chaque changement, par exemple pour ajuster les id des labels si c'est un input
-    addId: function(base,node,callback)
+    addId: function(base,nodes,callback)
     {
-        if(Str.isNotEmpty(base))
-        {
-            $(node).not("[id]").each(function(index, el) {
+        Str.check(base);
+        
+        Dom.each(nodes,function() {
+            if(!$(this).is("[id]"))
+            {
                 const newId = base+Integer.unique();
                 $(this).prop('id',newId);
                 
                 if(Func.is(callback))
                 callback.call(this,newId);
-            });
-        }
+            }
+        });
         
         return this;
     },
@@ -83,7 +84,7 @@ const DomChange = Lemur.DomChange = {
         $(anchor).filter(function() {
             return (Uri.isExternal(getAttr(this,"href")) && !$(this).is("[href^='mailto:']"))? true:false;
         })
-        .each(function(index, el) {
+        .each(function() {
             $(this).prop('target','_blank');
         });
         
@@ -108,15 +109,14 @@ const DomChange = Lemur.DomChange = {
     
     // wrapConsecutiveSiblings
     // permet d'enrobber toutes les prochaines balises répondant à until dans une balise html
-    wrapConsecutiveSiblings: function(node,until,html)
+    wrapConsecutiveSiblings: function(nodes,until,html)
     {
-        if(until && Str.isNotEmpty(html))
-        {
-            $(node).each(function(index, el) {
-                const nextUntil = $(this).nextUntil(until);
-                $(this).add(nextUntil).wrapAll(html);
-            });
-        }
+        Str.check(html);
+        
+        Dom.each(nodes,function() {
+            const nextUntil = $(this).nextUntil(until);
+            $(this).add(nextUntil).wrapAll(html);
+        });
         
         return this;
     }

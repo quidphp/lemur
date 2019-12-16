@@ -7,7 +7,7 @@
 // blockEvent
 // script of behaviours for a component which blocks event propagation
 // this component can only block events added after the block was registered
-const BlockEvent = Component.BlockEvent = function(type) 
+Component.BlockEvent = function(type) 
 {
     // not empty
     if(Vari.isEmpty(this)) 

@@ -6,8 +6,13 @@
  
 // scrollDrag
 // component to allow scrolling while dragging with the mouse
-const ScrollDrag = Component.ScrollDrag = function(option) 
+Component.ScrollDrag = function(option) 
 {    
+    // not empty
+    if(Vari.isEmpty(this)) 
+    return null;
+    
+    
     // option
     const $option = Pojo.replace({
         selector: null,

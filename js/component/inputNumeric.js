@@ -6,8 +6,13 @@
  
 // inputNumeric
 // script with logic for an input containing a number
-const InputNumeric = Component.InputNumeric = function(option)
+Component.InputNumeric = function(option)
 {
+    // not empty
+    if(Vari.isEmpty(this)) 
+    return null;
+    
+    
     // option
     const $option = Pojo.replace({
         timeout: 500,

@@ -6,8 +6,17 @@
  
 // addRemove
 // script of behaviours for an add-remove input component
-const AddRemove = Component.AddRemove = function(option)
+Component.AddRemove = function(option)
 {
+    // not empty
+    if(Vari.isEmpty(this)) 
+    return null;
+    
+    
+    // components
+    Component.Base.call(this);
+    
+    
     // option
     const $option = Pojo.replace({
         insert: '.insert',

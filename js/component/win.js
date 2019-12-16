@@ -6,7 +6,7 @@
  
 // win
 // behaviours to detect touch devices or responsive resolution on the window node
-const Win = Component.Win = function(type,timeout)
+Component.Win = function(type,timeout)
 {
     // une node
     Dom.checkNode(this,window);

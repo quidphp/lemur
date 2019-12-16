@@ -6,8 +6,13 @@
  
 // inputSearchHref
 // script containing logic for a search input which triggers a page change
-const InputSearchHref = Component.InputSearchHref = function(option)
+Component.InputSearchHref = function(option)
 {
+    // not empty
+    if(Vari.isEmpty(this)) 
+    return null;
+    
+    
     // component
     Component.InputSearch.call(this,option);
     

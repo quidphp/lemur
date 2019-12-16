@@ -17,8 +17,8 @@ const Dom = Lemur.Dom = {
     
     
     // isNodes
-    // retourne vrai si la valeur est une collection de node
-    // accepte jquery, nodeList ou un tableau de nodes non vide
+    // retourne vrai si la valeur est une collection de node non vide
+    // accepte nodeList ou un tableau de nodes non vide
     isNodes: function(value)
     {
         let r = false;
@@ -90,7 +90,7 @@ const Dom = Lemur.Dom = {
     // transforme une node list en array
     nodeWrap: function(value)
     {
-        if(Dom.isNode(value))
+        if(this.isNode(value))
         value = [value];
         
         else if(value instanceof NodeList)
@@ -102,11 +102,11 @@ const Dom = Lemur.Dom = {
     
     // matchAll
     // retourne vrai si toutes les nodes retournent vrai à is
-    matchAll: function(value,node)
+    matchAll: function(value,nodes)
     {
         let r = false;
         
-        $(node).each(function() {
+        this.each(nodes,function() {
             return r = $(this).is(value);
         });
         
@@ -133,7 +133,7 @@ const Dom = Lemur.Dom = {
     // envoie une exception si plus d'une node
     getData: function(node,key)
     {
-        Dom.checkNode(node);
+        this.checkNode(node);
         return $(node).data(key);
     },
     
@@ -170,15 +170,15 @@ const Dom = Lemur.Dom = {
     
     
     // outerHtml
-    // retourne le outerHtml d'une ou plusieurs nodes
+    // retourne le outerHtml d'une node
     // si pas de outerHtml, peut aussi retourner le html ou le texte
     outerHtml: function(node)
     {
-        let r = '';
+        let r = undefined;
+        this.checkNode(node,false);
         
-        $(node).each(function(index, el) {
-            r += $(this).prop('outerHTML') || $(this).html() || $(this).text();
-        });
+        if(node != null)
+        r = $(node).prop('outerHTML') || $(node).html() || $(node).text();
         
         return r;
     },
@@ -229,11 +229,17 @@ const Dom = Lemur.Dom = {
     
     // getAttr
     // retourne un attribut
-    getAttr: function(node,key)
+    getAttr: function(node,key,json)
     {
+        let r = undefined;
         Str.check(key,true);
-        Dom.checkNode(node);
-        return $(node).attr(key);
+        this.checkNode(node);
+        r = $(node).attr(key);
+        
+        if(r != null && json === true)
+        r = Json.decode(r);
+        
+        return r;
     },
     
     
@@ -266,10 +272,27 @@ const Dom = Lemur.Dom = {
     },
     
     
+    // getUri
+    // retourne l'uri à partir d'une node
+    getUri: function(node)
+    {
+        let r = undefined;
+        const tag = this.tag(node);
+        
+        if(tag === 'form')
+        r = this.getAttr(node,"action");
+        
+        else
+        r = this.getAttr(node,"href") || this.getAttr(node,'data-href');
+        
+        return r;
+    },
+    
+    
     // valueSeparator
     // prend un ensemble de input et crée un set avec les valeurs
     // un séparateur peut être fourni, sinon utilise -
-    valueSeparator: function(node,separator,trim) 
+    valueSeparator: function(nodes,separator,trim) 
     {
         let r = '';
         separator = (Str.isNotEmpty(separator))? separator:'-';
@@ -278,7 +301,7 @@ const Dom = Lemur.Dom = {
         {
             const $inst = this;
             
-            $(node).each(function() {
+            this.each(nodes,function() {
                 r += (r.length)? separator:"";
                 r += $inst.value(this,trim);
             });
@@ -316,5 +339,16 @@ const Dom = Lemur.Dom = {
         }
         
         return r;
+    },
+    
+    
+    // each
+    // permet de faire un loop sur une ou plusieurs nodes
+    each: function(loop,callback)
+    {
+        loop = this.nodeWrap(loop);
+        this.checkNodes(loop,false);
+        
+        return Arr.each(loop,callback);
     }
 }

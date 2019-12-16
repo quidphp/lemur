@@ -68,9 +68,6 @@ const qs = Selector.scopedQuerySelector.bind(Selector);
 const qsa = Selector.scopedQuerySelectorAll.bind(Selector);
 const mergedQsa = Selector.mergedQuerySelectorAll.bind(Selector);
 
-// vari
-const each = Obj.each.bind(Obj);
-
 // component
 const Component = Lemur.Component;
 

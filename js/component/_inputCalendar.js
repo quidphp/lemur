@@ -6,12 +6,13 @@
 
 // calendar
 // script with behaviours for a calendar component and a date input
-
-// calendarInput
-// gère les comportement pour un input de date qui ouvre un calendrier
-// utilise clickOpen
-Component.calendarInput = function()
+Component.CalendarInput = function()
 {
+    // not empty
+    if(Vari.isEmpty(this)) 
+    return null;
+    
+    /*
     // clickOpen
     Component.clickOpenWithTrigger.call(this,"input[type='text']",'click',null,true);
     
@@ -100,6 +101,7 @@ Component.calendarInput = function()
             trigEvt($this,"clickOpen:close");
         })
     };
-        
+    */
+    
     return this;
 }

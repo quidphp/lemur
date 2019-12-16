@@ -6,8 +6,13 @@
  
 // validatePrevent
 // component that blocks an event if the validation is not successfull
-const ValidatePrevent = Component.ValidatePrevent = function(type) 
+Component.ValidatePrevent = function(type) 
 {
+    // not empty
+    if(Vari.isEmpty(this)) 
+    return null;
+    
+    
     // handler
     setHdlr(this,'validatePrevent:getTargets',function(event) {
         return this;
@@ -19,7 +24,7 @@ const ValidatePrevent = Component.ValidatePrevent = function(type)
         
         if(Vari.isNotEmpty(targets))
         {
-            $(targets).each(function(index, el) {
+            Dom.each(targets,function() {
                 const val = trigHdlr(this,"validate:trigger");
                 
                 if(val === false)
@@ -52,7 +57,7 @@ const ValidatePrevent = Component.ValidatePrevent = function(type)
     aelOnce(this,'component:setup', function(event) {
         const targets = trigHdlr(this,'validatePrevent:getTargets');
         
-        $(targets).each(function() {
+        Dom.each(targets,function() {
             if(!trigHdlr(this,'validate:isBinded'))
             Component.Validate.call(this);
         });

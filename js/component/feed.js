@@ -6,8 +6,13 @@
  
 // feed
 // script of behaviours for a feed component with a load-more button
-const Feed = Component.Feed = function()
+Component.Feed = function()
 {
+    // not empty
+    if(Vari.isEmpty(this)) 
+    return null;
+    
+    
     // components
     Component.AjaxBlock.call(this,{ajaxEvent: 'ajax:init'});
     

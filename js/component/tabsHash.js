@@ -6,8 +6,13 @@
  
 // tabsHash
 // adds hashchange support for the tab
-const TabsHash = Component.TabsHash = function(option)
+Component.TabsHash = function(option)
 {
+    // not empty
+    if(Vari.isEmpty(this)) 
+    return null;
+    
+    
     // option
     const $option = Pojo.replace({
         hash: 'data-hash'

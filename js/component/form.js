@@ -6,8 +6,13 @@
  
 // form
 // script with behaviours for a form component
-const Form = Component.Form = function() 
-{    
+Component.Form = function() 
+{   
+    // not empty
+    if(Vari.isEmpty(this)) 
+    return null;
+    
+    
     // component
     Component.BlockEvent.call(this,'submit');
     
@@ -20,7 +25,7 @@ const Form = Component.Form = function()
         },
         
         getFields: function() {
-            return qsa(this,Selector.input());
+            return qsa(this,Selector.input(false));
         },
         
         getSystemFields: function() {
@@ -113,7 +118,7 @@ const Form = Component.Form = function()
             const serialize = $(target).serialize();
             const original = getData(this,'form-serialize');
             
-            if(original && serialize !== original)
+            if(original != null && serialize !== original)
             r = true;
             
             return r;

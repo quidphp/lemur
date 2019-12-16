@@ -133,41 +133,13 @@ class TableRelation extends Core\RouteAlias
     final public static function makeTableRelation(Core\Table $table,Core\Route $route,$attr=null):string
     {
         $r = '';
-        $html = '';
         $relation = $table->relation();
-        $size = $relation->size();
         $title = Html::span($table->label(),'title');
         $title .= Html::span(null,'ico');
-        $after = null;
-
-        $limit = $route->limit();
-        $query = $route->getSearchQuery();
-        $data = ['query'=>$query,'separator'=>static::getDefaultSegment(),'char'=>static::getReplaceSegment()];
-        if($route->hasOrder())
-        $route = $route->changeSegment('order',true);
-        $data['href'] = $route;
-
-        if($size > $limit)
-        {
-            $searchMinLength = $table->searchMinLength();
-            $order = $route->orderSelect();
-
-            $html .= Html::divOp('top');
-            $placeholder = static::langText('common/filter')." ($size)";
-            $html .= Html::inputText(null,['name'=>true,'data-pattern'=>['minLength'=>$searchMinLength],'placeholder'=>$placeholder]);
-
-            if(!empty($order))
-            {
-                $html .= Html::div(null,'spacing');
-                $html .= $order;
-            }
-
-            $html .= Html::divCl();
-        }
-
+        
+        [$html,$data] = static::commonInsideClickOpen($relation,$route);
         $attr = Base\Attr::append($attr,['data'=>$data]);
-        $html .= Html::div(null,'results');
-        $r .= static::makeClickOpen($html,$title,$after,$attr);
+        $r .= static::makeClickOpen($html,$title,null,$attr);
 
         return $r;
     }

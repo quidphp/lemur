@@ -6,8 +6,13 @@
  
 // inputGroup
 // script with behaviours for an input group component (like checkbox and radio)
-const InputGroup = Component.InputGroup = function() 
+Component.InputGroup = function() 
 {    
+    // not empty
+    if(Vari.isEmpty(this)) 
+    return null;
+    
+    
     setHdlr(this,'inputGroup:isChecked',function() {
         return ($(this).prop('checked') === true)? true:false;
     });

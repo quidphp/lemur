@@ -6,8 +6,13 @@
 
 // calendar
 // script for the calendar component
-Component.calendar = function()
+Component.Calendar = function()
 {
+    // not empty
+    if(Vari.isEmpty(this)) 
+    return null;
+    
+    /*
     // block + ajax
     Component.BlockEvent.call(this,'calendar:load');
     Component.Ajax.call(this,'calendar:load');
@@ -144,7 +149,7 @@ Component.calendar = function()
             trigEvt($this,'ajax:error',[parsedError,jqXHR,textStatus,errorThrown]);
         });
     };
+    */
     
     return this;
-
 }

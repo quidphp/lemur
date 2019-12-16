@@ -6,8 +6,13 @@
  
 // tabs
 // script with behaviours for a tabs component
-const Tabs = Component.Tabs = function(option) 
+Component.Tabs = function(option) 
 {
+    // not empty
+    if(Vari.isEmpty(this)) 
+    return null;
+    
+    
     // tabChange
     const tabChange = function(target)
     {

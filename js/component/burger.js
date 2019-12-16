@@ -6,7 +6,7 @@
  
 // burger
 // script for a burger menu component
-const Burger = Component.Burger = function()
+Component.Burger = function()
 {
     // not empty
     if(Vari.isEmpty(this)) 

@@ -6,13 +6,19 @@
  
 // filter
 // component for a clickOpen filter component which has a page feed, search and order tools
-const Filter = Component.Filter = function(option)
+Component.Filter = function(option)
 {
+    // not empty
+    if(Vari.isEmpty(this)) 
+    return null;
+    
+    
     // option
     const $option = Pojo.replace({
         trigger: true,
         target: true,
-        closeUnsetContent: true
+        closeUnsetContent: true,
+        parseData: "ul:last-child"
     },option);
     
     

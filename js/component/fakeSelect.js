@@ -6,8 +6,13 @@
  
 // fakeSelect
 // script with some logic for a select replacement component, uses clickOpen
-const FakeSelect = Component.FakeSelect = function()
+Component.FakeSelect = function()
 {
+    // not empty
+    if(Vari.isEmpty(this)) 
+    return null;
+    
+    
     const r = [];
     
     // htmlFromSelect
@@ -233,7 +238,7 @@ const FakeSelect = Component.FakeSelect = function()
     
     
     // htmlFromSelect
-    $(this).each(function() {
+    Dom.each(this,function() {
         if(trigHdlr(this,'input:getTag') === 'select')
         {
             if(trigHdlr(this,'input:allowMultiple') === false && trigHdlr(this,'input:isControlled') === false)

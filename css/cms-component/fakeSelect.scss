@@ -31,16 +31,13 @@
     position: relative;
     min-width: 150px;
 
-    &[data-validate='invalid'] {
-        > .trigger {
-            background-color: $red;
-            color: $white;
-            border: 1px solid $red;
-        }
+    &[data-validate='invalid'] > .trigger {
+        background-color: $red;
+        color: $white;
+        border: 1px solid $red;
     }
 
     &[data-disabled='1'] {
-        pointer-events: none;
 
         > .trigger {
             background-color: $gray;

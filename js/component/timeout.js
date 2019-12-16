@@ -6,8 +6,13 @@
  
 // timeout
 // behaviours for a timeout component, triggers an event once a timeout has completed
-const Timeout = Component.Timeout = function(type,timeout)
+Component.Timeout = function(type,timeout)
 {
+    // not empty
+    if(Vari.isEmpty(this)) 
+    return null;
+    
+    
     // handler
     setHdlr(this,'timeout:duration',function(type) {
         return timeout || getData(this,'timeout-'+type) || 500;
@@ -40,7 +45,7 @@ const Timeout = Component.Timeout = function(type,timeout)
     
     
     // event
-    ael(this,type,function() {
+    ael(this,type,function(event) {
         trigHdlr(this,'timeout:set',type);
     });
     

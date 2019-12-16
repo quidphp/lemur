@@ -6,8 +6,13 @@
  
 // com
 // script of behaviours for the communication component of the CMS
-const Com = Component.Com = function()
+Component.Com = function()
 {
+    // not empty
+    if(Vari.isEmpty(this)) 
+    return null;
+    
+    
     // components
     Component.BlockEvent.call(this,'click');
     Component.KeyboardEscape.call(this,true);
@@ -62,7 +67,7 @@ const Com = Component.Com = function()
     
     aelDelegate(this,'click',".row.insert > span,.row.update > span",function(event) {
         const delegate = event.delegateTarget;
-        const parent = $(this).parent();
+        const parent = $(this).parent().get(0);
         const table = getAttr(parent,'data-table');
         const primary = getAttr(parent,'data-primary');
         redirect.call(delegate,table,primary,event);
@@ -79,7 +84,7 @@ const Com = Component.Com = function()
     // redirect
     const redirect = function(table,primary,clickEvent)
     {
-        const href = Dom.dataHrefReplaceChar(this,table);
+        let href = Dom.dataHrefReplaceChar(this,table);
         
         if(Str.isNotEmpty(href))
         {

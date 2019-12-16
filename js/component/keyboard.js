@@ -6,11 +6,11 @@
  
 // keyboard
 // component to catch and/or prevent an event related to a key press on the keyboard
-const Keyboard = Component.Keyboard = function(key,values,type) 
+Component.Keyboard = function(key,values,type) 
 {   
     // check
-    if(this == null || !Str.isNotEmpty(key) || !Arr.isNotEmpty(values))
-    return false;
+    if(Vari.isEmpty(this) || !Str.isNotEmpty(key) || !Arr.isNotEmpty(values))
+    return null;
 
 
     // type
@@ -21,7 +21,7 @@ const Keyboard = Component.Keyboard = function(key,values,type)
     ael(this,type,function(event) {
         if(Arr.in(event.keyCode,values))
         {
-            const isInput = $(event.target).is(Selector.input());
+            const isInput = $(event.target).is(Selector.input(true));
             const ucKey = Str.upperFirst(key);
             const catched = "keyboard"+ucKey+":catched";
             trigEvt(this,catched,event,isInput,event.keyCode);

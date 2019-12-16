@@ -6,7 +6,7 @@
  
 // ajaxBlock
 // intègre la logique ajax, block et loading via une même méthode
-const AjaxBlock = Component.AjaxBlock = function(option)
+Component.AjaxBlock = function(option)
 {
     // not empty
     if(Vari.isEmpty(this)) 

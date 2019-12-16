@@ -6,7 +6,7 @@
  
 // absolutePlaceholder
 // script of behaviours for an absolute placeholder component
-const AbsolutePlaceholder = Component.AbsolutePlaceholder = function()
+Component.AbsolutePlaceholder = function()
 {
     // not empty
     if(Vari.isEmpty(this)) 
@@ -36,7 +36,7 @@ const AbsolutePlaceholder = Component.AbsolutePlaceholder = function()
         
         refresh: function() {
             const child = trigHdlr(this,'absolutePlaceholder:getChild');
-            
+
             if(child != null)
             {
                 if(!trigHdlr(this,'absolutePlaceholder:isOnlyHeight'))

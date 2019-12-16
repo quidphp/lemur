@@ -6,7 +6,7 @@
 
 // ajax
 // script to activate ajax with an event on the nodes
-const Ajax = Component.Ajax = function(type) 
+Component.Ajax = function(type) 
 {
     // not empty
     if(Vari.isEmpty(this)) 

@@ -6,8 +6,13 @@
 
 // colsSorter
 // script for the col sorter component of the general page of the CMS
-const ColsSorter = Component.ColsSorter = function(option)
+Component.ColsSorter = function(option)
 {
+    // not empty
+    if(Vari.isEmpty(this)) 
+    return null;
+    
+    
     // option
     const $option = Pojo.replaceRecursive({
         clickOpen: {
@@ -26,34 +31,37 @@ const ColsSorter = Component.ColsSorter = function(option)
     
     
     // handler
-    setHdlr(this,'colsSorter:getCheckboxes',function() {
-        return qsa(this,"input[type='checkbox']");
-    });
-    
-    setHdlr(this,'colsSorter:getCheckedCheckboxes',function() {
-        return Arr.filter(trigHdlr(this,'colsSorter:getCheckboxes'),function() {
-            return $(this).is(':checked');
-        });
-    });
-    
-    setHdlr(this,'colsSorter:getButton',function() {
-        return qs(trigHdlr(this,'clickOpen:getTarget'),"button[name='cols']");
-    });
-    
-    setHdlr(this,'colsSorter:getCheckedSet',function() {
-        const button = trigHdlr(this,'colsSorter:getButton');
-        const checkbox = trigHdlr(this,'colsSorter:getCheckedCheckboxes');
-        const separator = getAttr(button,'data-separator');
+    setHdlrs(this,'colsSorter:',{
         
-        return Dom.valueSeparator(checkbox,separator,true);
-    });
-    
-    setHdlr(this,'colsSorter:isCurrent',function() {
-        const button = trigHdlr(this,'colsSorter:getButton');
-        const set = trigHdlr(this,'colsSorter:getCheckedSet');
-        const current = getAttr(button,'data-current');
+        getCheckboxes: function() {
+            return qsa(this,"input[type='checkbox']");
+        },
         
-        return (set === current)? true:false;
+        getCheckedCheckboxes: function() {
+            return Arr.filter(trigHdlr(this,'colsSorter:getCheckboxes'),function() {
+                return $(this).is(':checked');
+            });
+        },
+        
+        getButton: function() {
+            return qs(trigHdlr(this,'clickOpen:getTarget'),"button[name='cols']");
+        },
+        
+        getCheckedSet: function() {
+            const button = trigHdlr(this,'colsSorter:getButton');
+            const checkbox = trigHdlr(this,'colsSorter:getCheckedCheckboxes');
+            const separator = getAttr(button,'data-separator');
+            
+            return Dom.valueSeparator(checkbox,separator,true);
+        },
+        
+        isCurrent: function() {
+            const button = trigHdlr(this,'colsSorter:getButton');
+            const set = trigHdlr(this,'colsSorter:getCheckedSet');
+            const current = getAttr(button,'data-current');
+            
+            return (set === current)? true:false;
+        }
     });
     
     
@@ -74,24 +82,27 @@ const ColsSorter = Component.ColsSorter = function(option)
         trigSetup(Component.Sorter.call(popup,$option.sorter));
         
         // handler
+        setHdlrs(popup,'popup:',{
+            
+            refresh: function() {
+                const checkboxes = trigHdlr($this,'colsSorter:getCheckboxes');
+                trigHdlrs(checkboxes,'validate:trigger');
+            },
+            
+            invalid: function() {
+                setAttr(this,'data-validate','invalid');
+            },
+            
+            valid: function() {
+                if(trigHdlr($this,'colsSorter:isCurrent'))
+                $(this).removeAttr("data-validate");
+                else
+                setAttr(this,'data-validate','valid');
+            }
+        });
+        
         setHdlr(popup,'verticalSorter:stop',function() {
             trigHdlr(this,'popup:refresh');
-        });
-        
-        setHdlr(popup,'popup:refresh',function() {
-            const checkboxes = trigHdlr($this,'colsSorter:getCheckboxes');
-            trigHdlrs(checkboxes,'validate:trigger');
-        });
-        
-        setHdlr(popup,'popup:invalid',function() {
-            setAttr(this,'data-validate','invalid');
-        });
-        
-        setHdlr(popup,'popup:valid',function() {
-            if(trigHdlr($this,'colsSorter:isCurrent'))
-            $(this).removeAttr("data-validate");
-            else
-            setAttr(this,'data-validate','valid');
         });
     }
     

@@ -6,7 +6,7 @@
  
 // winUnload
 // component to manage the unload notification with the window object
-const WinUnload = Component.WinUnload = function(type,timeout)
+Component.WinUnload = function(type,timeout)
 {
     // une node
     Dom.checkNode(this,window);
@@ -28,7 +28,7 @@ const WinUnload = Component.WinUnload = function(type,timeout)
         addNode: function(node) {
             const nodes = trigHdlr(this,'winUnload:getNodes');
             
-            $(node).each(function() {
+            Dom.each(node,function() {
                 nodes.push(this);
             });
         },
@@ -36,7 +36,7 @@ const WinUnload = Component.WinUnload = function(type,timeout)
         removeNode: function(node) {
             const nodes = trigHdlr(this,'winUnload:getNodes');
             
-            $(node).each(function() {
+            Dom.each(node,function() {
                 Arr.spliceValue(this,nodes);
             });
         },
@@ -49,7 +49,7 @@ const WinUnload = Component.WinUnload = function(type,timeout)
             let r = null;
             const nodes = trigHdlr(this,'winUnload:getNodes');
             
-            $(nodes).each(function() {
+            Arr.each(nodes,function() {
                 r = trigHdlr(this,'winUnload:getText');
                 
                 if(Str.isNotEmpty(r))

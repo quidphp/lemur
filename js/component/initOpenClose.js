@@ -6,8 +6,13 @@
  
 // initOpenClose
 // base component used for opening, closing and initializing a container
-const InitOpenClose = Component.InitOpenClose = function(type,attr)
+Component.InitOpenClose = function(type,attr)
 {
+    // not empty
+    if(Vari.isEmpty(this)) 
+    return null;
+    
+    
     // check
     Str.check(type);
     Str.check(attr);
@@ -30,13 +35,13 @@ const InitOpenClose = Component.InitOpenClose = function(type,attr)
     ael(this,type+':open',function() {
         if(trigHdlr(this,type+':isOpen') !== true)
         {
+            setAttr(this,attr,1);
+            
             if(trigHdlr(this,type+':isInit') !== true)
             {
                 trigEvt(this,type+':init');
                 setData(this,type+'-init',true);
             }
-            
-            setAttr(this,attr,1);
             
             trigEvt(this,type+':opened');
         }

@@ -6,20 +6,16 @@
 
 // clickOpenAjaxAnchor
 // clickOpen component which opens by an anchor click and triggers an ajax calls
-const ClickOpenAjaxAnchor = Component.ClickOpenAjaxAnchor = function(option) 
+Component.ClickOpenAjaxAnchor = function(option) 
 {
     // not empty
     if(Vari.isEmpty(this)) 
     return null;
     
     
-    // option
-    const $option = Pojo.replace({},option);
-    
-    
     // components
-    Component.ClickOpenTriggerBase.call(this,$option);
-    Component.ClickOpenAjax.call(this,$option);
+    Component.ClickOpenTriggerBase.call(this,option);
+    Component.ClickOpenAjax.call(this,option);
     
     
     // handler

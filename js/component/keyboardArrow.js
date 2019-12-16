@@ -6,8 +6,13 @@
  
 // keyboardArrow
 // component to catch or prevent the arrow keys on the keyboard
-const KeyboardArrow = Component.KeyboardArrow = function(prevent,type) 
+Component.KeyboardArrow = function(prevent,type) 
 {
+    // not empty
+    if(Vari.isEmpty(this)) 
+    return null;
+    
+    
     // keyboard
     Component.Keyboard.call(this,'arrow',[37,38,39,40],type);
     

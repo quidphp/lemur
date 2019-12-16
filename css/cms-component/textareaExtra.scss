@@ -16,7 +16,7 @@
         [data-absolute-placeholder] {
             margin: 3px;
 
-            &[data-absolute-placeholder='ready'] .table-relation.active {
+            &[data-absolute-placeholder='ready'] .table-relation[data-active='1'] {
                 z-index: 3;
                 @include abs(0, null, null, 0);
             }

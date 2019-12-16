@@ -6,7 +6,7 @@
 
 // clickOpenBase
 // grants base methods and events for a clickOpen component
-const ClickOpenBase = Component.ClickOpenBase = function(option)
+Component.ClickOpenBase = function(option)
 {
     // not empty
     if(Vari.isEmpty(this)) 

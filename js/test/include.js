@@ -6,7 +6,7 @@
  
 // include
 // script to test the include.js file
-const TestInclude = Test.Include = function()
+Test.Include = function()
 {   
     let r = true;
     
@@ -484,6 +484,7 @@ const TestInclude = Test.Include = function()
 
         // selector
         assert(Selector.input() === "input,select,textarea,button[type='submit']");
+        assert(Selector.input(true) === "input,select,textarea,button");
         assert(Dom.isNode(Selector.scopedQuerySelector(htmlNode,"body")));
         assert(Selector.scopedQuerySelector(htmlNode,"james") == null);
         assert(Arr.isNotEmpty(Selector.scopedQuerySelectorAll(htmlNode,"body")));

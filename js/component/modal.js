@@ -6,8 +6,13 @@
  
 // modal
 // script for a modal component (popup in a fixed div)
-const Modal = Component.Modal = function(option)
+Component.Modal = function(option)
 {
+    // not empty
+    if(Vari.isEmpty(this)) 
+    return null;
+    
+    
     // option
     const $option = Pojo.replace({
         background: 'modal'
@@ -19,52 +24,56 @@ const Modal = Component.Modal = function(option)
     
     
     // handler
-    setHdlr(this,'modal:getBox',function() {
-        return qs(this,'.box');
-    });
-    
-    setHdlr(this,'modal:getInner',function() {
-        const box = trigHdlr(this,'modal:getBox');
-        return qs(box,".inner");
-    });
-    
-    setHdlr(this,'modal:getRoute',function() {
-        return getAttr(this,'data-route');
-    });
-    
-    setHdlr(this,'modal:setRoute',function(route) {
-        if(Str.isNotEmpty(route))
-        setAttr(this,'data-route',route);
-        else
-        $(this).removeAttr('data-route');
-    });
-    
-    setHdlr(this,'modal:getRouteAnchors',function(route) {
-        return qsa(document,"a[data-modal='"+route+"']");
-    });
-    
-    setHdlr(this,'modal:anchorBind',function(anchor) {
-        anchorBind.call(this,anchor);
-    });
-    
-    setHdlr(this,'modal:fetchNode',function(node) {
-        const config = Xhr.configFromNode(node);
-        const route = getAttr(node,'data-modal');
-        return trigHdlr(this,'modal:fetch',config,route);
-    });
-    
-    setHdlr(this,'modal:fetch',function(config,route) {
-        let r = false;
+    setHdlrs(this,'modal:',{
         
-        if(Pojo.isNotEmpty(config))
-        {
-            trigHdlr(this,'modal:setRoute',route);
-            trigHdlr(this,'ajax:init',config);
-            r = true;
+        getBox: function() {
+            return qs(this,'.box');
+        },
+        
+        getInner: function() {
+            const box = trigHdlr(this,'modal:getBox');
+            return qs(box,".inner");
+        },
+        
+        getRoute: function() {
+            return getAttr(this,'data-route');
+        },
+        
+        setRoute: function(route) {
+            if(Str.isNotEmpty(route))
+            setAttr(this,'data-route',route);
+            else
+            $(this).removeAttr('data-route');
+        },
+        
+        getRouteAnchors: function(route) {
+            return qsa(document,"a[data-modal='"+route+"']");
+        },
+        
+        anchorBind: function(anchor) {
+            anchorBind.call(this,anchor);
+        },
+        
+        fetchNode: function(node) {
+            const config = Xhr.configFromNode(node);
+            const route = getAttr(node,'data-modal');
+            return trigHdlr(this,'modal:fetch',config,route);
+        },
+        
+        fetch: function(config,route) {
+            let r = false;
+            
+            if(Pojo.isNotEmpty(config))
+            {
+                trigHdlr(this,'modal:setRoute',route);
+                trigHdlr(this,'ajax:init',config);
+                r = true;
+            }
+            
+            return r;
         }
-        
-        return r;
     });
+    
     
     setHdlr(this,'clickOpen:getTargetContent',function() {
         return trigHdlr(this,'modal:getInner');

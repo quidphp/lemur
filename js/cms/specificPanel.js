@@ -6,8 +6,13 @@
  
 // specificPanel
 // component that manages the panel on the specific form page of the CMS
-const SpecificPanel = Component.SpecificPanel = function(option)
+Component.SpecificPanel = function(option)
 {
+    // not empty
+    if(Vari.isEmpty(this)) 
+    return null;
+    
+    
     // option
     const $option = Pojo.replace({
         target: "> .form-inner > .panel",

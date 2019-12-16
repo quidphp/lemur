@@ -6,9 +6,18 @@
  
 // inputFiles
 // script with logic for the file upload component of the CMS
-const InputFiles = Component.InputFiles = function()
+Component.InputFiles = function()
 {
-    // func
+    // not empty
+    if(Vari.isEmpty(this)) 
+    return null;
+    
+    
+    // components
+    Component.Base.call(this);
+    
+    
+    // handler
     setHdlr(this,'inputFiles:getBlock',function() {
         return qsa(this,'.file-block');
     })
@@ -28,7 +37,7 @@ const InputFiles = Component.InputFiles = function()
     {
         const blocks = trigHdlr(this,'inputFiles:getBlock');
         
-        // func
+        // handler
         setHdlrs(blocks,'block:',{
             getAction: function() {
                 return qsa(this,".action");

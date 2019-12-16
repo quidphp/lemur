@@ -6,8 +6,13 @@
  
 // validation
 // component with functions related to validation (pattern and required)
-const ComponentValidate = Component.Validate = function() 
+Component.Validate = function() 
 {    
+    // not empty
+    if(Vari.isEmpty(this)) 
+    return null;
+    
+    
     // handler
     setHdlr(this,'validate:isBinded',function() {
         return true;
