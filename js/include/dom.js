@@ -170,16 +170,18 @@ const Dom = Lemur.Dom = {
     
     
     // outerHtml
-    // retourne le outerHtml d'une node
+    // retourne le outerHtml d'une ou plusieurs nodes
     // si pas de outerHtml, peut aussi retourner le html ou le texte
-    outerHtml: function(node)
+    outerHtml: function(nodes)
     {
-        let r = undefined;
-        this.checkNode(node,false);
+        let r = '';
+        nodes = this.nodeWrap(nodes);
+        this.checkNodes(nodes,false);
         
-        if(node != null)
-        r = $(node).prop('outerHTML') || $(node).html() || $(node).text();
-        
+        Arr.each(nodes,function() {
+            r += $(this).prop('outerHTML') || $(this).html() || $(this).text();
+        });
+
         return r;
     },
 
@@ -229,6 +231,7 @@ const Dom = Lemur.Dom = {
     
     // getAttr
     // retourne un attribut
+    // possible de retourner un décoder la string json
     getAttr: function(node,key,json)
     {
         let r = undefined;
@@ -240,6 +243,14 @@ const Dom = Lemur.Dom = {
         r = Json.decode(r);
         
         return r;
+    },
+    
+    
+    // getAttrInt
+    // retourne une valeur d'attribut sous forme de int
+    getAttrInt: function(node,key)
+    {
+        return Integer.cast(this.getAttr(node,key));
     },
     
     

@@ -26,7 +26,7 @@ Component.InitOpenClose = function(type,attr)
         },
         
         isOpen: function() {
-            return (Integer.cast(getAttr(this,attr)) === 1);
+            return (getAttrInt(this,attr) === 1);
         }
     });
     

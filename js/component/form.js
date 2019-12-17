@@ -243,7 +243,7 @@ Component.Form = function()
     {
         const $this = this;
         
-        setHdlr(this,'winUnload:getText',function() {
+        setHdlr(this,'windowUnload:getText',function() {
             if(!trigHdlr(this,'form:isSubmitted') && trigHdlr(this,'form:hasChanged'))
             return getAttr(this,'data-unload');
         });
@@ -252,10 +252,10 @@ Component.Form = function()
             setData(this,'form-submitted',1);
         });
         
-        trigHdlr(window,'winUnload:addNode',this);
+        trigHdlr(window,'windowUnload:addNode',this);
         
         aelOnce(document,'doc:unmountPage',function() {
-            trigHdlr(window,'winUnload:removeNode',$this);
+            trigHdlr(window,'windowUnload:removeNode',$this);
         });
     }
     

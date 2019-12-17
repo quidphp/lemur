@@ -64,12 +64,13 @@ Component.FeedSearch = function(option)
     });
     
     setHdlr(this,'feed:parseData',function(data,type) {
+        
         if(type === 'append')
         {
             data = Html.parse(data);
             
             if($option.parseData)
-            data = $(data).find("ul:last-child").html();
+            data = $(data).find($option.parseData).html();
             
             data = $(data).html();
         }

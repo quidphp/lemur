@@ -25,7 +25,7 @@ Component.Input = function()
         },
         
         isControlled: function() {
-            return getAttr(this,'data-controlled') === '1';
+            return getAttrInt(this,'data-controlled') === 1;
         },
         
         isGroup: function() {
@@ -119,7 +119,7 @@ Component.Input = function()
         },
         
         setEmpty: function() {
-            $(this).val('');
+            trigHdlr(this,'input:setValue','');
         },
         
         appendValue: function(value) {

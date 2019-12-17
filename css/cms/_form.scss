@@ -98,7 +98,6 @@
 // inputTextEvents
 // mixin avec des styles de base pour les events dans les inputs/textarea
 @mixin inputTextEvents() {
-    &.active,
     &:hover,
     &:focus {
         background-color: $lightYellow;

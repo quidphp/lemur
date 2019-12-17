@@ -23,7 +23,7 @@
         font-weight: bold;
     }
 
-    &.active [data-absolute-placeholder='ready'] > .input {
+    &[data-active='1'] [data-absolute-placeholder='ready'] > .input {
         z-index: 3;
         @include abs(0, null, null, 0);
     }
@@ -75,7 +75,7 @@
         > button {
             @include filterElementBase();
 
-            &.already-in {
+            &[data-in='1'] {
                 background-color: $red !important;
                 color: $white;
             }

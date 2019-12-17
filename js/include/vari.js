@@ -28,7 +28,7 @@ const Vari = Lemur.Vari = {
         else if(Scalar.is(value))
         r = (!value)? true:false;
         
-        else (value != null)
+        else if(value != null)
         {
             this.eachProto(value,function() {
                 return r = false;

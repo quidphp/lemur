@@ -16,8 +16,9 @@ Component.InputSearch = function(option)
     // option
     const $option = Pojo.replace({
         timeout: 500,
-        keyEvent: 'keyup',
+        keyEvent: 'keydown',
         useCurrent: true,
+        button: "button[type='button']",
         timeoutHandler: 'inputSearch:process'
     },option);
     
@@ -44,7 +45,7 @@ Component.InputSearch = function(option)
         },
         
         getButton: function() {
-            return $(this).next("button[type='button']").get(0);
+            return (Str.is($option.button))? $(this).next($option.button).get(0):undefined;
         },
         
         validate: function() {
@@ -129,7 +130,7 @@ Component.InputSearch = function(option)
     {
         const $this = this;
         const button = trigHdlr(this,'inputSearch:getButton');
-        
+
         ael(button,'click',function(event) {
             trigHdlr($this,'inputSearch:buttonClick');
             Evt.preventStop(event);

@@ -30,7 +30,7 @@ ael(document,'doc:mountCommon',function(event,node) {
 
     // form
     const form = qsa(node,"form");
-    trigEvt(Component.Form.call(form),'component:setup');
+    trigSetup(Component.Form.call(form));
     
     // select
     const select = qsa(node,"select");

@@ -9,7 +9,26 @@
 // component
 // stylesheet for various simple componentns
 
+// var
+// variables for the CMS
+$font: 'Helvetica Neue', 'Helvetica', sans-serif;
+$color: #2a2b69;
+$darkColor: #181844;
+$darkerColor: #000;
+$lightGrayAlt: #e2e5eb;
+$lighterGray: #eee;
+$lightestGray: #f7f7f7;
+$lightGray: #ddd;
+$gray: #bbb;
+$midGray: #999;
+$darkGray: #555;
+$lightYellow: #f9fdd8;
+$green: #579758;
+$red: #8d1e2d;
+
+
 // generalComponent
+// component for the general page
 @mixin generalComponent() {
     padding: 8px 10px;
     height: 100%;
@@ -168,12 +187,13 @@
     }
 }
 
-// componentDateSpecific
+// componentInputCalendarSpecific
 // mixin pour le champ de date avec calendrier
-@mixin componentDateSpecific() {
-    &[data-absolute-placeholder='ready'].active > input[type='text'] {
+@mixin componentInputCalendarSpecific() {
+    &[data-absolute-placeholder='ready'][data-active='1'] > input[type='text'] {
         @include abs(0, null, null, 0);
         z-index: 3;
+        background-color: $lightYellow;
     }
 
     > .popup {
@@ -216,15 +236,6 @@
 @mixin componentRelationMediaGeneral() {
     @include componentRelationGeneral();
     text-align: center;
-}
-
-// componentSelectSpecific
-// mixin pour une relation avec une fakeselect
-@mixin componentSelectSpecific() {
-    &[data-absolute-placeholder='ready'] > .fakeselect.active {
-        z-index: 3;
-        @include abs(0, null, null, 0);
-    }
 }
 
 // componentRelationSortableSpecific

@@ -16,18 +16,19 @@ Component.InputNumeric = function(option)
     // option
     const $option = Pojo.replace({
         timeout: 500,
+        keyEvent: 'keydown',
         timeoutHandler: 'inputNumeric:process'
     },option);
     
     
     // bindings
-    Component.Timeout.call(this,'keyup',$option.timeout);
+    Component.Timeout.call(this,$option.keyEvent,$option.timeout);
     Component.ValidatePrevent.call(this,'inputNumeric:change');
     
 
     // handler
     setHdlr(this,'inputNumeric:getCurrent',function() {
-        return Integer.cast(getAttr(this,"data-current"));
+        return getAttrInt(this,"data-current");
     });
     
     setHdlr(this,'inputNumeric:setCurrent',function(value) {
@@ -35,7 +36,7 @@ Component.InputNumeric = function(option)
     });
     
     setHdlr(this,'inputNumeric:getMax',function() {
-        return Integer.cast(getAttr(this,'data-max'));
+        return getAttrInt(this,'data-max');
     });
     
     setHdlr(this,'inputNumeric:validate',function() {
@@ -74,7 +75,7 @@ Component.InputNumeric = function(option)
     
     
     // event
-    ael(this,'timeout:keyup',function() {
+    ael(this,'timeout:'+$option.keyEvent,function() {
         if($(this).is(":focus"))
         {
             trigHdlr(this,'input:valueRemember');
@@ -102,9 +103,8 @@ Component.InputNumeric = function(option)
     });
     
     ael(this,'inputNumeric:change',function() {
-        trigHdlr(this,'timeout:clear','keyup');
+        trigHdlr(this,'timeout:clear',$option.keyEvent);
     });
-    
     
     return this;
 }

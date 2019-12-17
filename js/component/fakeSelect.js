@@ -100,7 +100,7 @@ Component.FakeSelect = function()
         
         setHdlr(this,'fakeSelect:getSelected',function() {
             return Arr.find(trigHdlr(this,'fakeSelect:getChoices'),function() {
-                return (Integer.cast(getAttr(this,'data-selected')) === 1);
+                return (getAttrInt(this,'data-selected') === 1);
             });
         });
         

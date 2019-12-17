@@ -83,7 +83,8 @@ Component.RowsChecker = function()
             });
         },
         
-        getCheckedSet: function(separator) {
+        getCheckedSet: function() {
+            const separator = getAttr(this,"data-separator");
             return Dom.valueSeparator(trigHdlr(this,'rowsChecker:getCheckedCheckboxes'),separator,true);
         },
         
@@ -230,8 +231,7 @@ Component.RowsChecker = function()
         
         // handler
         setHdlr(button,'toolButton:redirect',function(clickEvent) {
-            const separator = getAttr(this,"data-separator");
-            const set = trigHdlr($this,'rowsChecker:getCheckedSet',separator);
+            const set = trigHdlr($this,'rowsChecker:getCheckedSet');
             const href = Dom.dataHrefReplaceChar(this,set);
             
             if(Str.isNotEmpty(href))
@@ -269,20 +269,19 @@ Component.RowsChecker = function()
         
         // handler
         setHdlr(multiDelete,'multiDelete:getPrimaries',function() {
-            return qsa(this,"input[name='primaries']");
+            return qs(this,"input[name='primaries']");
         });
         
         // event 
         ael(multiDelete,'confirm:yes',function(event,submit) {
             const input = trigHdlr(this,'multiDelete:getPrimaries');
-            const separator = getAttr(this,'data-separator');
-            const set = trigHdlr($this,'rowsChecker:getCheckedSet',separator);
+            const set = trigHdlr($this,'rowsChecker:getCheckedSet');
             
             if(Str.isNotEmpty(set))
-            $(input).val(set);
+            trigHdlr(input,'input:setValue',set);
             
             else
-            submit.preventDefault();
+            Evt.preventStop(submit);
         });
     }
     

@@ -31,16 +31,16 @@ Component.Ajax = function(type)
         trigger: function(config,triggerEvent) {
             let r = null;
             
-            if(!Pojo.isNotEmpty(config))
+            if(!Str.is(config) && !Pojo.isNotEmpty(config))
             {
                 config = trigHdlr(this,'ajax:config');
                 
                 if(Dom.isNode(config))
                 config = Xhr.configFromNode(config);
-                
-                else if(Str.is(config))
-                config = {url: config};
             }
+            
+            if(Str.is(config))
+            config = {url: config};
             
             if(Pojo.isNotEmpty(config))
             {
@@ -58,8 +58,8 @@ Component.Ajax = function(type)
     
     // event
     ael(this,type,function(event,config) {
-        event.stopPropagation();
         trigHdlr(this,'ajax:trigger',config,event);
+        Evt.preventStop(event);
     });
     
     return this;

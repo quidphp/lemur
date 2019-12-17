@@ -4,20 +4,20 @@
  * License: https://github.com/quidphp/lemur/blob/master/LICENSE
  */
  
-// winUnload
+// windowUnload
 // component to manage the unload notification with the window object
-Component.WinUnload = function(type,timeout)
+Component.WindowUnload = function(type,timeout)
 {
     // une node
     Dom.checkNode(this,window);
     
     
     // handler
-    setHdlrs(this,'winUnload:',{
+    setHdlrs(this,'windowUnload:',{
         
         isValid: function() {
             let r = false;
-            const unload = trigHdlr(this,'winUnload:getText');
+            const unload = trigHdlr(this,'windowUnload:getText');
             
             if(!Str.isNotEmpty(unload) || confirm(unload))
             r = true;
@@ -26,7 +26,7 @@ Component.WinUnload = function(type,timeout)
         },
         
         addNode: function(node) {
-            const nodes = trigHdlr(this,'winUnload:getNodes');
+            const nodes = trigHdlr(this,'windowUnload:getNodes');
             
             Dom.each(node,function() {
                 nodes.push(this);
@@ -34,7 +34,7 @@ Component.WinUnload = function(type,timeout)
         },
         
         removeNode: function(node) {
-            const nodes = trigHdlr(this,'winUnload:getNodes');
+            const nodes = trigHdlr(this,'windowUnload:getNodes');
             
             Dom.each(node,function() {
                 Arr.spliceValue(this,nodes);
@@ -42,15 +42,15 @@ Component.WinUnload = function(type,timeout)
         },
         
         getNodes: function(node) {
-            return Dom.getOrSetData(this,'win-unload-nodes',[]);
+            return Dom.getOrSetData(this,'window-unload-nodes',[]);
         },
         
         getText: function() {
             let r = null;
-            const nodes = trigHdlr(this,'winUnload:getNodes');
+            const nodes = trigHdlr(this,'windowUnload:getNodes');
             
             Arr.each(nodes,function() {
-                r = trigHdlr(this,'winUnload:getText');
+                r = trigHdlr(this,'windowUnload:getText');
                 
                 if(Str.isNotEmpty(r))
                 return false;
@@ -65,7 +65,7 @@ Component.WinUnload = function(type,timeout)
     ael(this,'beforeunload',function(event) {
         let r = undefined;
         event = event || window.event;
-        const text = trigHdlr(this,'winUnload:getText');
+        const text = trigHdlr(this,'windowUnload:getText');
         
         if(Str.isNotEmpty(text))
         {

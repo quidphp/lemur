@@ -17,7 +17,7 @@ Component.ClickOpenInputAjax = function(option)
     const $option = Pojo.replaceRecursive({
         ajaxEvent: 'submit',
         inputSearch: {
-            keyEvent: 'keyup',
+            keyEvent: 'keydown',
             timeout: 800
         }
     },option);

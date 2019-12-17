@@ -21,8 +21,8 @@ Component.Doc = function(option)
     // components
     Component.History.call(this,$option);
     Component.KeyboardEscape.call(this);
-    Component.Win.call(window);
-    Component.WinUnload.call(window);
+    Component.Window.call(window);
+    Component.WindowUnload.call(window);
     
     
     // handler
@@ -64,7 +64,7 @@ Component.Doc = function(option)
         makeMount: function(doc,isError) {
             trigHdlr(this,'doc:unmount');
             trigHdlr(this,'doc:make',doc);
-            trigHdlr(window,'win:scrollTo',0);
+            trigHdlr(window,'window:scrollTo',0);
             
             trigHdlr(this,'doc:mount',false,isError);
             
@@ -119,6 +119,7 @@ Component.Doc = function(option)
             // html
             // les attributs de html sont remplacés (les attributs existants ne sont pas effacés)
             const html = trigHdlr(this,'doc:getHtml');
+            if(Pojo.isNotEmpty(doc.htmlAttr))
             DomChange.setsAttr(doc.htmlAttr,html);
             
             // head
@@ -141,6 +142,7 @@ Component.Doc = function(option)
             // les attributs de body sont effacés et remplacés
             const body = trigHdlr(this,'doc:getBody');
             DomChange.emptyAttr(body);
+            if(Pojo.isNotEmpty(doc.bodyAttr))
             DomChange.setsAttr(doc.bodyAttr,body);
             
             // routeWrap
@@ -159,6 +161,8 @@ Component.Doc = function(option)
                         contentTarget = routeWrapTarget;
                         const routeWrapAttributes = Dom.attr(contentTarget);
                         DomChange.emptyAttr(routeWrap);
+                        
+                        if(Pojo.isNotEmpty(routeWrapAttributes))
                         DomChange.setsAttr(routeWrapAttributes,routeWrap);
                     }
                 }

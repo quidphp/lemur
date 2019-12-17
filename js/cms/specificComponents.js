@@ -21,7 +21,7 @@ Component.SpecificComponents = function(option)
         },
         
         checkboxSortable: {
-            match: "[data-group='relation'][data-sortable='1']",
+            match: "[data-tag='checkbox'][data-sortable='1']",
             component: Component.Sorter,
             option: {items: ".choice", handle: '.choice-in'},
             setupOnView: true

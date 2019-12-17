@@ -4,19 +4,19 @@
  * License: https://github.com/quidphp/lemur/blob/master/LICENSE
  */
  
-// win
+// window
 // behaviours to detect touch devices or responsive resolution on the window node
-Component.Win = function(type,timeout)
+Component.Window = function(type,timeout)
 {
     // une node
     Dom.checkNode(this,window);
     
     
     // handler
-    setHdlrs(this,'win:',{
+    setHdlrs(this,'window:',{
         // retourne vrai si le navigateur courant supporte le touch
         isTouch: function() {
-            return (getData(this,'win-isTouch') === true)? true:false;
+            return (getData(this,'window-isTouch') === true)? true:false;
         },
         
         // retourne vrai si la fenêtre courante est responsive
@@ -33,7 +33,7 @@ Component.Win = function(type,timeout)
     
     // sur le premier isTouch
     aelOnce(document,'touchstart',function() {
-        setData(window,'win-isTouch',true);
+        setData(window,'window-isTouch',true);
     });
         
     return this;

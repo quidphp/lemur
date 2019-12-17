@@ -53,9 +53,11 @@ Component.SpecificPanel = function(option)
         const hash = trigHdlr(tab,'tab:getHash');
         const input = trigHdlr(this,'specificPanel:getInput');
         const links = trigHdlr(this,'specificPanel:getLinks');
-        
         trigHdlr(input,'input:setValue',hash);
-        DomChange.hrefChangeHash(hash,links);
+        
+        Arr.each(links,function() {
+            this.hash = hash;
+        });
     });
     
     

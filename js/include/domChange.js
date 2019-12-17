@@ -72,52 +72,5 @@ const DomChange = Lemur.DomChange = {
         });
         
         return this;
-    },
-
-
-    // aExternalBlank
-    // ajout target _blank à tous les liens externes qui n'ont pas la target
-    aExternalBlank: function(node)
-    {
-        const anchor = Selector.scopedQueryAll(node,"a[target!='_blank']");
-        
-        $(anchor).filter(function() {
-            return (Uri.isExternal(getAttr(this,"href")) && !$(this).is("[href^='mailto:']"))? true:false;
-        })
-        .each(function() {
-            $(this).prop('target','_blank');
-        });
-        
-        return this;
-    },
-    
-    
-    // hrefChangeHash
-    // change le hash sur des balises avec attribut href
-    hrefChangeHash: function(fragment,nodes)
-    {
-        Str.check(fragment);
-        nodes = Dom.nodeWrap(nodes);
-        
-        Arr.each(nodes,function() {
-            this.hash = fragment;
-        });
-        
-        return this;
-    },
-    
-    
-    // wrapConsecutiveSiblings
-    // permet d'enrobber toutes les prochaines balises répondant à until dans une balise html
-    wrapConsecutiveSiblings: function(nodes,until,html)
-    {
-        Str.check(html);
-        
-        Dom.each(nodes,function() {
-            const nextUntil = $(this).nextUntil(until);
-            $(this).add(nextUntil).wrapAll(html);
-        });
-        
-        return this;
     }
 }

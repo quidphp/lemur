@@ -13,10 +13,6 @@
     *::before,
     *::after {
         box-sizing: inherit;
-        outline: 0;
-    }
-    *:focus {
-        box-shadow: inset 0px 0px 5px $gray;
     }
     html {
         height: 100%;

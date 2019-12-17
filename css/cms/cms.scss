@@ -15,6 +15,14 @@
 
 /* HTML */
 @include Document('.route-wrap');
+*,
+*::before,
+*::after {
+    outline: 0;
+}
+*:focus {
+    box-shadow: inset 0px 0px 5px $gray;
+}
 body {
     font-size: 1.4rem;
     font-weight: 300;
@@ -163,7 +171,7 @@ body > .modal {
 
 // date
 [data-group='date'] .specific-component {
-    @include componentDateSpecific();
+    @include componentInputCalendarSpecific();
 }
 
 // relation
@@ -172,9 +180,6 @@ body > .modal {
 }
 [data-group='relation'][data-sortable='1'] .specific-component {
     @include componentRelationSortableSpecific();
-}
-[data-group='relation'][data-tag='select'] .specific-component {
-    @include componentSelectSpecific();
 }
 [data-group='relation'] .general-component {
     @include componentRelationGeneral();

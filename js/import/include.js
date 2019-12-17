@@ -40,6 +40,7 @@ const logError = Debug.logError.bind(Debug);
 
 // dom 
 const getAttr = Dom.getAttr.bind(Dom);
+const getAttrInt = Dom.getAttrInt.bind(Dom);
 const getData = Dom.getData.bind(Dom);
 const setData = Dom.setData.bind(Dom);
 
