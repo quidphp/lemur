@@ -6,7 +6,7 @@
  
 // burger
 // script for a burger menu component
-Component.Burger = function()
+Component.Burger = function(persistent)
 {
     // not empty
     if(Vari.isEmpty(this)) 
@@ -53,6 +53,15 @@ Component.Burger = function()
     aelOnce(this,'component:teardown',function() {
         trigEvt(this,'burger:close');
     });
+    
+    
+    // persistent
+    if(persistent !== true)
+    {
+        aelOnce(document,'doc:unmountPage',function() {
+            trigEvt(this,'burger:close');
+        });
+    }
     
     return this;
 }

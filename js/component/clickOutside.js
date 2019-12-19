@@ -36,7 +36,7 @@ Component.ClickOutside = function(value,persistent)
         // persistent
         if(persistent !== true)
         {
-            const handlerDocument = aelOnce(document,'doc:unmountPage',function() {
+            aelOnce(document,'doc:unmountPage',function() {
                 rel(parent,handler);
                 rel(parent,handlerCustom);
             });
@@ -44,7 +44,6 @@ Component.ClickOutside = function(value,persistent)
             aelOnce(this,'component:teardown',function() {
                 rel(parent,handler);
                 rel(parent,handlerCustom);
-                rel(document,handlerDocument);
             });
         }
     });

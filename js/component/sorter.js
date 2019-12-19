@@ -19,34 +19,40 @@ Component.Sorter = function(option)
     
     // option
     const $option = Pojo.replace({
-        items: ".items",
         handle: '.handle',
-        containment: 'parent',
-        axis: "y",
-        cursor: "move",
-        tolerance: 'pointer',
-        opacity: 0.5,
-        cancel: Selector.input(false),
-        stop: function(event,ui) {
-            trigHdlr(this,'verticalSorter:stop');
-            ui.item.css('z-index','auto');
+        draggable: ".items",
+        direction: 'vertical',
+        forceFallback: true,
+        filter: Selector.input(false),
+        animation: 150,
+        onEnd: function(event) {
+            trigHdlr(this.el,'sorter:end',event,this);
         }
     },option);
     
     
+    // handler
+    setHdlr(this,'sorter:getInst',function() {
+        return getData(this,'sortable-inst');
+    });
+    
+    
     // event
     ael(this,'component:enable',function() {
-        $(this).sortable('enable');
+        const sortable = trigHdlr(this,'sorter:getInst');
+        sortable.option('disabled',false);
     });
     
     ael(this,'component:disable',function() {
-        $(this).sortable('disable');
+        const sortable = trigHdlr(this,'sorter:getInst');
+        sortable.option('disabled',true);
     });
     
     
     // setup
     aelOnce(this,'component:setup',function() {
-        $(this).sortable($option);
+        const sortable = Sortable.create(this,$option);
+        setData(this,'sortable-inst',sortable);
     });
     
     return this;

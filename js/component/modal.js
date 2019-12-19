@@ -54,6 +54,15 @@ Component.Modal = function(option)
             anchorBind.call(this,anchor);
         },
         
+        set: function(route,html) {
+            Str.check(route,true);
+            Str.check(html,true);
+            
+            trigHdlr(this,'modal:setRoute',route);
+            trigHdlr(this,'clickOpen:setTargetContent',html);
+            trigEvt(this,'clickOpen:open');
+        },
+        
         fetchNode: function(node) {
             const config = Xhr.configFromNode(node);
             const route = getAttr(node,'data-modal');

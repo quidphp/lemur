@@ -61,6 +61,12 @@ Component.History = function(option)
             return r;
         },
         
+        // retourne vrai si l'url de l'état est la même que l'url courante
+        isCurrentStateUrl: function(state) {
+            const current = trigHdlr(this,'history:getCurrentState');
+            return (state.url === current.url);
+        },
+        
         // retourne l'état courant
         getCurrentState: function() {
             return HistoryApi.makeState(location.href,this.title);
@@ -103,7 +109,7 @@ Component.History = function(option)
             let r = false;
             uriState = (Pojo.is(uriState))? uriState:HistoryApi.makeState(uriState,title);
             
-            if($history != null && uriState != null)
+            if($history != null && uriState != null && !trigHdlr(this,'history:isCurrentStateUrl',uriState))
             {
                 $history.pushState(uriState,uriState.title,uriState.url);
                 r = true;
@@ -114,6 +120,7 @@ Component.History = function(option)
         
         // permet de faire un replaceState avec un nouveau hash
         replaceHash: function(value,title) {
+            Str.check(value);
             value = Uri.makeHash(value,true);
             const state = HistoryApi.makeState(value,title);
             trigHdlr(this,'history:replaceState',state);
@@ -121,11 +128,15 @@ Component.History = function(option)
         
         // permet de faire un pushState avec un nouveau hash
         pushHash: function(value,title) {
+            Str.check(value);
             value = Uri.makeHash(value,true);
             const state = HistoryApi.makeState(value,title);
             
-            if(!trigHdlr(this,'history:pushState',state))
-            window.location.hash = Uri.makeHash(value,false);
+            if(!trigHdlr(this,'history:isCurrentStateUrl',state))
+            {
+                if(!trigHdlr(this,'history:pushState',state))
+                window.location.hash = Uri.makeHash(value,false);
+            }
         },
         
         // gère une nouvelle entrée à l'historique à partir d'un event
@@ -208,7 +219,7 @@ Component.History = function(option)
             else if(Uri.isSamePathQuery(state.url,$previous.url) && (Uri.hasFragment(state.url) || Uri.hasFragment($previous.url)))
             {
                 $previous = state;
-                trigEvt(this,'hashchange',event);
+                trigEvt(window,'hashChange:history',true);
             }
         });
     }
@@ -333,7 +344,7 @@ Component.History = function(option)
                     r = true;
                     trigHdlr(this,'history:pushState',state);
                     $previous = state;
-                    trigEvt(window,'hashchange',srcEvent);
+                    trigEvt(window,'hashChange:history');
                 }
                 
                 if(r === true)
@@ -436,7 +447,7 @@ Component.History = function(option)
             
             r = Xhr.trigger(config);
             trigHdlr(this,'history:cancelAjax');
-            
+
             if(r != null)
             setData(this,'doc-ajax',r);
         }

@@ -38,7 +38,7 @@ class About extends Core\RouteAlias
 
 
     // trigger
-    // html pour la page à propos, qui est accessible à tous peu importe le role
+    // html pour la page à propos
     final public function trigger()
     {
         return $this->output();

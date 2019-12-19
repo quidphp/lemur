@@ -345,13 +345,17 @@ footer {
     width: 100%;
     background-color: $color;
     padding: 0 15px;
-
+    
+    .back-to-top {
+        display: none;
+        
+        &[data-active='1'] {
+            display: block;
+        }
+    }
+    
     .with-submenu {
         position: relative;
-
-        &:first-child {
-            margin-left: 0;
-        }
 
         &.active .trigger {
             background-color: $darkColor;

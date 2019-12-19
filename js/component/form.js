@@ -227,12 +227,17 @@ Component.Form = function()
     // prepareValidate
     const prepareValidate = function() 
     {
-        const validateFields = trigHdlr(this,'form:getValidateFields');
-        
         Component.ValidatePrevent.call(this,'submit');
         
         setHdlr(this,'validatePrevent:getTargets',function() {
-            return validateFields;
+            const targets = trigHdlr(this,'form:getValidateFields');
+
+            Dom.each(targets,function() {
+                if(trigHdlr(this,'input:isValidateSetup') === false)
+                trigSetup(this);
+            });
+            
+            return targets;
         });
     }
     

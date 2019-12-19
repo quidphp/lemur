@@ -38,7 +38,7 @@
             margin-top: -5px;
             display: none;
 
-            &[data-direction='1'] {
+            &[data-tab='1'] {
                 display: block;
             }
         }
@@ -54,7 +54,7 @@
         .slider-element {
             display: none;
 
-            &[data-active='1'] {
+            &[data-tab='1'] {
                 display: block;
             }
         }

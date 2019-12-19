@@ -25,8 +25,8 @@ class Login extends Lemur\Route\Login
     public static $config = [
         'path'=>[
             null,
-            'fr'=>'',
-            'en'=>'']
+            'fr'=>'connexion',
+            'en'=>'login']
     ];
 
 
@@ -35,9 +35,14 @@ class Login extends Lemur\Route\Login
     final protected function onBefore()
     {
         $return = parent::onBefore();
+        $routeRequest = $this->routeRequest();
+        $lang = static::boot()->lang();
+        $langCode = $lang->currentLang();
+        $path = $routeRequest->routePath($langCode);
         $request = $this->request();
-
-        if(!$request->isPathMatchEmpty())
+        $pathMatch = $request->pathMatch();
+        
+        if(!empty($pathMatch) && $pathMatch !== $path)
         {
             $session = static::session();
             $flash = $session->flash();

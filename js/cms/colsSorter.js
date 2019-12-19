@@ -20,7 +20,7 @@ Component.ColsSorter = function(option)
             target: ".popup"
         },
         sorter: {
-            items: ".choice",
+            draggable: ".choice",
             handle: '.choice-in'
         }
     },option);
@@ -32,6 +32,11 @@ Component.ColsSorter = function(option)
     
     // handler
     setHdlrs(this,'colsSorter:',{
+        
+        getScroller: function() {
+            const popup = trigHdlr(this,'clickOpen:getTarget');
+            return qs(popup,'.scroller');
+        },
         
         getCheckboxes: function() {
             return qsa(this,"input[type='checkbox']");
@@ -78,10 +83,15 @@ Component.ColsSorter = function(option)
     {
         const $this = this;
         const popup = trigHdlr(this,'clickOpen:getTarget');
+        const scroller = trigHdlr(this,'colsSorter:getScroller');
         
-        trigSetup(Component.Sorter.call(popup,$option.sorter));
+        // scroller
+        trigSetup(Component.Sorter.call(scroller,$option.sorter));
+        setHdlr(scroller,'sorter:end',function() {
+            trigHdlr(popup,'popup:refresh');
+        });
         
-        // handler
+        // popup
         setHdlrs(popup,'popup:',{
             
             refresh: function() {
@@ -99,10 +109,6 @@ Component.ColsSorter = function(option)
                 else
                 setAttr(this,'data-validate','valid');
             }
-        });
-        
-        setHdlr(popup,'verticalSorter:stop',function() {
-            trigHdlr(this,'popup:refresh');
         });
     }
     

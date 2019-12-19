@@ -106,7 +106,7 @@ const Evt = Lemur.Evt = new function()
             Arr.each(nodes,function() {
                 this.addEventListener(type,handler,option);
                 
-                if(Str.isNotEmpty(register))
+                if(Str.isNotEmpty(register) || register === true)
                 $inst.registerEventListener(this,register,type,handler,option);
             });
             
@@ -186,6 +186,10 @@ const Evt = Lemur.Evt = new function()
     // ceci permet de le retirer par la suite
     this.registerEventListener = function(node,register,type,handler,option) 
     {
+        Str.check(type,true);
+        register = (register === true)? type:register;
+        Str.check(register,true);
+        
         const data = Dom.getOrSetData(node,'rel',{});
         const entry = [type,handler,option];
         Pojo.setRef(register,entry,data);
@@ -294,11 +298,18 @@ const Evt = Lemur.Evt = new function()
     
     // triggerSetup
     // fonction utilisé pour lancer le setup sur un component
+    // lance component:ready après le setup
     // ces événements ne bubble pas
     this.triggerSetup = function(nodes) 
     {
-        const args = Arr.merge([nodes,'component:setup'],ArrLike.sliceStart(1,arguments));
-        return this.triggerEvent.apply(this,args);
+        const sliced = ArrLike.sliceStart(1,arguments);
+        let args = Arr.merge([nodes,'component:setup'],sliced);
+        this.triggerEvent.apply(this,args);
+        
+        args = Arr.merge([nodes,'component:ready'],sliced);
+        this.triggerEvent.apply(this,args);
+        
+        return;
     }
     
     

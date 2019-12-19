@@ -14,7 +14,11 @@ Component.SpecificPanel = function(option)
     
     
     // option
-    const $option = Pojo.replace({
+    const $option = Pojo.replaceRecursive({
+        navHash: {
+            type: 'tabs',
+            child: 'tab'
+        },
         target: "> .form-inner > .panel",
         nav: "> .form-top .left ul li a"
     },option);
@@ -22,7 +26,7 @@ Component.SpecificPanel = function(option)
     
     // components
     Component.TabsNav.call(this,$option);
-    Component.TabsHash.call(this,$option);
+    Component.NavHash.call(this,$option.navHash);
     
     
     // handler
@@ -42,7 +46,7 @@ Component.SpecificPanel = function(option)
         }
     });
     
-    setHdlr(this,'tabsHash:setupFragment',function() {
+    setHdlr(this,'navHash:setupFragment',function() {
         const currentPanel = trigHdlr(this,'specificPanel:getCurrentPanel');
         return (currentPanel != null)? trigHdlr(currentPanel,'tab:getHash'):Request.fragment();
     });

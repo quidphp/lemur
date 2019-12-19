@@ -43,14 +43,14 @@ Component.SpecificMulti = function(option)
     {
         const $this = this;
         
-        const handler = ael(document,'specificForm:bindView',function(event,node) {
+        ael(document,'specificForm:bindView',function(event,node) {
             const elements = qsa(node,$option.formElement);
             trigHdlrs(elements,'specificMulti:refresh');
-        });
+        },'specificForm-bindView');
         
         aelOnce(document,'route:specificMulti:unmount',function() {
-            rel(document,handler);
-        })
+            rel(document,'specificForm-bindView');
+        });
     }
     
     

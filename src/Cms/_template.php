@@ -47,7 +47,9 @@ trait _template
         $flush .= Html::div(null,'loading-progress');
         $flush .= Html::div(null,'loading-icon');
         $flush .= Html::div(null,'background');
-        $flush .= Html::divCond($this->makeModal(),['modal']);
+        $route = Email::make();
+        $data = array('mailto'=>$route->uri());
+        $flush .= Html::divCond($this->makeModal(),array('modal','data'=>$data));
 
         $flush .= Html::divOp('route-wrap');
 
@@ -378,6 +380,13 @@ trait _template
         $showQuid = $boot->getOption('versionQuid') ?? true;
         $version = $boot->version(true,$showQuid,true);
 
+        if($this->hasPermission('backToTop'))
+        {
+            $r .= Html::divOp('back-to-top');
+            $r .= Html::button(static::langText('footer/backToTop'),array('with-icon','top','no-border'));
+            $r .= Html::divCl();
+        }
+        
         if($this->hasPermission('link'))
         $r .= $this->footerElement('link',$this->footerLink());
 
@@ -559,8 +568,7 @@ trait _template
     final protected function makeModal():string
     {
         $r = Html::button(null,['icon-solo','close']);
-        $r .= Html::divOp('inner');
-        $r .= Html::divCl();
+        $r .= Html::div(null,'inner');
         $r = static::makeDivPopup($r,'box');
 
         return $r;

@@ -14,6 +14,7 @@ Component.Doc = function(option)
 
     // option
     const $option = Pojo.replace({
+        mountTimeout: 0,
         routeWrap: "> .route-wrap"
     },option);
     
@@ -36,6 +37,11 @@ Component.Doc = function(option)
         // retourne la node body
         getBody: function() {
             return qs(this,'body');
+        },
+        
+        // retourne un tableau avec les nodes html et body
+        getHtmlBody: function() {
+            return [trigHdlr(this,'doc:getHtml'),trigHdlr(this,'doc:getBody')]
         },
         
         // retourne la node du route wrap
@@ -65,18 +71,17 @@ Component.Doc = function(option)
             trigHdlr(this,'doc:unmount');
             trigHdlr(this,'doc:make',doc);
             trigHdlr(window,'window:scrollTo',0);
-            
             trigHdlr(this,'doc:mount',false,isError);
-            
-            const html = trigHdlr(this,'doc:getHtml');
-            setTimeout(function() {
-                setAttr(html,'data-status','ready');
-            },100);
         },
         
         // lance les évènements pour monter le document dans le bon order
         mount: function(initial,isError) {
-            docMount.call(this,initial,isError);
+            const $this = this;
+            setTimeout(function() {
+                docMount.call($this,initial,isError);
+                const html = trigHdlr($this,'doc:getHtml');
+                setAttr(html,'data-status','ready');
+            },$option.mountTimeout);
         },
 
         // lance les évènements pour démonter le document dans le bon order
@@ -181,17 +186,12 @@ Component.Doc = function(option)
     {
         const html = trigHdlr(this,'doc:getHtml');
         const routeWrap = trigHdlr(this,'doc:getRouteWrap');
+        const body = trigHdlr(this,'doc:getBody');
         
         if(initial === true)
-        {
-            const body = trigHdlr(this,'doc:getBody');
-            trigEvt(this,'doc:mountInitial',body,isError);
-            trigEvt(this,'doc:mountCommon',body,isError);
-        }
+        trigEvt(this,'doc:mountInitial',body,isError);
         
-        else
         trigEvt(this,'doc:mountCommon',routeWrap,isError);
-        
         trigEvt(this,'doc:mountPage',routeWrap,isError);
         
         if(isError !== true)
@@ -205,7 +205,7 @@ Component.Doc = function(option)
             trigEvt(this,'route:'+route,routeWrap);
         }
         
-        trigEvt(this,'doc:mounted',routeWrap,isError);
+        trigEvt(this,'doc:mountedPage',routeWrap,isError);
     }
     
     

@@ -127,7 +127,7 @@ class Route extends Base\Test
         assert($obj2->hasUri());
         assert(!$route::make()->hasUri());
         assert($obj2->uri() === '/en/login/submit');
-        assert($login::make()->uri() === '/');
+        assert($login::make()->uri() === '/en/login');
         assert($sitemap::make()->uri() === '/sitemap.xml');
         assert($obj2->uriOutput() === '/en/login/submit');
         assert($obj2->uriRelative() === '/en/login/submit');
@@ -144,8 +144,8 @@ class Route extends Base\Test
         assert($obj2->aOpenTitle('%:','#id class2') === "<a href='/en/login/submit' id='id' class='class2' hreflang='en'>Login - Submit:");
         $loginMake = $login::make();
         assert(strlen($obj2->formOpen()) === 245);
-        assert(strlen($loginMake->formOpen(['method'=>'post'])) === 230);
-        assert($loginMake->formSubmit(null,'nameOK') === "<form action='/' method='get'><button name='nameOK' type='submit'></button></form>");
+        assert(strlen($loginMake->formOpen(['method'=>'post'])) === 238);
+        assert($loginMake->formSubmit(null,'nameOK') === "<form action='/en/login' method='get'><button name='nameOK' type='submit'></button></form>");
         assert($loginMake::submitLabel('% ok') === "<button type='submit'>Login ok</button>");
         assert($loginMake->submitTitle('% ok') === "<button type='submit'>Login ok</button>");
         assert($loginSubmit::make() instanceof $loginSubmit);
@@ -344,8 +344,8 @@ class Route extends Base\Test
         // routePath
         assert($matchError->routePath() === false);
         assert($matchError->routePath(null,true) === null);
-        assert($match->routePath('fr') === '');
-        assert($match->routePath('fr',true) === '');
+        assert($match->routePath('fr') === 'connexion');
+        assert($match->routePath('fr',true) === 'connexion');
         assert($match4->routePath() === false);
         assert($match4->routePath('ge',true) === false);
         assert($match4->routePath('fr') === 'connexion/soumettre');
@@ -476,7 +476,7 @@ class Route extends Base\Test
 
         // uri
         assert($match4->uri('fr') === $schemeHost.'/fr/connexion/soumettre');
-        assert($match->uri('fr') === $schemeHost);
+        assert($match->uri('fr') === $schemeHost."/fr/connexion");
         assert($match4->uri('fr',['query'=>['test'=>2,'james'=>'lolé']]) === $schemeHost.'/fr/connexion/soumettre?test=2&james=lolé');
         assert($match4->uri('fr',['query'=>true]) === $schemeHost.'/fr/connexion/soumettre');
 
@@ -647,12 +647,12 @@ class Route extends Base\Test
         $routes->init('cms');
 
         // routing
-        assert($app->count() === 53);
+        assert($app->count() === 54);
         assert($routes->type() === 'cms');
         assert($routes->keyParent()[Lemur\Cms\LoginSubmit::class] === Lemur\Cms\Login::class);
-        assert(count($routes->hierarchy()) === 26);
+        assert(count($routes->hierarchy()) === 27);
         assert(count($routes->childsRecursive($login)) === 5);
-        assert($routes->tops()->isCount(26));
+        assert($routes->tops()->isCount(27));
         assert($routes->tops() !== $routes);
         assert($routes->top($loginSubmit) === $login);
         assert($routes->parents($loginSubmit)->isCount(1));
@@ -663,8 +663,8 @@ class Route extends Base\Test
         assert($routes->withSegment()->count() > 5);
         assert($routes->withoutSegment()->count() > 5);
         assert($routes->allowed()->count() !== $routes->count());
-        assert($routes::makeBreadcrumbs('/',null,$login::make(),$loginSubmit::make()) === "<a href='/'>Login</a>/<a href='/en/login/submit' hreflang='en'>Login - Submit</a>");
-        assert($routes::makeBreadcrumbs('/',5,$login::make(),$loginSubmit::make()) === "<a href='/'>Login</a>/<a href='/en/login/submit' hreflang='en'>Lo...</a>");
+        assert($routes::makeBreadcrumbs('/',null,$login::make(),$loginSubmit::make()) === "<a href='/en/login' hreflang='en'>Login</a>/<a href='/en/login/submit' hreflang='en'>Login - Submit</a>");
+        assert($routes::makeBreadcrumbs('/',5,$login::make(),$loginSubmit::make()) === "<a href='/en/login' hreflang='en'>Login</a>/<a href='/en/login/submit' hreflang='en'>Lo...</a>");
 
         // classe
         assert($routes->not($routes)->add($routes)->count() > 20);
@@ -686,15 +686,15 @@ class Route extends Base\Test
         assert($routes->sortDefault() === $routes);
 
         // map
-        assert($routes->isCount(53));
+        assert($routes->isCount(54));
         assert($routes->get('Sitemap') === Lemur\Cms\Sitemap::class);
         assert($routes->get(Lemur\Cms\Sitemap::class) === Lemur\Cms\Sitemap::class);
         assert(!$routes->in('Sitemap'));
         assert($routes->in(Lemur\Cms\Sitemap::class));
         assert($routes->exists('Sitemap'));
         assert($routes->exists(Lemur\Cms\Sitemap::class));
-        assert($routes->unset('Sitemap')->isCount(52));
-        assert($routes->add(Lemur\Cms\Sitemap::class)->isCount(53));
+        assert($routes->unset('Sitemap')->isCount(53));
+        assert($routes->add(Lemur\Cms\Sitemap::class)->isCount(54));
 
         return true;
     }

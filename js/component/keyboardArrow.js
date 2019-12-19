@@ -31,7 +31,7 @@ Component.KeyboardArrow = function(prevent,type)
         else if(keyCode === 40)
         trigEvt(this,'keyboardArrow:down',keyEvent,isInput);
         
-        else if(ekeyCode === 37)
+        else if(keyCode === 37)
         trigEvt(this,'keyboardArrow:left',keyEvent,isInput);
         
         else if(keyCode === 39)

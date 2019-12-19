@@ -12,9 +12,9 @@ declare(strict_types=1);
 namespace Quid\Lemur\Service;
 use Quid\Main;
 
-// jQueryUi
-// class to integrate jquery-ui library
-class JQueryUi extends Main\Service
+// sortable
+// class to integrate sortable javascript library
+class Sortable extends Main\Service
 {
     // config
     public static $config = [];
@@ -22,13 +22,12 @@ class JQueryUi extends Main\Service
 
     // docOpenJs
     // retourne le javascript à lier en début de document
-    // inclut aussi touchpunch pour que sortable marche avec mobile
     final public function docOpenJs()
     {
-        return [3=>'js/vendor/jquery/jquery-ui.js',4=>'js/vendor/jquery/touch-punch.js'];
+        return 'js/vendor/sortable/sortable.js';
     }
 }
 
 // init
-JQueryUi::__init();
+Sortable::__init();
 ?>

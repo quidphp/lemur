@@ -54,15 +54,8 @@ Component.ValidatePrevent = function(type)
     
     
     // setup
-    aelOnce(this,'component:setup', function(event) {
-        const targets = trigHdlr(this,'validatePrevent:getTargets');
-        
-        Dom.each(targets,function() {
-            if(!trigHdlr(this,'validate:isBinded'))
-            Component.Validate.call(this);
-        });
-        
-        trigSetup(targets);
+    aelOnce(this,'component:setup',function() {
+        trigHdlr(this,'validatePrevent:getTargets');
     });
     
     return this;

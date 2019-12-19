@@ -4,9 +4,9 @@
  * License: https://github.com/quidphp/lemur/blob/master/LICENSE
  */
  
-// resizeChange
-// component to notify nodes when window size has changed
-Component.ResizeChange = function(persistent)
+// scrollChange
+// component to notify nodes when window scroll has changed
+Component.ScrollChange = function(persistent)
 {
     // not empty
     if(Vari.isEmpty(this)) 
@@ -16,10 +16,10 @@ Component.ResizeChange = function(persistent)
     // nodes
     const $nodes = this;
     
-
+    
     // event
-    const handler = ael(window,'resize',function(event) {
-        trigEvt($nodes,'resize:change');
+    const handler = ael(window,'scroll',function(event) {
+        trigEvt($nodes,'scroll:change',event);
     });
     
     

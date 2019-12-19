@@ -191,6 +191,31 @@ const ObjKeyValue = {
     arr: function(value)
     {
         return (this.is(value))? Array.from(this.values(value)):null;
+    },
+    
+    
+    // climb
+    // permet de grimper dans un objet plain à partir d'un tableau
+    climb: function(array,r) 
+    {
+        if(Arr.is(array) && this.is(r))
+        {
+            var i;
+            const $inst = this;
+            
+            Arr.each(array,function(value) {
+                if($inst.keyExists(value,r))
+                r = r[value];
+                
+                else
+                {
+                    r = undefined;
+                    return false;
+                }
+            });
+        }
+        
+        return r;
     }
 }
 

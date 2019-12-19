@@ -10,12 +10,16 @@
 // initial mount
 // comportements bindés une seule fois au tout début
 ael(document,'doc:mountInitial',function(event,body) {
+    // background
     const background = qs(body,"> .background");
-    const modal = qs(body,"> .modal");
-    
-    trigSetup(Component.SpecificComponents.call(this));
     trigSetup(Component.Background.call(background));
+    
+    // modal
+    const modal = qs(body,"> .modal");
     trigSetup(Component.Modal.call(modal));
+    
+    // specificComponents
+    trigSetup(Component.SpecificComponents.call(this));
 });
 
 
@@ -42,6 +46,7 @@ ael(document,'doc:mountCommon',function(event,node) {
     const aConfirm = qsa(node,"a[data-confirm]");
     const popupTrigger = qsa(node,".popup-trigger.with-popup:not(.with-ajax)");
     const popupTriggerAjax = qsa(node,".popup-trigger.with-popup.with-ajax");
+    const backToTop = qs(node,"footer .back-to-top");
     
     // anchorCorner
     trigSetup(Component.AnchorCorner.call(anchorCorner));
@@ -57,13 +62,18 @@ ael(document,'doc:mountCommon',function(event,node) {
     
     // popupTriggerAjax
     trigSetup(Component.ClickOpenAjaxAnchor.call(popupTriggerAjax,{trigger: ".popup-title", target: ".popup"}));
+    
+    // backToTop
+    trigSetup(Component.BackToTop.call(backToTop));
+    
+    // modalMailto
+    trigSetup(Component.ModalMailto.call(node));
 });
 
 
 // doc:unmountCommon
 // événement appelé pour enlever des bindings globaux
 ael(document,'doc:unmountCommon',function(event,node) {
-    
     const anchorCorner = qsa(node,"[data-anchor-corner]");
     const absolutePlaceholder = qsa(node,"[data-absolute-placeholder]");
     
@@ -74,12 +84,12 @@ ael(document,'doc:unmountCommon',function(event,node) {
 
 // mount page
 // comportements utilisés pour toutes les pages du CMS
-ael(document,'doc:mountPage',function(event,routeWrap) {
-    const burger = qsa(routeWrap,"header .burger-menu, .nav-fixed .nav-close");
-    const com = qs(routeWrap,"main > .inner > .com");
-    const subMenu = qsa(routeWrap,".with-submenu");
-    const carousel = qsa(routeWrap,".with-carousel");
-    const mainSearch = qs(routeWrap,"header .top form");
+ael(document,'doc:mountPage',function(event,node) {
+    const burger = qsa(node,"header .burger-menu, .nav-fixed .nav-close");
+    const com = qs(node,"main > .inner > .com");
+    const subMenu = qsa(node,".with-submenu");
+    const carousel = qsa(node,".with-carousel");
+    const mainSearch = qs(node,"header .top form");
     
     // burger
     trigSetup(Component.Burger.call(burger));
@@ -98,15 +108,6 @@ ael(document,'doc:mountPage',function(event,routeWrap) {
 });
 
 
-// document unmount
-ael(document,'doc:unmountPage',function(event,routeWrap) {
-    const burger = qsa(routeWrap,"header .burger-menu, .nav-fixed .nav-close");
-    
-    // burger
-    trigTeardown(burger);
-});
-
-
 // document ajax progress
 ael(document,'doc:ajaxProgress',function(event,percent,progressEvent) {
     const body = qs(this,"body");
@@ -116,24 +117,21 @@ ael(document,'doc:ajaxProgress',function(event,percent,progressEvent) {
 });
 
 
-// login
-// comportement pour la page login
-ael(document,'route:login',function(event,routeWrap) {
-    nobodyCommon.call(routeWrap);
-});
-
-
-// resetPassword
-// comportement pour la page regénérer mon mot de passe
-ael(document,'route:resetPassword',function(event,routeWrap) {
-    nobodyCommon.call(routeWrap);
-});
-
-
-// register
-// comportement pour la page enregistrement
-ael(document,'route:register',function(event,routeWrap) {
-    nobodyCommon.call(routeWrap);
+// nobody
+// comportement pour les pages nobody, login, resetPassword et register
+ael(document,'group:nobody',function(event,node) {
+    const browscap = qs(this,"main .browscap");
+    const form = qs(this,"main form");
+    const cookieDisabled = qs(browscap,".cookie-disabled");
+    const unsupportedBrowser = qs(browscap,".unsupported-browser");
+    
+    trigHdlr(form,'form:focusFirst');
+    
+    if(!Browser.allowsCookie())
+    $(cookieDisabled).show();
+    
+    if(!Browser.isUnsupported())
+    $(unsupportedBrowser).hide();
 });
 
 
@@ -147,9 +145,9 @@ ael(document,'modal:accountChangePassword',function(event,modal) {
 
 // home
 // comportement pour la page d'accueil du CMS une fois connecté
-ael(document,'route:home',function(event,routeWrap) {
+ael(document,'route:home',function(event,node) {
     
-    const feed = qs(routeWrap,"main .home-feed");
+    const feed = qs(node,"main .home-feed");
     const feedTogglers = qsa(feed,".block-head .feed-togglers > a");
     const feedBody = qs(feed,".block-body");
     
@@ -177,9 +175,9 @@ ael(document,'route:home',function(event,routeWrap) {
 
 // general
 // comportement pour la page de navigation
-ael(document,'route:general',function(event,routeWrap) {
+ael(document,'route:general',function(event,node) {
     
-    const main = qs(routeWrap,"main");
+    const main = qs(node,"main");
     const scroller = qs(main,".container .scroller");
     const search = qs(main,".left > .search");
     const pageLimit = qsa(main,"input[name='limit'],input[name='page']");
@@ -217,15 +215,12 @@ ael(document,'route:general',function(event,routeWrap) {
     trigSetup(Component.ScrollDrag.call(scroller,{selector: 'tbody',targetTag: 'div'}));
 
     // filesSlider
-    trigEvt(Component.TabsNav.call(filesSlider,{target: ".slider-element", prev: ".prev", next: ".next"}),'component:setupAndGo');
-});
-
-
-// unmount
-ael(document,'route:general:unmount',function(event,routeWrap) {
-    const table = qs(routeWrap,"main .scroller table");
-    const quickEdit = qsa(table,"td[data-quick-edit='1'] a.quick-edit");
-    trigHdlrs(quickEdit,'quickEdit:revert');
+    trigSetup(Component.TabsNav.call(filesSlider,{target: ".slider-element", prev: ".prev", next: ".next"}));
+    
+    // unmount
+    aelOnce(this,'route:general:unmount',function(event,node) {
+        trigHdlrs(quickEdit,'quickEdit:revert');
+    });
 });
 
 
@@ -271,9 +266,9 @@ ael(document,'specificForm:unmount',function(event,node) {
 
 // specific
 // comportement communs pour les pages spécifiques
-ael(document,'group:specific',function(event,routeWrap) {
+ael(document,'group:specific',function(event,node) {
     
-    const form = qs(routeWrap,"main .inner > .specific-form");
+    const form = qs(node,"main .inner > .specific-form");
     const panel = qsa(form,".panel");
 
     // champs simples
@@ -281,18 +276,15 @@ ael(document,'group:specific',function(event,routeWrap) {
     
     // avec panel
     if(Arr.length(panel) > 1)
-    trigEvt(Component.SpecificPanel.call(form),'component:setupAndGo',true);
+    trigSetup(Component.SpecificPanel.call(form),true);
     
     else
     trigEvt(this,'specificForm:bindView',form);
-});
-
-
-// unmount
-// comportements communs pour démonter la page spécifique
-ael(document,'group:specific:unmount',function(event,routeWrap) {
-    const form = qs(routeWrap,"main .inner > .specific-form");
-    trigEvt(this,'specificForm:unmount',form);
+    
+    // unmount
+    aelOnce(this,'group:specific:unmount',function(event,node) {
+        trigEvt(this,'specificForm:unmount',form);
+    });
 });
 
 
@@ -303,20 +295,3 @@ ael(document,'route:specificMulti',function(event) {
     const form = qs(this,"main .inner > form.specific-form");
     trigSetup(Component.SpecificMulti.call(form));
 });
-
-
-// nobodyCommon
-const nobodyCommon = function() {
-    const browscap = qs(this,"main .browscap");
-    const form = qs(this,"main form");
-    const cookieDisabled = qs(browscap,".cookie-disabled");
-    const unsupportedBrowser = qs(browscap,".unsupported-browser");
-    
-    trigHdlr(form,'form:focusFirst');
-    
-    if(!Browser.allowsCookie())
-    $(cookieDisabled).show();
-    
-    if(!Browser.isUnsupported())
-    $(unsupportedBrowser).hide();
-};

@@ -62,7 +62,7 @@ const Validate = Lemur.Validate = {
         let r = true;
         
         if(Bool.is(required))
-        required = Bool.fromInt(required);
+        required = Integer.fromBool(required);
         
         if(Num.isPositive(required))
         {

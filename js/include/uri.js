@@ -236,7 +236,7 @@ const Uri = Lemur.Uri = {
     // permet de faire une hash avec ou sans le hash
     makeHash: function(value,symbol)
     {
-        let r = null;
+        let r = '';
         
         if(Str.isNotEmpty(value))
         {
@@ -247,8 +247,11 @@ const Uri = Lemur.Uri = {
             r = (!hasHash)? "#"+r:r;
             
             else if(hasHash)
-            r = r.substring(1);
+            r = Str.sub(1,true,r);
         }
+        
+        else if(symbol === true)
+        r = '#';
         
         return r;
     },

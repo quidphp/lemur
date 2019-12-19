@@ -56,7 +56,7 @@ Component.FakeSelect = function()
                 r += " data-value='"+val+"'";
                 
                 if(Str.isNotEmpty(datas))
-                r += ' '.Obj.str(datas,'=',true);
+                r += ' '+Obj.str(datas,'=',true);
             }
             
             r += ">";
@@ -83,35 +83,38 @@ Component.FakeSelect = function()
         
         
         // handler
-        setHdlr(this,'fakeSelect:getSelect',function() {
-            return $(this).prev("select").get(0);
-        });
-        
-        setHdlr(this,'fakeSelect:getChoices',function() {
-            const target = trigHdlr(this,'clickOpen:getTarget');
-            return qsa(target,"li > button");
-        });
-        
-        setHdlr(this,'fakeSelect:getChoice',function(value) {
-            return Arr.find(trigHdlr(this,'fakeSelect:getChoices'),function() {
-                return Str.isEqual(getAttr(this,'data-value'),value);
-            });
-        });
-        
-        setHdlr(this,'fakeSelect:getSelected',function() {
-            return Arr.find(trigHdlr(this,'fakeSelect:getChoices'),function() {
-                return (getAttrInt(this,'data-selected') === 1);
-            });
-        });
-        
-        setHdlr(this,'fakeSelect:getTitle',function() {
-            const trigger = trigHdlr(this,'clickOpen:getTrigger');
-            return qs(trigger,".title");
-        });
-        
-        setHdlr(this,'fakeSelect:setTitle',function(value) {
-            const title = trigHdlr(this,'fakeSelect:getTitle');
-            $(title).text(value);
+        setHdlrs(this,'fakeSelect:',{
+            
+            getSelect: function() {
+                return $(this).prev("select").get(0);
+            },
+            
+            getChoices: function() {
+                const target = trigHdlr(this,'clickOpen:getTarget');
+                return qsa(target,"li > button");
+            },
+            
+            getChoice: function(value) {
+                return Arr.find(trigHdlr(this,'fakeSelect:getChoices'),function() {
+                    return Str.isEqual(getAttr(this,'data-value'),value);
+                });
+            },
+            
+            getSelected: function() {
+                return Arr.find(trigHdlr(this,'fakeSelect:getChoices'),function() {
+                    return (getAttrInt(this,'data-selected') === 1);
+                });
+            },
+            
+            getTitle: function() {
+                const trigger = trigHdlr(this,'clickOpen:getTrigger');
+                return qs(trigger,".title");
+            },
+            
+            setTitle: function(value) {
+                const title = trigHdlr(this,'fakeSelect:getTitle');
+                $(title).text(value);
+            }
         });
         
         
@@ -129,6 +132,7 @@ Component.FakeSelect = function()
         });
         
         ael(this,'clickOpen:opened',function() {
+            trigHdlr(this,'absolutePlaceholder:refresh');
             const selected = trigHdlr(this,'fakeSelect:getSelected');
             if(selected != null)
             $(selected).focus();
@@ -174,11 +178,11 @@ Component.FakeSelect = function()
             });
             
             ael(select,'input:disable',function() {
-                setAttr($this,'data-disabled',1);
+                trigHdlr($this,'clickOpen:disable');
             });
             
             ael(select,'input:enable',function() {
-                $($this).removeAttr('data-disabled');
+                trigHdlr($this,'clickOpen:enable');
             });
             
             ael(select,'validate:valid',function() {

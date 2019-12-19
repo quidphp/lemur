@@ -6,51 +6,51 @@
  
 // specificComponents
 // component that manages the panel on the specific form page of the CMS
-Component.SpecificComponents = function(option)
+Component.SpecificComponents = function()
 {
     // une node
     Dom.checkNode(this,document);
     
     
     // option components
-    const $components = Pojo.replaceRecursive({
-        date: {
+    const $components = [
+        {
             match: "[data-group='date']",
             component: Component.CalendarInput,
             setupOnView: true
         },
         
-        checkboxSortable: {
+        {
             match: "[data-tag='checkbox'][data-sortable='1']",
             component: Component.Sorter,
-            option: {items: ".choice", handle: '.choice-in'},
+            option: {draggable: ".choice", handle: '.choice-in'},
             setupOnView: true
         },
         
-        enumSet: {
+        {
             match: "[data-tag='search']",
             component: Component.EnumSet,
             setupOnView: true
         },
         
-        files: {
+        {
             match: "[data-group='media']",
             component: Component.InputFiles,
             setupOnView: true
         },
         
-        addRemove: {
+        {
             match: "[data-tag='add-remove']",
             component: Component.AddRemove,
             setupOnView: true
         },
         
-        textareaExtra: {
+        {
             match: "[data-tag='textarea']",
             component: Component.TextareaExtra,
             setupOnView: true
         }
-    },option);
+    ];
     
     
     // handler
@@ -64,12 +64,13 @@ Component.SpecificComponents = function(option)
             let r = undefined;
             Dom.checkNode(node);
             
-            Pojo.each($components,function() {
+            Arr.each($components,function() {
                 if($(node).is(this.match))
                 {
                     r = this;
                     return false;
                 }
+                
             });
             
             return r;
@@ -114,6 +115,7 @@ Component.SpecificComponents = function(option)
     // setup
     aelOnce(this,'component:setup',function() {
         trigEvt(this,'specificComponents:update',$components);
+        Arr.reverseRef($components);
     });
     
     

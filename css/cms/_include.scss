@@ -104,13 +104,15 @@
     border: 1px solid $lightGray;
 
     &:hover,
-    &[data-selected='1'] {
+    &[data-selected='1'],
+    &[data-tab='1'] {
         background-color: $color;
         border: 1px solid $darkColor;
         color: $white;
     }
 
-    &[data-selected='1'] {
+    &[data-selected='1'],
+    &[data-tab='1'] {
         text-decoration: underline;
     }
 
@@ -129,6 +131,7 @@
     border: 1px solid $lightGray;
 
     &:hover,
+    &[data-tab='1'],
     &[data-selected='1'] {
         background-color: $lightYellow;
     }

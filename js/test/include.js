@@ -144,8 +144,12 @@ Test.Include = function()
         assert(!Bool.is(null));
         assert(!Bool.is(1));
         assert(Bool.is(true));
-        assert(Bool.fromInt(true) === 1);
-        assert(Bool.fromInt(false) === 0);
+        assert(Bool.fromInt(1) === true);
+        assert(Bool.fromInt(0) === false);
+        assert(Bool.fromScalar(1) === true);
+        assert(Bool.fromScalar('true') === true);
+        assert(Bool.fromScalar(0) === false);
+        assert(Bool.fromScalar(false) === false);
         assert(Bool.toggle(false) === true);
         assert(Bool.isEmpty(false));
         assert(!Bool.isEmpty(0));
@@ -156,6 +160,8 @@ Test.Include = function()
         
         // browser
         assert(Bool.is(Browser.isOldIe()));
+        assert(Bool.is(Browser.isIe11()));
+        assert(Bool.is(Browser.isIe()));
         assert(Bool.is(Browser.isUnsupported()));
         assert(Bool.is(Browser.allowsCookie()));
         
@@ -401,6 +407,8 @@ Test.Include = function()
             length++;
         });
         assert(length === 0);
+        assert(Pojo.is(Obj.climb(['Lemur','Test'],window)));
+        assert(Obj.climb(['Lemuzr','Testz'],window) === undefined);
         
         // pojo
         assert(!Pojo.is(htmlNode));
@@ -523,6 +531,8 @@ Test.Include = function()
         assert(Str.quote('what',true) === '"what"');
         assert(Str.quote('what') === "'what'");
         assert(Str.quote(2) === null);
+        assert(Str.sub(2,true,'what') === 'at');
+        assert(Str.sub(2,true,'éèà') === 'à');
         assert(Obj.isEqual(Str.explode('-','la-vie-ok'),['la','vie','ok']));
         assert(Str.explodeIndex(2,'-','la-vie-ok') === 'ok');
         assert(Str.explodeIndex('2','-','la-vie-ok') === undefined);
@@ -599,6 +609,8 @@ Test.Include = function()
         assert(Uri.build(Uri.parse("https://google.com/ok?v=2#what"),true,false) === "https://google.com/ok?v=2");
         assert(Uri.build(Uri.parse("https://google.com/ok?v=2#what"),false,false) === "/ok?v=2");
         assert(Uri.build(Uri.parse("https://google.com/ok?v=2#what"),false,true) === "/ok?v=2#what");
+        assert(Uri.makeHash(undefined,true) === '#');
+        assert(Uri.makeHash(undefined,false) === '');
         assert(Uri.makeHash("james",true) === '#james');
         assert(Uri.makeHash("#james",true) === '#james');
         assert(Uri.makeHash("james") === 'james');

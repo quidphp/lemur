@@ -21,7 +21,29 @@ const Browser = Lemur.Browser = {
         return r;
     },
 
-
+    
+    // isIe11
+    // retourne vrai si le navigateur est ie11
+    isIe11: function()
+    {
+        let r = false;
+        const trident = window.navigator.userAgent.indexOf('Trident/');
+        
+        if(trident > 0)
+        r = true;
+        
+        return r;
+    },
+    
+    
+    // isIe
+    // retourne vrai si le navigateur est internet explorer
+    isIe: function()
+    {
+        return this.isOldIe() || this.isIe11();
+    },
+    
+    
     // isUnsupported
     // retourne vrai si le navigateur est insupporté
     isUnsupported: function() 

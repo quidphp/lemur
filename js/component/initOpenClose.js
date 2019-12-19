@@ -21,29 +21,52 @@ Component.InitOpenClose = function(type,attr)
     // handler
     setHdlrs(this,type+':',{
         
+        isBinded: function() {
+            return true;
+        },
+        
         isInit: function() {
             return (getData(this,type+'-init') === true);
         },
         
+        isDisabled: function() {
+            return getAttrInt(this,'data-disabled') === 1;
+        },
+        
         isOpen: function() {
             return (getAttrInt(this,attr) === 1);
+        },
+        
+        canOpen: function() {
+            return trigHdlr(this,type+':isDisabled') ? false:true;
+        },
+        
+        disable: function() {
+            setAttr(this,'data-disabled',1);
+        },
+        
+        enable: function() {
+            setAttr(this,'data-disabled',0);
         }
     });
     
     
     // event
     ael(this,type+':open',function() {
-        if(trigHdlr(this,type+':isOpen') !== true)
+        
+        if(trigHdlr(this,type+':isOpen') !== true && trigHdlr(this,type+':canOpen') === true)
         {
+            let isInit = false;
             setAttr(this,attr,1);
             
             if(trigHdlr(this,type+':isInit') !== true)
             {
+                isInit = true;
                 trigEvt(this,type+':init');
                 setData(this,type+'-init',true);
             }
             
-            trigEvt(this,type+':opened');
+            trigEvt(this,type+':opened',isInit);
         }
     });
     

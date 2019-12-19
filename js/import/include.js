@@ -41,8 +41,11 @@ const logError = Debug.logError.bind(Debug);
 // dom 
 const getAttr = Dom.getAttr.bind(Dom);
 const getAttrInt = Dom.getAttrInt.bind(Dom);
+const getAttrBool = Dom.getAttrBool.bind(Dom);
 const getData = Dom.getData.bind(Dom);
+const flashData = Dom.flashData.bind(Dom);
 const setData = Dom.setData.bind(Dom);
+const removeData = Dom.removeData.bind(Dom);
 
 // domChange
 const setAttr = DomChange.setAttr.bind(DomChange);

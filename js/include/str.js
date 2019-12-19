@@ -113,6 +113,14 @@ const StrPrimitive = {
     },
     
     
+    // sub
+    // retourne une nouvelle sous chaîne
+    sub: function(start,end,string)
+    {
+        return (this.is(string) && Integer.is(start))? string.substring(start,(end === true)? undefined:end):null;
+    },
+    
+    
     // explode
     // explode une chaîne
     // retourne un tableau dans tous les cas

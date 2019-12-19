@@ -22,11 +22,27 @@ const BoolPrimitive = {
     {
         let r = null;
         
-        if(value === true)
-        r = 1;
+        if(value === 1)
+        r = true;
 
-        else if(value === false)
-        r = 0;
+        else if(value === 0)
+        r = false;
+        
+        return r;
+    },
+    
+    
+    // fromScalar
+    // retourne un booléean à partir d'un scalar
+    fromScalar: function(value)
+    {
+        let r = null;
+        
+        if(Arr.in(value,[1,'1',true,'true']))
+        r = true;
+
+        else if(Arr.in(value,[0,'0',false,'false']))
+        r = false;
         
         return r;
     },

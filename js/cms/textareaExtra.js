@@ -19,7 +19,8 @@ Component.TextareaExtra = function(option)
             trigger: ".trigger",
             target: ".popup",
             background: "tableRelation"
-        }
+        },
+        tinymce: {}
     },option);
     
     
@@ -47,12 +48,18 @@ Component.TextareaExtra = function(option)
     // event
     ael(this,'component:enable',function() {
         if(trigHdlr(this,'textareaExtra:hasTinymce'))
-        enableTinycme.call(this);
+        {
+            const textarea = trigHdlr(this,'textareaExtra:getTextarea');
+            trigHdlr(textarea,'tinymce:enable');
+        }
     });
     
     ael(this,'component:disable',function() {
         if(trigHdlr(this,'textareaExtra:hasTinymce'))
-        disableTinycme.call(this);
+        {
+            const textarea = trigHdlr(this,'textareaExtra:getTextarea');
+            trigHdlr(textarea,'tinymce:disable');
+        }
     });
     
     
@@ -71,7 +78,10 @@ Component.TextareaExtra = function(option)
     // teardown
     aelOnce(this,'component:teardown',function() {
         if(trigHdlr(this,'textareaExtra:hasTinymce'))
-        unmountTinymce.call(this);
+        {
+            const textarea = trigHdlr(this,'textareaExtra:getTextarea');
+            trigTeardown(textarea);
+        }
     });
     
     
@@ -92,6 +102,7 @@ Component.TextareaExtra = function(option)
             return r;
         });
     }
+    
     
     // bindFilter
     const bindFilter = function() 
@@ -120,76 +131,25 @@ Component.TextareaExtra = function(option)
     const mountTinymce = function() 
     {
         const textarea = trigHdlr(this,'textareaExtra:getTextarea');
-        const editor = createTinymce.call(textarea);
-        setData(textarea,'tinymce-editor',editor);
+        trigSetup(Component.Tinymce.call(textarea,$option.tinymce));
+        
         setHdlr(textarea,'textareaInput:insert',function(html) {
             let r = false;
             
             if(Str.isNotEmpty(html))
             {
-                editor.execCommand('mceInsertContent',false,html);
-                r = true;
+                const editor = trigHdlr(textarea,'tinymce:get');
+                
+                if(editor != null)
+                {
+                    editor.execCommand('mceInsertContent',false,html);
+                    r = true;
+                }
             }
             
             return r;
         });
-        
-        setHdlr(this,'textareaExtra:getTinymceEditor',function() {
-            const textarea = trigHdlr(this,'textareaExtra:getTextarea');
-            return getData(textarea,'tinymce-editor');
-        });
     }
-    
-    
-    // unmountTinymce
-    const unmountTinymce = function()
-    {
-        const editor = trigHdlr(this,"textareaExtra:getTinymceEditor");
-
-        if(editor != null)
-        editor.remove();
-    }
-    
-    
-    // enableTinycme
-    const enableTinycme = function()
-    {
-        const editor = trigHdlr(this,"textareaExtra:getTinymceEditor");
         
-        if(editor != null)
-        editor.setMode('design');
-    }
-    
-    
-    // disableTinycme
-    const disableTinycme = function()
-    {
-        const editor = trigHdlr(this,"textareaExtra:getTinymceEditor");
-        
-        if(editor != null)
-        editor.setMode('readonly');
-    }
-    
-    
-    // createTinymce
-    const createTinymce = function() 
-    {
-        let r = null;
-        
-        DomChange.addId('tinymce-',this);
-        const id = $(this).prop('id');
-        const data = getAttr(this,'data-tinymce',true) || {};
-        data.selector = "#"+id;
-        data.init_instance_callback = function (editor) {
-            editor.on('Blur', function (e) {
-                editor.save();
-            });
-        };
-        tinymce.init(data);
-        r = tinymce.get(id);
-        
-        return r;
-    }
-    
     return this;
 }

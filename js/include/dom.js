@@ -138,6 +138,17 @@ const Dom = Lemur.Dom = {
     },
     
     
+    // flashData
+    // retourne la data et efface l'entrée de la node
+    flashData: function(node,key)
+    {
+        const r = this.getData(node,key);
+        this.removeData(node,key);
+        
+        return r;
+    },
+    
+    
     // setData
     // change de la data sur une ou plusieurs nodes
     // ceci n'affecte pas le dom, seulement stocké dans l'objet
@@ -145,6 +156,15 @@ const Dom = Lemur.Dom = {
     {
         Str.check(key,true);
         return $(nodes).data(key,value);
+    },
+    
+    
+    // removeData
+    // enlève une donnée de la ou les nodes
+    removeData: function(nodes,key)
+    {
+        Str.check(key,true);
+        return $(nodes).removeData(key);
     },
     
     
@@ -251,6 +271,14 @@ const Dom = Lemur.Dom = {
     getAttrInt: function(node,key)
     {
         return Integer.cast(this.getAttr(node,key));
+    },
+    
+    
+    // getAttrBool
+    // retourne une valeur d'attribut sous forme de boolean
+    getAttrBool: function(node,key)
+    {
+        return Bool.fromScalar(this.getAttr(node,key));
     },
     
     

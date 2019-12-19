@@ -24,6 +24,10 @@ Component.Input = function()
             return true;
         },
         
+        isValidateSetup: function() {
+            return false;
+        },
+        
         isControlled: function() {
             return getAttrInt(this,'data-controlled') === 1;
         },
@@ -198,22 +202,28 @@ Component.Input = function()
     
     
     // setup
-    aelOnce(this,'component:setup',function() {
-        
+    aelOnce(this,'input:setupGroup',function() {
         const isGroup = trigHdlr(this,'input:isGroup');
         
         // isGroup
         if(isGroup === true)
         Component.InputGroup.call(this);
         
-        
         // handler
         setHdlr(this,'validate:getValue',function() {
             return trigHdlr(this,(isGroup === true)? 'inputGroup:getValue':'input:getValue');
         });
+    });
+    
+    aelOnce(this,'input:setupValidate',function() {
         
+        if(!trigHdlr(this,'validate:isBinded'))
+        Component.Validate.call(this);
         
-        // ael
+        setHdlr(this,'input:isValidateSetup',function() {
+            return true;
+        });
+        
         ael(this,'focusout',function() {
             trigHdlr(this,'validate:process');
         });
@@ -223,9 +233,15 @@ Component.Input = function()
         });
                 
         ael(this,'change',function() {
+            const isGroup = trigHdlr(this,'input:isGroup');
             const target = (isGroup === true)? trigHdlr(this,'inputGroup:get'):this;
             trigHdlrs(target,(isGroup === true)? 'validate:trigger':'validate:process');
         });
+    });
+    
+    aelOnce(this,'component:setup',function() {
+        trigEvt(this,'input:setupGroup');
+        trigEvt(this,'input:setupValidate');
     });
     
     return this;

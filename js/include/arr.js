@@ -156,6 +156,14 @@ const ArrWriteSelf = {
     },
     
     
+    // reverseRef
+    // permet de renverser le tableau courant
+    reverseRef: function(array)
+    {
+        return (this.is(array))? array.reverse():null;
+    },
+    
+    
     // spliceValue
     // permet de retourner le même tableau sans la valeur donné en argument
     // retourne la valeur splice

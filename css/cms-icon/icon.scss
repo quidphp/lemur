@@ -156,6 +156,9 @@ body .with-icon {
     &.search {
         @include bgimg64($iconSearch);
     }
+    &.top {
+        @include bgimg64($iconTop);
+    }
     &.uncheck {
         @include bgimg64($iconUncheck);
     }

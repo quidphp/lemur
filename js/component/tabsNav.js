@@ -16,12 +16,12 @@ Component.TabsNav = function(option)
     // option
     const $option = Pojo.replace({
         nav: [],
-        navAttr: 'data-selected',
+        navAttr: 'data-tab',
         first: null,
         prev: null,
         next: null,
         last: null,
-        directionAttr: 'data-direction'
+        directionAttr: 'data-tab'
     },option);
     
     

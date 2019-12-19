@@ -476,7 +476,12 @@ class Fr extends Core\Lang\Fr
                 'info'=>"Utilisez ce formulaire pour envoyer un message à l'administrateur: [name] &lt;[email]&gt;.",
                 'submit'=>'Envoyer'
             ],
-
+            
+            // email
+            'email'=>array(
+                'send'=>'Envoyer'
+            ),
+            
             // relationFeed
             'relationFeed'=>[
                 'loadMore'=>'Charger de [from] à [to] sur [total]'
@@ -484,6 +489,7 @@ class Fr extends Core\Lang\Fr
 
             // footer
             'footer'=>[
+                'backToTop'=>'Retour vers le haut',
                 'link'=>'Lien',
                 'lang'=>'Langue',
                 'module'=>'Module',
@@ -803,6 +809,7 @@ class Fr extends Core\Lang\Fr
                     'about'=>'À propos',
                     'calendar'=>'Calendrier',
                     'download'=>'Téléchargement',
+                    'email'=>'Envoyer un courriel à',
                     'export'=>'Exportation',
                     'exportDownload'=>'Exportation - Téléchargement',
                     'homeFeed'=>'Accueil - Flux',

@@ -24,7 +24,7 @@ Component.EnumSet = function(option)
             button: null
         },
         sorter: {
-            items: ".choice", 
+            draggable: ".choice", 
             handle: '.choice-in'
         }
     },option);

@@ -21,8 +21,8 @@ Component.AddRemove = function(option)
     const $option = Pojo.replace({
         insert: '.insert',
         playground: '.playground',
-        items: ".ele",
-        move: ".move"
+        draggable: ".ele",
+        handle: ".move"
     },option);
     
     
@@ -121,7 +121,7 @@ Component.AddRemove = function(option)
     const bindSorter = function() 
     {
         const playground = trigHdlr(this,'addRemove:getPlayground');
-        Component.Sorter.call(playground,{items: $option.items, handle: $option.move});
+        Component.Sorter.call(playground,{draggable: $option.draggable, handle: $option.handle});
         trigSetup(playground);
     }
     

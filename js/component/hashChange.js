@@ -18,20 +18,28 @@ Component.HashChange = function(persistent)
     
     
     // event
-    const handler = ael(window,'hashchange',function(event,sourceEvent) {
-        trigEvt($nodes,'hash:change',sourceEvent);
+    const handler = ael(window,'hashchange',function(event) {
+        trigEvt($nodes,'hash:change',true);
+    });
+    
+    // pour popstate, trigger seulement le hash change si le navigateur est ie, les autres navigateurs envoient un événement natif hashchange
+    const handler2 = ael(window,'hashChange:history',function(event,popstate) {
+        if(popstate !== true || Browser.isIe())
+        trigEvt($nodes,'hash:change',false);
     });
     
     
     // persistent
     if(persistent !== true)
     {
-        const handlerDocument = aelOnce(document,'doc:unmountPage',function() {
+        aelOnce(document,'doc:unmountPage',function() {
             rel(window,handler);
+            rel(window,handler2);
         });
         
         aelOnce(this,'component:teardown',function() {
-            rel(document,handlerDocument);
+            rel(window,handler);
+            rel(window,handler2);
         });
     }
     

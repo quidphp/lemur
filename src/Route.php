@@ -44,6 +44,7 @@ abstract class Route extends Core\Route
                     'sessionPopup'=>true,
                     'sessionFakeRole'=>false,
                     'logout'=>true,
+                    'backToTop'=>true,
                     'link'=>true,
                     'linkType'=>true,
                     'linkTypeCms'=>false,
