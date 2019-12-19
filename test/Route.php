@@ -476,7 +476,7 @@ class Route extends Base\Test
 
         // uri
         assert($match4->uri('fr') === $schemeHost.'/fr/connexion/soumettre');
-        assert($match->uri('fr') === $schemeHost."/fr/connexion");
+        assert($match->uri('fr') === $schemeHost.'/fr/connexion');
         assert($match4->uri('fr',['query'=>['test'=>2,'james'=>'lolé']]) === $schemeHost.'/fr/connexion/soumettre?test=2&james=lolé');
         assert($match4->uri('fr',['query'=>true]) === $schemeHost.'/fr/connexion/soumettre');
 

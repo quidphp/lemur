@@ -48,8 +48,8 @@ trait _template
         $flush .= Html::div(null,'loading-icon');
         $flush .= Html::div(null,'background');
         $route = Email::make();
-        $data = array('mailto'=>$route->uri());
-        $flush .= Html::divCond($this->makeModal(),array('modal','data'=>$data));
+        $data = ['mailto'=>$route->uri()];
+        $flush .= Html::divCond($this->makeModal(),['modal','data'=>$data]);
 
         $flush .= Html::divOp('route-wrap');
 
@@ -383,10 +383,10 @@ trait _template
         if($this->hasPermission('backToTop'))
         {
             $r .= Html::divOp('back-to-top');
-            $r .= Html::button(static::langText('footer/backToTop'),array('with-icon','top','no-border'));
+            $r .= Html::button(static::langText('footer/backToTop'),['with-icon','top','no-border']);
             $r .= Html::divCl();
         }
-        
+
         if($this->hasPermission('link'))
         $r .= $this->footerElement('link',$this->footerLink());
 

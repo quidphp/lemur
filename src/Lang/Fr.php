@@ -476,12 +476,12 @@ class Fr extends Core\Lang\Fr
                 'info'=>"Utilisez ce formulaire pour envoyer un message à l'administrateur: [name] &lt;[email]&gt;.",
                 'submit'=>'Envoyer'
             ],
-            
+
             // email
-            'email'=>array(
+            'email'=>[
                 'send'=>'Envoyer'
-            ),
-            
+            ],
+
             // relationFeed
             'relationFeed'=>[
                 'loadMore'=>'Charger de [from] à [to] sur [total]'

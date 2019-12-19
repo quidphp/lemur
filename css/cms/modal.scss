@@ -39,7 +39,7 @@
 .modal[data-route='email'] .box {
     @include abs(25%, null, null, 25%);
     @include wh(50%);
-    
+
     h2 {
         margin-bottom: 20px;
     }

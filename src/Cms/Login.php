@@ -41,7 +41,7 @@ class Login extends Lemur\Route\Login
         $path = $routeRequest->routePath($langCode);
         $request = $this->request();
         $pathMatch = $request->pathMatch();
-        
+
         if(!empty($pathMatch) && $pathMatch !== $path)
         {
             $session = static::session();

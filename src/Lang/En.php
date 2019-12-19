@@ -166,7 +166,7 @@ class En extends Core\Lang\En
 
             // label
             'label'=>[
-                
+
                 // *
                 '*'=>[
                     'featured'=>'Featured',
@@ -266,7 +266,7 @@ class En extends Core\Lang\En
                     'total'=>'Total',
                     'host'=>'Host'
                 ],
-                
+
                 // contact
                 'contact'=>[
                     'email'=>'Email',
@@ -476,12 +476,12 @@ class En extends Core\Lang\En
                 'info'=>'Use this form to send a message to the administrator: [name] &lt;[email]&gt;.',
                 'submit'=>'Send'
             ],
-            
+
             // email
-            'email'=>array(
+            'email'=>[
                 'send'=>'Send'
-            ),
-            
+            ],
+
             // relationFeed
             'relationFeed'=>[
                 'loadMore'=>'Load [from] to [to] on [total]'
