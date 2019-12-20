@@ -36,7 +36,6 @@ Test.Component = function()
         ael(bodyNode,'test:suite',function() {
             i2++;
         },'handlerRel');
-        
         Component.BlockEvent.call(bodyNode,'test:suite');
         const handlerRel2 = ael(bodyNode,'test:suite',function() {
             i++;
@@ -124,9 +123,9 @@ Test.Component = function()
         assert(trigHdlr(inputNode,'input:getValueInt') === 2);
         trigHdlr(inputNode,'input:setValue',3);
         assert(trigHdlr(inputNode,'input:getValue') === '3');
-        trigEvt(inputNode,'input:disable');
+        trigHdlr(inputNode,'input:disable');
         assert(trigHdlr(inputNode,'input:isDisabled'));
-        assert(trigEvt(inputNode,'input:enable') == null);
+        assert(trigHdlr(inputNode,'input:enable') == null);
         assert(!trigHdlr(inputNode,'input:isDisabled'));
         trigHdlr(inputNode,'input:setValue','2');
         

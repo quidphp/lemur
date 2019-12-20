@@ -181,7 +181,7 @@ Component.ClickOpenBase = function(option)
             if(tagName === 'a')
             trigHdlr(document,'history:event',keyEvent);
             else
-            trigEvt(target,'click');
+            trigBubble(target,'click');
         });
         
         // delegate

@@ -227,6 +227,7 @@ Test.Include = function()
         assert(HistoryApi.supported());
         assert(HistoryApi.isState({ url: 'test', timestamp: 1234 }));
         assert(HistoryApi.isStateChangeValid({ url: 'test', timestamp: 1234 },HistoryApi.makeState('what','bleh')));
+        let $dom = document.createElement('a');
         assert(Obj.length(HistoryApi.makeState('what','bleh')) === 3);
         assert(Str.isEnd("/#what",HistoryApi.makeState('#what','bleh').url));
         
@@ -605,6 +606,8 @@ Test.Include = function()
         assert(Uri.absolute("http://google.com/testok.php") === "http://google.com/testok.php");
         assert(Uri.extension("http://google.com/ok.jpg?v=2#what") === 'jpg');
         assert(Obj.length(Uri.parse("http://google.com/ok?v=2#what")) === 6);
+        assert(Uri.build(Uri.parse("/test.ok?t=2#hash"),false,true) === '/test.ok?t=2#hash');
+        assert(Uri.build(Uri.parse("hash"),false,true) === '/hash');
         assert(Uri.build(Uri.parse("https://google.com/ok?v=2#what"),true,true) === "https://google.com/ok?v=2#what");
         assert(Uri.build(Uri.parse("https://google.com/ok?v=2#what"),true,false) === "https://google.com/ok?v=2");
         assert(Uri.build(Uri.parse("https://google.com/ok?v=2#what"),false,false) === "/ok?v=2");
@@ -681,7 +684,7 @@ Test.Include = function()
         Vari.eachProto(new XMLHttpRequest(),function(value) {
             length++;
         });
-        assert(length === 34);
+        assert(length >= 34);
 
         // xhr
         assert(Pojo.length(Xhr.configFromNode(htmlNode)) === 9);

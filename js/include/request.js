@@ -31,7 +31,15 @@ const Request = Lemur.Request = {
         return location.protocol.substr(0, location.protocol.indexOf(':'));
     },
 
-
+    
+    // host
+    // retourne le host courante
+    host: function()
+    {
+        return location.hostname;
+    },
+    
+    
     // fragment
     // retourne le fragment de l'uri sans le hash
     fragment: function() 

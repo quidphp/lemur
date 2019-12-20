@@ -183,21 +183,22 @@ Component.Input = function()
             
             if(Str.isNotEmpty(id))
             return qsa(parent,"label[for='"+id+"']");
+        },
+        
+        // handlers qui renvoie vers event, car ie11 n'envoie pas de custom event aux nodes disabled
+        enable: function() {
+            $(this).prop('disabled',false);
+            trigEvt(this,'input:enable');
+        },
+        
+        disable: function() {
+            trigEvt(this,'input:disable');
+            $(this).prop('disabled',true);
         }
     });
     
     setHdlr(this,'validate:getValue',function() {
         return trigHdlr(this,'input:getValue');
-    });
-    
-    
-    // event
-    ael(this,'input:enable',function() {
-        $(this).prop('disabled',false);
-    });
-    
-    ael(this,'input:disable',function() {
-        $(this).prop('disabled',true);
     });
     
     

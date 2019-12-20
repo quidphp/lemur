@@ -25,9 +25,9 @@ Component.Base = function()
         
         Dom.each(inputs,function() {
             if(trigHdlr(this,'input:isBinded'))
-            trigEvt(inputs,'input:enable');
+            trigHdlrs(inputs,'input:enable');
             else
-            $(this).prop('disabled',false);
+            $(this).prop('disabled',false)
         });
     });
     
@@ -36,7 +36,7 @@ Component.Base = function()
         
         Dom.each(inputs,function() {
             if(trigHdlr(this,'input:isBinded'))
-            trigEvt(inputs,'input:disable');
+            trigHdlrs(inputs,'input:disable');
             else
             $(this).prop('disabled',true);
         });

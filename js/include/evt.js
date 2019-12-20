@@ -12,6 +12,38 @@ const Evt = Lemur.Evt = new function()
     const $inst = this;
     
     
+    // support
+    // retourne un objet indiquant si le browser support passive et once
+    this.support = (function() {
+        const support = { passive: false, once: false};
+        
+        try 
+        {
+            const options = {
+                get passive() { 
+                    support.passive = true;
+                    return false;
+                },
+                get once() { 
+                    support.once = true;
+                    return false;
+                }
+            };
+
+            window.addEventListener("test-support", null, options);
+            window.removeEventListener("test-support", null, options);
+        } 
+        
+        catch(err) 
+        {
+            support.passive = false;
+            support.once = false;
+        }
+        
+        return support;
+    })();
+    
+
     // preventStop
     // permet de faire un prevent default et stop propagation à un événement
     this.preventStop = function(event,immediate)
@@ -100,17 +132,18 @@ const Evt = Lemur.Evt = new function()
         if(Arr.isNotEmpty(nodes))
         {
             option = Object.assign({capture: false, once: false},option);
+            let thirdArg = (this.support.once === true)? option:option.capture;
             
-            const handler = addEventListenerHandler(type,func,delegate);
+            const handler = addEventListenerHandler(type,func,delegate,thirdArg,option);
             
             Arr.each(nodes,function() {
-                this.addEventListener(type,handler,option);
+                this.addEventListener(type,handler,thirdArg);
                 
                 if(Str.isNotEmpty(register) || register === true)
-                $inst.registerEventListener(this,register,type,handler,option);
+                $inst.registerEventListener(this,register,type,handler,thirdArg);
             });
             
-            r = [type,handler,option];
+            r = [type,handler,thirdArg];
         }
         
         return r;
@@ -119,11 +152,15 @@ const Evt = Lemur.Evt = new function()
     
     // addEventListenerHandler
     // retourne le handler utilisé par addEventListener
-    const addEventListenerHandler = function(type,func,delegate) 
+    // ajoute le support pour once si non supporté par le navigateur
+    const addEventListenerHandler = function(type,func,delegate,thirdArg,option) 
     {
-        return function(event) {
+        const handler = function(event) {
             let go = (delegate == null)? true:false;
             let context = this;
+            
+            if(option.once === true && $inst.support.once === false)
+            $inst.removeEventListener(event.target,[type,handler,thirdArg]);
             
             if(Str.isNotEmpty(delegate) && event.target != null)
             {
@@ -143,6 +180,8 @@ const Evt = Lemur.Evt = new function()
                 func.apply(context,args);
             }
         };
+        
+        return handler;
     }
     
     

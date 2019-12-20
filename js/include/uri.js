@@ -177,6 +177,7 @@ const Uri = Lemur.Uri = {
 
     // parse
     // retourne un objet avec les différentes parties d'une uri séparés
+    // ne marche pas bien sur ie11
     parse: function(uri)
     {
         let r = {};
@@ -187,11 +188,14 @@ const Uri = Lemur.Uri = {
             $dom.href = uri;
             
             r.scheme = $dom.protocol.substr(0, $dom.protocol.indexOf(':')) || Request.scheme();
-            r.host = $dom.hostname;
+            r.host = $dom.hostname || Request.host();
             r.port = $dom.port;
             r.path = $dom.pathname;
             r.query = $dom.search.substr($dom.search.indexOf('?') + 1);
             r.hash = $dom.hash.substr($dom.hash.indexOf('#') + 1);
+            
+            if(!Str.isStart('/',r.path))
+            r.path = '/'+r.path;
             
             $dom = null;
         }

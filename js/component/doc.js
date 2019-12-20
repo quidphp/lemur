@@ -102,7 +102,7 @@ Component.Doc = function(option)
     // keyboardEscape
     // trigger un click
     ael(this,'keyboardEscape:catched',function() {
-        trigEvt(this,'click');
+        trigBubble(this,'click');
     });
     
     

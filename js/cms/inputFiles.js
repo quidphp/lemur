@@ -86,7 +86,7 @@ Component.InputFiles = function()
             setAttr(block,'data-action',1);
             $(actionText).html(text);
             
-            trigEvt(hidden,'input:enable');
+            trigHdlr(hidden,'input:enable');
             trigHdlr(hidden,'input:setValue',value);
         });
     }
@@ -107,7 +107,7 @@ Component.InputFiles = function()
             setAttr(block,'data-action',0);
             $(actionText).html('');
             
-            trigEvt(hidden,'input:disable');
+            trigHdlr(hidden,'input:disable');
             trigHdlr(hidden,'input:setValue',value);
         });
     }

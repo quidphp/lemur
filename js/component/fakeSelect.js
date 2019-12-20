@@ -132,7 +132,6 @@ Component.FakeSelect = function()
         });
         
         ael(this,'clickOpen:opened',function() {
-            trigHdlr(this,'absolutePlaceholder:refresh');
             const selected = trigHdlr(this,'fakeSelect:getSelected');
             if(selected != null)
             $(selected).focus();
@@ -236,7 +235,7 @@ Component.FakeSelect = function()
             trigEvt(this,'clickOpen:close');
             
             if(!Str.isEqual(value,current))
-            trigEvt(select,'change');
+            trigBubble(select,'change');
         }
     }
     
