@@ -68,6 +68,14 @@ Component.EnumSet = function(option)
             return getAttr(searchNode,'data-mode');
         },
         
+        isEnum: function() {
+            return trigHdlr(this,'enumSet:getMode') === 'enum';
+        },
+        
+        isSet: function() {
+            return trigHdlr(this,'enumSet:getMode') === 'set';
+        },
+        
         isChoiceIn: function(value) {
             const radioCheckbox = trigHdlr(this,'enumSet:getRadioCheckbox');
             const find = Arr.find(radioCheckbox,function() {
@@ -151,19 +159,26 @@ Component.EnumSet = function(option)
     {
         const current = trigHdlr(this,'enumSet:getCurrent');
         
-        // component
-        trigSetup(Component.Sorter.call(current,$option.sorter));
+        // enum
+        if(trigHdlr(this,'enumSet:isEnum'))
+        {
+            // delegate
+            aelDelegate(current,'click', "input[type='radio']",function(event) {
+                $(this).prop('checked',false);
+                $(this).parents(".choice").remove();
+            });
+        }
         
-        // delegate
-        aelDelegate(current,'click', "input[type='radio']",function(event) {
-            $(this).prop('checked',false);
-            $(this).parents(".choice").remove();
-        });
-        
-        aelDelegate(current,'change', "input[type='checkbox']",function(event) {
-            if($(this).is(":checked") === false)
-            $(this).parents(".choice").remove();
-        });
+        // set
+        if(trigHdlr(this,'enumSet:isSet'))
+        {
+            trigSetup(Component.Sorter.call(current,$option.sorter));
+            
+            aelDelegate(current,'change', "input[type='checkbox']",function(event) {
+                if($(this).is(":checked") === false)
+                $(this).parents(".choice").remove();
+            });
+        }
     }
     
     
@@ -182,9 +197,10 @@ Component.EnumSet = function(option)
             
             else
             {
-                if(mode === 'enum')
+                if(trigHdlr(this,'enumSet:isEnum'))
                 trigHdlr(this,'enumSet:emptyChoice');
-                else
+                
+                else if(trigHdlr(this,'enumSet:isSet'))
                 setAttr(button,'data-in',0);
                 
                 $(current).append(html);

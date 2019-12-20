@@ -80,8 +80,7 @@ Component.NavHash = function(option)
         if(Str.isStart("#",value))
         {
             const node = trigHdlr(this,'navHash:getHash',value);
-            if(node != null)
-            value = node;
+            value = (node != null)? node:null;
         }
         
         return (value == null)? 'first':value;
@@ -101,7 +100,7 @@ Component.NavHash = function(option)
         const hash = Request.fragment();
         const current = trigHdlr(this,'navHash:getCurrentHash');
         
-        if(hash == null && Str.isNotEmpty(current))
+        if(Str.isNotEmpty(current))
         trigHdlr(document,'history:replaceHash',current);
     });
     

@@ -97,7 +97,7 @@ trait _specificRelation
 
     // getCount
     // retounrne le nombre de lignes dans la table qui ont la valeur donnée en argument pour cette colonne
-    final protected function getCount(int $value):?int
+    final protected function getCount($value):?int
     {
         return $this->col()->countPrimaries($value);
     }

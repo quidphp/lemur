@@ -24,6 +24,7 @@ Component.Sorter = function(option)
         direction: 'vertical',
         forceFallback: true,
         filter: Selector.input(false),
+        preventOnFilter: false,
         animation: 150,
         onEnd: function(event) {
             trigHdlr(this.el,'sorter:end',event,this);

@@ -242,9 +242,10 @@ trait _specific
         $panel = $this->panel();
         $lang = $this->lang();
         $currentPanel = static::session()->flash()->get('currentPanel');
-
+        
         if(!empty($panel))
         {
+            $showDescription = ($table->hasPermission('panelDescription') && count($panel) > 1);
             $firstKey = key($panel);
 
             foreach ($panel as $key => $cols)
@@ -263,7 +264,7 @@ trait _specific
                     $attr = ['panel','data'=>$data];
 
                     $description = '';
-                    if($table->hasPermission('panelDescription') && is_string($key))
+                    if($showDescription === true && is_string($key))
                     {
                         $description = Html::divCond($lang->panelDescription($key),'panel-description');
                         if(!empty($description))
