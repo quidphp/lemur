@@ -242,7 +242,7 @@ trait _specific
         $panel = $this->panel();
         $lang = $this->lang();
         $currentPanel = static::session()->flash()->get('currentPanel');
-        
+
         if(!empty($panel))
         {
             $showDescription = ($table->hasPermission('panelDescription') && count($panel) > 1);
