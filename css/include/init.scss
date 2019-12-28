@@ -63,7 +63,7 @@ $media: $uriMedia;
             visibility: visible;
         }
     }
-    
+
     @include keyframes(fadeOut) {
         from {
             opacity: 1;
