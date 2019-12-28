@@ -29,7 +29,7 @@ Component.Input = function()
         },
         
         isControlled: function() {
-            return getAttrInt(this,'data-controlled') === 1;
+            return Dom.getAttrInt(this,'data-controlled') === 1;
         },
         
         isGroup: function() {
@@ -42,11 +42,11 @@ Component.Input = function()
         },
         
         isDisabled: function() {
-            return ($(this).prop('disabled') === true)? true:false;
+            return (getProp(this,'disabled') === true)? true:false;
         },
         
         allowMultiple: function() {
-            return ($(this).prop('multiple') === true)? true:false;
+            return (getProp(this,'multiple') === true)? true:false;
         },
         
         isRealChange: function() {
@@ -57,7 +57,7 @@ Component.Input = function()
         },
         
         getValue: function(trim) {
-            return Dom.value(this,trim);
+            return Dom.getValue(this,trim);
         },
         
         getValueTrim: function() {
@@ -92,15 +92,15 @@ Component.Input = function()
         },
         
         getId: function() {
-            return $(this).prop('id');
+            return getProp(this,'id');
         },
         
         getName: function() {
-            return $(this).prop('name');
+            return getProp(this,'name');
         },
         
         getType: function() {
-            return ($(this).is("input"))? $(this).prop('type'):null;
+            return (Selector.match(this,"input"))? getProp(this,'type'):null;
         },
         
         getTag: function() {
@@ -116,10 +116,7 @@ Component.Input = function()
         },
         
         setValue: function(value) {
-            if(Obj.is(value))
-            value = Json.encode(value);
-            
-            $(this).val(value);
+            DomChange.setValue(this,value);
         },
         
         setEmpty: function() {
@@ -133,43 +130,43 @@ Component.Input = function()
         },
         
         isSystem: function() {
-            return $(this).is("[name^='-']");
+            return Selector.match(this,"[name^='-']");
         },
         
         isTarget: function() {
-            return (!trigHdlr(this,'input:isDisabled') && !trigHdlr(this,'input:isSystem') && $(this).is("[name]"))? true:false;
+            return (!trigHdlr(this,'input:isDisabled') && !trigHdlr(this,'input:isSystem') && Selector.match(this,"[name]"))? true:false;
         },
         
         isTargetVisible: function() {
-            return (trigHdlr(this,'input:isTarget') && $(this).is(":visible"))? true:false;
+            return (trigHdlr(this,'input:isTarget') && Dom.isNodeVisible(this))? true:false;
         },
         
         isValidate: function() {
-            return (trigHdlr(this,'input:isTarget') && $(this).is("[data-required],[data-pattern]"))? true:false;
+            return (trigHdlr(this,'input:isTarget') && Selector.match(this,"[data-required],[data-pattern]"))? true:false;
         },
         
         isFile: function() {
-            return $(this).is("input[type='file']");
+            return Selector.match(this,"input[type='file']");
         },
         
         isCsrf: function() {
-            return (trigHdlr(this,'input:isSystem') && $(this).is("[data-csrf='1']"))? true:false;
+            return (trigHdlr(this,'input:isSystem') && Selector.match(this,"[data-csrf='1']"))? true:false;
         },
         
         isGenuine: function() {
-            return (trigHdlr(this,'input:isSystem') && $(this).is("[data-genuine='1']"))? true:false;
+            return (trigHdlr(this,'input:isSystem') && Selector.match(this,"[data-genuine='1']"))? true:false;
         },
         
         isSubmit: function() {
-            return $(this).is("[type='submit'],[type='image']");
+            return Selector.match(this,"[type='submit'],[type='image']");
         },
         
         isClickedSubmit: function() {
-            return (trigHdlr(this,'input:isSubmit') && $(this).is("[data-submit-click]"))? true:false;
+            return (trigHdlr(this,'input:isSubmit') && Selector.match(this,"[data-submit-click]"))? true:false;
         },
         
         getParent: function() {
-            let r = $(this).parents("form").get(0);
+            let r = Selector.closest(this,"form");
             
             if(r == null)
             r = document;
@@ -187,13 +184,13 @@ Component.Input = function()
         
         // handlers qui renvoie vers event, car ie11 n'envoie pas de custom event aux nodes disabled
         enable: function() {
-            $(this).prop('disabled',false);
+            setProp(this,'disabled',false);
             trigEvt(this,'input:enable');
         },
         
         disable: function() {
             trigEvt(this,'input:disable');
-            $(this).prop('disabled',true);
+            setProp(this,'disabled',true);
         }
     });
     

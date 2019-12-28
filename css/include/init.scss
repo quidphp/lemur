@@ -53,12 +53,25 @@ $media: $uriMedia;
 // defaultAnimation
 // mixin qui génère certaines animations par défaut
 @mixin defaultAnimation() {
-    @include keyframes(fadein) {
+    @include keyframes(fadeIn) {
         from {
             opacity: 0;
+            visibility: hidden;
         }
         to {
             opacity: 1;
+            visibility: visible;
+        }
+    }
+    
+    @include keyframes(fadeOut) {
+        from {
+            opacity: 1;
+            visibility: visible;
+        }
+        to {
+            opacity: 0;
+            visibility: hidden;
         }
     }
 }
@@ -285,7 +298,13 @@ $media: $uriMedia;
 // fade in
 // mixin pour qu'un élément s'anime avec un fadeIn
 @mixin fadeIn($time: 1s) {
-    @include animate(fadein, $time);
+    @include animate(fadeIn, $time);
+}
+
+// fade out
+// mixin pour qu'un élément s'anime avec un fadeOut
+@mixin fadeOut($time: 1s) {
+    @include animate(fadeOut, $time);
 }
 
 // keyframes

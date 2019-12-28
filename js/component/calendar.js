@@ -27,7 +27,7 @@ Component.Calendar = function(option)
     setHdlrs(this,'calendar:',{
         
         isEmpty: function() {
-            return (!$(this).html())? true:false;
+            return Dom.isNodeEmpty(this);
         },
         
         getHead: function() {
@@ -45,7 +45,7 @@ Component.Calendar = function(option)
         
         getSelected: function() {
             return Arr.filter(trigHdlr(this,'calendar:getCells'),function() {
-                return $(this).is(".selected");
+                return Selector.match(this,".selected");
             });
         },
         
@@ -59,7 +59,7 @@ Component.Calendar = function(option)
         
         removeSelected: function() {
             const selected = trigHdlr(this,'calendar:getSelected');
-            $(selected).removeClass('selected');
+            toggleClass(selected,'selected',false);
         },
         
         findCell: function(value) {
@@ -71,14 +71,14 @@ Component.Calendar = function(option)
             if(Num.is(value))
             {
                 r = Arr.find(tds,function() {
-                    return $(this).is("[data-timestamp='"+value+"']") && !$(this).is(".out");
+                    return Selector.match(this,"[data-timestamp='"+value+"']") && !Selector.match(this,".out");
                 });
             }
             
             else if(Str.isNotEmpty(value) && value.length == Str.length(format))
             {
                 r = Arr.find(tds,function() {
-                    return $(this).is("[data-format^='"+value+"']") && !$(this).is(".out");
+                    return Selector.match(this,"[data-format^='"+value+"']") && !Selector.match(this,".out");
                 });
             }
             
@@ -90,7 +90,7 @@ Component.Calendar = function(option)
             const td = trigHdlr(this,'calendar:findCell',value);
             
             if(td != null)
-            $(td).addClass('selected');
+            toggleClass(td,'selected',true);
             
             else if(reload === true)
             {

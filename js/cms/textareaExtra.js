@@ -32,7 +32,8 @@ Component.TextareaExtra = function(option)
         },
         
         hasTinymce: function() {
-            return ($(this).parents(".form-element").is("[data-group='tinymce']"))? true:false;
+            const parent = Selector.closest(this,".form-element");
+            return (Selector.match(parent,"[data-group='tinymce']"))? true:false;
         },
         
         getTextarea: function() {

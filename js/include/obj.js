@@ -64,7 +64,7 @@ const ObjKeyValue = {
     
     
     // keyExists
-    // retourne vrai si l'objet a la propriété
+    // retourne vrai si l'objet a la propriété, ne cherche pas dans le prototype
     keyExists: function(prop,obj)
     {
         return (this.isKey(prop) && this.is(obj))? obj.hasOwnProperty(prop):false
@@ -80,7 +80,7 @@ const ObjKeyValue = {
     
     
     // get
-    // permet de retourner la valeur d'une propriété d'un objet plain
+    // permet de retourner la valeur d'une propriété d'un objet
     get: function(prop,obj)
     {
         return (this.keyExists(prop,obj))? obj[prop]:undefined;
@@ -195,7 +195,7 @@ const ObjKeyValue = {
     
     
     // climb
-    // permet de grimper dans un objet plain à partir d'un tableau
+    // permet de grimper dans un objet à partir d'un tableau
     climb: function(array,r) 
     {
         if(Arr.is(array) && this.is(r))
@@ -221,7 +221,7 @@ const ObjKeyValue = {
 
 
 // objEach
-// handlertion for looping over an object
+// methods for looping over an object
 const ObjEach = {
     
     // each
@@ -259,7 +259,7 @@ const ObjEach = {
 
 
 // objCopyFilterMap
-// handlertions for copying, filtering and map an object
+// methods for copying, filtering and map an object
 const ObjCopyFilterMap = {
     
     // copy
@@ -324,7 +324,7 @@ const ObjCopyFilterMap = {
 
 
 // objWrite
-// handlertions for written on a copy of the object
+// methods for written on a copy of the object
 const ObjWrite = {
     
     // set
@@ -384,7 +384,7 @@ const ObjWrite = {
 
 
 // objWriteSelf
-// handlertions for writing within the object without copying it
+// methods for writing within the object without copying it
 const ObjWriteSelf = {
     
     // setRef
@@ -418,5 +418,18 @@ const ObjWriteSelf = {
         }
         
         return r;
+    }
+}
+
+
+// objProto
+// methods related to object prototype
+const ObjProto = {
+    
+    // keyExists
+    // retourne vrai si l'objet a la propriété, cherche dans le protype
+    keyExists: function(prop,obj)
+    {
+        return (this.isKey(prop) && this.is(obj))? (prop in obj):false
     }
 }

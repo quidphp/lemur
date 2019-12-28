@@ -13,12 +13,19 @@ Test.Component = function()
     try 
     {
         // prepare
+        let newHtml = "<form method='post' action=''>";
+        newHtml += "<input type='text' value='2' name='test-suite' data-required='1' data-pattern='^[0-9\-]+$' />";
+        newHtml += "<input type='submit' name='test-submit' />";
+        newHtml += "</form>";
         const htmlNode = Selector.scopedQuery(document,'html');
         const bodyNode = Selector.scopedQuery(htmlNode,'body');
-        $(bodyNode).prepend("<input type='text' value='2' name='test-suite' data-required='1' data-pattern='^[0-9\-]+$' />");
-        const inputNode = Selector.scopedQuery(bodyNode,"> input[name='test-suite']");
+        DomChange.prepend(bodyNode,newHtml);
+        const formNode = Selector.scopedQuery(bodyNode,"> form");
+        const inputNode = Selector.scopedQuery(bodyNode,"> form > input[name='test-suite']");
         
         // absolutePlaceholder
+        
+        // addRemove
         
         // ajax
         
@@ -29,6 +36,10 @@ Test.Component = function()
         // anchorCorner
         
         // background
+        
+        // backToTop
+        
+        // base
         
         // blockEvent
         let i = 0;
@@ -76,6 +87,8 @@ Test.Component = function()
         
         // burger
         
+        // calendar
+        
         // carousel
         
         // clickOpen
@@ -94,21 +107,21 @@ Test.Component = function()
         
         // clickOutside
         
-        // clickPrint
-        
-        // clickRemove
-        
-        // com
-        
         // confirm
         
         // doc
+        
+        // enumSet
+        
+        // fakeSelect
         
         // feed
         
         // feedSearch
         
         // filter
+        
+        // focusable
         
         // form
         
@@ -129,6 +142,10 @@ Test.Component = function()
         assert(!trigHdlr(inputNode,'input:isDisabled'));
         trigHdlr(inputNode,'input:setValue','2');
         
+        // inputCalendar
+        
+        // inputGroup
+        
         // inputNumeric
         
         // inputNumericHref
@@ -145,17 +162,29 @@ Test.Component = function()
         
         // keyboardEscape
         
-        // keyboardTab
-        
         // modal
+        
+        // modalMailto
+        
+        // navHash
+        
+        // navIndex
         
         // resizeChange
         
         // scrollChange
         
+        // scrollDrag
+        
         // searchAutoInfo
         
+        // searchSlide
+        
         // sorter
+        
+        // tabs
+        
+        // tabsNav
         
         // timeout
         i = 0;
@@ -166,6 +195,8 @@ Test.Component = function()
         });
         trigEvt(bodyNode,'test:suite');
         assert(i === 1);
+        
+        // tinymce
         
         // validate
         assert(trigHdlr(inputNode,'validate:isBinded'));
@@ -185,10 +216,12 @@ Test.Component = function()
         
         // validatePrevent
         
-        // win
+        // window
+        
+        // windowUnload
         
         // cleanup 
-        $(inputNode).remove();
+        DomChange.remove(formNode);
     } 
     
     catch (e) 

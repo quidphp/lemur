@@ -83,7 +83,7 @@ Component.History = function(option)
                 ajax.abort();
             }
             
-            $(this).removeData('doc-ajax');
+            Dom.removeData(this,'doc-ajax');
             
             return r;
         },
@@ -260,10 +260,10 @@ Component.History = function(option)
         if(Str.isNotEmpty(href))
         {
             if(type === 'submit')
-            r = $(node).is($option.form);
+            r = Selector.match(node,$option.form);
             
             else
-            r = $(node).is($option.anchor);
+            r = Selector.match(node,$option.anchor);
         }
         
         return r;
@@ -373,16 +373,20 @@ Component.History = function(option)
     const getTargetsTriggered = function(nodeOrEvent)
     {
         let r = null;
-        const node = (Dom.isNode(nodeOrEvent))? nodeOrEvent:Evt.getTriggerTarget(nodeOrEvent);
-        const tag = Dom.tag(node);
         
-        if(tag != null)
+        if(nodeOrEvent != null)
         {
-            if(tag === 'form')
-            r = trigHdlr(node,'form:getClickedSubmits');
+            const node = (Dom.isNode(nodeOrEvent))? nodeOrEvent:Evt.getTriggerTarget(nodeOrEvent);
+            const tag = Dom.tag(node);
             
-            else
-            r = [node];
+            if(tag != null)
+            {
+                if(tag === 'form')
+                r = trigHdlr(node,'form:getClickedSubmits');
+                
+                else
+                r = [node];
+            }
         }
         
         return r;
@@ -396,22 +400,25 @@ Component.History = function(option)
     {
         let r = 'push';
         
-        if(nodeOrEvent instanceof Event && nodeOrEvent.type === 'popstate')
-        r = 'popstate';
-        
-        else
+        if(nodeOrEvent != null)
         {
-            const node = (Dom.isNode(nodeOrEvent))? nodeOrEvent:Evt.getTriggerTarget(nodeOrEvent);
-            const tag = Dom.tag(node);
+            if(nodeOrEvent instanceof Event && nodeOrEvent.type === 'popstate')
+            r = 'popstate';
             
-            if(tag === 'form')
+            else
             {
-                Xhr.configFromNode(node,config);
+                const node = (Dom.isNode(nodeOrEvent))? nodeOrEvent:Evt.getTriggerTarget(nodeOrEvent);
+                const tag = Dom.tag(node);
                 
-                if(trigHdlr(node,'form:hasFiles'))
-                config.timeout = 0;
-                
-                r = 'form';
+                if(tag === 'form')
+                {
+                    Xhr.configFromNode(node,config);
+                    
+                    if(trigHdlr(node,'form:hasFiles'))
+                    config.timeout = 0;
+                    
+                    r = 'form';
+                }
             }
         }
         
@@ -489,7 +496,7 @@ Component.History = function(option)
                 
                 trigHdlr(this,'doc:makeMount',doc,isError);
                 
-                $(doc.html).remove();
+                DomChange.remove(doc.html);
                 $previous = state;
             }
         }

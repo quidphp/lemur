@@ -21,17 +21,18 @@ Component.AbsolutePlaceholder = function()
     setHdlrs(this,'absolutePlaceholder:',{
         
         getChild: function() {
-            return Arr.find($(this).children().get(),function() {
-                return $(this).is(':visible');
+            const childs = Selector.children(this);
+            return Arr.find(childs,function() {
+                return Dom.isNodeVisible(this);
             });
         },
         
         isOnlyHeight: function() {
-            return $(this).is('[data-only-height]');
+            return Selector.match(this,'[data-only-height]');
         },
         
         isOnlyWidth: function() {
-            return $(this).is('[data-only-width]');
+            return Selector.match(this,'[data-only-width]');
         },
         
         refresh: function() {
@@ -41,16 +42,16 @@ Component.AbsolutePlaceholder = function()
             {
                 if(!trigHdlr(this,'absolutePlaceholder:isOnlyHeight'))
                 {
-                    $(this).width('auto');
-                    const outerWidth = $(child).outerWidth();
-                    $(this).width(outerWidth);
+                    DomChange.setWidth(this,'auto');
+                    const outerWidth = Dom.getWidth(child,true);
+                    DomChange.setWidth(this,outerWidth);
                 }
                 
                 if(!trigHdlr(this,'absolutePlaceholder:isOnlyWidth'))
                 {
-                    $(this).height('auto');
-                    const outerHeight = $(child).outerHeight();
-                    $(this).height(outerHeight);
+                    DomChange.setHeight(this,'auto');
+                    const outerHeight = Dom.getHeight(child,true);
+                    DomChange.setHeight(this,outerHeight);
                 }
                 
                 setAttr(this,'data-absolute-placeholder','ready');

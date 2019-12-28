@@ -10,16 +10,53 @@ const Dom = Lemur.Dom = {
     
     // isNode
     // retourne vrai si la valeur est une node
-    isNode: function(value) 
+    isNode: function(value,docWindow) 
     {
-        return (value === document || value instanceof HTMLElement || this.isWindow(value))? true:false;
+        let r = value instanceof HTMLElement;
+        
+        if(r === false && docWindow === true && (this.isWindow(value) || this.isDocument(value)))
+        r = true;
+        
+        return r;
+    },
+    
+    
+    // isNodeEmpty
+    // retourne vrai si la valeur est une node et qu'elle est vide
+    isNodeEmpty: function(value)
+    {
+        return (this.isNode(value))? Str.isEmpty(this.getHtml(value)):false;
+    },
+
+
+    // isNodeNotEmpty
+    // retourne vrai si la valeur est une node et qu'elle n'est pas vide
+    isNodeNotEmpty: function(value)
+    {
+        return (this.isNode(value))? Str.isNotEmpty(this.getHtml(value)):false;
+    },
+    
+    
+    // isNodeVisible
+    // retourne vrai si la node est visible
+    isNodeVisible: function(value)
+    {
+        return (this.isNode(value))? !!(value.offsetWidth || value.offsetHeight || value.getClientRects().length):false;
+    },
+    
+    
+    // isNodeHidden
+    // retourne vrai si la node est invisible
+    isNodeHidden: function(value)
+    {
+        return (this.isNode(value))? !(this.isNodeVisible(value)):false;
     },
     
     
     // isNodes
     // retourne vrai si la valeur est une collection de node non vide
     // accepte nodeList ou un tableau de nodes non vide
-    isNodes: function(value)
+    isNodes: function(value,docWindow)
     {
         let r = false;
         const $inst = this;
@@ -30,36 +67,72 @@ const Dom = Lemur.Dom = {
         else if(Arr.isNotEmpty(value))
         {
             r = Arr.each(value,function(v) {
-                return $inst.isNode(v);
+                return $inst.isNode(v,docWindow);
             });
         }
         
         return r;
     },
     
-
+    
+    // isDocument
+    // retourne vrai si la valeur est document
+    isDocument: function(value) 
+    {
+        return value === document;
+    },
+    
+    
     // isWindow
-    // retourne vrai si la valeur est une node window
+    // retourne vrai si la valeur est window
     isWindow: function(value) 
     {
-        return value != null && value === value.window;
+        return value === window;
     },
     
     
     // isTag
     // retourne vrai si  la tag est celle donnée en argument
-    isTag: function(value,node)
+    isTag: function(node,value)
     {
         return (this.tag(node) === value);
     },
     
     
+    // hasData
+    // retourne vrai si la node a les données
+    hasData: function(node,value)
+    {
+        return this.getData(node,value) !== undefined;
+    },
+    
+    
+    // hasAttr
+    // retourne vrai si la node a l'attribut
+    hasAttr: function(node,value)
+    {
+        return this.getAttr(node,value) !== undefined;
+    },
+    
+    
+    // hasClass
+    // retourne vrai si la node a la classe
+    hasClass: function(node,value)
+    {
+        Dom.checkNode(node);
+        Str.check(value);
+        
+        return node.classList.contains(value);
+    },
+    
+    
     // checkNode
     // envoie une exception si la valeur n'est pas une node
+    // n'envoie pas d'erreur si la valeur est window ou document
     checkNode: function(value,type,message)
     {
         let error = false;
-        const isNode = this.isNode(value);
+        const isNode = this.isNode(value,true);
         
         if(!(isNode || (type === false && value == null)))
         error = true; 
@@ -76,9 +149,10 @@ const Dom = Lemur.Dom = {
     
     // checkNodes
     // envoie une exception si la valeur n'est pas un tableau de nodes
+    // n'envoie pas d'erreur si la valeur est window ou document
     checkNodes: function(value,type,message)
     {
-        if(!(this.isNodes(value) || (type === false && (value == null || Arr.isEmpty(value)))))
+        if(!(this.isNodes(value,true) || (type === false && (value == null || Arr.isEmpty(value)))))
         throw new Error([value,type,message]);
         
         return value;
@@ -88,9 +162,10 @@ const Dom = Lemur.Dom = {
     // nodeWrap
     // wrap une node dans un array, si ce n'est pas un array
     // transforme une node list en array
+    // n'envoie pas d'erreur si la valeur est window ou document
     nodeWrap: function(value)
     {
-        if(this.isNode(value))
+        if(this.isNode(value,true))
         value = [value];
         
         else if(value instanceof NodeList)
@@ -100,26 +175,12 @@ const Dom = Lemur.Dom = {
     },
     
     
-    // matchAll
-    // retourne vrai si toutes les nodes retournent vrai à is
-    matchAll: function(value,nodes)
-    {
-        let r = false;
-        
-        this.each(nodes,function() {
-            return r = $(this).is(value);
-        });
-        
-        return r;
-    },
-    
-    
     // tag
     // retourne le nom de la tag en lowerCase
     tag: function(node) 
     {
         let r = null;
-        const tag = $(node).prop("tagName");
+        const tag = this.getProp(node,'tagName');
         
         if(Str.is(tag))
         r = tag.toLowerCase();
@@ -127,6 +188,15 @@ const Dom = Lemur.Dom = {
         return r;
     },
 
+    
+    // getProp
+    // retourne une propriété d'une node
+    getProp: function(node,key)
+    {
+        this.checkNode(node);
+        return Obj.get(key,node);
+    },
+    
     
     // getData
     // permet de retourner une data d'une node
@@ -152,10 +222,17 @@ const Dom = Lemur.Dom = {
     // setData
     // change de la data sur une ou plusieurs nodes
     // ceci n'affecte pas le dom, seulement stocké dans l'objet
+    // si undefined efface la data
     setData: function(nodes,key,value)
     {
         Str.check(key,true);
-        return $(nodes).data(key,value);
+        
+        if(value === undefined)
+        $(nodes).removeData(key);
+        else
+        $(nodes).data(key,value);
+        
+        return;
     },
     
     
@@ -163,8 +240,7 @@ const Dom = Lemur.Dom = {
     // enlève une donnée de la ou les nodes
     removeData: function(nodes,key)
     {
-        Str.check(key,true);
-        return $(nodes).removeData(key);
+        return this.setData(nodes,key,undefined);
     },
     
     
@@ -195,25 +271,16 @@ const Dom = Lemur.Dom = {
     outerHtml: function(nodes)
     {
         let r = '';
-        nodes = this.nodeWrap(nodes);
-        this.checkNodes(nodes,false);
+        const $inst = this;
         
-        Arr.each(nodes,function() {
-            r += $(this).prop('outerHTML') || $(this).html() || $(this).text();
+        this.each(nodes,function() {
+            r += $inst.getProp(this,'outerHTML') || $inst.getHtml(this);
         });
 
         return r;
     },
 
 
-    // heightWithPadding
-    // retourne la hauteur avec le padding top et bottom
-    heightWithPadding: function(node)
-    {
-        return $(node).height() + parseInt($(node).css("padding-top")) + parseInt($(node).css("padding-bottom"));
-    },
-    
-    
     // attr
     // retourne un objet contenant tous les attributs d'une balise
     attr: function(node,start)
@@ -251,16 +318,25 @@ const Dom = Lemur.Dom = {
     
     // getAttr
     // retourne un attribut
-    // possible de retourner un décoder la string json
-    getAttr: function(node,key,json)
+    // possible de retourner la valeur json décodé, ou forcer un int/bool
+    getAttr: function(node,key,cast)
     {
         let r = undefined;
         Str.check(key,true);
         this.checkNode(node);
         r = $(node).attr(key);
         
-        if(r != null && json === true)
-        r = Json.decode(r);
+        if(r != null && cast != null)
+        {
+            if(Arr.in(cast,[true,'json']))
+            r = Json.decode(r);
+            
+            else if(cast === 'int')
+            r = Integer.cast(r);
+            
+            else if(cast === 'bool')
+            r = Bool.fromScalar(r);
+        }        
         
         return r;
     },
@@ -270,7 +346,7 @@ const Dom = Lemur.Dom = {
     // retourne une valeur d'attribut sous forme de int
     getAttrInt: function(node,key)
     {
-        return Integer.cast(this.getAttr(node,key));
+        return this.getAttr(node,key,'int');
     },
     
     
@@ -278,7 +354,7 @@ const Dom = Lemur.Dom = {
     // retourne une valeur d'attribut sous forme de boolean
     getAttrBool: function(node,key)
     {
-        return Bool.fromScalar(this.getAttr(node,key));
+        return this.getAttr(node,key,'bool');
     },
     
     
@@ -290,24 +366,105 @@ const Dom = Lemur.Dom = {
     },
     
     
-    // value
+    // getHtml
+    // retourne le html dans une node
+    getHtml: function(node)
+    {
+        this.checkNode(node);
+        return node.innerHTML;
+    },
+    
+    
+    // getText
+    // retourne le text contenu dans une node et ses enfants
+    // ne retourne aucune balise html
+    getText: function(node)
+    {
+        this.checkNode(node);
+        return node.textContent;
+    },
+    
+    
+    // getValue
     // retourne la valeur pour une node, surtout pour les formulaires
     // la valeur retourné peut être trim
-    value: function(node,trim)
+    getValue: function(node,trim)
     {
         let r = undefined;
-
-        r = $(node).val();
+        this.checkNode(node);
         
-        if(r != null)
-        {
-            r = Str.cast(r);
-            
-            if(trim === true)
-            r = Str.trim(r);
-        }
+        r = node.value;
+        r = Str.cast(r);
+        
+        if(trim === true)
+        r = Str.trim(r);
         
         return r;
+    },
+    
+    
+    // getWidth
+    // retourne la longueur de l'élément sans padding, border ou margin
+    // possible de retourner en additionnant le padding et border
+    getWidth: function(node,outer)
+    {
+        Dom.checkNode(node);
+        return (outer === true)? $(node).outerWidth():$(node).width();
+    },
+    
+    
+    // getHeight
+    // retourne la hauteur de l'élément sans padding, border ou margin
+    // possible de retourner en additionnant le padding et border
+    getHeight: function(node,outer)
+    {
+        Dom.checkNode(node);
+        return (outer === true)? $(node).outerHeight():$(node).height();
+    },
+    
+    
+    // getDimension
+    // retourne un tableau avec plusieurs dimensions relié à la node
+    getDimension: function(node)
+    {
+        return {
+            width: this.getWidth(node),
+            outerWidth: this.getWidth(node,true),
+            height: this.getHeight(node),
+            outerHeight: this.getHeight(node,true)
+        }
+    },
+    
+    
+    // getScroll
+    // retourne un object avec les données pour le scroll
+    getScroll: function(node)
+    {
+        Dom.checkNode(node);
+        return {
+            top: $(node).scrollTop(),
+            left: $(node).scrollLeft()
+        }
+    },
+    
+    
+    // getOffset
+    // retourne un objet avec les données pour le offset de la node
+    getOffset: function(node)
+    {
+        Dom.checkNode(node);
+        return $(node).offset();
+    },
+    
+    
+    // focus
+    // permet de mettre le focus sur une node
+    focus: function(node)
+    {
+        Dom.checkNode(node);
+        node.focus();
+        
+        return;
     },
     
     
@@ -328,6 +485,17 @@ const Dom = Lemur.Dom = {
     },
     
     
+    // serialize
+    // permet de serializer une ou plusieurs nodes
+    serialize: function(nodes)
+    {
+        nodes = Dom.nodeWrap(nodes);
+        nodes = Dom.checkNodes(nodes);
+        
+        return $(nodes).serialize();
+    },
+    
+    
     // valueSeparator
     // prend un ensemble de input et crée un set avec les valeurs
     // un séparateur peut être fourni, sinon utilise -
@@ -342,7 +510,7 @@ const Dom = Lemur.Dom = {
             
             this.each(nodes,function() {
                 r += (r.length)? separator:"";
-                r += $inst.value(this,trim);
+                r += $inst.getValue(this,trim);
             });
         }
         

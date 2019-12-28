@@ -104,7 +104,7 @@ Component.Form = function()
                 if(Str.isNotEmpty(name))
                 {
                     r = Arr.filter(trigHdlr(this,'form:getSubmits'),function() {
-                        return $(this).is("[name='"+name+"']");
+                        return Selector.match(this,"[name='"+name+"']");
                     });
                 }
             }
@@ -112,10 +112,14 @@ Component.Form = function()
             return r;
         },
         
+        serialize: function() {
+            const target = trigHdlr(this,'form:getTargetFields');
+            return Dom.serialize(target);
+        },
+        
         hasChanged: function() {
             let r = false;
-            const target = trigHdlr(this,'form:getTargetFields');
-            const serialize = $(target).serialize();
+            const serialize = trigHdlr(this,'form:serialize');
             const original = getData(this,'form-serialize');
             
             if(original != null && serialize !== original)
@@ -130,7 +134,7 @@ Component.Form = function()
             });
 
             if(target != null)
-            $(target).focus();
+            Dom.focus(target);
             
             return this;
         }
@@ -147,26 +151,26 @@ Component.Form = function()
     // setup
     aelOnce(this,'component:setup',function() {
         // genuine + hasChanged
-        if(!$(this).is("[data-skip-form-prepare='1']"))
+        if(!Selector.match(this,"[data-skip-form-prepare='1']"))
         trigEvt(this,'form:prepare');
         
         // submit
         prepareSubmit.call(this);
         
         // validation 
-        if(!$(this).is("[data-validation='0']"))
+        if(!Selector.match(this,"[data-validation='0']"))
         prepareValidate.call(this);
         
         // confirm
-        if($(this).is("[data-confirm]"))
+        if(Selector.match(this,"[data-confirm]"))
         prepareConfirm.call(this);
         
         // formUnload
-        if($(this).is("[data-unload]"))
+        if(Selector.match(this,"[data-unload]"))
         prepareUnload.call(this);
         
         // block
-        if(!$(this).is("[data-block='0']"))
+        if(!Selector.match(this,"[data-block='0']"))
         prepareBlock.call(this);
         
         // setup
@@ -184,7 +188,7 @@ Component.Form = function()
             const newName = name+"2-";
             const newValue = 1;
             const genuine2 = "<input type='hidden' name='"+newName+"' value='"+newValue+"' />";
-            $(this).prepend(genuine2);
+            DomChange.prepend(this,genuine2);
         }
     }
     
@@ -192,8 +196,7 @@ Component.Form = function()
     // prepareHasChanged
     const prepareHasChanged = function() 
     {
-        const target = trigHdlr(this,'form:getTargetFields');
-        const serialize = $(target).serialize();
+        const serialize = trigHdlr(this,'form:serialize');
         setData(this,'form-serialize',serialize);
     }
     
@@ -206,12 +209,12 @@ Component.Form = function()
         const submits = trigHdlr(this,'form:getSubmits');
         
         ael(submits,'click',function() {
-            $(submits).removeAttr('data-submit-click');
+            DomChange.removeAttr(submits,'data-submit-click');
             setAttr(this,'data-submit-click',true);
         });
         
         const submitsConfirm =  Arr.filter(submits,function() {
-            return $(this).is('[data-confirm]');
+            return Selector.match(this,'[data-confirm]');
         });
         Component.Confirm.call(submitsConfirm,'click');
     }

@@ -44,7 +44,7 @@ Component.ColsSorter = function(option)
         
         getCheckedCheckboxes: function() {
             return Arr.filter(trigHdlr(this,'colsSorter:getCheckboxes'),function() {
-                return $(this).is(':checked');
+                return Selector.match(this,':checked');
             });
         },
         
@@ -105,7 +105,7 @@ Component.ColsSorter = function(option)
             
             valid: function() {
                 if(trigHdlr($this,'colsSorter:isCurrent'))
-                $(this).removeAttr("data-validate");
+                DomChange.removeAttr(this,"data-validate");
                 else
                 setAttr(this,'data-validate','valid');
             }

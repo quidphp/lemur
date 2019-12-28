@@ -167,7 +167,7 @@ const Xhr = Lemur.Xhr = new function()
                 
                 if(Str.isNotEmpty(clickedName))
                 {
-                    const clickedVal = Dom.value(clicked);
+                    const clickedVal = Dom.getValue(clicked);
                     formData.append(clickedName,clickedVal);
                 }
             }
@@ -218,7 +218,7 @@ const Xhr = Lemur.Xhr = new function()
         {
             r = responseText;
             let html;
-            const parse = Arr.valueFirst(Html.parse(responseText));
+            const parse = Html.parse(responseText);
 
             if(parse != null)
             {
@@ -228,7 +228,7 @@ const Xhr = Lemur.Xhr = new function()
                 if(Vari.isEmpty(html))
                 {
                     const body = Selector.scopedQuery(parse,"body,[data-tag='body']");
-                    html = $(body).html();
+                    html = Dom.getHtml(body);
                 }
                 
                 if(Str.isNotEmpty(html))

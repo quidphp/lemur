@@ -27,7 +27,7 @@ Component.Base = function()
             if(trigHdlr(this,'input:isBinded'))
             trigHdlrs(inputs,'input:enable');
             else
-            $(this).prop('disabled',false)
+            setProp(this,'disabled',false)
         });
     });
     
@@ -38,7 +38,7 @@ Component.Base = function()
             if(trigHdlr(this,'input:isBinded'))
             trigHdlrs(inputs,'input:disable');
             else
-            $(this).prop('disabled',true);
+            setProp(this,'disabled',true);
         });
     });
     

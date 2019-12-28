@@ -29,16 +29,17 @@ Component.QuickEdit = function()
         },
         
         getTdOthers: function() {
-            return $($nodes).not(this).get();
+            const nodes = Dom.nodeWrap($nodes);
+            return Arr.valueStrip(this,nodes);
         },
         
         getTd: function() {
-            return $(this).parents("td").get(0);
+            return Selector.closest(this,"td");
         },
         
         getTdEditing: function() {
             const td = trigHdlr(this,'quickEdit:getTd');
-            return ($(td).is("[data-editing='1']"))? td:null;
+            return (Selector.match(td,"[data-editing='1']"))? td:null;
         },
         
         getCellInner: function() {
@@ -54,7 +55,7 @@ Component.QuickEdit = function()
         },
         
         getScroller: function() {
-            return $(this).parents(".scroller").get(0);
+            return Selector.closest(this,".scroller");
         },
         
         revert: function() {

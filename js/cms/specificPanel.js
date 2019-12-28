@@ -19,6 +19,7 @@ Component.SpecificPanel = function(option)
             type: 'tabs',
             child: 'tab'
         },
+        navClickTrigger: false,
         target: "> .form-inner > .panel",
         nav: "> .form-top .left ul li a"
     },option);
@@ -31,13 +32,14 @@ Component.SpecificPanel = function(option)
     
     // handler
     setHdlrs(this,'specificPanel:',{
+        
         getInput: function() {
             return qs(this,"input[name='-panel-']");
         },
         
         getCurrentPanel: function() {
             return Arr.find(trigHdlr(this,'tabs:getTargets'),function() {
-                return $(this).is("[data-current-panel='1']");
+                return Selector.match(this,"[data-current-panel='1']");
             });
         },
         

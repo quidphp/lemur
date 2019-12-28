@@ -9,6 +9,13 @@
 // searchSlide
 // mixin for the searchSlide component
 @mixin searchSlide() {
+    &[data-status='open'] {
+        > .in {
+            @include fadeIn();
+            display: block;
+        }
+    }
+    
     > .form {
         @include flex();
         margin-bottom: 5px;

@@ -64,7 +64,7 @@ const Integer = Lemur.Integer = Factory(Type,NumPrimitive,IntegerPrimitive);
 const Num = Lemur.Num = Factory(Type,NumPrimitive);
 
 // obj
-const Obj = Lemur.Obj = Factory(Type,ObjBase,ObjKeyValue,ObjEach,ObjCopyFilterMap,ObjWrite);
+const Obj = Lemur.Obj = Factory(Type,ObjBase,ObjKeyValue,ObjEach,ObjCopyFilterMap,ObjWrite,ObjWriteSelf,ObjProto);
 
 // pojo
 const Pojo = Lemur.Pojo = Factory(Type,ObjBase,ObjKeyValue,ObjEach,ObjCopyFilterMap,ObjWrite,ObjWriteSelf,PojoObj);

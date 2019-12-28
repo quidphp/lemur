@@ -43,7 +43,7 @@ Component.Modal = function(option)
             if(Str.isNotEmpty(route))
             setAttr(this,'data-route',route);
             else
-            $(this).removeAttr('data-route');
+            DomChange.removeAttr(this,'data-route');
         },
         
         getRouteAnchors: function(route) {
@@ -177,11 +177,11 @@ Component.Modal = function(option)
         const modal = this;
         
         setHdlr(anchor,'modal:open',function() {
-            $(this).addClass('selected');
+            toggleClass(this,'selected',true);
         });
         
         setHdlr(anchor,'modal:close',function() {
-            $(this).removeClass('selected');
+            toggleClass(this,'selected',false);
         });
         
         ael(anchor,'click',function(event) {

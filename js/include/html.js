@@ -8,6 +8,25 @@
 // script with functions for parsing html
 const Html = Lemur.Html = {
     
+    // get
+    // retourne le html dans une node ou un tableau de plusieurs nodes
+    get: function(value)
+    {
+        let r = '';
+        
+        if(Str.is(value))
+        r = value;
+        
+        else if(Scalar.is(value))
+        r = Str.cast(value);
+        
+        else
+        r = Dom.outerHtml(value);
+        
+        return r;
+    },
+    
+    
     // parse
     // parse une string html, retourne un objet avec les nodes
     // remplace les balises sensibles par des div (comme dans head et script)
@@ -23,6 +42,7 @@ const Html = Lemur.Html = {
             
             html = Str.trim(html);
             r = $.parseHTML(html);
+            r = Arr.valueFirst(r);
         }
 
         return r;
@@ -47,8 +67,8 @@ const Html = Lemur.Html = {
         };
         const doc = this.parse(html);
         
-        r.html = Arr.valueFirst(doc);
-        $(r.html).removeAttr('data-tag');
+        r.html = doc;
+        DomChange.removeAttr(r.html,'data-tag');
         r.htmlAttr = Dom.attr(r.html);
         
         r.head = Selector.scopedQuery(r.html,"[data-tag='head']");
@@ -58,16 +78,16 @@ const Html = Lemur.Html = {
         {
             const title = Selector.scopedQuery(r.head,"title");
             
-            $(r.head).removeAttr('data-tag');
+            DomChange.removeAttr(r.head,'data-tag');
             r.headAttr = Dom.attr(r.head);
-            r.title = (title != null)? $(title).text():'?';
+            r.title = (title != null)? Dom.getText(title):'?';
             r.titleHtml = r.title.replace('<','&lt;').replace('>','&gt;').replace(' & ',' &amp; ');
             r.meta = Selector.scopedQueryAll(r.head,"meta");
         }
         
         if(r.body != null)
         {
-            $(r.body).removeAttr('data-tag');
+            DomChange.removeAttr(r.body,'data-tag');
             r.bodyAttr = Dom.attr(r.body);
         }
         

@@ -65,7 +65,7 @@ Component.SpecificComponents = function()
             Dom.checkNode(node);
             
             Arr.each($components,function() {
-                if($(node).is(this.match))
+                if(Selector.match(node,this.match))
                 {
                     r = this;
                     return false;
@@ -122,7 +122,7 @@ Component.SpecificComponents = function()
     // nodesCall
     function nodesCall(nodes,type)
     {
-        const specComp = mergedQsa(nodes,'.specific-component');
+        const specComp = Selector.mergedQsa(nodes,'.specific-component');
         trigEvt(specComp,type);
     }
     

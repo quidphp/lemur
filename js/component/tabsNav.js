@@ -17,6 +17,7 @@ Component.TabsNav = function(option)
     const $option = Pojo.replace({
         nav: [],
         navAttr: 'data-tab',
+        navClickTrigger: true,
         first: null,
         prev: null,
         next: null,
@@ -106,9 +107,12 @@ Component.TabsNav = function(option)
                     trigHdlr($this,'tabs:go',tab)
                 });
                 
-                ael(value,'click',function() {
-                    trigHdlr(this,'nav:trigger');
-                });
+                if($option.navClickTrigger)
+                {
+                    ael(value,'click',function() {
+                        trigHdlr(this,'nav:trigger');
+                    });
+                }
             }
         });
     }

@@ -63,7 +63,7 @@ Component.AddRemove = function(option)
             if(Str.isNotEmpty(html))
             {
                 const playground = trigHdlr(this,'addRemove:getPlayground');
-                $(playground).append(html);
+                DomChange.append(playground,html);
                 
                 const inserted = trigHdlr(this,'addRemove:getLast');
                 bindElement.call(this,inserted);
@@ -78,7 +78,7 @@ Component.AddRemove = function(option)
             removed = trigHdlr(this,'addRemove:getIndex',removed);
             
             trigEvt(this,'addRemove:removed',removed);
-            $(removed).remove();
+            DomChange.remove(removed);
             
             if(!trigHdlr(this,'addRemove:length'))
             trigHdlr(this,'addRemove:insert');

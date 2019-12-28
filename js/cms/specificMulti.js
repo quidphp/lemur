@@ -63,7 +63,7 @@ Component.SpecificMulti = function(option)
             
             isActive: function() {
                 const checkbox = trigHdlr(this,'specificMulti:getCheckbox');
-                return $(checkbox).is(':checked');
+                return Selector.match(checkbox,':checked');
             },
             
             getCheckbox: function() {

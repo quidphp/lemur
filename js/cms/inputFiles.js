@@ -84,7 +84,7 @@ Component.InputFiles = function()
             const text = getAttr(this,'data-text');
             
             setAttr(block,'data-action',1);
-            $(actionText).html(text);
+            setHtml(actionText,text);
             
             trigHdlr(hidden,'input:enable');
             trigHdlr(hidden,'input:setValue',value);
@@ -105,7 +105,7 @@ Component.InputFiles = function()
             value.action = null;
             
             setAttr(block,'data-action',0);
-            $(actionText).html('');
+            setHtml(actionText,null);
             
             trigHdlr(hidden,'input:disable');
             trigHdlr(hidden,'input:setValue',value);

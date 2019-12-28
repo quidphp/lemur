@@ -49,7 +49,7 @@ Component.ClickOpenTriggerBase = function(option)
     
     ael(this,'clickOpen:closed',function() {
         const trigger = trigHdlr(this,'clickOpen:getTrigger');
-        $(trigger).focus();
+        Dom.focus(trigger);
     });
     
     

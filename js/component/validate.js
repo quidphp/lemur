@@ -19,7 +19,7 @@ Component.Validate = function()
     });
     
     setHdlr(this,'validate:getValue',function() {
-        return Dom.value(this,true);
+        return Dom.getValue(this,true);
     });
     
     setHdlr(this,'validate:isRequired',function() {

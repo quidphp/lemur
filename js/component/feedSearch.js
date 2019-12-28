@@ -60,7 +60,7 @@ Component.FeedSearch = function(option)
     
     setHdlr(this,'feed:loadMoreRemove',function() {
         const loadMore = trigHdlr(this,'feed:loadMore');
-        return $(loadMore).parent('li').get(0);
+        return Selector.closest(loadMore,'li');
     });
     
     setHdlr(this,'feed:parseData',function(data,type) {
@@ -70,9 +70,9 @@ Component.FeedSearch = function(option)
             data = Html.parse(data);
             
             if($option.parseData)
-            data = $(data).find($option.parseData).html();
+            data = qs(data,$option.parseData);
             
-            data = $(data).html();
+            data = getHtml(data);
         }
         
         return data;

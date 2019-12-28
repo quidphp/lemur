@@ -46,7 +46,7 @@ Component.Background = function()
                 if(value == null || value === getAttr(this,'data-from'))
                 {
                     r = true;
-                    $(this).removeAttr('data-from');
+                    DomChange.removeAttr(this,'data-from');
                 }
             }
             

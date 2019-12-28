@@ -97,9 +97,8 @@ Component.NavHash = function(option)
     });
     
     ael(this,type+':afterChange',function(event,target,old) {
-        const hash = Request.fragment();
         const current = trigHdlr(this,'navHash:getCurrentHash');
-        
+
         if(Str.isNotEmpty(current))
         trigHdlr(document,'history:replaceHash',current);
     });

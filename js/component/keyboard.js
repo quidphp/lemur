@@ -21,7 +21,7 @@ Component.Keyboard = function(key,values,type)
     ael(this,type,function(event) {
         if(Arr.in(event.keyCode,values))
         {
-            const isInput = $(event.target).is(Selector.input(true));
+            const isInput = Selector.match(event.target,Selector.input(true));
             const ucKey = Str.upperFirst(key);
             const catched = "keyboard"+ucKey+":catched";
             trigEvt(this,catched,event,isInput,event.keyCode);

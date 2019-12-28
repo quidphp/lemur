@@ -125,7 +125,7 @@ Component.Doc = function(option)
             // les attributs de html sont remplacés (les attributs existants ne sont pas effacés)
             const html = trigHdlr(this,'doc:getHtml');
             if(Pojo.isNotEmpty(doc.htmlAttr))
-            DomChange.setsAttr(doc.htmlAttr,html);
+            DomChange.setsAttr(html,doc.htmlAttr);
             
             // head
             const head = qs(html,'head');
@@ -135,20 +135,20 @@ Component.Doc = function(option)
             if(Str.isNotEmpty(doc.title))
             {
                 document.title = doc.title;
-                $(title).html(doc.titleHtml);
+                setHtml(title,doc.titleHtml);
             }
             
             // meta
             const meta = qsa(head,'meta');
-            $(meta).remove();
-            $(head).prepend(doc.meta);
+            DomChange.remove(meta);
+            DomChange.prepend(head,doc.meta);
             
             // body
             // les attributs de body sont effacés et remplacés
             const body = trigHdlr(this,'doc:getBody');
             DomChange.emptyAttr(body);
             if(Pojo.isNotEmpty(doc.bodyAttr))
-            DomChange.setsAttr(doc.bodyAttr,body);
+            DomChange.setsAttr(body,doc.bodyAttr);
             
             // routeWrap
             // les attributs de routeWrap sont effacés et remplacés seulement si routeWrap n'est pas body
@@ -158,7 +158,7 @@ Component.Doc = function(option)
             
             if(contentTarget != null)
             {
-                if($option.routeWrap && !$(routeWrap).is("body"))
+                if($option.routeWrap && !Selector.match(routeWrap,"body"))
                 {
                     const routeWrapTarget = qs(contentTarget,$option.routeWrap);
                     if(routeWrapTarget != null)
@@ -168,13 +168,13 @@ Component.Doc = function(option)
                         DomChange.emptyAttr(routeWrap);
                         
                         if(Pojo.isNotEmpty(routeWrapAttributes))
-                        DomChange.setsAttr(routeWrapAttributes,routeWrap);
+                        DomChange.setsAttr(routeWrap,routeWrapAttributes);
                     }
                 }
-                contentHtml = $(contentTarget).html();
+                contentHtml = getHtml(contentTarget);
             }
             
-            $(routeWrap).html(contentHtml);
+            setHtml(routeWrap,contentHtml);
         }
         
         return r;

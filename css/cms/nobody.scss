@@ -127,14 +127,25 @@
         color: $white;
         padding: 10px;
     }
-
-    > .unsupported-browser,
+    
     > noscript {
         display: block;
     }
-
+    
     > .cookie-disabled {
         display: none;
+        
+        &.show {
+            display: block;
+        }
+    }
+    
+    > .unsupported-browser {
+        display: block;
+        
+        &.hide {
+            display: none;
+        }
     }
 }
 [data-group='nobody'] main .box .form {

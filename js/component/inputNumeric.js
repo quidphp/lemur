@@ -28,7 +28,7 @@ Component.InputNumeric = function(option)
 
     // handler
     setHdlr(this,'inputNumeric:getCurrent',function() {
-        return getAttrInt(this,"data-current");
+        return Dom.getAttrInt(this,"data-current");
     });
     
     setHdlr(this,'inputNumeric:setCurrent',function(value) {
@@ -36,7 +36,7 @@ Component.InputNumeric = function(option)
     });
     
     setHdlr(this,'inputNumeric:getMax',function() {
-        return getAttrInt(this,'data-max');
+        return Dom.getAttrInt(this,'data-max');
     });
     
     setHdlr(this,'inputNumeric:validate',function() {
@@ -76,7 +76,7 @@ Component.InputNumeric = function(option)
     
     // event
     ael(this,'timeout:'+$option.keyEvent,function() {
-        if($(this).is(":focus"))
+        if(Selector.match(this,":focus"))
         {
             trigHdlr(this,'input:valueRemember');
             trigHdlr(this,$option.timeoutHandler);

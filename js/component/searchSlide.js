@@ -35,13 +35,11 @@ Component.SearchSlide = function(option)
         },
         
         showInfo: function() {
-            const info = trigHdlr(this,'searchSlide:getInfo');
-            $(info).stop(true,true).slideDown($option.speed);
+            setAttr(this,'data-status','open');
         },
         
         hideInfo: function() {
-            const info = trigHdlr(this,'searchSlide:getInfo');
-            $(info).stop(true,true).slideUp($option.speed);
+            setAttr(this,'data-status','close');
         }
     });
     
@@ -62,7 +60,8 @@ Component.SearchSlide = function(option)
         
         // handler
         setHdlr(input,'inputSearch:getButton',function() {
-            return $(this).parent().next("button[type='button']").get(0);
+            const parent = Selector.parent(this);
+            return Selector.next(parent,"button[type='button']");
         });
         
         // event

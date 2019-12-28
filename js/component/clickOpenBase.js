@@ -33,7 +33,7 @@ Component.ClickOpenBase = function(option)
         
         isEmpty: function() {
             const target = trigHdlr(this,'clickOpen:getTargetContent');
-            return $(target).is(":empty");
+            return Selector.match(target,":empty");
         },
         
         getTarget: function() {
@@ -58,7 +58,7 @@ Component.ClickOpenBase = function(option)
         
         setTargetContent: function(data) {
             const target = trigHdlr(this,'clickOpen:getTargetContent');
-            $(target).html(data);
+            setHtml(target,data);
         },
         
         unsetTargetContent: function() {
@@ -66,14 +66,14 @@ Component.ClickOpenBase = function(option)
             {
                 const target = trigHdlr(this,'clickOpen:getTargetContent');
                 trigEvt(this,'clickOpen:unmountContent');
-                $(target).html('');
+                setHtml(target,null);
             }
         },
         
         getParent: function() {
             const attr = $option.attr;
             
-            return $(this).parents("["+attr+"='1']").get(0);
+            return Selector.closest(this,"["+attr+"='1']");
         },
         
         getParentOrRoot: function() {
@@ -101,7 +101,7 @@ Component.ClickOpenBase = function(option)
         
         closeOthers: function(newBg) {
             const all = trigHdlr(this,'clickOpen:getAll');
-            const others = $(all).not(this).get();
+            const others = Arr.valueStrip(this,all);
             trigEvt(others,'clickOpen:close',newBg);
         },
         
@@ -152,8 +152,8 @@ Component.ClickOpenBase = function(option)
     ael(this,'clickOpen:focus',function() {
         const target = trigHdlr(this,'clickOpen:getTargetFocus');
         
-        if($(target).is('[tabindex]'))
-        $(target).focus();
+        if(Selector.match(target,'[tabindex]'))
+        Dom.focus(target);
     });
     
     ael(this,'keyboardEscape:blocked',function() {

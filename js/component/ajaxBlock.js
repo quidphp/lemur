@@ -34,7 +34,8 @@ Component.AjaxBlock = function(option)
         },
         
         isEmptyContentNode: function() {
-            return $(trigHdlr(this,'ajaxBlock:getContentNode')).is(":empty");
+            const node = trigHdlr(this,'ajaxBlock:getContentNode');
+            return Selector.match(node,":empty");
         },
         
         getStatusNode: function() {
@@ -47,13 +48,13 @@ Component.AjaxBlock = function(option)
         
         setContent: function(html,isError) {
             const node = trigHdlr(this,'ajaxBlock:getContentNode');
-            $(node).html(html);
+            setHtml(node,html);
         },
         
         unsetContent: function() {
             const node = trigHdlr(this,'ajaxBlock:getContentNode');
             trigEvt(this,'ajaxBlock:unmountContent');
-            $(node).html('');
+            setHtml(node,null);
         }
     });
     

@@ -14,7 +14,7 @@ Component.InputGroup = function()
     
     
     setHdlr(this,'inputGroup:isChecked',function() {
-        return ($(this).prop('checked') === true)? true:false;
+        return (getProp(this,'checked') === true)? true:false;
     });
     
     setHdlr(this,'inputGroup:getValue',function() {

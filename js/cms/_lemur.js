@@ -113,7 +113,7 @@ ael(document,'doc:ajaxProgress',function(event,percent,progressEvent) {
     const body = qs(this,"body");
     const progress = qs(body,".loading-progress");
     const html = (percent >= 0 && percent < 100)? "<div class='percent'>"+percent+"%"+"</div>":"";
-    $(progress).html(html);
+    setHtml(progress,html);
 });
 
 
@@ -126,12 +126,8 @@ ael(document,'group:nobody',function(event,node) {
     const unsupportedBrowser = qs(browscap,".unsupported-browser");
     
     trigHdlr(form,'form:focusFirst');
-    
-    if(!Browser.allowsCookie())
-    $(cookieDisabled).show();
-    
-    if(!Browser.isUnsupported())
-    $(unsupportedBrowser).hide();
+    toggleClass(cookieDisabled,'show',!Browser.allowsCookie());
+    toggleClass(unsupportedBrowser,'hide',!Browser.isUnsupported());
 });
 
 
@@ -208,7 +204,7 @@ ael(document,'route:general',function(event,node) {
     
     // highlight 
     ael(highlight,'mouseover',function(event) {
-        $(this).removeClass('highlight');
+        toggleClass(this,'highlight',false);
     });
     
     // dragScroll

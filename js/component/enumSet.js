@@ -53,7 +53,7 @@ Component.EnumSet = function(option)
         
         getRadioCheckbox: function() {
             const choices = trigHdlr(this,'enumSet:getChoices');
-            return mergedQsa(choices,"input[type='checkbox'],input[type='radio']");
+            return Selector.mergedQsa(choices,"input[type='checkbox'],input[type='radio']");
         },
         
         getCheckedSet: function() {
@@ -79,7 +79,7 @@ Component.EnumSet = function(option)
         isChoiceIn: function(value) {
             const radioCheckbox = trigHdlr(this,'enumSet:getRadioCheckbox');
             const find = Arr.find(radioCheckbox,function() {
-                return $(this).is("[value='"+value+"']")
+                return Selector.match(this,"[value='"+value+"']")
             });
             
             return find != null;
@@ -87,7 +87,7 @@ Component.EnumSet = function(option)
         
         emptyChoice: function() {
             const choices = trigHdlr(this,'enumSet:getChoices');
-            $(choices).remove();
+            DomChange.remove(choices);
         },
         
         findResult: function(value) {
@@ -164,8 +164,9 @@ Component.EnumSet = function(option)
         {
             // delegate
             aelDelegate(current,'click', "input[type='radio']",function(event) {
-                $(this).prop('checked',false);
-                $(this).parents(".choice").remove();
+                setProp(this,'checked',false);
+                const parent = Selector.closest(this,".choice");
+                DomChange.remove(parent);
             });
         }
         
@@ -175,8 +176,11 @@ Component.EnumSet = function(option)
             trigSetup(Component.Sorter.call(current,$option.sorter));
             
             aelDelegate(current,'change', "input[type='checkbox']",function(event) {
-                if($(this).is(":checked") === false)
-                $(this).parents(".choice").remove();
+                if(Selector.match(this,":checked") === false)
+                {
+                    const parent = Selector.closest(this,".choice");
+                    DomChange.remove(parent);
+                }
             });
         }
     }
@@ -203,7 +207,7 @@ Component.EnumSet = function(option)
                 else if(trigHdlr(this,'enumSet:isSet'))
                 setAttr(button,'data-in',0);
                 
-                $(current).append(html);
+                DomChange.append(current,html);
                 trigEvt(this,'clickOpen:close');
             }
         }

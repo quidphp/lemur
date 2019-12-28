@@ -13,12 +13,25 @@ Test.Include = function()
     try 
     {
         // prepare
+        let newHtml = "<form method='post' action=''>";
+        newHtml += "<input type='text' value='2' name='test-suite' data-required='1' data-pattern='^[0-9\-]+$' />";
+        newHtml += "<input type='submit' name='test-submit' />";
+        newHtml += "<div class='ok'>test <span>what</span></div>";
+        newHtml += "</form>";
         const htmlNode = Selector.scopedQuery(document,'html');
         const selectorOne = htmlNode.querySelector("body");
         const selectorAll = htmlNode.querySelectorAll("body");
         const htmlStr = Dom.outerHtml(htmlNode);
         const isEmpty = Str.isEmpty.bind(Str);
         const noop = function() { };
+        const bodyNode = Selector.scopedQuery(htmlNode,'body');
+        DomChange.prepend(bodyNode,newHtml);
+        const formNode = Selector.scopedQuery(bodyNode,"> form");
+        const divNode = Selector.scopedQuery(formNode,"> div");
+        const inputNode = Selector.scopedQuery(formNode,"> input");
+        
+        const dom = new DOMParser();
+        d(dom.parseFromString(newHtml,'text/html'));
         
         // js
         assert(Arr.is !== Obj.is);
@@ -171,29 +184,68 @@ Test.Include = function()
         // debug
         
         // dom
-        assert(Dom.isNode(window));
-        assert(Dom.isNode(document));
+        assert(!Dom.isNode(window));
+        assert(!Dom.isNode(document));
+        assert(Dom.isNode(window,true));
+        assert(Dom.isNode(document,true));
         assert(Dom.isNode(htmlNode));
+        assert(!Dom.isNodeEmpty(selectorOne));
+        assert(!Dom.isNodeEmpty(window));
+        assert(Dom.isNodeNotEmpty(selectorOne));
+        assert(Dom.isNodeVisible(htmlNode));
+        assert(!Dom.isNodeHidden(htmlNode));
         assert(Dom.isNodes([selectorOne]));
         assert(Dom.isNodes(selectorAll));
         assert(!Dom.isNodes([htmlNode,true]));
         assert(!Dom.isNodes(htmlNode));
+        assert(Dom.isDocument(document));
         assert(Dom.isWindow(window));
         assert(!Dom.isWindow(document));
-        assert(Dom.isTag('html',htmlNode));
-        assert(Dom.matchAll('html',htmlNode));
+        assert(Dom.isTag(htmlNode,'html'));
+        assert(Selector.matchAll(htmlNode,'html'));
         assert(Dom.tag(htmlNode) === 'html');
         assert(Dom.tag(window) === null);
         assert(Str.isNotEmpty(Dom.outerHtml(htmlNode)));
-        assert(Num.is(Dom.heightWithPadding(htmlNode)));
+        assert(Num.is(Dom.getHeight(window)));
+        assert(Num.is(Dom.getHeight(document)));
+        assert(Num.is(Dom.getHeight(htmlNode)));
+        assert(Num.is(Dom.getWidth(htmlNode)));
+        assert(Pojo.length(Dom.getDimension(htmlNode)) === 4);
+        assert(Pojo.length(Dom.getScroll(window)) === 2);
+        assert(Pojo.length(Dom.getScroll(htmlNode)) === 2);
         assert(Pojo.is(Dom.attr(htmlNode)));
+        assert(Dom.hasAttr(htmlNode,'data-error'));
         assert(Dom.getAttr(htmlNode,'data-error') === 'none');
+        assert(Dom.getAttrInt(htmlNode,'data-error') === null);
+        assert(Dom.getAttrBool(htmlNode,'data-error') === null);
         assert(Str.isNotEmpty(Dom.attrStr(htmlNode)));
         assert(Pojo.is(Dom.dataAttr(htmlNode)));
         assert(Dom.getAttr(htmlNode,'data-error') === 'none');
+        assert(Str.isNotEmpty(Dom.getHtml(htmlNode)));
+        assert(Str.isNotEmpty(Dom.getHtml(selectorOne)));
+        assert(!Dom.hasData(htmlNode,'test'));
+        assert(Dom.setData(htmlNode,'test',2) === undefined);
+        assert(Dom.hasData(htmlNode,'test'));
+        assert(Dom.getData(htmlNode,'test') === 2);
+        assert(Dom.flashData(htmlNode,'test') === 2);
+        assert(!Dom.hasData(htmlNode,'test'));
+        assert(Dom.flashData(htmlNode,'test',2) === undefined);
+        assert(Dom.getHtml(divNode) === 'test <span>what</span>');
+        assert(Dom.getText(divNode) === 'test what');
+        assert(Dom.getProp(divNode,'textContent') === 'test what');
+        assert(Dom.getProp(divNode,'textContent') === 'test what');
+        assert(!Dom.hasClass(divNode,'test'));
+        assert(DomChange.toggleClass(divNode,'test',true) === undefined);
+        assert(Dom.hasClass(divNode,'test'));
+        DomChange.toggleClass(divNode,'test',false);
+        assert(!Dom.hasClass(divNode,'test'));
+        DomChange.toggleClass(divNode,'test');
+        assert(Dom.hasClass(divNode,'test'));
+        DomChange.toggleClass(divNode,'test');
+        assert(!Dom.hasClass(divNode,'test'));
         
         // domChange
-
+        
         // evt
         assert(Evt.nameFromType('ok') === 'event');
         assert(Evt.nameFromType('ok:what') === 'customEvent');
@@ -232,7 +284,9 @@ Test.Include = function()
         assert(Str.isEnd("/#what",HistoryApi.makeState('#what','bleh').url));
         
         // html
-        assert(Html.parse(htmlStr).length === 1);
+        assert(Html.get(2) === '2');
+        assert(Html.get(htmlNode) === Html.get([htmlNode]));
+        assert(Dom.isNode(Html.parse(htmlStr)));
         assert(Obj.length(Html.doc(htmlStr)) === 9);
         
         // integer
@@ -498,6 +552,11 @@ Test.Include = function()
         assert(Selector.scopedQuery(htmlNode,"james") == null);
         assert(Arr.isNotEmpty(Selector.scopedQueryAll(htmlNode,"body")));
         assert(Arr.isEmpty(Selector.scopedQueryAll(htmlNode,"james")));
+        assert(Arr.isEqual(Selector.filter([htmlNode,bodyNode],"body"),[bodyNode]));
+        assert(Selector.parent(bodyNode) === htmlNode);
+        assert(Selector.parent(htmlNode) === document);
+        assert(Arr.isEqual(Selector.children(htmlNode,'body'),[bodyNode]));
+        assert(Arr.isEmpty(Selector.children(htmlNode,'div')));
         
         // str
         assert(Str.is('WHAT'));
@@ -692,6 +751,9 @@ Test.Include = function()
         assert(Xhr.parseError('<html><body><div>TEST</div></body></html>','error') === '<div>TEST</div>');
         assert(Xhr.parseError('<html><body><div class="ajax-parse-error"><div>TEST</div></div></body></html>','error') === '<div class="ajax-parse-error"><div>TEST</div></div>');
         assert(Xhr.parseError('','error') === 'error');
+        
+        // cleanup
+        DomChange.remove(formNode);
     } 
     
     catch (e) 

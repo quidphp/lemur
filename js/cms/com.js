@@ -29,16 +29,14 @@ Component.Com = function()
             return qs(this,'.bottom');
         },
         
-        slideUp: function() {
-            setAttr(this,'data-status','close');
-            const bottom = trigHdlr(this,'com:getBottom');
-            $(bottom).stop(true,true).slideUp('fast');
-        },
-        
-        slideDown: function() {
+        open: function() {
             setAttr(this,'data-status','open');
             const bottom = trigHdlr(this,'com:getBottom');
-            $(bottom).stop(true,true).slideDown('fast');
+        },
+        
+        close: function() {
+            setAttr(this,'data-status','close');
+            const bottom = trigHdlr(this,'com:getBottom');
         }
     });
     
@@ -49,7 +47,7 @@ Component.Com = function()
     });
     
     ael(this,'com:close',function() {
-        $(this).stop(true,true).fadeOut("slow");
+        setAttr(this,'data-status','hidden');
     })
     
     
@@ -62,12 +60,12 @@ Component.Com = function()
     aelDelegate(this,'click','.date',function(event) {
         const delegate = event.delegateTarget;
         const isOpen = trigHdlr(delegate,'com:isOpen');
-        trigHdlr(delegate,(isOpen)? 'com:slideUp':'com:slideDown');
+        trigHdlr(delegate,(isOpen)? 'com:close':'com:open');
     });
     
     aelDelegate(this,'click',".row.insert > span,.row.update > span",function(event) {
         const delegate = event.delegateTarget;
-        const parent = $(this).parent().get(0);
+        const parent = Selector.parent(this);
         const table = getAttr(parent,'data-table');
         const primary = getAttr(parent,'data-primary');
         redirect.call(delegate,table,primary,event);
@@ -76,8 +74,8 @@ Component.Com = function()
     
     // bind
     aelOnce(this,'component:setup',function() {
-        if($(this).is('[tabindex]'))
-        $(this).focus();
+        if(Selector.match(this,'[tabindex]'))
+        Dom.focus(this);
     });
     
     

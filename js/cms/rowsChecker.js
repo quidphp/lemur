@@ -26,19 +26,19 @@ Component.RowsChecker = function()
         
         getToolsButton: function() {
             return Arr.filter(trigHdlr(this,'rowsChecker:getTools'),function() {
-                return $(this).is('button');
+                return Selector.match(this,'button');
             });
         },
         
         getMultiModify: function() {
             return Arr.find(trigHdlr(this,'rowsChecker:getToolsButton'),function() {
-                return $(this).is('.multi-modify');
+                return Selector.match(this,'.multi-modify');
             });
         },
         
         getMultiDelete: function() {
             return Arr.find(trigHdlr(this,'rowsChecker:getTools'),function() {
-                return $(this).is(".multi-delete-form");
+                return Selector.match(this,".multi-delete-form");
             }); 
         },
         
@@ -74,12 +74,13 @@ Component.RowsChecker = function()
         },
         
         getCheckboxes: function() {
-            return mergedQsa(trigHdlr(this,'rowsChecker:getRows'),"td.rows input[type='checkbox']");
+            const rows = trigHdlr(this,'rowsChecker:getRows');
+            return Selector.mergedQsa(rows,"td.rows input[type='checkbox']");
         },
         
         getCheckedCheckboxes: function() {
             return Arr.filter(trigHdlr(this,'rowsChecker:getCheckboxes'),function() {
-                return $(this).is(':checked');
+                return Selector.match(this,':checked');
             });
         },
         
@@ -96,11 +97,13 @@ Component.RowsChecker = function()
         },
         
         areAllUpdateable: function() {
-            return Dom.matchAll("[data-updateable='1']",trigHdlr(this,'rowsChecker:getCheckedRows'));
+            const rows = trigHdlr(this,'rowsChecker:getCheckedRows');
+            return Selector.matchAll(rows,"[data-updateable='1']");
         },
         
         areAllDeleteable: function() {
-            return Dom.matchAll("[data-deleteable='1']",trigHdlr(this,'rowsChecker:getCheckedRows'));
+            const rows = trigHdlr(this,'rowsChecker:getCheckedRows');
+            return Selector.matchAll(rows,"[data-deleteable='1']");
         },
         
         refresh: function() {
@@ -115,7 +118,7 @@ Component.RowsChecker = function()
             const showMulti = (manyChecked === true && trigHdlr(this,'rowsChecker:areAllUpdateable'))? true:false;
             const showDelete = (oneChecked === true && trigHdlr(this,'rowsChecker:areAllDeleteable'))? true:false;
             
-            $(toggleAll).toggleClass('all-checked',allChecked);
+            toggleClass(toggleAll,'all-checked',allChecked);
             
             trigHdlr(toolsContainer,(oneChecked === true)? 'toolsContainer:show':'toolsContainer:hide');
             trigHdlr(multiModify,(showMulti === true)? 'toolMulti:show':'toolMulti:hide');
@@ -178,12 +181,12 @@ Component.RowsChecker = function()
         setHdlrs(checkboxes,'checkbox:',{
             
             getTr: function() {
-                return $(this).parents("tr").get(0);
+                return Selector.closest(this,"tr");
             },
             
             check: function(refresh) {
                 const tr = trigHdlr(this,'checkbox:getTr');
-                $(this).prop('checked',true);
+                setProp(this,'checked',true);
                 setAttr(tr,'data-checked',1);
                 
                 if(refresh === true)
@@ -192,7 +195,7 @@ Component.RowsChecker = function()
             
             uncheck: function(refresh) {
                 const tr = trigHdlr(this,'checkbox:getTr');
-                $(this).prop('checked',false);
+                setProp(this,'checked',false);
                 setAttr(tr,'data-checked',0);
                 
                 if(refresh === true)
@@ -202,7 +205,7 @@ Component.RowsChecker = function()
         
         // event
         ael(checkboxes,'change',function() {
-            trigHdlr(this,($(this).is(":checked"))? 'checkbox:check':'checkbox:uncheck',true);
+            trigHdlr(this,(Selector.match(this,":checked"))? 'checkbox:check':'checkbox:uncheck',true);
         });
     }
     

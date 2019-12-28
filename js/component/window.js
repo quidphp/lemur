@@ -21,13 +21,18 @@ Component.Window = function(type,timeout)
         
         // retourne vrai si la fenêtre courante est responsive
         isResponsive: function() {
-            return ($(this).width() < 900)? true:false;
+            return (Dom.getWidth(this) < 900)? true:false;
         },
         
         // permet de scroller la fenêtre
         scrollTo: function(top) {
             const htmlBody = qsa(document,"html,body");
-            $(htmlBody).stop(true,true).scrollTop(top);
+            
+            DomChange.animateStop(htmlBody);
+            
+            Dom.each(htmlBody,function() {
+                DomChange.setScroll(this,top);
+            });
         }
     });
     

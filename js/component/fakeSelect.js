@@ -19,11 +19,11 @@ Component.FakeSelect = function()
     const htmlFromSelect = function() 
     {
         let r = '';
-        const name = $(this).prop('name');
+        const name = getProp(this,'name');
         const required = getAttr(this,'data-required');
-        const disabled = $(this).prop('disabled');
+        const disabled = getProp(this,'disabled');
         const selected = qs(this,"option:checked");
-        const selectedText = (selected != null)? $(selected).text():null;
+        const selectedText = (selected != null)? Dom.getText(selected):null;
         const title = (Str.isNotEmpty(selectedText))? selectedText:"&nbsp;";
         const options = qsa(this,'option');
         const value = trigHdlr(this,'input:getValue');
@@ -42,8 +42,8 @@ Component.FakeSelect = function()
         r += "<ul>";
         
         Arr.each(options,function() {
-            const val = Str.cast($(this).prop('value'));
-            const text = $(this).text() || "&nbsp;";
+            const val = Str.cast(getProp(this,'value'));
+            const text = Dom.getText(this) || "&nbsp;";
             const datas = Dom.attrStr(this,'data-');
             
             r += "<li>";
@@ -86,7 +86,7 @@ Component.FakeSelect = function()
         setHdlrs(this,'fakeSelect:',{
             
             getSelect: function() {
-                return $(this).prev("select").get(0);
+                return Selector.prev(this,'select');
             },
             
             getChoices: function() {
@@ -102,7 +102,7 @@ Component.FakeSelect = function()
             
             getSelected: function() {
                 return Arr.find(trigHdlr(this,'fakeSelect:getChoices'),function() {
-                    return (getAttrInt(this,'data-selected') === 1);
+                    return (Dom.getAttrInt(this,'data-selected') === 1);
                 });
             },
             
@@ -113,7 +113,7 @@ Component.FakeSelect = function()
             
             setTitle: function(value) {
                 const title = trigHdlr(this,'fakeSelect:getTitle');
-                $(title).text(value);
+                DomChange.setText(title,value);
             }
         });
         
@@ -134,7 +134,7 @@ Component.FakeSelect = function()
         ael(this,'clickOpen:opened',function() {
             const selected = trigHdlr(this,'fakeSelect:getSelected');
             if(selected != null)
-            $(selected).focus();
+            Dom.focus(selected);
         });
         
         ael(this,'clickOpen:closed',function() {
@@ -221,12 +221,12 @@ Component.FakeSelect = function()
         const choose = function(selected)
         {
             const value = getAttr(selected,'data-value');
-            const text = $(selected).text();
+            const text = Dom.getText(selected);
             const select = trigHdlr(this,'fakeSelect:getSelect');
             const choices = trigHdlr(this,'fakeSelect:getChoices');
             const current = trigHdlr(select,'input:getValue');
             
-            $(choices).removeAttr('data-selected');
+            DomChange.removeAttr(choices,'data-selected');
             setAttr(selected,'data-selected',1);
             
             trigHdlr(select,'input:setValue',value);
@@ -247,7 +247,7 @@ Component.FakeSelect = function()
             if(trigHdlr(this,'input:allowMultiple') === false && trigHdlr(this,'input:isControlled') === false)
             {
                 const html = htmlFromSelect.call(this);
-                const node = $(html).insertAfter(this).get(0);
+                const node = DomChange.insertAfter(this,html);
                 bindFakeSelect.call(node);
                 setAttr(this,'data-controlled',1);
                 r.push(node);

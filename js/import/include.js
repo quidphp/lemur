@@ -39,23 +39,24 @@ const assert = Debug.assertThrow.bind(Debug);
 const logError = Debug.logError.bind(Debug);
 
 // dom 
+const getProp = Dom.getProp.bind(Dom);
 const getAttr = Dom.getAttr.bind(Dom);
-const getAttrInt = Dom.getAttrInt.bind(Dom);
-const getAttrBool = Dom.getAttrBool.bind(Dom);
 const getData = Dom.getData.bind(Dom);
-const flashData = Dom.flashData.bind(Dom);
+const getHtml = Dom.getHtml.bind(Dom);
 const setData = Dom.setData.bind(Dom);
-const removeData = Dom.removeData.bind(Dom);
 
 // domChange
+const setProp = DomChange.setProp.bind(DomChange);
 const setAttr = DomChange.setAttr.bind(DomChange);
+const setHtml = DomChange.setHtml.bind(DomChange);
+const toggleClass = DomChange.toggleClass.bind(DomChange);
 
 // event
-const ael = Evt.addEventListener.bind(Evt);
-const aelDelegate = Evt.addDelegatedEventListener.bind(Evt);
-const aelOnce = Evt.addEventListenerOnce.bind(Evt);
-const rel = Evt.removeEventListener.bind(Evt);
-const trigEvt = Evt.triggerEvent.bind(Evt);
+const ael = Evt.addListener.bind(Evt);
+const aelDelegate = Evt.addDelegatedListener.bind(Evt);
+const aelOnce = Evt.addListenerOnce.bind(Evt);
+const rel = Evt.removeListener.bind(Evt);
+const trigEvt = Evt.triggerNoBubble.bind(Evt);
 const trigBubble = Evt.triggerBubble.bind(Evt);
 const trigSetup = Evt.triggerSetup.bind(Evt);
 const trigTeardown = Evt.triggerTeardown.bind(Evt);
@@ -70,7 +71,6 @@ const trigHdlrs = Handler.triggers.bind(Handler);
 // selector
 const qs = Selector.scopedQuery.bind(Selector);
 const qsa = Selector.scopedQueryAll.bind(Selector);
-const mergedQsa = Selector.mergedScopedQueryAll.bind(Selector);
 
 // component
 const Component = Lemur.Component;
