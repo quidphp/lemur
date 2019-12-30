@@ -9,7 +9,7 @@
 Component.Window = function(type,timeout)
 {
     // une node
-    Dom.checkNode(this,window);
+    Vari.check(this,window);
     
     
     // handler
@@ -21,17 +21,17 @@ Component.Window = function(type,timeout)
         
         // retourne vrai si la fenêtre courante est responsive
         isResponsive: function() {
-            return (Dom.getWidth(this) < 900)? true:false;
+            return (Win.getDimension().width < 900)? true:false;
         },
         
         // permet de scroller la fenêtre
         scrollTo: function(top) {
             const htmlBody = qsa(document,"html,body");
             
-            DomChange.animateStop(htmlBody);
+            EleChange.animateStop(htmlBody);
             
-            Dom.each(htmlBody,function() {
-                DomChange.setScroll(this,top);
+            Ele.each(htmlBody,function() {
+                EleChange.setScroll(this,top);
             });
         }
     });

@@ -15,23 +15,32 @@ Test.Include = function()
         // prepare
         let newHtml = "<form method='post' action=''>";
         newHtml += "<input type='text' value='2' name='test-suite' data-required='1' data-pattern='^[0-9\-]+$' />";
+        newHtml += "<input type='submit' name='test-submit3' />";
+        newHtml += "<input type='submit' name='test-submit2' />";
         newHtml += "<input type='submit' name='test-submit' />";
         newHtml += "<div class='ok'>test <span>what</span></div>";
         newHtml += "</form>";
-        const htmlNode = Selector.scopedQuery(document,'html');
+        newHtml += "<div class='content' style='width: 25px; height: 25px; margin: 10px; padding: 5px; border: 5px solid green; box-sizing: content-box;'></div>";
+        newHtml += "<div class='border' style='width: 25px; height: 25px; margin: 10px; padding: 5px; border: 5px solid green; box-sizing: border-box;'></div>";
+        const htmlNode = Nod.scopedQuery(document,'html');
         const selectorOne = htmlNode.querySelector("body");
         const selectorAll = htmlNode.querySelectorAll("body");
-        const htmlStr = Dom.outerHtml(htmlNode);
+        const htmlStr = Ele.outerHtml(htmlNode);
         const isEmpty = Str.isEmpty.bind(Str);
         const noop = function() { };
-        const bodyNode = Selector.scopedQuery(htmlNode,'body');
-        DomChange.prepend(bodyNode,newHtml);
-        const formNode = Selector.scopedQuery(bodyNode,"> form");
-        const divNode = Selector.scopedQuery(formNode,"> div");
-        const inputNode = Selector.scopedQuery(formNode,"> input");
-        
-        const dom = new DOMParser();
-        d(dom.parseFromString(newHtml,'text/html'));
+        const bodyNode = Ele.scopedQuery(htmlNode,'body');
+        EleChange.prepend(bodyNode,newHtml);
+        const formNode = Ele.scopedQuery(bodyNode,"> form");
+        const divNode = Ele.scopedQuery(formNode,"> div");
+        const inputNode = Ele.scopedQuery(formNode,"> input[type='text']");
+        const submitNode = Ele.scopedQuery(formNode,"> input[name='test-submit']");
+        const textNode = divNode.firstChild;
+        const contentBox = Ele.scopedQuery(bodyNode,"> div.content");
+        const borderBox = Ele.scopedQuery(bodyNode,"> div.border");
+        const fragment = document.createDocumentFragment();
+        const template = document.createElement('template');
+        EleChange.setHtml(template,newHtml);
+        const formTemplate = Doc.children(template.content,'form');
         
         // js
         assert(Arr.is !== Obj.is);
@@ -113,6 +122,7 @@ Test.Include = function()
             return (this === 2)? true:false;
         }).length === 1);
         assert(Arr.isEqual(Arr.replace([1,2,2],[4,5],[0]),[0,5,2]));
+        assert(Arr.isEqual(Arr.clean([null,undefined,0,'0',[],{},false,true,'',1]),[0,'0',false,true,1]));
         
         // arrLike
         assert(!ArrLike.is([]));
@@ -177,6 +187,8 @@ Test.Include = function()
         assert(Bool.is(Browser.isIe()));
         assert(Bool.is(Browser.isUnsupported()));
         assert(Bool.is(Browser.allowsCookie()));
+
+        // data
         
         // datetime
         assert(Num.is(Datetime.now()));
@@ -184,67 +196,154 @@ Test.Include = function()
         // debug
         
         // dom
-        assert(!Dom.isNode(window));
-        assert(!Dom.isNode(document));
-        assert(Dom.isNode(window,true));
-        assert(Dom.isNode(document,true));
-        assert(Dom.isNode(htmlNode));
-        assert(!Dom.isNodeEmpty(selectorOne));
-        assert(!Dom.isNodeEmpty(window));
-        assert(Dom.isNodeNotEmpty(selectorOne));
-        assert(Dom.isNodeVisible(htmlNode));
-        assert(!Dom.isNodeHidden(htmlNode));
-        assert(Dom.isNodes([selectorOne]));
-        assert(Dom.isNodes(selectorAll));
-        assert(!Dom.isNodes([htmlNode,true]));
-        assert(!Dom.isNodes(htmlNode));
-        assert(Dom.isDocument(document));
-        assert(Dom.isWindow(window));
-        assert(!Dom.isWindow(document));
-        assert(Dom.isTag(htmlNode,'html'));
-        assert(Selector.matchAll(htmlNode,'html'));
-        assert(Dom.tag(htmlNode) === 'html');
-        assert(Dom.tag(window) === null);
-        assert(Str.isNotEmpty(Dom.outerHtml(htmlNode)));
-        assert(Num.is(Dom.getHeight(window)));
-        assert(Num.is(Dom.getHeight(document)));
-        assert(Num.is(Dom.getHeight(htmlNode)));
-        assert(Num.is(Dom.getWidth(htmlNode)));
-        assert(Pojo.length(Dom.getDimension(htmlNode)) === 4);
-        assert(Pojo.length(Dom.getScroll(window)) === 2);
-        assert(Pojo.length(Dom.getScroll(htmlNode)) === 2);
-        assert(Pojo.is(Dom.attr(htmlNode)));
-        assert(Dom.hasAttr(htmlNode,'data-error'));
-        assert(Dom.getAttr(htmlNode,'data-error') === 'none');
-        assert(Dom.getAttrInt(htmlNode,'data-error') === null);
-        assert(Dom.getAttrBool(htmlNode,'data-error') === null);
-        assert(Str.isNotEmpty(Dom.attrStr(htmlNode)));
-        assert(Pojo.is(Dom.dataAttr(htmlNode)));
-        assert(Dom.getAttr(htmlNode,'data-error') === 'none');
-        assert(Str.isNotEmpty(Dom.getHtml(htmlNode)));
-        assert(Str.isNotEmpty(Dom.getHtml(selectorOne)));
-        assert(!Dom.hasData(htmlNode,'test'));
-        assert(Dom.setData(htmlNode,'test',2) === undefined);
-        assert(Dom.hasData(htmlNode,'test'));
-        assert(Dom.getData(htmlNode,'test') === 2);
-        assert(Dom.flashData(htmlNode,'test') === 2);
-        assert(!Dom.hasData(htmlNode,'test'));
-        assert(Dom.flashData(htmlNode,'test',2) === undefined);
-        assert(Dom.getHtml(divNode) === 'test <span>what</span>');
-        assert(Dom.getText(divNode) === 'test what');
-        assert(Dom.getProp(divNode,'textContent') === 'test what');
-        assert(Dom.getProp(divNode,'textContent') === 'test what');
-        assert(!Dom.hasClass(divNode,'test'));
-        assert(DomChange.toggleClass(divNode,'test',true) === undefined);
-        assert(Dom.hasClass(divNode,'test'));
-        DomChange.toggleClass(divNode,'test',false);
-        assert(!Dom.hasClass(divNode,'test'));
-        DomChange.toggleClass(divNode,'test');
-        assert(Dom.hasClass(divNode,'test'));
-        DomChange.toggleClass(divNode,'test');
-        assert(!Dom.hasClass(divNode,'test'));
+        assert(Dom.html(2) === '2');
+        assert(Dom.html(htmlNode) === Dom.html([htmlNode]));
+        assert(Ele.is(Dom.parse(htmlStr)));
+        assert(Obj.length(Dom.doc(htmlStr)) === 9);
+        assert(Dom.selectorInput() === "input,select,textarea,button[type='submit']");
+        assert(Dom.selectorInput(true) === "input,select,textarea,button");
+
+        // ele
+        assert(Ele.hasData(divNode,'what') === false);
+        assert(Ele.getData(divNode,'what') === undefined);
+        assert(Ele.allData(divNode) === undefined);
+        assert(!Ele.is(textNode));
+        assert(!Ele.is(window));
+        assert(!Ele.is(document));
+        assert(!Ele.is(window));
+        assert(!Ele.is(document));
+        assert(Ele.is(htmlNode));
+        assert(Ele.are([selectorOne]));
+        assert(!Ele.are(selectorAll));
+        assert(!Ele.are([htmlNode,true]));
+        assert(!Ele.are(htmlNode));
+        assert(!Ele.isEmpty(selectorOne));
+        assert(!Ele.isEmpty(window));
+        assert(Ele.isNotEmpty(selectorOne));
+        assert(Ele.isVisible(htmlNode));
+        assert(!Ele.isHidden(htmlNode));
+        assert(Ele.isTag(htmlNode,'html'));
+        assert(Ele.matchAll(htmlNode,'html'));
+        assert(Ele.tag(htmlNode) === 'html');
+        assert(Str.isNotEmpty(Ele.outerHtml(htmlNode)));
+        assert(Obj.isNotEmpty(Ele.getBoundingRect(htmlNode)));
+        assert(Num.is(Ele.getDimension(htmlNode).width));
+        assert(Num.is(Ele.getDimension(htmlNode).height));
+        assert(Integer.cast(Ele.getDimension(contentBox).width) === 44);
+        assert(Ele.getDimension(borderBox).width === 25);
+        assert(Pojo.length(Ele.getScroll(htmlNode)) === 2);
+        assert(Pojo.is(Ele.attr(htmlNode)));
+        assert(Ele.hasAttr(htmlNode,'data-error'));
+        assert(!Ele.hasAttr(htmlNode,'data-errorz'));
+        assert(Ele.getAttr(htmlNode,'data-error') === 'none');
+        assert(Ele.getAttr(htmlNode,'data-errorz') == null);
+        assert(Num.isNan(Ele.getAttr(htmlNode,'data-error','int')));
+        assert(Ele.getAttr(htmlNode,'data-error','bool') === null);
+        assert(Str.isNotEmpty(Ele.attrStr(htmlNode)));
+        assert(Pojo.is(Ele.dataAttr(htmlNode)));
+        assert(Ele.getAttr(htmlNode,'data-error') === 'none');
+        assert(Str.isNotEmpty(Ele.getHtml(htmlNode)));
+        assert(Str.isNotEmpty(Ele.getHtml(selectorOne)));
+        assert(Ele.getHtml(divNode) === 'test <span>what</span>');
+        assert(Ele.getText(divNode) === 'test what');
+        assert(Ele.getProp(divNode,'textContent') === 'test what');
+        assert(Ele.getProp(divNode,'textContent') === 'test what');
+        assert(!Ele.hasClass(divNode,'test'));
+        assert(Integer.cast(Ele.getOffset(divNode).left) === 7);
+        assert(Pojo.length(Ele.getOffset(divNode)) === 2);
+        Ele.setHandler(htmlNode,'what',function(value) { setData(this,'OK',value); return true; });
+        assert(Ele.getData(htmlNode,'OK') == null);
+        assert(!Ele.hasData(htmlNode,'test'));
+        assert(Ele.setData(htmlNode,'test',2) === undefined);
+        assert(Ele.hasData(htmlNode,'test'));
+        assert(Ele.getData(htmlNode,'test') === 2);
+        assert(Ele.flashData(htmlNode,'test') === 2);
+        assert(!Ele.hasData(htmlNode,'test'));
+        assert(Ele.flashData(htmlNode,'test',2) === undefined);
+        assert(Pojo.isNotEmpty(Ele.allData(htmlNode)));
+        assert(Func.is(Ele.getHandler(htmlNode,'what')));
+        assert(Ele.isTriggerHandlerEqual([htmlNode],'what',true,'james'));
+        assert(Ele.isTriggerHandlerEqual(htmlNode,'what',true,'james'));
+        assert(!Ele.isTriggerHandlerEqual(htmlNode,'what',false,'james'));
+        assert(Ele.getData(htmlNode,'OK') == 'james');
+        assert(Ele.triggerHandler(htmlNode,'what','no') === true);
+        assert(Ele.triggerHandler(htmlNode,'what','yes') === true);
+        assert(Nod.getData(htmlNode,'OK') === 'yes');
+        Ele.setHandler(htmlNode,'what',function() { return false; });
+        assert(Ele.triggerHandler(htmlNode,'what') === false);
+        Ele.removeHandler(htmlNode,'what');
+        assert(Ele.getHandler(htmlNode,'what') === undefined);
+        assert(Ele.is(Ele.scopedQuery(htmlNode,"body")));
+        assert(Ele.scopedQuery(htmlNode,"james") == null);
+        assert(Arr.isNotEmpty(Ele.scopedQueryAll(htmlNode,"body")));
+        assert(Arr.isEmpty(Ele.scopedQueryAll(htmlNode,"james")));
+        assert(Ele.closest(bodyNode,'html') === htmlNode);
+        assert(Arr.isEqual(Ele.filter([htmlNode,bodyNode],"body"),[bodyNode]));
+        assert(Ele.parent(bodyNode) === htmlNode);
+        assert(Ele.parent(htmlNode) === document);
+        assert(Arr.isEqual(Ele.children(htmlNode,'body'),[bodyNode]));
+        assert(Arr.isEmpty(Ele.children(htmlNode,'div')));
+        assert(Ele.next(submitNode,'div') === divNode);
+        assert(Ele.prev(divNode) === submitNode);
+        assert(Ele.prev(divNode,'span') === null);
+        assert(Arr.length(Ele.nexts(submitNode)) === 1);
+        assert(Arr.isEmpty(Ele.nexts(divNode)));
+        assert(Arr.length(Ele.prevs(divNode)) === 4);
+        assert(Arr.length(Ele.prevs(divNode,"input[type='submit']")) === 3);
+        assert(Arr.length(Ele.prevs(divNode,"input[type='text']")) === 1);
+        assert(Arr.length(Ele.prevs(divNode,'input',"input[type='text']")) === 3);
+        EleChange.setHtml(divNode,'text ok bla <span>what</span>');
+        assert(Arr.length(Ele.children(divNode)) === 1);
+        assert(Arr.length(Doc.children(document)) === 1); // ie va avoir besoin d'un polyfill
+        assert(Arr.length(Ele.parents(divNode)) === 4);
+        assert(Arr.length(Ele.parents(divNode,'body')) === 1);
+        assert(Arr.length(Ele.parents(divNode,'body','html')) === 1);
+        assert(Arr.isEmpty(Ele.parents(divNode,'html','body')));
+        assert(Arr.isEmpty(Ele.parents(divNode,'html','html')));
+        assert(Ele.is(Doc.scopedQuery(template.content,'input')));
+        assert(Arr.length(formTemplate) === 1);
+        assert(Pojo.length(Ele.css(borderBox,'margin')) === 4);
+        assert(Pojo.length(Ele.css(borderBox)) > 250);
+        assert(Ele.getCss(borderBox,'height') === '25px');
+        assert(Ele.getCss(borderBox,'height','int') === 25);
+        assert(Ele.getCss(borderBox,'height','bool') === null);
+        assert(Ele.getCss(borderBox,'margin-top') === '10px');
         
-        // domChange
+        // eleChange
+        assert(!Ele.hasAttr(divNode,'what'));
+        EleChange.setAttr(divNode,'what','ok');
+        assert(Ele.hasAttr(divNode,'what'));
+        assert(Ele.getAttr(divNode,'what') === 'ok');
+        EleChange.removeAttr(divNode,'what');
+        assert(!Ele.hasAttr(divNode,'what'));
+        EleChange.setHtml(divNode,'what <span>ok</span>');
+        assert(Ele.getHtml(divNode) === 'what <span>ok</span>');
+        EleChange.setText(divNode,'what <span>ok</span>');
+        assert(Ele.getHtml(divNode) === 'what &lt;span&gt;ok&lt;/span&gt;');
+        assert(EleChange.setValue(inputNode,[1,2,3]) === undefined);
+        assert(inputNode.value === Ele.getValue(inputNode));
+        assert(Ele.getValue(inputNode) === '[1,2,3]');
+        assert(EleChange.toggleClass(divNode,'test',true) === undefined);
+        assert(Ele.hasClass(divNode,'test'));
+        EleChange.toggleClass(divNode,'test',false);
+        assert(!Ele.hasClass(divNode,'test'));
+        EleChange.toggleClass(divNode,'test');
+        assert(Ele.hasClass(divNode,'test'));
+        EleChange.toggleClass(divNode,'test');
+        assert(!Ele.hasClass(divNode,'test'));
+        assert(Ele.getHtml(template) !== newHtml);
+        assert(Str.length(Ele.getHtml(template)) === 571);
+        assert(Ele.getCss(divNode,'margin-top') === '0px');
+        EleChange.setCss(divNode,'margin-top','10px');
+        assert(Ele.getCss(divNode,'margin-top') === '10px');
+        assert(Ele.getCss(divNode,'margin-top','int') === 10);
+        assert(Ele.getCss(borderBox,'height') === '25px');
+        EleChange.setDimension(borderBox,20,40);
+        assert(Ele.getDimension(borderBox).height === 40);
+        assert(Ele.getCss(borderBox,'height') === '40px');
+        assert(EleChange.setScroll(htmlNode,0,0) === undefined);
+        
+        // eleHelper
         
         // evt
         assert(Evt.nameFromType('ok') === 'event');
@@ -252,7 +351,7 @@ Test.Include = function()
         assert(Evt.createFromType('ok') instanceof Event);
         assert(Evt.createFromType('ok:what') instanceof CustomEvent);
         
-        // handler
+        // func
         assert(!Func.is('test'));
         assert(Func.is(noop));
         assert(Func.length(noop) === 0);
@@ -260,21 +359,7 @@ Test.Include = function()
         Func.check(null,false);
         
         // handler
-        Handler.set(htmlNode,'what',function(value) { setData(this,'OK',value); return true; });
-        assert(Func.is(Handler.get(htmlNode,'what')));
-        assert(Dom.getData(htmlNode,'OK') == null);
-        assert(Handler.isTriggerEqual([htmlNode],'what',true,'james'));
-        assert(Handler.isTriggerEqual(htmlNode,'what',true,'james'));
-        assert(!Handler.isTriggerEqual(htmlNode,'what',false,'james'));
-        assert(Dom.getData(htmlNode,'OK') == 'james');
-        assert(Handler.trigger(htmlNode,'what','no') === true);
-        assert(Handler.trigger(htmlNode,'what','yes') === true);
-        assert(Dom.getData(htmlNode,'OK') === 'yes');
-        Handler.set(htmlNode,'what',function() { return false; });
-        assert(Handler.trigger(htmlNode,'what') === false);
-        Handler.remove(htmlNode,'what');
-        assert(Handler.get(htmlNode,'what') === undefined);
-
+        
         // historyApi
         assert(HistoryApi.supported());
         assert(HistoryApi.isState({ url: 'test', timestamp: 1234 }));
@@ -283,18 +368,13 @@ Test.Include = function()
         assert(Obj.length(HistoryApi.makeState('what','bleh')) === 3);
         assert(Str.isEnd("/#what",HistoryApi.makeState('#what','bleh').url));
         
-        // html
-        assert(Html.get(2) === '2');
-        assert(Html.get(htmlNode) === Html.get([htmlNode]));
-        assert(Dom.isNode(Html.parse(htmlStr)));
-        assert(Obj.length(Html.doc(htmlStr)) === 9);
-        
         // integer
         assert(!Integer.is('2'));
         assert(Integer.is(2));
         assert(!Integer.is(2.2));
         assert(Integer.cast(true) === null);
         assert(Integer.cast('2.3') === 2);
+        assert(Integer.cast('25px') === 25);
         assert(Integer.cast(4) === 4);
         assert(Integer.cast(2.3) === 2);
         assert(Integer.fromBool(true) === 1);
@@ -323,6 +403,8 @@ Test.Include = function()
         // json
         assert(Json.encode({ok: 2}) === '{"ok":2}');
         assert(Pojo.isEqual(Json.decode('{"ok":2}'),{ok: 2}));
+        
+        // listener
         
         // nav
         assert(Nav.isFirst(0,10));
@@ -355,13 +437,14 @@ Test.Include = function()
         assert(Nav.index(2,0,10,true) === 2);
         assert(Nav.index(0,0,10,true) === 0);
         assert(Nav.index(11,0,10,true) === null);
-            
+        
         // num
         assert(!Num.is('what'));
         assert(Num.is('2'));
         assert(Num.is('2.3'));
         assert(Num.is(2));
         assert(Num.is(2.2));
+        assert(!Num.isNan(2));
         assert(Num.cast('1.2') === 1.2);
         assert(Num.cast('1,2') === null);
         assert(Num.cast(1) === 1);
@@ -544,25 +627,18 @@ Test.Include = function()
         assert(Scalar.check(true,true) === true);
         assert(Scalar.check(false) === false);
         assert(Scalar.check(null,false) === null);
-
+        assert(Scalar.cast('2.4','int') === 2);
+        assert(Scalar.cast('1','bool') === true);
+        
         // selector
-        assert(Selector.input() === "input,select,textarea,button[type='submit']");
-        assert(Selector.input(true) === "input,select,textarea,button");
-        assert(Dom.isNode(Selector.scopedQuery(htmlNode,"body")));
-        assert(Selector.scopedQuery(htmlNode,"james") == null);
-        assert(Arr.isNotEmpty(Selector.scopedQueryAll(htmlNode,"body")));
-        assert(Arr.isEmpty(Selector.scopedQueryAll(htmlNode,"james")));
-        assert(Arr.isEqual(Selector.filter([htmlNode,bodyNode],"body"),[bodyNode]));
-        assert(Selector.parent(bodyNode) === htmlNode);
-        assert(Selector.parent(htmlNode) === document);
-        assert(Arr.isEqual(Selector.children(htmlNode,'body'),[bodyNode]));
-        assert(Arr.isEmpty(Selector.children(htmlNode,'div')));
         
         // str
         assert(Str.is('WHAT'));
         assert(Str.is(''));
         assert(!Str.is([]));
         assert(!Str.is(null));
+        assert(Str.are(['test','ok']));
+        assert(Arr.length(Str.checks(['test','ok',null],false)) === 3);
         assert(Str.isStart('a','as'));
         assert(!Str.isStart(3,'3s'));
         assert(Str.isEnd('s','as'));
@@ -582,9 +658,11 @@ Test.Include = function()
         assert(Str.pos('a','as') === 0);
         assert(Str.pos('é','aéè') === 1);
         assert(Str.pos('é','aÉè') === null);
+        assert(Str.lower('AE') === 'ae');
         assert(Str.lowerFirst('as') === 'as');
         assert(Str.lowerFirst('As') === 'as');
         assert(Str.lowerFirst('És') === 'és');
+        assert(Str.upper('ae') === 'AE');
         assert(Str.upperFirst('as') === 'As');
         assert(Str.upperFirst('As') === 'As');
         assert(Str.trim(' As ') === 'As');
@@ -629,6 +707,47 @@ Test.Include = function()
             return this != 'j'? true:false;
         }) === 'o');
         assert(Arr.length(Str.arr('what')) === 4);
+        assert(Str.removeAllWhitespace(' ads das sda ') === 'adsdassda');
+        assert(Str.toCamelCase('-','margin-top-right') === 'marginTopRight');
+        assert(Str.toCamelCase(' ',' margin top right ') === 'marginTopRight');
+        assert(Str.toCamelCase('_',' margin top right ') === 'margintopright');
+        assert(Str.toCamelCase('-','-margin--top--right-') === 'marginTopRight');
+        
+        // target
+        assert(Target.is(document));
+        assert(Target.is(fragment));
+        assert(Target.is(window));
+        assert(Target.is(divNode));
+        assert(Target.are([window,document]));
+        assert(Target.check(fragment) === fragment);
+        const arrFragment = [fragment];
+        assert(Target.checks(arrFragment) === arrFragment);
+        assert(Arr.length(Target.wrap(selectorAll)) === 1);
+        assert(Target.wrap(arrFragment) === arrFragment);
+        assert(Arr.length(Target.wrap(htmlNode)) === 1);
+        assert(Doc.isCurrent(document));
+        assert(Doc.is(document));
+        assert(Doc.is(fragment));
+        assert(!Doc.is(window));
+        assert(!Doc.is(htmlNode));
+        assert(!Doc.isFragment(document));
+        assert(Doc.isFragment(fragment));
+        assert(Doc.isFragment(Ele.parent(formTemplate[0])));
+        assert(Num.is(Doc.getDimension(document).width));
+        assert(Num.is(Doc.getDimension(document).height));
+        assert(Doc.getDimension(fragment) === null);
+        assert(Doc.check(document) === document);
+        assert(Doc.are([document,fragment]));
+        assert(Nod.is(document));
+        assert(!Nod.is(window));
+        assert(Nod.are([document,htmlNode]));
+        assert(!Nod.are([document,window]));
+        assert(Win.is(window));
+        assert(!Win.is(document));
+        assert(Pojo.length(Win.getScroll()) === 2);
+        assert(Win.getDimension().width > 0);
+        assert(Win.getDimension().height > 0);
+        assert(Win.are([window,window]));
         
         // type
         
@@ -718,6 +837,8 @@ Test.Include = function()
         assert(Vari.isEmpty(undefined));
         assert(Vari.isNotEmpty(2));
         assert(!Vari.isNotEmpty(null));
+        assert(!Vari.isReallyEmpty(0));
+        assert(Vari.isNotReallyEmpty(0));
         assert(Vari.isNull(null));
         assert(!Vari.isNull(undefined));
         assert(!Vari.isUndefined(null));
@@ -744,7 +865,7 @@ Test.Include = function()
             length++;
         });
         assert(length >= 34);
-
+        
         // xhr
         assert(Pojo.length(Xhr.configFromNode(htmlNode)) === 9);
         assert(Pojo.length(Xhr.configFromNode(htmlNode,null,true)) === 13);
@@ -753,7 +874,7 @@ Test.Include = function()
         assert(Xhr.parseError('','error') === 'error');
         
         // cleanup
-        DomChange.remove(formNode);
+        EleChange.remove([formNode,contentBox,contentBox,borderBox]);
     } 
     
     catch (e) 

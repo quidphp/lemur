@@ -33,13 +33,15 @@ Component.ScrollDrag = function(option)
         
         required: function() {
             const children = trigHdlr(this,'scrollDrag:getChildren');
-            return ((Dom.getWidth(children) - Dom.getWidth(this)) > 0)? true:false;
+            const dimensionEle = Ele.getDimension(children);
+            const dimensionThis = Ele.getDimension(this);
+            return ((dimensionEle.width - dimensionThis.width) > 0)? true:false;
         },
         
         getChildren: function() {
-            const childs = Selector.children(this);
+            const childs = Nod.children(this);
             return Arr.find(childs,function() {
-                return Dom.isNodeVisible(this);
+                return Ele.isVisible(this);
             });
         },
         
@@ -71,12 +73,12 @@ Component.ScrollDrag = function(option)
         {
             const delY = getData(delegate,'scrollDrag-cursorPositionY');
             const delX = getData(delegate,'scrollDrag-cursorPositionX');
-            const scroll = Dom.getScroll(delegate);
+            const scroll = Ele.getScroll(delegate);
             const delTop = scroll.top;
             const delLeft = scroll.left;
             const newY = ((delY - event.pageY) / $option.dividor);
             const newX = ((delX - event.pageX) / $option.dividor);
-            DomChange.setScroll(delegate,(delTop + newY),(delLeft + newX));
+            EleChange.setScroll(delegate,(delTop + newY),(delLeft + newX));
         }
     });
     
@@ -86,7 +88,7 @@ Component.ScrollDrag = function(option)
         
         if(trigHdlr(delegate,'scrollDrag:can') && trigHdlr(delegate,'scrollDrag:required') && event.which === 1)
         {
-            if($option.targetTag == null || Dom.isTag(target,$option.targetTag))
+            if($option.targetTag == null || Ele.isTag(target,$option.targetTag))
             {
                 setData(delegate,'scrollDrag-cursorDown',true);
                 setData(delegate,'scrollDrag-cursorPositionY',event.pageY);

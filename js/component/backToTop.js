@@ -57,7 +57,7 @@ Component.BackToTop = function(option)
         
         refresh: function() {
             const scroller = trigHdlr(this,'backToTop:getScroller');
-            const scrollTop = Dom.getScroll(scroller).top;
+            const scrollTop = Ele.getScroll(scroller).top;
             trigHdlr(this,(scrollTop === 0)? 'backToTop:hide':'backToTop:show');
         }
     });
@@ -84,7 +84,7 @@ Component.BackToTop = function(option)
         
         ael(trigger,'click',function() {
             const scroller = trigHdlr($this,'backToTop:getScroller');
-            DomChange.animate(scroller,{scrollTop: 0},$option.speed);
+            EleChange.animate(scroller,{scrollTop: 0},$option.speed);
         });
     }
     

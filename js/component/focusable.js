@@ -30,13 +30,13 @@ Component.Focusable = function(option)
         getCurrent: function() {
             const targets = trigHdlr(this,'focusable:getTargets');
             return Arr.find(targets,function() {
-                return Selector.match(this,":focus");
+                return Nod.match(this,":focus");
             });
         },
         
         focus: function(node) {
-            if(Dom.isNode(node))
-            Dom.focus(node);
+            if(Ele.is(node))
+            Ele.focus(node);
         },
         
         prev: function() {

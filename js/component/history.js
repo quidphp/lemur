@@ -9,7 +9,7 @@
 Component.History = function(option)
 {
     // document node
-    Dom.checkNode(this,document);
+    Vari.check(this,document);
     
     
     // option
@@ -83,7 +83,7 @@ Component.History = function(option)
                 ajax.abort();
             }
             
-            Dom.removeData(this,'doc-ajax');
+            Doc.removeData(this,'doc-ajax');
             
             return r;
         },
@@ -255,15 +255,15 @@ Component.History = function(option)
     const isValidNode = function(node,type)
     {
         let r = false;
-        const href = Dom.getUri(node);
+        const href = EleHelper.getUri(node);
         
         if(Str.isNotEmpty(href))
         {
             if(type === 'submit')
-            r = Selector.match(node,$option.form);
+            r = Nod.match(node,$option.form);
             
             else
-            r = Selector.match(node,$option.anchor);
+            r = Nod.match(node,$option.anchor);
         }
         
         return r;
@@ -306,7 +306,7 @@ Component.History = function(option)
         
         if(isValidNode.call(this,node,type))
         {
-            const href = Dom.getUri(node);
+            const href = EleHelper.getUri(node);
             r = historyHref.call(this,href,nodeOrEvent);
         }
         
@@ -376,8 +376,8 @@ Component.History = function(option)
         
         if(nodeOrEvent != null)
         {
-            const node = (Dom.isNode(nodeOrEvent))? nodeOrEvent:Evt.getTriggerTarget(nodeOrEvent);
-            const tag = Dom.tag(node);
+            const node = (Ele.is(nodeOrEvent))? nodeOrEvent:Evt.getTriggerTarget(nodeOrEvent);
+            const tag = Ele.tag(node);
             
             if(tag != null)
             {
@@ -407,8 +407,8 @@ Component.History = function(option)
             
             else
             {
-                const node = (Dom.isNode(nodeOrEvent))? nodeOrEvent:Evt.getTriggerTarget(nodeOrEvent);
-                const tag = Dom.tag(node);
+                const node = (Ele.is(nodeOrEvent))? nodeOrEvent:Evt.getTriggerTarget(nodeOrEvent);
+                const tag = Ele.tag(node);
                 
                 if(tag === 'form')
                 {
@@ -475,7 +475,7 @@ Component.History = function(option)
             
             if(Str.is(data))
             {
-                const doc = Html.doc(data);
+                const doc = Dom.doc(data);
                 
                 if(type === 'push' || type === 'form')
                 {
@@ -496,7 +496,7 @@ Component.History = function(option)
                 
                 trigHdlr(this,'doc:makeMount',doc,isError);
                 
-                DomChange.remove(doc.html);
+                EleChange.remove(doc.html);
                 $previous = state;
             }
         }

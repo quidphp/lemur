@@ -6,26 +6,15 @@
  
 // selector
 // script with behaviours related to selecting nodes
-const Selector = Lemur.Selector = {
-    
-    // input
-    // retourne un selector commun à utiliser pour les inputs
-    input: function(all) 
-    {
-        let r = 'input,select,textarea,button';
-        r += (all !== true)? "[type='submit']":'';
-        
-        return r;
-    },
-    
+const SelectorTarget = {
     
     // scopedQuery
     // méthode utilisé pour faire une recherche et retourner le premier enfant d'une target qui match le selector
     scopedQuery: function(node,selector)
     {
         let r = null;
-        Dom.checkNode(node,false);
-        selector = (node === document)? selector:":scope "+selector;
+        this.check(node,false);
+        selector = (Doc.is(node))? selector:":scope "+selector;
         
         if(node != null)
         r = node.querySelector(selector);
@@ -43,8 +32,8 @@ const Selector = Lemur.Selector = {
     scopedQueryAll: function(node,selector)
     {
         let r = null;
-        Dom.checkNode(node,false);
-        selector = (node === document)? selector:":scope "+selector;
+        this.check(node,false);
+        selector = (Doc.is(node))? selector:":scope "+selector;
         
         if(node != null)
         {
@@ -75,7 +64,7 @@ const Selector = Lemur.Selector = {
         if(nodes != null)
         {
             r = [];
-            Dom.each(nodes,function() {
+            this.each(nodes,function() {
                 Arr.mergeRef(r,$inst.scopedQueryAll(this,selector));
             });
         }
@@ -84,14 +73,26 @@ const Selector = Lemur.Selector = {
     },
     
     
+    // closest
+    // retourne le parent le plus proche de la node qui retourne vrai au pattern
+    // peut retourner la node courante
+    closest: function(node,value)
+    {
+        this.check(node);
+        Str.check(value);
+        
+        return node.closest(value);
+    },
+    
+    
     // match
     // retourne vrai si la node match le pattern
     match: function(node,value)
     {
-        Dom.checkNode(node);
+        this.check(node);
         Str.check(value);
         
-        return node.matches(value);
+        return (Doc.is(node))? false:node.matches(value);
     },
     
     
@@ -102,7 +103,7 @@ const Selector = Lemur.Selector = {
         let r = false;
         const $inst = this;
         
-        Dom.each(nodes,function() {
+        this.each(nodes,function() {
             return r = $inst.match(this,value);
         });
         
@@ -114,8 +115,7 @@ const Selector = Lemur.Selector = {
     // permet de filtrer les nodes d'un tableau qui match le pattern
     filter: function(nodes,value)
     {
-        nodes = Dom.nodeWrap(nodes);
-        Dom.checkNodes(nodes,false);
+        nodes = this.wrap(nodes,false);
         Str.check(value);
         const $inst = this;
         
@@ -129,8 +129,7 @@ const Selector = Lemur.Selector = {
     // retourne la première valeur d'un tableau qui match le pattern
     find: function(nodes,value)
     {
-        nodes = Dom.nodeWrap(nodes);
-        Dom.checkNodes(nodes,false);
+        nodes = this.wrap(nodes,false);
         Str.check(value);
         const $inst = this;
         
@@ -144,12 +143,36 @@ const Selector = Lemur.Selector = {
     // retourne le parent de la node, le parent peut être valider contre un sélecteur
     parent: function(node,value)
     {
-        let r = undefined;
-        Dom.checkNode(node);
+        let r = null;
+        this.check(node);
         const parent = node.parentNode;
         
-        if(value == null || this.match(parent,value))
-        r = parent;
+        if(Nod.is(parent))
+        {
+            if(value == null || Nod.match(parent,value))
+            r = parent;
+        }
+        
+        return r;
+    },
+    
+    
+    // parents
+    // permet de retourner tous les parents d'une node
+    // possible d'arrêter à un point
+    parents: function(node,value,until)
+    {
+        let r = [];
+        this.check(node);
+        
+        while (node = Nod.parent(node)) 
+        {
+            if(until != null &&Nod.match(node,until))
+            break;
+            
+            if(value == null || Nod.match(node,value))
+            r.push(node);
+        }
         
         return r;
     },
@@ -159,12 +182,36 @@ const Selector = Lemur.Selector = {
     // retourne l'élément précédant la node
     prev: function(node,value)
     {
-        let r = undefined;
-        Dom.checkNode(node);
-        const sibling = $(node).prev().get(0);
+        let r = null;
+        this.check(node);
+        const sibling = node.previousElementSibling;
         
-        if(value == null || this.match(sibling,value))
-        r = sibling;
+        if(Nod.is(sibling))
+        {
+            if(value == null || Nod.match(sibling,value))
+            r = sibling;
+        }
+        
+        return r;
+    },
+    
+    
+    // prevs
+    // retourne tous les éléments précédant la node
+    // possible d'arrêter à un point
+    prevs: function(node,value,until)
+    {
+        let r = [];
+        this.check(node);
+        
+        while (node = Nod.prev(node)) 
+        {
+            if(until != null && Nod.match(node,until))
+            break;
+            
+            if(value == null || Nod.match(node,value))
+            r.push(node);
+        }
         
         return r;
     },
@@ -174,62 +221,36 @@ const Selector = Lemur.Selector = {
     // retourne l'élément suivant la node
     next: function(node,value)
     {
-        let r = undefined;
-        Dom.checkNode(node);
-        const sibling = $(node).next().get(0);
+        let r = null;
+        this.check(node);
+        const sibling = node.nextElementSibling;
         
-        if(value == null || this.match(sibling,value))
-        r = sibling;
-        
-        return r;
-    },
-    
-    
-    // prevAll
-    // retourne tous les éléments précédant la node
-    prevAll: function(node,value)
-    {
-        let r = [];
-        Dom.checkNode(node);
-        r = $(node).prevAll(value).get();
+        if(Nod.is(sibling,true))
+        {
+            if(value == null || Nod.match(sibling,value))
+            r = sibling;
+        }
         
         return r;
     },
     
     
-    // nextAll
+    // nexts
     // retourne tous les éléments suivant la node
-    nextAll: function(node,value)
+    // possible d'arrêter à un point
+    nexts: function(node,value,until)
     {
         let r = [];
-        Dom.checkNode(node);
-        r = $(node).nextAll(value).get();
+        this.check(node);
         
-        return r;
-    },
-    
-    
-    // prevUntil
-    // retourne tous les éléments précédents jusqu'à qu'un élément matche le pattern
-    prevUntil: function(node,value,filter)
-    {
-        let r = [];
-        Dom.checkNode(node);
-        Str.check(value);
-        r = $(node).prevUntil(value,filter).get();
-        
-        return r;
-    },
-    
-    
-    // nextUntil
-    // retourne tous les éléments suivants jusqu'à qu'un élément matche le pattern
-    nextUntil: function(node,value,filter)
-    {
-        let r = [];
-        Dom.checkNode(node);
-        Str.check(value);
-        r = $(node).nextUntil(value,filter).get();
+        while (node = Nod.next(node)) 
+        {
+            if(until != null && Nod.match(node,until))
+            break;
+            
+            if(value == null || Nod.match(node,value))
+            r.push(node);
+        }
         
         return r;
     },
@@ -240,28 +261,16 @@ const Selector = Lemur.Selector = {
     // possible de seulement retourner les enfants valides avec le sélecteur
     children: function(node,value)
     {
-        let r = undefined;
-        Dom.checkNode(node);
-        const childs = $(node).children().get();
-        
+        let r = null;
+        this.check(node);
+        const childs = ArrLike.arr(node.children);
+
         if(value == null)
         r = childs;
         
         else
-        r = this.filter(childs,value);
+        r = Nod.filter(childs,value);
         
         return r;
-    },
-    
-    
-    // closest
-    // retourne le parent le plus proche de la node qui retourne vrai au pattern
-    // peut retourner la node courante
-    closest: function(node,value)
-    {
-        Dom.checkNode(node);
-        Str.check(value);
-        
-        return node.closest(value);
     }
 }

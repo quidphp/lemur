@@ -46,7 +46,23 @@ const Vari = Lemur.Vari = {
         return !this.isEmpty(value);
     },
     
-
+    
+    // isReallyEmpty
+    // retourne vrai si la variable est vraiment vide (conserve les numériques et bool)
+    isReallyEmpty: function(value)
+    {
+        return (!Num.is(value) && !Bool.is(value) && this.isEmpty(value))
+    },
+    
+    
+    // isNotReallyEmpty
+    // retourne vrai si la variable n'est pas vraiment vide
+    isNotReallyEmpty: function(value)
+    {
+        return !this.isReallyEmpty(value);
+    },
+    
+    
     // isNull
     // retourne vrai si la valeur est null
     isNull: function(value)
@@ -122,6 +138,17 @@ const Vari = Lemur.Vari = {
         }
         
         return r;
+    },
+    
+    
+    // check
+    // envoie une erreur si la valeur n'est pas égale à la deuxième
+    check: function(value,type)
+    {
+        if(value !== type)
+        throw new Error([value,type]);
+        
+        return value;
     },
     
     

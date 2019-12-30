@@ -5,25 +5,21 @@
  */
  
 // handler
-// script containing handler management (functions stored in nodes)
-const Handler = Lemur.Handler = new function()
-{    
-    // inst
-    const $inst = this;
-    
-    
-    // isTriggerEqual
-    // retourne vrai si la fonction de chaque node retourne la valeur donné en argument
-    this.isTriggerEqual = function(nodes,type,equal)
+// script containing handler management (functions stored in targets)
+const HandlerTarget = {    
+
+    // isTriggerHandlerEqual
+    // retourne vrai si la handler de chaque node retourne la valeur donné en argument
+    isTriggerHandlerEqual: function(nodes,type,equal)
     {
         let r = false;
-        nodes = Dom.nodeWrap(nodes);
-        Dom.checkNodes(nodes,false,type);
+        nodes = this.wrap(nodes,[false,type]);
         const args = Arr.merge([type],ArrLike.sliceStart(3,arguments));
+        const $inst = this;
         
         Arr.each(nodes,function(index) {
             const funcArgs = Arr.merge([this],args);
-            const result = $inst.trigger.apply($inst,funcArgs);
+            const result = $inst.triggerHandler.apply($inst,funcArgs);
             r = (result === equal);
             
             if(r === false)
@@ -31,106 +27,107 @@ const Handler = Lemur.Handler = new function()
         });
         
         return r;
-    }
+    },
     
     
-    // all
-    // retourne de l'objet avec toutes les func lié à la node
+    // allHandler
+    // retourne de l'objet avec toutes les handler lié à la node
     // possible de créer l'objet si non existant
     // envoie une erreur si plusieurs nodes
-    this.all = function(node,create)
+    allHandler: function(node,create)
     {
-        return Dom.getOrSetData(node,'lemur-func',(create === true)? {}:undefined);
-    }
+        return this.getOrSetData(node,'_handler_',(create === true)? {}:undefined);
+    },
     
     
-    // get
-    // méthode qui retourne une fonction emmagasiné dans une node
+    // getHandler
+    // méthode qui retourne un handler emmagasiné dans une node
     // envoie une erreur si plusieurs nodes
-    this.get = function(node,type,func) 
+    getHandler: function(node,type) 
     {
-        return Pojo.get(type,this.all(node));
-    }
+        return Pojo.get(type,this.allHandler(node));
+    },
     
     
-    // set
-    // permet d'emmagasiné une fonction dans chaque node fournit en argument
-    this.set = function(nodes,type,func) 
+    // setHandler
+    // permet d'emmagasiné une handler dans chaque node fournit en argument
+    setHandler: function(nodes,type,handler) 
     {
         Str.check(type,true);
-        Func.check(func);
-        nodes = Dom.nodeWrap(nodes);
-        Dom.checkNodes(nodes,false,type);
-
+        Func.check(handler);
+        nodes = this.wrap(nodes,[false,type]);
+        const $inst = this;
+        
         if(Arr.isNotEmpty(nodes))
         {
             Arr.each(nodes,function() {
-                const all = $inst.all(this,true);
-                Pojo.setRef(type,func,all);
+                const all = $inst.allHandler(this,true);
+                Pojo.setRef(type,handler,all);
             });
         }
         
         return;
-    }
+    },
     
     
-    // sets
+    // setsHandler
     // permet d'ajouter plusieurs handlers à partir d'un objet
-    this.sets = function(nodes,typeStart,obj)
+    setsHandler: function(nodes,typeStart,obj)
     {
         Str.check(typeStart,true);
         Pojo.check(obj,true);
+        const $inst = this;
         
         Pojo.each(obj,function(value,key) {
             let type = typeStart+key;
-            $inst.set(nodes,type,value);
+            $inst.setHandler(nodes,type,value);
         });
         
         return;
-    }
+    },
     
     
-    // remove
-    // permet de retirer une fonction emmagasiné dans une ou plusiuers node
-    this.remove = function(nodes,type) 
+    // removeHandler
+    // permet de retirer un handler emmagasiné dans une ou plusiuers node
+    removeHandler: function(nodes,type) 
     {
         Str.check(type,true);
-        nodes = Dom.nodeWrap(nodes);
-        Dom.checkNodes(nodes,false,type);
+        nodes = this.wrap(nodes,[false,type]);
+        const $inst = this;
         
         if(Arr.isNotEmpty(nodes))
         {
             Arr.each(nodes,function() {
-                const all = $inst.all(this,true);
+                const all = $inst.allHandler(this,true);
                 Pojo.unsetRef(type,all);
             });
         }
         
         return;
-    }
+    },
     
     
-    // trigger
-    // permet de lancer la fonction sur la première node donnée en argument
+    // triggerHandler
+    // permet de lancer le handler sur la première node donnée en argument
     // retourne le résultat de la méthode ou undefined
-    this.trigger = function(node,type) 
+    triggerHandler: function(node,type) 
     {
         let r = undefined;
-        Dom.checkNode(node,false,type);
+        this.check(node);
         Str.check(type,true);
         
         if(node != null)
         {
-            const func = this.get(node,type);
+            const handler = this.getHandler(node,type);
             
-            if(Func.is(func))
+            if(Func.is(handler))
             {
                 const args = ArrLike.sliceStart(2,arguments);
                 
                 if(Debug.is('handler'))
                 console.log('triggerFunc',type,'found',node);
                 
-                r = func.apply(node,args);
+                r = handler.apply(node,args);
             }
             
             else if(Debug.is('handler'))
@@ -138,17 +135,17 @@ const Handler = Lemur.Handler = new function()
         }
         
         return r;
-    }
+    },
     
     
-    // triggers
-    // permet de lancer une fonction sur plusieurs nodes
+    // triggersHandler
+    // permet de lancer un handler sur plusieurs nodes
     // retorne un tableau avec tous les résultats
-    this.triggers = function(nodes,type)
+    triggersHandler: function(nodes,type)
     {
         let r = null;
-        nodes = Dom.nodeWrap(nodes);
-        Dom.checkNodes(nodes,false,type);
+        nodes = this.wrap(nodes,[false,type]);
+        const $inst = this;
         
         if(Arr.isNotEmpty(nodes))
         {
@@ -156,11 +153,11 @@ const Handler = Lemur.Handler = new function()
             const args = ArrLike.sliceStart(2,arguments);
             
             Arr.each(nodes,function() {
-                let result = $inst.trigger.apply($inst,Arr.merge([this,type],args));
+                let result = $inst.triggerHandler.apply($inst,Arr.merge([this,type],args));
                 r.push(result);
             });
         }
 
         return r;
     }
-};
+}

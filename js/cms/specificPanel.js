@@ -39,7 +39,7 @@ Component.SpecificPanel = function(option)
         
         getCurrentPanel: function() {
             return Arr.find(trigHdlr(this,'tabs:getTargets'),function() {
-                return Selector.match(this,"[data-current-panel='1']");
+                return Nod.match(this,"[data-current-panel='1']");
             });
         },
         

@@ -65,7 +65,7 @@ Component.Com = function()
     
     aelDelegate(this,'click',".row.insert > span,.row.update > span",function(event) {
         const delegate = event.delegateTarget;
-        const parent = Selector.parent(this);
+        const parent = Nod.parent(this);
         const table = getAttr(parent,'data-table');
         const primary = getAttr(parent,'data-primary');
         redirect.call(delegate,table,primary,event);
@@ -74,15 +74,15 @@ Component.Com = function()
     
     // bind
     aelOnce(this,'component:setup',function() {
-        if(Selector.match(this,'[tabindex]'))
-        Dom.focus(this);
+        if(Nod.match(this,'[tabindex]'))
+        Ele.focus(this);
     });
     
     
     // redirect
     const redirect = function(table,primary,clickEvent)
     {
-        let href = Dom.dataHrefReplaceChar(this,table);
+        let href = EleHelper.dataHrefReplaceChar(this,table);
         
         if(Str.isNotEmpty(href))
         {

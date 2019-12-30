@@ -20,7 +20,7 @@ const IntegerPrimitive = {
     // retourne le nombre sous forme de int
     cast: function(value)
     {
-        return (Num.is(value))? parseInt(value):null;
+        return (Scalar.isNotBool(value))? parseInt(value):null;
     },
     
     

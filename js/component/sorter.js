@@ -23,7 +23,7 @@ Component.Sorter = function(option)
         draggable: ".items",
         direction: 'vertical',
         forceFallback: true,
-        filter: Selector.input(false),
+        filter: Dom.selectorInput(false),
         preventOnFilter: false,
         animation: 150,
         onEnd: function(event) {

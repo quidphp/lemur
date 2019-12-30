@@ -25,7 +25,7 @@ Component.Form = function()
         },
         
         getFields: function() {
-            return qsa(this,Selector.input(false));
+            return qsa(this,Dom.selectorInput(false));
         },
         
         getSystemFields: function() {
@@ -104,7 +104,7 @@ Component.Form = function()
                 if(Str.isNotEmpty(name))
                 {
                     r = Arr.filter(trigHdlr(this,'form:getSubmits'),function() {
-                        return Selector.match(this,"[name='"+name+"']");
+                        return Nod.match(this,"[name='"+name+"']");
                     });
                 }
             }
@@ -114,7 +114,7 @@ Component.Form = function()
         
         serialize: function() {
             const target = trigHdlr(this,'form:getTargetFields');
-            return Dom.serialize(target);
+            return EleHelper.serialize(target);
         },
         
         hasChanged: function() {
@@ -134,7 +134,7 @@ Component.Form = function()
             });
 
             if(target != null)
-            Dom.focus(target);
+            Ele.focus(target);
             
             return this;
         }
@@ -151,26 +151,26 @@ Component.Form = function()
     // setup
     aelOnce(this,'component:setup',function() {
         // genuine + hasChanged
-        if(!Selector.match(this,"[data-skip-form-prepare='1']"))
+        if(!Nod.match(this,"[data-skip-form-prepare='1']"))
         trigEvt(this,'form:prepare');
         
         // submit
         prepareSubmit.call(this);
         
         // validation 
-        if(!Selector.match(this,"[data-validation='0']"))
+        if(!Nod.match(this,"[data-validation='0']"))
         prepareValidate.call(this);
         
         // confirm
-        if(Selector.match(this,"[data-confirm]"))
+        if(Nod.match(this,"[data-confirm]"))
         prepareConfirm.call(this);
         
         // formUnload
-        if(Selector.match(this,"[data-unload]"))
+        if(Nod.match(this,"[data-unload]"))
         prepareUnload.call(this);
         
         // block
-        if(!Selector.match(this,"[data-block='0']"))
+        if(!Nod.match(this,"[data-block='0']"))
         prepareBlock.call(this);
         
         // setup
@@ -188,7 +188,7 @@ Component.Form = function()
             const newName = name+"2-";
             const newValue = 1;
             const genuine2 = "<input type='hidden' name='"+newName+"' value='"+newValue+"' />";
-            DomChange.prepend(this,genuine2);
+            EleChange.prepend(this,genuine2);
         }
     }
     
@@ -209,12 +209,12 @@ Component.Form = function()
         const submits = trigHdlr(this,'form:getSubmits');
         
         ael(submits,'click',function() {
-            DomChange.removeAttr(submits,'data-submit-click');
+            EleChange.removeAttr(submits,'data-submit-click');
             setAttr(this,'data-submit-click',true);
         });
         
         const submitsConfirm =  Arr.filter(submits,function() {
-            return Selector.match(this,'[data-confirm]');
+            return Nod.match(this,'[data-confirm]');
         });
         Component.Confirm.call(submitsConfirm,'click');
     }
@@ -235,7 +235,7 @@ Component.Form = function()
         setHdlr(this,'validatePrevent:getTargets',function() {
             const targets = trigHdlr(this,'form:getValidateFields');
 
-            Dom.each(targets,function() {
+            Ele.each(targets,function() {
                 if(trigHdlr(this,'input:isValidateSetup') === false)
                 trigSetup(this);
             });

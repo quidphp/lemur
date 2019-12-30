@@ -35,7 +35,7 @@ Component.AjaxBlock = function(option)
         
         isEmptyContentNode: function() {
             const node = trigHdlr(this,'ajaxBlock:getContentNode');
-            return Selector.match(node,":empty");
+            return Nod.match(node,":empty");
         },
         
         getStatusNode: function() {

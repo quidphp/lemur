@@ -9,7 +9,7 @@
 Component.WindowUnload = function(type,timeout)
 {
     // une node
-    Dom.checkNode(this,window);
+    Vari.check(this,window);
     
     
     // handler
@@ -28,7 +28,7 @@ Component.WindowUnload = function(type,timeout)
         addNode: function(node) {
             const nodes = trigHdlr(this,'windowUnload:getNodes');
             
-            Dom.each(node,function() {
+            Ele.each(node,function() {
                 nodes.push(this);
             });
         },
@@ -36,13 +36,13 @@ Component.WindowUnload = function(type,timeout)
         removeNode: function(node) {
             const nodes = trigHdlr(this,'windowUnload:getNodes');
             
-            Dom.each(node,function() {
+            Ele.each(node,function() {
                 Arr.spliceValue(this,nodes);
             });
         },
         
         getNodes: function(node) {
-            return Dom.getOrSetData(this,'window-unload-nodes',[]);
+            return Win.getOrSetData(this,'window-unload-nodes',[]);
         },
         
         getText: function() {

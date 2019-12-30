@@ -44,7 +44,7 @@ Component.ColsSorter = function(option)
         
         getCheckedCheckboxes: function() {
             return Arr.filter(trigHdlr(this,'colsSorter:getCheckboxes'),function() {
-                return Selector.match(this,':checked');
+                return Nod.match(this,':checked');
             });
         },
         
@@ -57,7 +57,7 @@ Component.ColsSorter = function(option)
             const checkbox = trigHdlr(this,'colsSorter:getCheckedCheckboxes');
             const separator = getAttr(button,'data-separator');
             
-            return Dom.valueSeparator(checkbox,separator,true);
+            return EleHelper.valueSeparator(checkbox,separator,true);
         },
         
         isCurrent: function() {
@@ -105,7 +105,7 @@ Component.ColsSorter = function(option)
             
             valid: function() {
                 if(trigHdlr($this,'colsSorter:isCurrent'))
-                DomChange.removeAttr(this,"data-validate");
+                EleChange.removeAttr(this,"data-validate");
                 else
                 setAttr(this,'data-validate','valid');
             }
@@ -140,7 +140,7 @@ Component.ColsSorter = function(option)
         // handler
         setHdlr(button,'button:redirect',function(clickEvent) {
             const set = trigHdlr($this,'colsSorter:getCheckedSet');
-            const href = Dom.dataHrefReplaceChar(this,set);
+            const href = EleHelper.dataHrefReplaceChar(this,set);
             
             if(Str.isNotEmpty(href) && href !== Request.relative())
             trigHdlr(document,'history:href',href,clickEvent);

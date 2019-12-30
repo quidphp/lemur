@@ -27,5 +27,25 @@ const ScalarPrimitive = {
     isNotBool: function(value)
     {
         return (this.is(value) && !Bool.is(value))? true:false;
+    },
+    
+    
+    // cast
+    // permet de cast une valeur selon un type donné en deuxième argument
+    cast: function(r,type)
+    {
+        if(r != null && type != null)
+        {
+            if(Arr.in(type,[true,'json']))
+            r = Json.decode(r);
+            
+            if(type === 'int')
+            r = Integer.cast(r);
+            
+            else if(type === 'bool')
+            r = Bool.fromScalar(r);
+        }
+        
+        return r;
     }
 }

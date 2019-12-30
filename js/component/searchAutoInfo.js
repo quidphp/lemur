@@ -76,7 +76,7 @@ Component.SearchAutoInfo = function(option)
         });
         
         ael(field,'validate:empty',function() {
-            if(Selector.match(this,":focus"))
+            if(Nod.match(this,":focus"))
             trigEvt(info,'clickOpen:open');
         });
         

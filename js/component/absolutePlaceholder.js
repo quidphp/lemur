@@ -21,18 +21,18 @@ Component.AbsolutePlaceholder = function()
     setHdlrs(this,'absolutePlaceholder:',{
         
         getChild: function() {
-            const childs = Selector.children(this);
+            const childs = Nod.children(this);
             return Arr.find(childs,function() {
-                return Dom.isNodeVisible(this);
+                return Ele.isVisible(this);
             });
         },
         
         isOnlyHeight: function() {
-            return Selector.match(this,'[data-only-height]');
+            return Nod.match(this,'[data-only-height]');
         },
         
         isOnlyWidth: function() {
-            return Selector.match(this,'[data-only-width]');
+            return Nod.match(this,'[data-only-width]');
         },
         
         refresh: function() {
@@ -40,19 +40,12 @@ Component.AbsolutePlaceholder = function()
 
             if(child != null)
             {
-                if(!trigHdlr(this,'absolutePlaceholder:isOnlyHeight'))
-                {
-                    DomChange.setWidth(this,'auto');
-                    const outerWidth = Dom.getWidth(child,true);
-                    DomChange.setWidth(this,outerWidth);
-                }
+                const doWidth = !trigHdlr(this,'absolutePlaceholder:isOnlyHeight');
+                const doHeight = !trigHdlr(this,'absolutePlaceholder:isOnlyWidth');
                 
-                if(!trigHdlr(this,'absolutePlaceholder:isOnlyWidth'))
-                {
-                    DomChange.setHeight(this,'auto');
-                    const outerHeight = Dom.getHeight(child,true);
-                    DomChange.setHeight(this,outerHeight);
-                }
+                EleChange.setDimension(this,(doWidth)? 'auto':null,(doHeight)? 'auto':null);
+                const dimension = Ele.getDimension(child);
+                EleChange.setDimension(this,(doWidth)? dimension.width:null,(doHeight)? dimension.height:null);
                 
                 setAttr(this,'data-absolute-placeholder','ready');
             }

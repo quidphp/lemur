@@ -26,19 +26,19 @@ Component.RowsChecker = function()
         
         getToolsButton: function() {
             return Arr.filter(trigHdlr(this,'rowsChecker:getTools'),function() {
-                return Selector.match(this,'button');
+                return Nod.match(this,'button');
             });
         },
         
         getMultiModify: function() {
             return Arr.find(trigHdlr(this,'rowsChecker:getToolsButton'),function() {
-                return Selector.match(this,'.multi-modify');
+                return Nod.match(this,'.multi-modify');
             });
         },
         
         getMultiDelete: function() {
             return Arr.find(trigHdlr(this,'rowsChecker:getTools'),function() {
-                return Selector.match(this,".multi-delete-form");
+                return Nod.match(this,".multi-delete-form");
             }); 
         },
         
@@ -75,18 +75,18 @@ Component.RowsChecker = function()
         
         getCheckboxes: function() {
             const rows = trigHdlr(this,'rowsChecker:getRows');
-            return Selector.mergedQsa(rows,"td.rows input[type='checkbox']");
+            return Nod.mergedQsa(rows,"td.rows input[type='checkbox']");
         },
         
         getCheckedCheckboxes: function() {
             return Arr.filter(trigHdlr(this,'rowsChecker:getCheckboxes'),function() {
-                return Selector.match(this,':checked');
+                return Nod.match(this,':checked');
             });
         },
         
         getCheckedSet: function() {
             const separator = getAttr(this,"data-separator");
-            return Dom.valueSeparator(trigHdlr(this,'rowsChecker:getCheckedCheckboxes'),separator,true);
+            return EleHelper.valueSeparator(trigHdlr(this,'rowsChecker:getCheckedCheckboxes'),separator,true);
         },
         
         areAllChecked: function() {
@@ -98,12 +98,12 @@ Component.RowsChecker = function()
         
         areAllUpdateable: function() {
             const rows = trigHdlr(this,'rowsChecker:getCheckedRows');
-            return Selector.matchAll(rows,"[data-updateable='1']");
+            return Nod.matchAll(rows,"[data-updateable='1']");
         },
         
         areAllDeleteable: function() {
             const rows = trigHdlr(this,'rowsChecker:getCheckedRows');
-            return Selector.matchAll(rows,"[data-deleteable='1']");
+            return Nod.matchAll(rows,"[data-deleteable='1']");
         },
         
         refresh: function() {
@@ -181,7 +181,7 @@ Component.RowsChecker = function()
         setHdlrs(checkboxes,'checkbox:',{
             
             getTr: function() {
-                return Selector.closest(this,"tr");
+                return Nod.closest(this,"tr");
             },
             
             check: function(refresh) {
@@ -205,7 +205,7 @@ Component.RowsChecker = function()
         
         // event
         ael(checkboxes,'change',function() {
-            trigHdlr(this,(Selector.match(this,":checked"))? 'checkbox:check':'checkbox:uncheck',true);
+            trigHdlr(this,(Nod.match(this,":checked"))? 'checkbox:check':'checkbox:uncheck',true);
         });
     }
     
@@ -235,7 +235,7 @@ Component.RowsChecker = function()
         // handler
         setHdlr(button,'toolButton:redirect',function(clickEvent) {
             const set = trigHdlr($this,'rowsChecker:getCheckedSet');
-            const href = Dom.dataHrefReplaceChar(this,set);
+            const href = EleHelper.dataHrefReplaceChar(this,set);
             
             if(Str.isNotEmpty(href))
             trigHdlr(document,'history:href',href,clickEvent);

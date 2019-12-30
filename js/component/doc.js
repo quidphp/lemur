@@ -9,7 +9,7 @@
 Component.Doc = function(option)
 {
     // document node
-    Dom.checkNode(this,document);
+    Vari.check(this,document);
     
 
     // option
@@ -125,7 +125,7 @@ Component.Doc = function(option)
             // les attributs de html sont remplacés (les attributs existants ne sont pas effacés)
             const html = trigHdlr(this,'doc:getHtml');
             if(Pojo.isNotEmpty(doc.htmlAttr))
-            DomChange.setsAttr(html,doc.htmlAttr);
+            EleChange.setsAttr(html,doc.htmlAttr);
             
             // head
             const head = qs(html,'head');
@@ -140,15 +140,15 @@ Component.Doc = function(option)
             
             // meta
             const meta = qsa(head,'meta');
-            DomChange.remove(meta);
-            DomChange.prepend(head,doc.meta);
+            EleChange.remove(meta);
+            EleChange.prepend(head,doc.meta);
             
             // body
             // les attributs de body sont effacés et remplacés
             const body = trigHdlr(this,'doc:getBody');
-            DomChange.emptyAttr(body);
+            EleChange.emptyAttr(body);
             if(Pojo.isNotEmpty(doc.bodyAttr))
-            DomChange.setsAttr(body,doc.bodyAttr);
+            EleChange.setsAttr(body,doc.bodyAttr);
             
             // routeWrap
             // les attributs de routeWrap sont effacés et remplacés seulement si routeWrap n'est pas body
@@ -158,17 +158,17 @@ Component.Doc = function(option)
             
             if(contentTarget != null)
             {
-                if($option.routeWrap && !Selector.match(routeWrap,"body"))
+                if($option.routeWrap && !Nod.match(routeWrap,"body"))
                 {
                     const routeWrapTarget = qs(contentTarget,$option.routeWrap);
                     if(routeWrapTarget != null)
                     {
                         contentTarget = routeWrapTarget;
-                        const routeWrapAttributes = Dom.attr(contentTarget);
-                        DomChange.emptyAttr(routeWrap);
+                        const routeWrapAttributes = Ele.attr(contentTarget);
+                        EleChange.emptyAttr(routeWrap);
                         
                         if(Pojo.isNotEmpty(routeWrapAttributes))
-                        DomChange.setsAttr(routeWrap,routeWrapAttributes);
+                        EleChange.setsAttr(routeWrap,routeWrapAttributes);
                     }
                 }
                 contentHtml = getHtml(contentTarget);

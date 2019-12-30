@@ -74,11 +74,27 @@ const StrPrimitive = {
     },
     
     
+    // lower
+    // retourne la chaîne en lower case
+    lower: function(value)
+    {
+        return (this.is(value))? value.toLowerCase():null;
+    },
+    
+    
     // lowerFirst
     // met la première lettre de la string lowercase
     lowerFirst: function(value)
     {
         return (this.isNotEmpty(value))? value.charAt(0).toLowerCase() + value.slice(1):null;
+    },
+    
+    
+    // upper
+    // retourne la chaîne en uppercase
+    upper: function(value)
+    {
+        return (this.is(value))? value.toUpperCase():null;
     },
     
     
@@ -124,9 +140,19 @@ const StrPrimitive = {
     // explode
     // explode une chaîne
     // retourne un tableau dans tous les cas
-    explode: function(delimiter,value)
+    explode: function(delimiter,value,clean)
     {
-        return (this.is(delimiter) && this.is(value))? value.split(delimiter):[];
+        let r = [];
+        
+        if(this.is(delimiter) && this.is(value))
+        {
+            r = value.split(delimiter);
+            
+            if(clean === true)
+            r = Arr.clean(r);
+        }
+        
+        return r;
     },
     
     
@@ -139,6 +165,38 @@ const StrPrimitive = {
         
         if(Integer.is(index) && this.isNotEmpty(x[index]))
         r = x[index];
+        
+        return r;
+    },
+    
+    
+    // removeAllWhitespace
+    // enlève tous les espaces blancs d'une string
+    removeAllWhitespace: function(string)
+    {
+        return (this.is(string))? string.replace(/\s/g, ""):null;
+    },
+    
+    
+    // toCamelCase
+    // transforme une string en camelCase
+    toCamelCase: function(delimiter,string)
+    {
+        let r = null;
+        
+        if(this.is(string))
+        {
+            const $inst = this;
+            string = this.trim(string);
+            let array = this.explode(delimiter,string,true);
+            
+            array = array.map(function(word,index) {
+                return (index == 0)? $inst.lower(word):$inst.upperFirst(word);
+            });
+            
+            r = array.join('');
+            r = this.removeAllWhitespace(r);
+        }
         
         return r;
     }

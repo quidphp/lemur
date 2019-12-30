@@ -9,7 +9,7 @@
 Component.SpecificComponents = function()
 {
     // une node
-    Dom.checkNode(this,document);
+    Vari.check(this,document);
     
     
     // option components
@@ -62,10 +62,10 @@ Component.SpecificComponents = function()
         
         match: function(node) {
             let r = undefined;
-            Dom.checkNode(node);
+            Ele.check(node);
             
             Arr.each($components,function() {
-                if(Selector.match(node,this.match))
+                if(Nod.match(node,this.match))
                 {
                     r = this;
                     return false;
@@ -77,14 +77,12 @@ Component.SpecificComponents = function()
         },
         
         setup: function(nodes,view) {
-            Dom.checkNodes(nodes,false);
-            
-            Dom.each(nodes,function() {
+            Ele.each(nodes,function() {
                 const $this = this;
                 const comp = trigHdlr(document,'specificComponents:match',this);
                 const node = qs(this,'.specific-component');
                 let found = false;
-                Dom.checkNode(node);
+                Ele.check(node);
                 
                 if(comp != null && comp.setupOnView == view)
                 {
@@ -122,7 +120,7 @@ Component.SpecificComponents = function()
     // nodesCall
     function nodesCall(nodes,type)
     {
-        const specComp = Selector.mergedQsa(nodes,'.specific-component');
+        const specComp = Nod.mergedQsa(nodes,'.specific-component');
         trigEvt(specComp,type);
     }
     

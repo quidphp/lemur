@@ -23,11 +23,11 @@ Component.FakeSelect = function()
         const required = getAttr(this,'data-required');
         const disabled = getProp(this,'disabled');
         const selected = qs(this,"option:checked");
-        const selectedText = (selected != null)? Dom.getText(selected):null;
+        const selectedText = (selected != null)? Ele.getText(selected):null;
         const title = (Str.isNotEmpty(selectedText))? selectedText:"&nbsp;";
         const options = qsa(this,'option');
         const value = trigHdlr(this,'input:getValue');
-        const datas = Dom.attrStr(this,'data-');
+        const datas = Ele.attrStr(this,'data-');
                 
         r += "<div data-fake-input='1' data-anchor-corner='1' data-absolute-placeholder='1' class='fakeselect'";
         if(disabled)
@@ -43,8 +43,8 @@ Component.FakeSelect = function()
         
         Arr.each(options,function() {
             const val = Str.cast(getProp(this,'value'));
-            const text = Dom.getText(this) || "&nbsp;";
-            const datas = Dom.attrStr(this,'data-');
+            const text = Ele.getText(this) || "&nbsp;";
+            const datas = Ele.attrStr(this,'data-');
             
             r += "<li>";
             r += "<button type='button'";
@@ -86,7 +86,7 @@ Component.FakeSelect = function()
         setHdlrs(this,'fakeSelect:',{
             
             getSelect: function() {
-                return Selector.prev(this,'select');
+                return Nod.prev(this,'select');
             },
             
             getChoices: function() {
@@ -102,7 +102,7 @@ Component.FakeSelect = function()
             
             getSelected: function() {
                 return Arr.find(trigHdlr(this,'fakeSelect:getChoices'),function() {
-                    return (Dom.getAttrInt(this,'data-selected') === 1);
+                    return (getAttr(this,'data-selected','int') === 1);
                 });
             },
             
@@ -113,7 +113,7 @@ Component.FakeSelect = function()
             
             setTitle: function(value) {
                 const title = trigHdlr(this,'fakeSelect:getTitle');
-                DomChange.setText(title,value);
+                EleChange.setText(title,value);
             }
         });
         
@@ -134,7 +134,7 @@ Component.FakeSelect = function()
         ael(this,'clickOpen:opened',function() {
             const selected = trigHdlr(this,'fakeSelect:getSelected');
             if(selected != null)
-            Dom.focus(selected);
+            Ele.focus(selected);
         });
         
         ael(this,'clickOpen:closed',function() {
@@ -221,12 +221,12 @@ Component.FakeSelect = function()
         const choose = function(selected)
         {
             const value = getAttr(selected,'data-value');
-            const text = Dom.getText(selected);
+            const text = Ele.getText(selected);
             const select = trigHdlr(this,'fakeSelect:getSelect');
             const choices = trigHdlr(this,'fakeSelect:getChoices');
             const current = trigHdlr(select,'input:getValue');
             
-            DomChange.removeAttr(choices,'data-selected');
+            EleChange.removeAttr(choices,'data-selected');
             setAttr(selected,'data-selected',1);
             
             trigHdlr(select,'input:setValue',value);
@@ -241,13 +241,13 @@ Component.FakeSelect = function()
     
     
     // htmlFromSelect
-    Dom.each(this,function() {
+    Ele.each(this,function() {
         if(trigHdlr(this,'input:getTag') === 'select')
         {
             if(trigHdlr(this,'input:allowMultiple') === false && trigHdlr(this,'input:isControlled') === false)
             {
                 const html = htmlFromSelect.call(this);
-                const node = DomChange.insertAfter(this,html);
+                const node = EleChange.insertAfter(this,html);
                 bindFakeSelect.call(node);
                 setAttr(this,'data-controlled',1);
                 r.push(node);

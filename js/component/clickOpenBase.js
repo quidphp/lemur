@@ -33,7 +33,7 @@ Component.ClickOpenBase = function(option)
         
         isEmpty: function() {
             const target = trigHdlr(this,'clickOpen:getTargetContent');
-            return Selector.match(target,":empty");
+            return Nod.match(target,":empty");
         },
         
         getTarget: function() {
@@ -73,7 +73,7 @@ Component.ClickOpenBase = function(option)
         getParent: function() {
             const attr = $option.attr;
             
-            return Selector.closest(this,"["+attr+"='1']");
+            return Nod.closest(this,"["+attr+"='1']");
         },
         
         getParentOrRoot: function() {
@@ -152,8 +152,8 @@ Component.ClickOpenBase = function(option)
     ael(this,'clickOpen:focus',function() {
         const target = trigHdlr(this,'clickOpen:getTargetFocus');
         
-        if(Selector.match(target,'[tabindex]'))
-        Dom.focus(target);
+        if(Nod.match(target,'[tabindex]'))
+        Ele.focus(target);
     });
     
     ael(this,'keyboardEscape:blocked',function() {
@@ -176,7 +176,7 @@ Component.ClickOpenBase = function(option)
         
         ael(container,'keyboardEnter:blocked',function(event,keyEvent) {
             const target = keyEvent.target;
-            const tagName = Dom.tag(target);
+            const tagName = Ele.tag(target);
 
             if(tagName === 'a')
             trigHdlr(document,'history:event',keyEvent);

@@ -54,6 +54,14 @@ const NumPrimitive =  {
     },
     
     
+    // isNan
+    // retourne vrai si la valeur est nan
+    isNan: function(value)
+    {
+        return isNaN(value);
+    },
+    
+    
     // cast
     // retourne la variable sous forme de nombre
     cast: function(value)

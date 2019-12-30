@@ -9,15 +9,27 @@
 const Type = {  
     
     // is
-    // retourne vrai si c'est une variable primitive
+    // retourne vrai si c'est une variable du type
     is: function(value)
     {
         return Vari.type(value) !== 'object';
     },
 
     
+    // are
+    // retourne vrai si la valeur est un tableau contenant des variables du type
+    are: function(value)
+    {
+        const $inst = this;
+        
+        return Arr.each(value,function(v) {
+            return $inst.is(v);
+        });
+    },
+    
+    
     // isEmpty
-    // retourne vrai si c'est une variable primitive vide
+    // retourne vrai si c'est une variable du type vide
     isEmpty: function(value)
     {
         return (this.is(value))? Vari.isEmpty(value):false;
@@ -25,7 +37,7 @@ const Type = {
     
     
     // isNotEmpty
-    // retourne vrai si c'est une variable primitive non-vide
+    // retourne vrai si c'est une variable du type non-vide
     isNotEmpty: function(value)
     {
         return (this.is(value))? Vari.isNotEmpty(value):false;
@@ -33,13 +45,33 @@ const Type = {
     
     
     // check
-    // envoie une erreur si la valeur n'est pas un primitif
-    // si type est true, doit être un primitif non vide
+    // envoie une erreur si la valeur n'est pas du type
+    // si type est true, doit être du type et non vide
     // si type est false, accepte null + undefined
-    check: function(value,type,message)
+    check: function(value,type)
     {
         if(((type === true && !this.isNotEmpty(value)) || (type !== true && !this.is(value))) && !(type === false && value == null))
-        throw new Error([value,type,message]);
+        throw new Error(value);
+        
+        return value;
+    },
+    
+    
+    // checks
+    // envoie une exception si la valeur n'est pas un tableau contenant des valeurs du type
+    checks: function(value,type)
+    {
+        if(Arr.is(value))
+        {
+            const $inst = this;
+            
+            Arr.each(value,function() {
+                $inst.check(this,type);
+            });
+        }
+        
+        else
+        throw new Error(value);
         
         return value;
     }

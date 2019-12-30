@@ -24,7 +24,7 @@ Component.ValidatePrevent = function(type)
         
         if(Vari.isNotEmpty(targets))
         {
-            Dom.each(targets,function() {
+            Ele.each(targets,function() {
                 const val = trigHdlr(this,"validate:trigger");
                 
                 if(val === false)

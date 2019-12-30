@@ -35,7 +35,7 @@ Component.Ajax = function(type)
             {
                 config = trigHdlr(this,'ajax:config');
                 
-                if(Dom.isNode(config))
+                if(Ele.is(config))
                 config = Xhr.configFromNode(config);
             }
             

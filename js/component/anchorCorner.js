@@ -44,13 +44,14 @@ Component.AnchorCorner = function()
     // offsetCorner
     const offsetCorner = function()
     {
-        let r = Dom.getOffset(this);
-        const scroll = Dom.getScroll(window);
+        let r = Ele.getOffset(this);
+        const scroll = Win.getScroll();
+        const dimension = Win.getDimension();
         r.y = r.top - scroll.top;
         r.x = r.left - scroll.left;
         
-        r.topBottom = (r.y > (Dom.getHeight(window) / 2))? 'bottom':'top';
-        r.leftRight = (r.x > (Dom.getWidth(window) / 2))? 'right':'left';
+        r.topBottom = (r.y > (dimension.height / 2))? 'bottom':'top';
+        r.leftRight = (r.x > (dimension.width / 2))? 'right':'left';
         r.corner = r.topBottom+"-"+r.leftRight;
         
         return r;

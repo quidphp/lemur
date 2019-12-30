@@ -109,6 +109,16 @@ const ArrBase = {
     },
     
     
+    // clean
+    // retourne un nouveau tableau avec les valeurs vides retirés
+    clean: function(array)
+    {
+        return this.filter(array,function() {
+            return Vari.isNotReallyEmpty(this);
+        });
+    },
+    
+    
     // valueStrip
     // permet de retourner un nouveau tableau sans la valeur donné en argument
     valueStrip: function(value,array) 

@@ -15,7 +15,7 @@ const ArrLikeRead = {
     {
         let r = false;
         
-        if(!Arr.is(value) && !Scalar.is(value) && !Func.is(value) && !Dom.isWindow(value))
+        if(!Arr.is(value) && !Scalar.is(value) && !Func.is(value) && !Win.is(value))
         {
             const type = Vari.type(value);
             const length = !!value && "length" in value && value.length;

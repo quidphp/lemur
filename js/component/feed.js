@@ -67,7 +67,7 @@ Component.Feed = function()
         if(type === 'append')
         {
             const target = trigHdlr(this,'feed:getAppendTarget');
-            DomChange.append(target,data);
+            EleChange.append(target,data);
         }
         
         else
@@ -101,7 +101,7 @@ Component.Feed = function()
         const removeLoadMore = function()
         {
             const node = trigHdlr(this,'feed:loadMoreRemove');
-            DomChange.remove(node);
+            EleChange.remove(node);
         }
     }
     

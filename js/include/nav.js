@@ -157,16 +157,16 @@ const Nav = Lemur.Nav = {
     indexNode: function(value,current,nodes,loop)
     {
         let r = null;
-        Dom.checkNodes(nodes,false);
+        Ele.checks(nodes,undefined,false);
         
         if(nodes != null)
         {
             const max = Arr.length(nodes);
             
-            if(Dom.isNode(value))
+            if(Ele.is(value))
             value = Arr.search(value,nodes);
             
-            if(Dom.isNode(current))
+            if(Ele.is(current))
             current = Arr.search(current,nodes);
             
             const index = this.index(value,current,max,loop);

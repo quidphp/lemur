@@ -41,11 +41,11 @@ Component.InputSearch = function(option)
         },
         
         unsetCurrent: function() {
-            DomChange.removeAttr(this,"data-current");
+            EleChange.removeAttr(this,"data-current");
         },
         
         getButton: function() {
-            return (Str.is($option.button))? Selector.next(this,$option.button):undefined;
+            return (Str.is($option.button))? Nod.next(this,$option.button):undefined;
         },
         
         validate: function() {
@@ -98,7 +98,7 @@ Component.InputSearch = function(option)
     });
     
     ael(this,'timeout:'+$option.keyEvent,function(event,keyEvent) {
-        if(Selector.match(this,":focus"))
+        if(Nod.match(this,":focus"))
         {
             trigHdlr(this,'input:valueRemember');
             trigHdlr(this,$option.timeoutHandler);

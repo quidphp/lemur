@@ -17,11 +17,11 @@ Test.Component = function()
         newHtml += "<input type='text' value='2' name='test-suite' data-required='1' data-pattern='^[0-9\-]+$' />";
         newHtml += "<input type='submit' name='test-submit' />";
         newHtml += "</form>";
-        const htmlNode = Selector.scopedQuery(document,'html');
-        const bodyNode = Selector.scopedQuery(htmlNode,'body');
-        DomChange.prepend(bodyNode,newHtml);
-        const formNode = Selector.scopedQuery(bodyNode,"> form");
-        const inputNode = Selector.scopedQuery(bodyNode,"> form > input[name='test-suite']");
+        const htmlNode = Nod.scopedQuery(document,'html');
+        const bodyNode = Nod.scopedQuery(htmlNode,'body');
+        EleChange.prepend(bodyNode,newHtml);
+        const formNode = Nod.scopedQuery(bodyNode,"> form");
+        const inputNode = Nod.scopedQuery(bodyNode,"> form > input[name='test-suite']");
         
         // absolutePlaceholder
         
@@ -211,8 +211,8 @@ Test.Component = function()
         assert(trigHdlr(inputNode,'validate:required'));
         assert(trigHdlr(inputNode,'validate:pattern'));
         assert(trigHdlr(inputNode,'validate:trigger'));
-        assert(Dom.getAttr(inputNode,'data-validate') === 'valid');
-        assert(Dom.getAttr(inputNode,'data-empty') === '0');
+        assert(Ele.getAttr(inputNode,'data-validate') === 'valid');
+        assert(Ele.getAttr(inputNode,'data-empty') === '0');
         
         // validatePrevent
         
@@ -221,7 +221,7 @@ Test.Component = function()
         // windowUnload
         
         // cleanup 
-        DomChange.remove(formNode);
+        EleChange.remove(formNode);
     } 
     
     catch (e) 

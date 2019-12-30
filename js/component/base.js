@@ -15,7 +15,7 @@ Component.Base = function()
     
     // handler
     setHdlr(this,'base:getInputs',function() {
-        return qsa(this,Selector.input(true));
+        return qsa(this,Dom.selectorInput(true));
     });
     
     
@@ -23,7 +23,7 @@ Component.Base = function()
     ael(this,'component:enable',function() {
         const inputs = trigHdlr(this,'base:getInputs');
         
-        Dom.each(inputs,function() {
+        Ele.each(inputs,function() {
             if(trigHdlr(this,'input:isBinded'))
             trigHdlrs(inputs,'input:enable');
             else
@@ -34,7 +34,7 @@ Component.Base = function()
     ael(this,'component:disable',function() {
         const inputs = trigHdlr(this,'base:getInputs');
         
-        Dom.each(inputs,function() {
+        Ele.each(inputs,function() {
             if(trigHdlr(this,'input:isBinded'))
             trigHdlrs(inputs,'input:disable');
             else

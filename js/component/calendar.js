@@ -27,7 +27,7 @@ Component.Calendar = function(option)
     setHdlrs(this,'calendar:',{
         
         isEmpty: function() {
-            return Dom.isNodeEmpty(this);
+            return Ele.isEmpty(this);
         },
         
         getHead: function() {
@@ -45,7 +45,7 @@ Component.Calendar = function(option)
         
         getSelected: function() {
             return Arr.filter(trigHdlr(this,'calendar:getCells'),function() {
-                return Selector.match(this,".selected");
+                return Nod.match(this,".selected");
             });
         },
         
@@ -71,14 +71,14 @@ Component.Calendar = function(option)
             if(Num.is(value))
             {
                 r = Arr.find(tds,function() {
-                    return Selector.match(this,"[data-timestamp='"+value+"']") && !Selector.match(this,".out");
+                    return Nod.match(this,"[data-timestamp='"+value+"']") && !Nod.match(this,".out");
                 });
             }
             
             else if(Str.isNotEmpty(value) && value.length == Str.length(format))
             {
                 r = Arr.find(tds,function() {
-                    return Selector.match(this,"[data-format^='"+value+"']") && !Selector.match(this,".out");
+                    return Nod.match(this,"[data-format^='"+value+"']") && !Nod.match(this,".out");
                 });
             }
             
@@ -106,7 +106,7 @@ Component.Calendar = function(option)
     });
 
     setHdlr(this,'ajax:config',function() {
-        return Dom.dataHrefReplaceChar(this,trigHdlr(this,'calendar:getCurrent'));
+        return EleHelper.dataHrefReplaceChar(this,trigHdlr(this,'calendar:getCurrent'));
     });
     
     

@@ -43,7 +43,7 @@ Component.Modal = function(option)
             if(Str.isNotEmpty(route))
             setAttr(this,'data-route',route);
             else
-            DomChange.removeAttr(this,'data-route');
+            EleChange.removeAttr(this,'data-route');
         },
         
         getRouteAnchors: function(route) {

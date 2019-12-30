@@ -29,17 +29,17 @@ Component.QuickEdit = function()
         },
         
         getTdOthers: function() {
-            const nodes = Dom.nodeWrap($nodes);
+            const nodes = Nod.wrap($nodes);
             return Arr.valueStrip(this,nodes);
         },
         
         getTd: function() {
-            return Selector.closest(this,"td");
+            return Nod.closest(this,"td");
         },
         
         getTdEditing: function() {
             const td = trigHdlr(this,'quickEdit:getTd');
-            return (Selector.match(td,"[data-editing='1']"))? td:null;
+            return (Nod.match(td,"[data-editing='1']"))? td:null;
         },
         
         getCellInner: function() {
@@ -55,7 +55,7 @@ Component.QuickEdit = function()
         },
         
         getScroller: function() {
-            return Selector.closest(this,".scroller");
+            return Nod.closest(this,".scroller");
         },
         
         revert: function() {

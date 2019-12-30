@@ -20,7 +20,7 @@ Component.InputNumericHref = function(option)
     // redirect
     ael(this,'inputNumeric:change',function() {
         const val = trigHdlr(this,'input:getValueInt');
-        const href = Dom.dataHrefReplaceChar(this,val);
+        const href = EleHelper.dataHrefReplaceChar(this,val);
         
         if(Str.isNotEmpty(href))
         trigHdlr(document,'history:href',href);

@@ -29,7 +29,7 @@ ael(document,'doc:mountInitial',function(event,body) {
 ael(document,'doc:mountCommon',function(event,node) {
     
     // input
-    const input = qsa(node,Selector.input(false));
+    const input = qsa(node,Dom.selectorInput(false));
     Component.Input.call(input);
 
     // form

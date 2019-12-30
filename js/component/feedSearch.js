@@ -60,14 +60,14 @@ Component.FeedSearch = function(option)
     
     setHdlr(this,'feed:loadMoreRemove',function() {
         const loadMore = trigHdlr(this,'feed:loadMore');
-        return Selector.closest(loadMore,'li');
+        return Nod.closest(loadMore,'li');
     });
     
     setHdlr(this,'feed:parseData',function(data,type) {
         
         if(type === 'append')
         {
-            data = Html.parse(data);
+            data = Dom.parse(data);
             
             if($option.parseData)
             data = qs(data,$option.parseData);
@@ -91,7 +91,7 @@ Component.FeedSearch = function(option)
         data[query] = search;
         
         return {
-            url: Dom.dataHrefReplaceChar(this,order),
+            url: EleHelper.dataHrefReplaceChar(this,order),
             data: data
         }
     });

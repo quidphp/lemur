@@ -30,11 +30,11 @@ Component.InitOpenClose = function(type,attr)
         },
         
         isDisabled: function() {
-            return Dom.getAttrInt(this,'data-disabled') === 1;
+            return getAttr(this,'data-disabled','int') === 1;
         },
         
         isOpen: function() {
-            return (Dom.getAttrInt(this,attr) === 1);
+            return (getAttr(this,attr,'int') === 1);
         },
         
         canOpen: function() {

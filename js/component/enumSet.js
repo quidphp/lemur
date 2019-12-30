@@ -53,14 +53,14 @@ Component.EnumSet = function(option)
         
         getRadioCheckbox: function() {
             const choices = trigHdlr(this,'enumSet:getChoices');
-            return Selector.mergedQsa(choices,"input[type='checkbox'],input[type='radio']");
+            return Nod.mergedQsa(choices,"input[type='checkbox'],input[type='radio']");
         },
         
         getCheckedSet: function() {
             const searchNode = trigHdlr(this,'feedSearch:getSearch');
             const separator = getAttr(searchNode,'data-separator');
             const radioCheckbox = trigHdlr(this,'enumSet:getRadioCheckbox');
-            return Dom.valueSeparator(radioCheckbox,separator,true);
+            return EleHelper.valueSeparator(radioCheckbox,separator,true);
         },
         
         getMode: function() {
@@ -79,7 +79,7 @@ Component.EnumSet = function(option)
         isChoiceIn: function(value) {
             const radioCheckbox = trigHdlr(this,'enumSet:getRadioCheckbox');
             const find = Arr.find(radioCheckbox,function() {
-                return Selector.match(this,"[value='"+value+"']")
+                return Nod.match(this,"[value='"+value+"']")
             });
             
             return find != null;
@@ -87,11 +87,11 @@ Component.EnumSet = function(option)
         
         emptyChoice: function() {
             const choices = trigHdlr(this,'enumSet:getChoices');
-            DomChange.remove(choices);
+            EleChange.remove(choices);
         },
         
         findResult: function(value) {
-            if(Dom.isNode(value))
+            if(Ele.is(value))
             value = getAttr(value,'data-value');
             
             const result = trigHdlr(this,'feedSearch:getResult');
@@ -114,7 +114,7 @@ Component.EnumSet = function(option)
         const searchValue = trigHdlr(this,'feedSearch:getSearchValue');
         const order = trigHdlr(this,'feedSearch:getOrderValue') || separator;
         const selected = trigHdlr(this,'enumSet:getCheckedSet') || separator;
-        const uri = Dom.dataHrefReplaceChar(searchNode,selected,order);
+        const uri = EleHelper.dataHrefReplaceChar(searchNode,selected,order);
         const data = {};
         data[query] = searchValue;
         
@@ -165,8 +165,8 @@ Component.EnumSet = function(option)
             // delegate
             aelDelegate(current,'click', "input[type='radio']",function(event) {
                 setProp(this,'checked',false);
-                const parent = Selector.closest(this,".choice");
-                DomChange.remove(parent);
+                const parent = Nod.closest(this,".choice");
+                EleChange.remove(parent);
             });
         }
         
@@ -176,10 +176,10 @@ Component.EnumSet = function(option)
             trigSetup(Component.Sorter.call(current,$option.sorter));
             
             aelDelegate(current,'change', "input[type='checkbox']",function(event) {
-                if(Selector.match(this,":checked") === false)
+                if(Nod.match(this,":checked") === false)
                 {
-                    const parent = Selector.closest(this,".choice");
-                    DomChange.remove(parent);
+                    const parent = Nod.closest(this,".choice");
+                    EleChange.remove(parent);
                 }
             });
         }
@@ -207,7 +207,7 @@ Component.EnumSet = function(option)
                 else if(trigHdlr(this,'enumSet:isSet'))
                 setAttr(button,'data-in',0);
                 
-                DomChange.append(current,html);
+                EleChange.append(current,html);
                 trigEvt(this,'clickOpen:close');
             }
         }

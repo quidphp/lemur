@@ -29,7 +29,7 @@ Component.Input = function()
         },
         
         isControlled: function() {
-            return Dom.getAttrInt(this,'data-controlled') === 1;
+            return getAttr(this,'data-controlled','int') === 1;
         },
         
         isGroup: function() {
@@ -57,7 +57,7 @@ Component.Input = function()
         },
         
         getValue: function(trim) {
-            return Dom.getValue(this,trim);
+            return Ele.getValue(this,trim);
         },
         
         getValueTrim: function() {
@@ -100,11 +100,11 @@ Component.Input = function()
         },
         
         getType: function() {
-            return (Selector.match(this,"input"))? getProp(this,'type'):null;
+            return (Nod.match(this,"input"))? getProp(this,'type'):null;
         },
         
         getTag: function() {
-            return Dom.tag(this);
+            return Ele.tag(this);
         },
         
         isRadioCheckbox: function() {
@@ -116,7 +116,7 @@ Component.Input = function()
         },
         
         setValue: function(value) {
-            DomChange.setValue(this,value);
+            EleChange.setValue(this,value);
         },
         
         setEmpty: function() {
@@ -130,43 +130,43 @@ Component.Input = function()
         },
         
         isSystem: function() {
-            return Selector.match(this,"[name^='-']");
+            return Nod.match(this,"[name^='-']");
         },
         
         isTarget: function() {
-            return (!trigHdlr(this,'input:isDisabled') && !trigHdlr(this,'input:isSystem') && Selector.match(this,"[name]"))? true:false;
+            return (!trigHdlr(this,'input:isDisabled') && !trigHdlr(this,'input:isSystem') && Nod.match(this,"[name]"))? true:false;
         },
         
         isTargetVisible: function() {
-            return (trigHdlr(this,'input:isTarget') && Dom.isNodeVisible(this))? true:false;
+            return (trigHdlr(this,'input:isTarget') && Ele.isVisible(this))? true:false;
         },
         
         isValidate: function() {
-            return (trigHdlr(this,'input:isTarget') && Selector.match(this,"[data-required],[data-pattern]"))? true:false;
+            return (trigHdlr(this,'input:isTarget') && Nod.match(this,"[data-required],[data-pattern]"))? true:false;
         },
         
         isFile: function() {
-            return Selector.match(this,"input[type='file']");
+            return Nod.match(this,"input[type='file']");
         },
         
         isCsrf: function() {
-            return (trigHdlr(this,'input:isSystem') && Selector.match(this,"[data-csrf='1']"))? true:false;
+            return (trigHdlr(this,'input:isSystem') && Nod.match(this,"[data-csrf='1']"))? true:false;
         },
         
         isGenuine: function() {
-            return (trigHdlr(this,'input:isSystem') && Selector.match(this,"[data-genuine='1']"))? true:false;
+            return (trigHdlr(this,'input:isSystem') && Nod.match(this,"[data-genuine='1']"))? true:false;
         },
         
         isSubmit: function() {
-            return Selector.match(this,"[type='submit'],[type='image']");
+            return Nod.match(this,"[type='submit'],[type='image']");
         },
         
         isClickedSubmit: function() {
-            return (trigHdlr(this,'input:isSubmit') && Selector.match(this,"[data-submit-click]"))? true:false;
+            return (trigHdlr(this,'input:isSubmit') && Nod.match(this,"[data-submit-click]"))? true:false;
         },
         
         getParent: function() {
-            let r = Selector.closest(this,"form");
+            let r = Nod.closest(this,"form");
             
             if(r == null)
             r = document;

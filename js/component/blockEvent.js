@@ -121,7 +121,7 @@ Component.BlockEvent = function(type)
     // getBlockObj
     const getBlockObj = function() 
     {
-        return Dom.getOrSetData(this,'blockEvent-obj',{});
+        return Nod.getOrSetData(this,'blockEvent-obj',{});
     }
 
 
