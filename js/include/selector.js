@@ -13,7 +13,8 @@ const SelectorTarget = {
     scopedQuery: function(node,selector)
     {
         let r = null;
-        this.check(node,false);
+        node = this.realNode(node);
+        Nod.check(node,false);
         selector = (Doc.is(node))? selector:":scope "+selector;
         
         if(node != null)
@@ -32,7 +33,8 @@ const SelectorTarget = {
     scopedQueryAll: function(node,selector)
     {
         let r = null;
-        this.check(node,false);
+        node = this.realNode(node);
+        Nod.check(node,false);
         selector = (Doc.is(node))? selector:":scope "+selector;
         
         if(node != null)
@@ -78,7 +80,8 @@ const SelectorTarget = {
     // peut retourner la node courante
     closest: function(node,value)
     {
-        this.check(node);
+        node = this.realNode(node);
+        Nod.check(node);
         Str.check(value);
         
         return node.closest(value);
@@ -89,7 +92,8 @@ const SelectorTarget = {
     // retourne vrai si la node match le pattern
     match: function(node,value)
     {
-        this.check(node);
+        node = this.realNode(node);
+        Nod.check(node);
         Str.check(value);
         
         return (Doc.is(node))? false:node.matches(value);
@@ -144,7 +148,8 @@ const SelectorTarget = {
     parent: function(node,value)
     {
         let r = null;
-        this.check(node);
+        node = this.realNode(node);
+        Nod.check(node);
         const parent = node.parentNode;
         
         if(Nod.is(parent))
@@ -163,11 +168,12 @@ const SelectorTarget = {
     parents: function(node,value,until)
     {
         let r = [];
-        this.check(node);
+        node = this.realNode(node);
+        Nod.check(node);
         
         while (node = Nod.parent(node)) 
         {
-            if(until != null &&Nod.match(node,until))
+            if(until != null && Nod.match(node,until))
             break;
             
             if(value == null || Nod.match(node,value))
@@ -183,7 +189,8 @@ const SelectorTarget = {
     prev: function(node,value)
     {
         let r = null;
-        this.check(node);
+        node = this.realNode(node);
+        Nod.check(node);
         const sibling = node.previousElementSibling;
         
         if(Nod.is(sibling))
@@ -202,7 +209,8 @@ const SelectorTarget = {
     prevs: function(node,value,until)
     {
         let r = [];
-        this.check(node);
+        node = this.realNode(node);
+        Nod.check(node);
         
         while (node = Nod.prev(node)) 
         {
@@ -222,7 +230,8 @@ const SelectorTarget = {
     next: function(node,value)
     {
         let r = null;
-        this.check(node);
+        node = this.realNode(node);
+        Nod.check(node);
         const sibling = node.nextElementSibling;
         
         if(Nod.is(sibling,true))
@@ -241,7 +250,8 @@ const SelectorTarget = {
     nexts: function(node,value,until)
     {
         let r = [];
-        this.check(node);
+        node = this.realNode(node);
+        Nod.check(node);
         
         while (node = Nod.next(node)) 
         {
@@ -259,12 +269,14 @@ const SelectorTarget = {
     // children
     // retourne les enfants de la node
     // possible de seulement retourner les enfants valides avec le sélecteur
-    children: function(node,value)
+    children: function(node,value,withTextNodes)
     {
         let r = null;
-        this.check(node);
-        const childs = ArrLike.arr(node.children);
-
+        node = this.realNode(node);
+        Nod.check(node);
+        const prop = (withTextNodes === true)? node.childNodes:node.children;
+        const childs = ArrLike.arr(prop);
+        
         if(value == null)
         r = childs;
         
@@ -272,5 +284,14 @@ const SelectorTarget = {
         r = Nod.filter(childs,value);
         
         return r;
+    },
+    
+    
+    // realNode
+    // permet de remplacer la node pour les méthodes du sélector
+    // à étendre
+    realNode: function(node)
+    {
+        return node;
     }
 }

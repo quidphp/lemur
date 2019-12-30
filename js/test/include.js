@@ -25,11 +25,11 @@ Test.Include = function()
         const htmlNode = Nod.scopedQuery(document,'html');
         const selectorOne = htmlNode.querySelector("body");
         const selectorAll = htmlNode.querySelectorAll("body");
-        const htmlStr = Ele.outerHtml(htmlNode);
+        const htmlStr = Ele.getOuterHtml(htmlNode);
         const isEmpty = Str.isEmpty.bind(Str);
         const noop = function() { };
         const bodyNode = Ele.scopedQuery(htmlNode,'body');
-        EleChange.prepend(bodyNode,newHtml);
+        Ele.prepend(bodyNode,newHtml);
         const formNode = Ele.scopedQuery(bodyNode,"> form");
         const divNode = Ele.scopedQuery(formNode,"> div");
         const inputNode = Ele.scopedQuery(formNode,"> input[type='text']");
@@ -39,7 +39,8 @@ Test.Include = function()
         const borderBox = Ele.scopedQuery(bodyNode,"> div.border");
         const fragment = document.createDocumentFragment();
         const template = document.createElement('template');
-        EleChange.setHtml(template,newHtml);
+        Ele.setHtml(template,newHtml);
+        Doc.setHtml(fragment,newHtml);
         const formTemplate = Doc.children(template.content,'form');
         
         // js
@@ -195,10 +196,61 @@ Test.Include = function()
         
         // debug
         
+        // doc
+        assert(Doc.is(document));
+        assert(Doc.is(fragment));
+        assert(Doc.isCurrent(document));
+        assert(!Doc.is(window));
+        assert(!Doc.is(htmlNode));
+        assert(!Doc.isFragment(document));
+        assert(Doc.isFragment(fragment));
+        assert(Doc.isFragment(Ele.parent(formTemplate[0])));
+        assert(Doc.isTemplate(template));
+        assert(Num.is(Doc.getDimension(document).width));
+        assert(Num.is(Doc.getDimension(document).height));
+        assert(Doc.realNode(document) === document);
+        assert(Doc.realNode(fragment) === fragment);
+        assert(Doc.realNode(template) === template.content);
+        assert(Pojo.isEqual(Doc.getDimension(fragment),{width:0,height:0}));
+        assert(Str.isStart('<html',Doc.getHtml(document)));
+        assert(Str.isStart('<form',Doc.getHtml(fragment)));
+        assert(Doc.setHtml(fragment,'<div>ok</div>') === undefined);
+        assert(Doc.getHtml(fragment) === '<div>ok</div>');
+        assert(Str.isStart('<form',Doc.getHtml(template)));
+        assert(Doc.setHtml(template,'<div>ok</div>') === undefined);
+        assert(Doc.getHtml(template) === '<div>ok</div>');
+        Doc.setHtml(template,newHtml);
+        assert(Str.isStart('<form',Doc.getHtml(template)));
+        assert(Doc.getHtml(fragment) === '<div>ok</div>');
+        Doc.setHtml(template,fragment,true);
+        assert(Doc.getHtml(template) === '<div>ok</div>');
+        Doc.setHtml(template,newHtml,true);
+        assert(Doc.getHtml(fragment) === '<div>ok</div>');
+        Doc.setHtml(fragment,template,true);
+        assert(Str.isStart('<form',Doc.getHtml(fragment)));
+        assert(Str.isStart('<form',Doc.getHtml(template)));
+        assert(Doc.check(document) === document);
+        assert(Doc.are([document,fragment]));
+        assert(Arr.length(Doc.scopedQueryAll(fragment,"input")) === 4);
+        assert(Arr.length(Doc.scopedQueryAll(template,"input")) === 4);
+        assert(Arr.length(Doc.scopedQueryAll(document,"input")) === 4);
+        Doc.setHtml(template,"<div><span>OK</span></div>");
+        Doc.setHtml(fragment,"<div><span>OK</span></div>");
+        assert(Arr.length(Doc.scopedQueryAll(fragment,"div")) === 1);
+        assert(Arr.length(Doc.scopedQueryAll(template,"span")) === 1);
+        assert(Ele.tag(Doc.children(template)[0]) === 'div');
+        assert(Ele.tag(Doc.children(fragment)[0]) === 'div');
+        assert(Ele.tag(Doc.children(document)[0]) === 'html');
+        assert(Doc.parent(template) === null);
+        assert(Doc.parent(fragment) === null);
+        assert(Arr.isNotEmpty(Ele.children(template)));
+        Doc.setHtml(template,newHtml);
+        
         // dom
-        assert(Dom.html(2) === '2');
-        assert(Dom.html(htmlNode) === Dom.html([htmlNode]));
-        assert(Ele.is(Dom.parse(htmlStr)));
+        assert(Dom.htmlStr(2) === '2');
+        assert(Dom.htmlStr(htmlNode) === Dom.htmlStr([htmlNode]));
+        assert(Arr.is(Dom.parse(htmlStr)));
+        assert(Ele.is(Dom.parseOne(htmlStr)));
         assert(Obj.length(Dom.doc(htmlStr)) === 9);
         assert(Dom.selectorInput() === "input,select,textarea,button[type='submit']");
         assert(Dom.selectorInput(true) === "input,select,textarea,button");
@@ -225,7 +277,7 @@ Test.Include = function()
         assert(Ele.isTag(htmlNode,'html'));
         assert(Ele.matchAll(htmlNode,'html'));
         assert(Ele.tag(htmlNode) === 'html');
-        assert(Str.isNotEmpty(Ele.outerHtml(htmlNode)));
+        assert(Str.isNotEmpty(Ele.getOuterHtml(htmlNode)));
         assert(Obj.isNotEmpty(Ele.getBoundingRect(htmlNode)));
         assert(Num.is(Ele.getDimension(htmlNode).width));
         assert(Num.is(Ele.getDimension(htmlNode).height));
@@ -292,7 +344,7 @@ Test.Include = function()
         assert(Arr.length(Ele.prevs(divNode,"input[type='submit']")) === 3);
         assert(Arr.length(Ele.prevs(divNode,"input[type='text']")) === 1);
         assert(Arr.length(Ele.prevs(divNode,'input',"input[type='text']")) === 3);
-        EleChange.setHtml(divNode,'text ok bla <span>what</span>');
+        Ele.setHtml(divNode,'text ok bla <span>what</span>');
         assert(Arr.length(Ele.children(divNode)) === 1);
         assert(Arr.length(Doc.children(document)) === 1); // ie va avoir besoin d'un polyfill
         assert(Arr.length(Ele.parents(divNode)) === 4);
@@ -308,40 +360,42 @@ Test.Include = function()
         assert(Ele.getCss(borderBox,'height','int') === 25);
         assert(Ele.getCss(borderBox,'height','bool') === null);
         assert(Ele.getCss(borderBox,'margin-top') === '10px');
-        
-        // eleChange
         assert(!Ele.hasAttr(divNode,'what'));
-        EleChange.setAttr(divNode,'what','ok');
+        Ele.setAttr(divNode,'what','ok');
         assert(Ele.hasAttr(divNode,'what'));
         assert(Ele.getAttr(divNode,'what') === 'ok');
-        EleChange.removeAttr(divNode,'what');
+        Ele.removeAttr(divNode,'what');
         assert(!Ele.hasAttr(divNode,'what'));
-        EleChange.setHtml(divNode,'what <span>ok</span>');
+        Ele.setHtml(divNode,'what <span>ok</span>');
         assert(Ele.getHtml(divNode) === 'what <span>ok</span>');
-        EleChange.setText(divNode,'what <span>ok</span>');
-        assert(Ele.getHtml(divNode) === 'what &lt;span&gt;ok&lt;/span&gt;');
-        assert(EleChange.setValue(inputNode,[1,2,3]) === undefined);
+        Ele.setText(divNode,'what <span>ok</span>');
+        assert(Ele.getHtml(divNode) === 'what <span>ok</span>');
+        assert(Ele.setValue(inputNode,[1,2,3]) === undefined);
         assert(inputNode.value === Ele.getValue(inputNode));
         assert(Ele.getValue(inputNode) === '[1,2,3]');
-        assert(EleChange.toggleClass(divNode,'test',true) === undefined);
+        assert(Ele.toggleClass(divNode,'test',true) === undefined);
         assert(Ele.hasClass(divNode,'test'));
-        EleChange.toggleClass(divNode,'test',false);
+        Ele.toggleClass(divNode,'test',false);
         assert(!Ele.hasClass(divNode,'test'));
-        EleChange.toggleClass(divNode,'test');
+        Ele.toggleClass(divNode,'test');
         assert(Ele.hasClass(divNode,'test'));
-        EleChange.toggleClass(divNode,'test');
+        Ele.toggleClass(divNode,'test');
         assert(!Ele.hasClass(divNode,'test'));
         assert(Ele.getHtml(template) !== newHtml);
         assert(Str.length(Ele.getHtml(template)) === 571);
         assert(Ele.getCss(divNode,'margin-top') === '0px');
-        EleChange.setCss(divNode,'margin-top','10px');
+        Ele.setCss(divNode,'margin-top','10px');
         assert(Ele.getCss(divNode,'margin-top') === '10px');
         assert(Ele.getCss(divNode,'margin-top','int') === 10);
         assert(Ele.getCss(borderBox,'height') === '25px');
-        EleChange.setDimension(borderBox,20,40);
+        Ele.setDimension(borderBox,20,40);
         assert(Ele.getDimension(borderBox).height === 40);
         assert(Ele.getCss(borderBox,'height') === '40px');
-        assert(EleChange.setScroll(htmlNode,0,0) === undefined);
+        assert(Ele.setScroll(htmlNode,0,0) === undefined);
+        Ele.setHtml(divNode,'OK');
+        assert(Ele.getHtml(divNode) === 'OK');
+        Ele.append(divNode,'<div>test</div>');
+        assert(Ele.getHtml(divNode) === 'OK<div>test</div>');
         
         // eleHelper
         
@@ -360,13 +414,12 @@ Test.Include = function()
         
         // handler
         
-        // historyApi
-        assert(HistoryApi.supported());
-        assert(HistoryApi.isState({ url: 'test', timestamp: 1234 }));
-        assert(HistoryApi.isStateChangeValid({ url: 'test', timestamp: 1234 },HistoryApi.makeState('what','bleh')));
+        // historyState
+        assert(HistoryState.is({ url: 'test', timestamp: 1234 }));
+        assert(HistoryState.isChangeValid({ url: 'test', timestamp: 1234 },HistoryState.make('what','bleh')));
         let $dom = document.createElement('a');
-        assert(Obj.length(HistoryApi.makeState('what','bleh')) === 3);
-        assert(Str.isEnd("/#what",HistoryApi.makeState('#what','bleh').url));
+        assert(Obj.length(HistoryState.make('what','bleh')) === 3);
+        assert(Str.isEnd("/#what",HistoryState.make('#what','bleh').url));
         
         // integer
         assert(!Integer.is('2'));
@@ -725,29 +778,10 @@ Test.Include = function()
         assert(Arr.length(Target.wrap(selectorAll)) === 1);
         assert(Target.wrap(arrFragment) === arrFragment);
         assert(Arr.length(Target.wrap(htmlNode)) === 1);
-        assert(Doc.isCurrent(document));
-        assert(Doc.is(document));
-        assert(Doc.is(fragment));
-        assert(!Doc.is(window));
-        assert(!Doc.is(htmlNode));
-        assert(!Doc.isFragment(document));
-        assert(Doc.isFragment(fragment));
-        assert(Doc.isFragment(Ele.parent(formTemplate[0])));
-        assert(Num.is(Doc.getDimension(document).width));
-        assert(Num.is(Doc.getDimension(document).height));
-        assert(Doc.getDimension(fragment) === null);
-        assert(Doc.check(document) === document);
-        assert(Doc.are([document,fragment]));
         assert(Nod.is(document));
         assert(!Nod.is(window));
         assert(Nod.are([document,htmlNode]));
         assert(!Nod.are([document,window]));
-        assert(Win.is(window));
-        assert(!Win.is(document));
-        assert(Pojo.length(Win.getScroll()) === 2);
-        assert(Win.getDimension().width > 0);
-        assert(Win.getDimension().height > 0);
-        assert(Win.are([window,window]));
         
         // type
         
@@ -866,6 +900,15 @@ Test.Include = function()
         });
         assert(length >= 34);
         
+        // win
+        assert(Win.hasHistoryApi());
+        assert(Win.is(window));
+        assert(!Win.is(document));
+        assert(Pojo.length(Win.getScroll()) === 2);
+        assert(Win.getDimension().width > 0);
+        assert(Win.getDimension().height > 0);
+        assert(Win.are([window,window]));
+        
         // xhr
         assert(Pojo.length(Xhr.configFromNode(htmlNode)) === 9);
         assert(Pojo.length(Xhr.configFromNode(htmlNode,null,true)) === 13);
@@ -874,7 +917,7 @@ Test.Include = function()
         assert(Xhr.parseError('','error') === 'error');
         
         // cleanup
-        EleChange.remove([formNode,contentBox,contentBox,borderBox]);
+        Ele.remove([formNode,contentBox,contentBox,borderBox]);
     } 
     
     catch (e) 

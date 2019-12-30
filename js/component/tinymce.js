@@ -56,7 +56,7 @@ Component.Tinymce = function(option)
     // createTinymce
     const createTinymce = function() 
     {
-        EleChange.addId(this,'tinymce-');
+        Ele.addId(this,'tinymce-');
         const id = getProp(this,'id');
         const data = Pojo.replaceRecursive({},option,getAttr(this,'data-tinymce',true));
         

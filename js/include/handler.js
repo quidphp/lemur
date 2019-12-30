@@ -13,7 +13,7 @@ const HandlerTarget = {
     isTriggerHandlerEqual: function(nodes,type,equal)
     {
         let r = false;
-        nodes = this.wrap(nodes,[false,type]);
+        nodes = this.wrap(nodes,false);
         const args = Arr.merge([type],ArrLike.sliceStart(3,arguments));
         const $inst = this;
         
@@ -55,7 +55,7 @@ const HandlerTarget = {
     {
         Str.check(type,true);
         Func.check(handler);
-        nodes = this.wrap(nodes,[false,type]);
+        nodes = this.wrap(nodes,false);
         const $inst = this;
         
         if(Arr.isNotEmpty(nodes))
@@ -92,7 +92,7 @@ const HandlerTarget = {
     removeHandler: function(nodes,type) 
     {
         Str.check(type,true);
-        nodes = this.wrap(nodes,[false,type]);
+        nodes = this.wrap(nodes,false);
         const $inst = this;
         
         if(Arr.isNotEmpty(nodes))
@@ -113,7 +113,7 @@ const HandlerTarget = {
     triggerHandler: function(node,type) 
     {
         let r = undefined;
-        this.check(node);
+        this.check(node,false);
         Str.check(type,true);
         
         if(node != null)
@@ -144,7 +144,7 @@ const HandlerTarget = {
     triggersHandler: function(nodes,type)
     {
         let r = null;
-        nodes = this.wrap(nodes,[false,type]);
+        nodes = this.wrap(nodes,false);
         const $inst = this;
         
         if(Arr.isNotEmpty(nodes))

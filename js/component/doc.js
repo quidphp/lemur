@@ -125,7 +125,7 @@ Component.Doc = function(option)
             // les attributs de html sont remplacés (les attributs existants ne sont pas effacés)
             const html = trigHdlr(this,'doc:getHtml');
             if(Pojo.isNotEmpty(doc.htmlAttr))
-            EleChange.setsAttr(html,doc.htmlAttr);
+            Ele.setsAttr(html,doc.htmlAttr);
             
             // head
             const head = qs(html,'head');
@@ -140,15 +140,15 @@ Component.Doc = function(option)
             
             // meta
             const meta = qsa(head,'meta');
-            EleChange.remove(meta);
-            EleChange.prepend(head,doc.meta);
+            Ele.remove(meta);
+            Ele.prepend(head,doc.meta);
             
             // body
             // les attributs de body sont effacés et remplacés
             const body = trigHdlr(this,'doc:getBody');
-            EleChange.emptyAttr(body);
+            Ele.emptyAttr(body);
             if(Pojo.isNotEmpty(doc.bodyAttr))
-            EleChange.setsAttr(body,doc.bodyAttr);
+            Ele.setsAttr(body,doc.bodyAttr);
             
             // routeWrap
             // les attributs de routeWrap sont effacés et remplacés seulement si routeWrap n'est pas body
@@ -165,10 +165,10 @@ Component.Doc = function(option)
                     {
                         contentTarget = routeWrapTarget;
                         const routeWrapAttributes = Ele.attr(contentTarget);
-                        EleChange.emptyAttr(routeWrap);
+                        Ele.emptyAttr(routeWrap);
                         
                         if(Pojo.isNotEmpty(routeWrapAttributes))
-                        EleChange.setsAttr(routeWrap,routeWrapAttributes);
+                        Ele.setsAttr(routeWrap,routeWrapAttributes);
                     }
                 }
                 contentHtml = getHtml(contentTarget);

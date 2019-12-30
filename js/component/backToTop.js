@@ -84,7 +84,7 @@ Component.BackToTop = function(option)
         
         ael(trigger,'click',function() {
             const scroller = trigHdlr($this,'backToTop:getScroller');
-            EleChange.animate(scroller,{scrollTop: 0},$option.speed);
+            Ele.animate(scroller,{scrollTop: 0},$option.speed);
         });
     }
     

@@ -15,7 +15,7 @@ const ListenerTarget = new function()
     {
         let r = null;
         Str.check(type,true);
-        nodes = Target.wrap(nodes,[false,type]);
+        nodes = this.wrap(nodes,false);
         const $inst = this;
         
         if(Arr.isNotEmpty(nodes))
@@ -119,7 +119,7 @@ const ListenerTarget = new function()
         register = (register === true)? type:register;
         Str.check(register,true);
         
-        const data = Target.getOrSetData(node,'rel',{});
+        const data = this.getOrSetData(node,'rel',{});
         const entry = [type,handler,option];
         Pojo.setRef(register,entry,data);
         
@@ -148,7 +148,8 @@ const ListenerTarget = new function()
     // args est le tableau retournée par addListener (contient type, handler et option)
     this.removeListener = function(nodes,args)
     {
-        nodes = Target.wrap(nodes,false);
+        nodes = this.wrap(nodes,false);
+        const $inst = this;
         
         if(Arr.isNotEmpty(nodes))
         {
@@ -162,7 +163,7 @@ const ListenerTarget = new function()
                 if(Str.isNotEmpty(args))
                 {
                     const key = args;
-                    const data = Target.getData(this,'rel');
+                    const data = $inst.getData(this,'rel');
                     args = Pojo.get(key,data);
                     Pojo.unsetRef(key,data);
                 }
@@ -181,7 +182,7 @@ const ListenerTarget = new function()
     this.trigger = function(nodes,type,option)
     {
         Str.check(type,true);
-        nodes = Target.wrap(nodes,[false,type]);
+        nodes = this.wrap(nodes,false);
         
         if(Arr.isNotEmpty(nodes))
         {

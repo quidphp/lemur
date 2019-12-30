@@ -4,29 +4,13 @@
  * License: https://github.com/quidphp/lemur/blob/master/LICENSE
  */
  
-// historyApi
-// script with functions related to the history API
-const HistoryApi = Lemur.HistoryApi = {
+// historyState
+// script with functions related to the history states
+const HistoryState = Lemur.HistoryState = {
     
-    // supported
-    // retourne vrai si le navigateur courant supporte history API
-    supported: function()
-    {
-        let r = false;
-        
-        if(window.history && window.history.pushState && window.history.replaceState)
-        {
-            if(!navigator.userAgent.match(/((iPod|iPhone|iPad).+\bOS\s+[1-4]\D|WebApps\/.+CFNetwork)/))
-            r = true;
-        }
-        
-        return r;
-    },
-
-    
-    // isState
+    // is
     // retourne vrai si la valeur est un objet compatible pour un état d'historique
-    isState: function(state)
+    is: function(state)
     {
         let r = false;
         
@@ -37,13 +21,13 @@ const HistoryApi = Lemur.HistoryApi = {
     },
     
     
-    // isStateChangeValid
+    // isChangeValid
     // retourne vrai si le changement de state est valide
-    isStateChangeValid: function(state,previous,differentPathQuery)
+    isChangeValid: function(state,previous,differentPathQuery)
     {
         let r = false;
         
-        if(this.isState(state) && this.isState(previous))
+        if(this.is(state) && this.is(previous))
         {
             const isInternal = Uri.isInternal(state.url,previous.url);
             const hasExtension = Uri.hasExtension(state.url);
@@ -61,9 +45,9 @@ const HistoryApi = Lemur.HistoryApi = {
     },
     
     
-    // makeState
+    // make
     // retourne un objet état d'historique (avec url absolute, title et timestamp)
-    makeState: function(uri,title) 
+    make: function(uri,title) 
     {
         let r = null;
         

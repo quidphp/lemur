@@ -67,7 +67,7 @@ Component.FeedSearch = function(option)
         
         if(type === 'append')
         {
-            data = Dom.parse(data);
+            data = Dom.parseOne(data);
             
             if($option.parseData)
             data = qs(data,$option.parseData);

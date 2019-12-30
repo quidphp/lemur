@@ -94,100 +94,14 @@ const TargetRoot = {
     }
 }
 
-// nodTarget
-// object for element and document nodes
-const NodTarget = {
-    
-    // is
-    // retourne vrai si la valeur est un element ou un document
-    is: function(value)
-    {
-        return (Ele.is(value) || Doc.is(value));
-    }
-}
-
-// docTarget
-// object for document and document fragment targets
-const DocTarget = {
-    
-    // is
-    // retourne vrai si la valeur est un document ou un fragment de document
-    is: function(value)
-    {
-        return (this.isCurrent(value) || this.isFragment(value));
-    },
-    
-    
-    // is
-    // retourne vrai si la valeur est le document courant
-    isCurrent: function(value) 
-    {
-        return value === document;
-    },
-    
-    
-    // isFragment
-    // retourne vrai si la valeur est un fragment de document
-    isFragment: function(value)
-    {
-        return value instanceof DocumentFragment;
-    },
-    
-    
-    // getDimension
-    // retourne la dimension du document, c'est à dire la dimension de l'élément du document
-    getDimension: function(value)
-    {
-        this.check(value);
-        return (value.documentElement)? Ele.getDimension(value.documentElement):null;
-    }
-}
-
-// winTarget
-// object for window target
-const WinTarget = {
-    
-    // is
-    // retourne vrai si la valeur est window
-    is: function(value) 
-    {
-        return value === window;
-    },
-    
-    
-    // getScroll
-    // retourne le scroll de la window
-    getScroll: function()
-    {
-        return {
-            top: window.pageYOffset,
-            left: window.pageXOffset
-        }
-    },
-    
-    
-    // getDimension
-    // retourne la dimension interne de la fênetre
-    getDimension: function()
-    {
-        return {
-            width: window.innerWidth,
-            height: window.innerHeight
-        }
-    }
-}
-
 // doc
-const Doc = Lemur.Doc = Factory(TargetRoot,DataTarget,HandlerTarget,ListenerTarget,SelectorTarget,DocTarget);
+const Doc = Lemur.Doc = Factory(TargetRoot,DataTarget,HandlerTarget,ListenerTarget,SelectorTarget,NodTarget,EleDocTarget,DocTarget);
 
 // ele
-const Ele = Lemur.Ele = Factory(TargetRoot,DataTarget,HandlerTarget,ListenerTarget,SelectorTarget,EleTarget);
+const Ele = Lemur.Ele = Factory(TargetRoot,DataTarget,HandlerTarget,ListenerTarget,SelectorTarget,NodTarget,EleDocTarget,EleTarget);
 
 // nod
 const Nod = Lemur.Nod = Factory(TargetRoot,DataTarget,HandlerTarget,ListenerTarget,SelectorTarget,NodTarget);
-
-// win
-const Win = Lemur.Win = Factory(TargetRoot,DataTarget,HandlerTarget,ListenerTarget,WinTarget);
 
 // target
 const Target = Lemur.Target = Factory(TargetRoot,DataTarget,HandlerTarget,ListenerTarget);

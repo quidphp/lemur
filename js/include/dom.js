@@ -19,9 +19,9 @@ const Dom = Lemur.Dom = {
     },
     
     
-    // html
-    // retourne le html dans une node ou un tableau de plusieurs nodes
-    html: function(value)
+    // htmlStr
+    // prend un maximum d'input et retourne une string html
+    htmlStr: function(value)
     {
         let r = '';
         
@@ -31,35 +31,84 @@ const Dom = Lemur.Dom = {
         else if(Scalar.is(value))
         r = Str.cast(value);
         
-        else
-        r = Ele.outerHtml(value);
+        else if(Doc.is(value))
+        r = Doc.getHtml(value);
+        
+        else if(Ele.is(value))
+        r = Ele.getOuterHtml(value);
+        
+        else if(Ele.are(value))
+        r = Ele.getOuterHtml(value);
         
         return r;
+    },
+    
+    
+    // htmlNodes
+    // prend un maximum d'input et retourne un tableau de nodes
+    // possible de cloner
+    htmlNodes: function(value,clone)
+    {
+        let r = [];
+        
+        if(Str.is(value))
+        r = this.parse(value);
+        
+        else if(Doc.is(value))
+        {
+            value = Doc.realNode(value);
+            r.push((clone === true)? Doc.clone(value):value);
+        }
+        
+        else if(Ele.are(value))
+        r = (clone === true)? Ele.clones(value):value;
+        
+        else if(Ele.is(value))
+        r.push((clone === true)? Ele.clone(value):value);
+        
+        return r;
+    },
+    
+    
+    // safeHtml
+    // fait quelques modifications à une string html pour éviter des injections
+    safeHtml: function(html)
+    {
+        Str.check(html);
+        html = html.replace(/<\!DOCTYPE[^>]*>/i, '');
+        html = html.replace(/<(html|head|body|script)([\s\>])/gi,'<div data-tag="$1"$2');
+        html = html.replace(/<\/(html|head|body|script)\>/gi,'</div>');
+        html = Str.trim(html);
+        
+        return html;
     },
     
     
     // parse
-    // parse une string html, retourne un objet avec les nodes
-    // remplace les balises sensibles par des div (comme dans head et script)
+    // parse une string html, retourne un tableau avec les nodes
+    // utilise l'élément template de document
+    // retourne un tableau
     parse: function(html)
     {
-        let r = null;
+        let r = [];
+        html = this.safeHtml(html);
+        const template = document.createElement('template');
+        template.innerHTML = html;
+        const fragment = template.content;
+        r = Doc.children(fragment,null,true);
         
-        if(Str.isNotEmpty(html))
-        {
-            html = html.replace(/<\!DOCTYPE[^>]*>/i, '');
-            html = html.replace(/<(html|head|body|script)([\s\>])/gi,'<div data-tag="$1"$2');
-            html = html.replace(/<\/(html|head|body|script)\>/gi,'</div>');
-            
-            html = Str.trim(html);
-            r = $.parseHTML(html);
-            r = Arr.valueFirst(r);
-        }
-
         return r;
     },
 
-
+    
+    // parseOne
+    // comme parse mais retourne seulement la première node du tableau
+    parseOne: function(html)
+    {
+        return Arr.valueFirst(this.parse(html));
+    },
+    
+    
     // doc
     // prend une string html
     // retourne un objet avec les différents éléments d'un document décortiqués
@@ -76,10 +125,10 @@ const Dom = Lemur.Dom = {
             body: null,
             bodyAttr: null
         };
-        const doc = this.parse(html);
+        const doc = this.parseOne(html);
         
         r.html = doc;
-        EleChange.removeAttr(r.html,'data-tag');
+        Ele.removeAttr(r.html,'data-tag');
         r.htmlAttr = Ele.attr(r.html);
         
         r.head = Nod.scopedQuery(r.html,"[data-tag='head']");
@@ -89,7 +138,7 @@ const Dom = Lemur.Dom = {
         {
             const title = Nod.scopedQuery(r.head,"title");
             
-            EleChange.removeAttr(r.head,'data-tag');
+            Ele.removeAttr(r.head,'data-tag');
             r.headAttr = Ele.attr(r.head);
             r.title = (title != null)? Ele.getText(title):'?';
             r.titleHtml = r.title.replace('<','&lt;').replace('>','&gt;').replace(' & ',' &amp; ');
@@ -98,16 +147,15 @@ const Dom = Lemur.Dom = {
         
         if(r.body != null)
         {
-            EleChange.removeAttr(r.body,'data-tag');
+            Ele.removeAttr(r.body,'data-tag');
             r.bodyAttr = Ele.attr(r.body);
         }
         
         else
         {
-            const html = Ele.outerHtml(doc);
-            let newBody = "<div data-tag='body'>"+html+"</div>";
-            newBody = $.parseHTML(newBody);
-            r.body = Arr.valueFirst(newBody);
+            const html = Ele.getOuterHtml(doc);
+            const newBody = "<div data-tag='body'>"+html+"</div>";
+            r.body = this.parseOne(newBody);
         }
         
         return r;

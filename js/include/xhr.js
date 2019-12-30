@@ -218,12 +218,12 @@ const Xhr = Lemur.Xhr = new function()
         {
             r = responseText;
             let html;
-            const parse = Dom.parse(responseText);
+            const parse = Dom.parseOne(responseText);
 
             if(parse != null)
             {
                 const ajaxParse = Nod.scopedQuery(parse,".ajax-parse-error");
-                html = Ele.outerHtml(ajaxParse);
+                html = Ele.getOuterHtml(ajaxParse);
                 
                 if(Vari.isEmpty(html))
                 {

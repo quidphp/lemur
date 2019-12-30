@@ -14,11 +14,10 @@ const Debug = Lemur.Debug;
 const Doc = Lemur.Doc;
 const Dom = Lemur.Dom;
 const Ele = Lemur.Ele;
-const EleChange = Lemur.EleChange;
 const EleHelper = Lemur.EleHelper;
 const Evt = Lemur.Evt;
 const Func = Lemur.Func;
-const HistoryApi = Lemur.HistoryApi;
+const HistoryState = Lemur.HistoryState;
 const Integer = Lemur.Integer;
 const Json = Lemur.Json;
 const Nav = Lemur.Nav;
@@ -46,12 +45,10 @@ const logError = Debug.logError.bind(Debug);
 const getProp = Ele.getProp.bind(Ele);
 const getAttr = Ele.getAttr.bind(Ele);
 const getHtml = Ele.getHtml.bind(Ele);
-
-// eleChange
-const setProp = EleChange.setProp.bind(EleChange);
-const setAttr = EleChange.setAttr.bind(EleChange);
-const setHtml = EleChange.setHtml.bind(EleChange);
-const toggleClass = EleChange.toggleClass.bind(EleChange);
+const setProp = Ele.setProp.bind(Ele);
+const setAttr = Ele.setAttr.bind(Ele);
+const setHtml = Ele.setHtml.bind(Ele);
+const toggleClass = Ele.toggleClass.bind(Ele);
 
 // nod
 const qs = Nod.scopedQuery.bind(Nod);

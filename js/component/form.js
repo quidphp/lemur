@@ -188,7 +188,7 @@ Component.Form = function()
             const newName = name+"2-";
             const newValue = 1;
             const genuine2 = "<input type='hidden' name='"+newName+"' value='"+newValue+"' />";
-            EleChange.prepend(this,genuine2);
+            Ele.prepend(this,genuine2);
         }
     }
     
@@ -209,7 +209,7 @@ Component.Form = function()
         const submits = trigHdlr(this,'form:getSubmits');
         
         ael(submits,'click',function() {
-            EleChange.removeAttr(submits,'data-submit-click');
+            Ele.removeAttr(submits,'data-submit-click');
             setAttr(this,'data-submit-click',true);
         });
         

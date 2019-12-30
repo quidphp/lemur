@@ -116,7 +116,7 @@ Component.Input = function()
         },
         
         setValue: function(value) {
-            EleChange.setValue(this,value);
+            Ele.setValue(this,value);
         },
         
         setEmpty: function() {

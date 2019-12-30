@@ -16,22 +16,6 @@ const EleTarget = {
     },
     
 
-    // isEmpty
-    // retourne vrai si la valeur est une node et qu'elle est vide
-    isEmpty: function(value)
-    {
-        return (this.is(value))? Str.isEmpty(this.getHtml(value)):false;
-    },
-
-
-    // isNotEmpty
-    // retourne vrai si la valeur est une node et qu'elle n'est pas vide
-    isNotEmpty: function(value)
-    {
-        return (this.is(value))? Str.isNotEmpty(this.getHtml(value)):false;
-    },
-    
-    
     // isVisible
     // retourne vrai si la node est visible
     isVisible: function(value)
@@ -88,31 +72,6 @@ const EleTarget = {
         if(Str.is(tag))
         r = tag.toLowerCase();
         
-        return r;
-    },
-
-    
-    // getProp
-    // retourne une propriété d'une node
-    getProp: function(node,key)
-    {
-        this.check(node);
-        return Obj.get(key,node);
-    },
-    
-
-    // outerHtml
-    // retourne le outerHtml d'une ou plusieurs nodes
-    // si pas de outerHtml, peut aussi retourner le html ou le texte
-    outerHtml: function(nodes)
-    {
-        let r = '';
-        const $inst = this;
-        
-        this.each(nodes,function() {
-            r += $inst.getProp(this,'outerHTML') || $inst.getHtml(this);
-        });
-
         return r;
     },
 
@@ -208,25 +167,6 @@ const EleTarget = {
     },
     
     
-    // getHtml
-    // retourne le html dans une node
-    getHtml: function(node)
-    {
-        this.check(node);
-        return node.innerHTML;
-    },
-    
-    
-    // getText
-    // retourne le text contenu dans une node et ses enfants
-    // ne retourne aucune balise html
-    getText: function(node)
-    {
-        this.check(node);
-        return node.textContent;
-    },
-    
-    
     // getValue
     // retourne la valeur pour une node, surtout pour les formulaires
     // la valeur retourné peut être trim
@@ -298,6 +238,201 @@ const EleTarget = {
     {
         this.check(node);
         node.focus();
+        
+        return;
+    },
+    
+    
+    // setAttr
+    // change un attribut sur une ou plusieurs nodes
+    // si undefined, efface l'attribut
+    setAttr: function(nodes,key,value)
+    {
+        nodes = this.wrap(nodes,false);
+        Str.check(key,true);
+        
+        if(Obj.is(value))
+        value = Json.encode(value);
+        
+        this.each(nodes,function() {
+            if(value === undefined)
+            this.removeAttribute(key);
+            else
+            this.setAttribute(key,value);
+        });
+        
+        return;
+    },
+    
+    
+    // removeAttr
+    // enlève un attribut sur une ou plusieurs nodes
+    removeAttr: function(nodes,key)
+    {
+        return this.setAttr(nodes,key,undefined);
+    },
+    
+    
+    // setsAttr
+    // remplace tous les attributs d'une ou plusieurs nodes, il faut fournir un plain object
+    // possible de retirer les attributs existants
+    setsAttr: function(nodes,value)
+    {
+        Pojo.check(value);
+        const $inst = this;
+        
+        this.each(nodes,function() {
+            const $this = this;
+            
+            Pojo.each(value,function(v,k) {
+                $inst.setAttr($this,k,v);
+            });
+        });
+        
+        return;
+    },
+
+
+    // emptyAttr
+    // permet de retirer tous les attributs à une ou plusieurs nodes
+    emptyAttr: function(nodes)
+    {
+        const $inst = this;
+        this.each(nodes,function() {
+            const $this = this;
+            
+            ArrLike.each(this.attributes,function(value) {
+                if(value != null)
+                $inst.removeAttr($this,value.name);
+            });
+        });
+        
+        return;
+    },
+    
+    
+    // addId
+    // ajoute un id aux éléments contenus dans l'objet qui n'en ont pas
+    addId: function(nodes,value)
+    {
+        Str.check(value);
+        const $inst = this;
+        
+        this.each(nodes,function() {
+            if(!$inst.match(this,"[id]"))
+            {
+                const newId = value+Integer.unique();
+                $inst.setProp(this,'id',newId);
+            }
+        });
+        
+        return;
+    },
+    
+
+    // setCss
+    // permet de changer une valeur inline du css
+    setCss: function(node,key,value)
+    {
+        this.check(node);
+        Str.check(key);
+        key = Str.toCamelCase('-',key);
+        
+        node.style[key] = value;
+        
+        return;
+    },
+    
+    
+    // setValue
+    // permet de changer la valeur d'une node
+    // si la valeur est un objet, encode en json
+    setValue: function(node,value)
+    {
+        this.check(node);
+        
+        if(Obj.is(value))
+        value = Json.encode(value);
+        
+        value = Str.cast(value);
+        node.value = value;
+        
+        return;
+    },
+    
+    
+    // toggleClass
+    // permet d'ajouter ou enlever une classe sur une ou plusieurs nodes
+    toggleClass: function(nodes,value,bool)
+    {
+        nodes = this.wrap(nodes,false);
+        Str.check(value,true);
+        
+        this.each(nodes,function() {
+            this.classList.toggle(value,bool);
+        });
+        
+        return;
+    },
+    
+    
+    // setDimension
+    // permet de changer la largeur et hauteur de la node
+    setDimension: function(node,width,height)
+    {
+        if(Scalar.isNotBool(width))
+        {
+            width = (Num.is(width))? width+"px":width;
+            this.setCss(node,'width',width);
+        }
+        
+        if(Scalar.isNotBool(height))
+        {
+            height = (Num.is(height))? height+"px":height;
+            this.setCss(node,'height',height);
+        }
+        
+        return;
+    },
+    
+    
+    // setScroll
+    // permet de changer les valeurs du scroll
+    setScroll: function(node,top,left)
+    {
+        this.check(node);
+        
+        if(Num.is(top))
+        node.scrollTop = (top > 0)? top:0;
+        
+        if(Num.is(left))
+        node.scrollLeft = (left > 0)? left:0;
+        
+        return;
+    },
+    
+
+    // animate
+    // permet de créer une animation sur une ou plusieurs nodes
+    // retourne une promise qui sera appelé une fois après que toutes les nodes aient finis l'animation
+    animate: function(nodes,param,speed) 
+    {
+        let r = null;
+        nodes = this.wrap(nodes,true);
+        this.animateStop(nodes);
+        Pojo.check(param);
+        Num.check(speed);
+        
+        return $(nodes).animate(param,speed).promise();
+    },
+    
+    
+    // animateStop
+    // permet d'arrêter toutes les animations sur une ou plusiuers nodes
+    animateStop: function(nodes) 
+    {
+        nodes = this.wrap(nodes,true);
+        $(nodes).stop(true,true);
         
         return;
     }

@@ -41,7 +41,7 @@ Component.InputSearch = function(option)
         },
         
         unsetCurrent: function() {
-            EleChange.removeAttr(this,"data-current");
+            Ele.removeAttr(this,"data-current");
         },
         
         getButton: function() {

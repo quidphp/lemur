@@ -33,12 +33,7 @@ Component.Calendar = function(option)
         getHead: function() {
             return qs(this,'.head');
         },
-        
-        getPrevNext: function() {
-            const head = trigHdlr(this,'calendar:getHead');
-            return qsa(head,".prev,.next");
-        },
-        
+                
         getCells: function() {
             return qsa(this,".body td");
         },
@@ -143,7 +138,6 @@ Component.Calendar = function(option)
     const bindNav = function() 
     {
         const $this = this;
-        const prevNext = trigHdlr(this,'calendar:getPrevNext');
         
         aelDelegate(this,'click',".head .prev,.head .next",function(event) {
             const href = getAttr(this,'href');

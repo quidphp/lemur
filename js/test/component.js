@@ -19,7 +19,7 @@ Test.Component = function()
         newHtml += "</form>";
         const htmlNode = Nod.scopedQuery(document,'html');
         const bodyNode = Nod.scopedQuery(htmlNode,'body');
-        EleChange.prepend(bodyNode,newHtml);
+        Ele.prepend(bodyNode,newHtml);
         const formNode = Nod.scopedQuery(bodyNode,"> form");
         const inputNode = Nod.scopedQuery(bodyNode,"> form > input[name='test-suite']");
         
@@ -221,7 +221,7 @@ Test.Component = function()
         // windowUnload
         
         // cleanup 
-        EleChange.remove(formNode);
+        Ele.remove(formNode);
     } 
     
     catch (e) 

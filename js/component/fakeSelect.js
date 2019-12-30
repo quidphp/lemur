@@ -113,7 +113,7 @@ Component.FakeSelect = function()
             
             setTitle: function(value) {
                 const title = trigHdlr(this,'fakeSelect:getTitle');
-                EleChange.setText(title,value);
+                Ele.setText(title,value);
             }
         });
         
@@ -226,7 +226,7 @@ Component.FakeSelect = function()
             const choices = trigHdlr(this,'fakeSelect:getChoices');
             const current = trigHdlr(select,'input:getValue');
             
-            EleChange.removeAttr(choices,'data-selected');
+            Ele.removeAttr(choices,'data-selected');
             setAttr(selected,'data-selected',1);
             
             trigHdlr(select,'input:setValue',value);
@@ -247,7 +247,8 @@ Component.FakeSelect = function()
             if(trigHdlr(this,'input:allowMultiple') === false && trigHdlr(this,'input:isControlled') === false)
             {
                 const html = htmlFromSelect.call(this);
-                const node = EleChange.insertAfter(this,html);
+                let node = Ele.insertAfter(this,html);
+                node = Arr.valueFirst(node);
                 bindFakeSelect.call(node);
                 setAttr(this,'data-controlled',1);
                 r.push(node);

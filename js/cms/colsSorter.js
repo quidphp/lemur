@@ -105,7 +105,7 @@ Component.ColsSorter = function(option)
             
             valid: function() {
                 if(trigHdlr($this,'colsSorter:isCurrent'))
-                EleChange.removeAttr(this,"data-validate");
+                Ele.removeAttr(this,"data-validate");
                 else
                 setAttr(this,'data-validate','valid');
             }

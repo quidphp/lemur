@@ -22,8 +22,8 @@ Component.History = function(option)
     
     
     // variable
-    let $history = (HistoryApi.supported())? window.history:null;
-    let $initial = HistoryApi.makeState(location.href,this.title);
+    let $history = (Win.hasHistoryApi())? window.history:null;
+    let $initial = HistoryState.make(location.href,this.title);
     let $previous = $initial;
     
     
@@ -69,7 +69,7 @@ Component.History = function(option)
         
         // retourne l'état courant
         getCurrentState: function() {
-            return HistoryApi.makeState(location.href,this.title);
+            return HistoryState.make(location.href,this.title);
         },
         
         // annule et détruit l'objet ajax si existant
@@ -92,7 +92,7 @@ Component.History = function(option)
         // le premier argument peut être une uri ou un objet state
         replaceState: function(uriState,title) {
             let r = false;
-            uriState = (Pojo.is(uriState))? uriState:HistoryApi.makeState(uriState,title);
+            uriState = (Pojo.is(uriState))? uriState:HistoryState.make(uriState,title);
             
             if($history != null && uriState != null)
             {
@@ -107,7 +107,7 @@ Component.History = function(option)
         // le premier argument peut être une uri ou un objet state
         pushState: function(uriState,title) {
             let r = false;
-            uriState = (Pojo.is(uriState))? uriState:HistoryApi.makeState(uriState,title);
+            uriState = (Pojo.is(uriState))? uriState:HistoryState.make(uriState,title);
             
             if($history != null && uriState != null && !trigHdlr(this,'history:isCurrentStateUrl',uriState))
             {
@@ -122,7 +122,7 @@ Component.History = function(option)
         replaceHash: function(value,title) {
             Str.check(value);
             value = Uri.makeHash(value,true);
-            const state = HistoryApi.makeState(value,title);
+            const state = HistoryState.make(value,title);
             trigHdlr(this,'history:replaceState',state);
         },
         
@@ -130,7 +130,7 @@ Component.History = function(option)
         pushHash: function(value,title) {
             Str.check(value);
             value = Uri.makeHash(value,true);
-            const state = HistoryApi.makeState(value,title);
+            const state = HistoryState.make(value,title);
             
             if(!trigHdlr(this,'history:isCurrentStateUrl',state))
             {
@@ -204,7 +204,7 @@ Component.History = function(option)
     {
         ael(window,'popstate',function(event) {
             const state = event.state || trigHdlr(document,'history:getCurrentState');
-            const isValid = HistoryApi.isStateChangeValid(state,$previous,true);
+            const isValid = HistoryState.isChangeValid(state,$previous,true);
             
             if(isValid === true)
             {
@@ -327,8 +327,8 @@ Component.History = function(option)
             if(Uri.isInternal(href))
             {
                 const current = trigHdlr(this,'history:getCurrentState');
-                const state = HistoryApi.makeState(href);
-                const isValid = HistoryApi.isStateChangeValid(state,current);
+                const state = HistoryState.make(href);
+                const isValid = HistoryState.isChangeValid(state,current);
                 
                 if(isValid === true)
                 {
@@ -432,7 +432,7 @@ Component.History = function(option)
     {
         let r = null;
 
-        if(HistoryApi.isState(state))
+        if(HistoryState.is(state))
         {
             trigHdlr(this,'doc:setStatusLoading');
 
@@ -467,7 +467,7 @@ Component.History = function(option)
     // callback après le ajax
     const afterAjax = function(type,state,jqXHR,isError)
     {
-        if(Str.isNotEmpty(type) && HistoryApi.isState(state) && Pojo.is(jqXHR))
+        if(Str.isNotEmpty(type) && HistoryState.is(state) && Pojo.is(jqXHR))
         {
             const data = jqXHR.responseText;
             const currentUri = (Str.isNotEmpty($option.responseUrl))? jqXHR.getResponseHeader($option.responseUrl):null;
@@ -479,7 +479,7 @@ Component.History = function(option)
                 
                 if(type === 'push' || type === 'form')
                 {
-                    state = HistoryApi.makeState(state.url,doc.title);
+                    state = HistoryState.make(state.url,doc.title);
                     
                     if(state.url !== current.url)
                     {
@@ -496,7 +496,7 @@ Component.History = function(option)
                 
                 trigHdlr(this,'doc:makeMount',doc,isError);
                 
-                EleChange.remove(doc.html);
+                Ele.remove(doc.html);
                 $previous = state;
             }
         }

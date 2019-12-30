@@ -43,9 +43,9 @@ Component.AbsolutePlaceholder = function()
                 const doWidth = !trigHdlr(this,'absolutePlaceholder:isOnlyHeight');
                 const doHeight = !trigHdlr(this,'absolutePlaceholder:isOnlyWidth');
                 
-                EleChange.setDimension(this,(doWidth)? 'auto':null,(doHeight)? 'auto':null);
+                Ele.setDimension(this,(doWidth)? 'auto':null,(doHeight)? 'auto':null);
                 const dimension = Ele.getDimension(child);
-                EleChange.setDimension(this,(doWidth)? dimension.width:null,(doHeight)? dimension.height:null);
+                Ele.setDimension(this,(doWidth)? dimension.width:null,(doHeight)? dimension.height:null);
                 
                 setAttr(this,'data-absolute-placeholder','ready');
             }

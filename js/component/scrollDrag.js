@@ -78,7 +78,7 @@ Component.ScrollDrag = function(option)
             const delLeft = scroll.left;
             const newY = ((delY - event.pageY) / $option.dividor);
             const newX = ((delX - event.pageX) / $option.dividor);
-            EleChange.setScroll(delegate,(delTop + newY),(delLeft + newX));
+            Ele.setScroll(delegate,(delTop + newY),(delLeft + newX));
         }
     });
     

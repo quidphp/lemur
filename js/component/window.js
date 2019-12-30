@@ -28,10 +28,10 @@ Component.Window = function(type,timeout)
         scrollTo: function(top) {
             const htmlBody = qsa(document,"html,body");
             
-            EleChange.animateStop(htmlBody);
+            Ele.animateStop(htmlBody);
             
             Ele.each(htmlBody,function() {
-                EleChange.setScroll(this,top);
+                Ele.setScroll(this,top);
             });
         }
     });

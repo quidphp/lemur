@@ -87,7 +87,7 @@ Component.EnumSet = function(option)
         
         emptyChoice: function() {
             const choices = trigHdlr(this,'enumSet:getChoices');
-            EleChange.remove(choices);
+            Ele.remove(choices);
         },
         
         findResult: function(value) {
@@ -166,7 +166,7 @@ Component.EnumSet = function(option)
             aelDelegate(current,'click', "input[type='radio']",function(event) {
                 setProp(this,'checked',false);
                 const parent = Nod.closest(this,".choice");
-                EleChange.remove(parent);
+                Ele.remove(parent);
             });
         }
         
@@ -179,7 +179,7 @@ Component.EnumSet = function(option)
                 if(Nod.match(this,":checked") === false)
                 {
                     const parent = Nod.closest(this,".choice");
-                    EleChange.remove(parent);
+                    Ele.remove(parent);
                 }
             });
         }
@@ -207,7 +207,7 @@ Component.EnumSet = function(option)
                 else if(trigHdlr(this,'enumSet:isSet'))
                 setAttr(button,'data-in',0);
                 
-                EleChange.append(current,html);
+                Ele.append(current,html);
                 trigEvt(this,'clickOpen:close');
             }
         }
