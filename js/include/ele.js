@@ -412,28 +412,40 @@ const EleTarget = {
     },
     
 
-    // animate
-    // permet de créer une animation sur une ou plusieurs nodes
-    // retourne une promise qui sera appelé une fois après que toutes les nodes aient finis l'animation
-    animate: function(nodes,param,speed) 
+    // getUri
+    // retourne l'uri à partir d'une node
+    getUri: function(node)
     {
-        let r = null;
-        nodes = this.wrap(nodes,true);
-        this.animateStop(nodes);
-        Pojo.check(param);
-        Num.check(speed);
+        let r = undefined;
+        const tag = this.tag(node);
         
-        return $(nodes).animate(param,speed).promise();
+        if(tag === 'form')
+        r = this.getAttr(node,"action");
+        
+        else
+        r = this.getAttr(node,"href") || this.getAttr(node,'data-href');
+        
+        return r;
     },
     
-    
-    // animateStop
-    // permet d'arrêter toutes les animations sur une ou plusiuers nodes
-    animateStop: function(nodes) 
+
+    // serialize
+    // permet de serializer une ou plusieurs nodes
+    serialize: function(nodes)
     {
-        nodes = this.wrap(nodes,true);
-        $(nodes).stop(true,true);
+        let r = '';
+        nodes = Nod.wrap(nodes,true);
+        const query = Uri.query();
+        const $inst = this;
         
-        return;
-    }
+        this.each(nodes,function() {
+            const key = $inst.getProp(this,'name');
+            const value = $inst.getProp(this,'value');
+            query.append(key,value);
+        });
+        
+        r = query.toString();
+        
+        return r;
+    },
 }

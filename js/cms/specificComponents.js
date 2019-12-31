@@ -81,10 +81,11 @@ Component.SpecificComponents = function()
                 const $this = this;
                 const comp = trigHdlr(document,'specificComponents:match',this);
                 const node = qs(this,'.specific-component');
+                const hasInput = qs(node,Dom.selectorInput(true));
                 let found = false;
                 Ele.check(node);
                 
-                if(comp != null && comp.setupOnView == view)
+                if(comp != null && comp.setupOnView == view && hasInput != null)
                 {
                     found = true;
                     comp.component.call(node,comp.option);

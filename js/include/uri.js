@@ -19,7 +19,7 @@ const Uri = Lemur.Uri = {
             compare = (Str.is(compare))? this.parse(compare):Request.parse();			
             const parse = this.parse(uri);
             
-            if(parse.scheme === compare.scheme && parse.host === compare.host)
+            if(parse.protocol === compare.protocol && parse.host === compare.host)
             r = true;
         }
         
@@ -80,8 +80,8 @@ const Uri = Lemur.Uri = {
         {
             compare = (Str.is(compare))? this.parse(compare):Request.parse();			
             const parse = this.parse(uri);
-            
-            if(parse.path === compare.path && parse.query === compare.query)
+
+            if(parse.pathname === compare.pathname && parse.search === compare.search)
             r = true;
         }
         
@@ -101,7 +101,7 @@ const Uri = Lemur.Uri = {
             compare = (Str.is(compare))? this.parse(compare):Request.parse();			
             const parse = this.parse(uri);
             
-            if(parse.path === compare.path && parse.query === compare.query && parse.hash === compare.hash)
+            if(parse.pathname === compare.pathname && parse.search === compare.search && parse.hash === compare.hash)
             r = true;
         }
         
@@ -120,7 +120,7 @@ const Uri = Lemur.Uri = {
             compare = (Str.is(compare))? this.parse(compare):Request.parse();
             const parse = this.parse(uri);
             
-            if(parse.scheme === compare.scheme && parse.host === compare.host && parse.path === compare.path && parse.query === compare.query)
+            if(parse.protocol === compare.protocol && parse.host === compare.host && parse.pathname === compare.pathname && parse.search === compare.search)
             {
                 if(Str.isNotEmpty(parse.hash) && parse.hash !== compare.hash)
                 r = true;
@@ -165,7 +165,7 @@ const Uri = Lemur.Uri = {
         {
             const regex = /(?:\.([^.]+))?$/;
             const parse = this.parse(uri);
-            const result = regex.exec(parse.path);
+            const result = regex.exec(parse.pathname);
             
             if(Arr.is(result) && result.length === 2)
             r = result[1];
@@ -180,29 +180,32 @@ const Uri = Lemur.Uri = {
     // ne marche pas bien sur ie11
     parse: function(uri)
     {
-        let r = {};
+        Str.check(uri);
+        const schemeHost = Request.schemeHost();
         
-        if(Str.is(uri))
+        if(Str.isStart("#",uri))
+        uri = Request.relative()+uri;
+        
+        return new URL(uri,schemeHost);
+    },
+
+    
+    // query
+    // permet de retourner un objet urlSearchParams à partir d'une string ou un object
+    query: function(value)
+    {
+        const r = (Str.is(value))? new URLSearchParams(value):new URLSearchParams();
+        
+        if(Pojo.is(value))
         {
-            let $dom = document.createElement('a');
-            $dom.href = uri;
-            
-            r.scheme = $dom.protocol.substr(0, $dom.protocol.indexOf(':')) || Request.scheme();
-            r.host = $dom.hostname || Request.host();
-            r.port = $dom.port;
-            r.path = $dom.pathname;
-            r.query = $dom.search.substr($dom.search.indexOf('?') + 1);
-            r.hash = $dom.hash.substr($dom.hash.indexOf('#') + 1);
-            
-            if(!Str.isStart('/',r.path))
-            r.path = '/'+r.path;
-            
-            $dom = null;
+            Pojo.each(value,function(value,key) {
+                r.append(key,value);
+            });
         }
         
         return r;
     },
-
+    
     
     // build
     // prend un objet parse et retourne une string uri
@@ -210,26 +213,28 @@ const Uri = Lemur.Uri = {
     // possible d'inclure ou non le hash
     build: function(parse,absolute,hash)
     {
-        let r = null;
+        let r = '';
+        Obj.check(parse);
         
-        if(Pojo.isNotEmpty(parse))
+        if(absolute === true && hash === true)
+        r = parse.toString();
+        
+        else
         {
-            r = '';
-            
             if(absolute === true)
             {
-                r += parse.scheme;
-                r += "://";
+                r += parse.protocol;
+                r += "//";
                 r += parse.host;
             }
             
-            r += parse.path;
+            r += parse.pathname;
             
-            if(parse.query)
-            r += "?"+parse.query;
+            if(parse.search)
+            r += parse.search;
 
             if(parse.hash && hash === true)
-            r += "#"+parse.hash;
+            r += parse.hash;
         }
         
         return r;

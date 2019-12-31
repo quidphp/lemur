@@ -12,6 +12,20 @@ const Xhr = Lemur.Xhr = new function()
     const $inst = this;
     
     
+    // isStatusSuccess
+    // retourne vrai si le statut est un succès
+    this.isStatusSuccess = function(value)
+    {
+        let r = false;
+        Integer.check(value);
+        
+        if(value >= 200 && value < 400)
+        r = true;
+        
+        return r;
+    }
+    
+    
     // trigger
     // fonction utilisé pour lancer une requête ajax
     // retourne null ou un objet promise ajax
@@ -21,7 +35,49 @@ const Xhr = Lemur.Xhr = new function()
         config = prepareConfig(config);
         
         if(Str.isNotEmpty(config.url))
-        r = $.ajax(config);
+        {
+            const xhr = new XMLHttpRequest();
+            xhr.open(config.method, config.url, true);
+            xhr.timeout = config.timeout;
+            xhr.setRequestHeader('X-Requested-With','XMLHttpRequest');
+            
+            xhr.ontimeout = function() {
+                if(Func.is(config.error))
+                config.error(xhr);
+            };
+            xhr.onreadystatechange = function() {
+                if(this.readyState === XMLHttpRequest.DONE)
+                {
+                    const isSuccess = $inst.isStatusSuccess(this.status);
+                    
+                    if(isSuccess === false && Func.is(config.error))
+                    config.error(xhr);
+                    
+                    else if(isSuccess === true && Func.is(config.success))
+                    config.success(xhr);
+                    
+                    if(Func.is(config.complete))
+                    config.complete(xhr);
+                }
+            };
+            
+            if(xhr.upload != null)
+            {
+                xhr.upload.addEventListener("progress",function(event) {
+                    if(Func.is(config.progress) && event.lengthComputable === true)
+                    {
+                        const percent = parseInt((event.loaded / event.total * 100));
+                        config.progress(percent,event,xhr);
+                    }
+                });
+            }
+            
+            if(Func.is(config.before))
+            config.before(xhr);
+
+            xhr.send(config.data);
+            r = xhr;
+        }
         
         return r;
     }
@@ -35,34 +91,7 @@ const Xhr = Lemur.Xhr = new function()
             url: undefined,
             method: undefined,
             data: undefined,
-            timeout: 5000,
-            processData: true,
-            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-            xhr: function() {
-                let r = this.originalXHR;
-                
-                if(r == null)
-                {
-                    r = this.originalXHR = new XMLHttpRequest()
-                    this.xhrProgress();
-                }
-                
-                return r;
-            },
-            xhrProgress: function() {
-                const xhr = this.xhr();
-                const $this = this;
-                xhr.upload.addEventListener("progress",function(event) {
-                    if(event.lengthComputable === true)
-                    {
-                        const percent = parseInt((event.loaded / event.total * 100));
-                        
-                        if($this.progress != null)
-                        $this.progress(percent,event);
-                    }
-                });
-            },
-            progress: null
+            timeout: 5000
         };
     }
     
@@ -77,11 +106,15 @@ const Xhr = Lemur.Xhr = new function()
         config.method = 'get';
         config.method = config.method.toUpperCase();
         
-        if(config.data instanceof FormData)
+        if(Pojo.is(config.data))
         {
-            config.processData = false;
-            config.contentType = false;
+            const parse = Uri.parse(config.url);
+            const query = Uri.query(config.data).toString();
+            parse.search = query;
+            config.url = parse.toString();
         }
+        
+        config.data = (config.data instanceof FormData)? config.data:null;
         
         return config;
     }
@@ -125,7 +158,7 @@ const Xhr = Lemur.Xhr = new function()
         r.url = Target.triggerHandler(node,'ajax:getUrl');
         
         if(r.url == null)
-        r.url = EleHelper.getUri(node);
+        r.url = Ele.getUri(node);
         
         return r;
     }
@@ -183,25 +216,25 @@ const Xhr = Lemur.Xhr = new function()
     // fait la configuration des événements à envoyer à la node pour la requête ajax
     this.configNodeEvents = function(node,config)
     {
-        config.progress = function(percent,progressEvent) {
-            Target.triggerHandler(node,'ajax:progress',percent,progressEvent);
+        config.before = function(xhr) {
+            Target.triggerHandler(node,'ajax:before',xhr);
         };
         
-        config.beforeSend = function(jqXHR,settings) {
-            Target.triggerHandler(node,'ajax:before',jqXHR,settings);
+        config.progress = function(percent,event,xhr) {
+            Target.triggerHandler(node,'ajax:progress',percent,event,xhr);
         };
         
-        config.success = function(data,textStatus,jqXHR) {
-            Target.triggerHandler(node,'ajax:success',data,textStatus,jqXHR);
+        config.success = function(xhr) {
+            Target.triggerHandler(node,'ajax:success',xhr.responseText,xhr);
         };
         
-        config.error = function(jqXHR,textStatus,errorThrown) {
-            const parsedError = $inst.parseError(jqXHR.responseText,textStatus);
-            Target.triggerHandler(node,'ajax:error',parsedError,jqXHR,textStatus,errorThrown);
+        config.error = function(xhr) {
+            const parsedError = $inst.parseError(xhr.responseText);
+            Target.triggerHandler(node,'ajax:error',parsedError,xhr);
         };
         
-        config.complete = function(jqXHR,textStatus) {
-            Target.triggerHandler(node,'ajax:complete',jqXHR,textStatus);
+        config.complete = function(xhr) {
+            Target.triggerHandler(node,'ajax:complete',xhr);
         };
         
         return config;
@@ -210,9 +243,9 @@ const Xhr = Lemur.Xhr = new function()
     
     // parseError
     // cette méthode gère l'affichage pour un xhr en erreur
-    this.parseError = function(responseText,textStatus)
+    this.parseError = function(responseText)
     {
-        let r = textStatus;
+        let r = '';
         
         if(Str.isNotEmpty(responseText))
         {
@@ -228,6 +261,7 @@ const Xhr = Lemur.Xhr = new function()
                 if(Vari.isEmpty(html))
                 {
                     const body = Nod.scopedQuery(parse,"body,[data-tag='body']");
+                    if(body != null)
                     html = Ele.getHtml(body);
                 }
                 

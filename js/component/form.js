@@ -114,7 +114,7 @@ Component.Form = function()
         
         serialize: function() {
             const target = trigHdlr(this,'form:getTargetFields');
-            return EleHelper.serialize(target);
+            return Ele.serialize(target);
         },
         
         hasChanged: function() {

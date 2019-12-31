@@ -255,7 +255,7 @@ Component.History = function(option)
     const isValidNode = function(node,type)
     {
         let r = false;
-        const href = EleHelper.getUri(node);
+        const href = Ele.getUri(node);
         
         if(Str.isNotEmpty(href))
         {
@@ -306,7 +306,7 @@ Component.History = function(option)
         
         if(isValidNode.call(this,node,type))
         {
-            const href = EleHelper.getUri(node);
+            const href = Ele.getUri(node);
             r = historyHref.call(this,href,nodeOrEvent);
         }
         
@@ -439,14 +439,14 @@ Component.History = function(option)
             const config = {
                 url: state.url,
                 timeout: $option.timeout,
-                progress: function(percent,event) {
+                progress: function(percent,event,xhr) {
                     trigEvt(document,'doc:ajaxProgress',percent,event);
                 },
-                success: function(data,textStatus,jqXHR) {
-                    afterAjax.call(document,type,state,jqXHR,false);
+                success: function(xhr) {
+                    afterAjax.call(document,type,state,xhr,false);
                 },
-                error: function(jqXHR,textStatus,errorThrown) {
-                    afterAjax.call(document,type,state,jqXHR,true);
+                error: function(xhr) {
+                    afterAjax.call(document,type,state,xhr,true);
                 }
             };
             
@@ -465,14 +465,14 @@ Component.History = function(option)
 
     // afterAjax
     // callback après le ajax
-    const afterAjax = function(type,state,jqXHR,isError)
+    const afterAjax = function(type,state,xhr,isError)
     {
-        if(Str.isNotEmpty(type) && HistoryState.is(state) && Pojo.is(jqXHR))
+        if(Str.isNotEmpty(type) && HistoryState.is(state) && Obj.is(xhr))
         {
-            const data = jqXHR.responseText;
-            const currentUri = (Str.isNotEmpty($option.responseUrl))? jqXHR.getResponseHeader($option.responseUrl):null;
+            const data = xhr.responseText;
+            const currentUri = (Str.isNotEmpty($option.responseUrl))? xhr.getResponseHeader($option.responseUrl):null;
             const current = trigHdlr(this,'history:getCurrentState');
-            
+
             if(Str.is(data))
             {
                 const doc = Dom.doc(data);

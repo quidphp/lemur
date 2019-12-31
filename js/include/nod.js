@@ -46,7 +46,6 @@ const NodTarget = {
     realNode: function(value)
     {
         let r = value;
-        this.check(value);
         
         if(this.isTemplate(value))
         r = value.content;
@@ -96,6 +95,47 @@ const NodTarget = {
         Obj.setRef(key,value,node);
         
         return;
+    },
+    
+    
+    // propStr
+    // prend un ensemble de node et retourne une string concatené pour une même prop
+    // un séparateur peut être fourni, sinon utilise -
+    propStr: function(nodes,prop,separator) 
+    {
+        let r = '';
+        nodes = Nod.wrap(nodes,true);
+        Str.check(prop,true);
+        separator = (Str.isNotEmpty(separator))? separator:'-';
+        const $inst = this;
+        
+        this.each(nodes,function() {
+            r += (r.length)? separator:"";
+            r += $inst.getProp(this,prop);
+        });
+        
+        return r;
+    },
+    
+    
+    // propObj
+    // permet de retourner un objet à partir de plusieurs nodes
+    // il faut spécifier une prop pour clé et une autre pour valeur
+    propObj: function(nodes,propKey,propValue)
+    {
+        const r = {};
+        nodes = Nod.wrap(nodes,true);
+        const $inst = this;
+        Str.check(propKey,true);
+        Str.check(propValue,true);
+        
+        this.each(nodes,function() {
+            const key = $inst.getProp(this,propKey);
+            const value = $inst.getProp(this,propValue);
+            r[key] = value;
+        });
+        
+        return r;
     },
     
     

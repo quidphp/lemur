@@ -13,7 +13,7 @@ Test.Include = function()
     try 
     {
         // prepare
-        let newHtml = "<form method='post' action=''>";
+        let newHtml = "<form method='post' action='/ok'>";
         newHtml += "<input type='text' value='2' name='test-suite' data-required='1' data-pattern='^[0-9\-]+$' />";
         newHtml += "<input type='submit' name='test-submit3' />";
         newHtml += "<input type='submit' name='test-submit2' />";
@@ -31,6 +31,7 @@ Test.Include = function()
         const bodyNode = Ele.scopedQuery(htmlNode,'body');
         Ele.prepend(bodyNode,newHtml);
         const formNode = Ele.scopedQuery(bodyNode,"> form");
+        const formInput = Ele.scopedQueryAll(formNode,Dom.selectorInput());
         const divNode = Ele.scopedQuery(formNode,"> div");
         const inputNode = Ele.scopedQuery(formNode,"> input[type='text']");
         const submitNode = Ele.scopedQuery(formNode,"> input[name='test-submit']");
@@ -281,7 +282,7 @@ Test.Include = function()
         assert(Obj.isNotEmpty(Ele.getBoundingRect(htmlNode)));
         assert(Num.is(Ele.getDimension(htmlNode).width));
         assert(Num.is(Ele.getDimension(htmlNode).height));
-        assert(Integer.cast(Ele.getDimension(contentBox).width) === 44);
+        assert(Integer.cast(Ele.getDimension(contentBox).width) === 45);
         assert(Ele.getDimension(borderBox).width === 25);
         assert(Pojo.length(Ele.getScroll(htmlNode)) === 2);
         assert(Pojo.is(Ele.attr(htmlNode)));
@@ -301,7 +302,7 @@ Test.Include = function()
         assert(Ele.getProp(divNode,'textContent') === 'test what');
         assert(Ele.getProp(divNode,'textContent') === 'test what');
         assert(!Ele.hasClass(divNode,'test'));
-        assert(Integer.cast(Ele.getOffset(divNode).left) === 7);
+        assert(Integer.cast(Ele.getOffset(divNode).left) === 8);
         assert(Pojo.length(Ele.getOffset(divNode)) === 2);
         Ele.setHandler(htmlNode,'what',function(value) { setData(this,'OK',value); return true; });
         assert(Ele.getData(htmlNode,'OK') == null);
@@ -354,7 +355,7 @@ Test.Include = function()
         assert(Arr.isEmpty(Ele.parents(divNode,'html','html')));
         assert(Ele.is(Doc.scopedQuery(template.content,'input')));
         assert(Arr.length(formTemplate) === 1);
-        assert(Pojo.length(Ele.css(borderBox,'margin')) === 4);
+        assert(Pojo.length(Ele.css(borderBox,'position')) === 1);
         assert(Pojo.length(Ele.css(borderBox)) > 250);
         assert(Ele.getCss(borderBox,'height') === '25px');
         assert(Ele.getCss(borderBox,'height','int') === 25);
@@ -382,7 +383,7 @@ Test.Include = function()
         Ele.toggleClass(divNode,'test');
         assert(!Ele.hasClass(divNode,'test'));
         assert(Ele.getHtml(template) !== newHtml);
-        assert(Str.length(Ele.getHtml(template)) === 571);
+        assert(Str.length(Ele.getHtml(template)) === 574);
         assert(Ele.getCss(divNode,'margin-top') === '0px');
         Ele.setCss(divNode,'margin-top','10px');
         assert(Ele.getCss(divNode,'margin-top') === '10px');
@@ -396,6 +397,11 @@ Test.Include = function()
         assert(Ele.getHtml(divNode) === 'OK');
         Ele.append(divNode,'<div>test</div>');
         assert(Ele.getHtml(divNode) === 'OK<div>test</div>');
+        assert(Ele.getUri(formNode) === '/ok');
+        assert(Pojo.length(Ele.propObj(formInput,'name','value')) === 4);
+        assert(Ele.propStr(formInput,'name') === 'test-suite-test-submit3-test-submit2-test-submit');
+        assert(Ele.propStr(formInput,'name','|') === 'test-suite|test-submit3|test-submit2|test-submit');
+        assert(Ele.serialize(formInput) === 'test-suite=%5B1%2C2%2C3%5D&test-submit3=&test-submit2=&test-submit=');
         
         // eleHelper
         
@@ -662,7 +668,9 @@ Test.Include = function()
         assert(Request.absolute() !== Request.relative());
         assert(Str.isNotEmpty(Request.scheme()));
         assert(Str.is(Request.fragment()) || Request.fragment() === null);
-        assert(Pojo.is(Request.parse()));
+        assert(Obj.is(Request.parse()));
+        assert(Str.isNotEmpty(Request.parse().hostname));
+        assert(Str.isNotEmpty(Request.schemeHost()));
         
         // scalar
         assert(Scalar.is('test'));
@@ -817,7 +825,6 @@ Test.Include = function()
         assert(Str.isEnd("#james",Uri.absolute("testok.php#james",true)));
         assert(Uri.absolute("http://google.com/testok.php") === "http://google.com/testok.php");
         assert(Uri.extension("http://google.com/ok.jpg?v=2#what") === 'jpg');
-        assert(Obj.length(Uri.parse("http://google.com/ok?v=2#what")) === 6);
         assert(Uri.build(Uri.parse("/test.ok?t=2#hash"),false,true) === '/test.ok?t=2#hash');
         assert(Uri.build(Uri.parse("hash"),false,true) === '/hash');
         assert(Uri.build(Uri.parse("https://google.com/ok?v=2#what"),true,true) === "https://google.com/ok?v=2#what");
@@ -833,6 +840,10 @@ Test.Include = function()
         assert(Uri.getMailto('mailto:test@test.com') === 'test@test.com');
         assert(Uri.getMailto('test@test.com') === 'test@test.com');
         assert(Uri.getMailto('mailto:testtest.com') === null);
+        const query = Uri.query('?q=URLUtils.searchéParams&topic=api');
+        const query2 = Uri.query({q: 'oké', what: 2});
+        assert(query.toString() === 'q=URLUtils.search%C3%A9Params&topic=api');
+        assert(query2.toString() === 'q=ok%C3%A9&what=2');
         
         // validate
         assert(Validate.isNumericDash("213-123"));
@@ -910,11 +921,16 @@ Test.Include = function()
         assert(Win.are([window,window]));
         
         // xhr
-        assert(Pojo.length(Xhr.configFromNode(htmlNode)) === 9);
-        assert(Pojo.length(Xhr.configFromNode(htmlNode,null,true)) === 13);
+        const formData = new FormData(formNode);
+        assert(Xhr.isStatusSuccess(200));
+        assert(!Xhr.isStatusSuccess(404));
+        assert(!ArrLike.is(formData));
+        assert(Arr.isNotEmpty(Array.from(formData)));
+        assert(Pojo.length(Xhr.configFromNode(htmlNode)) === 4);
+        assert(Pojo.length(Xhr.configFromNode(htmlNode,null,true)) === 9);
         assert(Xhr.parseError('<html><body><div>TEST</div></body></html>','error') === '<div>TEST</div>');
         assert(Xhr.parseError('<html><body><div class="ajax-parse-error"><div>TEST</div></div></body></html>','error') === '<div class="ajax-parse-error"><div>TEST</div></div>');
-        assert(Xhr.parseError('','error') === 'error');
+        assert(Xhr.parseError('') === '');
         
         // cleanup
         Ele.remove([formNode,contentBox,contentBox,borderBox]);

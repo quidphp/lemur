@@ -21,6 +21,7 @@ Component.Calendar = function(option)
     
     // components
     Component.AjaxBlock.call(this,$option);
+    Component.HrefReplaceChar.call(this);
     
     
     // handler
@@ -101,7 +102,8 @@ Component.Calendar = function(option)
     });
 
     setHdlr(this,'ajax:config',function() {
-        return EleHelper.dataHrefReplaceChar(this,trigHdlr(this,'calendar:getCurrent'));
+        const current = trigHdlr(this,'calendar:getCurrent');
+        return trigHdlr(this,'hrefReplaceChar:make',current);
     });
     
     

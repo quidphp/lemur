@@ -57,7 +57,7 @@ Component.ColsSorter = function(option)
             const checkbox = trigHdlr(this,'colsSorter:getCheckedCheckboxes');
             const separator = getAttr(button,'data-separator');
             
-            return EleHelper.valueSeparator(checkbox,separator,true);
+            return Ele.propStr(checkbox,'value',separator);
         },
         
         isCurrent: function() {
@@ -137,10 +137,12 @@ Component.ColsSorter = function(option)
         const $this = this;
         const button = trigHdlr(this,'colsSorter:getButton');
         
+        Component.HrefReplaceChar.call(button);
+        
         // handler
         setHdlr(button,'button:redirect',function(clickEvent) {
             const set = trigHdlr($this,'colsSorter:getCheckedSet');
-            const href = EleHelper.dataHrefReplaceChar(this,set);
+            const href = trigHdlr(this,'hrefReplaceChar:make',set);
             
             if(Str.isNotEmpty(href) && href !== Request.relative())
             trigHdlr(document,'history:href',href,clickEvent);

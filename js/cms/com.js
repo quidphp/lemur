@@ -16,6 +16,7 @@ Component.Com = function()
     // components
     Component.BlockEvent.call(this,'click');
     Component.KeyboardEscape.call(this,true);
+    Component.HrefReplaceChar.call(this);
     
     
     // handler
@@ -82,7 +83,7 @@ Component.Com = function()
     // redirect
     const redirect = function(table,primary,clickEvent)
     {
-        let href = EleHelper.dataHrefReplaceChar(this,table);
+        let href = trigHdlr(this,'hrefReplaceChar:make',table);
         
         if(Str.isNotEmpty(href))
         {

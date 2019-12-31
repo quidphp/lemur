@@ -14,7 +14,6 @@ const Debug = Lemur.Debug;
 const Doc = Lemur.Doc;
 const Dom = Lemur.Dom;
 const Ele = Lemur.Ele;
-const EleHelper = Lemur.EleHelper;
 const Evt = Lemur.Evt;
 const Func = Lemur.Func;
 const HistoryState = Lemur.HistoryState;

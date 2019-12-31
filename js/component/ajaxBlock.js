@@ -60,14 +60,14 @@ Component.AjaxBlock = function(option)
     
     setHdlrs(this,'ajax:',{
         
-        before: function(jqXHR,setting) {
+        before: function(xhr) {
             const node = trigHdlr(this,'ajaxBlock:getStatusNode');
             setAttr(node,'data-status','loading');
             trigHdlr(this,'blockEvent:block',$option.ajaxEvent);
-            trigEvt(this,'ajaxBlock:before',jqXHR,setting);
+            trigEvt(this,'ajaxBlock:before',xhr);
         },
         
-        error: function(parsedError,jqXHR,textStatus,errorThrown) {
+        error: function(parsedError,xhr) {
             const node = trigHdlr(this,'ajaxBlock:getStatusNode');
             setAttr(node,"data-status",'error');
             
@@ -76,10 +76,10 @@ Component.AjaxBlock = function(option)
             
             trigHdlr(this,'ajaxBlock:setContent',parsedError,true);
             trigEvt(this,'ajaxBlock:beforeMount',parsedError,true);
-            trigEvt(this,'ajaxBlock:error',parsedError,jqXHR,textStatus,errorThrown);
+            trigEvt(this,'ajaxBlock:error',parsedError,xhr);
         },
         
-        success: function(data,textStatus,jqXHR) {
+        success: function(data,xhr) {
             const node = trigHdlr(this,'ajaxBlock:getStatusNode');
             setAttr(node,"data-status",'ready');
             
@@ -89,12 +89,12 @@ Component.AjaxBlock = function(option)
             trigHdlr(this,'ajaxBlock:setContent',data,false);
             trigEvt(this,'ajaxBlock:beforeMount',data,false);
             trigEvt(this,'ajaxBlock:mountContent');
-            trigEvt(this,'ajaxBlock:success',data,textStatus,jqXHR);
+            trigEvt(this,'ajaxBlock:success',data,xhr);
         },
         
-        complete: function(jqXHR,textStatus) {
+        complete: function(xhr) {
             trigHdlr(this,'blockEvent:unblock',$option.ajaxEvent);
-            trigEvt(this,'ajaxBlock:complete',jqXHR,textStatus);
+            trigEvt(this,'ajaxBlock:complete',xhr);
         }
     });
     

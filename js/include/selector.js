@@ -15,10 +15,12 @@ const SelectorTarget = {
         let r = null;
         node = this.realNode(node);
         Nod.check(node,false);
-        selector = (Doc.is(node))? selector:":scope "+selector;
         
         if(node != null)
-        r = node.querySelector(selector);
+        {
+            selector = (Doc.is(node))? selector:":scope "+selector;
+            r = node.querySelector(selector);
+        }
         
         if(Debug.is('selector'))
         console.log(node,selector,'scopedQuerySelector',r);
@@ -35,10 +37,10 @@ const SelectorTarget = {
         let r = null;
         node = this.realNode(node);
         Nod.check(node,false);
-        selector = (Doc.is(node))? selector:":scope "+selector;
         
         if(node != null)
         {
+            selector = (Doc.is(node))? selector:":scope "+selector;
             r = node.querySelectorAll(selector);
             
             if(r instanceof NodeList)

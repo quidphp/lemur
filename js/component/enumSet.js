@@ -60,7 +60,7 @@ Component.EnumSet = function(option)
             const searchNode = trigHdlr(this,'feedSearch:getSearch');
             const separator = getAttr(searchNode,'data-separator');
             const radioCheckbox = trigHdlr(this,'enumSet:getRadioCheckbox');
-            return EleHelper.valueSeparator(radioCheckbox,separator,true);
+            return Ele.propStr(radioCheckbox,'value',separator);
         },
         
         getMode: function() {
@@ -114,7 +114,7 @@ Component.EnumSet = function(option)
         const searchValue = trigHdlr(this,'feedSearch:getSearchValue');
         const order = trigHdlr(this,'feedSearch:getOrderValue') || separator;
         const selected = trigHdlr(this,'enumSet:getCheckedSet') || separator;
-        const uri = EleHelper.dataHrefReplaceChar(searchNode,selected,order);
+        const uri = trigHdlr(searchNode,'hrefReplaceChar:make',selected,order);
         const data = {};
         data[query] = searchValue;
         
@@ -139,6 +139,7 @@ Component.EnumSet = function(option)
     aelOnce(this,'component:setup',function() {
         bindResults.call(this);
         bindChoices.call(this);
+        bindSearch.call(this);
     });
     
     
@@ -183,6 +184,14 @@ Component.EnumSet = function(option)
                 }
             });
         }
+    }
+    
+    
+    // bindSearch
+    const bindSearch = function()
+    {
+        const searchNode = trigHdlr(this,'feedSearch:getSearch');
+        Component.HrefReplaceChar.call(searchNode);
     }
     
     

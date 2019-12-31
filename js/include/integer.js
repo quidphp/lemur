@@ -18,9 +18,10 @@ const IntegerPrimitive = {
     
     // cast
     // retourne le nombre sous forme de int
+    // utilise round pour éviter de ramener le nombre vers le bas
     cast: function(value)
     {
-        return (Scalar.isNotBool(value))? parseInt(value):null;
+        return (Scalar.isNotBool(value))? Math.round(parseFloat(value)):null;
     },
     
     

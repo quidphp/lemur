@@ -12,6 +12,10 @@ Component.Window = function(type,timeout)
     Vari.check(this,window);
     
     
+    // components
+    Component.ScrollAnimate.call(this);
+    
+    
     // handler
     setHdlrs(this,'window:',{
         // retourne vrai si le navigateur courant supporte le touch
@@ -25,16 +29,11 @@ Component.Window = function(type,timeout)
         },
         
         // permet de scroller la fenêtre
-        scrollTo: function(top) {
-            const htmlBody = qsa(document,"html,body");
-            
-            Ele.animateStop(htmlBody);
-            
-            Ele.each(htmlBody,function() {
-                Ele.setScroll(this,top);
-            });
+        scrollTo: function(top,left,smooth) {
+            return trigHdlr(this,'scrollAnimate:go',top,left,smooth);
         }
     });
+    
     
     // sur le premier isTouch
     aelOnce(document,'touchstart',function() {

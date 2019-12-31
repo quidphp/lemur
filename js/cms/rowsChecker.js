@@ -86,7 +86,8 @@ Component.RowsChecker = function()
         
         getCheckedSet: function() {
             const separator = getAttr(this,"data-separator");
-            return EleHelper.valueSeparator(trigHdlr(this,'rowsChecker:getCheckedCheckboxes'),separator,true);
+            const checked = trigHdlr(this,'rowsChecker:getCheckedCheckboxes');
+            return Ele.propStr(checked,'value',separator);
         },
         
         areAllChecked: function() {
@@ -232,10 +233,12 @@ Component.RowsChecker = function()
         const $this = this;
         const button = trigHdlr(this,'rowsChecker:getToolsButton');
         
+        Component.HrefReplaceChar.call(button);
+        
         // handler
         setHdlr(button,'toolButton:redirect',function(clickEvent) {
             const set = trigHdlr($this,'rowsChecker:getCheckedSet');
-            const href = EleHelper.dataHrefReplaceChar(this,set);
+            const href = trigHdlr(this,'hrefReplaceChar:make',set);
             
             if(Str.isNotEmpty(href))
             trigHdlr(document,'history:href',href,clickEvent);

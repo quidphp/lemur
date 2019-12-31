@@ -6,11 +6,18 @@
  
 // scrollChange
 // component to notify nodes when window scroll has changed
-Component.ScrollChange = function(persistent)
+Component.ScrollChange = function(option)
 {
     // not empty
     if(Vari.isEmpty(this)) 
     return null;
+    
+    
+    // option
+    const $option = Pojo.replace({
+        scroller: window,
+        persistent: false
+    },option);
     
     
     // nodes
@@ -18,20 +25,20 @@ Component.ScrollChange = function(persistent)
     
     
     // event
-    const handler = ael(window,'scroll',function(event) {
+    const handler = ael($option.scroller,'scroll',function(event) {
         trigEvt($nodes,'scroll:change',event);
     });
     
     
     // persistent
-    if(persistent !== true)
+    if($option.persistent !== true)
     {
         aelOnce(document,'doc:unmountPage',function() {
-            rel(window,handler);
+            rel($option.scroller,handler);
         });
         
         aelOnce(this,'component:teardown',function() {
-            rel(window,handler);
+            rel($option.scroller,handler);
         });
     }
     

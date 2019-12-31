@@ -54,7 +54,7 @@ Component.NavIndex = function(option)
         };
         
         if(promise != null)
-        promise.done(callback);
+        promise.then(callback);
         
         else
         callback();

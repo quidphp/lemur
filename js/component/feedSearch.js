@@ -26,6 +26,7 @@ Component.FeedSearch = function(option)
     
     // components
     Component.Feed.call(this);
+    Component.HrefReplaceChar.call(this);
     
     
     // handler
@@ -91,7 +92,7 @@ Component.FeedSearch = function(option)
         data[query] = search;
         
         return {
-            url: EleHelper.dataHrefReplaceChar(this,order),
+            url: trigHdlr(this,'hrefReplaceChar:make',order),
             data: data
         }
     });

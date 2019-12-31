@@ -40,6 +40,14 @@ const Request = Lemur.Request = {
     },
     
     
+    // schemeHost
+    // retourne le schemeHost courant
+    schemeHost: function()
+    {
+        return location.origin;
+    },
+    
+    
     // fragment
     // retourne le fragment de l'uri sans le hash
     fragment: function() 
@@ -52,12 +60,6 @@ const Request = Lemur.Request = {
     // retourne un objet avec les différentes parties de l'uri courante séparés
     parse: function()
     {
-        return {
-            scheme: this.scheme(), 
-            host: location.hostname, 
-            path: location.pathname, 
-            query: location.search, 
-            hash: location.hash
-        };
+        return new URL(this.absolute());
     }
 }

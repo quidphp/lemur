@@ -53,7 +53,6 @@ abstract class Boot extends Core\Boot
         '@cms'=>[
             'service'=>[
                 'polyfill'=>Service\Polyfill::class,
-                'jQuery'=>Service\JQuery::class,
                 'sortable'=>Service\Sortable::class,
                 'tinymce'=>Service\TinyMce::class],
             'option'=>[

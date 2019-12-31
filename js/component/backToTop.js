@@ -15,33 +15,18 @@ Component.BackToTop = function(option)
     
     // option
     const $option = Pojo.replace({
-        scroller: 'html',
         attr: 'data-active',
         trigger: 'button',
-        speed: 500
+        smooth: true
     },option);
     
     
     // components
-    Component.ScrollChange.call(this);
+    Component.ScrollAnimate.call(this);
     
     
     // handler
     setHdlrs(this,'backToTop:',{
-        
-        getScroller: function() {
-            let r = this;
-            
-            if(Str.isNotEmpty($option.scroller))
-            r = qs(document,$option.scroller);
-            
-            const htmlBody = trigHdlr(document,'doc:getHtmlBody');
-
-            if(Arr.in(this,htmlBody))
-            r = htmlBody;
-            
-            return r;
-        },
         
         getTrigger: function() {
             return qs(this,$option.trigger);
@@ -56,13 +41,12 @@ Component.BackToTop = function(option)
         },
         
         refresh: function() {
-            const scroller = trigHdlr(this,'backToTop:getScroller');
-            const scrollTop = Ele.getScroll(scroller).top;
+            const scrollTop = trigHdlr(this,'scrollAnimate:getCurrentScroll').top;
             trigHdlr(this,(scrollTop === 0)? 'backToTop:hide':'backToTop:show');
         }
     });
     
-    
+
     // event
     ael(this,'scroll:change',function() {
         trigHdlr(this,'backToTop:refresh');
@@ -83,8 +67,7 @@ Component.BackToTop = function(option)
         const trigger = trigHdlr(this,'backToTop:getTrigger');
         
         ael(trigger,'click',function() {
-            const scroller = trigHdlr($this,'backToTop:getScroller');
-            Ele.animate(scroller,{scrollTop: 0},$option.speed);
+            trigHdlr($this,'scrollAnimate:go',0,null,$option.smooth);
         });
     }
     
