@@ -49,7 +49,7 @@ trait _generalRelation
         $r = '';
         $grab = $this->relationGrab();
         $emptyNotEmpty = $this->showEmptyNotEmpty();
-
+        
         if(!empty($grab))
         {
             ['result'=>$results,'count'=>$count] = $grab;

@@ -431,21 +431,24 @@ const EleTarget = {
 
     // serialize
     // permet de serializer une ou plusieurs nodes
-    serialize: function(nodes)
+    // il faut spécifier la prop pour clé et celle pour value
+    serialize: function(nodes,keyProp,valueProp)
     {
         let r = '';
         nodes = Nod.wrap(nodes,true);
         const query = Uri.query();
+        keyProp = (Str.is(keyProp))? keyProp:'name';
+        valueProp = (Str.is(valueProp))? valueProp:'value';
         const $inst = this;
         
         this.each(nodes,function() {
-            const key = $inst.getProp(this,'name');
-            const value = $inst.getProp(this,'value');
+            const key = $inst.getProp(this,keyProp);
+            const value = $inst.getProp(this,valueProp);
             query.append(key,value);
         });
         
         r = query.toString();
-        
+
         return r;
     },
 }

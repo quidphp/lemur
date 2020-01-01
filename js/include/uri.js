@@ -199,6 +199,7 @@ const Uri = Lemur.Uri = {
         if(Pojo.is(value))
         {
             Pojo.each(value,function(value,key) {
+                value = (value == null)? '':value;
                 r.append(key,value);
             });
         }
@@ -216,27 +217,21 @@ const Uri = Lemur.Uri = {
         let r = '';
         Obj.check(parse);
         
-        if(absolute === true && hash === true)
-        r = parse.toString();
-        
-        else
+        if(absolute === true)
         {
-            if(absolute === true)
-            {
-                r += parse.protocol;
-                r += "//";
-                r += parse.host;
-            }
-            
-            r += parse.pathname;
-            
-            if(parse.search)
-            r += parse.search;
-
-            if(parse.hash && hash === true)
-            r += parse.hash;
+            r += parse.protocol;
+            r += "//";
+            r += parse.host;
         }
         
+        r += parse.pathname;
+        
+        if(parse.search)
+        r += parse.search;
+
+        if(parse.hash && hash === true)
+        r += parse.hash;
+
         return r;
     },
     

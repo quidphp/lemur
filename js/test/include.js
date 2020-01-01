@@ -282,7 +282,7 @@ Test.Include = function()
         assert(Obj.isNotEmpty(Ele.getBoundingRect(htmlNode)));
         assert(Num.is(Ele.getDimension(htmlNode).width));
         assert(Num.is(Ele.getDimension(htmlNode).height));
-        assert(Integer.cast(Ele.getDimension(contentBox).width) === 45);
+        assert(Integer.round(Ele.getDimension(contentBox).width) === 45);
         assert(Ele.getDimension(borderBox).width === 25);
         assert(Pojo.length(Ele.getScroll(htmlNode)) === 2);
         assert(Pojo.is(Ele.attr(htmlNode)));
@@ -302,7 +302,7 @@ Test.Include = function()
         assert(Ele.getProp(divNode,'textContent') === 'test what');
         assert(Ele.getProp(divNode,'textContent') === 'test what');
         assert(!Ele.hasClass(divNode,'test'));
-        assert(Integer.cast(Ele.getOffset(divNode).left) === 8);
+        assert(Integer.round(Ele.getOffset(divNode).left) === 8);
         assert(Pojo.length(Ele.getOffset(divNode)) === 2);
         Ele.setHandler(htmlNode,'what',function(value) { setData(this,'OK',value); return true; });
         assert(Ele.getData(htmlNode,'OK') == null);
@@ -423,9 +423,9 @@ Test.Include = function()
         // historyState
         assert(HistoryState.is({ url: 'test', timestamp: 1234 }));
         assert(HistoryState.isChangeValid({ url: 'test', timestamp: 1234 },HistoryState.make('what','bleh')));
-        let $dom = document.createElement('a');
         assert(Obj.length(HistoryState.make('what','bleh')) === 3);
         assert(Str.isEnd("/#what",HistoryState.make('#what','bleh').url));
+        assert(HistoryState.make('http://google.com/ok#','bleh').url === 'http://google.com/ok');
         
         // integer
         assert(!Integer.is('2'));
@@ -433,6 +433,7 @@ Test.Include = function()
         assert(!Integer.is(2.2));
         assert(Integer.cast(true) === null);
         assert(Integer.cast('2.3') === 2);
+        assert(Integer.cast('2.6') === 2);
         assert(Integer.cast('25px') === 25);
         assert(Integer.cast(4) === 4);
         assert(Integer.cast(2.3) === 2);

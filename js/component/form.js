@@ -40,6 +40,12 @@ Component.Form = function()
             });
         },
         
+        getSerializeFields: function() {
+            return Arr.filter(trigHdlr(this,'form:getFields'),function() {
+                return trigHdlr(this,'input:isSerialize');
+            });
+        },
+        
         getTargetVisibleFields: function() {
             return Arr.filter(trigHdlr(this,'form:getFields'),function() {
                 return trigHdlr(this,'input:isTargetVisible');
@@ -113,7 +119,7 @@ Component.Form = function()
         },
         
         serialize: function() {
-            const target = trigHdlr(this,'form:getTargetFields');
+            const target = trigHdlr(this,'form:getSerializeFields');
             return Ele.serialize(target);
         },
         

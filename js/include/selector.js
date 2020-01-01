@@ -78,8 +78,7 @@ const SelectorTarget = {
     
     
     // closest
-    // retourne le parent le plus proche de la node qui retourne vrai au pattern
-    // peut retourner la node courante
+    // retourne la node ou le parent le plus proche de la node qui retourne vrai au pattern
     closest: function(node,value)
     {
         node = this.realNode(node);
@@ -87,6 +86,15 @@ const SelectorTarget = {
         Str.check(value);
         
         return node.closest(value);
+    },
+    
+    
+    // closestParent
+    // retourne le parent le plus proche de la node qui retourne vrai au pattern
+    closestParent: function(node,value)
+    {
+        const parent = this.parent(node);
+        return (parent != null)? this.closest(parent,value):null;
     },
     
     

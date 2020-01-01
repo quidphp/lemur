@@ -141,6 +141,16 @@ Component.Input = function()
             return (trigHdlr(this,'input:isTarget') && Ele.isVisible(this))? true:false;
         },
         
+        isSerialize: function() {
+            let r = false;
+            const isRadioCheckbox = trigHdlr(this,'input:isRadioCheckbox');
+            
+            if(trigHdlr(this,'input:isTarget'))
+            r = (isRadioCheckbox === true)? !Ele.match(this,':checked'):true;
+            
+            return r;
+        },
+        
         isValidate: function() {
             return (trigHdlr(this,'input:isTarget') && Nod.match(this,"[data-required],[data-pattern]"))? true:false;
         },

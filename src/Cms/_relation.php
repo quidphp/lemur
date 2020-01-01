@@ -242,7 +242,7 @@ trait _relation
             $array = null;
             $count = 0;
             $optionCount = Base\Arr::plus($option,['limit'=>null]);
-
+            
             if(is_string($search))
             {
                 $count = $relation->searchCount($search,$optionCount);

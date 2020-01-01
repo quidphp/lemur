@@ -99,7 +99,8 @@ Component.NavHash = function(option)
     ael(this,type+':afterChange',function(event,target,old) {
         const current = trigHdlr(this,'navHash:getCurrentHash');
 
-        if(Str.isNotEmpty(current))
+        // ici remplace seulement le hash s'il y a déjà un hash (ceci afin d'éviter qu'au chargement de page, on ajoute un hash)
+        if(Request.fragment() && Str.isNotEmpty(current))
         trigHdlr(document,'history:replaceHash',current);
     });
     

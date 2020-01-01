@@ -73,7 +73,7 @@ Component.ClickOpenBase = function(option)
         getParent: function() {
             const attr = $option.attr;
             
-            return Nod.closest(this,"["+attr+"='1']");
+            return Nod.closestParent(this,"["+attr+"='1']");
         },
         
         getParentOrRoot: function() {

@@ -90,14 +90,15 @@ Component.History = function(option)
         
         // replace l'état courant par une nouvelle uri
         // le premier argument peut être une uri ou un objet state
+        // retourne null ou le nouveau state
         replaceState: function(uriState,title) {
-            let r = false;
+            let r = null;
             uriState = (Pojo.is(uriState))? uriState:HistoryState.make(uriState,title);
             
             if($history != null && uriState != null)
             {
                 $history.replaceState(uriState,uriState.title,uriState.url);
-                r = true;
+                r = uriState;
             }
             
             return r;
@@ -105,38 +106,45 @@ Component.History = function(option)
         
         // ajoute un élément à l'historique
         // le premier argument peut être une uri ou un objet state
+        // retourne null ou le nouveau state
         pushState: function(uriState,title) {
-            let r = false;
+            let r = null;
             uriState = (Pojo.is(uriState))? uriState:HistoryState.make(uriState,title);
             
             if($history != null && uriState != null && !trigHdlr(this,'history:isCurrentStateUrl',uriState))
             {
                 $history.pushState(uriState,uriState.title,uriState.url);
-                r = true;
+                r = uriState;
             }
             
             return r;
         },
         
         // permet de faire un replaceState avec un nouveau hash
+        // retourne null ou le nouveau state
         replaceHash: function(value,title) {
             Str.check(value);
             value = Uri.makeHash(value,true);
-            const state = HistoryState.make(value,title);
-            trigHdlr(this,'history:replaceState',state);
+            return trigHdlr(this,'history:replaceState',value,title);
         },
         
         // permet de faire un pushState avec un nouveau hash
+        // retourne null ou le nouveau state, si null va faire le changement via window.location
         pushHash: function(value,title) {
+            let r = null;
             Str.check(value);
             value = Uri.makeHash(value,true);
             const state = HistoryState.make(value,title);
             
             if(!trigHdlr(this,'history:isCurrentStateUrl',state))
             {
-                if(!trigHdlr(this,'history:pushState',state))
+                r = trigHdlr(this,'history:pushState',state);
+                
+                if(r == null)
                 window.location.hash = Uri.makeHash(value,false);
             }
+            
+            return r;
         },
         
         // gère une nouvelle entrée à l'historique à partir d'un event
