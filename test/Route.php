@@ -170,7 +170,9 @@ class Route extends Base\Test
         assert($route::group() === 'error');
         assert($login::group() === 'nobody');
         assert($login::group(true) === 'nobody');
-        assert($route::name() === 'error');
+        assert($route::name(true) === 'error');
+        assert($route::name(false) === 'Error');
+        assert($route::name() === 'Error');
         assert($route::priority() === 999);
         assert($route::parent() === null);
         assert($loginSubmit::parent() === Lemur\Cms\Login::class);

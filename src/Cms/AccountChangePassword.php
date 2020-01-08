@@ -18,7 +18,7 @@ use Quid\Lemur;
 class AccountChangePassword extends Lemur\Route\AccountChangePassword
 {
     // trait
-    use _modal;
+    use Lemur\Route\_modal;
 
 
     // config

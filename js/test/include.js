@@ -252,7 +252,7 @@ Test.Include = function()
         assert(Dom.htmlStr(htmlNode) === Dom.htmlStr([htmlNode]));
         assert(Arr.is(Dom.parse(htmlStr)));
         assert(Ele.is(Dom.parseOne(htmlStr)));
-        assert(Obj.length(Dom.doc(htmlStr)) === 9);
+        assert(Obj.length(Dom.doc(htmlStr)) === 11);
         assert(Dom.selectorInput() === "input,select,textarea,button[type='submit']");
         assert(Dom.selectorInput(true) === "input,select,textarea,button");
 
@@ -282,7 +282,7 @@ Test.Include = function()
         assert(Obj.isNotEmpty(Ele.getBoundingRect(htmlNode)));
         assert(Num.is(Ele.getDimension(htmlNode).width));
         assert(Num.is(Ele.getDimension(htmlNode).height));
-        assert(Integer.round(Ele.getDimension(contentBox).width) === 45);
+        assert(Integer.round(Ele.getDimension(contentBox).width) > 40);
         assert(Ele.getDimension(borderBox).width === 25);
         assert(Pojo.length(Ele.getScroll(htmlNode)) === 2);
         assert(Pojo.is(Ele.attr(htmlNode)));

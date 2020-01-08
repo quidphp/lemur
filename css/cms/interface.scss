@@ -9,7 +9,7 @@
 // interface
 // stylesheet for the main interface of the CMS
 
-/* WRAPPER */
+// body
 body {
     @include print() {
         background-image: none !important;

@@ -31,6 +31,7 @@ Component.Background = function()
                 {
                     r = true;
                     setAttr(this,'data-from',value);
+                    trigHdlr(this,'background:changed',value);
                 }
             }
             
@@ -47,6 +48,7 @@ Component.Background = function()
                 {
                     r = true;
                     Ele.removeAttr(this,'data-from');
+                    trigHdlr(this,'background:changed',undefined);
                 }
             }
             

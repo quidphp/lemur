@@ -12,13 +12,14 @@ declare(strict_types=1);
 namespace Quid\Lemur\Cms;
 use Quid\Base\Html;
 use Quid\Core;
+use Quid\Lemur;
 
 // email
 // modal route to confirm the mailto link
 class Email extends Core\RouteAlias
 {
     // trait
-    use _modal;
+    use Lemur\Route\_modal;
 
 
     // config

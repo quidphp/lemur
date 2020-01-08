@@ -68,22 +68,39 @@ Component.NavHash = function(option)
         }
     });
     
-    setHdlr(this,type+':readyValue',function(value) {
-        if(value === true)
-        {
-            value = null;
-            const setupHash = trigHdlr(this,'navHash:setupFragment');
-            if(Str.isNotEmpty(setupHash))
-            value = "#"+setupHash;
-        }
+    setHdlrs(this,type+':',{
         
-        if(Str.isStart("#",value))
-        {
-            const node = trigHdlr(this,'navHash:getHash',value);
-            value = (node != null)? node:null;
-        }
+        manageHashChange: function(target,old,context,targets) {
+            const isFirst = Arr.valueFirst(targets) === target;
+            const current = trigHdlr(this,'navHash:getCurrentHash');
+
+            // ici remplace seulement le hash s'il y a déjà un hash 
+            // ou si ce n'est pas le premier
+            // ceci afin d'éviter qu'au chargement de page, on ajoute un hash
+            if(Str.isNotEmpty(current))
+            {
+                if(Request.fragment() || isFirst === false)
+                trigHdlr(document,'history:replaceHash',current);
+            }
+        },
         
-        return (value == null)? 'first':value;
+        readyValue: function(value) {
+            if(value === true)
+            {
+                value = null;
+                const setupHash = trigHdlr(this,'navHash:setupFragment');
+                if(Str.isNotEmpty(setupHash))
+                value = "#"+setupHash;
+            }
+            
+            if(Str.isStart("#",value))
+            {
+                const node = trigHdlr(this,'navHash:getHash',value);
+                value = (node != null)? node:null;
+            }
+            
+            return (value == null)? 'first':value;
+        }
     });
     
     
@@ -96,12 +113,8 @@ Component.NavHash = function(option)
         trigHdlr(this,type+':go',"#"+hash,'hashchange');
     });
     
-    ael(this,type+':afterChange',function(event,target,old) {
-        const current = trigHdlr(this,'navHash:getCurrentHash');
-
-        // ici remplace seulement le hash s'il y a déjà un hash (ceci afin d'éviter qu'au chargement de page, on ajoute un hash)
-        if(Request.fragment() && Str.isNotEmpty(current))
-        trigHdlr(document,'history:replaceHash',current);
+    ael(this,type+':afterChange',function(event,target,old,context,targets) {
+        trigHdlr(this,type+':manageHashChange',target,old,context,targets);
     });
     
     ael(this,type+':bindChilds',function(event,value) {

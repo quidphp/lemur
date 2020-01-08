@@ -151,7 +151,6 @@
     textarea {
         font-family: inherit;
         font-size: 100%;
-        line-height: normal;
         margin: 0;
     }
     button,
@@ -251,7 +250,6 @@
     }
     button[type='button'] {
         @include transitions(color 0.3s, background-color 0.3s, opacity 0.3s, border 0.3s);
-        line-height: 1.4;
         text-align: left;
         padding: 0;
         color: $black;

@@ -18,7 +18,7 @@ use Quid\Lemur;
 class Contact extends Lemur\Route\Contact
 {
     // trait
-    use _modal;
+    use Lemur\Route\_modal;
 
 
     // config

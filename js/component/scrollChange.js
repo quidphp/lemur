@@ -16,16 +16,18 @@ Component.ScrollChange = function(option)
     // option
     const $option = Pojo.replace({
         scroller: window,
-        persistent: false
+        persistent: false,
+        passive: true
     },option);
     
     
     // nodes
     const $nodes = this;
+    const listener = ($option.passive === true)? aelPassive:ael;
     
     
     // event
-    const handler = ael($option.scroller,'scroll',function(event) {
+    const handler = listener($option.scroller,'scroll',function(event) {
         trigEvt($nodes,'scroll:change',event);
     });
     

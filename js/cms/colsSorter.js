@@ -60,13 +60,20 @@ Component.ColsSorter = function(option)
             return Ele.propStr(checkbox,'value',separator);
         },
         
-        isCurrent: function() {
+        hasChanged: function() {
             const button = trigHdlr(this,'colsSorter:getButton');
             const set = trigHdlr(this,'colsSorter:getCheckedSet');
             const current = getAttr(button,'data-current');
             
-            return (set === current)? true:false;
+            return (set !== current)? true:false;
         }
+    });
+    
+    
+    // event
+    ael(this,'clickOpen:closed',function() {
+        if(trigHdlr(this,'colsSorter:hasChanged'))
+        redirect.call(this);
     });
     
     
@@ -104,7 +111,7 @@ Component.ColsSorter = function(option)
             },
             
             valid: function() {
-                if(trigHdlr($this,'colsSorter:isCurrent'))
+                if(!trigHdlr($this,'colsSorter:hasChanged'))
                 Ele.removeAttr(this,"data-validate");
                 else
                 setAttr(this,'data-validate','valid');
@@ -139,19 +146,22 @@ Component.ColsSorter = function(option)
         
         Component.HrefReplaceChar.call(button);
         
-        // handler
-        setHdlr(button,'button:redirect',function(clickEvent) {
-            const set = trigHdlr($this,'colsSorter:getCheckedSet');
-            const href = trigHdlr(this,'hrefReplaceChar:make',set);
-            
-            if(Str.isNotEmpty(href) && href !== Request.relative())
-            trigHdlr(document,'history:href',href,clickEvent);
-        });
-        
         // event
         ael(button,'click',function(event) {
-            trigHdlr(this,'button:redirect',event);
+            redirect.call($this,event);
         });
+    }
+    
+    
+    // redirect
+    const redirect = function(clickEvent)
+    {
+        const button = trigHdlr(this,'colsSorter:getButton');
+        const set = trigHdlr(this,'colsSorter:getCheckedSet');
+        const href = trigHdlr(button,'hrefReplaceChar:make',set);
+        
+        if(Str.isNotEmpty(href) && href !== Request.relative())
+        trigHdlr(document,'history:href',href,clickEvent);
     }
 
     return this;

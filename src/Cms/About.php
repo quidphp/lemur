@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Quid\Lemur\Cms;
 use Quid\Base\Html;
+use Quid\Lemur;
 use Quid\Core;
 
 // about
@@ -18,7 +19,7 @@ use Quid\Core;
 class About extends Core\RouteAlias
 {
     // trait
-    use _modal;
+    use Lemur\Route\_modal;
 
 
     // config

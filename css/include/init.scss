@@ -74,49 +74,78 @@ $media: $uriMedia;
             visibility: hidden;
         }
     }
+    
+    @include keyframes(pulse) {
+        0% { transform: scale(1); }
+        30% { transform: scale(1); }
+        40% { transform: scale(1.08); }
+        50% { transform: scale(1); }
+        60% { transform: scale(1); }
+        70% { transform: scale(1.05); }
+        80% { transform: scale(1); }
+        100% { transform: scale(1); }
+    }
+}
+
+// position
+// permet de changer la position d'un élément
+@mixin position($top: null, $right: null, $bottom: null, $left: null) {
+    @if ($top) {
+        top: $top;
+    }
+    
+    @else {
+        top: auto;
+    }
+
+    @if ($right) {
+        right: $right;
+    }
+    
+    @else {
+        right: auto;
+    }
+    
+    @if ($bottom) {
+        bottom: $bottom;
+    }
+    
+    @else {
+        bottom: auto;
+    }
+    
+    @if ($left) {
+        left: $left;
+    }
+    
+    @else {
+        left: auto;
+    }
 }
 
 // abs
 // mixin utilisé pour positionner un élément en absolute
 @mixin abs($top: null, $right: null, $bottom: null, $left: null) {
+    @include position($top,$right,$bottom,$left);
     position: absolute;
-
-    @if ($top) {
-        top: $top;
-    }
-
-    @if ($right) {
-        right: $right;
-    }
-
-    @if ($bottom) {
-        bottom: $bottom;
-    }
-
-    @if ($left) {
-        left: $left;
-    }
 }
 
 // fixed
 // mixin utilisé pour positionner un élément de façon fixed
 @mixin fixed($top: null, $right: null, $bottom: null, $left: null) {
+    @include position($top,$right,$bottom,$left);
     position: fixed;
+}
 
-    @if ($top) {
-        top: $top;
-    }
-
-    @if ($right) {
-        right: $right;
-    }
-
-    @if ($bottom) {
-        bottom: $bottom;
-    }
-
-    @if ($left) {
-        left: $left;
+// sticky
+// mixin pour positionner un élément sticky, fallback absolute pour ie
+@mixin sticky($top: null, $right: null, $bottom: null, $left: null) {
+    position: -webkit-sticky;
+    position: sticky;
+    @include position($top,$right,$bottom,$left);
+    
+    @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {  
+        position: relative;
     }
 }
 
@@ -246,12 +275,12 @@ $media: $uriMedia;
 
 // animate
 // mixin utilisé pour créer des animations compatible avec tous les navigateurs
-@mixin animate($name, $time: 1s, $delay: 0s, $direction: normal, $fillMode: forwards) {
-    -webkit-animation: $name $time $delay $direction $fillMode;
-    -moz-animation: $name $time $delay $direction $fillMode;
-    -ms-animation: $name $time $delay $direction $fillMode;
-    -o-animation: $name $time $delay $direction $fillMode;
-    animation: $name $time $delay $direction $fillMode;
+@mixin animate($name, $time: 1s, $delay: 0s, $direction: normal, $fillMode: forwards,$count: null) {
+    -webkit-animation: $name $time $delay $direction $fillMode $count;
+    -moz-animation: $name $time $delay $direction $fillMode $count;
+    -ms-animation: $name $time $delay $direction $fillMode $count;
+    -o-animation: $name $time $delay $direction $fillMode $count;
+    animation: $name $time $delay $direction $fillMode $count;
 }
 
 // animateCancel
@@ -267,12 +296,12 @@ $media: $uriMedia;
 // transition
 // mixin utilisé pour ajouter une transition sur un élément
 // fournir le nom de la propriété
-@mixin transition($prop, $duration: 0.3s) {
+@mixin transition($prop, $duration: 0.3s,$timing:null) {
     transition: $prop $duration;
-    -webkit-transition: $prop $duration;
-    -moz-transition: $prop $duration;
-    -o-transition: $prop $duration;
-    -ms-transition: $prop $duration;
+    -webkit-transition: $prop $duration $timing;
+    -moz-transition: $prop $duration $timing;
+    -o-transition: $prop $duration $timing;
+    -ms-transition: $prop $duration $timing;
 }
 
 // transitionCancel
@@ -305,6 +334,12 @@ $media: $uriMedia;
 // mixin pour qu'un élément s'anime avec un fadeOut
 @mixin fadeOut($time: 1s) {
     @include animate(fadeOut, $time);
+}
+
+// pulse
+// mixin pour qu'un élément pulse (change de taille)
+@mixin pulse($time: 1s,$count:infinite) {
+    @include animate(pulse, $time, $count: $count);
 }
 
 // keyframes
@@ -347,15 +382,27 @@ $media: $uriMedia;
     }
 }
 
+// responsiveAndPrint
+// mixin pour appliquer les styles à responsive et print
+@mixin responsiveAndPrint($maxWidth: 900px) {
+    @media screen and (max-width: $maxWidth), screen and (orientation: portrait) {
+        @content;
+    }
+    
+    @media print {
+        @content;
+    }
+}
+
 // responsiveSize
 // mixin utilisé pour annuler les styles width, padding et margin
-@mixin responsiveSize($important: null) {
+@mixin responsiveSize($important: null,$width:auto) {
     @if ($important) {
-        width: auto !important;
+        width: $width !important;
         padding: 0 !important;
         margin: 0 !important;
     } @else {
-        width: auto;
+        width: $width;
         padding: 0;
         margin: 0;
     }
@@ -363,12 +410,12 @@ $media: $uriMedia;
 
 // responsiveBlock
 // mixin utilisé pour annuler des styles et que l'élément s'affiche en block avec width auto
-@mixin responsiveBlock($important: null) {
+@mixin responsiveBlock($important: null,$width:auto) {
     @if ($important) {
-        @include responsiveSize($important);
+        @include responsiveSize($important,$width);
         display: block !important;
     } @else {
-        @include responsiveSize($important);
+        @include responsiveSize($important,$width);
         display: block;
     }
 }

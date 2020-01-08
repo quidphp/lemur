@@ -115,6 +115,8 @@ const Dom = Lemur.Dom = {
     doc: function(html)
     {
         let r = {
+            doc: this.parse(html),
+            docEle: [],
             html: null,
             htmlAttr: null,
             head: null,
@@ -125,24 +127,32 @@ const Dom = Lemur.Dom = {
             body: null,
             bodyAttr: null
         };
-        const doc = this.parseOne(html);
         
-        r.html = doc;
-        Ele.removeAttr(r.html,'data-tag');
-        r.htmlAttr = Ele.attr(r.html);
+        Arr.each(r.doc,function() {
+            if(Ele.is(this))
+            r.docEle.push(this);
+        });
         
-        r.head = Nod.scopedQuery(r.html,"[data-tag='head']");
-        r.body = Nod.scopedQuery(r.html,"[data-tag='body']");
+        r.html = Ele.find(r.docEle,"[data-tag='html']") || Arr.valueFirst(r.docEle);
         
-        if(r.head != null)
+        if(r.html != null)
         {
-            const title = Nod.scopedQuery(r.head,"title");
+            Ele.removeAttr(r.html,'data-tag');
+            r.htmlAttr = Ele.attr(r.html);
             
-            Ele.removeAttr(r.head,'data-tag');
-            r.headAttr = Ele.attr(r.head);
-            r.title = (title != null)? Ele.getText(title):'?';
-            r.titleHtml = r.title.replace('<','&lt;').replace('>','&gt;').replace(' & ',' &amp; ');
-            r.meta = Nod.scopedQueryAll(r.head,"meta");
+            r.head = Nod.scopedQuery(r.html,"[data-tag='head']");
+            r.body = Nod.scopedQuery(r.html,"[data-tag='body']");
+            
+            if(r.head != null)
+            {
+                const title = Nod.scopedQuery(r.head,"title");
+                
+                Ele.removeAttr(r.head,'data-tag');
+                r.headAttr = Ele.attr(r.head);
+                r.title = (title != null)? Ele.getText(title):'?';
+                r.titleHtml = r.title.replace('<','&lt;').replace('>','&gt;').replace(' & ',' &amp; ');
+                r.meta = Nod.scopedQueryAll(r.head,"meta");
+            }
         }
         
         if(r.body != null)
@@ -153,11 +163,11 @@ const Dom = Lemur.Dom = {
         
         else
         {
-            const html = Ele.getOuterHtml(doc);
+            const html = Ele.getOuterHtml(r.doc);
             const newBody = "<div data-tag='body'>"+html+"</div>";
             r.body = this.parseOne(newBody);
         }
-        
+
         return r;
     }
 }

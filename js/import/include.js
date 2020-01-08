@@ -63,6 +63,7 @@ const trigHdlr = Target.triggerHandler.bind(Target);
 const trigHdlrs = Target.triggersHandler.bind(Target);
 const ael = Target.addListener.bind(Target);
 const aelDelegate = Target.addDelegatedListener.bind(Target);
+const aelPassive = Target.addPassiveListener.bind(Target);
 const aelOnce = Target.addListenerOnce.bind(Target);
 const rel = Target.removeListener.bind(Target);
 const trigEvt = Target.triggerNoBubble.bind(Target);

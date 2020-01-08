@@ -6,16 +6,26 @@
  
 // initOpenClose
 // base component used for opening, closing and initializing a container
-Component.InitOpenClose = function(type,attr)
+Component.InitOpenClose = function(option)
 {
     // not empty
     if(Vari.isEmpty(this)) 
     return null;
     
     
+    // option
+    const $option = Pojo.replace({
+        type: null,
+        attr: null,
+        attrInit: 'data-init'
+    },option);
+    
+    
     // check
+    const type = $option.type;
     Str.check(type);
-    Str.check(attr);
+    Str.check($option.attr);
+    Str.check($option.attrInit);
     
     
     // handler
@@ -34,7 +44,7 @@ Component.InitOpenClose = function(type,attr)
         },
         
         isOpen: function() {
-            return (getAttr(this,attr,'int') === 1);
+            return (getAttr(this,$option.attr,'int') === 1);
         },
         
         canOpen: function() {
@@ -57,13 +67,14 @@ Component.InitOpenClose = function(type,attr)
         if(trigHdlr(this,type+':isOpen') !== true && trigHdlr(this,type+':canOpen') === true)
         {
             let isInit = false;
-            setAttr(this,attr,1);
+            setAttr(this,$option.attr,1);
             
             if(trigHdlr(this,type+':isInit') !== true)
             {
                 isInit = true;
                 trigEvt(this,type+':init');
                 setData(this,type+'-init',true);
+                setAttr(this,$option.attrInit,1);
             }
             
             trigEvt(this,type+':opened',isInit);
@@ -73,7 +84,7 @@ Component.InitOpenClose = function(type,attr)
     ael(this,type+':close',function() {
         if(trigHdlr(this,type+':isOpen') === true)
         {
-            setAttr(this,attr,0);
+            setAttr(this,$option.attr,0);
             
             trigEvt(this,type+':closed');
         }

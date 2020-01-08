@@ -21,7 +21,7 @@ use Quid\Main;
 class SessionRole extends Core\RouteAlias
 {
     // trait
-    use _modal;
+    use Lemur\Route\_modal;
 
 
     // config

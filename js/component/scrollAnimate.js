@@ -44,8 +44,40 @@ Component.ScrollAnimate = function(option)
             return (scroller === window)? Win.getScroll():Ele.getScroll(scroller);
         },
         
-        getScrollTo: function(top,left,smooth) {
-            const r = {};
+        go: function(top,left,smooth) {
+            const $this = this;
+            top = (Num.is(top))? Integer.cast(top):null;
+            left = (Num.is(left))? Integer.cast(left):null;
+            const scroller = trigHdlr(this,'scrollAnimate:getScroller');
+            const scrollTo = getScrollTo(top,left,smooth);
+            
+            if(scrollTo != null)
+            {
+                scroller.scroll(scrollTo);
+                
+                return new Promise(function(resolve) {
+                    const handler = ael($this,'scroll:change',function() {
+                        const currentScroll = trigHdlr($this,'scrollAnimate:getCurrentScroll');
+                        
+                        if((top == null || top === currentScroll.top) && (left == null || left === currentScroll.left))
+                        {
+                            rel($this,handler);
+                            resolve();
+                        }
+                    });
+                });
+            }
+        }
+    });
+    
+    // getScrollTo
+    const getScrollTo = function(top,left,smooth)
+    {
+        let r = null;
+        
+        if(Integer.is(top) || Integer.is(left))
+        {
+            r = {};
             
             if(Integer.is(top))
             r.top = top;
@@ -55,29 +87,10 @@ Component.ScrollAnimate = function(option)
             
             if(smooth === true)
             r.behavior = 'smooth';
-            
-            return r;
-        },
-        
-        go: function(top,left,smooth) {
-            const $this = this;
-            const scroller = trigHdlr(this,'scrollAnimate:getScroller');
-            const scrollTo = trigHdlr(this,'scrollAnimate:getScrollTo',top,left,smooth);
-            scroller.scroll(scrollTo);
-            
-            return new Promise(function(resolve) {
-                const handler = ael($this,'scroll:change',function() {
-                    const currentScroll = trigHdlr($this,'scrollAnimate:getCurrentScroll');
-                    
-                    if((top == null || top === currentScroll.top) && (left == null || left === currentScroll.left))
-                    {
-                        rel($this,handler);
-                        resolve();
-                    }
-                });
-            });
         }
-    });
+        
+        return r;
+    }
     
     return this;
 }

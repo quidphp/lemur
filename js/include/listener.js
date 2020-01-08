@@ -143,6 +143,14 @@ const ListenerTarget = new function()
     }
     
     
+    // addPassiveListener
+    // permet d'ajouter un event listener passif, utile pour scroll
+    this.addPassiveListener = function(node,type,func,register,delegate,option) 
+    {
+        return this.addListener(node,type,func,register,delegate,Object.assign({},option,{passive: true}));
+    }
+    
+    
     // removeListener
     // permet de retirer un event listener
     // args est le tableau retournée par addListener (contient type, handler et option)

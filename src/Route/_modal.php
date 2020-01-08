@@ -9,11 +9,11 @@ declare(strict_types=1);
  * Readme: https://github.com/quidphp/lemur/blob/master/README.md
  */
 
-namespace Quid\Lemur\Cms;
-use quid\Base;
+namespace Quid\Lemur\Route;
+use Quid\Base;
 
 // _modal
-// trait that provides some initial configuration for CMS modal routes
+// trait that provides some initial configuration for modal routes
 trait _modal
 {
     // config
@@ -30,7 +30,7 @@ trait _modal
     // retourne le lien dialog
     final public function aDialog($value=null,?array $attr=null):string
     {
-        return $this->a(($value === null)? $this->title():$value,Base\Attr::append($attr,['data'=>['modal'=>static::name()]]));
+        return $this->a(($value === null)? $this->title():$value,Base\Attr::append($attr,['data'=>['modal'=>static::name(true)]]));
     }
 }
 ?>

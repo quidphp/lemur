@@ -132,7 +132,7 @@ Component.Doc = function(option)
             const title = qs(head,'title');
             
             // title
-            if(Str.isNotEmpty(doc.title))
+            if(title != null && Str.isNotEmpty(doc.title))
             {
                 document.title = doc.title;
                 setHtml(title,doc.titleHtml);

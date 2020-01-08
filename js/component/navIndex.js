@@ -119,7 +119,7 @@ Component.NavIndex = function(option)
             {
                 const target = trigHdlr(this,type+':get',value);
                 const current = trigHdlr(this,type+':getCurrent');
-
+                
                 if(target != null && target != current)
                 {
                     $option.go.call(this,target,context);
@@ -139,11 +139,11 @@ Component.NavIndex = function(option)
         },
         
         hasPrev: function() {
-            return Nav.hasPrev(trigHdlr(this,type+':getCurrentIndex'),trigHdlr(this,type+':getTargetsLength'));
+            return Nav.hasPrev(trigHdlr(this,type+':getCurrentIndex'),trigHdlr(this,type+':getTargetsLength'),$option.loop);
         },
         
         hasNext: function() {
-            return Nav.hasNext(trigHdlr(this,type+':getCurrentIndex'),trigHdlr(this,type+':getTargetsLength'));
+            return Nav.hasNext(trigHdlr(this,type+':getCurrentIndex'),trigHdlr(this,type+':getTargetsLength'),$option.loop);
         },
         
         isLast: function() {
@@ -202,7 +202,7 @@ Component.NavIndex = function(option)
             if(!trigHdlr(this,child+':isBinded'))
             {
                 // components
-                Component.InitOpenClose.call(this,child,$option.attr);
+                Component.InitOpenClose.call(this,Pojo.replace($option,{type: child}));
                 
                 // handler
                 setHdlrs(this,child+':',handlers);
