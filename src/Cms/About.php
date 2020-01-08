@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace Quid\Lemur\Cms;
 use Quid\Base\Html;
-use Quid\Lemur;
 use Quid\Core;
+use Quid\Lemur;
 
 // about
 // class for the about popup route of the CMS

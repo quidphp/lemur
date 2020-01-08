@@ -69,7 +69,7 @@ trait _specificSlug
     {
         $return = [];
         $class = static::rowClass();
-        
+
         foreach ($class::grabVisible() as $row)
         {
             if($row->inAllSegment() && !in_array($row,$return,true))

@@ -74,16 +74,32 @@ $media: $uriMedia;
             visibility: hidden;
         }
     }
-    
+
     @include keyframes(pulse) {
-        0% { transform: scale(1); }
-        30% { transform: scale(1); }
-        40% { transform: scale(1.08); }
-        50% { transform: scale(1); }
-        60% { transform: scale(1); }
-        70% { transform: scale(1.05); }
-        80% { transform: scale(1); }
-        100% { transform: scale(1); }
+        0% {
+            transform: scale(1);
+        }
+        30% {
+            transform: scale(1);
+        }
+        40% {
+            transform: scale(1.08);
+        }
+        50% {
+            transform: scale(1);
+        }
+        60% {
+            transform: scale(1);
+        }
+        70% {
+            transform: scale(1.05);
+        }
+        80% {
+            transform: scale(1);
+        }
+        100% {
+            transform: scale(1);
+        }
     }
 }
 
@@ -92,33 +108,25 @@ $media: $uriMedia;
 @mixin position($top: null, $right: null, $bottom: null, $left: null) {
     @if ($top) {
         top: $top;
-    }
-    
-    @else {
+    } @else {
         top: auto;
     }
 
     @if ($right) {
         right: $right;
-    }
-    
-    @else {
+    } @else {
         right: auto;
     }
-    
+
     @if ($bottom) {
         bottom: $bottom;
-    }
-    
-    @else {
+    } @else {
         bottom: auto;
     }
-    
+
     @if ($left) {
         left: $left;
-    }
-    
-    @else {
+    } @else {
         left: auto;
     }
 }
@@ -126,14 +134,14 @@ $media: $uriMedia;
 // abs
 // mixin utilisé pour positionner un élément en absolute
 @mixin abs($top: null, $right: null, $bottom: null, $left: null) {
-    @include position($top,$right,$bottom,$left);
+    @include position($top, $right, $bottom, $left);
     position: absolute;
 }
 
 // fixed
 // mixin utilisé pour positionner un élément de façon fixed
 @mixin fixed($top: null, $right: null, $bottom: null, $left: null) {
-    @include position($top,$right,$bottom,$left);
+    @include position($top, $right, $bottom, $left);
     position: fixed;
 }
 
@@ -142,9 +150,9 @@ $media: $uriMedia;
 @mixin sticky($top: null, $right: null, $bottom: null, $left: null) {
     position: -webkit-sticky;
     position: sticky;
-    @include position($top,$right,$bottom,$left);
-    
-    @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {  
+    @include position($top, $right, $bottom, $left);
+
+    @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
         position: relative;
     }
 }
@@ -275,7 +283,7 @@ $media: $uriMedia;
 
 // animate
 // mixin utilisé pour créer des animations compatible avec tous les navigateurs
-@mixin animate($name, $time: 1s, $delay: 0s, $direction: normal, $fillMode: forwards,$count: null) {
+@mixin animate($name, $time: 1s, $delay: 0s, $direction: normal, $fillMode: forwards, $count: null) {
     -webkit-animation: $name $time $delay $direction $fillMode $count;
     -moz-animation: $name $time $delay $direction $fillMode $count;
     -ms-animation: $name $time $delay $direction $fillMode $count;
@@ -296,7 +304,7 @@ $media: $uriMedia;
 // transition
 // mixin utilisé pour ajouter une transition sur un élément
 // fournir le nom de la propriété
-@mixin transition($prop, $duration: 0.3s,$timing:null) {
+@mixin transition($prop, $duration: 0.3s, $timing: null) {
     transition: $prop $duration;
     -webkit-transition: $prop $duration $timing;
     -moz-transition: $prop $duration $timing;
@@ -338,7 +346,7 @@ $media: $uriMedia;
 
 // pulse
 // mixin pour qu'un élément pulse (change de taille)
-@mixin pulse($time: 1s,$count:infinite) {
+@mixin pulse($time: 1s, $count: infinite) {
     @include animate(pulse, $time, $count: $count);
 }
 
@@ -388,7 +396,7 @@ $media: $uriMedia;
     @media screen and (max-width: $maxWidth), screen and (orientation: portrait) {
         @content;
     }
-    
+
     @media print {
         @content;
     }
@@ -396,7 +404,7 @@ $media: $uriMedia;
 
 // responsiveSize
 // mixin utilisé pour annuler les styles width, padding et margin
-@mixin responsiveSize($important: null,$width:auto) {
+@mixin responsiveSize($important: null, $width: auto) {
     @if ($important) {
         width: $width !important;
         padding: 0 !important;
@@ -410,12 +418,12 @@ $media: $uriMedia;
 
 // responsiveBlock
 // mixin utilisé pour annuler des styles et que l'élément s'affiche en block avec width auto
-@mixin responsiveBlock($important: null,$width:auto) {
+@mixin responsiveBlock($important: null, $width: auto) {
     @if ($important) {
-        @include responsiveSize($important,$width);
+        @include responsiveSize($important, $width);
         display: block !important;
     } @else {
-        @include responsiveSize($important,$width);
+        @include responsiveSize($important, $width);
         display: block;
     }
 }
