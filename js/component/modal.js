@@ -15,7 +15,8 @@ Component.Modal = function(option)
     
     // option
     const $option = Pojo.replace({
-        background: 'modal'
+        background: 'modal',
+        clickOutsidePersistent: true
     },option);
     
     

@@ -15,6 +15,7 @@ $font: 'Arial', sans-serif;
 $white: #fff;
 $black: #000;
 $media: $uriMedia;
+$defaultResponsiveMaxWidth: 900px;
 
 // defaultClasses
 // mixin qui génère les classes par défaut
@@ -143,6 +144,13 @@ $media: $uriMedia;
 @mixin fixed($top: null, $right: null, $bottom: null, $left: null) {
     @include position($top, $right, $bottom, $left);
     position: fixed;
+}
+
+// relative
+// mixin utilisé pour positionner un élément de façon relative
+@mixin relative($top: null, $right: null, $bottom: null, $left: null) {
+    @include position($top, $right, $bottom, $left);
+    position: relative;
 }
 
 // sticky
@@ -376,7 +384,7 @@ $media: $uriMedia;
 
 // responsive
 // mixin utilisé pour mettre des règles responsives
-@mixin responsive($maxWidth: 900px) {
+@mixin responsive($maxWidth: $defaultResponsiveMaxWidth) {
     @media screen and (max-width: $maxWidth), screen and (orientation: portrait) {
         @content;
     }
@@ -392,7 +400,7 @@ $media: $uriMedia;
 
 // responsiveAndPrint
 // mixin pour appliquer les styles à responsive et print
-@mixin responsiveAndPrint($maxWidth: 900px) {
+@mixin responsiveAndPrint($maxWidth: $defaultResponsiveMaxWidth) {
     @media screen and (max-width: $maxWidth), screen and (orientation: portrait) {
         @content;
     }

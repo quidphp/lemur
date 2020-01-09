@@ -13,9 +13,15 @@ Component.ClickOpen = function(option)
     return null;
     
     
+    // option
+    const $option = Pojo.replace({
+        clickOutsidePersistent: false
+    },option);
+    
+    
     // components
-    Component.ClickOutside.call(this,'clickOpen:close');
-    Component.ClickOpenBase.call(this,option);
+    Component.ClickOutside.call(this,'clickOpen:close',$option.clickOutsidePersistent);
+    Component.ClickOpenBase.call(this,$option);
     
     
     // handler

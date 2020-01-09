@@ -21,7 +21,7 @@ trait _slug
     {
         $return = false;
         $table = static::tableSegment($keyValue);
-
+        
         if(!empty($table))
         {
             $rowClass = $table->classe()->row();
@@ -50,7 +50,7 @@ trait _slug
                 $return = $value;
             }
         }
-
+        
         return $return;
     }
 
