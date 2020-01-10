@@ -37,10 +37,8 @@
         border: 1px solid $red;
     }
 
-    &[data-disabled='1'] {
-        > .trigger {
-            background-color: $gray;
-        }
+    &[data-disabled='1'] > .trigger {
+        background-color: $gray;
     }
 
     > .trigger {

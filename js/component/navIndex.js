@@ -39,7 +39,6 @@ Component.NavIndex = function(option)
         const $this = this;
         const targets = trigHdlr(this,type+':getTargets');
         const current = trigHdlr(this,type+':getCurrent');
-        
         trigEvt(this,type+':beforeChange',target,current,context,targets);
         
         Arr.each(targets,function() {

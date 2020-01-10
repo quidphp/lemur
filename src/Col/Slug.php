@@ -69,7 +69,7 @@ class Slug extends Core\ColAlias
             }
         }
 
-        if(!$this->slugUnique($return,$cell))
+        if(!$this->slugUnique($return,$cell,true))
         $return = $this->slugAddNow($keep,$cell,$option);
 
         return $return;
@@ -101,7 +101,7 @@ class Slug extends Core\ColAlias
 
             if(!empty($return))
             {
-                $unique = $this->slugUnique($return,$cell);
+                $unique = $this->slugUnique($return,$cell,true);
 
                 if($unique !== true)
                 $return = $this->slugExists($return,$row,$cell,$option);
@@ -245,7 +245,7 @@ class Slug extends Core\ColAlias
         if(empty($value) || !is_string($value))
         $return = true;
 
-        if(is_string($value) && $this->slugUnique($value,$cell) !== true)
+        if(is_string($value) && $this->slugUnique($value,$cell,true) !== true)
         $return = true;
 
         return $return;
@@ -254,16 +254,23 @@ class Slug extends Core\ColAlias
 
     // slugUnique
     // retourne vrai si le slug est unique
-    final public function slugUnique($value,?Core\Cell $cell=null):bool
+    // par défaut va toujours retourner vrai si le schema n'indique pas que la colonne est unique
+    final public function slugUnique($value,?Core\Cell $cell=null,bool $colSchema=true):bool
     {
         $return = false;
         $notIn = null;
-
-        if(!empty($cell))
-        $notIn = $cell->rowPrimary();
-
-        if($this->isUnique($value,$notIn) === true)
+        
+        if($colSchema === true && !$this->shouldBeUnique())
         $return = true;
+        
+        else
+        {
+            if(!empty($cell))
+            $notIn = $cell->rowPrimary();
+
+            if($this->isUnique($value,$notIn) === true)
+            $return = true;
+        }
 
         return $return;
     }
@@ -315,7 +322,7 @@ class Slug extends Core\ColAlias
                     {
                         $return = $this->slugAdd($value,$now,$option);
 
-                        if($this->slugUnique($return,$cell) === true)
+                        if($this->slugUnique($return,$cell,true) === true)
                         {
                             $unique = true;
                             break;

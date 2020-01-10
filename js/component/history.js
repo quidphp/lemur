@@ -93,7 +93,7 @@ Component.History = function(option)
         // retourne null ou le nouveau state
         replaceState: function(uriState,title) {
             let r = null;
-            uriState = (Pojo.is(uriState))? uriState:HistoryState.make(uriState,title);
+            uriState = prepareState(uriState,title);
             
             if($history != null && uriState != null)
             {
@@ -109,7 +109,7 @@ Component.History = function(option)
         // retourne null ou le nouveau state
         pushState: function(uriState,title) {
             let r = null;
-            uriState = (Pojo.is(uriState))? uriState:HistoryState.make(uriState,title);
+            uriState = prepareState(uriState,title);
             
             if($history != null && uriState != null && !trigHdlr(this,'history:isCurrentStateUrl',uriState))
             {
@@ -131,20 +131,9 @@ Component.History = function(option)
         // permet de faire un pushState avec un nouveau hash
         // retourne null ou le nouveau state, si null va faire le changement via window.location
         pushHash: function(value,title) {
-            let r = null;
             Str.check(value);
             value = Uri.makeHash(value,true);
-            const state = HistoryState.make(value,title);
-            
-            if(!trigHdlr(this,'history:isCurrentStateUrl',state))
-            {
-                r = trigHdlr(this,'history:pushState',state);
-                
-                if(r == null)
-                window.location.hash = Uri.makeHash(value,false);
-            }
-            
-            return r;
+            return trigHdlr(this,'history:pushState',value,title);
         },
         
         // gère une nouvelle entrée à l'historique à partir d'un event
@@ -176,6 +165,26 @@ Component.History = function(option)
             bindWindow.call(this);
         }
     });
+    
+    
+    // prepareState
+    // utilisé par push et replaceHash
+    // utilse no emptyHash (donc si finit par # retire)
+    const prepareState = function(uriState,title) 
+    {
+        let r = null;
+        
+        if(Pojo.is(uriState))
+        {
+            title = uriState.title || title;
+            uriState = uriState.url;
+        }
+        
+        if(Str.is(uriState))
+        r = HistoryState.make(uriState,title,true);
+        
+        return r;
+    }
     
     
     // bindDocument
@@ -337,7 +346,7 @@ Component.History = function(option)
                 const current = trigHdlr(this,'history:getCurrentState');
                 const state = HistoryState.make(href);
                 const isValid = HistoryState.isChangeValid(state,current);
-                
+
                 if(isValid === true)
                 {
                     if(trigHdlr(window,'windowUnload:isValid') === true)

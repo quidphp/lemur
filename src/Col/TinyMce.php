@@ -45,6 +45,7 @@ class TinyMce extends TextareaAlias
             'style_formats'=>[
                 10=>['title'=>'paragraph','format'=>'p','wrapper'=>true],
                 11=>['title'=>'superscript','format'=>'superscript'],
+                12=>['title'=>'header1','format'=>'h1'],
                 13=>['title'=>'header2','format'=>'h2'],
                 14=>['title'=>'header3','format'=>'h3'],
                 15=>['title'=>'header4','format'=>'h4'],
@@ -90,7 +91,7 @@ class TinyMce extends TextareaAlias
 
         if(is_string($return['cache_suffix']))
         $return['cache_suffix'] = str_replace('%version%',$boot->version(),$return['cache_suffix']);
-
+        
         if(is_array($return['style_formats']))
         {
             foreach ($return['style_formats'] as $key => $value)

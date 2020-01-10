@@ -321,6 +321,23 @@ class Fr extends Core\Lang\Fr
                 ]
             ],
 
+            // tinymce
+            'tinymce'=>[
+                'paragraph'=>'Paragraphe',
+                'superscript'=>'Exposant',
+                'header1'=>'En-tête 1',
+                'header2'=>'En-tête 2',
+                'header3'=>'En-tête 3',
+                'header4'=>'En-tête 4',
+                'header5'=>'En-tête 5',
+                'header6'=>'En-tête 6',
+                'alignLeft'=>'Aligner à gauche',
+                'alignCenter'=>'Aligner au centre',
+                'alignRight'=>'Aligner à droite',
+                'floatLeft'=>'Flotter à gauche',
+                'floatRight'=>'Flotter à droite'
+            ],
+            
             // popup
             'popup'=>[
 

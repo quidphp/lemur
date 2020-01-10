@@ -21,5 +21,43 @@ const FuncObj = {
     noop: function() 
     {
         return function() {};
+    },
+    
+    
+    // debounce
+    // permet d'appeler une fonction une seule fois
+    // après le délai spécifié par le timeout
+    debounce: function(timeout,func) {
+        Integer.check(timeout);
+        Func.check(func);
+        
+        return function() {
+            let previousCall = this.lastCall;
+            this.lastCall = Date.now();
+            const args = arguments;
+            
+            if(previousCall && ((this.lastCall - previousCall) <= timeout))
+            clearTimeout(this.lastCallTimer);
+            
+            this.lastCallTimer = setTimeout(function() {
+                func.apply(null,args);
+            },timeout);
+        }
+    },
+    
+    
+    // throttle
+    // permet de limiter le rythme d'appel à une fonction
+    throttle: function(timeout,func) {
+        Integer.check(timeout);
+        Func.check(func);
+        
+        return function() {
+            let previousCall = this.lastCall;
+            this.lastCall = Date.now();
+            
+            if(previousCall == null || (this.lastCall - previousCall) > timeout)
+            return func.apply(null,arguments);
+        }
     }
 }

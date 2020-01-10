@@ -44,6 +44,12 @@ Component.ScrollAnimate = function(option)
             return (scroller === window)? Win.getScroll():Ele.getScroll(scroller);
         },
         
+        getCurrentDimension: function()
+        {
+            const scroller = trigHdlr(this,'scrollAnimate:getScroller');
+            return (scroller === window)? Doc.getDimension(document):Ele.getDimension(scroller);
+        },
+        
         go: function(top,left,smooth) {
             const $this = this;
             top = (Num.is(top))? Integer.cast(top):null;
@@ -56,15 +62,11 @@ Component.ScrollAnimate = function(option)
                 scroller.scroll(scrollTo);
                 
                 return new Promise(function(resolve) {
-                    const handler = ael($this,'scroll:change',function() {
-                        const currentScroll = trigHdlr($this,'scrollAnimate:getCurrentScroll');
-                        
-                        if((top == null || top === currentScroll.top) && (left == null || left === currentScroll.left))
-                        {
-                            rel($this,handler);
-                            resolve();
-                        }
+                    const debounced = Func.debounce(50,function() {
+                        rel($this,handler);
+                        resolve();
                     });
+                    const handler = ael($this,'scroll:change',debounced);
                 });
             }
         }

@@ -37,13 +37,23 @@ const DocTarget = {
     getDimension: function(value)
     {
         const r = { width: 0, height: 0 };
-        const children = this.children(value);
         
-        Ele.each(children,function() {
-            const dimension = Ele.getDimension(this);
-            r.width += dimension.width;
-            r.height += dimension.height;
-        });
+        if(this.isCurrent(value))
+        {
+            r.width = document.documentElement.scrollWidth;
+            r.height = document.documentElement.scrollHeight;
+        }
+        
+        else
+        {
+            const children = this.children(value);
+            
+            Ele.each(children,function() {
+                const dimension = Ele.getDimension(this);
+                r.width += dimension.width;
+                r.height += dimension.height;
+            });
+        }
         
         return r;
     }

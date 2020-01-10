@@ -98,7 +98,7 @@ Component.NavHash = function(option)
                 const node = trigHdlr(this,'navHash:getHash',value);
                 value = (node != null)? node:null;
             }
-            
+
             return (value == null)? 'first':value;
         }
     });

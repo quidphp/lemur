@@ -122,7 +122,7 @@ const Uri = Lemur.Uri = {
             
             if(parse.protocol === compare.protocol && parse.host === compare.host && parse.pathname === compare.pathname && parse.search === compare.search)
             {
-                if(Str.isNotEmpty(parse.hash) && parse.hash !== compare.hash)
+                if((Str.isNotEmpty(parse.hash) || Str.isNotEmpty(compare.hash)) && parse.hash !== compare.hash)
                 r = true;
             }
         }

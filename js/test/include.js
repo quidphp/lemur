@@ -425,7 +425,10 @@ Test.Include = function()
         assert(HistoryState.isChangeValid({ url: 'test', timestamp: 1234 },HistoryState.make('what','bleh')));
         assert(Obj.length(HistoryState.make('what','bleh')) === 3);
         assert(Str.isEnd("/#what",HistoryState.make('#what','bleh').url));
-        assert(HistoryState.make('http://google.com/ok#','bleh').url === 'http://google.com/ok');
+        assert(HistoryState.make('http://google.com/ok#','bleh').url === 'http://google.com/ok#');
+        assert(HistoryState.make('http://google.com/ok#','bleh',true).url === 'http://google.com/ok');
+        assert(Str.isEnd('/#',HistoryState.make("#").url));
+        assert(!Str.isEnd('/#',HistoryState.make("#",null,true).url));
         
         // integer
         assert(!Integer.is('2'));
