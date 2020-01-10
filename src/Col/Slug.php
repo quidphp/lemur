@@ -259,10 +259,10 @@ class Slug extends Core\ColAlias
     {
         $return = false;
         $notIn = null;
-        
+
         if($colSchema === true && !$this->shouldBeUnique())
         $return = true;
-        
+
         else
         {
             if(!empty($cell))

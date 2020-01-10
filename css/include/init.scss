@@ -519,57 +519,40 @@ $defaultResponsiveMaxWidth: 900px;
 
 // chamferBorder
 // permet de faire une bordure carré
-@mixin chamferBorder($color,$br:null,$tr:null,$bl:null,$tl:null) {
-    
-    @if($tl) {
+@mixin chamferBorder($color, $br: null, $tr: null, $bl: null, $tl: null) {
+    @if ($tl) {
         $tl: transparent;
-    }
-    
-    @else {
+    } @else {
         $tl: $color;
     }
-    
-    @if($tr) {
+
+    @if ($tr) {
         $tr: transparent;
-    }
-    
-    @else {
+    } @else {
         $tr: $color;
     }
-    
-    @if($bl) {
+
+    @if ($bl) {
         $bl: transparent;
-    }
-    
-    @else {
+    } @else {
         $bl: $color;
     }
-    
-    @if($br) {
+
+    @if ($br) {
         $br: transparent;
-    }
-    
-    @else {
+    } @else {
         $br: $color;
     }
-    
+
     background-color: $color;
-    background:
-        -moz-linear-gradient(45deg,  $bl 15px, $color 10px),
-        -moz-linear-gradient(135deg, $br 15px, $color 10px),
-        -moz-linear-gradient(225deg, $tr 15px, $color 10px),
-        -moz-linear-gradient(315deg, $tl 15px, $color 10px);
-    background:
-        -o-linear-gradient(45deg,  $bl 15px, $color 10px),
-        -o-linear-gradient(135deg, $br 15px, $color 10px),
-        -o-linear-gradient(225deg, $tr 15px, $color 10px),
-        -o-linear-gradient(315deg, $tl 15px, $color 10px);
-    background:
-        -webkit-linear-gradient(45deg,  $bl 15px, $color 10px),
-        -webkit-linear-gradient(135deg, $br 15px, $color 10px),
-        -webkit-linear-gradient(225deg, $tr 15px, $color 10px),
+    background: -moz-linear-gradient(45deg, $bl 15px, $color 10px), -moz-linear-gradient(135deg, $br 15px, $color 10px),
+        -moz-linear-gradient(225deg, $tr 15px, $color 10px), -moz-linear-gradient(315deg, $tl 15px, $color 10px);
+    background: -o-linear-gradient(45deg, $bl 15px, $color 10px), -o-linear-gradient(135deg, $br 15px, $color 10px),
+        -o-linear-gradient(225deg, $tr 15px, $color 10px), -o-linear-gradient(315deg, $tl 15px, $color 10px);
+    background: -webkit-linear-gradient(45deg, $bl 15px, $color 10px),
+        -webkit-linear-gradient(135deg, $br 15px, $color 10px), -webkit-linear-gradient(225deg, $tr 15px, $color 10px),
         -webkit-linear-gradient(315deg, $tl 15px, $color 10px);
-    background-position: bottom left, bottom right, top right, top left;    
+    background-position: bottom left, bottom right, top right, top left;
     background-size: 50% 50%;
     background-repeat: no-repeat;
 }

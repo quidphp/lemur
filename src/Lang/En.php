@@ -337,7 +337,7 @@ class En extends Core\Lang\En
                 'floatLeft'=>'Float left',
                 'floatRight'=>'Float right'
             ],
-            
+
             // popup
             'popup'=>[
 

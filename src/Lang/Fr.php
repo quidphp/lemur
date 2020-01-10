@@ -337,7 +337,7 @@ class Fr extends Core\Lang\Fr
                 'floatLeft'=>'Flotter à gauche',
                 'floatRight'=>'Flotter à droite'
             ],
-            
+
             // popup
             'popup'=>[
 

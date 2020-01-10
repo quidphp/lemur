@@ -91,7 +91,7 @@ class TinyMce extends TextareaAlias
 
         if(is_string($return['cache_suffix']))
         $return['cache_suffix'] = str_replace('%version%',$boot->version(),$return['cache_suffix']);
-        
+
         if(is_array($return['style_formats']))
         {
             foreach ($return['style_formats'] as $key => $value)
