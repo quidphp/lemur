@@ -33,7 +33,7 @@
     }
 
     > .in {
-        @include transition(height,0.3s);
+        @include transition(height, 0.3s);
         height: 0;
         overflow: hidden;
         max-width: 450px;

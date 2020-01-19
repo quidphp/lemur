@@ -66,10 +66,10 @@
         }
 
         .bottom {
-            @include transition(height,0.5s);
+            @include transition(height, 0.5s);
             height: 0;
             overflow: hidden;
-            
+
             .table > span,
             .row > span {
                 font-weight: bold;

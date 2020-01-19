@@ -38,7 +38,6 @@
 // fakeSelectTrigger
 // mixin pour le trigger d'un fakeselect
 @mixin fakeSelectTrigger() {
-    
     &[data-validate='invalid'] > .trigger {
         background-color: $red;
         color: $white;
@@ -54,7 +53,7 @@
         border-radius: 5px;
         border: 1px solid $gray;
         background-color: $white;
-        
+
         > .ico {
             @include abs(50%, 10px);
             @include triangle(bottom, $color, 10px);

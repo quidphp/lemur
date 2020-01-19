@@ -14,7 +14,7 @@
 @include defaultAnimation();
 
 /* HTML */
-@include Document('.route-wrap',$gray);
+@include Document('.route-wrap', $gray);
 
 body {
     font-size: 1.4rem;
@@ -131,13 +131,12 @@ td[data-quick-edit='1'][data-status='loading'] > .cell-inner > a.quick-edit {
 /* COMPONENT */
 body {
     @include ClickOpen('.popup');
-    
+
     .popup {
         @include popupCommon();
     }
 }
 body .popup {
-    
 }
 form {
     @include Form();

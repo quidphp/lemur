@@ -58,7 +58,7 @@
         @include toolBox();
         border-bottom-left-radius: 5px;
 
-        > .icon-solo:not(:first-child){
+        > .icon-solo:not(:first-child) {
             margin-left: 5px;
         }
     }

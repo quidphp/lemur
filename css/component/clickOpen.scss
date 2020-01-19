@@ -13,7 +13,7 @@
     [data-anchor-corner] {
         @include AnchorCorner($popup);
     }
-    
+
     &[data-anchor-corner='bottom-left'] #{$popup},
     [data-anchor-corner='bottom-left'] #{$popup} {
         border-radius: 10px 10px 0 0;
@@ -41,7 +41,7 @@
             display: none !important;
         }
     }
-    
+
     #{$popup} {
         @include ClickOpenPopup();
     }
@@ -64,7 +64,7 @@
     padding: 0;
     box-sizing: border-box;
     cursor: default;
-    
+
     @include print() {
         display: none !important;
     }

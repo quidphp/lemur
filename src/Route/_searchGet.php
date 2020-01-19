@@ -45,11 +45,11 @@ trait _searchGet
         {
             $search = (string) $search;
             $decode = $this->getSearchDecodeType();
-            
+
             if(strlen($search) && $this->isSearchValueValid($search))
             $return = Base\Uri::decode($search,$decode);
         }
-        
+
         return $return;
     }
 
