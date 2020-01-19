@@ -98,7 +98,7 @@ ael(document,'doc:mountPage',function(event,node) {
     trigSetup(Component.Com.call(com));
     
     // carousel
-    trigSetup(Component.Carousel.call(carousel,{trigger: ".trigger", target: ".target"}));
+    trigSetup(Component.Carousel.call(carousel,{trigger: ".trigger", target: ".target", targetHeight: true}));
     
     // subMenu
     trigSetup(Component.ClickOpenTrigger.call(subMenu,{trigger: ".trigger", target: ".popup", background: "submenu"}));
@@ -188,7 +188,7 @@ ael(document,'route:general',function(event,node) {
     Component.InputNumericHref.call(pageLimit);
     
     // search
-    trigSetup(Component.SearchSlide.call(search,{inputTarget: "> .form input[type='text']", infoTarget: "> .in"}));
+    trigSetup(Component.SearchSlide.call(search,{trigger: "> .form input[type='text']", target: "> .in"}));
     
     // rowsChecker
     trigSetup(Component.RowsChecker.call(main));
@@ -220,28 +220,41 @@ ael(document,'route:general',function(event,node) {
 });
 
 
-// specificForm mount
+// mountAll
 // permet de faire tous les bindings des champs (simples et complexes)
-ael(document,'specificForm:mount',function(event,node) {
-    trigEvt(this,'specificForm:bindMount',node);
-    trigEvt(this,'specificForm:bindView',node);
+ael(document,'specificForm:mountAll',function(event,node) {
+    trigEvt(this,'specificForm:pageMount',node);
+    trigEvt(this,'specificForm:tabFull',node);
 });
 
 
-// bindMount
+// pageMount
 // ces champs seront bindés au chargement de la page
-ael(document,'specificForm:bindMount',function(event,node) {
+ael(document,'specificForm:pageMount',function(event,node) {
     const elements = qsa(node,".form-element");
     trigHdlr(this,'specificComponents:setup',elements,false);
 });
 
 
-// bindView
-// ces champs seront bindés à l'initialisation du panneau, lorsqu'ils sont visibles
-ael(document,'specificForm:bindView',function(event,node) {
+// tabFull
+// gère l'initialisation et le opened d'un tab
+ael(document,'specificForm:tabFull',function(event,node) {
+    trigEvt(this,'specificForm:tabInit',node);
+    trigEvt(this,'specificForm:tabOpened',node);
+});
+
+
+// tabInit
+// binding à l'initialisation du panneau, une seule fois
+ael(document,'specificForm:tabInit',function(event,node) {
     const elements = qsa(node,".form-element");
     trigHdlr(this,'specificComponents:setup',elements,true);
-    
+});
+
+
+// tabOpened
+// binding après l'ouverture du panneau
+ael(document,'specificForm:tabOpened',function(event,node) {
     // anchorCorner
     const anchorCorner = qsa(node,"[data-anchor-corner]");
     trigHdlrs(anchorCorner,'anchorCorner:refresh');
@@ -268,14 +281,14 @@ ael(document,'group:specific',function(event,node) {
     const panel = qsa(form,".panel");
 
     // champs simples
-    trigEvt(this,'specificForm:bindMount',form);
+    trigEvt(this,'specificForm:pageMount',form);
     
     // avec panel
     if(Arr.length(panel) > 1)
     trigSetup(Component.SpecificPanel.call(form),true);
     
     else
-    trigEvt(this,'specificForm:bindView',form);
+    trigEvt(this,'specificForm:tabFull',form);
     
     // unmount
     aelOnce(this,'group:specific:unmount',function(event,node) {

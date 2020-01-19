@@ -6,48 +6,37 @@
  
 // com
 // script of behaviours for the communication component of the CMS
-Component.Com = function()
+Component.Com = function(option)
 {
     // not empty
     if(Vari.isEmpty(this)) 
     return null;
     
     
-    // components
-    Component.BlockEvent.call(this,'click');
-    Component.KeyboardEscape.call(this,true);
-    Component.HrefReplaceChar.call(this);
-    
-    
-    // handler
-    setHdlrs(this,'com:',{
-        
-        isOpen: function() {
-            return (getAttr(this,'data-status') !== 'close')? true:false;
-        },
-        
-        getBottom: function() {
-            return qs(this,'.bottom');
-        },
-        
-        open: function() {
-            setAttr(this,'data-status','open');
-            const bottom = trigHdlr(this,'com:getBottom');
-        },
-        
-        close: function() {
-            setAttr(this,'data-status','close');
-            const bottom = trigHdlr(this,'com:getBottom');
+    // option
+    const $option = Pojo.replaceRecursive({
+        clickOpen: {
+            attr: "data-com",
+            trigger: ".scroller .date", 
+            target: ".scroller .bottom", 
+            clickOutside: false,
+            background: false, 
+            targetHeight: true
         }
-    });
+    },option);
+    
+    
+    // components
+    Component.ClickOpenTrigger.call(this,$option.clickOpen)
+    Component.HrefReplaceChar.call(this);
     
     
     // event
     ael(this,'keyboardEscape:blocked',function() {
-        trigEvt(this,'com:close');
+        trigEvt(this,'com:hide');
     });
     
-    ael(this,'com:close',function() {
+    ael(this,'com:hide',function() {
         setAttr(this,'data-status','hidden');
     })
     
@@ -55,29 +44,32 @@ Component.Com = function()
     // delegate
     aelDelegate(this,'click','.close',function(event) {
         const delegate = event.delegateTarget;
-        trigEvt(delegate,'com:close');
+        trigEvt(delegate,'com:hide');
     });
     
-    aelDelegate(this,'click','.date',function(event) {
-        const delegate = event.delegateTarget;
-        const isOpen = trigHdlr(delegate,'com:isOpen');
-        trigHdlr(delegate,(isOpen)? 'com:close':'com:open');
-    });
-    
-    aelDelegate(this,'click',".row.insert > span,.row.update > span",function(event) {
-        const delegate = event.delegateTarget;
-        const parent = Nod.parent(this);
-        const table = getAttr(parent,'data-table');
-        const primary = getAttr(parent,'data-primary');
-        redirect.call(delegate,table,primary,event);
-    });
-    
-    
+
     // bind
     aelOnce(this,'component:setup',function() {
-        if(Nod.match(this,'[tabindex]'))
+        bindLinks.call(this);
+        
+        if(Ele.isFocusable(this))
         Ele.focus(this);
     });
+    
+    
+    // bindLinks
+    const bindLinks = function()
+    {
+        const $this = this;
+        const links = qsa(this,".row.insert > span,.row.update > span");
+        
+        ael(links,'click',function() {
+            const parent = Nod.parent(this);
+            const table = getAttr(parent,'data-table');
+            const primary = getAttr(parent,'data-primary');
+            redirect.call($this,table,primary,event);
+        });
+    }
     
     
     // redirect
@@ -88,7 +80,6 @@ Component.Com = function()
         if(Str.isNotEmpty(href))
         {
             const char = getAttr(this,'data-char');
-            trigHdlr(this,'blockEvent:block','click');
             href = href.replace(char,primary);
             trigHdlr(document,'history:href',href,clickEvent);
         }

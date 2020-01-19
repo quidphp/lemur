@@ -38,7 +38,7 @@ Component.FakeSelect = function()
         r += "<span data-title'='"+title+"' class='title'>"+title+"</span>";
         r += "<span class='ico'></span>";
         r += "</button>";
-        r += "<div class='popup' tabindex='0'>";
+        r += "<div class='options' tabindex='0'>";
         r += "<ul>";
         
         Arr.each(options,function() {
@@ -76,8 +76,8 @@ Component.FakeSelect = function()
     const bindFakeSelect = function() 
     {    
         // clickOpen
-        Component.ClickOpenTrigger.call(this,{trigger: "> .trigger", target: "> .popup", background: "fakeselect"});
-        Component.Focusable.call(this,{target: "> .popup button"});
+        Component.ClickOpenTrigger.call(this,{trigger: "> .trigger", target: "> .options", background: "fakeselect"});
+        Component.Focusable.call(this,{target: "> .options button"});
         Component.KeyboardEnter.call(this,true);
         Component.KeyboardArrow.call(this,true);
         

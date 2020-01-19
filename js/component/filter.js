@@ -36,6 +36,10 @@ Component.Filter = function(option)
         return trigHdlr(this,'feedSearch:getResult');
     });
     
+    setHdlr(this,'clickOpen:getTargetFocus',function() {
+        return trigHdlr(this,'feedSearch:getSearch') || trigHdlr(this,'clickOpen:getTarget');
+    });
+    
     
     // event
     ael(this,'clickOpen:triggerClick',function(clickEvent) {

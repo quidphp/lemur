@@ -19,7 +19,7 @@ trait _searchGet
     // config
     public static $configSearch = [
         'search'=>[
-            'decode'=>0,
+            'decode'=>1,
             'query'=>'s']
     ];
 
@@ -45,11 +45,11 @@ trait _searchGet
         {
             $search = (string) $search;
             $decode = $this->getSearchDecodeType();
-
+            
             if(strlen($search) && $this->isSearchValueValid($search))
             $return = Base\Uri::decode($search,$decode);
         }
-
+        
         return $return;
     }
 

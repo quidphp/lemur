@@ -27,9 +27,9 @@ Component.Timeout = function(type,timeout)
         const $this = this;
         const duration = trigHdlr(this,'timeout:duration',type);
         const timeoutObj = getTimeoutObj.call(this);
-        const timeout = setTimeout(function() {
+        const timeout = Func.timeout(duration,function() {
             trigEvt($this,'timeout:'+type);
-        },duration);
+        });
         
         trigHdlr(this,'timeout:clear',type);
         Pojo.setRef(type,timeout,timeoutObj);

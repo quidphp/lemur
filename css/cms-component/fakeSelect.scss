@@ -12,25 +12,33 @@
 // fakeSelect
 // mixin pour styliser un faux menu de sélection
 @mixin fakeSelect() {
+    @include FakeSelect();
     @include fakeSelectTrigger();
-    @include inbl();
 
-    &[data-absolute-placeholder='ready'][data-active='1'] > .trigger {
-        @include abs(0, null, null, 0);
-        z-index: 3;
-    }
+    > .options {
+        @include popupCommon();
+        border-radius: 5px;
 
-    > .popup {
-        @include fakeSelectPopup();
+        > ul > li > button {
+            padding: 5px 10px;
+            border-top: 1px solid $lighterGray;
+
+            &:hover,
+            &[data-selected='1'] {
+                background-color: $lightYellow;
+            }
+
+            &:active {
+                background-color: $lightGray;
+            }
+        }
     }
 }
 
 // fakeSelectTrigger
 // mixin pour le trigger d'un fakeselect
 @mixin fakeSelectTrigger() {
-    position: relative;
-    min-width: 150px;
-
+    
     &[data-validate='invalid'] > .trigger {
         background-color: $red;
         color: $white;
@@ -42,23 +50,14 @@
     }
 
     > .trigger {
-        position: relative;
         padding: 5px 40px 5px 12px;
-        width: 100%;
         border-radius: 5px;
         border: 1px solid $gray;
         background-color: $white;
-
-        > .title {
-            text-align: left;
-            display: block;
-        }
-
+        
         > .ico {
             @include abs(50%, 10px);
             @include triangle(bottom, $color, 10px);
-            display: block;
-            background-size: contain;
             margin-top: -4px;
         }
     }
@@ -70,38 +69,5 @@
 
     > .trigger:active {
         background-color: $lightGray;
-    }
-}
-
-// fakeSelectPopup
-// mixin pour le popup d'un fakeselect
-@mixin fakeSelectPopup() {
-    width: 100%;
-    display: none;
-    text-align: left;
-    max-height: 250px;
-    overflow-y: auto;
-    z-index: 100;
-    border-radius: 5px;
-
-    > ul {
-        list-style-type: none;
-
-        > li {
-            > button {
-                padding: 5px 10px;
-                border-top: 1px solid $lighterGray;
-                width: 100%;
-
-                &:hover,
-                &[data-selected='1'] {
-                    background-color: $lightYellow;
-                }
-
-                &:active {
-                    background-color: $lightGray;
-                }
-            }
-        }
     }
 }

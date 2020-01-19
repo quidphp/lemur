@@ -15,6 +15,7 @@ Component.ScrollAnimate = function(option)
     
     // option
     const $option = Pojo.replace({
+        stop: 50,
         scroller: window
     },option);
     
@@ -62,11 +63,10 @@ Component.ScrollAnimate = function(option)
                 scroller.scroll(scrollTo);
                 
                 return new Promise(function(resolve) {
-                    const debounced = Func.debounce(50,function() {
+                    const handler = ael($this,'scroll:stop',function() {
                         rel($this,handler);
                         resolve();
                     });
-                    const handler = ael($this,'scroll:change',debounced);
                 });
             }
         }

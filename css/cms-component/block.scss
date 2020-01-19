@@ -58,12 +58,8 @@
         @include toolBox();
         border-bottom-left-radius: 5px;
 
-        > .icon-solo {
+        > .icon-solo:not(:first-child){
             margin-left: 5px;
-
-            &:first-child {
-                margin-left: 0;
-            }
         }
     }
 

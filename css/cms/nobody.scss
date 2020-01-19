@@ -166,9 +166,12 @@
     border-top: 1px solid $darkerColor;
 
     .button {
-        padding-left: 10px;
         flex-grow: 1;
 
+        &:not(:first-child) {
+            padding-left: 10px;
+        }
+        
         > a {
             border-radius: 5px;
             padding: 5px;
@@ -185,10 +188,6 @@
             &:active {
                 background-color: $black;
             }
-        }
-
-        &:first-child {
-            padding-left: 0;
         }
     }
 }
@@ -223,15 +222,9 @@
 
 /* REGISTER */
 [data-route='register'] main .box form {
-    .part {
+    .part:not(:first-child) {
         padding-top: 5px;
         margin-top: 5px;
         border-top: 1px solid $darkColor;
-
-        &:first-child {
-            padding-top: 0;
-            margin-top: 0;
-            border-top: 0;
-        }
     }
 }

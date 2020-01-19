@@ -33,10 +33,37 @@ const EleTarget = {
 
 
     // isTag
-    // retourne vrai si  la tag est celle donnée en argument
+    // retourne vrai si la tag est celle donnée en argument
     isTag: function(node,value)
     {
         return (this.tag(node) === value);
+    },
+    
+    
+    // isFocused
+    // retourne vrai si la node a présentement le focus
+    isFocused: function(node)
+    {
+        return node === document.activeElement;
+    },
+    
+    
+    // isFocusable
+    // retourne vrai si la node peut recevoir le focus
+    isFocusable: function(node)
+    {
+        let r = false;
+        
+        if(this.is(node))
+        {
+            const tag = this.tag(node);
+            const tags = ['input','textarea','a','button'];
+            
+            if(this.match(node,'[tabindex]') || (Arr.in(tag,tags) && this.getDimension(node).height > 0))
+            r = true;
+        }
+        
+        return r;
     },
     
     
@@ -187,9 +214,32 @@ const EleTarget = {
     
     // getDimension
     // retourne la dimension de la node
-    getDimension: function(node)
+    // il est possible de retourner la dimension si on change de façon temporaire le display
+    getDimension: function(node,display)
     {
+        this.check(node);
+        display = (display === true)? 'block':display;
+        let currentDisplay, currentWidth, currentHeight;
+        const displayToggle = Str.isNotEmpty(display);
+        
+        if(displayToggle)
+        {
+            currentDisplay = node.style.display;
+            currentWidth = node.style.width;
+            currentHeight = node.style.height;
+            node.style.display = display;
+            node.style.width = 'auto';
+            node.style.height = 'auto';
+        }
+        
         const rect = this.getBoundingRect(node);
+        
+        if(displayToggle)
+        {
+            node.style.display = currentDisplay;
+            node.style.width = currentWidth;
+            node.style.height = currentHeight;
+        }
         
         return {
             width: rect.width,
@@ -338,6 +388,9 @@ const EleTarget = {
         Str.check(key);
         key = Str.toCamelCase('-',key);
         
+        if(value == null)
+        value = '';
+        
         node.style[key] = value;
         
         return;
@@ -380,14 +433,18 @@ const EleTarget = {
     // permet de changer la largeur et hauteur de la node
     setDimension: function(node,width,height)
     {
-        if(Scalar.isNotBool(width))
+        if(Scalar.is(width))
         {
+            width = (width === true)? this.getDimension(node,width).width:width;
+            width = (width === false)? undefined:width;
             width = (Num.is(width))? width+"px":width;
             this.setCss(node,'width',width);
         }
         
-        if(Scalar.isNotBool(height))
+        if(Scalar.is(height))
         {
+            height = (height === true)? this.getDimension(node,height).height:height;
+            height = (height === false)? undefined:height;
             height = (Num.is(height))? height+"px":height;
             this.setCss(node,'height',height);
         }

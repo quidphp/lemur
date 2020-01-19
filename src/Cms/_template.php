@@ -586,7 +586,7 @@ trait _template
         if(!empty($comText))
         {
             $route = Specific::make(true);
-            $data = ['href'=>$route,'char'=>$route::getReplaceSegment()];
+            $data = ['href'=>$route,'char'=>$route::getReplaceSegment(),'com'=>1];
             $attr = ['com','data'=>$data];
 
             $r = Html::divOp('top');

@@ -87,7 +87,7 @@ Component.QuickEdit = function()
         const node = trigHdlr(this,'ajaxBlock:getContentNode');
         const scroller = trigHdlr(this,'quickEdit:getScroller');
 
-        trigEvt(document,'specificForm:mount',node);
+        trigEvt(document,'specificForm:mountAll',node);
         trigHdlr(scroller,'scrollDrag:refresh');
     });
     

@@ -24,40 +24,72 @@ const FuncObj = {
     },
     
     
-    // debounce
-    // permet d'appeler une fonction une seule fois
-    // après le délai spécifié par le timeout
-    debounce: function(timeout,func) {
-        Integer.check(timeout);
+    // async
+    // comme timeout, mais la durée est automatiquement 0
+    async: function(func) 
+    {
+        return this.timeout(0,func);
+    },
+    
+    
+    // timeout
+    // permet d'appeler une fois après un timeout
+    // si timeout n'est pas integer, utlise 0
+    // retourne le timeout
+    timeout: function(delay,func) 
+    {
         Func.check(func);
         
+        if(!Integer.is(delay))
+        delay = 0;
+        
+        return setTimeout(func,delay);
+    },
+    
+    
+    // debounce
+    // permet d'appeler une fonction une seule fois après le délai spécifié par le timeout
+    // retourne une nouvelle fonction
+    debounce: function(delay,func) 
+    {
+        Integer.check(delay);
+        Func.check(func);
+        const $inst = this;
+        let timeout;
+        
         return function() {
-            let previousCall = this.lastCall;
-            this.lastCall = Date.now();
             const args = arguments;
             
-            if(previousCall && ((this.lastCall - previousCall) <= timeout))
-            clearTimeout(this.lastCallTimer);
+            if(timeout)
+            clearTimeout(timeout);
             
-            this.lastCallTimer = setTimeout(function() {
+            timeout = $inst.timeout(delay,function() {
                 func.apply(null,args);
-            },timeout);
+            });
         }
     },
     
     
     // throttle
     // permet de limiter le rythme d'appel à une fonction
-    throttle: function(timeout,func) {
-        Integer.check(timeout);
+    // retourne une nouvelle fonction
+    throttle: function(delay,func) 
+    {
+        Integer.check(delay);
         Func.check(func);
+        const $inst = this;
+        let canCall = true;
         
         return function() {
-            let previousCall = this.lastCall;
-            this.lastCall = Date.now();
-            
-            if(previousCall == null || (this.lastCall - previousCall) > timeout)
-            return func.apply(null,arguments);
+            if(canCall === true)
+            {
+                func.apply(null,arguments);
+                canCall = false;
+                
+                $inst.timeout(delay,function() {
+                    canCall = true;
+                });
+            }
         }
     }
 }

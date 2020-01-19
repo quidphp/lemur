@@ -67,7 +67,6 @@ Component.InitOpenClose = function(option)
         if(trigHdlr(this,type+':isOpen') !== true && trigHdlr(this,type+':canOpen') === true)
         {
             let isInit = false;
-            setAttr(this,$option.attr,1);
             
             if(trigHdlr(this,type+':isInit') !== true)
             {
@@ -77,6 +76,8 @@ Component.InitOpenClose = function(option)
                 setAttr(this,$option.attrInit,1);
             }
             
+            trigHdlr(this,type+':willOpen',isInit);
+            setAttr(this,$option.attr,1);
             trigEvt(this,type+':opened',isInit);
         }
     });
@@ -85,7 +86,6 @@ Component.InitOpenClose = function(option)
         if(trigHdlr(this,type+':isOpen') === true)
         {
             setAttr(this,$option.attr,0);
-            
             trigEvt(this,type+':closed');
         }
     });

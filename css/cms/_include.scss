@@ -235,12 +235,8 @@
     line-height: 1;
     background-color: $lighterGray;
 
-    > .tool-element {
+    > .tool-element:not(:first-child) {
         margin-left: 10px;
-
-        &:first-child {
-            margin-left: 0;
-        }
     }
 
     .icon-solo {

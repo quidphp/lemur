@@ -51,12 +51,8 @@
         }
     }
 
-    > .right .operation-element {
+    > .right .operation-element:not(:first-child) {
         margin-left: 10px;
-
-        &:first-child {
-            margin-left: 0;
-        }
     }
 
     @include responsive() {
@@ -109,14 +105,13 @@
     @include flex();
     background-color: $lightestGray;
     border: 1px solid $lightGray;
-    margin-top: 20px;
     padding: 10px 15px;
     border-radius: 5px;
     box-shadow: 2px 2px 6px -4px $gray;
     position: relative;
 
-    &:first-child {
-        margin-top: 0;
+    &:not(:first-child) {
+        margin-top: 20px;
     }
 
     &.required {

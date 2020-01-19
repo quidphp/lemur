@@ -97,30 +97,26 @@
             }
         }
 
-        &[data-carousel='1'] > .target {
-            display: block;
-        }
-
         > .target {
-            display: none;
+            @include transition(height,0.5s);
+            height: 0;
+            overflow: hidden;
 
-            > ul > li {
-                > a:first-child {
-                    display: block;
-                    padding: 4px 15px 4px 32px;
-                    color: $white;
-                    font-size: 90%;
-                    border-top: 1px solid $color;
+            > ul > li > a:first-child {
+                display: block;
+                padding: 4px 15px 4px 32px;
+                color: $white;
+                font-size: 90%;
+                border-top: 1px solid $color;
 
-                    &:hover,
-                    &.selected,
-                    &[data-triggered='1'] {
-                        background-color: $color;
-                    }
+                &:hover,
+                &.selected,
+                &[data-triggered='1'] {
+                    background-color: $color;
+                }
 
-                    &.selected {
-                        text-decoration: underline;
-                    }
+                &.selected {
+                    text-decoration: underline;
                 }
             }
         }

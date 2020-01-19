@@ -17,12 +17,13 @@ Component.Carousel = function(option)
     const $option = Pojo.replace({
         background: false,
         attr: 'data-carousel',
+        clickOutside: false,
         multiple: true
     },option);
     
 
     // components
-    Component.ClickOpenBase.call(this,$option);
+    Component.ClickOpen.call(this,$option);
     Component.ClickOpenTriggerBase.call(this,$option);
     
     return this;

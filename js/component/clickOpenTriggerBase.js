@@ -17,7 +17,7 @@ Component.ClickOpenTriggerBase = function(option)
     const $option = Pojo.replace({
         trigger: true,
         triggerEvent: 'click',
-        triggerFocus: true,
+        triggerFocusClose: true,
         triggerToggle: true
     },option);
     
@@ -51,7 +51,7 @@ Component.ClickOpenTriggerBase = function(option)
     ael(this,'clickOpen:closed',function() {
         const trigger = trigHdlr(this,'clickOpen:getTrigger');
         
-        if($option.triggerFocus)
+        if($option.triggerFocusClose)
         Ele.focus(trigger);
     });
     

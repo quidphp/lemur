@@ -90,7 +90,7 @@ Component.FeedSearch = function(option)
         const order = trigHdlr(this,'feedSearch:getOrderValue') || separator;
         const data = {};
         data[query] = search;
-
+        
         return {
             url: trigHdlr(this,'hrefReplaceChar:make',order),
             data: data

@@ -7,59 +7,15 @@
  */
 
 // clickOpen
-// stylesheet for the clickOpen component
+// stylesheet related to clickOpen components
 
-// clickOpen
-// mixin avec quelques styles de base pour un widget clickOpen avec popup
-// le trigger ouvre le clickOpen, un click sur le body le ferme
-@mixin clickOpen() {
-    [data-anchor-corner='bottom-left'] .popup {
-        border-radius: 10px 10px 0 0;
-    }
-    [data-anchor-corner='bottom-right'] .popup {
-        border-radius: 10px 10px 0 0;
-    }
-
-    [data-active='1'].popup,
-    [data-active='1'] > .popup,
-    [data-active='1'] > * > .popup {
-        display: block;
-    }
-    [data-status='loading'].popup,
-    [data-status='loading'] .popup {
-        height: 40px;
-
-        > * {
-            display: none !important;
-        }
-    }
-    .popup {
-        @include popupBase();
-    }
-}
-
-// popupBase
+// popupCommon
 // mixin de base pour un popup
-@mixin popupBase() {
-    @include abs(100%, null, null, 0);
+@mixin popupCommon() {
     @include scrollbar();
-    position: absolute;
     border-top-left-radius: 0;
-    display: none;
-    z-index: 3;
     font-size: 1.3rem;
-    width: 450px;
-    max-width: 450px;
-    background-color: $white;
     border: 1px solid $lightGray;
-    color: $black;
-    text-align: left;
-    min-height: 20px;
-    max-height: 300px;
-    overflow-y: auto;
-    padding: 0;
-    box-sizing: border-box;
-    cursor: default;
     border-radius: 0 0 10px 10px;
 
     .popup {
@@ -70,10 +26,6 @@
     &.no-scroll {
         padding: 0;
         overflow: hidden;
-    }
-
-    @include print() {
-        display: none !important;
     }
 }
 

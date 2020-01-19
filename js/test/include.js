@@ -22,6 +22,8 @@ Test.Include = function()
         newHtml += "</form>";
         newHtml += "<div class='content' style='width: 25px; height: 25px; margin: 10px; padding: 5px; border: 5px solid green; box-sizing: content-box;'></div>";
         newHtml += "<div class='border' style='width: 25px; height: 25px; margin: 10px; padding: 5px; border: 5px solid green; box-sizing: border-box;'></div>";
+        newHtml += "<div class='hidden' style='display: none; padding: 3px;'>LOL</div>";
+        
         const htmlNode = Nod.scopedQuery(document,'html');
         const selectorOne = htmlNode.querySelector("body");
         const selectorAll = htmlNode.querySelectorAll("body");
@@ -40,6 +42,7 @@ Test.Include = function()
         const borderBox = Ele.scopedQuery(bodyNode,"> div.border");
         const fragment = document.createDocumentFragment();
         const template = document.createElement('template');
+        const hiddenNode = Ele.scopedQuery(bodyNode,".hidden");
         Ele.setHtml(template,newHtml);
         Doc.setHtml(fragment,newHtml);
         const formTemplate = Doc.children(template.content,'form');
@@ -276,6 +279,9 @@ Test.Include = function()
         assert(Ele.isVisible(htmlNode));
         assert(!Ele.isHidden(htmlNode));
         assert(Ele.isTag(htmlNode,'html'));
+        assert(!Ele.isFocused(htmlNode));
+        assert(!Ele.isFocusable(htmlNode));
+        assert(Ele.isFocusable(inputNode));
         assert(Ele.matchAll(htmlNode,'html'));
         assert(Ele.tag(htmlNode) === 'html');
         assert(Str.isNotEmpty(Ele.getOuterHtml(htmlNode)));
@@ -383,7 +389,7 @@ Test.Include = function()
         Ele.toggleClass(divNode,'test');
         assert(!Ele.hasClass(divNode,'test'));
         assert(Ele.getHtml(template) !== newHtml);
-        assert(Str.length(Ele.getHtml(template)) === 574);
+        assert(Str.length(Ele.getHtml(template)) === 640);
         assert(Ele.getCss(divNode,'margin-top') === '0px');
         Ele.setCss(divNode,'margin-top','10px');
         assert(Ele.getCss(divNode,'margin-top') === '10px');
@@ -402,8 +408,11 @@ Test.Include = function()
         assert(Ele.propStr(formInput,'name') === 'test-suite-test-submit3-test-submit2-test-submit');
         assert(Ele.propStr(formInput,'name','|') === 'test-suite|test-submit3|test-submit2|test-submit');
         assert(Ele.serialize(formInput) === 'test-suite=%5B1%2C2%2C3%5D&test-submit3=&test-submit2=&test-submit=');
-        
-        // eleHelper
+        assert(Ele.getDimension(hiddenNode).width === 0);
+        assert(Ele.getDimension(hiddenNode,true).width > 0);
+        assert(Pojo.isEqual(Ele.getDimension(hiddenNode,'block'),Ele.getDimension(hiddenNode,true)));
+        assert(Ele.getDimension(hiddenNode,'inline').width < Ele.getDimension(hiddenNode,true).width);
+        assert(Ele.getDimension(hiddenNode).width === 0);
         
         // evt
         assert(Evt.nameFromType('ok') === 'event');
@@ -417,6 +426,24 @@ Test.Include = function()
         assert(Func.length(noop) === 0);
         Func.check(noop);
         Func.check(null,false);
+        assert(Integer.is(Func.timeout(null,function() {
+            assert(true);
+        })));
+        assert(Func.is(Func.debounce(2,function() {})));
+        assert(Func.is(Func.throttle(2,function() {})));
+        const debounceFunc = Func.debounce(1000,function(arg) {
+            assert(arg === 99);
+        });
+        for (var i = 0; i < 100; i++) {
+            debounceFunc(i);
+        }
+        const throttleFunc = Func.throttle(50,function(arg) {
+            assert(Integer.is(arg));
+        });
+        for (var i = 0; i < 100; i++) {
+            let arg = i;
+            Func.timeout(arg,function() { throttleFunc(arg) });
+        }
         
         // handler
         
@@ -846,8 +873,10 @@ Test.Include = function()
         assert(Uri.getMailto('mailto:testtest.com') === null);
         const query = Uri.query('?q=URLUtils.searchéParams&topic=api');
         const query2 = Uri.query({q: 'oké', what: 2});
+        const query3 = Uri.query({q: "la vi+e est bèlle"});
         assert(query.toString() === 'q=URLUtils.search%C3%A9Params&topic=api');
         assert(query2.toString() === 'q=ok%C3%A9&what=2');
+        assert(query3.toString() === 'q=la+vi%2Be+est+b%C3%A8lle');
         
         // validate
         assert(Validate.isNumericDash("213-123"));

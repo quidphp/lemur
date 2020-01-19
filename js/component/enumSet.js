@@ -103,6 +103,10 @@ Component.EnumSet = function(option)
         return trigHdlr(this,'feedSearch:getResult');
     });
     
+    setHdlr(this,'clickOpen:getTargetFocus',function() {
+        return trigHdlr(this,'feedSearch:getSearch') || trigHdlr(this,'clickOpen:getTarget');
+    });
+    
     setHdlr(this,'clickOpen:getTargetContent',function() {
         return trigHdlr(this,'feedSearch:getResult');
     });
@@ -172,7 +176,7 @@ Component.EnumSet = function(option)
         }
         
         // set
-        if(trigHdlr(this,'enumSet:isSet'))
+        else if(trigHdlr(this,'enumSet:isSet'))
         {
             trigSetup(Component.Sorter.call(current,$option.sorter));
             

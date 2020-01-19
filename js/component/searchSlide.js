@@ -15,35 +15,20 @@ Component.SearchSlide = function(option)
     
     // option
     const $option = Pojo.replaceRecursive({
-        inputTarget: "> input[type='text']",
-        infoTarget: '> div',
+        background: false,
+        targetHeight: true,
+        triggerToggle: false,
+        triggerFocusClose: false,
         inputSearch: {
             timeoutHandler: 'inputSearch:validate'
         },
-        speed: 300
     },option);
     
     
-    // handler
-    setHdlrs(this,'searchSlide:',{
-        getInput: function() {
-            return qs(this,$option.inputTarget);
-        },
-        
-        getInfo: function() {
-            return qs(this,$option.infoTarget);
-        },
-        
-        showInfo: function() {
-            setAttr(this,'data-status','open');
-        },
-        
-        hideInfo: function() {
-            setAttr(this,'data-status','close');
-        }
-    });
+    // component
+    Component.ClickOpenTrigger.call(this,$option)
     
-
+    
     // setup
     aelOnce(this,'component:setup',function() {
         bindInput.call(this);
@@ -54,8 +39,7 @@ Component.SearchSlide = function(option)
     const bindInput = function()
     {
         const $this = this;
-        const input = trigHdlr(this,'searchSlide:getInput');
-        
+        const input = trigHdlr(this,'clickOpen:getTrigger');
         Component.InputSearchHref.call(input,$option.inputSearch);
         
         // handler
@@ -66,11 +50,11 @@ Component.SearchSlide = function(option)
         
         // event
         ael(input,'focus',function() {
-            trigHdlr($this,'searchSlide:showInfo');
+            trigHdlr($this,'clickOpen:open');
         });
         
         ael(input,'focusout',function() {
-            trigHdlr($this,'searchSlide:hideInfo');
+            trigHdlr($this,'clickOpen:close');
         });
         
         trigSetup(input);

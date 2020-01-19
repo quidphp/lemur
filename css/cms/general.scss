@@ -19,12 +19,8 @@
         @include flex(flex-end);
         margin-bottom: 15px;
 
-        > .operation-element {
+        > .operation-element:not(:first-child) {
             margin-left: 10px;
-
-            &:first-child {
-                margin-left: 0;
-            }
         }
     }
 

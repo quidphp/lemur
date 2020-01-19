@@ -77,11 +77,11 @@ Component.Doc = function(option)
         // lance les évènements pour monter le document dans le bon order
         mount: function(initial,isError) {
             const $this = this;
-            setTimeout(function() {
+            Func.timeout($option.mountTimeout,function() {
                 docMount.call($this,initial,isError);
                 const html = trigHdlr($this,'doc:getHtml');
                 setAttr(html,'data-status','ready');
-            },$option.mountTimeout);
+            });
         },
 
         // lance les évènements pour démonter le document dans le bon order

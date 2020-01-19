@@ -22,13 +22,9 @@
         }
     }
 
-    &[data-status='close'] > .scroller {
+    &[data-com='1'] > .scroller {
         .top .triangle {
-            @include triangle(right, $darkColor, 10px);
-        }
-
-        .bottom {
-            display: none;
+            @include triangle(bottom, $darkColor, 10px);
         }
     }
 
@@ -51,7 +47,7 @@
             @include flex();
 
             .triangle {
-                @include triangle(bottom, $darkColor, 10px);
+                @include triangle(right, $darkColor, 10px);
             }
 
             .date {
@@ -70,6 +66,10 @@
         }
 
         .bottom {
+            @include transition(height,0.5s);
+            height: 0;
+            overflow: hidden;
+            
             .table > span,
             .row > span {
                 font-weight: bold;

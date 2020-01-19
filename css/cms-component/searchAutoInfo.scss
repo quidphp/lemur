@@ -48,7 +48,8 @@
     }
 
     .search-info {
-        @include popupBase();
+        @include ClickOpenPopup();
+        @include popupCommon();
         padding: 15px;
 
         > .first {

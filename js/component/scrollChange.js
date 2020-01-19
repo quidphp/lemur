@@ -5,7 +5,7 @@
  */
  
 // scrollChange
-// component to notify nodes when window scroll has changed
+// component to notify nodes when window scroll has changed or stopped
 Component.ScrollChange = function(option)
 {
     // not empty
@@ -17,6 +17,7 @@ Component.ScrollChange = function(option)
     const $option = Pojo.replace({
         scroller: window,
         persistent: false,
+        stop: 100,
         passive: true
     },option);
     
@@ -24,6 +25,7 @@ Component.ScrollChange = function(option)
     // nodes
     const $nodes = this;
     const listener = ($option.passive === true)? aelPassive:ael;
+    let handlerStop;
     
     
     // event
@@ -32,15 +34,30 @@ Component.ScrollChange = function(option)
     });
     
     
+    // stop
+    if(Integer.is($option.stop))
+    {
+        const handlerStop = listener($option.scroller,'scroll',Func.debounce($option.stop,function(event) {
+            trigEvt($nodes,'scroll:stop',event);
+        }));
+    }
+    
+    
     // persistent
     if($option.persistent !== true)
     {
         aelOnce(document,'doc:unmountPage',function() {
             rel($option.scroller,handler);
+            
+            if(handlerStop)
+            rel($option.scroller,handlerStop);
         });
         
         aelOnce(this,'component:teardown',function() {
             rel($option.scroller,handler);
+            
+            if(handlerStop)
+            rel($option.scroller,handlerStop);
         });
     }
     

@@ -50,10 +50,9 @@
 
             > .toggler-element {
                 @include bigButtonLight();
-                margin-left: 5px;
-
-                &:first-child {
-                    margin-left: 0;
+                
+                &:not(:first-child) {
+                    margin-left: 5px;
                 }
             }
         }

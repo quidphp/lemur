@@ -14,15 +14,8 @@
 @include defaultAnimation();
 
 /* HTML */
-@include Document('.route-wrap');
-*,
-*::before,
-*::after {
-    outline: 0;
-}
-*:focus {
-    box-shadow: inset 0px 0px 5px $gray;
-}
+@include Document('.route-wrap',$gray);
+
 body {
     font-size: 1.4rem;
     font-weight: 300;
@@ -137,7 +130,14 @@ td[data-quick-edit='1'][data-status='loading'] > .cell-inner > a.quick-edit {
 
 /* COMPONENT */
 body {
-    @include clickOpen();
+    @include ClickOpen('.popup');
+    
+    .popup {
+        @include popupCommon();
+    }
+}
+body .popup {
+    
 }
 form {
     @include Form();
@@ -147,9 +147,6 @@ body > .modal {
 }
 [data-absolute-placeholder] {
     @include AbsolutePlaceholder();
-}
-[data-anchor-corner] {
-    @include AnchorCorner('.popup');
 }
 .fakeselect {
     @include fakeSelect();
