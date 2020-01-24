@@ -65,10 +65,10 @@ trait _common
     final public static function makeDivPopup($value=null,$attr='popup',?int $tabindex=0)
     {
         $attr = (array) $attr;
-        
+
         if(is_int($tabindex))
         $attr['tabindex'] = $tabindex;
-        
+
         $return = Html::div($value,$attr);
 
         return $return;

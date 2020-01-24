@@ -12,7 +12,7 @@
     @include fixed(null, 15px, 10px);
     width: 35%;
     z-index: 3;
-    
+
     .close {
         @include abs(10px, 15px);
         z-index: 3;
@@ -26,7 +26,7 @@
         .top .triangle {
             @include triangle(bottom, $darkColor, 10px);
         }
-        
+
         .bottom {
             visibility: visible;
         }
@@ -74,7 +74,7 @@
             height: 0;
             overflow: hidden;
             visibility: hidden;
-            
+
             .table > span,
             .row > span {
                 font-weight: bold;

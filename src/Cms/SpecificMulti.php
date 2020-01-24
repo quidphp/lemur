@@ -80,8 +80,8 @@ class SpecificMulti extends Core\RouteAlias
 
         return;
     }
-    
-    
+
+
     // rows
     // retourne l'objet rows
     final protected function rows():Core\Rows

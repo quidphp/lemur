@@ -569,14 +569,14 @@ class En extends Core\Lang\En
                 'modifyBottom'=>'Modify',
                 'activateField'=>'Modify field'
             ],
-            
+
             // rangeInput
-            'rangeInput'=>array(
+            'rangeInput'=>[
                 'min'=>'Minimum',
                 'max'=>'Maximum',
                 'inc'=>'Increment'
-            ),
-            
+            ],
+
             // table
             'table'=>[
 
@@ -604,7 +604,7 @@ class En extends Core\Lang\En
             'validate'=>[
                 'range'=>'Must be a valid range',
             ],
-            
+
             // col
             'col'=>[
 

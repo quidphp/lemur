@@ -10,9 +10,9 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Col;
-use Quid\Core;
-use Quid\Base\Html;
 use Quid\Base;
+use Quid\Base\Html;
+use Quid\Core;
 
 // range
 // class for a column managing a range (minimum, maximum, increment)
@@ -23,33 +23,33 @@ class Range extends Core\Col\JsonAlias
         'required'=>true,
         'check'=>['kind'=>'char'],
         'preValidate'=>'array',
-        'range'=>array( // custom
+        'range'=>[ // custom
             'min'=>0,
             'max'=>10,
-            'inc'=>1),
+            'inc'=>1],
         'formWrap'=>"<div class='range-input'>%label%%form%</div>"
     ];
-    
-    
+
+
     // hasFormLabelId
     // le champ contient différents labels
     final public function hasFormLabelId(?array $attr=null,bool $complex=false):bool
     {
         return false;
     }
-    
-    
+
+
     // showDetailsMaxLength
     // n'affiche pas le max length
     public function showDetailsMaxLength():bool
     {
         return false;
     }
-    
-    
+
+
     // validateClosure
     // retourne la closure pour la validation de range
-    final public function validateClosure():?\Closure 
+    final public function validateClosure():?\Closure
     {
         return function(string $context,$value=null) {
             $return = null;
@@ -63,22 +63,22 @@ class Range extends Core\Col\JsonAlias
             return $return;
         };
     }
-    
-    
+
+
     // onGet
     // sur onGet retourne un tableau associatif avec min, max ou inc
     final protected function onGet($value,array $option)
     {
         $return = null;
         $value = parent::onGet($value,$option);
-        
+
         if(is_array($value) && Base\Arr::isRange($value))
-        $return = Base\Arr::keysChange(array(0=>'min',1=>'max',2=>'inc'),$value);
-        
+        $return = Base\Arr::keysChange([0=>'min',1=>'max',2=>'inc'],$value);
+
         return $return;
     }
-    
-    
+
+
     // formComplex
     // génère le formulaire complex pour range
     final public function formComplex($value=true,?array $attr=null,?array $option=null):string
@@ -86,15 +86,15 @@ class Range extends Core\Col\JsonAlias
         $return = '';
         $tag = $this->complexTag($attr);
         $wrap = $this->getAttr('formWrap');
-        
+
         if(Html::isFormTag($tag))
         {
             $inputs = $this->inputs($value);
 
             foreach ($inputs as $array)
             {
-                $label = $array['label'].":";
-                $input = array('inputText',$array['value'],$array['attr']);
+                $label = $array['label'].':';
+                $input = ['inputText',$array['value'],$array['attr']];
                 $return .= Html::formWrap($label,$input,$wrap);
             }
         }
@@ -104,8 +104,8 @@ class Range extends Core\Col\JsonAlias
 
         return $return;
     }
-    
-    
+
+
     // inputs
     // retourne les inputs à utiliser pour le formulaire
     final public function inputs($value):array
@@ -117,13 +117,13 @@ class Range extends Core\Col\JsonAlias
         $required = $this->isRequired();
         $value = $this->get($value);
         $config = $this->getAttr('range');
-        
+
         foreach ($config as $key => $default)
         {
             $v = (is_array($value) && array_key_exists($key,$value))? $value[$key]:$default;
             $label = $lang->text('rangeInput/'.$key);
             $array = ['name'=>$name,'data-required'=>$required,'data-pattern'=>$pattern];
-            $return[] = array('label'=>$label,'value'=>$v,'attr'=>$array);
+            $return[] = ['label'=>$label,'value'=>$v,'attr'=>$array];
         }
 
         return $return;

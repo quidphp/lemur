@@ -93,7 +93,7 @@
             height: 0;
             overflow: hidden;
             visibility: hidden;
-            
+
             > ul > li > a:first-child {
                 display: block;
                 padding: 4px 15px 4px 32px;
@@ -112,7 +112,7 @@
                 }
             }
         }
-        
+
         &[data-carousel='1'] {
             > .trigger {
                 background-color: $darkerColor;
@@ -122,7 +122,7 @@
                     @include triangle(bottom, $gray, 10px);
                 }
             }
-            
+
             > .target {
                 visibility: visible;
             }

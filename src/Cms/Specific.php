@@ -73,8 +73,8 @@ class Specific extends Core\RouteAlias
 
         return;
     }
-    
-    
+
+
     // onReplace
     // tableau onReplace pour la route
     final protected function onReplace(array $return):array
