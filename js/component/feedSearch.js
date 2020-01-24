@@ -15,7 +15,7 @@ Component.FeedSearch = function(option)
     
     // option
     const $option = Pojo.replaceRecursive({
-        appendTarget: "ul:last-child",
+        appendTarget: "ul:last-of-type",
         parseData: null,
         result: '.results',
         search: "input[type='text']",
@@ -56,6 +56,7 @@ Component.FeedSearch = function(option)
     
     setHdlr(this,'feed:getAppendTarget',function() {
         const target = trigHdlr(this,'feed:getTarget');
+        d(target);
         return qs(target,$option.appendTarget);
     });
     

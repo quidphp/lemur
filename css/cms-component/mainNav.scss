@@ -88,20 +88,12 @@
             }
         }
 
-        &[data-carousel='1'] > .trigger {
-            background-color: $darkerColor;
-
-            .triangle {
-                margin-top: 2px;
-                @include triangle(bottom, $gray, 10px);
-            }
-        }
-
         > .target {
             @include transition(height, 0.5s);
             height: 0;
             overflow: hidden;
-
+            visibility: hidden;
+            
             > ul > li > a:first-child {
                 display: block;
                 padding: 4px 15px 4px 32px;
@@ -118,6 +110,21 @@
                 &.selected {
                     text-decoration: underline;
                 }
+            }
+        }
+        
+        &[data-carousel='1'] {
+            > .trigger {
+                background-color: $darkerColor;
+
+                .triangle {
+                    margin-top: 2px;
+                    @include triangle(bottom, $gray, 10px);
+                }
+            }
+            
+            > .target {
+                visibility: visible;
             }
         }
     }

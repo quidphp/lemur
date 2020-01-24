@@ -18,7 +18,7 @@ Component.Filter = function(option)
         trigger: true,
         target: true,
         closeUnsetContent: true,
-        parseData: "ul:last-child"
+        parseData: "ul:last-of-type"
     },option);
     
     

@@ -315,7 +315,7 @@ trait _template
                             }
 
                             $targetHtml = Html::ul($routeHtml.$subNav);
-                            $html .= static::makeDivPopup($targetHtml,'target');
+                            $html .= static::makeDivPopup($targetHtml,'target',null);
                         }
 
                         if($this->isTableTop($keys))
@@ -591,7 +591,7 @@ trait _template
 
             $r = Html::divOp('top');
             $r .= Html::div(null,'triangle');
-            $r .= Html::div(Base\Datetime::format(4),'date');
+            $r .= Html::button(Base\Datetime::format(4),'date');
             $r .= Html::divCl();
             $r .= Html::div(null,'spacer');
             $r .= Html::div($comText,'bottom');

@@ -123,7 +123,7 @@ class Route extends Base\Test
         assert($obj2->title(3) === 'Log');
         assert(!empty($obj->docOpen()));
         assert(count($obj->getReplace()) === 17);
-        assert(!$obj2->isSelected());
+        assert(!$obj2->isSelectedUri());
         assert($obj2->hasUri());
         assert(!$route::make()->hasUri());
         assert($obj2->uri() === '/en/login/submit');

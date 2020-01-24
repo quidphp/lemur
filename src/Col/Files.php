@@ -267,8 +267,6 @@ abstract class Files extends Core\Col\Files
 
             if(!empty($versions))
             {
-                $return .= Html::ulOp();
-
                 foreach ($versions as $key => $array)
                 {
                     $file = $cellVersions->get($key);
@@ -294,7 +292,7 @@ abstract class Files extends Core\Col\Files
                     $return .= Html::liCl();
                 }
 
-                $return .= Html::ulCl();
+                $return = Html::ulCond($return);
             }
         }
 

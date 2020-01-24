@@ -36,7 +36,7 @@ Component.Base = function()
         
         Ele.each(inputs,function() {
             if(trigHdlr(this,'input:isBinded'))
-            trigHdlrs(inputs,'input:disable');
+            trigHdlr(this,'input:disable');
             else
             setProp(this,'disabled',true);
         });

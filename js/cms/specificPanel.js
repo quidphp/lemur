@@ -78,11 +78,10 @@ Component.SpecificPanel = function(option)
     {
         const tabs = trigHdlr(this,'tabs:getTargets');
         
-        ael(tabs,'tab:init',function() {
+        ael(tabs,'tab:opened',function(event,isInit) {
+            if(isInit === true)
             trigEvt(document,'specificForm:tabInit',this);
-        });
-        
-        ael(tabs,'tab:opened',function() {
+            
             trigEvt(document,'specificForm:tabOpened',this);
         });
     }

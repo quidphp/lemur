@@ -264,7 +264,8 @@ class Fr extends Core\Lang\Fr
                     'author'=>'Auteur',
                     'price'=>'Prix',
                     'total'=>'Total',
-                    'host'=>'Hôte'
+                    'host'=>'Hôte',
+                    'quantity'=>'Quantité'
                 ],
 
                 // contact
@@ -568,7 +569,14 @@ class Fr extends Core\Lang\Fr
                 'modifyBottom'=>'Modifier',
                 'activateField'=>'Modifier le champ'
             ],
-
+            
+            // rangeInput
+            'rangeInput'=>array(
+                'min'=>'Minimum',
+                'max'=>'Maximum',
+                'inc'=>'Incrémentation'
+            ),
+            
             // table
             'table'=>[
 
@@ -592,6 +600,11 @@ class Fr extends Core\Lang\Fr
                     'user'=>"Utilisateurs pouvant accéder à l'application et/ou au CMS"]
             ],
 
+            // validate
+            'validate'=>[
+                'range'=>'Doit être une intervalle valide',
+            ],
+            
             // col
             'col'=>[
 
@@ -696,7 +709,8 @@ class Fr extends Core\Lang\Fr
                         'author'=>"Spécifie l'auteur de l'élément",
                         'price'=>"Spécifie le prix de l'élément",
                         'total'=>"Spécifie le total de l'élément",
-                        'timezone'=>"Spécifie le fuseau horaire de l'élément"
+                        'timezone'=>"Spécifie le fuseau horaire de l'élément",
+                        'quantity'=>"Spécifie la quantité de l'élément"
                     ],
 
                     // lang

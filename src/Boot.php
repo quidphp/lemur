@@ -95,7 +95,4 @@ abstract class Boot extends Core\Boot
         return ($this->type() === 'cms')? true:false;
     }
 }
-
-// init
-Boot::__init();
 ?>

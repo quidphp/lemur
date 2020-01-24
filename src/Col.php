@@ -58,7 +58,7 @@ class Col extends Core\Col
         return ($this->getAttr('relationSearchRequired') === true)? true:false;
     }
 
-
+    
     // panel
     // retourne le panel de la colonne
     // retourne la string default si vide

@@ -87,6 +87,18 @@ class General extends Core\RouteAlias
     }
 
 
+    // onPrepared
+    // génère une les uri sélectionnés pour une route en lien avec une table
+    final protected function onPrepared()
+    {
+        $table = $this->table();
+        $session = $this->session();
+        $session->routeTableGeneral($table)->addSelectedUri();
+
+        return;
+    }
+    
+    
     // onFallback
     // sur fallback, efface la version de la route dans nav/session
     final protected function onFallback($context=null)
@@ -108,23 +120,6 @@ class General extends Core\RouteAlias
     {
         $return['title'] = $this->title();
         $return['metaDescription'] = $this->table()->description();
-
-        return $return;
-    }
-
-
-    // selectedUri
-    // génère une les uri sélectionnés pour une route en lien avec une table
-    final public function selectedUri():array
-    {
-        $return = [];
-        $tables = $this->db()->tables();
-        $table = $this->table();
-        $session = $this->session();
-
-        $root = static::session()->routeTableGeneral($table);
-        $uri = $root->uri();
-        $return[$uri] = true;
 
         return $return;
     }

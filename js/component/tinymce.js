@@ -59,7 +59,7 @@ Component.Tinymce = function(option)
         Ele.addId(this,'tinymce-');
         const id = getProp(this,'id');
         const data = Pojo.replaceRecursive({},option,getAttr(this,'data-tinymce',true));
-
+        
         data.selector = "#"+id;
         data.init_instance_callback = function (editor) {
             editor.on('Blur', function (e) {
@@ -67,6 +67,8 @@ Component.Tinymce = function(option)
             });
         };
         
+        const $this = this;
+
         tinymce.init(data);
         const editor = tinymce.get(id);
         setData(this,'tinymce-editor',editor);

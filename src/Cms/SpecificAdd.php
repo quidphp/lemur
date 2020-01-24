@@ -78,21 +78,18 @@ class SpecificAdd extends Core\RouteAlias
     }
 
 
-    // selectedUri
-    // retourne les uri sélectionnés pour la route
-    final public function selectedUri():array
+    // onPrepared
+    // génère les uri sélectionnés pour la route
+    final protected function onPrepared()
     {
-        $return = [];
-
         if(!$this->hasSpecificAddNavLink())
         {
             $table = $this->table();
-            $root = static::session()->routeTableGeneral($table);
-            $uri = $root->uri();
-            $return[$uri] = true;
+            $session = static::session();
+            $session->routeTableGeneral($table)->addSelectedUri();
         }
 
-        return $return;
+        return;
     }
 
 

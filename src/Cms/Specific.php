@@ -58,37 +58,28 @@ class Specific extends Core\RouteAlias
     }
 
 
+    // onPrepared
+    // génère une les uri sélectionnés
+    // la route account peut être sélectionner
+    final protected function onPrepared()
+    {
+        $table = $this->table();
+        $session = static::session();
+        $user = $session->user();
+        $session->routeTableGeneral($table)->addSelectedUri();
+
+        if($user->route()->uri() === $this->uri())
+        Account::make()->addSelectedUri();
+
+        return;
+    }
+    
+    
     // onReplace
     // tableau onReplace pour la route
     final protected function onReplace(array $return):array
     {
         $return['title'] = $this->title();
-
-        return $return;
-    }
-
-
-    // selectedUri
-    // retourne les uris sélectionnés pour la route
-    // la route account peut être sélectionner
-    final public function selectedUri():array
-    {
-        $return = [];
-        $table = $this->table();
-        $user = static::sessionUser();
-        $root = static::session()->routeTableGeneral($table);
-        $uri = $root->uri();
-        $return[$uri] = true;
-
-        if($user->route()->uri() === $this->uri())
-        {
-            $route = Account::make();
-            if($route->canTrigger())
-            {
-                $account = $route->uri();
-                $return[$account] = true;
-            }
-        }
 
         return $return;
     }

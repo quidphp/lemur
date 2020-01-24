@@ -70,6 +70,18 @@ class SpecificMulti extends Core\RouteAlias
     }
 
 
+    // onPrepared
+    // retourne les uri sélectionnés pour la route
+    final protected function onPrepared()
+    {
+        $table = $this->table();
+        $session = static::session();
+        $session->routeTableGeneral($table)->addSelectedUri();
+
+        return;
+    }
+    
+    
     // rows
     // retourne l'objet rows
     final protected function rows():Core\Rows
@@ -85,20 +97,6 @@ class SpecificMulti extends Core\RouteAlias
     final protected function routeSubmit():SpecificMultiSubmit
     {
         return SpecificMultiSubmit::make($this->segments());
-    }
-
-
-    // selectedUri
-    // retourne les uri sélectionnés pour la route
-    final public function selectedUri():array
-    {
-        $return = [];
-        $table = $this->table();
-        $root = static::session()->routeTableGeneral($table);
-        $uri = $root->uri();
-        $return[$uri] = true;
-
-        return $return;
     }
 
 
