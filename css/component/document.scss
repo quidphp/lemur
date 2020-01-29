@@ -132,6 +132,10 @@
         text-decoration: none;
         color: $black;
     }
+    a:active,
+    a[data-triggered='1'] {
+        box-shadow: none !important;
+    }
     table {
         border-collapse: collapse;
         font-weight: normal;
