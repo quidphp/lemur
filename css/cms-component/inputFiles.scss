@@ -35,10 +35,10 @@
         .next {
             @include trianglePrevNext(14px);
             margin-top: -5px;
-            display: none;
+            display: block;
 
-            &[data-tab='1'] {
-                display: block;
+            &:disabled {
+                display: none;
             }
         }
 

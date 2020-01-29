@@ -203,27 +203,11 @@
     cursor: pointer;
 
     &.prev {
-        @include triangle(left, $color1, $dimension, $transparent);
-
-        &:hover {
-            @include triangle(left, $color2, $dimension, $transparent);
-        }
-
-        &:active {
-            @include triangle(left, $color3, $dimension, $transparent);
-        }
+        @include triangleEvent(left,$dimension,$transparent,$color1,$color2,$color3);
     }
 
     &.next {
-        @include triangle(right, $color1, $dimension, $transparent);
-
-        &:hover {
-            @include triangle(right, $color2, $dimension, $transparent);
-        }
-
-        &:active {
-            @include triangle(right, $color3, $dimension, $transparent);
-        }
+        @include triangleEvent(right,$dimension,$transparent,$color1,$color2,$color3);
     }
 }
 

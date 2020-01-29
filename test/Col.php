@@ -106,9 +106,9 @@ class Col extends Base\Test
 
         // col
         assert(count($col->attr()) === 66);
-        assert(strlen($date->formComplex()) === 251);
-        assert(strlen($date->formComplex('08-08-1984')) === 269);
-        assert(strlen($date->formComplex(mktime(0,0,0,8,8,1984))) === 269);
+        assert(strlen($date->formComplex()) === 260);
+        assert(strlen($date->formComplex('08-08-1984')) === 278);
+        assert(strlen($date->formComplex(mktime(0,0,0,8,8,1984))) === 278);
         assert($email->generalExcerptMin() === null);
         assert($jsonArray instanceof Lemur\Col\JsonArray);
         assert($jsonArray->required(null) === 'required');

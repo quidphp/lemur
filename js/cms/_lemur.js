@@ -47,6 +47,7 @@ ael(document,'doc:mountCommon',function(event,node) {
     const popupTrigger = qsa(node,".popup-trigger.with-popup:not(.with-ajax)");
     const popupTriggerAjax = qsa(node,".popup-trigger.with-popup.with-ajax");
     const backToTop = qs(node,"footer .back-to-top");
+    const tooltip = qsa(node,"[data-tooltip]");
     
     // anchorCorner
     trigSetup(Component.AnchorCorner.call(anchorCorner));
@@ -68,6 +69,9 @@ ael(document,'doc:mountCommon',function(event,node) {
     
     // modalMailto
     trigSetup(Component.ModalMailto.call(node));
+    
+    // tooltip
+    trigSetup(Component.Tooltip.call(tooltip,{target: "body > .tooltip", targetContent: ".tooltip-content", offsetTop: -8}));
 });
 
 
@@ -94,17 +98,17 @@ ael(document,'doc:mountPage',function(event,node) {
     // burger
     trigSetup(Component.Burger.call(burger));
     
-    // com
-    trigSetup(Component.Com.call(com));
-    
     // carousel
-    trigSetup(Component.Carousel.call(carousel,{trigger: ".trigger", target: ".target", targetHeight: true}));
+    trigSetup(Component.Carousel.call(carousel,{trigger: ".trigger", target: ".target", targetHeight: true, transitionTimeout: 500}));
     
     // subMenu
     trigSetup(Component.ClickOpenTrigger.call(subMenu,{trigger: ".trigger", target: ".popup", background: "submenu"}));
     
     // mainSearch
     trigSetup(Component.SearchAutoInfo.call(mainSearch,{target: ".popup"}));
+    
+    // com
+    trigSetup(Component.Com.call(com));
 });
 
 

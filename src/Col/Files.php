@@ -146,13 +146,15 @@ abstract class Files extends Core\Col\Files
 
                     if($isRegenerateable === true)
                     {
-                        $data = ['action'=>'regenerate','confirm'=>$lang->text('common/confirm'),'text'=>$lang->text('specific/mediaRegenerate')];
+                        $tooltip = static::langText('tooltip/mediaRegenerate');
+                        $data = ['action'=>'regenerate','confirm'=>$lang->text('common/confirm'),'tooltip'=>$tooltip,'text'=>$lang->text('specific/mediaRegenerate')];
                         $action .= Html::div(null,['icon-solo','action','regenerate','data'=>$data]);
                     }
 
                     if($isDeleteable === true)
                     {
-                        $data = ['action'=>'delete','confirm'=>$lang->text('common/confirm'),'text'=>$lang->text('specific/mediaDelete')];
+                        $tooltip = static::langText('tooltip/mediaDelete');
+                        $data = ['action'=>'delete','confirm'=>$lang->text('common/confirm'),'tooltip'=>$tooltip,'text'=>$lang->text('specific/mediaDelete')];
                         $action .= Html::div(null,['icon-solo','action','remove','data'=>$data]);
                     }
 

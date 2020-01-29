@@ -39,18 +39,37 @@ const Evt = Lemur.Evt = {
         return support;
     })(),
     
-
+    
+    // isSpecialKeyCode
+    // retourne vrai si l'event a un keyCode et que celui-ci est tab, enter, escape, ou arrow
+    isSpecialKeyCode: function(event)
+    {
+        let r = false;
+        
+        if(event instanceof Event && Integer.is(event.keyCode))
+        {
+            if(Arr.in(event.keyCode,[10,13,27,37,38,39,40]))
+            r = true;
+        }
+        
+        return r;
+    },
+    
+    
     // preventStop
     // permet de faire un prevent default et stop propagation à un événement
     preventStop: function(event,immediate)
     {
-        event.preventDefault();
-        
-        if(immediate === true)
-        event.stopImmediatePropagation();
-        
-        else
-        event.stopPropagation();
+        if(event instanceof Event)
+        {
+            event.preventDefault();
+            
+            if(immediate === true)
+            event.stopImmediatePropagation();
+            
+            else
+            event.stopPropagation();
+        }
         
         return false;
     },

@@ -36,7 +36,7 @@ const EleTarget = {
     // retourne vrai si la tag est celle donnée en argument
     isTag: function(node,value)
     {
-        return (this.tag(node) === value);
+        return (this.is(node) && this.tag(node) === value);
     },
     
     
@@ -197,7 +197,7 @@ const EleTarget = {
     // getValue
     // retourne la valeur pour une node, surtout pour les formulaires
     // la valeur retourné peut être trim
-    getValue: function(node,trim)
+    getValue: function(node,trim,cast)
     {
         let r = undefined;
         this.check(node);
@@ -207,6 +207,9 @@ const EleTarget = {
         
         if(trim === true)
         r = Str.trim(r);
+        
+        if(cast != null)
+        r = Scalar.cast(r,cast);
         
         return r;
     },

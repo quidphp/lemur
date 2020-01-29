@@ -19,6 +19,7 @@ class Db extends Core\Db
     // config
     public static $config = [
         'cols'=>[ // paramètre par défaut pour les colonnes
+            'order'=>['class'=>Col\IntegerRange::class],
             'featured'=>['class'=>Core\Col\Yes::class,'general'=>true],
             'menu'=>['class'=>Core\Col\Yes::class,'general'=>true],
             'fax'=>['search'=>false],

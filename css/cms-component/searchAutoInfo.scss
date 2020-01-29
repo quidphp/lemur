@@ -44,7 +44,19 @@
     }
 
     .popup {
-        @include popupList();
+        > ul > li {
+            > a {
+                @include filterElementLink();
+            }
+            
+            &:first-child > a {
+                border-top: 0;
+            }
+        }
+        
+        > h3 {
+            @include filterNotFound();
+        }
     }
 
     .search-info {

@@ -28,7 +28,7 @@ class Serialize extends Core\Col\Serialize
     final protected function onGet($return,array $option)
     {
         $return = parent::onGet($return,$option);
-
+        
         if(is_array($return) && !empty($option['context']) && $option['context'] === 'cms:specific')
         $return = Base\Debug::export($return);
 

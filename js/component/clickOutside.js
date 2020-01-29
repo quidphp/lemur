@@ -36,15 +36,13 @@ Component.ClickOutside = function(value,persistent)
         // persistent
         if(persistent !== true)
         {
-            aelOnce(document,'doc:unmountPage',function() {
+            const teardown = function() {
                 rel(parent,handler);
                 rel(parent,handlerCustom);
-            });
+            };
             
-            aelOnce(this,'component:teardown',function() {
-                rel(parent,handler);
-                rel(parent,handlerCustom);
-            });
+            aelOnce(document,'doc:unmountPage',teardown);
+            aelOnce(this,'component:teardown',teardown);
         }
     });
     

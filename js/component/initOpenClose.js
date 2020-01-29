@@ -17,7 +17,8 @@ Component.InitOpenClose = function(option)
     const $option = Pojo.replace({
         type: null,
         attr: null,
-        attrInit: 'data-init'
+        attrInit: 'data-init',
+        transitionTimeout: false
     },option);
     
     
@@ -48,7 +49,11 @@ Component.InitOpenClose = function(option)
         },
         
         canOpen: function() {
-            return trigHdlr(this,type+':isDisabled') ? false:true;
+            return (!trigHdlr(this,type+':isOpen') && !trigHdlr(this,type+':isDisabled') && Ele.getData(this,'clickOpen-transitionTimeout') == null)? true:false;
+        },
+        
+        canClose: function() {
+            return (trigHdlr(this,type+':isOpen') && !trigHdlr(this,type+':isDisabled') && Ele.getData(this,'clickOpen-transitionTimeout') == null)? true:false;
         },
         
         disable: function() {
@@ -64,7 +69,7 @@ Component.InitOpenClose = function(option)
     // event
     ael(this,type+':open',function() {
         
-        if(trigHdlr(this,type+':isOpen') !== true && trigHdlr(this,type+':canOpen') === true)
+        if(trigHdlr(this,type+':canOpen') === true)
         {
             let isInit = false;
             
@@ -79,16 +84,36 @@ Component.InitOpenClose = function(option)
             trigHdlr(this,type+':willOpen',isInit);
             setAttr(this,$option.attr,1);
             trigEvt(this,type+':opened',isInit);
+            
+            if(Integer.is($option.transitionTimeout))
+            setTransitionTimeout.call(this,$option.transitionTimeout);
         }
     });
     
     ael(this,type+':close',function() {
-        if(trigHdlr(this,type+':isOpen') === true)
+        if(trigHdlr(this,type+':canClose') === true)
         {
             setAttr(this,$option.attr,0);
             trigEvt(this,type+':closed');
+            
+            if(Integer.is($option.transitionTimeout))
+            setTransitionTimeout.call(this,$option.transitionTimeout);
         }
     });
+    
+    
+    // setTransitionTimeout
+    const setTransitionTimeout = function(timeout)
+    {
+        Integer.check(timeout);
+        const key = 'clickOpen-transitionTimeout';
+        
+        const func = Func.timeout(timeout,function() {
+            Ele.removeData(this,key);
+        },this);
+        
+        Ele.setData(this,key,func);
+    }
     
     return this;
 }

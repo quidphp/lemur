@@ -50,7 +50,8 @@ trait _template
         $route = Email::make();
         $data = ['mailto'=>$route->uri()];
         $flush .= Html::divCond($this->makeModal(),['modal','data'=>$data]);
-
+        $flush .= Html::div($this->makeTooltip(),'tooltip');
+        
         $flush .= Html::divOp('route-wrap');
 
         if($hasNav === true)
@@ -315,7 +316,7 @@ trait _template
                             }
 
                             $targetHtml = Html::ul($routeHtml.$subNav);
-                            $html .= static::makeDivPopup($targetHtml,'target',null);
+                            $html .= static::makeDivPopup($targetHtml,'target');
                         }
 
                         if($this->isTableTop($keys))
@@ -575,6 +576,17 @@ trait _template
     }
 
 
+    // makeTooltip
+    // génère le html pour le tooltip
+    final protected function makeTooltip():string 
+    {
+        $r = Html::div(null,'tooltip-content');
+        $r .= Html::div(null,'tooltip-arrow');
+        
+        return $r;
+    }
+    
+    
     // makeCom
     // génère le block pour la communication
     final protected function makeCom():string

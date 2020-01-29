@@ -335,7 +335,7 @@ class Specific extends Core\RouteAlias
         $r = '';
         $dispatch = $this->isUpdateableOrDeleteable();
         $hasPanel = $this->hasPanel();
-        $attr = ['specific-form',($hasPanel === true)? 'with-panel':null];
+        $attr = ['specific-form','tabindex'=>-1,($hasPanel === true)? 'with-panel':null];
 
         if($dispatch === true)
         {

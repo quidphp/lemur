@@ -21,15 +21,14 @@ Component.TabsNav = function(option)
         first: null,
         prev: null,
         next: null,
-        last: null,
-        directionAttr: 'data-tab'
+        last: null
     },option);
     
     
     // components
     Component.Tabs.call(this,option);
-    
-    
+
+
     // handler
     setHdlrs(this,'tabsNav:',{
         getNavs: function() {
@@ -74,11 +73,25 @@ Component.TabsNav = function(option)
         trigHdlr(this,'tabsNav:sync');
     });
     
+    // event
+    ael(this,'keyboardArrow:left',function(event,keyEvent,isInput) {
+        if(isInput === false)
+        trigHdlr(this,'tabs:goPrev');
+    });
+    
+    ael(this,'keyboardArrow:right',function(event,keyEvent,isInput) {
+        if(isInput === false)
+        trigHdlr(this,'tabs:goNext');
+    });
+    
     
     // setup
     aelOnce(this,'component:setup',function() {
         bindNav.call(this);
         bindDirection.call(this);
+        
+        if(Ele.match(this,'[tabindex]'))
+        Component.KeyboardArrow.call(this,'horizontal');
     });
     
     
@@ -168,29 +181,29 @@ Component.TabsNav = function(option)
         const first = trigHdlr(this,'tabsNav:getFirst');
         if(first != null)
         {
-            value = (tabsLength && !trigHdlr($this,'tabs:isFirst'))? 1:0;
-            setAttr(first,$option.directionAttr,value);
+            value = (tabsLength && !trigHdlr($this,'tabs:isFirst'))? false:true;
+            setProp(first,'disabled',value);
         }
         
         const last = trigHdlr(this,'tabsNav:getLast');
         if(last != null)
         {
-            value = (tabsLength && !trigHdlr($this,'tabs:isLast'))? 1:0;
-            setAttr(last,$option.directionAttr,value);
+            value = (tabsLength && !trigHdlr($this,'tabs:isLast'))? false:true;
+            setProp(last,'disabled',value);
         }
         
         const prev = trigHdlr(this,'tabsNav:getPrev');
         if(prev != null)
         {
-            value = (tabsLength && trigHdlr($this,'tabs:hasPrev'))? 1:0;
-            setAttr(prev,$option.directionAttr,value);
+            value = (tabsLength && trigHdlr($this,'tabs:hasPrev'))? false:true;
+            setProp(prev,'disabled',value);
         }
         
         const next = trigHdlr(this,'tabsNav:getNext');
         if(next != null)
         {
-            value = (tabsLength && trigHdlr($this,'tabs:hasNext'))? 1:0;
-            setAttr(next,$option.directionAttr,value);
+            value = (tabsLength && trigHdlr($this,'tabs:hasNext'))? false:true;
+            setProp(next,'disabled',value);
         }
     }
     

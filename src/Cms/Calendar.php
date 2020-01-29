@@ -57,10 +57,19 @@ class Calendar extends Core\RouteAlias
             return $route->a(null,['ajax','next']);
         })
         ->setCallback('day',function(int $value,int $timestamp,array $attr) {
-            return Html::button($value);
+            $attr = ($this->isDayDisabled($value,$timestamp))? array('disabled'=>true):null;
+            return Html::button($value,$attr);
         });
 
         return $return;
+    }
+    
+    
+    // isDayDisabled
+    // permet de désactiver une journée
+    public function isDayDisabled(int $value,int $timestamp):bool 
+    {
+        return false;
     }
 }
 

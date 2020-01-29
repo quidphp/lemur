@@ -14,38 +14,45 @@ Component.Timeout = function(type,timeout)
     
     
     // handler
-    setHdlr(this,'timeout:duration',function(type) {
-        return timeout || getData(this,'timeout-'+type) || 500;
-    });
-    
-    setHdlr(this,'timeout:getObj',function() {
-        return Pojo.copy(getTimeoutObj.call(this));
-    });
-    
-    setHdlr(this,'timeout:set',function(type) {
-        Str.check(type,true);
-        const $this = this;
-        const duration = trigHdlr(this,'timeout:duration',type);
-        const timeoutObj = getTimeoutObj.call(this);
-        const timeout = Func.timeout(duration,function() {
-            trigEvt($this,'timeout:'+type);
-        });
+    setHdlrs(this,'timeout:',{
         
-        trigHdlr(this,'timeout:clear',type);
-        Pojo.setRef(type,timeout,timeoutObj);
-    })
-    
-    setHdlr(this,'timeout:clear',function(type) {
-        Str.check(type,true);
-        const oldTimeout = getTimeout.call(this,type);
+        duration: function(type) {
+            return timeout || getData(this,'timeout-'+type) || 500;
+        },
         
-        if(oldTimeout != null)
-        clearTimeout(oldTimeout);
+        getObj: function() {
+            return Pojo.copy(getTimeoutObj.call(this));
+        },
+        
+        set: function(type) {
+            Str.check(type,true);
+            const duration = trigHdlr(this,'timeout:duration',type);
+            const timeoutObj = getTimeoutObj.call(this);
+            const timeout = Func.timeout(duration,function() {
+                trigEvt(this,'timeout:'+type);
+            },this);
+            
+            trigHdlr(this,'timeout:clear',type);
+            Pojo.setRef(type,timeout,timeoutObj);
+        },
+        
+        validateEvent: function(event) {
+            return true;
+        },
+        
+        clear: function(type) {
+            Str.check(type,true);
+            const oldTimeout = getTimeout.call(this,type);
+            
+            if(oldTimeout != null)
+            clearTimeout(oldTimeout);
+        }
     });
-    
+
     
     // event
     ael(this,type,function(event) {
+        if(trigHdlr(this,'timeout:validateEvent',event) === true)
         trigHdlr(this,'timeout:set',type);
     });
     

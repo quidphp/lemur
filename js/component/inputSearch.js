@@ -68,7 +68,7 @@ Component.InputSearch = function(option)
             
             if(validate === true)
             {
-                trigHdlr(this,'input:valueRemember');
+                trigHdlr(this,'input:rememberValue');
                 trigEvt(this,'inputSearch:change');
             }
         },
@@ -91,6 +91,10 @@ Component.InputSearch = function(option)
         }
     });
     
+    setHdlr(this,'timeout:validateEvent',function(event) {
+        return !Evt.isSpecialKeyCode(event);
+    });
+    
     
     // event
     ael(this,'keyboardEnter:blocked',function() {
@@ -100,7 +104,7 @@ Component.InputSearch = function(option)
     ael(this,'timeout:'+$option.keyEvent,function(event,keyEvent) {
         if(Nod.match(this,":focus"))
         {
-            trigHdlr(this,'input:valueRemember');
+            trigHdlr(this,'input:rememberValue');
             trigHdlr(this,$option.timeoutHandler);
         }
     });

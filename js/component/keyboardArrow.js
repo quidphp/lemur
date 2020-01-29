@@ -18,8 +18,19 @@ Component.KeyboardArrow = function(prevent,type)
     
     
     // handler
-    setHdlr(this,'keyboardArrow:prevent',function() {
-        return (prevent === true)? true:false;
+    setHdlr(this,'keyboardArrow:prevent',function(keyEvent,isInput,keyCode) {
+        let r = false;
+        
+        if(prevent === true)
+        r = true;
+        
+        else if(prevent === 'vertical' && Arr.in(keyCode,[38,40]))
+        r = true;
+        
+        else if(prevent === 'horizontal' && Arr.in(keyCode,[37,39]))
+        r = true;
+
+        return r;
     }); 
     
     

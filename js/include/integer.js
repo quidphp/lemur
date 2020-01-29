@@ -20,7 +20,7 @@ const IntegerPrimitive = {
     // retourne le nombre sous forme de int
     cast: function(value)
     {
-        return (Scalar.isNotBool(value))? parseInt(value):null;
+        return (Scalar.isNotBool(value) && value !== '')? parseInt(value):null;
     },
     
     
@@ -60,6 +60,28 @@ const IntegerPrimitive = {
         else if(value === 0)
         r = 1;
 
+        return r;
+    },
+    
+    
+    // range
+    // retourne un tableau range
+    range: function(min,max,inc)
+    {
+        let r = null;
+        min = (min == null)? 1:min;
+        inc = (inc == null)? 1:inc;
+        
+        if(Integer.isPositive(min,true) && Integer.isPositive(max,true) && Integer.isPositive(inc))
+        {
+            const length = Math.floor((max - min) / inc) + 1;
+            const arr = Array(length).fill(min);
+            
+            r = arr.map(function(x,y) {
+                return x + y * inc;
+            });
+        }
+        
         return r;
     },
     

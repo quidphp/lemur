@@ -86,19 +86,18 @@
     cursor: default;
     font-weight: 300;
 
-    .fakeselect .popup {
+    .fakeselect .options {
         top: 100% !important;
         left: 0 !important;
-        right: auto;
-        bottom: auto;
+        right: auto !important;
+        bottom: auto !important;
     }
 
     .results {
         display: block;
 
         h3 {
-            text-align: center;
-            padding: 10px;
+            @include filterNotFound();
         }
 
         ul {
@@ -147,19 +146,6 @@
 
             > a.replace {
                 @include filterElementBase();
-
-                &:hover,
-                &[data-triggered='1'] {
-                    background-color: $lightYellow;
-                }
-
-                &:active {
-                    background-color: $lightGray;
-                }
-
-                &.selected {
-                    background-color: $lightYellow;
-                }
             }
 
             a.icon-solo {
@@ -178,14 +164,8 @@
 // filterElementBase
 // mixin avec des styles commons pour un élément d'un filtre et enum set
 @mixin filterElementBase() {
-    @include transitions(background-color 0.3s);
+    @include filterElementLink();
     @include flex(center);
-    cursor: pointer;
-    text-align: center;
-    position: relative;
-    border-top: 1px solid $lightGray;
-    padding: 5px 10px;
-    width: 100%;
 
     .label-content {
         @include imageLegend();
@@ -206,4 +186,34 @@
         margin-left: 10px;
         font-size: 90%;
     }
+}
+
+// filterElementLink
+// mixin de style de base pour le lien dans le popup
+@mixin filterElementLink() {
+    @include transitions(background-color 0.3s);
+    cursor: pointer;
+    display: block;
+    text-align: center;
+    position: relative;
+    border-top: 1px solid $lightGray;
+    padding: 5px 10px;
+    width: 100%;
+    
+    &:hover,
+    &.selected,
+    &[data-triggered='1'] {
+        background-color: $lightYellow;
+    }
+
+    &:active {
+        background-color: $lightGray;
+    }
+}
+
+// filterNotFound
+// style de base pour le message si aucun résultat
+@mixin filterNotFound() {
+    text-align: center;
+    padding: 10px;
 }

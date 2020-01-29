@@ -186,31 +186,6 @@ $red: #8d1e2d;
     }
 }
 
-// componentInputCalendarSpecific
-// mixin pour le champ de date avec calendrier
-@mixin componentInputCalendarSpecific() {
-    &[data-absolute-placeholder='ready'][data-active='1'] > input[type='text'] {
-        @include abs(0, null, null, 0);
-        z-index: 3;
-        background-color: $lightYellow;
-    }
-
-    > .popup {
-        width: 250px;
-        padding: 0;
-        border: 0;
-        overflow: hidden;
-
-        .calendar {
-            @include calendar();
-        }
-
-        &:after {
-            display: none;
-        }
-    }
-}
-
 // componentRelationGeneral
 // mixin pour une cellule de relation dans le tableau general
 @mixin componentRelationGeneral() {

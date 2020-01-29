@@ -16,7 +16,7 @@ Component.SpecificComponents = function()
     const $components = [
         {
             match: "[data-group='date']",
-            component: Component.CalendarInput,
+            component: Component.InputCalendar,
             setupOnView: true
         },
         
@@ -48,6 +48,12 @@ Component.SpecificComponents = function()
         {
             match: "[data-tag='textarea']",
             component: Component.TextareaExtra,
+            setupOnView: true
+        },
+        
+        {
+            match: "[data-tag='inputNumericRange']",
+            component: Component.InputNumericRange,
             setupOnView: true
         }
     ];

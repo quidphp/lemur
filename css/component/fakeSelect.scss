@@ -6,28 +6,14 @@
  * License: https://github.com/quidphp/lemur/blob/master/LICENSE
  */
 
-// background
+// fakeSelect
 // stylesheet for the main styles of the fakeSelect component
+
+// fakeselect
+// styles pour le trigger et popup d'un fakeselect
 @mixin FakeSelect() {
-    @include inbl();
+    @include FakeSelectTrigger();
     @include ClickOpen('.options');
-    position: relative;
-    min-width: 150px;
-
-    > .trigger {
-        position: relative;
-        width: 100%;
-
-        > .title {
-            text-align: left;
-            display: block;
-        }
-
-        > .ico {
-            display: block;
-            background-size: contain;
-        }
-    }
 
     > .options {
         width: 100%;
@@ -46,5 +32,28 @@
     &[data-absolute-placeholder='ready'][data-active='1'] > .trigger {
         @include abs(0, null, null, 0);
         z-index: 3;
+    }
+}
+
+// fakeSelectTrigger
+// styles seulement pour le trigger d'un fakeslect
+@mixin FakeSelectTrigger() {
+    @include inbl();
+    position: relative;
+    min-width: 150px;
+
+    > .trigger {
+        position: relative;
+        width: 100%;
+
+        > .title {
+            text-align: left;
+            display: block;
+        }
+
+        > .ico {
+            display: block;
+            background-size: contain;
+        }
     }
 }

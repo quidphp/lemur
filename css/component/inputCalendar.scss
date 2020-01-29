@@ -1,0 +1,31 @@
+// compileOnSave: false
+
+/*
+ * This file is part of the QuidPHP package.
+ * Website: https://quidphp.com
+ * License: https://github.com/quidphp/lemur/blob/master/LICENSE
+ */
+
+// inputCalendar
+// stylesheet for the input calendar component
+@mixin InputCalendar() {
+    position: relative;
+    @include ClickOpen('.calendar-popup');
+    
+    &[data-absolute-placeholder='ready'][data-active='1'] > input[type='text'] {
+        @include abs(0, null, null, 0);
+        z-index: 100;
+    }
+
+    > .calendar-popup {
+        width: 250px;
+        padding: 0;
+        border: 0;
+        overflow: hidden;
+        z-index: 100;
+        
+        &:after {
+            display: none;
+        }
+    }
+}

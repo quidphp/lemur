@@ -7,76 +7,48 @@
  */
 
 // calendar
-// stylesheet for the calendar component
+// stylesheet for the calendar component of the cms
 @mixin calendar() {
+    @include Calendar();
+    
     .head {
-        padding: 5px;
         background-color: $darkColor;
-        position: relative;
-
+        
         .prev,
         .next {
             @include trianglePrevNext(12px, null, $white, $lightGray, $gray);
             margin-top: -6px;
         }
-
-        .prev {
-            @include abs(50%, null, null, 10px);
-        }
-
-        .next {
-            @include abs(50%, 10px);
-        }
-
-        .current {
-            text-align: center;
-            font-size: 120%;
-            color: $white;
-        }
     }
+    
     .body {
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
         thead {
             background-color: $color;
-
+            
             th {
-                padding: 3px;
-                color: $white;
-                text-align: center;
                 font-weight: bold;
             }
         }
 
-        tbody {
-            td {
-                > button {
-                    box-sizing: border-box;
-                    color: $black;
-                    border: 1px solid $lightGray;
-                    text-align: center;
-                    padding: 3px;
-                    width: 100%;
+        tbody td {
+            > button {
+                border: 1px solid $lightGray;
 
-                    &:hover {
-                        background-color: $lightYellow;
-                    }
+                &:hover {
+                    background-color: $lightYellow;
                 }
+            }
 
-                &.out > button {
-                    color: $lightGray;
-                }
+            &.out > button {
+                color: $lightGray;
+            }
 
-                &.today > button {
-                    background-color: $lightGray;
-                }
+            &.today > button {
+                background-color: $lighterGray;
+            }
 
-                &.selected > button {
-                    background-color: $lightYellow !important;
-                }
+            &.selected > button {
+                background-color: $lightYellow !important;
             }
         }
     }

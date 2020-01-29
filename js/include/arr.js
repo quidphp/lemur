@@ -52,6 +52,22 @@ const ArrBase = {
     },
     
     
+    // keyFirst
+    // retourne la première clé d'un tableau
+    keyFirst: function(array)
+    {
+        return (this.is(array) && array.length)? 0:undefined;
+    },
+    
+    
+    // keyLast
+    // retourne la dernière clé d'un tableau
+    keyLast: function(array)
+    {
+        return (this.is(array) && array.length)? array.length-1:undefined;
+    },
+    
+    
     // search
     // retourne l'index de la valeur dans le tableau
     search: function(value,array) 

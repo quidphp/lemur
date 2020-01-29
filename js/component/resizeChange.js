@@ -45,19 +45,15 @@ Component.ResizeChange = function(option)
     // persistent
     if($option.persistent !== true)
     {
-        aelOnce(document,'doc:unmountPage',function() {
+        const teardown = function() {
             rel(window,handler);
             
             if(handlerStop)
             rel(window,handlerStop);
-        });
+        };
         
-        aelOnce(this,'component:teardown',function() {
-            rel(window,handler);
-            
-            if(handlerStop)
-            rel(window,handlerStop);
-        });
+        aelOnce(document,'doc:unmountPage',teardown);
+        aelOnce(this,'component:teardown',teardown);
     }
     
     return this;

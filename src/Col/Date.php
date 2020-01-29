@@ -21,10 +21,10 @@ class Date extends Core\Col\Date
 {
     // config
     public static $config = [
+        'anchorCorner'=>true,
+        'absolutePlaceholder'=>true,
+        'onComplex'=>true,
         '@cms'=>[
-            'anchorCorner'=>true,
-            'absolutePlaceholder'=>true,
-            'onComplex'=>true,
             'route'=>['calendar'=>Lemur\Cms\Calendar::class]]
     ];
 
@@ -61,7 +61,7 @@ class Date extends Core\Col\Date
             $placeholderMaxLength = strlen($placeholder);
             $attr = Base\Attr::append($attr,['placeholder'=>$placeholder,'maxlength'=>$placeholderMaxLength]);
             $return .= $this->form($value,$attr,$option);
-            $return .= Html::divOp('popup');
+            $return .= Html::divOp('calendar-popup');
             $data = ['char'=>$route::getReplaceSegment(),'format'=>$formatCalendar,'current'=>$timestamp,'href'=>$route];
             $return .= Html::div(null,['calendar','data'=>$data]);
             $return .= Html::divCl();

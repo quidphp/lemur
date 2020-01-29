@@ -36,7 +36,9 @@
     &[data-status='loading'] #{$popup},
     [data-status='loading'] #{$popup} {
         height: 40px;
-
+        background-position: center;
+        background-size: 16px 16px;
+        
         > * {
             display: none !important;
         }

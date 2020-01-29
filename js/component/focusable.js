@@ -29,9 +29,19 @@ Component.Focusable = function(option)
         
         getCurrent: function() {
             const targets = trigHdlr(this,'focusable:getTargets');
-            return Arr.find(targets,function() {
+
+            let r = Arr.find(targets,function() {
                 return Nod.match(this,":focus");
             });
+            
+            if(r == null)
+            r = trigHdlr(this,'focusable:getCurrentFallback');
+            
+            return r;
+        },
+        
+        getCurrentFallback: function() {
+            return null;
         },
         
         focus: function(node) {

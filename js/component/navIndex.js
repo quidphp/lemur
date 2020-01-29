@@ -36,27 +36,35 @@ Component.NavIndex = function(option)
     // defaultChange
     const defaultChange = function(target,context)
     {
+        let r = false;
         const $this = this;
         const targets = trigHdlr(this,type+':getTargets');
         const current = trigHdlr(this,type+':getCurrent');
-        trigEvt(this,type+':beforeChange',target,current,context,targets);
         
-        Arr.each(targets,function() {
-            if(this !== target)
-            trigEvt(this,child+':close',context);
-        }); 
+        if(trigHdlr(target,child+':canOpen') && (current == null || trigHdlr(current,child+':canClose')))
+        {
+            r = true;
+            trigEvt(this,type+':beforeChange',target,current,context,targets);
+            
+            Arr.each(targets,function() {
+                if(this !== target)
+                trigEvt(this,child+':close',context);
+            }); 
+            
+            const promise = trigHdlr(this,type+':getPromise',target,current,context,targets);
+            const callback = function() {
+                trigEvt(target,child+':open');
+                trigEvt($this,type+':afterChange',target,current,context,targets);
+            };
+            
+            if(promise != null)
+            promise.then(callback);
+            
+            else
+            callback();
+        }
         
-        const promise = trigHdlr(this,type+':getPromise',target,current,context,targets);
-        const callback = function() {
-            trigEvt(target,child+':open');
-            trigEvt($this,type+':afterChange',target,current,context,targets);
-        };
-        
-        if(promise != null)
-        promise.then(callback);
-        
-        else
-        callback();
+        return r;
     }
     
     
@@ -120,10 +128,7 @@ Component.NavIndex = function(option)
                 const current = trigHdlr(this,type+':getCurrent');
                 
                 if(target != null && target != current)
-                {
-                    $option.go.call(this,target,context);
-                    r = true;
-                }
+                r = $option.go.call(this,target,context);
             }
             
             return r;
@@ -150,19 +155,19 @@ Component.NavIndex = function(option)
         },
         
         goFirst: function(context) {
-            trigHdlr(this,type+':go','first',context);
+            return trigHdlr(this,type+':go','first',context);
         },
         
         goPrev: function(context) {
-            trigHdlr(this,type+':go','prev',context);
+            return trigHdlr(this,type+':go','prev',context);
         },
         
         goNext: function(context) {
-            trigHdlr(this,type+':go','next',context);
+            return trigHdlr(this,type+':go','next',context);
         },
         
         goLast: function(context) {
-            trigHdlr(this,type+':go','last',context);
+            return trigHdlr(this,type+':go','last',context);
         },
         
         readyValue: function(value) {

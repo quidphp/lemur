@@ -24,76 +24,148 @@ Component.InputNumeric = function(option)
     // bindings
     Component.Timeout.call(this,$option.keyEvent,$option.timeout);
     Component.ValidatePrevent.call(this,'inputNumeric:change');
-    
+    Component.KeyboardArrow.call(this,'vertical');
+
 
     // handler
-    setHdlr(this,'inputNumeric:getCurrent',function() {
-        return getAttr(this,"data-current",'int');
-    });
-    
-    setHdlr(this,'inputNumeric:setCurrent',function(value) {
-        setAttr(this,"data-current",value);
-    });
-    
-    setHdlr(this,'inputNumeric:getMax',function() {
-        return getAttr(this,'data-max','int');
-    });
-    
-    setHdlr(this,'inputNumeric:validate',function() {
-        let r = false;
-        let val = trigHdlr(this,'input:getValueInt');
-        const max = trigHdlr(this,'inputNumeric:getMax');
-        const current = trigHdlr(this,'inputNumeric:getCurrent');
+    setHdlrs(this,'inputNumeric:',{
         
-        if(!val)
-        trigEvt(this,'validate:invalid');
+        getValueRestore: function() {
+            return trigHdlr(this,'input:getValueRemember','int') || trigHdlr(this,'input:getValueInt');
+        },
         
-        else
-        {
-            if(val > max)
+        setValue: function(value,change) {
+            trigHdlr(this,'input:setValue',value);
+            
+            if(change === true)
+            trigEvt(this,'inputNumeric:change');
+            
+            else
+            trigHdlr(this,'input:rememberValue');
+        },
+        
+        getMin: function() {
+            return getAttr(this,'data-min','int') || 1;
+        },
+        
+        getMax: function() {
+            return getAttr(this,'data-max','int');
+        },
+        
+        getPrev: function() {
+            let r = null;
+            const val = trigHdlr(this,'input:getValueRemember','int');
+            const min = trigHdlr(this,'inputNumeric:getMin');
+            
+            if(Integer.is(val))
             {
-                trigHdlr(this,'input:setValue',max);
-                val = max;
+                const newVal = (val-1);
+                if(newVal >= min)
+                r = newVal;
             }
             
-            if(trigHdlr(this,'validate:isValid') && val !== current)
-            r = true;
-        }
+            return r;
+        },
         
-        return r;
-    });
-    
-    setHdlr(this,'inputNumeric:process',function() {
-        const validate = trigHdlr(this,'inputNumeric:validate');
+        getNext: function() {
+            let r = null;
+            const val = trigHdlr(this,'input:getValueRemember','int');
+            const max = trigHdlr(this,'inputNumeric:getMax');
+            
+            if(Integer.is(val))
+            {
+                const newVal = (val+1);
+                if(newVal <= max)
+                r = newVal;
+            }
+            
+            return r;
+        },
         
-        if(validate === true)
-        {
-            trigHdlr(this,'input:valueRemember');
+        setPrev: function() {
+            const value = trigHdlr(this,'inputNumeric:getPrev');
+            if(value != null)
+            trigHdlr(this,'inputNumeric:setValue',value,true);
+        },
+        
+        setNext: function() {
+            const value = trigHdlr(this,'inputNumeric:getNext');
+            if(value != null)
+            trigHdlr(this,'inputNumeric:setValue',value,true);
+        },
+        
+        validateReplace: function(val) {
+            let r = null;
+            const min = trigHdlr(this,'inputNumeric:getMin');
+            const max = trigHdlr(this,'inputNumeric:getMax');
+            
+            if(val > max)
+            r = max;
+            
+            else if(val < min)
+            r = min;
+            
+            return r;
+        },
+        
+        validate: function() {
+            let r = false;
+            let val = trigHdlr(this,'input:getValueInt');
+            
+            if(!val)
+            trigEvt(this,'validate:invalid');
+            
+            else if(Integer.is(val))
+            {
+                const newVal = trigHdlr(this,'inputNumeric:validateReplace',val);
+                
+                if(newVal != null)
+                trigHdlr(this,'inputNumeric:setValue',newVal);
+                
+                if(trigHdlr(this,'validate:isValid'))
+                r = true;
+            }
+            
+            return r;
+        },
+        
+        shouldChange: function() {
+            return true;
+        },
+        
+        process: function() {
+            const validate = trigHdlr(this,'inputNumeric:validate');
+            const shouldChange = trigHdlr(this,'inputNumeric:shouldChange');
+            
+            if(validate === true && shouldChange === true)
             trigEvt(this,'inputNumeric:change');
         }
+    });
+    
+    setHdlr(this,'timeout:validateEvent',function(event) {
+        return !Evt.isSpecialKeyCode(event);
     });
     
     
     // event
     ael(this,'timeout:'+$option.keyEvent,function() {
         if(Nod.match(this,":focus"))
-        {
-            trigHdlr(this,'input:valueRemember');
-            trigHdlr(this,$option.timeoutHandler);
-        }
+        trigHdlr(this,$option.timeoutHandler);
     });
     
     ael(this,'validate:invalid',function() {
-        const current = trigHdlr(this,'inputNumeric:getCurrent');
-        trigHdlr(this,'input:setValue',current);
+        const value = trigHdlr(this,'inputNumeric:getValueRestore');
+        trigHdlr(this,'inputNumeric:setValue',value);
         trigEvt(this,'validate:valid');
     });
     
     ael(this,'focus',function() {
+        trigHdlr(this,'input:rememberValue');
         trigHdlr(this,'input:setEmpty');
     });
     
     ael(this,'focusout',function() {
+        if(trigHdlr(this,'input:isRealChange'))
         trigHdlr(this,'inputNumeric:process');
     });
     
@@ -103,7 +175,16 @@ Component.InputNumeric = function(option)
     });
     
     ael(this,'inputNumeric:change',function() {
+        trigHdlr(this,'input:rememberValue');
         trigHdlr(this,'timeout:clear',$option.keyEvent);
+    });
+    
+    ael(this,'keyboardArrow:up',function() {
+        trigHdlr(this,'inputNumeric:setNext');
+    });
+    
+    ael(this,'keyboardArrow:down',function() {
+        trigHdlr(this,'inputNumeric:setPrev');
     });
     
     return this;

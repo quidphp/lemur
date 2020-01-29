@@ -23,6 +23,7 @@
         }
 
         .table-relation {
+            @include FakeSelectTrigger();
             @include fakeSelectTrigger();
 
             > .popup {

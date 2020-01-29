@@ -32,15 +32,13 @@ Component.HashChange = function(persistent)
     // persistent
     if(persistent !== true)
     {
-        aelOnce(document,'doc:unmountPage',function() {
+        const teardown = function() {
             rel(window,handler);
             rel(window,handler2);
-        });
+        };
         
-        aelOnce(this,'component:teardown',function() {
-            rel(window,handler);
-            rel(window,handler2);
-        });
+        aelOnce(document,'doc:unmountPage',teardown);
+        aelOnce(this,'component:teardown',teardown);
     }
     
     return this;

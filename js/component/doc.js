@@ -15,7 +15,8 @@ Component.Doc = function(option)
     // option
     const $option = Pojo.replace({
         mountTimeout: 0,
-        routeWrap: "> .route-wrap"
+        routeWrap: "> .route-wrap",
+        scrollTop: true
     },option);
     
     
@@ -61,6 +62,11 @@ Component.Doc = function(option)
             setAttr(html,'data-status','loading');
         },
         
+        // désactive le scrollTop lors du prochain chargement de page seulement
+        skipNextScrollTop: function() {
+            $option.scrollTop = null;
+        },
+        
         // crée le document à partir d'un objet doc, passé dans dom.parse
         make: function(doc) {
             return docMake.call(this,doc);
@@ -70,18 +76,23 @@ Component.Doc = function(option)
         makeMount: function(doc,isError) {
             trigHdlr(this,'doc:unmount');
             trigHdlr(this,'doc:make',doc);
+
+            if($option.scrollTop === true)
             trigHdlr(window,'window:scrollTo',0);
+            
+            if($option.scrollTop == null)
+            $option.scrollTop = true;
+            
             trigHdlr(this,'doc:mount',false,isError);
         },
         
         // lance les évènements pour monter le document dans le bon order
         mount: function(initial,isError) {
-            const $this = this;
             Func.timeout($option.mountTimeout,function() {
-                docMount.call($this,initial,isError);
-                const html = trigHdlr($this,'doc:getHtml');
+                docMount.call(this,initial,isError);
+                const html = trigHdlr(this,'doc:getHtml');
                 setAttr(html,'data-status','ready');
-            });
+            },this);
         },
 
         // lance les évènements pour démonter le document dans le bon order

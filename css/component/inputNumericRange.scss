@@ -1,0 +1,26 @@
+// compileOnSave: false
+
+/*
+ * This file is part of the QuidPHP package.
+ * Website: https://quidphp.com
+ * License: https://github.com/quidphp/lemur/blob/master/LICENSE
+ */
+
+// inputNumericRange
+// base styles for the integerRange component
+@mixin InputNumericRange() {
+    @include flex(stretch,stretch,wrap);
+    
+    > button {
+        height: auto;
+        
+        &:disabled {
+            opacity: 0.3;
+            cursor: default;
+        }
+    }
+    
+    > input[type='text'] {
+        text-align: center;
+    }
+}

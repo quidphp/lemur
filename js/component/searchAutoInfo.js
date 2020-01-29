@@ -18,6 +18,7 @@ Component.SearchAutoInfo = function(option)
         targetInfo: ".search-info",
         attrInfo: 'data-search-info',
         background: "searchAutoInfo",
+        focusableTarget: "a",
         inputSearch: {
             useCurrent: false
         },
@@ -29,11 +30,28 @@ Component.SearchAutoInfo = function(option)
     
     // components
     Component.ClickOpenInputAjax.call(this,$option);
+    Component.Focusable.call(this);
+    Component.KeyboardArrow.call(this,'vertical');
     
     
     // handler
     setHdlr(this,'searchAutoInfo:getInfo',function() {
         return qs(this,$option.targetInfo);
+    });
+    
+    setHdlr(this,'focusable:getTargets',function() {
+        const content = trigHdlr(this,'clickOpen:getTargetContent');
+        return qsa(content,$option.focusableTarget);
+    });
+    
+    
+    // event
+    ael(this,'keyboardArrow:down',function() {
+        trigHdlr(this,'focusable:next');
+    });
+    
+    ael(this,'keyboardArrow:up',function() {
+        trigHdlr(this,'focusable:prev');
     });
     
     

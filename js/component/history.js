@@ -310,7 +310,7 @@ Component.History = function(option)
     {
         let r = false;
         let nodeOrEvent = node;
-        let type = 'click';
+        let type = (Ele.isTag(node,'form'))? 'submit':'click';
         
         if(eventOrType instanceof Event)
         {

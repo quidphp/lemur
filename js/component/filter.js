@@ -18,6 +18,7 @@ Component.Filter = function(option)
         trigger: true,
         target: true,
         closeUnsetContent: true,
+        focusableTarget: "a:not(.load-more)",
         parseData: "ul:last-of-type"
     },option);
     

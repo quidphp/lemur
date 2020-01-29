@@ -26,6 +26,10 @@
 /* FORM */
 [data-group='specific'] main .inner > .specific-form {
     position: relative;
+    
+    &:focus {
+        box-shadow: none !important;
+    }
 }
 [data-group='specific'] main .inner > .specific-form button.hidden {
     visibility: hidden;

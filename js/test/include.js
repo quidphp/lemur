@@ -92,6 +92,8 @@ Test.Include = function()
         assert(Arr.valueLast(arr) === 5);
         assert(Arr.valueFirst([]) === undefined);
         assert(Arr.valueStrip('8',arr) !== arr);
+        assert(Arr.keyFirst(arr) === 0);
+        assert(Arr.keyLast(arr) === 4);
         assert(Arr.isEqual(Arr.valueStrip('8',arr),arr));
         let arrKey;
         assert(Vari.isEqual(Arr.copy([1,2,3]),[1,2,3]));
@@ -467,6 +469,7 @@ Test.Include = function()
         assert(Integer.cast('25px') === 25);
         assert(Integer.cast(4) === 4);
         assert(Integer.cast(2.3) === 2);
+        assert(Integer.cast('') === null);
         assert(Integer.fromBool(true) === 1);
         assert(Integer.fromBool(null) === null);
         assert(Integer.fromBool(false) === 0);
@@ -482,13 +485,19 @@ Test.Include = function()
         assert(Integer.isNotEmpty(1));
         assert(Integer.isNotEmpty(-1));
         assert(Integer.isPositive(2));
+        assert(!Integer.isPositive(0));
+        assert(Integer.isPositive(0,true));
         assert(!Integer.isPositive('2'));
         assert(!Integer.isPositive(-1));
         assert(Integer.isNegative(-1));
         assert(!Integer.isNegative(0));
+        assert(Integer.isNegative(0,true));
         assert(Integer.check(1) === 1);
         assert(Integer.check(0) === 0);
         assert(Integer.check(null,false) === null);
+        assert(Arr.length(Integer.range(0,100,1)) === 101);
+        assert(Arr.length(Integer.range(1,100,1)) === 100);
+        assert(Arr.length(Integer.range(2,18,3)) === 6);
         
         // json
         assert(Json.encode({ok: 2}) === '{"ok":2}');
@@ -551,6 +560,7 @@ Test.Include = function()
         assert(Num.isNotEmpty(1.1));
         assert(Num.isPositive('2.2'));
         assert(!Num.isPositive('0'));
+        assert(Num.isPositive('0',true));
         assert(Num.isNegative('-2.2'));
         assert(Num.check('0') === '0');
         assert(Num.check(2.1,true) === 2.1);

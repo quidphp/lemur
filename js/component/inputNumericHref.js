@@ -18,6 +18,27 @@ Component.InputNumericHref = function(option)
     Component.HrefReplaceChar.call(this);
     
     
+    // handlers
+    setHdlr(this,'inputNumericHref:getCurrent',function() {
+        return getAttr(this,"data-current",'int');
+    });
+    
+    setHdlr(this,'inputNumericHref:setCurrent',function() {
+        setAttr(this,"data-current",value);
+    });
+    
+    setHdlr(this,'inputNumeric:getValueRestore',function() {
+        return trigHdlr(this,'inputNumericHref:getCurrent');
+    });
+    
+    setHdlr(this,'inputNumeric:shouldChange',function() {
+        const current = trigHdlr(this,'inputNumericHref:getCurrent');
+        const val = trigHdlr(this,'input:getValueInt');
+
+        return (val !== current);
+    });
+    
+    
     // redirect
     ael(this,'inputNumeric:change',function() {
         const val = trigHdlr(this,'input:getValueInt');

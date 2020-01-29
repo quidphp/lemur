@@ -1,0 +1,21 @@
+// compileOnSave: false
+
+/*
+ * This file is part of the QuidPHP package.
+ * Website: https://quidphp.com
+ * License: https://github.com/quidphp/lemur/blob/master/LICENSE
+ */
+
+// tooltip
+// base styles for the tooltip component
+@mixin Tooltip() {
+    position: fixed;
+    top: 0%;
+    left: 0%;
+    z-index: 100;
+    display: none;
+    
+    &[data-active='1'] {
+        display: block;
+    }
+}

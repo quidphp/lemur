@@ -87,12 +87,15 @@ const NodTarget = {
     
     
     // setProp
-    // permet de changer la propriété sur une node
-    setProp: function(node,key,value)
+    // permet de changer la propriété sur une node ou plusieurs node
+    setProp: function(nodes,key,value)
     {
-        this.check(node);
         Str.check(key);
-        Obj.setRef(key,value,node);
+        nodes = this.wrap(nodes,false);
+        
+        this.each(nodes,function() {
+            Obj.setRef(key,value,this);
+        });
         
         return;
     },

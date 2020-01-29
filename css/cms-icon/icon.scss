@@ -11,6 +11,7 @@
 
 /* LOADING */
 body .loading-icon,
+body [data-status='loading'] .calendar-popup,
 body [data-status='loading'] .popup,
 body [data-status='loading'].popup,
 .load-more[data-status='loading'],

@@ -40,17 +40,39 @@ const NumPrimitive =  {
     
     // isPositive
     // retourne vrai si c'est une variable numérique positive (> 0)
-    isPositive: function(value)
+    // si allowZero est true, retourne true si zero
+    isPositive: function(value,allowZero)
     {
-        return (this.is(value) && this.cast(value) > 0)? true:false;
+        let r = false;
+        
+        if(this.is(value))
+        {
+            value = this.cast(value);
+            
+            if(value > 0 || (allowZero === true && value === 0))
+            r = true;
+        }
+        
+        return r;
     },
     
     
     // isNegative
     // retourne vrai si c'est une variable numérique positive (< 0)
-    isNegative: function(value)
+    // si allowZero est true, retourne true si zero
+    isNegative: function(value,allowZero)
     {
-        return (this.is(value) && this.cast(value) < 0)? true:false;
+        let r = false;
+        
+        if(this.is(value))
+        {
+            value = this.cast(value);
+            
+            if(value < 0 || (allowZero === true && value === 0))
+            r = true;
+        }
+        
+        return r;
     },
     
     

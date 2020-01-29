@@ -101,6 +101,7 @@ html body .icon-solo.move {
 
 /* LOADING */
 body .loading-icon,
+body [data-status='loading'] .calendar-popup,
 body [data-status='loading'] .popup,
 body [data-status='loading'].popup,
 .load-more[data-status='loading'],
@@ -136,7 +137,8 @@ body {
         @include popupCommon();
     }
 }
-body .popup {
+body > .tooltip {
+    @include tooltip();
 }
 form {
     @include Form();
@@ -220,4 +222,9 @@ body > .modal {
 // tinymce
 [data-group='tinymce'] .specific-component {
     @include componentTinymceSpecific();
+}
+
+// inputNumericRange
+[data-tag='inputNumericRange'] .specific-component {
+    @include componentInputNumericRange();
 }

@@ -338,7 +338,19 @@ class Fr extends Core\Lang\Fr
                 'floatLeft'=>'Flotter à gauche',
                 'floatRight'=>'Flotter à droite'
             ],
-
+            
+            // tooltip
+            'tooltip'=>array(
+                'rememberMe'=>"Se souvenir du nom d'utilisateur après la déconnexion",
+                'colsSorter'=>'Gestion des colonnes à afficher',
+                'filterIn'=>"Conserver les lignes cochés",
+                'filterOut'=>"Retirer les lignes cochés",
+                'multiModify'=>"Modifier toutes les lignes cochées",
+                'multiDelete'=>"Effacer toutes les lignes cochées",
+                'mediaRegenerate'=>"Regénérer les versions de cette image",
+                'mediaDelete'=>"Effacer ce média"
+            ),
+            
             // popup
             'popup'=>[
 
@@ -602,6 +614,7 @@ class Fr extends Core\Lang\Fr
 
             // validate
             'validate'=>[
+                'integerRange'=>"Doit être inclu dans l'intervalle définie",
                 'range'=>'Doit être une intervalle valide',
             ],
 

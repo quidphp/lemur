@@ -17,6 +17,7 @@ Component.SearchSlide = function(option)
     const $option = Pojo.replaceRecursive({
         background: false,
         targetHeight: true,
+        transitionTimeout: 300,
         triggerToggle: false,
         triggerFocusClose: false,
         inputSearch: {

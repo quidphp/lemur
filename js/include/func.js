@@ -36,14 +36,14 @@ const FuncObj = {
     // permet d'appeler une fois après un timeout
     // si timeout n'est pas integer, utlise 0
     // retourne le timeout
-    timeout: function(delay,func) 
+    timeout: function(delay,func,context) 
     {
         Func.check(func);
         
         if(!Integer.is(delay))
         delay = 0;
         
-        return setTimeout(func,delay);
+        return setTimeout(func.bind(context),delay);
     },
     
     
@@ -58,15 +58,34 @@ const FuncObj = {
         let timeout;
         
         return function() {
+            const $this = this;
             const args = arguments;
             
             if(timeout)
             clearTimeout(timeout);
             
             timeout = $inst.timeout(delay,function() {
-                func.apply(null,args);
+                func.apply($this,args);
             });
         }
+    },
+    
+    
+    // debounceOnce
+    // comme debounce mais la function ne pourra être appelé qu'une fois
+    debounceOnce: function(delay,func)
+    {
+        let once = false;
+        Func.check(func);
+        return this.debounce(delay,function() {
+            const args = arguments;
+            
+            if(once === false)
+            {
+                func.apply(this,args);
+                once = true;
+            }
+        });
     },
     
     
@@ -81,9 +100,11 @@ const FuncObj = {
         let canCall = true;
         
         return function() {
+            const $this = this;
+            
             if(canCall === true)
             {
-                func.apply(null,arguments);
+                func.apply($this,arguments);
                 canCall = false;
                 
                 $inst.timeout(delay,function() {

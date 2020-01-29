@@ -46,19 +46,15 @@ Component.ScrollChange = function(option)
     // persistent
     if($option.persistent !== true)
     {
-        aelOnce(document,'doc:unmountPage',function() {
+        const teardown = function() {
             rel($option.scroller,handler);
             
             if(handlerStop)
             rel($option.scroller,handlerStop);
-        });
+        };
         
-        aelOnce(this,'component:teardown',function() {
-            rel($option.scroller,handler);
-            
-            if(handlerStop)
-            rel($option.scroller,handlerStop);
-        });
+        aelOnce(document,'doc:unmountPage',teardown);
+        aelOnce(this,'component:teardown',teardown);
     }
     
     return this;

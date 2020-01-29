@@ -16,6 +16,7 @@ Component.FeedSearch = function(option)
     // option
     const $option = Pojo.replaceRecursive({
         appendTarget: "ul:last-of-type",
+        focusableTarget: "button",
         parseData: null,
         result: '.results',
         search: "input[type='text']",
@@ -27,57 +28,69 @@ Component.FeedSearch = function(option)
     // components
     Component.Feed.call(this);
     Component.HrefReplaceChar.call(this);
+    Component.Focusable.call(this);
+    Component.KeyboardArrow.call(this,'vertical');
     
     
     // handler
-    setHdlr(this,'feedSearch:getResult',function() {
-        return qs(this,$option.result);
-    });
-    
-    setHdlr(this,'feedSearch:getSearch',function() {
-        return qs(this,$option.search);
-    });
-    
-    setHdlr(this,'feedSearch:getSearchValue',function() {
-        return trigHdlr(trigHdlr(this,'feedSearch:getSearch'),'input:getValueTrim');
-    });
-    
-    setHdlr(this,'feedSearch:getOrder',function() {
-        return qs(this,$option.order);
-    });
-
-    setHdlr(this,'feedSearch:getOrderValue',function() {
-        return trigHdlr(trigHdlr(this,'feedSearch:getOrder'),'input:getValueInt');
-    });
-    
-    setHdlr(this,'feed:getTarget',function() {
-        return trigHdlr(this,'feedSearch:getResult');
-    });
-    
-    setHdlr(this,'feed:getAppendTarget',function() {
-        const target = trigHdlr(this,'feed:getTarget');
-        d(target);
-        return qs(target,$option.appendTarget);
-    });
-    
-    setHdlr(this,'feed:loadMoreRemove',function() {
-        const loadMore = trigHdlr(this,'feed:loadMore');
-        return Nod.closest(loadMore,'li');
-    });
-    
-    setHdlr(this,'feed:parseData',function(data,type) {
+    setHdlrs(this,'feedSearch:',{
         
-        if(type === 'append')
-        {
-            data = Dom.parseOne(data);
-            
-            if($option.parseData)
-            data = qs(data,$option.parseData);
-            
-            data = getHtml(data);
+        getResult: function() {
+            return qs(this,$option.result);
+        },
+        
+        getSearch: function() {
+            return qs(this,$option.search);
+        },
+        
+        getSearchValue: function() {
+            return trigHdlr(trigHdlr(this,'feedSearch:getSearch'),'input:getValueTrim');
+        },
+        
+        getOrder: function() {
+            return qs(this,$option.order);
+        },
+        
+        getOrderValue: function() {
+            return trigHdlr(trigHdlr(this,'feedSearch:getOrder'),'input:getValueInt');
         }
+    });
+    
+    setHdlrs(this,'feed:',{
         
-        return data;
+        getTarget: function() {
+            return trigHdlr(this,'feedSearch:getResult');
+        },
+        
+        getAppendTarget: function() {
+            const target = trigHdlr(this,'feed:getTarget');
+            return qs(target,$option.appendTarget);
+        },
+        
+        loadMoreRemove: function() {
+            const loadMore = trigHdlr(this,'feed:loadMore');
+            return Nod.closest(loadMore,'li');
+        },
+        
+        parseData: function(data,type) {
+            
+            if(type === 'append')
+            {
+                data = Dom.parseOne(data);
+                
+                if($option.parseData)
+                data = qs(data,$option.parseData);
+                
+                data = getHtml(data);
+            }
+            
+            return data;
+        }
+    });
+    
+    setHdlr(this,'focusable:getTargets',function() {
+        const result = trigHdlr(this,'feedSearch:getResult');
+        return qsa(result,$option.focusableTarget);
     });
     
     setHdlr(this,'ajaxBlock:setContent',function(html,isError) {
@@ -99,6 +112,16 @@ Component.FeedSearch = function(option)
     });
     
     
+    // event
+    ael(this,'keyboardArrow:down',function() {
+        trigHdlr(this,'focusable:next');
+    });
+    
+    ael(this,'keyboardArrow:up',function() {
+        trigHdlr(this,'focusable:prev');
+    });
+    
+    
     // setup
     aelOnce(this,'component:setup',function() {
         bindSearch.call(this);
@@ -115,6 +138,8 @@ Component.FeedSearch = function(option)
         // components
         Component.InputSearch.call(search,$option.inputSearch);
         
+        
+        // event
         ael(search,'inputSearch:change',function() {
             trigEvt($this,'ajax:init');
         });

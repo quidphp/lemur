@@ -51,17 +51,26 @@ Component.Input = function()
         
         isRealChange: function() {
             const value = trigHdlr(this,'input:getValue');
-            const remember = getData(this,'input-remember');
+            const remember = trigHdlr(this,'input:getValueRemember');
 
             return (Str.isEqual(value,remember)) ? false:true;
         },
         
-        getValue: function(trim) {
-            return Ele.getValue(this,trim);
+        getValue: function(trim,cast) {
+            return Ele.getValue(this,trim,cast);
         },
         
-        getValueTrim: function() {
-            return trigHdlr(this,'input:getValue',true);
+        getValueTrim: function(cast) {
+            return trigHdlr(this,'input:getValue',true,cast);
+        },
+        
+        getValueRemember: function(cast) {
+            let r = getData(this,'input-remember');
+            
+            if(r != null && cast != null)
+            r = Scalar.cast(r,cast);
+            
+            return r;
         },
         
         getValueEncoded: function(trim) {
@@ -74,19 +83,19 @@ Component.Input = function()
         },
         
         getValueInt: function() {
-            return Integer.cast(trigHdlr(this,'input:getValue',true));
+            return trigHdlr(this,'input:getValue',true,'int');
         },
         
         getValueJson: function() {
-            let r = trigHdlr(this,'input:getValue');
-            
-            if(Str.is(r))
-            r = Json.decode(r);
-            
-            return r;
+            return trigHdlr(this,'input:getValue',null,'json');
         },
         
-        valueRemember: function() {
+        setValueRemember: function() {
+            const value = trigHdlr(this,'input:getValueRemember');
+            trigHdlr(this,'input:setValue',value);
+        },
+        
+        rememberValue: function() {
             const value = trigHdlr(this,'input:getValue');
             setData(this,'input-remember',value);
         },
@@ -105,6 +114,10 @@ Component.Input = function()
         
         getTag: function() {
             return Ele.tag(this);
+        },
+        
+        getForm: function() {
+            return Ele.closest(this,'form');
         },
         
         isRadioCheckbox: function() {

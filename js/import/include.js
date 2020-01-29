@@ -47,6 +47,7 @@ const getHtml = Ele.getHtml.bind(Ele);
 const setProp = Ele.setProp.bind(Ele);
 const setAttr = Ele.setAttr.bind(Ele);
 const setHtml = Ele.setHtml.bind(Ele);
+const setCss = Ele.setCss.bind(Ele);
 const toggleClass = Ele.toggleClass.bind(Ele);
 
 // nod

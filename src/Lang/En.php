@@ -338,7 +338,19 @@ class En extends Core\Lang\En
                 'floatLeft'=>'Float left',
                 'floatRight'=>'Float right'
             ],
-
+            
+            // tooltip
+            'tooltip'=>array(
+                'rememberMe'=>'Remember the username after logout',
+                'colsSorter'=>'Manage columns to display',
+                'filterIn'=>"Keep checked lines",
+                'filterOut'=>"Hide checked lines",
+                'multiModify'=>"Modify all checked lines",
+                'multiDelete'=>"Delete all checked lines",
+                'mediaRegenerate'=>"Regenerate versions of this image",
+                'mediaDelete'=>"Delete this media"
+            ),
+            
             // popup
             'popup'=>[
 
@@ -602,6 +614,7 @@ class En extends Core\Lang\En
 
             // validate
             'validate'=>[
+                'integerRange'=>'Must be within the defined range',
                 'range'=>'Must be a valid range',
             ],
 

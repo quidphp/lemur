@@ -17,7 +17,6 @@ Component.ClickOpen = function(option)
     const $option = Pojo.replace({
         target: true,
         targetHeight: false,
-        targetHeightTimeout: 500,
         background: 'clickOpen',
         attr: 'data-active',
         closeUnsetContent: false,
@@ -46,15 +45,6 @@ Component.ClickOpen = function(option)
     
     // handler
     setHdlrs(this,'clickOpen:',{
-        
-        canOpen: function() {
-            let r = true;
-            
-            if($option.targetHeight && $option.targetHeightTimeout && Ele.getData(this,'clickOpen-timeout') != null)
-            r = false;
-            
-            return r;
-        },
         
         isEmpty: function() {
             const target = trigHdlr(this,'clickOpen:getTargetContent');
@@ -176,6 +166,8 @@ Component.ClickOpen = function(option)
     });
     
     ael(this,'clickOpen:closed',function(event,newBg) {
+        const $this = this;
+        
         if($option.closeUnsetContent === true)
         trigHdlr(this,'clickOpen:unsetTargetContent');
         
@@ -186,16 +178,8 @@ Component.ClickOpen = function(option)
         
         if($option.targetHeight)
         {
-            const $this = this;
             const target = trigHdlr(this,'clickOpen:getTarget');
             Ele.setDimension(target,null,false);
-            
-            if($option.targetHeightTimeout)
-            {
-                Ele.setData(this,'clickOpen-timeout',Func.timeout($option.targetHeightTimeout,function() {
-                    Ele.removeData($this,'clickOpen-timeout');
-                }));
-            }
         }
     });
         

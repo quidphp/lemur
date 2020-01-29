@@ -22,6 +22,7 @@ Component.Calendar = function(option)
     // components
     Component.AjaxBlock.call(this,$option);
     Component.HrefReplaceChar.call(this);
+    Component.Focusable.call(this);
     
     
     // handler
@@ -39,10 +40,26 @@ Component.Calendar = function(option)
             return qsa(this,".body td");
         },
         
-        getSelected: function() {
+        getButtons: function() {
+            return qsa(this,".body td button");
+        },
+        
+        getSelecteds: function() {
             return Arr.filter(trigHdlr(this,'calendar:getCells'),function() {
                 return Nod.match(this,".selected");
             });
+        },
+        
+        getSelected: function() {
+            const selecteds = trigHdlr(this,'calendar:getSelecteds');
+            return Arr.valueFirst(selecteds);
+        },
+        
+        getSelectedButton: function() {
+            const selected = trigHdlr(this,'calendar:getSelected');
+            
+            if(selected != null)
+            return qs(selected,'button');
         },
         
         getCurrent: function() {
@@ -54,11 +71,11 @@ Component.Calendar = function(option)
         },
         
         removeSelected: function() {
-            const selected = trigHdlr(this,'calendar:getSelected');
+            const selected = trigHdlr(this,'calendar:getSelecteds');
             toggleClass(selected,'selected',false);
         },
         
-        findCell: function(value) {
+        findCell: function(value,onlyIn) {
             let r = undefined;
             const tds = trigHdlr(this,'calendar:getCells');
             const format = trigHdlr(this,'calendar:getFormat');
@@ -67,24 +84,27 @@ Component.Calendar = function(option)
             if(Num.is(value))
             {
                 r = Arr.find(tds,function() {
-                    return Nod.match(this,"[data-timestamp='"+value+"']") && !Nod.match(this,".out");
+                    return Ele.match(this,"[data-timestamp='"+value+"']");
                 });
             }
             
             else if(Str.isNotEmpty(value) && value.length == Str.length(format))
             {
                 r = Arr.find(tds,function() {
-                    return Nod.match(this,"[data-format^='"+value+"']") && !Nod.match(this,".out");
+                    return Ele.match(this,"[data-format^='"+value+"']");
                 });
             }
+            
+            if(r != null && onlyIn === true && Ele.match(r,".out"))
+            r = null;
             
             return r;
         },
         
-        select: function(value,reload) {
+        select: function(value,reload,onlyIn) {
             trigHdlr(this,'calendar:removeSelected');
-            const td = trigHdlr(this,'calendar:findCell',value);
-            
+            const td = trigHdlr(this,'calendar:findCell',value,onlyIn);
+
             if(td != null)
             toggleClass(td,'selected',true);
             
@@ -104,6 +124,14 @@ Component.Calendar = function(option)
     setHdlr(this,'ajax:config',function() {
         const current = trigHdlr(this,'calendar:getCurrent');
         return trigHdlr(this,'hrefReplaceChar:make',current);
+    });
+    
+    setHdlr(this,'focusable:getCurrentFallback',function() {
+        return trigHdlr(this,'calendar:getSelectedButton');
+    });
+    
+    setHdlr(this,'focusable:getTargets',function() {
+        return trigHdlr(this,'calendar:getButtons');
     });
     
     

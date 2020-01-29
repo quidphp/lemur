@@ -614,6 +614,7 @@ class General extends Core\RouteAlias
 
         if($this->hasTablePermission('rows'))
         {
+            $lang = static::lang();
             $table = $this->table();
             $char = static::getReplaceSegment();
             $defaultSegment = static::getDefaultSegment();
@@ -621,7 +622,8 @@ class General extends Core\RouteAlias
             if($this->hasTablePermission('in'))
             {
                 $route = $this->changeSegments(['page'=>1,'in'=>true]);
-                $data = ['href'=>$route,'char'=>$char,'separator'=>$defaultSegment];
+                $tooltip = $lang->text('tooltip/filterIn');
+                $data = ['href'=>$route,'char'=>$char,'separator'=>$defaultSegment,'tooltip'=>$tooltip];
                 $r .= Html::button(null,['tool-element','icon-solo','plus','data'=>$data]);
             }
 
@@ -630,14 +632,16 @@ class General extends Core\RouteAlias
                 $notIn = $this->segment('notIn');
                 $notIn[] = $char;
                 $route = $this->changeSegments(['page'=>1,'notIn'=>$notIn]);
-                $data = ['href'=>$route,'char'=>$char,'separator'=>$defaultSegment];
+                $tooltip = $lang->text('tooltip/filterOut');
+                $data = ['href'=>$route,'char'=>$char,'separator'=>$defaultSegment,'tooltip'=>$tooltip];
                 $r .= Html::button(null,['tool-element','icon-solo','minus','data'=>$data]);
             }
 
             $route = SpecificMulti::make(['table'=>$table,'primaries'=>true]);
             if($route->canTrigger())
             {
-                $data = ['href'=>$route,'char'=>$char,'separator'=>$defaultSegment];
+                $tooltip = $lang->text('tooltip/multiModify');
+                $data = ['href'=>$route,'char'=>$char,'separator'=>$defaultSegment,'tooltip'=>$tooltip];
                 $r .= Html::button(null,['tool-element','icon-solo','multi-modify','data'=>$data]);
             }
 
@@ -661,7 +665,8 @@ class General extends Core\RouteAlias
         if($route->canTrigger())
         {
             $defaultSegment = static::getDefaultSegment();
-            $data = ['confirm'=>static::langText('common/confirm'),'separator'=>$defaultSegment];
+            $tooltip = static::lang()->text('tooltip/multiDelete');
+            $data = ['confirm'=>static::langText('common/confirm'),'separator'=>$defaultSegment,'tooltip'=>$tooltip];
 
             $r .= $route->formOpen(['tool-element','multi-delete-form','data'=>$data]);
             $r .= $this->tableHiddenInput();
@@ -739,8 +744,9 @@ class General extends Core\RouteAlias
                     $option['value'][] = $key;
                 }
             }
-
-            $r .= Html::buttonOp(['trigger',($hasSpecificCols === true)? 'selected':null]);
+            
+            $tooltip = static::lang()->text('tooltip/colsSorter');
+            $r .= Html::buttonOp(['trigger','data-tooltip'=>$tooltip,($hasSpecificCols === true)? 'selected':null]);
             $r .= Html::span(null,['icon-solo','icon-center','cols']);
             $r .= Html::buttonCl();
 

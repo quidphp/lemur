@@ -13,6 +13,10 @@ Component.Com = function(option)
     return null;
     
     
+    // nodes
+    const $nodes = this;
+    
+    
     // option
     const $option = Pojo.replaceRecursive({
         clickOpen: {
@@ -21,7 +25,8 @@ Component.Com = function(option)
             target: ".scroller .bottom", 
             clickOutside: false,
             background: false, 
-            targetHeight: true
+            targetHeight: true,
+            transitionTimeout: 500
         }
     },option);
     
@@ -39,6 +44,10 @@ Component.Com = function(option)
     ael(this,'com:hide',function() {
         setAttr(this,'data-status','hidden');
     })
+    
+    ael(document,'keyboardEscape:catched',function() {
+        trigEvt($nodes,'com:hide');
+    });
     
     
     // delegate

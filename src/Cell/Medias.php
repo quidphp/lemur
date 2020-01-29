@@ -40,7 +40,7 @@ class Medias extends Core\Cell\Medias
         if(!empty($slider))
         {
             if(count($slider) > 1)
-            $return = Html::divCond($this->makeGeneralSlider($slider),'slider');
+            $return = Html::divCond($this->makeGeneralSlider($slider),array('slider','tabindex'=>0));
 
             else
             $return = current($slider);
@@ -56,8 +56,8 @@ class Medias extends Core\Cell\Medias
     {
         $r = '';
 
-        $r .= Html::div(null,['triangle','prev']);
-        $r .= Html::div(null,['triangle','next']);
+        $r .= Html::button(null,['triangle','prev']);
+        $r .= Html::button(null,['triangle','next']);
 
         foreach ($slider as $value)
         {
