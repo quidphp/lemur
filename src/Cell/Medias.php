@@ -40,7 +40,7 @@ class Medias extends Core\Cell\Medias
         if(!empty($slider))
         {
             if(count($slider) > 1)
-            $return = Html::divCond($this->makeGeneralSlider($slider),array('slider','tabindex'=>0));
+            $return = Html::divCond($this->makeGeneralSlider($slider),['slider','tabindex'=>0]);
 
             else
             $return = current($slider);

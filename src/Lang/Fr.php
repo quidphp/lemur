@@ -338,19 +338,19 @@ class Fr extends Core\Lang\Fr
                 'floatLeft'=>'Flotter à gauche',
                 'floatRight'=>'Flotter à droite'
             ],
-            
+
             // tooltip
-            'tooltip'=>array(
+            'tooltip'=>[
                 'rememberMe'=>"Se souvenir du nom d'utilisateur après la déconnexion",
                 'colsSorter'=>'Gestion des colonnes à afficher',
-                'filterIn'=>"Conserver les lignes cochés",
-                'filterOut'=>"Retirer les lignes cochés",
-                'multiModify'=>"Modifier toutes les lignes cochées",
-                'multiDelete'=>"Effacer toutes les lignes cochées",
-                'mediaRegenerate'=>"Regénérer les versions de cette image",
-                'mediaDelete'=>"Effacer ce média"
-            ),
-            
+                'filterIn'=>'Conserver les lignes cochés',
+                'filterOut'=>'Retirer les lignes cochés',
+                'multiModify'=>'Modifier toutes les lignes cochées',
+                'multiDelete'=>'Effacer toutes les lignes cochées',
+                'mediaRegenerate'=>'Regénérer les versions de cette image',
+                'mediaDelete'=>'Effacer ce média'
+            ],
+
             // popup
             'popup'=>[
 

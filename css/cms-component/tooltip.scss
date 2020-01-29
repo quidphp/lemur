@@ -10,7 +10,7 @@
 // stylesheet for the tooltip component
 @mixin tooltip() {
     @include Tooltip();
-    
+
     > .tooltip-content {
         background-color: $lightYellow;
         padding: 5px 10px;
@@ -21,10 +21,10 @@
         box-shadow: 2px 2px 6px -4px $black;
         max-width: 225px;
     }
-    
+
     > .tooltip-arrow {
-        @include abs(100%,null,null,50%);
-        @include triangle(bottom,$gray,6px);
+        @include abs(100%, null, null, 50%);
+        @include triangle(bottom, $gray, 6px);
         margin-left: -3px;
     }
 }

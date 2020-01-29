@@ -13,7 +13,6 @@ namespace Quid\Lemur\Col;
 use Quid\Base;
 use Quid\Base\Html;
 use Quid\Core;
-use Quid\Lemur;
 
 // range
 // class for a column managing a range (minimum, maximum, increment)
@@ -86,12 +85,12 @@ class Range extends Core\Col\JsonAlias
     {
         $return = '';
         $tag = $this->complexTag($attr);
-        
+
         if(Html::isFormTag($tag))
         {
             $inputs = $this->inputs($value);
             $wrap = $this->getAttr('formWrap');
-            
+
             foreach ($inputs as $array)
             {
                 $label = $array['label'].':';

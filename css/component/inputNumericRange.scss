@@ -9,17 +9,17 @@
 // inputNumericRange
 // base styles for the integerRange component
 @mixin InputNumericRange() {
-    @include flex(stretch,stretch,wrap);
-    
+    @include flex(stretch, stretch, wrap);
+
     > button {
         height: auto;
-        
+
         &:disabled {
             opacity: 0.3;
             cursor: default;
         }
     }
-    
+
     > input[type='text'] {
         text-align: center;
     }

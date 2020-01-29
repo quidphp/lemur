@@ -11,7 +11,7 @@
 @mixin InputCalendar() {
     position: relative;
     @include ClickOpen('.calendar-popup');
-    
+
     &[data-absolute-placeholder='ready'][data-active='1'] > input[type='text'] {
         @include abs(0, null, null, 0);
         z-index: 100;
@@ -23,7 +23,7 @@
         border: 0;
         overflow: hidden;
         z-index: 100;
-        
+
         &:after {
             display: none;
         }

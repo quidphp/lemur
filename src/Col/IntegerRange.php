@@ -10,9 +10,9 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Col;
-use Quid\Core;
 use Quid\Base;
 use Quid\Base\Html;
+use Quid\Core;
 
 // integerRanger
 // class for an integer column that supports range
@@ -25,13 +25,13 @@ class IntegerRange extends Core\Col\Integer
         'permission'=>[
             '*'=>[
                 'nullPlaceholder'=>false]],
-        'range'=>array( // custom, défini la range
+        'range'=>[ // custom, défini la range
             'min'=>1,
             'max'=>100,
-            'inc'=>1)
+            'inc'=>1]
     ];
-    
-    
+
+
     // showDetailsMaxLength
     // n'affiche pas le max length
     public function showDetailsMaxLength():bool
@@ -39,7 +39,7 @@ class IntegerRange extends Core\Col\Integer
         return false;
     }
 
-    
+
     // validateClosure
     // retourne la closure pour la validation de range
     final public function validateClosure():?\Closure
@@ -59,35 +59,35 @@ class IntegerRange extends Core\Col\Integer
             return $return;
         };
     }
-    
-    
+
+
     // getRange
     // retourne la range paramétrée pour la colonne
-    final public function getRange():array 
+    final public function getRange():array
     {
         $return = null;
         $range = $this->getAttr('range');
-        $arg = array($range['min'],$range['max'],$range['inc'],true);
+        $arg = [$range['min'],$range['max'],$range['inc'],true];
         $return = Base\Integer::range(...$arg);
-        
+
         return $return;
     }
-    
-    
+
+
     // formComplex
     // génère le formulaire complex pour integerRange
     final public function formComplex($value=true,?array $attr=null,?array $option=null):string
     {
         $return = '';
         $tag = $this->complexTag($attr);
-        
+
         if($tag === 'inputNumericRange')
         {
             $range = $this->getAttr('range');
-            $return .= Html::button(null,array('icon-solo','minus','data-range'=>'prev'));
-            $inputAttr = Base\Arrs::replace($attr,array('tag'=>'inputText','data'=>$range));
+            $return .= Html::button(null,['icon-solo','minus','data-range'=>'prev']);
+            $inputAttr = Base\Arrs::replace($attr,['tag'=>'inputText','data'=>$range]);
             $return .= parent::formComplex($value,$inputAttr,$option);
-            $return .= Html::button(null,array('icon-solo','plus','data-range'=>'next'));
+            $return .= Html::button(null,['icon-solo','plus','data-range'=>'next']);
         }
 
         else

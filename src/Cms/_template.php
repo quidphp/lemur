@@ -51,7 +51,7 @@ trait _template
         $data = ['mailto'=>$route->uri()];
         $flush .= Html::divCond($this->makeModal(),['modal','data'=>$data]);
         $flush .= Html::div($this->makeTooltip(),'tooltip');
-        
+
         $flush .= Html::divOp('route-wrap');
 
         if($hasNav === true)
@@ -578,15 +578,15 @@ trait _template
 
     // makeTooltip
     // génère le html pour le tooltip
-    final protected function makeTooltip():string 
+    final protected function makeTooltip():string
     {
         $r = Html::div(null,'tooltip-content');
         $r .= Html::div(null,'tooltip-arrow');
-        
+
         return $r;
     }
-    
-    
+
+
     // makeCom
     // génère le block pour la communication
     final protected function makeCom():string

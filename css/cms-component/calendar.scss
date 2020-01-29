@@ -10,21 +10,21 @@
 // stylesheet for the calendar component of the cms
 @mixin calendar() {
     @include Calendar();
-    
+
     .head {
         background-color: $darkColor;
-        
+
         .prev,
         .next {
             @include trianglePrevNext(12px, null, $white, $lightGray, $gray);
             margin-top: -6px;
         }
     }
-    
+
     .body {
         thead {
             background-color: $color;
-            
+
             th {
                 font-weight: bold;
             }

@@ -203,11 +203,11 @@
     cursor: pointer;
 
     &.prev {
-        @include triangleEvent(left,$dimension,$transparent,$color1,$color2,$color3);
+        @include triangleEvent(left, $dimension, $transparent, $color1, $color2, $color3);
     }
 
     &.next {
-        @include triangleEvent(right,$dimension,$transparent,$color1,$color2,$color3);
+        @include triangleEvent(right, $dimension, $transparent, $color1, $color2, $color3);
     }
 }
 

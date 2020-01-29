@@ -744,7 +744,7 @@ class General extends Core\RouteAlias
                     $option['value'][] = $key;
                 }
             }
-            
+
             $tooltip = static::lang()->text('tooltip/colsSorter');
             $r .= Html::buttonOp(['trigger','data-tooltip'=>$tooltip,($hasSpecificCols === true)? 'selected':null]);
             $r .= Html::span(null,['icon-solo','icon-center','cols']);
