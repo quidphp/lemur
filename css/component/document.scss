@@ -18,6 +18,14 @@
     *:focus {
         box-shadow: inset 0px 0px 5px $focus;
     }
+    button:hover,
+    a:active,
+    a[data-triggered='1'],
+    a:hover,
+    a:active,
+    a[data-triggered='1'] {
+        box-shadow: none !important;
+    }
     html {
         height: 100%;
         box-sizing: border-box;
@@ -131,10 +139,6 @@
         @include transitions(color 0.3s, background-color 0.3s, opacity 0.3s, border 0.3s);
         text-decoration: none;
         color: $black;
-    }
-    a:active,
-    a[data-triggered='1'] {
-        box-shadow: none !important;
     }
     table {
         border-collapse: collapse;

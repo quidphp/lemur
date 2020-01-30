@@ -22,7 +22,7 @@ trait _meta
             'metaTitle'=>['metaTitle_[lang]','name_[lang]'],
             'metaKeywords'=>'metaKeywords_[lang]',
             'metaDescription'=>['metaDescription_[lang]','excerpt_[lang]','content_[lang]'],
-            'metaImage'=>'metaImage_[lang]']
+            'metaImage'=>array('metaImage_[lang]'=>-1)]
     ];
 
 
@@ -55,10 +55,23 @@ trait _meta
     public function getMetaImage($value=null)
     {
         $return = null;
-        $cell = $this->metaLoop('metaImage');
-
-        if(!empty($cell) && $cell->fileExists('large'))
-        $return = $cell;
+        $meta = $this->getAttr(array('meta','metaImage'));
+        
+        if(is_array($meta) && !empty($meta))
+        {
+            foreach ($meta as $name => $version) 
+            {
+                if(is_string($name) && $this->hasCell($name))
+                {
+                    if(!is_array($version))
+                    $version = array($version);
+                    
+                    $cell = $this->cell($name);
+                    $return = $cell->file(...$version);
+                    break;
+                }
+            }
+        }
 
         return $return;
     }

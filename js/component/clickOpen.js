@@ -161,7 +161,7 @@ Component.ClickOpen = function(option)
             Ele.setDimension(target,null,'auto');
             
             const dimension = Ele.getDimension(target,$option.targetHeight);
-            Func.async(function() { Ele.setDimension(target,null,dimension.height) });
+            Func.timeout(20,function() { Ele.setDimension(target,null,dimension.height) }); // timeout à 0 ne marche pas pour firefox
         }
     });
     

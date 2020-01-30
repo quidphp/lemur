@@ -17,6 +17,7 @@ Component.ClickOpenTriggerBase = function(option)
     const $option = Pojo.replace({
         trigger: true,
         triggerEvent: 'click',
+        triggerFocusHideOpen:true,
         triggerFocusClose: true,
         triggerToggle: true
     },option);
@@ -66,6 +67,15 @@ Component.ClickOpenTriggerBase = function(option)
             ael(trigger,$option.triggerEvent,function(event) {
                 trigEvt($this,'clickOpen:triggerClick',event);
                 Evt.preventStop(event);
+                
+                // ceci permet d'éviter le focus ring on click sur chrome
+                if($option.triggerFocusHideOpen === true)
+                {
+                    const tag = Ele.tag(this);
+                    if(tag === 'button')
+                    this.blur();
+                }
+                
                 return false;
             });
             

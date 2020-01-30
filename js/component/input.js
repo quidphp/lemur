@@ -159,7 +159,7 @@ Component.Input = function()
             const isRadioCheckbox = trigHdlr(this,'input:isRadioCheckbox');
             
             if(trigHdlr(this,'input:isTarget'))
-            r = (isRadioCheckbox === true)? !Ele.match(this,':checked'):true;
+            r = (isRadioCheckbox === true)? Ele.match(this,':checked'):true;
             
             return r;
         },

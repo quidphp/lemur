@@ -221,6 +221,13 @@ Component.EnumSet = function(option)
                 setAttr(button,'data-in',0);
                 
                 Ele.append(current,html);
+                
+                const radioCheckbox = trigHdlr(this,'enumSet:getRadioCheckbox');
+                Ele.each(radioCheckbox,function() {
+                    if(!trigHdlr(this,'input:isBinded'))
+                    Component.Input.call(this);
+                });
+                
                 trigEvt(this,'clickOpen:close');
             }
         }
