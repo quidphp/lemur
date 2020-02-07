@@ -21,7 +21,8 @@ Component.TabsNav = function(option)
         first: null,
         prev: null,
         next: null,
-        last: null
+        last: null,
+        keyboardArrow: 'horizontalNotInput'
     },option);
     
     
@@ -75,12 +76,10 @@ Component.TabsNav = function(option)
     
     // event
     ael(this,'keyboardArrow:left',function(event,keyEvent,isInput) {
-        if(isInput === false)
         trigHdlr(this,'tabs:goPrev');
     });
     
     ael(this,'keyboardArrow:right',function(event,keyEvent,isInput) {
-        if(isInput === false)
         trigHdlr(this,'tabs:goNext');
     });
     
@@ -91,7 +90,7 @@ Component.TabsNav = function(option)
         bindDirection.call(this);
         
         if(Ele.match(this,'[tabindex]'))
-        Component.KeyboardArrow.call(this,'horizontal');
+        Component.KeyboardArrow.call(this,$option.keyboardArrow);
     });
     
     

@@ -279,13 +279,32 @@ const SelectorTarget = {
     // children
     // retourne les enfants de la node
     // possible de seulement retourner les enfants valides avec le sélecteur
+    // méthode plus complexe pour gérer le fait que document n'a pas de propriété children sur ie11
     children: function(node,value,withTextNodes)
     {
         let r = null;
         node = this.realNode(node);
         Nod.check(node);
-        const prop = (withTextNodes === true)? node.childNodes:node.children;
-        const childs = ArrLike.arr(prop);
+        const hasChildren = (node.children != null);
+        let childs;
+        
+        if(withTextNodes === true)
+        childs = ArrLike.arr(node.childNodes);
+        
+        else
+        {
+            if(hasChildren === true)
+            childs = ArrLike.arr(node.children);
+            
+            else
+            {
+                childs = [];
+                ArrLike.each(node.childNodes,function(value) {
+                    if(Ele.is(value))
+                    childs.push(value);
+                });
+            }
+        }
         
         if(value == null)
         r = childs;

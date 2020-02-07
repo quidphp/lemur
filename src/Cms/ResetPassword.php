@@ -50,7 +50,15 @@ class ResetPassword extends Lemur\Route\ResetPassword
         return ['with-icon','reset'];
     }
 
-
+    
+    // makeInfo
+    // retourne le message d'information
+    final protected function makeInfo():string 
+    {
+        return static::langText('resetPassword/info');
+    }
+    
+    
     // makeForm
     // génère le form de resetPassword
     final protected function makeForm():string
@@ -63,8 +71,6 @@ class ResetPassword extends Lemur\Route\ResetPassword
         $r .= Html::divOp('top');
         $r .= $table->col('email')->formWrap('divtable','%:',null,['data-required'=>true]);
         $r .= Html::divClose();
-
-        $r .= Html::divCond(static::langText('resetPassword/info'),'info');
 
         $r .= Html::divOp('bottom');
         $r .= Html::submit(static::label(),$this->submitAttr());

@@ -97,6 +97,12 @@
         h3 {
             color: $gray;
         }
+        
+        .info {
+            padding-top: 5px;
+            color: $lightGray;
+            font-size: 90%;
+        }
     }
 
     @include responsive() {
@@ -209,14 +215,6 @@
         .right {
             width: 50%;
         }
-    }
-}
-
-/* RESET PASSWORD */
-[data-route='resetPassword'] main .box form {
-    .info {
-        color: $lightGray;
-        font-size: 90%;
     }
 }
 

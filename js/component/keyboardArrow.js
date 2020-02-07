@@ -24,18 +24,27 @@ Component.KeyboardArrow = function(prevent,type)
         if(prevent === true)
         r = true;
         
+        else if(prevent === 'notInput' && isInput === false)
+        r = true;
+        
         else if(prevent === 'vertical' && Arr.in(keyCode,[38,40]))
+        r = true;
+        
+        else if(prevent === 'verticalNotInput' && isInput === false && Arr.in(keyCode,[38,40]))
         r = true;
         
         else if(prevent === 'horizontal' && Arr.in(keyCode,[37,39]))
         r = true;
-
+        
+        else if(prevent === 'horizontalNotInput' && isInput === false && Arr.in(keyCode,[37,39]))
+        r = true;
+        
         return r;
     }); 
     
     
     // event
-    ael(this,'keyboardArrow:catched',function(event,keyEvent,isInput,keyCode) {
+    ael(this,'keyboardArrow:blocked',function(event,keyEvent,isInput,keyCode) {
         if(keyCode === 38)
         trigEvt(this,'keyboardArrow:up',keyEvent,isInput);
         

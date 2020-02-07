@@ -15,7 +15,7 @@ Test.Component = function()
         // prepare
         let newHtml = "<form method='post' action=''>";
         newHtml += "<input type='text' value='2' name='test-suite' data-required='1' data-pattern='^[0-9\-]+$' />";
-        newHtml += "<input type='submit' name='test-submit' />";
+        newHtml += "<input type='submit' name='test-submit' value='' />";
         newHtml += "</form>";
         const htmlNode = Nod.scopedQuery(document,'html');
         const bodyNode = Nod.scopedQuery(htmlNode,'body');

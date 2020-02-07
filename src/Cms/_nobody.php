@@ -79,6 +79,7 @@ trait _nobody
         $r .= Html::h1($anchor);
         $r .= Html::h2($boot->typeLabel());
         $r .= Html::h3(static::label());
+        $r .= Html::divCond($this->makeInfo(),'info');
         $r .= Html::divCl();
 
         $r .= Html::divCond($this->browscap(),'browscap');
@@ -102,7 +103,15 @@ trait _nobody
         return $r;
     }
 
-
+    
+    // makeInfo
+    // retourne le message d'information
+    protected function makeInfo():string 
+    {
+        return '';
+    }
+    
+    
     // makeRegister
     // bouton vers la page register, si permis
     final protected function makeRegister():string

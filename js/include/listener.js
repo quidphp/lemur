@@ -23,7 +23,7 @@ const ListenerTarget = new function()
             option = Object.assign({capture: false, once: false},option);
             let thirdArg = (Evt.support.once === true)? option:option.capture;
             
-            const handler = addListenerHandler(type,func,delegate,thirdArg,option);
+            const handler = addListenerHandler.call(this,type,func,delegate,thirdArg,option);
             
             Arr.each(nodes,function() {
                 this.addEventListener(type,handler,thirdArg);

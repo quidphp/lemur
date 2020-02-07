@@ -15,13 +15,13 @@ Test.Include = function()
         // prepare
         let newHtml = "<form method='post' action='/ok'>";
         newHtml += "<input type='text' value='2' name='test-suite' data-required='1' data-pattern='^[0-9\-]+$' />";
-        newHtml += "<input type='submit' name='test-submit3' />";
-        newHtml += "<input type='submit' name='test-submit2' />";
-        newHtml += "<input type='submit' name='test-submit' />";
+        newHtml += "<input type='submit' name='test-submit3' value='' />";
+        newHtml += "<input type='submit' name='test-submit2' value='' />";
+        newHtml += "<input type='submit' name='test-submit' value='' />";
         newHtml += "<div class='ok'>test <span>what</span></div>";
         newHtml += "</form>";
-        newHtml += "<div class='content' style='width: 25px; height: 25px; margin: 10px; padding: 5px; border: 5px solid green; box-sizing: content-box;'></div>";
-        newHtml += "<div class='border' style='width: 25px; height: 25px; margin: 10px; padding: 5px; border: 5px solid green; box-sizing: border-box;'></div>";
+        newHtml += "<div class='content' style='width: 25px; height: 25px; margin: 10px; padding: 5px; border: 5px solid green; box-sizing: content-box; border-image: none;'></div>";
+        newHtml += "<div class='border' style='width: 25px; height: 25px; margin: 10px; padding: 5px; border: 5px solid green; box-sizing: border-box; border-image: none;'></div>";
         newHtml += "<div class='hidden' style='display: none; padding: 3px;'>LOL</div>";
         
         const htmlNode = Nod.scopedQuery(document,'html');
@@ -391,14 +391,14 @@ Test.Include = function()
         Ele.toggleClass(divNode,'test');
         assert(!Ele.hasClass(divNode,'test'));
         assert(Ele.getHtml(template) !== newHtml);
-        assert(Str.length(Ele.getHtml(template)) === 640);
+        assert(Str.length(Ele.getHtml(template)) === 707); // ie11 ajoute border-image: none pour une raison
         assert(Ele.getCss(divNode,'margin-top') === '0px');
         Ele.setCss(divNode,'margin-top','10px');
         assert(Ele.getCss(divNode,'margin-top') === '10px');
         assert(Ele.getCss(divNode,'margin-top','int') === 10);
         assert(Ele.getCss(borderBox,'height') === '25px');
         Ele.setDimension(borderBox,20,40);
-        assert(Ele.getDimension(borderBox).height === 40);
+        assert(Integer.round(Ele.getDimension(borderBox).height) === 40);
         assert(Ele.getCss(borderBox,'height') === '40px');
         assert(Ele.setScroll(htmlNode,0,0) === undefined);
         Ele.setHtml(divNode,'OK');
@@ -968,7 +968,6 @@ Test.Include = function()
         assert(Xhr.isStatusSuccess(200));
         assert(!Xhr.isStatusSuccess(404));
         assert(!ArrLike.is(formData));
-        assert(Arr.isNotEmpty(Array.from(formData)));
         assert(Pojo.length(Xhr.configFromNode(htmlNode)) === 4);
         assert(Pojo.length(Xhr.configFromNode(htmlNode,null,true)) === 9);
         assert(Xhr.parseError('<html><body><div>TEST</div></body></html>','error') === '<div>TEST</div>');

@@ -129,9 +129,20 @@ const EleTarget = {
         let r = undefined;
         this.check(node);
         Str.check(key);
-        const style = window.getComputedStyle(node,pseudo);
         
-        r = style.getPropertyValue(key);
+        // fix pour ie11 qui retourne mauvais computed style pour width/height (box-model)
+        if(Arr.in(key,['width','height']))
+        {
+            const dimension = this.getDimension(node);
+            r = Integer.round(dimension[key])+"px";
+        }
+        
+        else
+        {
+            const style = window.getComputedStyle(node,pseudo);
+            r = style.getPropertyValue(key);
+        }
+        
         r = Scalar.cast(r,cast);
         
         return r;
