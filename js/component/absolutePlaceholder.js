@@ -45,7 +45,9 @@ Component.AbsolutePlaceholder = function()
                 
                 Ele.setDimension(this,(doWidth)? 'auto':null,(doHeight)? 'auto':null);
                 const dimension = Ele.getDimension(child);
-                Ele.setDimension(this,(doWidth)? dimension.width:null,(doHeight)? dimension.height:null);
+                
+                // ici ceil le pixel pour IE
+                Ele.setDimension(this,(doWidth)? Math.ceil(dimension.width):null,(doHeight)? Math.ceil(dimension.height):null);
                 
                 setAttr(this,'data-absolute-placeholder','ready');
             }

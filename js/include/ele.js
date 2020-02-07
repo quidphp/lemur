@@ -275,11 +275,22 @@ const EleTarget = {
     // retourne un object avec les données pour le scroll
     getScroll: function(node)
     {
+        let r = null;
         this.check(node);
-        return {
-            top: node.scrollTop,
-            left: node.scrollLeft
-        };
+        
+        // scrollTop n'est pas sur la tag HTML dans IE
+        if(Arr.in(this.tag(node),['html','body']));
+        r = Win.getScroll();
+        
+        else
+        {
+            r = {
+                top: node.scrollTop,
+                left: node.scrollLeft
+            };
+        }
+        
+        return r;
     },
     
     

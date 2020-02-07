@@ -88,9 +88,10 @@ Component.Doc = function(option)
         
         // lance les évènements pour monter le document dans le bon order
         mount: function(initial,isError) {
+            trigEvt(this,'doc:mountImmediate',initial,isError);
             Func.timeout($option.mountTimeout,function() {
-                docMount.call(this,initial,isError);
                 const html = trigHdlr(this,'doc:getHtml');
+                docMount.call(this,initial,isError);
                 setAttr(html,'data-status','ready');
             },this);
         },

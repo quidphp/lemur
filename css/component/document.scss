@@ -104,7 +104,8 @@
     template {
         display: none;
     }
-    [hidden] {
+    [hidden],
+    [data-tag='noscript'] {
         display: none;
     }
     h1,
@@ -155,6 +156,13 @@
         padding: 0;
         font-weight: inherit;
         vertical-align: inherit;
+    }
+    @supports (-ms-ime-align: auto) {
+        table tr,
+        table td,
+        table th {
+            box-sizing: border-box;
+        }
     }
     button,
     input,

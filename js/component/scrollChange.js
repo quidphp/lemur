@@ -17,7 +17,7 @@ Component.ScrollChange = function(option)
     const $option = Pojo.replace({
         scroller: window,
         persistent: false,
-        stop: 100,
+        stop: 50,
         passive: true
     },option);
     
@@ -37,7 +37,7 @@ Component.ScrollChange = function(option)
     // stop
     if(Integer.is($option.stop))
     {
-        const handlerStop = listener($option.scroller,'scroll',Func.debounce($option.stop,function(event) {
+        const handlerStop = ael($nodes,'scroll:change',Func.debounce($option.stop,function(event) {
             trigEvt($nodes,'scroll:stop',event);
         }));
     }

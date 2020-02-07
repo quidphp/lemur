@@ -284,14 +284,6 @@
             }
         }
     }
-
-    // ie edge
-    @supports (-ms-ime-align: auto) {
-        > tr,
-        > tr  > td {
-            box-sizing: border-box;
-        }
-    }
 }
 [data-route='general'] main .container > .scroller > table > tbody > tr > td {
     &[data-quick-edit='1'] {

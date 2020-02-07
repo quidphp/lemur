@@ -7,6 +7,23 @@
 // lemur
 // script of common behaviours for all pages of the CMS
 
+// mountImmediate
+// binding à faire avant le timeout de 0 pour les bindings de page
+ael(document,'doc:mountImmediate',function() {
+    const browscap = qs(this,"main .browscap");
+
+    if(browscap != null)
+    {
+        const cookieDisabled = qs(browscap,".cookie-disabled");
+        if(cookieDisabled != null)
+        toggleClass(cookieDisabled,'show',!Browser.allowsCookie());
+        
+        const unsupportedBrowser = qs(browscap,".unsupported-browser");
+        if(unsupportedBrowser != null)
+        toggleClass(unsupportedBrowser,'hide',!Browser.isUnsupported());
+    }
+});
+
 // initial mount
 // comportements bindés une seule fois au tout début
 ael(document,'doc:mountInitial',function(event,body) {
@@ -21,7 +38,6 @@ ael(document,'doc:mountInitial',function(event,body) {
     // specificComponents
     trigSetup(Component.SpecificComponents.call(this));
 });
-
 
 // doc:mountCommon
 // événement appelé pour faire les bindings globaux
@@ -120,18 +136,11 @@ ael(document,'doc:ajaxProgress',function(event,percent,progressEvent) {
     setHtml(progress,html);
 });
 
-
 // nobody
 // comportement pour les pages nobody, login, resetPassword et register
 ael(document,'group:nobody',function(event,node) {
-    const browscap = qs(this,"main .browscap");
     const form = qs(this,"main form");
-    const cookieDisabled = qs(browscap,".cookie-disabled");
-    const unsupportedBrowser = qs(browscap,".unsupported-browser");
-    
     trigHdlr(form,'form:focusFirst');
-    toggleClass(cookieDisabled,'show',!Browser.allowsCookie());
-    toggleClass(unsupportedBrowser,'hide',!Browser.isUnsupported());
 });
 
 
