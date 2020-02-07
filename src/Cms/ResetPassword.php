@@ -50,15 +50,15 @@ class ResetPassword extends Lemur\Route\ResetPassword
         return ['with-icon','reset'];
     }
 
-    
+
     // makeInfo
     // retourne le message d'information
-    final protected function makeInfo():string 
+    final protected function makeInfo():string
     {
         return static::langText('resetPassword/info');
     }
-    
-    
+
+
     // makeForm
     // génère le form de resetPassword
     final protected function makeForm():string

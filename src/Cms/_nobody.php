@@ -103,15 +103,15 @@ trait _nobody
         return $r;
     }
 
-    
+
     // makeInfo
     // retourne le message d'information
-    protected function makeInfo():string 
+    protected function makeInfo():string
     {
         return '';
     }
-    
-    
+
+
     // makeRegister
     // bouton vers la page register, si permis
     final protected function makeRegister():string
