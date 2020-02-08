@@ -81,7 +81,7 @@ body > .route-wrap {
     @include flex(flex-start, stretch);
     @include transitions(opacity 0.3s);
     opacity: 1;
-    
+
     > .nav-wrap {
         width: 220px;
     }
