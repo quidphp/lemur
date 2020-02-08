@@ -156,11 +156,11 @@ $defaultResponsiveMaxWidth: 900px;
 // sticky
 // mixin pour positionner un élément sticky, fallback absolute pour ie
 @mixin sticky($top: null, $right: null, $bottom: null, $left: null) {
+    @include position($top, $right, $bottom, $left);
     position: -webkit-sticky;
     position: sticky;
-    @include position($top, $right, $bottom, $left);
 
-    @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    @include ie11() {
         position: relative;
     }
 }
@@ -378,6 +378,22 @@ $defaultResponsiveMaxWidth: 900px;
     }
 
     @keyframes #{$name} {
+        @content;
+    }
+}
+
+// ie11
+// mixin utilisé pour des styles pour ie11
+@mixin ie11() {
+    @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+        @content;
+    }
+}
+
+// ieEdge
+// mixin utilisé pour des styles pour ieEdge
+@mixin ieEdge() {
+    @supports (-ms-ime-align: auto) {
         @content;
     }
 }

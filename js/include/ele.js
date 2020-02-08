@@ -57,7 +57,7 @@ const EleTarget = {
         if(this.is(node))
         {
             const tag = this.tag(node);
-            const tags = ['input','textarea','a','button'];
+            const tags = ['input','textarea','select','a','button'];
             
             if(this.match(node,'[tabindex]') || (Arr.in(tag,tags) && this.getDimension(node).height > 0))
             r = true;
@@ -279,7 +279,7 @@ const EleTarget = {
         this.check(node);
         
         // scrollTop n'est pas sur la tag HTML dans IE
-        if(Arr.in(this.tag(node),['html','body']));
+        if(Arr.in(this.tag(node),['html','body']))
         r = Win.getScroll();
         
         else

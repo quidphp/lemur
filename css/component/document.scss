@@ -15,7 +15,12 @@
         box-sizing: inherit;
         outline: 0;
     }
-    *:focus {
+    a:focus,
+    input:focus,
+    select:focus,
+    textarea:focus,
+    button:focus,
+    [tabindex]:focus {
         box-shadow: inset 0px 0px 5px $focus;
     }
     button:hover,
@@ -24,7 +29,7 @@
     a:hover,
     a:active,
     a[data-triggered='1'] {
-        box-shadow: none !important;
+        box-shadow: none;
     }
     html {
         height: 100%;
@@ -39,7 +44,6 @@
     }
     body {
         margin: 0;
-        height: 100%;
         font-family: $font;
         font-size: 1.6rem;
         background-color: $white;
@@ -49,6 +53,13 @@
         text-align: left;
         word-wrap: break-word;
         overflow-wrap: break-word;
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        
+        @include print() {
+            background-image: none;
+        }
     }
     main {
         display: block;
@@ -157,7 +168,7 @@
         font-weight: inherit;
         vertical-align: inherit;
     }
-    @supports (-ms-ime-align: auto) {
+    @include ieEdge() {
         table tr,
         table td,
         table th {
@@ -199,6 +210,9 @@
     [type='reset']:-moz-focusring,
     [type='submit']:-moz-focusring {
         outline: 1px dotted ButtonText;
+    }
+    button > * {
+        position: relative;
     }
     fieldset {
         padding: 0.35em 0.75em 0.625em;
@@ -281,11 +295,12 @@
     }
     #{$routeWrap} {
         margin: auto;
-        min-height: 100%;
+        min-height: 100vh;
         height: auto;
         position: relative;
         min-width: 900px;
-
+        width: 100%;
+        
         @include responsive() {
             min-width: auto;
         }

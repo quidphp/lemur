@@ -10,11 +10,6 @@
 // stylesheet for the main interface of the CMS
 
 // body
-body {
-    @include print() {
-        background-image: none !important;
-    }
-}
 [data-status='loading'] body {
     * {
         cursor: wait !important;
@@ -86,7 +81,7 @@ body > .route-wrap {
     @include flex(flex-start, stretch);
     @include transitions(opacity 0.3s);
     opacity: 1;
-
+    
     > .nav-wrap {
         width: 220px;
     }

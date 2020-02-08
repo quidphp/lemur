@@ -28,10 +28,14 @@ const Vari = Lemur.Vari = {
         else if(Scalar.is(value))
         r = (!value)? true:false;
         
+        else if(Nod.is(value))
+        r = false;
+        
         else if(value != null)
         {
             this.eachProto(value,function() {
-                return r = false;
+                r = false;
+                return false;
             });
         }
         
@@ -163,9 +167,9 @@ const Vari = Lemur.Vari = {
         {
             r = true;
             var key;
-            let value;
+            var value;
             let result;
-            
+
             for (key in loop) 
             {
                 value = loop[key];
