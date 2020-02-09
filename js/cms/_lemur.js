@@ -125,8 +125,14 @@ ael(document,'doc:mountPage',function(event,node) {
     
     // burger
     trigSetup(Component.Burger.call(burger));
-    ael(burger,'burger:open',function() {
+    const refreshHeight = function() {
         trigHdlrs(carousel,'clickOpen:refreshTargetHeight',true);
+    };
+    ael(burger,'resize:stop',function() {
+        refreshHeight();
+    });
+    ael(burger,'burger:open',function() {
+        refreshHeight();
     });
 });
 

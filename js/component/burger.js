@@ -13,6 +13,10 @@ Component.Burger = function(persistent)
     return null;
     
     
+    // component
+    Component.ResizeChange.call(this,{persistent: persistent});
+    
+    
     // nodes
     const $nodes = this;
     

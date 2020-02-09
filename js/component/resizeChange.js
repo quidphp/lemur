@@ -36,7 +36,7 @@ Component.ResizeChange = function(option)
     // stop
     if(Integer.is($option.stop))
     {
-        handlerStop = listener($option.scroller,'resize',Func.debounce($option.stop,function(event) {
+        handlerStop = listener(window,'resize',Func.debounce($option.stop,function(event) {
             trigEvt($nodes,'resize:stop',event);
         }));
     }
