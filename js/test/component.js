@@ -97,8 +97,6 @@ Test.Component = function()
         
         // clickOpenAjaxAnchor
         
-        // clickOpenBase
-        
         // clickOpenInputAjax
         
         // clickOpenTrigger
@@ -127,6 +125,12 @@ Test.Component = function()
         
         // hashChange
         
+        // history
+        
+        // hrefReplaceChar
+        
+        // initOpenClose
+        
         // input
         Component.Input.call(inputNode);
         assert(trigHdlr(inputNode,'input:isBinded'));
@@ -150,6 +154,8 @@ Test.Component = function()
         
         // inputNumericHref
         
+        // inputNumericRange
+        
         // inputSearch
         
         // inputSearchHref
@@ -171,6 +177,8 @@ Test.Component = function()
         // navIndex
         
         // resizeChange
+        
+        // scrollAnimate
         
         // scrollChange
         
@@ -197,6 +205,8 @@ Test.Component = function()
         assert(i === 1);
         
         // tinymce
+        
+        // tooltip
         
         // validate
         assert(trigHdlr(inputNode,'validate:isBinded'));
