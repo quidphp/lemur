@@ -14,7 +14,8 @@
     left: 0%;
     z-index: 100;
     display: none;
-
+    white-space: nowrap;
+    
     &[data-active='1'] {
         display: block;
     }

@@ -143,14 +143,21 @@
 
 // scrollbar
 // mixin pour la scrollbar
-@mixin scrollbar() {
+@mixin scrollbar($horizontal:null) {
     &::-webkit-scrollbar-track {
         -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
         background-color: $lightestGray;
     }
 
     &::-webkit-scrollbar {
-        width: 8px;
+        @if($horizontal) {
+            height: 8px;
+        }
+        
+        @else {
+            width: 8px;
+        }
+        
         background-color: $lightestGray;
     }
 

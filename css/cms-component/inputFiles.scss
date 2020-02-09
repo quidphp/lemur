@@ -63,7 +63,8 @@
 // filesBlock
 // mixin avec les styles pour un bloc du champ de chargement de fichiers
 @mixin filesBlock() {
-    width: 500px;
+    width: 100%;
+    max-width: 500px;
     background-color: $white;
     border-radius: 5px;
     position: relative;
@@ -200,10 +201,6 @@
                 }
             }
         }
-    }
-
-    @include responsive() {
-        width: 100%;
     }
 
     /* PRINT */

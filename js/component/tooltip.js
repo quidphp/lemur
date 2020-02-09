@@ -18,6 +18,7 @@ Component.Tooltip = function(option)
         target: "body > .tooltip",
         targetContent: true,
         attrContent: "data-tooltip",
+        attrViewport: "data-viewport",
         attr: "data-active",
         offsetTop: 0,
         offsetLeft: 0,
@@ -56,26 +57,6 @@ Component.Tooltip = function(option)
             return Str.check(r,true);
         },
         
-        getPosition: function(dimension) {
-            const rect = Ele.getBoundingRect(this);
-            let top = rect.top - dimension.height;
-            let left = rect.left + (rect.width / 2) - (dimension.width / 2);
-            
-            if(Integer.is($option.offsetTop))
-            top += $option.offsetTop;
-            
-            if(Integer.is($option.offsetLeft))
-            left += $option.offsetLeft;
-            
-            top += "px";
-            left += "px";
-            
-            return {
-                top: top,
-                left: left
-            }
-        },
-        
         show: function() {
             const target = trigHdlr(this,'tooltip:getTarget');
             const targetContent = trigHdlr(this,'tooltip:getTargetContent');
@@ -89,6 +70,7 @@ Component.Tooltip = function(option)
             const target = trigHdlr(this,'tooltip:getTarget');
             const targetContent = trigHdlr(this,'tooltip:getTargetContent');
             setAttr(target,$option.attr,0);
+            Ele.removeAttr(target,$option.attrViewport);
             setHtml(targetContent,false);
             setCss(target,'top',null);
             setCss(target,'left',null);
@@ -97,9 +79,10 @@ Component.Tooltip = function(option)
         updatePosition: function() {
             const target = trigHdlr(this,'tooltip:getTarget');
             const dimension = Ele.getDimension(target);
-            const position = trigHdlr(this,'tooltip:getPosition',dimension);
+            const position = getPosition.call(this,dimension);
             setCss(target,'top',position.top);
             setCss(target,'left',position.left);
+            setAttr(target,$option.attrViewport,position.viewport);
         }
     });
     
@@ -108,6 +91,11 @@ Component.Tooltip = function(option)
     ael(this,'scroll:change',function() {
         if(trigHdlr(this,'tooltip:isActive'))
         trigHdlr(this,'tooltip:updatePosition');
+    });
+    
+    ael(this,'click',function() {
+        if(trigHdlr(this,'tooltip:isActive'))
+        trigHdlr(this,'tooltip:hide');
     });
     
     
@@ -139,6 +127,44 @@ Component.Tooltip = function(option)
             
             aelOnce(document,'doc:unmountPage',teardown);
             aelOnce(this,'component:teardown',teardown);
+        }
+    }
+    
+    
+    // getPosition
+    const getPosition = function(dimension) 
+    {
+        const rect = Ele.getBoundingRect(this);
+        const winDimension = Win.getDimension();
+        let top = rect.top - dimension.height;
+        let left = rect.left + (rect.width / 2) - (dimension.width / 2);
+        let viewport = 1;
+        
+        if(left < 0)
+        {
+            left = 0;
+            viewport = 0;
+        }
+        
+        else if((left + dimension.width) > winDimension.width)
+        {
+            left = winDimension.width - dimension.width;
+            viewport = 0;
+        }
+        
+        if(Integer.is($option.offsetTop))
+        top += $option.offsetTop;
+        
+        if(Integer.is($option.offsetLeft))
+        left += $option.offsetLeft;
+        
+        top += "px";
+        left += "px";
+        
+        return {
+            top: top,
+            left: left,
+            viewport: viewport
         }
     }
     

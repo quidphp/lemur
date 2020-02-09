@@ -279,6 +279,7 @@ Test.Include = function()
         assert(!Ele.isEmpty(window));
         assert(Ele.isNotEmpty(selectorOne));
         assert(Ele.isVisible(htmlNode));
+        assert(Ele.isVisible(borderBox));
         assert(!Ele.isHidden(htmlNode));
         assert(Ele.isTag(htmlNode,'html'));
         assert(!Ele.isFocused(htmlNode));

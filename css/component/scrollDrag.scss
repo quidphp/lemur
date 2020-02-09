@@ -10,7 +10,7 @@
 // stylesheet for the scrollDrag component
 @mixin ScrollDrag($child) {
     width: 100%;
-    overflow: hidden;
+    overflow: auto;
 
     &[data-grabbable='1'] #{$child} {
         @include disableSelection();

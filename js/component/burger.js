@@ -13,6 +13,10 @@ Component.Burger = function(persistent)
     return null;
     
     
+    // nodes
+    const $nodes = this;
+    
+    
     // handler
     setHdlrs(this,'burger:',{
         
@@ -42,6 +46,18 @@ Component.Burger = function(persistent)
         setAttr(html,'data-burger','close');
     });
     
+    const escapeHandler = ael(document,'keyboardEscape:catched',function() {
+        trigEvt($nodes,'burger:close');
+    });
+    
+    
+    // teardown
+    const teardown = function()
+    {
+        trigEvt(this,'burger:close');
+        rel(document,escapeHandler);
+    }
+    
     
     // setup
     aelOnce(this,'component:setup',function() {
@@ -51,7 +67,7 @@ Component.Burger = function(persistent)
     
     // teardown
     aelOnce(this,'component:teardown',function() {
-        trigEvt(this,'burger:close');
+        teardown.call(this);
     });
     
     
@@ -59,7 +75,7 @@ Component.Burger = function(persistent)
     if(persistent !== true)
     {
         aelOnce(document,'doc:unmountPage',function() {
-            trigEvt(this,'burger:close');
+            teardown.call($nodes);
         });
     }
     

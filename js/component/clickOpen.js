@@ -128,6 +128,19 @@ Component.ClickOpen = function(option)
         toggle: function() {
             const isOpen = trigHdlr(this,'clickOpen:isOpen');
             trigEvt(this,(isOpen === true)? 'clickOpen:close':'clickOpen:open');
+        },
+        
+        refreshTargetHeight: function(setAuto) {
+            const target = trigHdlr(this,'clickOpen:getTarget');
+            
+            if($option.targetHeight && trigHdlr(this,'clickOpen:isOpen') && Ele.isVisible(target))
+            {
+                if(setAuto === true)
+                Ele.setDimension(target,null,'auto');
+                
+                const dimension = Ele.getDimension(target,$option.targetHeight);
+                Func.timeout(20,function() { Ele.setDimension(target,null,dimension.height) }); // timeout à 0 ne marche pas pour firefox
+            }
         }
     });
     
@@ -153,16 +166,7 @@ Component.ClickOpen = function(option)
         const background = trigHdlr(document,'doc:getBackground');
         trigHdlr(background,'background:set',bgFrom,false);
         
-        if($option.targetHeight)
-        {
-            const target = trigHdlr(this,'clickOpen:getTarget');
-            
-            if(compSetup === true)
-            Ele.setDimension(target,null,'auto');
-            
-            const dimension = Ele.getDimension(target,$option.targetHeight);
-            Func.timeout(20,function() { Ele.setDimension(target,null,dimension.height) }); // timeout à 0 ne marche pas pour firefox
-        }
+        trigHdlr(this,'clickOpen:refreshTargetHeight',compSetup);
     });
     
     ael(this,'clickOpen:closed',function(event,newBg) {

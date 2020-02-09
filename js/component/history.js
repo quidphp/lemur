@@ -17,7 +17,7 @@ Component.History = function(option)
         anchor: "a:not([target='_blank']):not([data-navigation='0']):not([data-modal]):not([href^='mailto:'])",
         form: "form:not([data-navigation='0'])",
         responseUrl: 'QUID-URI',
-        timeout: 10000
+        timeout: 30000
     },option);
     
     

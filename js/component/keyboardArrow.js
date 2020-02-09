@@ -19,6 +19,10 @@ Component.KeyboardArrow = function(prevent,type)
     
     // handler
     setHdlr(this,'keyboardArrow:prevent',function(keyEvent,isInput,keyCode) {
+        return trigHdlr(this,'keyboardArrow:preventBool',keyEvent,isInput,keyCode);
+    });
+    
+    setHdlr(this,'keyboardArrow:preventBool',function(keyEvent,isInput,keyCode) {
         let r = false;
         
         if(prevent === true)

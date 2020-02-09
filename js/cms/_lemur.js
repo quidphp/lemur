@@ -111,9 +111,6 @@ ael(document,'doc:mountPage',function(event,node) {
     const carousel = qsa(node,".with-carousel");
     const mainSearch = qs(node,"header .top form");
     
-    // burger
-    trigSetup(Component.Burger.call(burger));
-    
     // carousel
     trigSetup(Component.Carousel.call(carousel,{trigger: ".trigger", target: ".target", targetHeight: true, transitionTimeout: 500}));
     
@@ -125,6 +122,12 @@ ael(document,'doc:mountPage',function(event,node) {
     
     // com
     trigSetup(Component.Com.call(com));
+    
+    // burger
+    trigSetup(Component.Burger.call(burger));
+    ael(burger,'burger:open',function() {
+        trigHdlrs(carousel,'clickOpen:refreshTargetHeight',true);
+    });
 });
 
 

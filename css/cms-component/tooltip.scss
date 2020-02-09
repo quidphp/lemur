@@ -26,5 +26,10 @@
         @include abs(100%, null, null, 50%);
         @include triangle(bottom, $gray, 6px);
         margin-left: -3px;
+        display: none;
+    }
+    
+    &[data-viewport='1'] > .tooltip-arrow {
+        display: block;
     }
 }

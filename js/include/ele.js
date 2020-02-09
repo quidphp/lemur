@@ -20,7 +20,7 @@ const EleTarget = {
     // retourne vrai si la node est visible
     isVisible: function(value)
     {
-        return (this.is(value))? !!(value.offsetWidth || value.offsetHeight || value.getClientRects().length):false;
+        return (this.is(value))? !!(value.offsetWidth || value.offsetHeight):false;
     },
     
     

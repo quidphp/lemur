@@ -128,17 +128,4 @@
             }
         }
     }
-
-    // responsive
-    @include responsive() {
-        text-align: center;
-
-        > ul > li.with-carousel > .trigger {
-            justify-content: center;
-        }
-
-        li > a:first-child {
-            padding-left: 30px !important;
-        }
-    }
 }
