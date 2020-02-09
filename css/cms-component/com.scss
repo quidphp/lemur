@@ -34,7 +34,7 @@
 
     &[data-status='hidden'] {
         @include fadeOut();
-        
+
         @include responsive() {
             display: none;
         }
