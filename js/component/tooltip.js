@@ -93,11 +93,6 @@ Component.Tooltip = function(option)
         trigHdlr(this,'tooltip:updatePosition');
     });
     
-    ael(this,'click',function() {
-        if(trigHdlr(this,'tooltip:isActive'))
-        trigHdlr(this,'tooltip:hide');
-    });
-    
     
     // setup
     aelOnce(this,'component:setup',function() {
