@@ -84,7 +84,7 @@ Component.Modal = function(option)
         }
     });
     
-    
+        
     setHdlr(this,'clickOpen:getTargetContent',function() {
         return trigHdlr(this,'modal:getInner');
     });
@@ -97,7 +97,7 @@ Component.Modal = function(option)
     // event
     ael(this,'clickOpen:opened',function() {
         const route = trigHdlr(this,'modal:getRoute');
-        
+
         if(Str.isNotEmpty(route))
         {
             const anchors = trigHdlr(this,'modal:getRouteAnchors',route);
@@ -111,6 +111,11 @@ Component.Modal = function(option)
         
         if(Str.isNotEmpty(route))
         trigEvt(document,'modal:'+route,this);
+    });
+    
+    ael(this,'clickOpen:reopen',function() {
+        trigHdlr(this,'clickOpen:unsetTargetContent');
+        trigEvt(this,'clickOpen:opened',false);
     });
     
     ael(this,'clickOpen:closed',function() {

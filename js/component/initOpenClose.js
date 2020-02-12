@@ -88,6 +88,9 @@ Component.InitOpenClose = function(option)
             if(Integer.is($option.transitionTimeout))
             setTransitionTimeout.call(this,$option.transitionTimeout);
         }
+        
+        else if(trigHdlr(this,type+':isOpen'))
+        trigEvt(this,type+':reopen');
     });
     
     ael(this,type+':close',function() {
