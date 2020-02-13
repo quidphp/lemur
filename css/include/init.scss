@@ -417,11 +417,7 @@ $defaultResponsiveMaxWidth: 900px;
 // responsiveAndPrint
 // mixin pour appliquer les styles à responsive et print
 @mixin responsiveAndPrint($maxWidth: $defaultResponsiveMaxWidth) {
-    @media screen and (max-width: $maxWidth), screen and (orientation: portrait) {
-        @content;
-    }
-
-    @media print {
+    @media print, screen and (max-width: $maxWidth), screen and (orientation: portrait) {
         @content;
     }
 }
