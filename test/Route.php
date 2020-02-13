@@ -132,18 +132,18 @@ class Route extends Base\Test
         assert($obj2->uriOutput() === '/en/login/submit');
         assert($obj2->uriRelative() === '/en/login/submit');
         assert($obj2->uriAbsolute() === Base\Request::schemeHost().'/en/login/submit');
-        assert($obj2->a() === "<a href='/en/login/submit' hreflang='en'></a>");
-        assert($obj2->a('okk','#id class2','fr',['attr'=>['href'=>['lang'=>false]]]) === "<a href='/fr/connexion/soumettre' id='id' class='class2'>okk</a>");
-        assert($obj2->aOpen() === "<a href='/en/login/submit' hreflang='en'>");
-        assert($obj2->aOpen('okkk','#id class2','fr') === "<a href='/fr/connexion/soumettre' id='id' class='class2' hreflang='fr'>okkk");
-        assert($obj2->aLabel() === "<a href='/en/login/submit' hreflang='en'>Login - Submit</a>");
-        assert($obj2->aOpenLabel() === "<a href='/en/login/submit' hreflang='en'>Login - Submit");
-        assert($obj2->aTitle() === "<a href='/en/login/submit' hreflang='en'>Login - Submit</a>");
-        assert($obj2->aOpenTitle() === "<a href='/en/login/submit' hreflang='en'>Login - Submit");
-        assert($obj2->aOpenTitle(3) === "<a href='/en/login/submit' hreflang='en'>Log");
-        assert($obj2->aOpenTitle('%:','#id class2') === "<a href='/en/login/submit' id='id' class='class2' hreflang='en'>Login - Submit:");
+        assert($obj2->a() === "<a href='/en/login/submit' data-navigation='0' hreflang='en'></a>");
+        assert($obj2->a('okk','#id class2','fr',['attr'=>['href'=>['lang'=>false]]]) === "<a href='/fr/connexion/soumettre' data-navigation='0' id='id' class='class2'>okk</a>");
+        assert($obj2->aOpen() === "<a href='/en/login/submit' data-navigation='0' hreflang='en'>");
+        assert($obj2->aOpen('okkk','#id class2','fr') === "<a href='/fr/connexion/soumettre' data-navigation='0' id='id' class='class2' hreflang='fr'>okkk");
+        assert($obj2->aLabel() === "<a href='/en/login/submit' data-navigation='0' hreflang='en'>Login - Submit</a>");
+        assert($obj2->aOpenLabel() === "<a href='/en/login/submit' data-navigation='0' hreflang='en'>Login - Submit");
+        assert($obj2->aTitle() === "<a href='/en/login/submit' data-navigation='0' hreflang='en'>Login - Submit</a>");
+        assert($obj2->aOpenTitle() === "<a href='/en/login/submit' data-navigation='0' hreflang='en'>Login - Submit");
+        assert($obj2->aOpenTitle(3) === "<a href='/en/login/submit' data-navigation='0' hreflang='en'>Log");
+        assert($obj2->aOpenTitle('%:','#id class2') === "<a href='/en/login/submit' data-navigation='0' id='id' class='class2' hreflang='en'>Login - Submit:");
         $loginMake = $login::make();
-        assert(strlen($obj2->formOpen()) === 245);
+        assert(strlen($obj2->formOpen()) === 265);
         assert(strlen($loginMake->formOpen(['method'=>'post'])) === 238);
         assert($loginMake->formSubmit(null,'nameOK') === "<form action='/en/login' method='get'><button name='nameOK' type='submit'></button></form>");
         assert($loginMake::submitLabel('% ok') === "<button type='submit'>Login ok</button>");
@@ -166,7 +166,7 @@ class Route extends Base\Test
         assert($priority::inSitemap());
         assert(!$loginSubmit::inSitemap());
         assert($route::allowNavigation());
-        assert($loginSubmit::allowNavigation());
+        assert(!$loginSubmit::allowNavigation());
         assert($route::group() === 'error');
         assert($login::group() === 'nobody');
         assert($login::group(true) === 'nobody');
@@ -280,7 +280,7 @@ class Route extends Base\Test
         // bootDbAccess
         assert($obj::db() instanceof Core\Db);
 
-        /* ROUTE REQUEST */
+        // ROUTE REQUEST
         // prepare
         $userAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/604.4.7 (KHTML, like Gecko) Version/11.0.2 Safari/604.4.7';
         $param = ['ssl'=>true,'ajax'=>true,'path'=>'/fr/test/de/la/vie','host'=>'google.com','method'=>'post','ip'=>'127.0.0.1','userAgent'=>$userAgent];
@@ -504,7 +504,7 @@ class Route extends Base\Test
         // pathFromRoute
         assert($match::pathFromRoute($match4->route(),'fr') === 'connexion/soumettre');
 
-        /* ROUTE SEGMENT REQUEST */
+        // ROUTE SEGMENT REQUEST
 
         // construct
         $generalMake = new $general();
@@ -638,7 +638,7 @@ class Route extends Base\Test
         assert($rr->uriRelative('fr') === '/fr/table/ormTable/1/20/-/-/-/-/-/-/-');
         assert($rr6->uriAbsolute('en') === Base\Request::schemeHost().'/en/table/user/1');
 
-        /* ROUTES */
+        // ROUTES
         $boot = $data['boot'];
         $type = $boot->type();
         $app = $boot->routes($type);
@@ -665,8 +665,8 @@ class Route extends Base\Test
         assert($routes->withSegment()->count() > 5);
         assert($routes->withoutSegment()->count() > 5);
         assert($routes->allowed()->count() !== $routes->count());
-        assert($routes::makeBreadcrumbs('/',null,$login::make(),$loginSubmit::make()) === "<a href='/en/login' hreflang='en'>Login</a>/<a href='/en/login/submit' hreflang='en'>Login - Submit</a>");
-        assert($routes::makeBreadcrumbs('/',5,$login::make(),$loginSubmit::make()) === "<a href='/en/login' hreflang='en'>Login</a>/<a href='/en/login/submit' hreflang='en'>Lo...</a>");
+        assert($routes::makeBreadcrumbs('/',null,$login::make(),$loginSubmit::make()) === "<a href='/en/login' hreflang='en'>Login</a>/<a href='/en/login/submit' data-navigation='0' hreflang='en'>Login - Submit</a>");
+        assert($routes::makeBreadcrumbs('/',5,$login::make(),$loginSubmit::make()) === "<a href='/en/login' hreflang='en'>Login</a>/<a href='/en/login/submit' data-navigation='0' hreflang='en'>Lo...</a>");
 
         // classe
         assert($routes->not($routes)->add($routes)->count() > 20);
