@@ -37,7 +37,8 @@ abstract class LoginSubmit extends Core\RouteAlias
             'trigger'=>['max'=>8,'timeout'=>600]],
         'parent'=>Login::class,
         'group'=>'submit',
-        'log'=>null
+        'log'=>null,
+        'navigation'=>false // false car une route peut rediriger vers un download
     ];
 
 
