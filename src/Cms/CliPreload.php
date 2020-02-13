@@ -25,7 +25,7 @@ class CliPreload extends Core\Route\CliPreload
     // config
     public static $config = [
         'compile'=>[
-            'init'=>[
+            'closure'=>[
                 'from'=>[
                     Lemur::class=>['closure'=>true]]]]
     ];
