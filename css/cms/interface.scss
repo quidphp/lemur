@@ -271,7 +271,7 @@ main {
         min-height: 200px;
         position: relative;
     }
-    
+
     @include ie11() {
         overflow: hidden;
     }
