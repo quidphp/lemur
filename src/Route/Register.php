@@ -28,7 +28,8 @@ abstract class Register extends Core\RouteAlias
             'session'=>'allowRegister'],
         'parent'=>Login::class,
         'row'=>Lemur\Row\User::class,
-        'group'=>'nobody'
+        'group'=>'nobody',
+        'formWrap'=>"<div class='table %class%'><div class='table-row'><div class='table-cell label-cell'>%label%</div><div class='table-cell form-cell'>%form%</div></div></div>"
     ];
 
 
@@ -56,9 +57,17 @@ abstract class Register extends Core\RouteAlias
     }
 
 
+    // getFormWrap
+    // retourne la string formWrap
+    final public function getFormWrap():string
+    {
+        return $this->getAttr('formWrap');
+    }
+
+
     // flash
     // retourne les données flash pour le formulaire
-    final protected function flash():?array
+    protected function flash():?array
     {
         return $this->cache(__METHOD__,function() {
             $return = null;
@@ -107,13 +116,15 @@ abstract class Register extends Core\RouteAlias
         $table = static::tableFromRowClass();
         $fields = $this->getBaseFields();
         $flash = $this->flash();
+        $formWrap = $this->getFormWrap();
 
         foreach ($fields as $value)
         {
             $v = $flash[$value] ?? null;
             $col = $table->col($value);
-            $class = ($col->isRequired())? 'required':null;
-            $r .= $col->formWrap('divtableClass','%:',$v,null,['class'=>$class]);
+            $class = ($col->isRequired())? 'required':'not-required';
+            $description = Html::divCond($col->description(),'description');
+            $r .= $col->formWrap($formWrap,'%:',$v,null,['class'=>$class,'description'=>$description]);
         }
 
         return $r;
@@ -129,10 +140,11 @@ abstract class Register extends Core\RouteAlias
         $table = static::tableFromRowClass();
         $col = $table->col($fields['password']);
         $label = static::langText('register/confirmPassword');
-        $replace = ['class'=>'required'];
+        $replace = ['class'=>'required','description'=>null];
+        $formWrap = $this->getFormWrap();
 
-        $r .= $col->formWrap('divtableClass','%:',null,['data-required'=>true],$replace);
-        $r .= $col->formWrap('divtableClass',$label.':',null,['data-required'=>true,'name'=>$fields['passwordConfirm']],$replace);
+        $r .= $col->formWrap($formWrap,'%:',null,['data-required'=>true],$replace);
+        $r .= $col->formWrap($formWrap,$label.':',null,['data-required'=>true,'name'=>$fields['passwordConfirm']],$replace);
 
         return $r;
     }
