@@ -39,7 +39,10 @@ abstract class AccountSubmit extends Core\RouteAlias
             'success'=>['max'=>25,'timeout'=>600]],
         'parent'=>Account::class,
         'baseFields'=>['email'],
-        'group'=>'submit'
+        'group'=>'submit',
+        'form'=>[
+            'attr'=>[
+                'data-unload'=>true]]
     ];
 
 

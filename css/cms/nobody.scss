@@ -159,7 +159,7 @@
     }
 }
 [data-group='nobody'] main .box .form {
-    @include tableForm($white, $gray);
+    @include tableForm($white, $gray, $gray);
     padding: 10px 25px;
     margin-bottom: 10px;
 }
@@ -228,10 +228,5 @@
         padding-top: 5px;
         margin-top: 5px;
         border-top: 1px solid $darkColor;
-    }
-
-    .description {
-        font-size: 90%;
-        color: $gray;
     }
 }

@@ -204,7 +204,12 @@ Component.ClickOpen = function(option)
         const $this = this;
         const container = trigHdlr(this,'clickOpen:getTarget');
         const targetContainer = trigHdlr(this,'clickOpen:getTargetContent');
-        Component.KeyboardEnter.call(container,true);
+        Component.KeyboardEnter.call(container);
+        
+        // handler
+        setHdlr(this,'keyboardEnter:prevent',function(keyEvent,isInput) {
+            return (isInput === true)? false:true;
+        });
         
         // event
         ael(container,'click',function(event) {
