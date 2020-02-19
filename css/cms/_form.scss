@@ -71,8 +71,8 @@
             width: 40%;
         }
     }
-    
-    @if($description) {
+
+    @if ($description) {
         .description {
             font-size: 90%;
             color: $description;
