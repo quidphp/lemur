@@ -43,8 +43,8 @@ trait _slug
                 if($value === null)
                 $return = static::structureSegmentSlugValidateDefault();
 
-                elseif(is_string($value) && !empty($value))
-                $return = $table->row($value) ?? false;
+                elseif(is_scalar($value) && !is_bool($value) && !empty($value))
+                $return = $table->row((string) $value) ?? false;
 
                 elseif(is_a($value,$rowClass,true))
                 $return = $value;

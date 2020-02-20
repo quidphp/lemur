@@ -23,6 +23,9 @@ abstract class Files extends Core\Col\Files
     // config
     public static $config = [
         'complex'=>'inputFile',
+        'permission'=>[
+            '*'=>[
+                'mediaLegend'=>true]],
         '@cms'=>[
             'route'=>['download'=>Lemur\Cms\Download::class]]
     ];

@@ -21,6 +21,18 @@ class Primary extends Core\Col\Primary
     public static $config = [];
 
 
+    // getDataAttr
+    // retourne les attr pour la colonne primaire
+    public function getDataAttr(array $return):array
+    {
+        $table = $this->table();
+        $specific = $table->hasPermission('view','specific');
+        $return['data-link'] = $specific;
+
+        return $return;
+    }
+
+
     // onGet
     // logique onGet pour un champ primary
     // affichage d'un lien si le contexte est cms:general

@@ -167,7 +167,7 @@ body > .modal {
 }
 
 // primary
-[data-cell='primary'] .general-component {
+[data-cell='primary'][data-link='1'] .general-component {
     @include componentPrimaryGeneral();
 }
 

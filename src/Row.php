@@ -23,5 +23,13 @@ class Row extends Core\Row implements Main\Contract\Meta
 
     // config
     public static $config = [];
+
+
+    // getDataAttr
+    // retourne les attr pour la ligne
+    public function getDataAttr(array $return):array
+    {
+        return $return;
+    }
 }
 ?>

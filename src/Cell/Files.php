@@ -32,6 +32,7 @@ abstract class Files extends Core\Cell\Files
         $col = $this->col();
         $table = $this->table();
         $download = $table->hasPermission('download');
+        $withLegend = $col->hasPermission('mediaLegend');
         $file = $original = $this->commonFile($index);
 
         if(!empty($file))
@@ -55,7 +56,9 @@ abstract class Files extends Core\Cell\Files
 
                 if(!empty($file))
                 {
+                    if($withLegend === true)
                     $legendLink = $original->pathToUri();
+
                     $img = Html::img($file);
                     if(!empty($img))
                     $return .= Html::div($img,'thumbnail');
@@ -64,16 +67,21 @@ abstract class Files extends Core\Cell\Files
 
             else
             {
+                if($withLegend === true)
                 $legendLink = $file->pathToUri();
+
                 $return .= Html::div(null,'media-placeholder');
             }
 
             if($download === true)
             $return .= Html::aCl();
 
-            $return .= Html::divOp('legend');
-            $return .= Html::spanOr($legendLink,$value);
-            $return .= Html::divCl();
+            if($withLegend === true)
+            {
+                $return .= Html::divOp('legend');
+                $return .= Html::spanOr($legendLink,$value);
+                $return .= Html::divCl();
+            }
         }
 
         return $return;

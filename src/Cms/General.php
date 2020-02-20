@@ -979,6 +979,8 @@ class General extends Core\RouteAlias
                 }
 
                 $data = ['id'=>$row->primary(),'row'=>$row::className(true),'updateable'=>$updateable,'deleteable'=>$deleteable];
+                $data = $row->getDataAttr($data);
+
                 $rowAttr = ['data'=>$data];
                 if(!empty($highlight) && in_array($row->primary(),$highlight,true))
                 $rowAttr[] = 'highlight';

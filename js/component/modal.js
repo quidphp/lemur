@@ -48,18 +48,24 @@ Component.Modal = function(option)
         },
         
         getRouteAnchors: function(route) {
-            return qsa(document,"a[data-modal='"+route+"']");
+            return getData(this,'data-route-anchor') || qsa(document,"a[data-modal='"+route+"']");
         },
         
-        anchorBind: function(anchor) {
-            anchorBind.call(this,anchor);
+        setRouteAnchor: function(value) {
+            Ele.check(value,false);
+            setData(this,'data-route-anchor',value);
         },
         
-        set: function(route,html) {
+        anchorBind: function(anchor,click) {
+            anchorBind.call(this,anchor,click);
+        },
+        
+        set: function(route,html,anchor) {
             Str.check(route,true);
             Str.check(html,true);
             
             trigHdlr(this,'modal:setRoute',route);
+            trigHdlr(this,'modal:setRouteAnchor',anchor);
             trigHdlr(this,'clickOpen:setTargetContent',html);
             trigEvt(this,'clickOpen:open');
         },
@@ -70,12 +76,16 @@ Component.Modal = function(option)
             return trigHdlr(this,'modal:fetch',config,route);
         },
         
-        fetch: function(config,route) {
+        fetch: function(config,route,anchor) {
             let r = false;
+            
+            if(Str.isNotEmpty(config))
+            config = Xhr.configFromString(config);
             
             if(Pojo.isNotEmpty(config))
             {
                 trigHdlr(this,'modal:setRoute',route);
+                trigHdlr(this,'modal:setRouteAnchor',anchor);
                 trigHdlr(this,'ajax:init',config);
                 r = true;
             }
@@ -127,6 +137,7 @@ Component.Modal = function(option)
         }
         
         trigHdlr(this,'modal:setRoute',null);
+        trigHdlr(this,'modal:setRouteAnchor',null);
     });
     
     ael(this,'click',function() {
@@ -168,7 +179,7 @@ Component.Modal = function(option)
         
         ael(document,'doc:mountCommon',function(event,node) {
             const anchor = qsa(node,"a[data-modal]");
-            trigHdlr(modal,'modal:anchorBind',anchor);
+            trigHdlr(modal,'modal:anchorBind',anchor,true);
         });
         
         ael(document,'doc:unmountPage',function() {
@@ -178,7 +189,7 @@ Component.Modal = function(option)
     
     
     // anchorBind
-    const anchorBind = function(anchor) 
+    const anchorBind = function(anchor,click) 
     {
         const modal = this;
         
@@ -190,18 +201,21 @@ Component.Modal = function(option)
             toggleClass(this,'selected',false);
         });
         
-        ael(anchor,'click',function(event) {
-            let r = true;
-            const result = trigHdlr(modal,'modal:fetchNode',this);
-            
-            if(result === true)
-            {
-                Evt.preventStop(event);
-                r = false;
-            }
-            
-            return r;
-        });
+        if(click === true)
+        {
+            ael(anchor,'click',function(event) {
+                let r = true;
+                const result = trigHdlr(modal,'modal:fetchNode',this);
+                
+                if(result === true)
+                {
+                    Evt.preventStop(event);
+                    r = false;
+                }
+                
+                return r;
+            });
+        }
     }
     
     return this;

@@ -40,7 +40,7 @@ Component.Ajax = function(type)
             }
             
             if(Str.is(config))
-            config = {url: config};
+            config = Xhr.configFromString(config);
             
             if(Pojo.isNotEmpty(config))
             {

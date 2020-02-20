@@ -83,6 +83,17 @@ const Xhr = Lemur.Xhr = new function()
     }
 
     
+    // configFromString
+    // retounre un tableau avec la string comme url
+    this.configFromString = function(value)
+    {
+        Str.check(value,true);
+        return {
+            url: value
+        };
+    }
+    
+    
     // defaultConfig
     // retourne la configuration par défaut pour une requête ajax
     const defaultConfig = function()

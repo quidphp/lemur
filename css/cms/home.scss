@@ -11,7 +11,7 @@
 
 /* HOME */
 [data-route='home'] main .inner > .bottom {
-    @include flex(center, flex-start);
+    @include flex(center, flex-start, wrap);
 
     > .left {
         flex-grow: 1;

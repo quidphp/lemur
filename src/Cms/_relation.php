@@ -33,7 +33,8 @@ trait _relation
             'ajax'=>true,
             'session'=>'canAccess'],
         'group'=>'relation',
-        'order'=>true
+        'order'=>true,
+        'orderSelect'=>true
     ];
 
 
@@ -146,6 +147,14 @@ trait _relation
         $return = true;
 
         return $return;
+    }
+
+
+    // hasOrderSelect
+    // retourne vrai s'il faut mettre le order select
+    final public function hasOrderSelect():bool
+    {
+        return $this->getAttr('orderSelect') === true;
     }
 
 
@@ -281,6 +290,9 @@ trait _relation
             if($route->hasOrder())
             $route = $route->changeSegment('order',true);
             $data['href'] = $route;
+
+            $order = null;
+            if($route->hasOrderSelect())
             $order = $route->orderSelect();
 
             if($size > $limit)
@@ -303,7 +315,7 @@ trait _relation
             }
 
             elseif($size > 1 && !empty($order))
-            $html .= Html::div($route->orderSelect(),'top');
+            $html .= Html::div($order,'top');
 
             $html .= Html::div(null,'results');
         }

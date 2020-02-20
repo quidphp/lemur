@@ -263,6 +263,7 @@ class Fr extends Core\Lang\Fr
                     'visible'=>'Visible',
                     'author'=>'Auteur',
                     'price'=>'Prix',
+                    'percent'=>'Pourcentage',
                     'total'=>'Total',
                     'host'=>'Hôte',
                     'quantity'=>'Quantité'
@@ -695,8 +696,8 @@ class Fr extends Core\Lang\Fr
                         'uri_en'=>"Uri de l'élément.",
                         'excerpt_fr'=>"Court résumé de l'élément, environ 2-3 phrases. Si vide se génère automatiquement à partir du contenu",
                         'excerpt_en'=>"Court résumé de l'élément, environ 2-3 phrases. Si vide se génère automatiquement à partir du contenu",
-                        'content_fr'=>"Contenu principal de l'élément. Possible de copier-coller à partir de Microsoft Word. Appuyer shift+enter pour faire un saut de ligne sans créer une nouvelle balise.",
-                        'content_en'=>"Contenu principal de l'élément. Possible de copier-coller à partir de Microsoft Word. Appuyer shift+enter pour faire un saut de ligne sans créer une nouvelle balise.",
+                        'content_fr'=>"Contenu principal de l'élément.",
+                        'content_en'=>"Contenu principal de l'élément.",
                         'metaTitle_fr'=>'Meta titre pour la page française, champ facultatif',
                         'metaTitle_en'=>'Meta titre pour la page anglaise, champ facultatif',
                         'metaImage_fr'=>'Meta image pour représenter la page française, champ facultatif',
@@ -721,6 +722,7 @@ class Fr extends Core\Lang\Fr
                         'website'=>"Site web en lien avec l'élément, mettre l'adresse complête",
                         'author'=>"Spécifie l'auteur de l'élément",
                         'price'=>"Spécifie le prix de l'élément",
+                        'percent'=>"Spécifie le pourcentage de l'élément",
                         'total'=>"Spécifie le total de l'élément",
                         'timezone'=>"Spécifie le fuseau horaire de l'élément",
                         'quantity'=>"Spécifie la quantité de l'élément"

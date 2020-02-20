@@ -62,7 +62,9 @@ class Db extends Core\Db
             'slugPath_fr'=>['class'=>Col\SlugPath::class],
             'fragment_en'=>['class'=>Col\Fragment::class],
             'fragment_fr'=>['class'=>Col\Fragment::class],
-            'slug'=>['class'=>Col\Slug::class]]
+            'slug'=>['class'=>Col\Slug::class],
+            'price'=>['class'=>Col\Money::class],
+            'percent'=>['class'=>Col\Percent::class]]
     ];
 }
 

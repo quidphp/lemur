@@ -263,6 +263,7 @@ class En extends Core\Lang\En
                     'visible'=>'Visible',
                     'author'=>'Author',
                     'price'=>'Price',
+                    'percent'=>'Percent',
                     'total'=>'Total',
                     'host'=>'Host',
                     'quantity'=>'Quantity'
@@ -695,8 +696,8 @@ class En extends Core\Lang\En
                         'uri_en'=>'Uri of the element.',
                         'excerpt_fr'=>'Short summary of the element, about 2-3 sentences, if empty is generated automatically from the content',
                         'excerpt_en'=>'Short summary of the element, about 2-3 sentences, if empty is generated automatically from the content',
-                        'content_fr'=>'Main content field of the element. Possible to copy and paste from Microsoft Word. Press shift+enter to create a new line within the same tag.',
-                        'content_en'=>'Main content field of the element. Possible to copy and paste from Microsoft Word. Press shift+enter to create a new line within the same tag.',
+                        'content_fr'=>'Main content field of the element.',
+                        'content_en'=>'Main content field of the element.',
                         'metaTitle_fr'=>'Meta title for the French page, optional field',
                         'metaTitle_en'=>'Meta title for the English page, optional field',
                         'metaImage_fr'=>'Meta image to represent the French page, optional field',
@@ -721,6 +722,7 @@ class En extends Core\Lang\En
                         'website'=>'Web site linked to the element, put the full address',
                         'author'=>'Specifies the author of the element',
                         'price'=>'Specifies the price of the element',
+                        'percent'=>'Specifies the percent of the element',
                         'total'=>'Specifies the total of the element',
                         'timezone'=>'Specifies the timezone of the element',
                         'quantity'=>'Specifies the quantity of the element'
