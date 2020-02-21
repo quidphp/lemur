@@ -16,6 +16,13 @@ use Quid\Base\Html;
 // trait that provides some practical methods to work with page route within the CMS
 trait _page
 {
+    // config
+    public static $configCmsPage = [
+        'match'=>[
+            'session'=>'canAccess']
+    ];
+
+
     // trait
     use _templateAlias;
 

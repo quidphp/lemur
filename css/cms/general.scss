@@ -115,7 +115,7 @@
 
 /* TABLE */
 [data-route='general'] main .container > .scroller > table {
-    @include wh();
+    @include tableBase();
 
     [data-anchor-corner='bottom-left'] .popup,
     [data-anchor-corner='bottom-right'] .popup {
@@ -124,11 +124,7 @@
     }
 }
 [data-route='general'] main .container > .scroller > table > thead > tr > th {
-    vertical-align: middle;
-    background-color: $color;
     min-width: 150px;
-    position: relative;
-    height: 100%;
 
     &:first-child .cell-inner {
         border-left: 1px solid $darkColor;
@@ -202,7 +198,7 @@
             margin-top: -5px;
             margin-left: -5px;
             display: block;
-            opacity: 0.1;
+            opacity: 0.2;
         }
     }
 
@@ -254,9 +250,6 @@
 /* TBODY */
 [data-route='general'] main .container > .scroller > table > tbody {
     > tr {
-        &:nth-child(even) {
-            background-color: $lightestGray;
-        }
         &.highlight,
         &[data-checked='1'] {
             background-color: $lightYellow !important;
@@ -268,8 +261,7 @@
     }
 
     > tr > td {
-        height: 100%;
-
+        
         > .cell-inner {
             @include transition(background-color);
             border-right: 1px solid $lighterGray;

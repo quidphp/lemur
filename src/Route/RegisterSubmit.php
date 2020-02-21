@@ -44,6 +44,7 @@ abstract class RegisterSubmit extends Core\RouteAlias
         'passwordFields'=>[
             'password'=>'password',
             'passwordConfirm'=>'passwordConfirm'],
+        'otherFields'=>null,
         'group'=>'submit',
         'flashPost'=>true,
         'log'=>null,
@@ -110,6 +111,7 @@ abstract class RegisterSubmit extends Core\RouteAlias
         $default = $this->getDataDefault($post);
         $passwordConfirm = $password['passwordConfirm'];
         $keep = $this->getBaseFields();
+        $keep = Base\Arr::append($keep,$this->getOtherFields());
         $keep[] = $password['password'];
 
         $return['data'] = Base\Arr::gets($keep,$post);
@@ -183,6 +185,22 @@ abstract class RegisterSubmit extends Core\RouteAlias
     final public function getPasswordFields():array
     {
         return $this->getAttr('passwordFields') ?? [];
+    }
+
+
+    // getOtherFields
+    // retourne les champs autres
+    final public function getOtherFields():array
+    {
+        return $this->getAttr('otherFields') ?? [];
+    }
+
+
+    // getBaseAndOtherFields
+    // retourne les champs de base et autres
+    final public function getBaseAndOtherFields():array
+    {
+        return Base\Arr::append($this->getBaseFields(),$this->getOtherFields());
     }
 }
 

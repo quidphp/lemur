@@ -61,7 +61,8 @@ abstract class Route extends Core\Route
                 'shared'=>['access'=>false],
                 'user'=>['access'=>false],
                 'subAdmin'=>['popup'=>true,'sessionFakeRole'=>true,'userWelcome'=>true],
-                'admin'=>['popup'=>true,'sessionFakeRole'=>true,'userWelcome'=>true]],
+                'admin'=>['popup'=>true,'sessionFakeRole'=>true,'userWelcome'=>true],
+                'cli'=>['cli'=>true]],
         '@dev'=>[
             'docOpen'=>[
                 'head'=>[

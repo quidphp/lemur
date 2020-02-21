@@ -292,3 +292,26 @@
         justify-content: center;
     }
 }
+
+// tableBase
+// mixin de base pour une table du cms
+@mixin tableBase() {
+    @include wh();
+    
+    > thead > tr > th {
+        vertical-align: middle;
+        background-color: $color;
+        position: relative;
+        height: 100%;
+    }
+    
+    > tbody > tr {
+        &:nth-child(even) {
+            background-color: $lightestGray;
+        }
+        
+        > td {
+            height: 100%;
+        }
+    }
+}

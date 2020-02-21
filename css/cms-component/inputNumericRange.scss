@@ -8,7 +8,7 @@
 
 // inputNumericRange
 // styles for the integerRange component
-@mixin componentInputNumericRange() {
+@mixin componentInputNumericRange($maxWidth: 120px) {
     @include InputNumericRange();
 
     > button {
@@ -35,7 +35,7 @@
 
     > input[type='text'] {
         width: 80%;
-        max-width: 120px !important;
+        max-width: $maxWidth !important;
         border-radius: 0;
     }
 }
