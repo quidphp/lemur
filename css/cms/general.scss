@@ -261,7 +261,6 @@
     }
 
     > tr > td {
-        
         > .cell-inner {
             @include transition(background-color);
             border-right: 1px solid $lighterGray;
