@@ -16,11 +16,10 @@ use Quid\Orm;
 
 // percent
 // class for a column percent value
-class Percent extends Core\ColAlias
+class Percent extends Core\Col\FloatingAlias
 {
     // config
     public static $config = [
-        'check'=>['kind'=>'float'],
         'percent'=>null // custom
     ];
 

@@ -16,11 +16,10 @@ use Quid\Orm;
 
 // money
 // class for a column managing money (money formatted string)
-class Money extends Core\ColAlias
+class Money extends Core\Col\FloatingAlias
 {
     // config
     public static $config = [
-        'check'=>['kind'=>'float'],
         'money'=>null // custom
     ];
 

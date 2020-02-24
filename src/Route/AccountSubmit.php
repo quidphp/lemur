@@ -48,7 +48,7 @@ abstract class AccountSubmit extends Core\RouteAlias
 
     // onSuccess
     // callback appelé lors d'une modification réussi
-    final protected function onSuccess():void
+    protected function onSuccess():void
     {
         static::sessionCom()->stripFloor();
         static::timeoutIncrement('success');

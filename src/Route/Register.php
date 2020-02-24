@@ -120,11 +120,12 @@ abstract class Register extends Core\RouteAlias
 
         foreach ($fields as $value)
         {
-            $v = $flash[$value] ?? null;
             $col = $table->col($value);
+            $v = $flash[$value] ?? $col->default();
             $class = ($col->isRequired())? 'required':'not-required';
             $description = Html::divCond($col->description(),'description');
-            $r .= $col->formWrap($formWrap,'%:',$v,null,['class'=>$class,'description'=>$description]);
+            $method = ($col->isRelation())? 'formComplexWrap':'formWrap';
+            $r .= $col->$method($formWrap,'%:',$v,null,['class'=>$class,'description'=>$description]);
         }
 
         return $r;
