@@ -71,6 +71,14 @@ class Download extends Core\RouteAlias
 
         return $return;
     }
+
+
+    // structureSegmentIntDefault
+    // retourne le int par défaut pour le segment
+    final public static function structureSegmentIntDefault()
+    {
+        return;
+    }
 }
 
 // init

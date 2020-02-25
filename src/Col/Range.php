@@ -67,13 +67,12 @@ class Range extends Core\Col\JsonAlias
 
     // onGet
     // sur onGet retourne un tableau associatif avec min, max ou inc
-    final protected function onGet($value,array $option)
+    final protected function onGet($return,array $option)
     {
-        $return = null;
-        $value = parent::onGet($value,$option);
+        $return = parent::onGet($return,$option);
 
-        if(is_array($value) && Base\Arr::isRange($value))
-        $return = Base\Arr::keysChange([0=>'min',1=>'max',2=>'inc'],$value);
+        if(is_array($return) && Base\Arr::isRange($return))
+        $return = Base\Arr::keysChange([0=>'min',1=>'max',2=>'inc'],$return);
 
         return $return;
     }

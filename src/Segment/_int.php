@@ -20,13 +20,14 @@ trait _int
     final public static function structureSegmentInt(string $type,$value,array &$keyValue)
     {
         $return = false;
-        $default = static::structureSegmentIntDefault();
 
         if($type === 'make')
         $return = (is_int($value) && $value >= 0)? $value:false;
 
         elseif($type === 'match')
         {
+            $default = static::structureSegmentIntDefault();
+
             if($value === null)
             $return = $default;
 
@@ -48,7 +49,7 @@ trait _int
     // retourne le int par défaut pour le segment
     final public static function structureSegmentIntDefault()
     {
-        return;
+        return false;
     }
 
 

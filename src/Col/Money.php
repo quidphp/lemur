@@ -28,9 +28,10 @@ class Money extends Core\Col\FloatingAlias
     // ramène le nombre flottant dans un format monétaire
     final protected function onGet($return,array $option)
     {
-        $return = $this->value($return);
+        $return = parent::onGet($return,$option);
+        $return = ($return instanceof Orm\Cell)? $this->value($return):$return;
 
-        if(!empty($return))
+        if(is_numeric($return))
         $return = Base\Num::moneyFormat($return,null,$this->getAttr('money'));
 
         return $return;

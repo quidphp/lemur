@@ -13,6 +13,12 @@ Component.InputNumericRange = function(option)
     return null;
     
     
+    // option
+    const $option = Pojo.replace({
+        zero: false
+    },option);
+    
+    
     // handler
     setHdlrs(this,'inputNumericRange:',{
         
@@ -51,7 +57,13 @@ Component.InputNumericRange = function(option)
         
         getRange: function() {
             const attr = trigHdlr(this,'inputNumericRange:getRangeAttr');
-            return Integer.range(attr.min,attr.max,attr.inc);
+            const r = Integer.range(attr.min,attr.max,attr.inc);
+            const firstValue = Arr.valueFirst(r);
+            
+            if($option.zero === true && firstValue !== 0)
+            r.unshift(0);
+            
+            return r;
         },
         
         refresh: function() {

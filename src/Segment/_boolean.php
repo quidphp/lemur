@@ -25,9 +25,25 @@ trait _boolean
         $return = (in_array($value,[0,1],true))? $value:false;
 
         elseif($type === 'match')
-        $return = (in_array($value,[0,1],true))? $value:false;
+        {
+            $default = static::structureSegmentBoolDefault();
+
+            if($value === null)
+            $return = $default;
+
+            else
+            $return = (in_array($value,[0,1],true))? $value:false;
+        }
 
         return $return;
+    }
+
+
+    // structureSegmentBoolDefault
+    // retourne le int par défaut pour le segment
+    final public static function structureSegmentBoolDefault()
+    {
+        return false;
     }
 }
 ?>

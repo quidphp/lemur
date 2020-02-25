@@ -103,7 +103,7 @@ abstract class Relation extends Core\Col\Relation
 
         foreach ($array as $key => $value)
         {
-            if(is_int($key) && !empty($table) && !empty($route) && $table->hasPermission('view'))
+            if(is_int($key) && !empty($table) && !empty($route) && $table->hasPermission('view','specific'))
             {
                 $route = $route::make(['table'=>$table,'primary'=>$key]);
                 $return[$key] = $route->a($value);

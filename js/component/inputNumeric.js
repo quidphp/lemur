@@ -111,11 +111,8 @@ Component.InputNumeric = function(option)
         validate: function() {
             let r = false;
             let val = trigHdlr(this,'input:getValueInt');
-            
-            if(!val)
-            trigEvt(this,'validate:invalid');
-            
-            else if(Integer.is(val))
+
+            if(Integer.is(val))
             {
                 const newVal = trigHdlr(this,'inputNumeric:validateReplace',val);
                 
@@ -126,6 +123,9 @@ Component.InputNumeric = function(option)
                 r = true;
             }
             
+            else
+            trigEvt(this,'validate:invalid');
+            
             return r;
         },
         
@@ -134,10 +134,12 @@ Component.InputNumeric = function(option)
         },
         
         process: function() {
+            const value = trigHdlr(this,'inputNumeric:getValueRestore');
             const validate = trigHdlr(this,'inputNumeric:validate');
             const shouldChange = trigHdlr(this,'inputNumeric:shouldChange');
+            const newValue = trigHdlr(this,'input:getValueInt');
             
-            if(validate === true && shouldChange === true)
+            if(validate === true && shouldChange === true && value !== newValue)
             trigEvt(this,'inputNumeric:change');
         }
     });
