@@ -46,7 +46,7 @@ trait _int
 
 
     // structureSegmentIntDefault
-    // retourne le int par défaut pour le segment
+    // retourne la valeur par défaut pour le segment (false)
     final public static function structureSegmentIntDefault()
     {
         return false;

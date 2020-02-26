@@ -14,6 +14,7 @@ use Quid\Base;
 use Quid\Base\Html;
 use Quid\Core;
 use Quid\Lemur;
+use Quid\Routing;
 
 // _template
 // trait that grants the methods to generate the CMS HTML template
@@ -38,6 +39,7 @@ trait _template
 
 
     // template
+    // génère le template pour le cms
     final protected function template():string
     {
         $r = '';
@@ -230,16 +232,42 @@ trait _template
 
     // nav
     // génère la navigation principale pour toutes les pages du cms
+    // vérifier la présence de mainBefore et mainAfter dans les routes
     final protected function nav():string
     {
         $r = '';
+
+        foreach ($this->navRoutes('mainBefore') as $routeClass)
+        {
+            $r .= Html::liCond($routeClass::make()->aTitle());
+        }
+
         $tables = $this->db()->tables();
         $tables = $tables->hasPermission('view','mainNav','general');
         $hierarchy = $tables->hierarchy(false);
+        $r .= $this->navMenu($hierarchy);
 
-        $r .= Html::ulCond($this->navMenu($hierarchy));
+        foreach ($this->navRoutes('mainAfter') as $routeClass)
+        {
+            $r .= Html::liCond($routeClass::make()->aTitle());
+        }
+
+        $r = Html::ulCond($r);
 
         return $r;
+    }
+
+
+    // navRoutes
+    // retourne les routes pour un type (en lien avec nav)
+    final protected function navRoutes(string $type):Routing\Routes
+    {
+        $return = [];
+        $boot = static::boot();
+        $routes = $boot->routes();
+        $return = $routes->filter(['inMenu'=>true],$type);
+
+        return $return;
     }
 
 

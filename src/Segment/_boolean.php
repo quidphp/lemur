@@ -40,7 +40,7 @@ trait _boolean
 
 
     // structureSegmentBoolDefault
-    // retourne le int par défaut pour le segment
+    // retourne la valeur par défaut pour le segment (false)
     final public static function structureSegmentBoolDefault()
     {
         return false;

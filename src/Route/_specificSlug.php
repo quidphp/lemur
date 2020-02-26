@@ -63,14 +63,23 @@ trait _specificSlug
     }
 
 
+    // rowsAllSegmentWhere
+    // retourne la valeur where pour la requête des rows allSegment
+    final public static function rowsAllSegmentWhere()
+    {
+        return true;
+    }
+
+
     // allSegment
     // génère tous les combinaisons possibles pour le sitemap
     final public static function allSegment()
     {
         $return = [];
-        $class = static::rowClass();
+        $where = static::rowsAllSegmentWhere();
+        $rows = static::rowClass()::grabVisible($where);
 
-        foreach ($class::grabVisible() as $row)
+        foreach ($rows as $row)
         {
             if($row->inAllSegment() && !in_array($row,$return,true))
             $return[] = $row;
