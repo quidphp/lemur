@@ -444,7 +444,7 @@ class Specific extends Core\RouteAlias
         $session = $this->session();
 
         if($key === null)
-        $key = static::boot()->typePrimary();
+        $key = $row->getViewRouteType() ?? static::boot()->typePrimary();
 
         if($table->hasPermission('viewApp') && $session->canViewRow($row))
         {

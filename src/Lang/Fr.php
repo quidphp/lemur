@@ -598,7 +598,7 @@ class Fr extends Core\Lang\Fr
 
                 // description
                 'description'=>[
-                    'contact'=>'Archive des messages envoyés via le formulaire de la page de contact',
+                    'contact'=>'Messages envoyés via les formulaire de contact',
                     'email'=>"Contenu relatif aux courriels envoyés par l'application",
                     'lang'=>"Tous les autres contenus textes présents dans l'application et le CMS",
                     'redirection'=>"Spécifie les redirections d'une URL à une autre",
@@ -658,8 +658,9 @@ class Fr extends Core\Lang\Fr
                         'metaDescription_fr'=>'Aucune balise HTML, champ facultatif',
                         'metaDescription_en'=>'Aucune balise HTML, champ facultatif',
                         'date'=>"Spécifie la date pour représenter l'élément",
-                        'datetimeStart'=>"Spécifie la date de début de l'élément",
-                        'datetimeEnd'=>"Spécifie la date de fin de l'élément",
+                        'datetime'=>"Spécifie la date et l'heure pour représenter l'élément",
+                        'datetimeStart'=>"Spécifie la date et l'heure de début de l'élément",
+                        'datetimeEnd'=>"Spécifie la date et l'heure de fin de l'élément",
                         'phone'=>'Numéro de téléphone avec ou sans extension',
                         'fax'=>'Numéro de fax avec ou sans extension',
                         'address'=>'Adresse complête',

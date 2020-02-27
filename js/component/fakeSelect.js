@@ -114,6 +114,14 @@ Component.FakeSelect = function()
             setTitle: function(value) {
                 const title = trigHdlr(this,'fakeSelect:getTitle');
                 Ele.setText(title,value);
+            },
+            
+            setPrev: function() {
+                choosePrevNext.call(this,'prev');
+            },
+            
+            setNext: function() {
+                choosePrevNext.call(this,'next');
             }
         });
         
@@ -124,11 +132,17 @@ Component.FakeSelect = function()
         });
         
         ael(this,'keyboardArrow:up',function() {
+            if(trigHdlr(this,'clickOpen:isOpen'))
             trigHdlr(this,'focusable:prev');
+            else
+            trigHdlr(this,'fakeSelect:setPrev');
         });
         
         ael(this,'keyboardArrow:down',function() {
+            if(trigHdlr(this,'clickOpen:isOpen'))
             trigHdlr(this,'focusable:next');
+            else
+            trigHdlr(this,'fakeSelect:setNext');
         });
         
         ael(this,'clickOpen:opened',function() {
@@ -214,6 +228,22 @@ Component.FakeSelect = function()
             
             if(selected != null)
             choose.call(this,selected);
+        }
+        
+        
+        // choosePrevNext
+        const choosePrevNext = function(type)
+        {
+            const choices = trigHdlr(this,'fakeSelect:getChoices');
+            const selected = trigHdlr(this,'fakeSelect:getSelected');
+            
+            if(selected != null)
+            {
+                const newNode = Nav.indexNode(type,selected,choices);
+                
+                if(newNode != null)
+                choose.call(this,newNode);
+            }
         }
         
         

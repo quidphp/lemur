@@ -598,7 +598,7 @@ class En extends Core\Lang\En
 
                 // description
                 'description'=>[
-                    'contact'=>'Archive messages sent via the contact page form',
+                    'contact'=>'Archive messages sent via contact forms',
                     'email'=>'Email content sent by the app',
                     'lang'=>'All other text content in the application and CMS',
                     'redirection'=>'Specifies the redirection from one URL to another',
@@ -658,8 +658,9 @@ class En extends Core\Lang\En
                         'metaDescription_fr'=>'No HTML tags, optional field',
                         'metaDescription_en'=>'No HTML tags, optional field',
                         'date'=>'Specifies the date to represent the entry',
-                        'datetimeStart'=>'Specifies the start date of the entry',
-                        'datetimeEnd'=>'Specifies the end date of the entry',
+                        'datetime'=>'Specifies the date and time to represent the entry',
+                        'datetimeStart'=>'Specifies the start date and time of the entry',
+                        'datetimeEnd'=>'Specifies the end date and time of the entry',
                         'phone'=>'Phone number with or without extension',
                         'fax'=>'Fax number with or without extension',
                         'address'=>'Complete address',

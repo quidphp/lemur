@@ -31,5 +31,13 @@ class Row extends Core\Row implements Main\Contract\Meta
     {
         return $return;
     }
+
+
+    // getViewRouteType
+    // retourne le type à utiliser pour voir la route via la page spécifique du cms
+    public function getViewRouteType():?string
+    {
+        return null;
+    }
 }
 ?>

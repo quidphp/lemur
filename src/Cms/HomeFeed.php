@@ -187,6 +187,9 @@ class HomeFeed extends Core\RouteAlias
         if($type === 1)
         $where[] = [$user,'=',$currentUser];
 
+        // date pas vide
+        $where[] = [$date,true];
+
         $array = [];
         $array['what'] = [$primary,[$date,'date']];
         $array['where'] = $where;
