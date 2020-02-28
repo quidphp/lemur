@@ -8,11 +8,11 @@
 
 // background
 // stylesheet for the background component
-@mixin Background($zindex: 2, $opacity: 0.2) {
+@mixin Background($zindex: 2, $opacity: 0.2, $rgb: (0,0,0)) {
     @include fixed(0, null, null, 0);
     @include transitions(opacity 1.5s, background-color 1.5s);
     @include wh(100%);
     z-index: $zindex;
-    background-color: rgba(0, 0, 0, $opacity);
+    background-color: rgba($rgb, $opacity);
     display: none;
 }

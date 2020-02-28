@@ -170,7 +170,7 @@ class Contact extends Core\RowAlias
 
     // makeForm
     // génère le formulaire de contact
-    final public static function makeForm(string $formWrap,$pattern=null,?array $flash=null):string
+    final public static function makeForm(string $formWrap,$pattern=null,?array $flash=null,?array $attr=null):string
     {
         $r = '';
         $table = static::tableFromFqcn();
@@ -180,8 +180,8 @@ class Contact extends Core\RowAlias
             $name = $col->name();
             $value = (is_array($flash) && array_key_exists($name,$flash))? $flash[$name]:null;
 
-            $r .= Html::divOp(['field',$col]);
-            $r .= $col->formWrap($formWrap,$pattern,$value);
+            $r .= Html::divOp(['field','data-field'=>$col]);
+            $r .= $col->formWrap($formWrap,$pattern,$value,$attr);
             $r .= Html::divCl();
         }
 
