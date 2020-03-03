@@ -46,7 +46,8 @@ abstract class ContactSubmit extends Core\RouteAlias
     // retourne vrai si la route peut trigger
     public function canTrigger():bool
     {
-        return (parent::canTrigger() && static::db()->hasTable(static::rowClass()) && static::rowClass()::canSendEmail())? true:false;
+        $row = static::rowClass();
+        return (!empty($row) && parent::canTrigger() && static::db()->hasTable($row) && $row::canSendEmail())? true:false;
     }
 
 

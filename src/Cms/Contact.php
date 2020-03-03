@@ -63,6 +63,19 @@ class Contact extends Lemur\Route\Contact
         $return['phone'] = ($user->hasCell('phone'))? $user->cell('phone'):null;
         $return['email'] = $user->email();
 
+        return $return;
+    }
+
+
+    // getAdminEmail
+    // retourne le courriel pour admin, utilise celui stocke dans le modèle row
+    final protected function getAdminEmail():array
+    {
+        $return = null;
+        $row = static::rowClass();
+
+        if(!empty($row))
+        $return = $row::getAdminEmail();
 
         return $return;
     }
@@ -73,7 +86,7 @@ class Contact extends Lemur\Route\Contact
     final public function trigger()
     {
         $r = '';
-        $adminEmail = static::rowClass()::getAdminEmail();
+        $adminEmail = $this->getAdminEmail();
         $replace = [];
 
         if(!empty($adminEmail))

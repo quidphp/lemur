@@ -43,20 +43,12 @@
             }
 
             button {
+                @include hoverClickState();
                 width: 32px;
                 height: auto;
                 background-color: $lightGray;
                 border: 1px solid $lightGray;
                 border-left: 0;
-
-                &:hover {
-                    background-color: $lightYellow;
-                    opacity: 1;
-                }
-
-                &:active {
-                    background-color: $gray;
-                }
             }
         }
 

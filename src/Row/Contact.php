@@ -125,7 +125,7 @@ class Contact extends Core\RowAlias
 
         $replace = $this->getReplaceEmail();
         $method = $option['method'];
-        $adminEmail = $this->getAdminEmail();
+        $adminEmail = static::getAdminEmail();
         $contactAdmin = $this->contactAdminEmailModel();
         $contactConfirm = $this->contactConfirmEmailModel();
 

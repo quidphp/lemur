@@ -50,6 +50,7 @@
         .insert {
             @include transitions(background-color 0.3s);
             @include imageLegend();
+            @include hoverClickState();
             padding: 5px 10px;
             text-align: center;
             width: 100%;
@@ -60,14 +61,6 @@
                 margin: auto;
                 margin-bottom: 3px;
                 background-size: contain;
-            }
-
-            &:hover {
-                background-color: $lightYellow;
-            }
-
-            &:active {
-                background-color: $lightGray;
             }
         }
 

@@ -80,8 +80,8 @@
 
 // ulOlMargin
 // margin utilisé pour les ul/ol
-@mixin ulOlMargin() {
-    margin-left: 1.7rem;
+@mixin ulOlMargin($margin: 1.7rem) {
+    margin-left: $margin;
 }
 
 // bigButton
@@ -127,18 +127,9 @@
 // mixin pour les styles de base pour gros boutons avec hover clair
 @mixin bigButtonLight() {
     @include bigButton();
+    @include hoverClickState("[data-tab='1']","[data-selected='1']");
     background-color: $white;
     border: 1px solid $lightGray;
-
-    &:hover,
-    &[data-tab='1'],
-    &[data-selected='1'] {
-        background-color: $lightYellow;
-    }
-
-    &:active {
-        background-color: $lightGray;
-    }
 }
 
 // scrollbar
@@ -312,6 +303,29 @@
 
         > td {
             height: 100%;
+        }
+    }
+}
+
+// hoverClickState
+@mixin hoverClickState($selector:"[data-triggered='1']",$selector2:null) {
+    &:hover {
+        background-color: $lightYellow;
+    }
+    
+    &:active {
+        background-color: $lightGray;
+    }
+    
+    @if($selector) {
+        &#{$selector} {
+            background-color: $lightYellow;
+        }
+    }
+    
+    @if($selector2) {
+        &#{$selector2} {
+            background-color: $lightYellow;
         }
     }
 }

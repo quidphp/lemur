@@ -75,6 +75,21 @@ const NumPrimitive =  {
         return r;
     },
     
+    // isOdd
+    // vérifie que la valeur est un chiffre impair
+    isOdd: function(value)
+    {
+        return (this.is(value) && !Integer.is(value / 2));
+    },
+    
+    
+    // isEven
+    // vérifie que la valeur est un chiffre pair
+    isEven: function(value)
+    {
+        return (this.is(value) && Integer.is(value / 2));
+    },
+    
     
     // isNan
     // retourne vrai si la valeur est nan

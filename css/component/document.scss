@@ -8,7 +8,7 @@
 
 // document
 // stylesheet for the document component, includes many style reset
-@mixin Document($routeWrap, $focus) {
+@mixin Document($routeWrap, $focus, $loadingCursor:wait) {
     *,
     *::before,
     *::after {
@@ -24,8 +24,8 @@
         box-shadow: inset 0px 0px 5px $focus;
     }
     button:hover,
-    a:active,
-    a[data-triggered='1'],
+    button:active,
+    button[data-triggered='1'],
     a:hover,
     a:active,
     a[data-triggered='1'] {
@@ -288,21 +288,27 @@
         padding: 0;
         color: $black;
     }
-    input[data-controlled='1'],
-    select[data-controlled='1'],
-    textarea[data-controlled='1'] {
-        display: none;
+    
+    @if($loadingCursor) {
+        html[data-status='loading'] body {
+            * {
+                cursor: $loadingCursor !important;
+            }
+        }
     }
-    #{$routeWrap} {
-        margin: auto;
-        min-height: 100vh;
-        height: auto;
-        position: relative;
-        min-width: 900px;
-        width: 100%;
+    
+    @if($routeWrap) {
+        #{$routeWrap} {
+            margin: auto;
+            min-height: 100vh;
+            height: auto;
+            position: relative;
+            min-width: 900px;
+            width: 100%;
 
-        @include responsive() {
-            min-width: auto;
+            @include responsive() {
+                min-width: auto;
+            }
         }
     }
 }

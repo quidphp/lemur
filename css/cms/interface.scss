@@ -11,10 +11,6 @@
 
 // body
 [data-status='loading'] body {
-    * {
-        cursor: wait !important;
-    }
-
     > .loading-icon,
     > .loading-progress {
         display: block;
@@ -356,7 +352,7 @@ footer {
     .with-submenu {
         position: relative;
 
-        &.active .trigger {
+        &[data-active='1'] .trigger {
             background-color: $darkColor;
         }
 

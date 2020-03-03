@@ -174,10 +174,7 @@
     width: 40px;
 }
 [data-route='general'] main .container > .scroller > table > tbody > tr > td.action .cell-inner {
-    &:hover,
-    &[data-triggered='1'] {
-        background-color: $lightYellow;
-    }
+    @include hoverClickState();
 }
 
 /* ORDER */

@@ -22,15 +22,8 @@
         > ul > li > button {
             padding: 5px 10px;
             border-top: 1px solid $lighterGray;
-
-            &:hover,
-            &[data-selected='1'] {
-                background-color: $lightYellow;
-            }
-
-            &:active {
-                background-color: $lightGray;
-            }
+            
+            @include hoverClickState("[data-selected='1']");
         }
     }
 }

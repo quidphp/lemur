@@ -565,6 +565,12 @@ Test.Include = function()
         assert(Num.isNegative('-2.2'));
         assert(Num.check('0') === '0');
         assert(Num.check(2.1,true) === 2.1);
+        assert(Num.isOdd(1));
+        assert(!Num.isEven(1));
+        assert(Num.isEven(2));
+        assert(Num.isOdd(11));
+        assert(!Num.isOdd(0));
+        assert(Num.isEven(0));
         
         // obj
         assert(Obj.is({}));

@@ -451,7 +451,7 @@ class Specific extends Core\RouteAlias
             $row = $this->row();
             $route = $row->routeSafe($key);
 
-            if(!empty($route) && $route::hasPath() && $route::allowed())
+            if(!empty($route) && $route::hasPath() && $route->canTrigger())
             $r .= $route->a(static::langText('specific/view'),['with-icon','view','operation-element','target'=>false]);
         }
 

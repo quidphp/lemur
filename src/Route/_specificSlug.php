@@ -76,13 +76,18 @@ trait _specificSlug
     final public static function allSegment()
     {
         $return = [];
-        $where = static::rowsAllSegmentWhere();
-        $rows = static::rowClass()::grabVisible($where);
+        $class = static::rowClass();
 
-        foreach ($rows as $row)
+        if(!empty($class))
         {
-            if($row->inAllSegment() && !in_array($row,$return,true))
-            $return[] = $row;
+            $where = static::rowsAllSegmentWhere();
+            $rows = $class::grabVisible($where);
+
+            foreach ($rows as $row)
+            {
+                if($row->inAllSegment() && !in_array($row,$return,true))
+                $return[] = $row;
+            }
         }
 
         return $return;
