@@ -127,7 +127,7 @@
 // mixin pour les styles de base pour gros boutons avec hover clair
 @mixin bigButtonLight() {
     @include bigButton();
-    @include hoverClickState("[data-tab='1']","[data-selected='1']");
+    @include hoverClickState("[data-tab='1']", "[data-selected='1']");
     background-color: $white;
     border: 1px solid $lightGray;
 }
@@ -308,22 +308,22 @@
 }
 
 // hoverClickState
-@mixin hoverClickState($selector:"[data-triggered='1']",$selector2:null) {
+@mixin hoverClickState($selector: "[data-triggered='1']", $selector2: null) {
     &:hover {
         background-color: $lightYellow;
     }
-    
+
     &:active {
         background-color: $lightGray;
     }
-    
-    @if($selector) {
+
+    @if ($selector) {
         &#{$selector} {
             background-color: $lightYellow;
         }
     }
-    
-    @if($selector2) {
+
+    @if ($selector2) {
         &#{$selector2} {
             background-color: $lightYellow;
         }

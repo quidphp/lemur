@@ -8,7 +8,7 @@
 
 // document
 // stylesheet for the document component, includes many style reset
-@mixin Document($routeWrap, $focus, $loadingCursor:wait) {
+@mixin Document($routeWrap, $focus, $loadingCursor: wait) {
     *,
     *::before,
     *::after {
@@ -288,16 +288,16 @@
         padding: 0;
         color: $black;
     }
-    
-    @if($loadingCursor) {
+
+    @if ($loadingCursor) {
         html[data-status='loading'] body {
             * {
                 cursor: $loadingCursor !important;
             }
         }
     }
-    
-    @if($routeWrap) {
+
+    @if ($routeWrap) {
         #{$routeWrap} {
             margin: auto;
             min-height: 100vh;

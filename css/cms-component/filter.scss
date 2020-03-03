@@ -192,7 +192,7 @@
 // mixin de style de base pour le lien dans le popup
 @mixin filterElementLink() {
     @include transitions(background-color 0.3s);
-    @include hoverClickState($selector2:".selected");
+    @include hoverClickState($selector2: '.selected');
     cursor: pointer;
     display: block;
     text-align: center;

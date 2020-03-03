@@ -22,7 +22,7 @@
         > ul > li > button {
             padding: 5px 10px;
             border-top: 1px solid $lighterGray;
-            
+
             @include hoverClickState("[data-selected='1']");
         }
     }

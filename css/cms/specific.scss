@@ -152,24 +152,24 @@
                 }
             }
         }
-        
+
         .description {
             > ol,
             > ul {
                 @include ulOlMargin(2rem);
             }
         }
-        
+
         .details {
             padding-top: 5px;
             font-size: 90%;
-            
+
             > ol,
             > ul {
                 @include ulOlMargin();
             }
         }
-        
+
         .details,
         .description {
             li {
