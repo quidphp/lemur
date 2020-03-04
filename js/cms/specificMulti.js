@@ -31,7 +31,7 @@ Component.SpecificMulti = function(option)
     
     
     // setup
-    ael(this,'component:setup',function() {
+    aelOnce(this,'component:setup',function() {
         bindDocument.call(this);
         bindElements.call(this);
         trigEvt(this,'form:prepare');

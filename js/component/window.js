@@ -13,7 +13,7 @@ Component.Window = function(type,timeout)
     
     
     // components
-    Component.ScrollAnimate.call(this);
+    Component.Scroller.call(this);
     
     
     // handler
@@ -30,7 +30,7 @@ Component.Window = function(type,timeout)
         
         // permet de scroller la fenêtre
         scrollTo: function(top,left,smooth) {
-            return trigHdlr(this,'scrollAnimate:go',top,left,smooth);
+            return trigHdlr(this,'scroller:go',top,left,smooth);
         }
     });
     

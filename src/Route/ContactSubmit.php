@@ -83,7 +83,7 @@ abstract class ContactSubmit extends Core\RouteAlias
 
     // post
     // retourne les données post pour le formulaire de contact
-    final protected function post():array
+    protected function post():array
     {
         $return = [];
         $request = $this->request();

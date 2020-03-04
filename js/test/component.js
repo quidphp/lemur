@@ -178,11 +178,11 @@ Test.Component = function()
         
         // resizeChange
         
-        // scrollAnimate
-        
         // scrollChange
         
         // scrollDrag
+        
+        // scroller
         
         // searchAutoInfo
         

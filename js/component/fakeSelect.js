@@ -181,14 +181,16 @@ Component.FakeSelect = function()
         {
             const $this = this;
             const select = trigHdlr(this,'fakeSelect:getSelect');
-            
-            ael(select,'change',function() {
+            const handleChange = function() {
                 const value = trigHdlr(this,'input:getValue');
                 const choice = trigHdlr($this,'fakeSelect:getChoice',value);
                 
                 if(choice != null)
                 choose.call($this,choice);
-            });
+            };
+            
+            ael(select,'change',handleChange);
+            ael(select,'input:change',handleChange);
             
             ael(select,'input:disable',function() {
                 trigHdlr($this,'clickOpen:disable');

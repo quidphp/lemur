@@ -22,7 +22,7 @@ Component.BackToTop = function(option)
     
     
     // components
-    Component.ScrollAnimate.call(this);
+    Component.Scroller.call(this);
     
     
     // handler
@@ -41,7 +41,7 @@ Component.BackToTop = function(option)
         },
         
         refresh: function() {
-            const scrollTop = trigHdlr(this,'scrollAnimate:getCurrentScroll').top;
+            const scrollTop = trigHdlr(this,'scroller:getCurrentScroll').top;
             trigHdlr(this,(scrollTop === 0)? 'backToTop:hide':'backToTop:show');
         }
     });
@@ -67,7 +67,7 @@ Component.BackToTop = function(option)
         const trigger = trigHdlr(this,'backToTop:getTrigger');
         
         ael(trigger,'click',function() {
-            trigHdlr($this,'scrollAnimate:go',0,null,$option.smooth);
+            trigHdlr($this,'scroller:go',0,null,$option.smooth);
         });
     }
     

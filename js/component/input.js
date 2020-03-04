@@ -129,7 +129,12 @@ Component.Input = function()
         },
         
         setValue: function(value) {
+            const oldValue = trigHdlr(this,'input:getValue');
             Ele.setValue(this,value);
+            const newValue = trigHdlr(this,'input:getValue');
+            
+            if(oldValue !== newValue)
+            trigEvt(this,'input:change');
         },
         
         setEmpty: function() {

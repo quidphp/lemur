@@ -203,21 +203,24 @@ Component.Doc = function(option)
         if(initial === true)
         trigEvt(this,'doc:mountInitial',body,isError);
         
-        trigEvt(this,'doc:mountCommon',routeWrap,isError);
-        trigEvt(this,'doc:mountPage',routeWrap,isError);
-        
-        if(isError !== true)
+        if(routeWrap != null)
         {
-            const group = getAttr(html,"data-group");
-            if(Str.isNotEmpty(group))
-            trigEvt(this,'group:'+group,routeWrap);
+            trigEvt(this,'doc:mountCommon',routeWrap,isError);
+            trigEvt(this,'doc:mountPage',routeWrap,isError,initial);
             
-            const route = getAttr(html,"data-route");
-            if(Str.isNotEmpty(route))
-            trigEvt(this,'route:'+route,routeWrap);
+            if(isError !== true)
+            {
+                const group = getAttr(html,"data-group");
+                if(Str.isNotEmpty(group))
+                trigEvt(this,'group:'+group,routeWrap);
+                
+                const route = getAttr(html,"data-route");
+                if(Str.isNotEmpty(route))
+                trigEvt(this,'route:'+route,routeWrap);
+            }
+            
+            trigEvt(this,'doc:mountedPage',routeWrap,isError);
         }
-        
-        trigEvt(this,'doc:mountedPage',routeWrap,isError);
     }
     
     
@@ -228,18 +231,21 @@ Component.Doc = function(option)
         const body = trigHdlr(this,'doc:getBody');
         const routeWrap = trigHdlr(this,'doc:getRouteWrap');
         
-        trigEvt(this,'doc:unmountCommon',routeWrap);
-        trigEvt(this,'doc:unmountPage',routeWrap);
-        
-        const group = getAttr(html,"data-group");
-        if(Str.isNotEmpty(group))
-        trigEvt(this,'group:'+group+':unmount',routeWrap);
-        
-        const route = getAttr(html,"data-route");
-        if(Str.isNotEmpty(route))
-        trigEvt(this,'route:'+route+':unmount',routeWrap);
-                
-        trigEvt(this,'doc:unmounted',routeWrap);
+        if(routeWrap != null)
+        {
+            trigEvt(this,'doc:unmountCommon',routeWrap);
+            trigEvt(this,'doc:unmountPage',routeWrap);
+            
+            const group = getAttr(html,"data-group");
+            if(Str.isNotEmpty(group))
+            trigEvt(this,'group:'+group+':unmount',routeWrap);
+            
+            const route = getAttr(html,"data-route");
+            if(Str.isNotEmpty(route))
+            trigEvt(this,'route:'+route+':unmount',routeWrap);
+                    
+            trigEvt(this,'doc:unmounted',routeWrap);
+        }
     }
     
     return this;

@@ -277,9 +277,10 @@ const EleTarget = {
     {
         let r = null;
         this.check(node);
+        const tag = this.tag(node);
         
         // scrollTop n'est pas sur la tag HTML dans IE
-        if(Arr.in(this.tag(node),['html','body']))
+        if(Arr.in(tag,['html','body']))
         r = Win.getScroll();
         
         else

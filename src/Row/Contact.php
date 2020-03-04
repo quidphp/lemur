@@ -151,7 +151,7 @@ class Contact extends Core\RowAlias
 
     // getReplaceEmail
     // retourne le tableau de remplacement pour les courriels
-    final protected function getReplaceEmail():array
+    protected function getReplaceEmail():array
     {
         $return = [];
         $boot = static::boot();
@@ -170,12 +170,13 @@ class Contact extends Core\RowAlias
 
     // makeForm
     // génère le formulaire de contact
-    final public static function makeForm(string $formWrap,$pattern=null,?array $flash=null,?array $attr=null):string
+    final public static function makeForm(string $formWrap,$pattern=null,?array $flash=null,?array $attr=null,?array $cols=null):string
     {
         $r = '';
         $table = static::tableFromFqcn();
+        $cols = (empty($cols))? static::getColsForm():$cols;
 
-        foreach($table->cols(...static::getColsForm()) as $col)
+        foreach($table->cols(...$cols) as $col)
         {
             $name = $col->name();
             $value = (is_array($flash) && array_key_exists($name,$flash))? $flash[$name]:null;
