@@ -126,7 +126,7 @@ Component.Scroller = function(option)
             {
                 Arr.each(targets,function() {
                     let keep = false;
-                    const offset = Ele.getOffset(this).top;
+                    const offset = Ele.getOffsetWin(this).top;
                     const height = Ele.getDimension(this).height;
                     
                     if(scrollTop >= (offset - windowHeightRatio))

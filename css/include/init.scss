@@ -400,8 +400,8 @@ $defaultResponsiveMaxWidth: 900px;
 
 // responsive
 // mixin utilisé pour mettre des règles responsives
-@mixin responsive($maxWidth: $defaultResponsiveMaxWidth) {
-    @media screen and (max-width: $maxWidth), screen and (orientation: portrait) {
+@mixin responsive($width: $defaultResponsiveMaxWidth,$type:'max-width') {
+    @media screen and (#{$type}: $width), screen and (orientation: portrait) {
         @content;
     }
 }

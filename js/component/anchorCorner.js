@@ -44,7 +44,7 @@ Component.AnchorCorner = function()
     // offsetCorner
     const offsetCorner = function()
     {
-        let r = Ele.getOffset(this);
+        let r = Ele.getOffsetWin(this);
         const scroll = Win.getScroll();
         const dimension = Win.getDimension();
         r.y = r.top - scroll.top;

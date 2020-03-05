@@ -109,6 +109,27 @@ const Dom = Lemur.Dom = {
     },
     
     
+    // querySelector
+    // comme parse one, mais cherche pour en enfant via query selector
+    // retourne le html de cette node
+    querySelector: function(value,html)
+    {
+        let r = undefined;
+        Str.check(value);
+        const node = this.parseOne(html);
+        
+        if(node != null)
+        {
+            const find = Ele.scopedQuery(node,value);
+            
+            if(find != null)
+            r = Ele.getHtml(find);
+        }
+        
+        return r;
+    },
+    
+    
     // doc
     // prend une string html
     // retourne un objet avec les différents éléments d'un document décortiqués

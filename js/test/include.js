@@ -257,10 +257,11 @@ Test.Include = function()
         assert(Dom.htmlStr(htmlNode) === Dom.htmlStr([htmlNode]));
         assert(Arr.is(Dom.parse(htmlStr)));
         assert(Ele.is(Dom.parseOne(htmlStr)));
+        assert(Dom.querySelector("div[data-success]",htmlStr) === '<span>JavaScript: </span><span>Idle</span>');
         assert(Obj.length(Dom.doc(htmlStr)) === 11);
         assert(Dom.selectorInput() === "input,select,textarea,button[type='submit']");
         assert(Dom.selectorInput(true) === "input,select,textarea,button");
-
+        
         // ele
         assert(Ele.hasData(divNode,'what') === false);
         assert(Ele.getData(divNode,'what') === undefined);
@@ -311,8 +312,9 @@ Test.Include = function()
         assert(Ele.getProp(divNode,'textContent') === 'test what');
         assert(Ele.getProp(divNode,'textContent') === 'test what');
         assert(!Ele.hasClass(divNode,'test'));
-        assert(Integer.round(Ele.getOffset(divNode).left) === 8);
-        assert(Pojo.length(Ele.getOffset(divNode)) === 2);
+        assert(Ele.getOffset(divNode).left === 8);
+        assert(Integer.round(Ele.getOffsetWin(divNode).left) === 8);
+        assert(Pojo.length(Ele.getOffsetWin(divNode)) === 2);
         Ele.setHandler(htmlNode,'what',function(value) { setData(this,'OK',value); return true; });
         assert(Ele.getData(htmlNode,'OK') == null);
         assert(!Ele.hasData(htmlNode,'test'));

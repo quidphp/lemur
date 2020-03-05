@@ -46,7 +46,12 @@ Component.AjaxBlock = function(option)
             return trigHdlr(this,'ajaxBlock:getStatusNode');
         },
         
+        parseContent: function(html) {
+            return html
+        },
+        
         setContent: function(html,isError) {
+            html = trigHdlr(this,'ajaxBlock:parseContent',html);
             const node = trigHdlr(this,'ajaxBlock:getContentNode');
             setHtml(node,html);
         },

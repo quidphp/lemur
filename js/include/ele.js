@@ -296,11 +296,25 @@ const EleTarget = {
     
     
     // getOffset
-    // retourne un objet avec les données pour le offset de la node
+    // retourne un objet avec les données pour le offset de la node (par rapport à son parent scrollable)
     getOffset: function(node)
+    {
+        this.check(node);
+        
+        return {
+            top: node.offsetTop,
+            left: node.offsetLeft
+        };
+    },
+    
+    
+    // getOffsetWin
+    // retourne un objet avec les données pour le offset de la node (par rapport à la fenêtre)
+    getOffsetWin: function(node)
     {
         const rect = this.getBoundingRect(node);
         const scroll = Win.getScroll();
+        
         return {
             top: rect.top + scroll.top,
             left: rect.left + scroll.left
