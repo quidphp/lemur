@@ -28,7 +28,8 @@ class JsonArray extends Core\Col\JsonAlias
         'cell'=>Lemur\Cell\JsonArray::class,
         'preValidate'=>'array',
         'onComplex'=>true,
-        'tag'=>'inputText'
+        'tag'=>'inputText',
+        'clean'=>true
     ];
 
 
@@ -36,7 +37,9 @@ class JsonArray extends Core\Col\JsonAlias
     // arrange le tableau pour les méthode onGet et onSet
     protected function prepare(array $return)
     {
+        if($this->getAttr('clean'))
         $return = Base\Arr::clean($return);
+
         $return = array_values($return);
 
         if(empty($return))

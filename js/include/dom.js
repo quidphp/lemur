@@ -116,14 +116,17 @@ const Dom = Lemur.Dom = {
     {
         let r = undefined;
         Str.check(value);
-        const node = this.parseOne(html);
+        const nodes = this.parse(html);
         
-        if(node != null)
+        if(Arr.isNotEmpty(nodes))
         {
-            const find = Ele.scopedQuery(node,value);
+            const finds = Ele.mergedQsa(nodes,value);
             
-            if(find != null)
-            r = Ele.getHtml(find);
+            if(Arr.isNotEmpty(finds))
+            {
+                const find = Arr.valueFirst(finds);
+                r = Ele.getHtml(find);
+            }
         }
         
         return r;
