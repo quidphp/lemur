@@ -27,6 +27,24 @@ Component.Scroller = function(option)
     // handler
     setHdlrs(this,'scroller:',{
         
+        isScrolling: function() {
+            return getData(this,'scroller-scrolling') === true;
+        },
+        
+        shouldScroll: function(scrollTo) {
+            let r = false;
+            Pojo.check(scrollTo);
+            const current = trigHdlr(this,'scroller:getCurrentScroll');
+            
+            if(Pojo.keyExists("left",scrollTo) && Integer.cast(scrollTo.left) !== Integer.cast(current.left))
+            r = true;
+            
+            else if(Pojo.keyExists("top",scrollTo) && Integer.cast(scrollTo.top) !== Integer.cast(current.top))
+            r = true;
+            
+            return r;
+        },
+        
         getScroller: function() {
             let r = this;
             
@@ -56,6 +74,7 @@ Component.Scroller = function(option)
         },
         
         go: function(top,left,smooth) {
+            let r = null;
             const $this = this;
             top = (Num.is(top))? Integer.cast(top):null;
             left = (Num.is(left))? Integer.cast(left):null;
@@ -64,21 +83,33 @@ Component.Scroller = function(option)
             
             if(scrollTo != null)
             {
-                scroller.scroll(scrollTo);
+                const shouldScroll = trigHdlr(this,'scroller:shouldScroll',scrollTo);
                 
-                return new Promise(function(resolve) {
-                    const handler = ael($this,'scroll:stop',function() {
-                        rel($this,handler);
-                        resolve();
+                if(shouldScroll === true)
+                {
+                    setData(this,'scroller-scrolling',true);
+                    scroller.scroll(scrollTo);
+                    
+                    const promise = new Promise(function(resolve) {
+                        const handler = aelOnce($this,'scroll:stop',function() {
+                            rel($this,handler);
+                            resolve();
+                        });
                     });
-                });
+                    r = promise.then(function() {
+                        setData($this,'scroller-scrolling',false);
+                    });
+                }
             }
+            
+            return r;
         },
         
         goSmooth: function(top,left) {
             return trigHdlr(this,'scroller:go',top,left,true);
         }
     });
+    
     
     // getScrollTo
     const getScrollTo = function(top,left,smooth)
@@ -126,7 +157,7 @@ Component.Scroller = function(option)
             {
                 Arr.each(targets,function() {
                     let keep = false;
-                    const offset = Ele.getOffsetWin(this).top;
+                    const offset = Ele.getOffsetDoc(this).top;
                     const height = Ele.getDimension(this).height;
                     
                     if(scrollTop >= (offset - windowHeightRatio))

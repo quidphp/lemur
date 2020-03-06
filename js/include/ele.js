@@ -308,9 +308,9 @@ const EleTarget = {
     },
     
     
-    // getOffsetWin
-    // retourne un objet avec les données pour le offset de la node (par rapport à la fenêtre)
-    getOffsetWin: function(node)
+    // getOffsetDoc
+    // retourne un objet avec les données pour le offset de la node (par rapport au document)
+    getOffsetDoc: function(node)
     {
         const rect = this.getBoundingRect(node);
         const scroll = Win.getScroll();

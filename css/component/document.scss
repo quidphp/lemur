@@ -257,6 +257,10 @@
     textarea {
         @include inbl();
         font-weight: inherit;
+        
+        &[data-controlled='1'] {
+            display: none;
+        }
     }
     input[type='text'],
     input[type='password'],

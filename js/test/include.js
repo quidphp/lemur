@@ -313,8 +313,8 @@ Test.Include = function()
         assert(Ele.getProp(divNode,'textContent') === 'test what');
         assert(!Ele.hasClass(divNode,'test'));
         assert(Ele.getOffset(divNode).left === 8);
-        assert(Integer.round(Ele.getOffsetWin(divNode).left) === 8);
-        assert(Pojo.length(Ele.getOffsetWin(divNode)) === 2);
+        assert(Integer.round(Ele.getOffsetDoc(divNode).left) === 8);
+        assert(Pojo.length(Ele.getOffsetDoc(divNode)) === 2);
         Ele.setHandler(htmlNode,'what',function(value) { setData(this,'OK',value); return true; });
         assert(Ele.getData(htmlNode,'OK') == null);
         assert(!Ele.hasData(htmlNode,'test'));
