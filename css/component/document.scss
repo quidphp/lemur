@@ -257,7 +257,7 @@
     textarea {
         @include inbl();
         font-weight: inherit;
-        
+
         &[data-controlled='1'] {
             display: none;
         }
