@@ -130,6 +130,14 @@ Test.Include = function()
         }).length === 1);
         assert(Arr.isEqual(Arr.replace([1,2,2],[4,5],[0]),[0,5,2]));
         assert(Arr.isEqual(Arr.clean([null,undefined,0,'0',[],{},false,true,'',1]),[0,'0',false,true,1]));
+        assert(Arr.timeouts([1,2,3],2000,2000,function() {
+            assert(Integer.is(this));
+        }));
+        assert(Arr.oddEven([1,2,3],function() {
+            assert(this !== 2);
+        },function() {
+            assert(this === 2);
+        }));
         
         // arrLike
         assert(!ArrLike.is([]));
@@ -294,7 +302,7 @@ Test.Include = function()
         assert(Num.is(Ele.getDimension(htmlNode).height));
         assert(Integer.round(Ele.getDimension(contentBox).width) > 40);
         assert(Ele.getDimension(borderBox).width === 25);
-        assert(Pojo.length(Ele.getScroll(htmlNode)) === 2);
+        assert(Pojo.length(Ele.getScroll(htmlNode)) === 4);
         assert(Pojo.is(Ele.attr(htmlNode)));
         assert(Ele.hasAttr(htmlNode,'data-error'));
         assert(!Ele.hasAttr(htmlNode,'data-errorz'));
@@ -312,8 +320,10 @@ Test.Include = function()
         assert(Ele.getProp(divNode,'textContent') === 'test what');
         assert(Ele.getProp(divNode,'textContent') === 'test what');
         assert(!Ele.hasClass(divNode,'test'));
-        assert(Ele.getOffset(divNode).left === 8);
+        assert(Pojo.length(Ele.getOffset(divNode)) === 3);
+        assert(Ele.getOffsetParent(divNode).left === 8);
         assert(Integer.round(Ele.getOffsetDoc(divNode).left) === 8);
+        assert(Integer.round(Ele.getOffsetWin(divNode).left) === 8);
         assert(Pojo.length(Ele.getOffsetDoc(divNode)) === 2);
         Ele.setHandler(htmlNode,'what',function(value) { setData(this,'OK',value); return true; });
         assert(Ele.getData(htmlNode,'OK') == null);
@@ -418,6 +428,9 @@ Test.Include = function()
         assert(Pojo.isEqual(Ele.getDimension(hiddenNode,'block'),Ele.getDimension(hiddenNode,true)));
         assert(Ele.getDimension(hiddenNode,'inline').width < Ele.getDimension(hiddenNode,true).width);
         assert(Ele.getDimension(hiddenNode).width === 0);
+        assert(Ele.oddEven(hiddenNode,function() {
+            assert(this === hiddenNode);
+        }));
         
         // evt
         assert(Evt.nameFromType('ok') === 'event');
@@ -609,7 +622,8 @@ Test.Include = function()
         assert(Obj.unset('test',objGetSet) !== objGetSet);
         assert(Obj.str({str: 2, what: 'ok', loop: [1,2], meh: { what: 2 }}) === 'str=2 what=ok loop=[1,2] meh={"what":2}');
         assert(Obj.str({str: 2, what: 'ok', loop: [1,2], meh: { what: 2 }},'!') === 'str!2 what!ok loop![1,2] meh!{"what":2}');
-        assert(Obj.str({str: 2, what: 'ok', loop: [1,2], meh: { what: 2 }},'=',true) === "str='2' what='ok' loop='[1,2]' meh='{\"what\":2}'");
+        assert(Obj.str({str: 2, what: 'ok', loop: [1,2], meh: { what: 2 }},'=',' ',true) === "str='2' what='ok' loop='[1,2]' meh='{\"what\":2}'");
+        assert(Obj.str({str: 2, what: 'ok', loop: [1,2], meh: { what: 2 }},'=',true,true) === "str='2' what='ok' loop='[1,2]' meh='{\"what\":2}'");
         let objCopy = { test: 3};
         assert(Obj.copy(objCopy) !== objCopy);
         assert(Obj.isEqual(Obj.new(),{}));
@@ -967,7 +981,7 @@ Test.Include = function()
         assert(Win.hasHistoryApi());
         assert(Win.is(window));
         assert(!Win.is(document));
-        assert(Pojo.length(Win.getScroll()) === 2);
+        assert(Pojo.length(Win.getScroll()) === 4);
         assert(Win.getDimension().width > 0);
         assert(Win.getDimension().height > 0);
         assert(Win.are([window,window]));

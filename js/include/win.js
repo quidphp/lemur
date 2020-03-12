@@ -33,13 +33,13 @@ const WinTarget = {
     
     
     // getScroll
-    // retourne le scroll de la window
+    // retourne le scroll de la window, retourne aussi les dimensions
     getScroll: function()
     {
-        return {
+        return Pojo.replace({
             top: window.pageYOffset,
-            left: window.pageXOffset
-        }
+            left: window.pageXOffset,
+        },Doc.getDimension(document));
     },
     
     

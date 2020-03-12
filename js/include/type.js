@@ -78,10 +78,10 @@ const Type = {
 }
 
 // arr
-const Arr = Lemur.Arr = Factory(Type,ObjBase,ObjKeyValue,ObjEach,ObjCopyFilterMap,ObjWrite,ObjWriteSelf,ArrBase,ArrWriteSelf);
+const Arr = Lemur.Arr = Factory(Type,ObjBase,ObjKeyValue,ObjEach,ObjCopyFilterMap,ObjWrite,ObjWriteSelf,ArrBase,ArrWriteSelf,ArrLoop);
 
 // arrLike
-const ArrLike = Lemur.ArrLike = Factory(Type,ObjBase,ObjKeyValue,ObjEach,ObjCopyFilterMap,ArrBase,ArrLikeRead);
+const ArrLike = Lemur.ArrLike = Factory(Type,ObjBase,ObjKeyValue,ObjEach,ObjCopyFilterMap,ArrBase,ArrLikeRead,ArrLoop);
 
 // bool
 const Bool = Lemur.Bool = Factory(Type,BoolPrimitive);

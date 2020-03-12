@@ -210,3 +210,43 @@ const ArrWriteSelf = {
         return r;
     }
 }
+
+// arrLoop
+// fonctions relatives à certains loops spéciaux
+const ArrLoop = {
+    
+    // timeouts
+    // permet de lancer un callback sur chaque element du tableau avec timeout différent (selon index)
+    timeouts: function(array,timeout,indexTimeout,callback) 
+    {
+        Integer.check(timeout);
+        Integer.check(indexTimeout);
+        Func.check(callback);
+        
+        return this.each(array, function(value, index) {
+            const funcTimeout = timeout + (index * indexTimeout);
+            Func.timeout(funcTimeout,callback,this);
+        });
+    },
+    
+    
+    // oddEven
+    // permet d'appeler une méthode de callback différents selon si l'élément est odd ou even
+    oddEven: function(array,funcOdd,funcEven) 
+    {
+        Func.checks([funcOdd,funcEven],false);
+        
+        return this.each(array, function(value,index) {
+            const key = index + 1;
+            
+            if(Num.isOdd(key))
+            {
+                if(funcOdd != null)
+                funcOdd.call(this,index)
+            }
+            
+            else if(funcEven != null)
+            funcEven.call(this,index);
+        });
+    }
+}

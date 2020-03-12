@@ -41,7 +41,7 @@
 @mixin rowsCheckerToggleAll() {
     .close {
         @include abs(-8px, -8px);
-        z-index: 5;
+        z-index: 4;
     }
 
     .cell-inner {

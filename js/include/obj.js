@@ -154,12 +154,13 @@ const ObjKeyValue = {
     
     // str
     // permet de convertir un objet en string
-    // possible de spécifier un séparateur et s'il faut quote les valeurs
-    str: function(obj,separator,quote) 
+    // possible de spécifier deux séparateurs et s'il faut quote les valeurs
+    str: function(obj,separator,separator2,quote) 
     {
         let r = '';
         const $inst = this;
-        separator = (Str.isNotEmpty(separator))? separator:'=';
+        separator = (Str.is(separator))? separator:'=';
+        separator2 = (Str.is(separator2))? separator2:' ';
         
         this.each(obj,function(value,key) {
             if(Str.isNotEmpty(key))
@@ -174,7 +175,7 @@ const ObjKeyValue = {
                 value = Str.quote(value,false);
                 
                 if(r.length)
-                r += ' ';
+                r += separator2;
                 
                 r += key;
                 r += separator;

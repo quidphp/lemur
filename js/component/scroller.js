@@ -31,46 +31,46 @@ Component.Scroller = function(option)
             return getData(this,'scroller-scrolling') === true;
         },
         
+        isWindow: function() {
+            return trigHdlr(this,'scrollChange:getScroller') === window;
+        },
+        
         shouldScroll: function(scrollTo) {
             let r = false;
             Pojo.check(scrollTo);
             const current = trigHdlr(this,'scroller:getCurrentScroll');
+            const left = Integer.cast(scrollTo.left);
+            const top = Integer.cast(scrollTo.top);
             
-            if(Pojo.keyExists("left",scrollTo) && Integer.cast(scrollTo.left) !== Integer.cast(current.left))
+            if(Pojo.keyExists("left",scrollTo) && left >= 0 && left !== Integer.cast(current.left) && left <= current.width)
             r = true;
             
-            else if(Pojo.keyExists("top",scrollTo) && Integer.cast(scrollTo.top) !== Integer.cast(current.top))
+            else if(Pojo.keyExists("top",scrollTo) && top >= 0 && top !== Integer.cast(current.top) && top <= current.height)
             r = true;
-            
-            return r;
-        },
-        
-        getScroller: function() {
-            let r = this;
-            
-            if(Target.is($option.scroller))
-            r = $option.scroller;
-            
-            else if(Str.isNotEmpty($option.scroller))
-            r = qs(this,$option.scroller);
             
             return r;
         },
         
         getCurrentScroll: function()
         {
-            const scroller = trigHdlr(this,'scroller:getScroller');
+            const scroller = trigHdlr(this,'scrollChange:getScroller');
             return (scroller === window)? Win.getScroll():Ele.getScroll(scroller);
         },
         
         getCurrentDimension: function()
         {
-            const scroller = trigHdlr(this,'scroller:getScroller');
+            const scroller = trigHdlr(this,'scrollChange:getScroller');
             return (scroller === window)? Doc.getDimension(document):Ele.getDimension(scroller);
         },
         
-        getCurrentTarget: function(targets,debug) {
-            return getCurrentTarget.call(this,targets,debug);
+        getCurrentVerticalTarget: function(targets,offsetType) {
+            if(offsetType == null)
+            {
+                const isWindow = trigHdlr(this,'scroller:isWindow');
+                offsetType = (isWindow === true)? 'doc':'parent';
+            }
+            
+            return getCurrentVerticalTarget.call(this,targets,offsetType);
         },
         
         go: function(top,left,smooth) {
@@ -78,7 +78,7 @@ Component.Scroller = function(option)
             const $this = this;
             top = (Num.is(top))? Integer.cast(top):null;
             left = (Num.is(left))? Integer.cast(left):null;
-            const scroller = trigHdlr(this,'scroller:getScroller');
+            const scroller = trigHdlr(this,'scrollChange:getScroller');
             const scrollTo = getScrollTo(top,left,smooth);
             
             if(scrollTo != null)
@@ -134,19 +134,21 @@ Component.Scroller = function(option)
     }
     
     
-    // getCurrentTarget
-    const getCurrentTarget = function(targets,debug)
+    // getCurrentVerticalTarget
+    const getCurrentVerticalTarget = function(targets,offsetType)
     {
         let r = null;
         Ele.checks(targets);
+        Str.check(offsetType);
+        
         const winDimension = Win.getDimension();
         const currentScroll = trigHdlr(this,'scroller:getCurrentScroll');
         const currentDimension = trigHdlr(this,'scroller:getCurrentDimension');
-        
+        const offsetFunc = (offsetType === 'doc')? 'getOffsetDoc':'getOffsetParent';        
         const windowHeight = winDimension.height;
         const windowHeightRatio = (windowHeight / 2);
         const scrollTop = currentScroll.top;
-        const documentHeight = currentDimension.height;
+        const parentHeight = currentDimension.height;
         
         if(Arr.isNotEmpty(targets))
         {
@@ -157,12 +159,15 @@ Component.Scroller = function(option)
             {
                 Arr.each(targets,function() {
                     let keep = false;
-                    const offset = Ele.getOffsetDoc(this).top;
-                    const height = Ele.getDimension(this).height;
+                    const offset = Ele[offsetFunc](this);
+                    const dimension = Ele.getDimension(this);
                     
-                    if(scrollTop >= (offset - windowHeightRatio))
+                    const offsetTop = offset.top;
+                    const height = dimension.height;
+                    
+                    if(scrollTop >= (offsetTop - windowHeightRatio))
                     {
-                        if(scrollTop < ((offset + height) - windowHeightRatio))
+                        if(scrollTop < ((offsetTop + height) - windowHeightRatio))
                         keep = true;
                     }
                     
@@ -174,7 +179,7 @@ Component.Scroller = function(option)
                 });
             }
             
-            if(r == null && scrollTop >= (documentHeight - windowHeight))
+            if(r == null && scrollTop >= (parentHeight - windowHeight))
             r = Arr.valueLast(targets);
         }
         

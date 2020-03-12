@@ -11,7 +11,7 @@
 @mixin colsSorter() {
     .close {
         @include abs(-8px, -8px);
-        z-index: 5;
+        z-index: 4;
     }
 
     &[data-active='1'] .cell-inner .trigger,
@@ -21,7 +21,7 @@
     }
 
     &[data-active='1'] .cell-inner > .trigger {
-        z-index: 3;
+        z-index: 4;
     }
 
     .cell-inner {

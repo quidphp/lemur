@@ -127,15 +127,16 @@ const SelectorTarget = {
     
     // filter
     // permet de filtrer les nodes d'un tableau qui match le pattern
+    // possible aussi de donner une fonction pour que ce soit le même comportement que arr filter
     filter: function(nodes,value)
     {
         nodes = this.wrap(nodes,false);
-        Str.check(value);
         const $inst = this;
-        
-        return Arr.filter(nodes,function() {
+        const func = (Func.is(value))? value:function() {
             return $inst.match(this,value);
-        });
+        };
+        
+        return Arr.filter(nodes,func);
     },
     
     

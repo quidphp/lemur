@@ -28,8 +28,23 @@ Component.ScrollChange = function(option)
     let handlerStop;
     
     
+    // handler
+    setHdlr(this,'scrollChange:getScroller',function() {
+        let r = this;
+        
+        if(Target.is($option.scroller))
+        r = $option.scroller;
+        
+        else if(Str.isNotEmpty($option.scroller))
+        r = qs(this,$option.scroller);
+        
+        return Target.check(r);
+    });
+    const scroller = Arr.valueFirst(trigHdlrs(this,'scrollChange:getScroller'));
+    
+    
     // event
-    const handler = listener($option.scroller,'scroll',function(event) {
+    const handler = listener(scroller,'scroll',function(event) {
         trigEvt($nodes,'scroll:change',event);
     });
     
@@ -47,10 +62,10 @@ Component.ScrollChange = function(option)
     if($option.persistent !== true)
     {
         const teardown = function() {
-            rel($option.scroller,handler);
+            rel(scroller,handler);
             
             if(handlerStop)
-            rel($option.scroller,handlerStop);
+            rel(scroller,handlerStop);
         };
         
         aelOnce(document,'doc:unmountPage',teardown);

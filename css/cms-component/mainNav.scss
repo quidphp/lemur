@@ -63,7 +63,7 @@
             > .specific-add {
                 @include abs(50%, 10px);
                 margin-top: -8px;
-                z-index: 3;
+                z-index: 4;
 
                 &:hover {
                     opacity: 0.6;

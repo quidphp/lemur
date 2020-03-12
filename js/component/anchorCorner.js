@@ -19,8 +19,8 @@ Component.AnchorCorner = function()
     
     // handler
     setHdlr(this,'anchorCorner:refresh',function() {
-        const offset = offsetCorner.call(this);
-        setAttr(this,'data-anchor-corner',offset.corner);
+        const corner = offsetCorner.call(this);
+        setAttr(this,'data-anchor-corner',corner);
     });
     
     
@@ -44,15 +44,13 @@ Component.AnchorCorner = function()
     // offsetCorner
     const offsetCorner = function()
     {
-        let r = Ele.getOffsetDoc(this);
-        const scroll = Win.getScroll();
+        let r = null;
+        const offset = Ele.getOffsetWin(this);
         const dimension = Win.getDimension();
-        r.y = r.top - scroll.top;
-        r.x = r.left - scroll.left;
+        const topBottom = (offset.top > (dimension.height / 2))? 'bottom':'top';
+        const leftRight = (offset.left > (dimension.width / 2))? 'right':'left';
         
-        r.topBottom = (r.y > (dimension.height / 2))? 'bottom':'top';
-        r.leftRight = (r.x > (dimension.width / 2))? 'right':'left';
-        r.corner = r.topBottom+"-"+r.leftRight;
+        r = topBottom+"-"+leftRight;
         
         return r;
     }

@@ -58,9 +58,13 @@ const EleTarget = {
         {
             const tag = this.tag(node);
             const tags = ['input','textarea','select','a','button'];
+            const dimension = this.getDimension(node);
             
-            if(this.match(node,'[tabindex]') || (Arr.in(tag,tags) && this.getDimension(node).height > 0))
-            r = true;
+            if(this.match(node,'[tabindex]') || Arr.in(tag,tags))
+            {
+                if(dimension.width > 0 && dimension.height > 0)
+                r = true;
+            }
         }
         
         return r;
@@ -174,7 +178,7 @@ const EleTarget = {
         const attr = this.attr(node,start);
         
         if(attr != null)
-        r = Obj.str(attr,'=',true);
+        r = Obj.str(attr,'=',' ',true);
         
         return r;
     },
@@ -233,8 +237,8 @@ const EleTarget = {
     {
         this.check(node);
         display = (display === true)? 'block':display;
-        let currentDisplay, currentWidth, currentHeight;
         const displayToggle = Str.isNotEmpty(display);
+        let currentDisplay, currentWidth, currentHeight;
         
         if(displayToggle)
         {
@@ -273,6 +277,7 @@ const EleTarget = {
     
     // getScroll
     // retourne un object avec les données pour le scroll
+    // retourne aussi les dimensions
     getScroll: function(node)
     {
         let r = null;
@@ -287,7 +292,9 @@ const EleTarget = {
         {
             r = {
                 top: node.scrollTop,
-                left: node.scrollLeft
+                left: node.scrollLeft,
+                width: node.scrollWidth,
+                height: node.scrollHeight
             };
         }
         
@@ -296,8 +303,20 @@ const EleTarget = {
     
     
     // getOffset
+    // retourne tous les offsets de la node (par rapport au parent, au document et à la window)
+    getOffset: function(node) 
+    {
+        return {
+            parent: this.getOffsetParent(node),
+            doc: this.getOffsetDoc(node),
+            win: this.getOffsetWin(node)
+        }
+    },
+    
+    
+    // getOffsetParent
     // retourne un objet avec les données pour le offset de la node (par rapport à son parent scrollable)
-    getOffset: function(node)
+    getOffsetParent: function(node)
     {
         this.check(node);
         
@@ -318,6 +337,19 @@ const EleTarget = {
         return {
             top: rect.top + scroll.top,
             left: rect.left + scroll.left
+        };
+    },
+    
+    
+    // getOffsetWin
+    // retourne un objet avec les données pour le offset de la node (par rapport à la window)
+    getOffsetWin: function(node)
+    {
+        const rect = this.getBoundingRect(node);
+        
+        return {
+            top: rect.top,
+            left: rect.left
         };
     },
     

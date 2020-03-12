@@ -56,7 +56,7 @@ Component.FakeSelect = function()
                 r += " data-value='"+val+"'";
                 
                 if(Str.isNotEmpty(datas))
-                r += ' '+Obj.str(datas,'=',true);
+                r += ' '+Obj.str(datas,'=',' ',true);
             }
             
             r += ">";

@@ -11,12 +11,12 @@
 @mixin com() {
     @include fixed(null, 15px, 10px);
     width: 35%;
-    z-index: 1;
+    z-index: 2;
     font-size: 110%;
 
     .close {
         @include abs(10px, 15px);
-        z-index: 3;
+        z-index: 4;
 
         &:hover {
             opacity: 0.8;

@@ -32,7 +32,7 @@
     }
 }
 body > .background {
-    @include Background(2, 0.1);
+    @include Background(3, 0.1);
 
     &[data-from='modal'] {
         background-color: rgba(0, 0, 0, 0.4);

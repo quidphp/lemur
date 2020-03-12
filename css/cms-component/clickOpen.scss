@@ -40,7 +40,7 @@
     }
 
     &[data-absolute-placeholder='ready'][data-active='1'] .popup-title {
-        z-index: 3;
+        z-index: 4;
         @include abs(0, null, null, 0);
         white-space: nowrap;
     }
