@@ -83,7 +83,7 @@ Component.InputFiles = function()
             value.action = getAttr(this,'data-action');
             const text = getAttr(this,'data-text');
             
-            setAttr(block,'data-action',1);
+            toggleAttr(block,'data-action',true);
             setHtml(actionText,text);
             
             trigHdlr(hidden,'input:enable');
@@ -104,7 +104,7 @@ Component.InputFiles = function()
             const value = trigHdlr(hidden,'input:getValueJson');
             value.action = null;
             
-            setAttr(block,'data-action',0);
+            toggleAttr(block,'data-action',false);
             setHtml(actionText,null);
             
             trigHdlr(hidden,'input:disable');

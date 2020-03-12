@@ -53,7 +53,7 @@ Component.EnumSet = function(option)
         
         getRadioCheckbox: function() {
             const choices = trigHdlr(this,'enumSet:getChoices');
-            return Nod.mergedQsa(choices,"input[type='checkbox'],input[type='radio']");
+            return Ele.mergedQsa(choices,"input[type='checkbox'],input[type='radio']");
         },
         
         getCheckedSet: function() {
@@ -79,7 +79,7 @@ Component.EnumSet = function(option)
         isChoiceIn: function(value) {
             const radioCheckbox = trigHdlr(this,'enumSet:getRadioCheckbox');
             const find = Arr.find(radioCheckbox,function() {
-                return Nod.match(this,"[value='"+value+"']")
+                return Ele.match(this,"[value='"+value+"']")
             });
             
             return find != null;
@@ -170,7 +170,7 @@ Component.EnumSet = function(option)
             // delegate
             aelDelegate(current,'click', "input[type='radio']",function(event) {
                 setProp(this,'checked',false);
-                const parent = Nod.closest(this,".choice");
+                const parent = Ele.closest(this,".choice");
                 Ele.remove(parent);
             });
         }
@@ -181,9 +181,9 @@ Component.EnumSet = function(option)
             trigSetup(Component.Sorter.call(current,$option.sorter));
             
             aelDelegate(current,'change', "input[type='checkbox']",function(event) {
-                if(Nod.match(this,":checked") === false)
+                if(Ele.match(this,":checked") === false)
                 {
-                    const parent = Nod.closest(this,".choice");
+                    const parent = Ele.closest(this,".choice");
                     Ele.remove(parent);
                 }
             });
@@ -210,7 +210,7 @@ Component.EnumSet = function(option)
             const button = trigHdlr(this,'enumSet:findResult',value);
             
             if(trigHdlr(this,'enumSet:isChoiceIn',value))
-            setAttr(button,'data-in',1);
+            toggleAttr(button,'data-in',true);
             
             else
             {
@@ -218,7 +218,7 @@ Component.EnumSet = function(option)
                 trigHdlr(this,'enumSet:emptyChoice');
                 
                 else if(trigHdlr(this,'enumSet:isSet'))
-                setAttr(button,'data-in',0);
+                toggleAttr(button,'data-in',false);
                 
                 Ele.append(current,html);
                 

@@ -73,7 +73,7 @@ Component.Com = function(option)
         const links = qsa(this,".row.insert > span,.row.update > span");
         
         ael(links,'click',function() {
-            const parent = Nod.parent(this);
+            const parent = Ele.parent(this);
             const table = getAttr(parent,'data-table');
             const primary = getAttr(parent,'data-primary');
             redirect.call($this,table,primary,event);

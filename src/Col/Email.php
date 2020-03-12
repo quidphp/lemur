@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Quid\Lemur\Col;
 use Quid\Base;
+use Quid\Base\Html;
 use Quid\Core;
 
 // email
@@ -40,7 +41,7 @@ class Email extends Core\Col\Email
             if(!empty($option['excerpt']))
             $title = Base\Str::excerpt($option['excerpt'],$return);
 
-            $return = Base\Html::a($return,$title);
+            $return = Html::a($return,$title);
         }
 
         return $return;

@@ -37,7 +37,8 @@ abstract class Boot extends Core\Boot
                 'to'=>'[publicJs]/component.js',
                 'from'=>[
                     0=>'[vendorFront]/js/import',
-                    1=>'[vendorFront]/js/component']]],
+                    1=>'[vendorFront]/js/component',
+                    2=>'[vendorLemur]/js/component']]],
 
         'compileJsOption'=>[
             'concatenator'=>[

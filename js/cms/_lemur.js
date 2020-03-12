@@ -180,9 +180,9 @@ ael(document,'route:home',function(event,node) {
     });
     
     ael(feedTogglers,'ajaxBlock:before',function() {
-        setAttr(feedTogglers,'data-selected',0);
+        toggleAttr(feedTogglers,'data-selected',false);
         trigEvt(feedBody,'ajaxBlock:unmountContent');
-        setAttr(this,'data-selected',1);
+        toggleAttr(this,'data-selected',true);
     });
     
     ael(feedTogglers,'ajaxBlock:success',function() {

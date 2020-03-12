@@ -63,7 +63,7 @@ Component.SpecificMulti = function(option)
             
             isActive: function() {
                 const checkbox = trigHdlr(this,'specificMulti:getCheckbox');
-                return Nod.match(checkbox,':checked');
+                return Ele.match(checkbox,':checked');
             },
             
             getCheckbox: function() {
@@ -77,7 +77,7 @@ Component.SpecificMulti = function(option)
             refresh: function() {
                 const isActive = trigHdlr(this,'specificMulti:isActive');
                 const component = trigHdlr(this,'specificMulti:getComponent');
-                setAttr(this,'data-disabled',(isActive === true)? 0:1);
+                toggleAttr(this,'data-disabled',(isActive === true)? false:true);
                 trigEvt(component,(isActive === true)? 'component:enable':'component:disable');
             }
         });

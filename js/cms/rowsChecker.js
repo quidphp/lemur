@@ -26,19 +26,19 @@ Component.RowsChecker = function()
         
         getToolsButton: function() {
             return Arr.filter(trigHdlr(this,'rowsChecker:getTools'),function() {
-                return Nod.match(this,'button');
+                return Ele.match(this,'button');
             });
         },
         
         getMultiModify: function() {
             return Arr.find(trigHdlr(this,'rowsChecker:getToolsButton'),function() {
-                return Nod.match(this,'.multi-modify');
+                return Ele.match(this,'.multi-modify');
             });
         },
         
         getMultiDelete: function() {
             return Arr.find(trigHdlr(this,'rowsChecker:getTools'),function() {
-                return Nod.match(this,".multi-delete-form");
+                return Ele.match(this,".multi-delete-form");
             }); 
         },
         
@@ -75,12 +75,12 @@ Component.RowsChecker = function()
         
         getCheckboxes: function() {
             const rows = trigHdlr(this,'rowsChecker:getRows');
-            return Nod.mergedQsa(rows,"td.rows input[type='checkbox']");
+            return Ele.mergedQsa(rows,"td.rows input[type='checkbox']");
         },
         
         getCheckedCheckboxes: function() {
             return Arr.filter(trigHdlr(this,'rowsChecker:getCheckboxes'),function() {
-                return Nod.match(this,':checked');
+                return Ele.match(this,':checked');
             });
         },
         
@@ -99,12 +99,12 @@ Component.RowsChecker = function()
         
         areAllUpdateable: function() {
             const rows = trigHdlr(this,'rowsChecker:getCheckedRows');
-            return Nod.matchAll(rows,"[data-updateable='1']");
+            return Ele.matchAll(rows,"[data-updateable='1']");
         },
         
         areAllDeleteable: function() {
             const rows = trigHdlr(this,'rowsChecker:getCheckedRows');
-            return Nod.matchAll(rows,"[data-deleteable='1']");
+            return Ele.matchAll(rows,"[data-deleteable='1']");
         },
         
         refresh: function() {
@@ -182,13 +182,13 @@ Component.RowsChecker = function()
         setHdlrs(checkboxes,'checkbox:',{
             
             getTr: function() {
-                return Nod.closest(this,"tr");
+                return Ele.closest(this,"tr");
             },
             
             check: function(refresh) {
                 const tr = trigHdlr(this,'checkbox:getTr');
                 setProp(this,'checked',true);
-                setAttr(tr,'data-checked',1);
+                toggleAttr(tr,'data-checked',true);
                 
                 if(refresh === true)
                 trigHdlr($this,'rowsChecker:refresh');
@@ -197,7 +197,7 @@ Component.RowsChecker = function()
             uncheck: function(refresh) {
                 const tr = trigHdlr(this,'checkbox:getTr');
                 setProp(this,'checked',false);
-                setAttr(tr,'data-checked',0);
+                toggleAttr(tr,'data-checked',false);
                 
                 if(refresh === true)
                 trigHdlr($this,'rowsChecker:refresh');
@@ -206,7 +206,7 @@ Component.RowsChecker = function()
         
         // event
         ael(checkboxes,'change',function() {
-            trigHdlr(this,(Nod.match(this,":checked"))? 'checkbox:check':'checkbox:uncheck',true);
+            trigHdlr(this,(Ele.match(this,":checked"))? 'checkbox:check':'checkbox:uncheck',true);
         });
     }
     
@@ -258,11 +258,11 @@ Component.RowsChecker = function()
         
         // handler
         setHdlr(tools,'toolMulti:show',function() {
-            setAttr(this,'data-visible',1);
+            toggleAttr(this,'data-visible',true);
         });
         
         setHdlr(tools,'toolMulti:hide',function() {
-            setAttr(this,'data-visible',0);
+            toggleAttr(this,'data-visible',false);
         });
     }
     

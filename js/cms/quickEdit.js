@@ -29,17 +29,17 @@ Component.QuickEdit = function()
         },
         
         getTdOthers: function() {
-            const nodes = Nod.wrap($nodes);
+            const nodes = Ele.wrap($nodes);
             return Arr.valueStrip(this,nodes);
         },
         
         getTd: function() {
-            return Nod.closest(this,"td");
+            return Ele.closest(this,"td");
         },
         
         getTdEditing: function() {
             const td = trigHdlr(this,'quickEdit:getTd');
-            return (Nod.match(td,"[data-editing='1']"))? td:null;
+            return (Ele.match(td,"[data-editing='1']"))? td:null;
         },
         
         getCellInner: function() {
@@ -55,7 +55,7 @@ Component.QuickEdit = function()
         },
         
         getScroller: function() {
-            return Nod.closest(this,".scroller");
+            return Ele.closest(this,".scroller");
         },
         
         revert: function() {
@@ -66,7 +66,7 @@ Component.QuickEdit = function()
                 const scroller = trigHdlr(this,'quickEdit:getScroller');
                 
                 trigHdlr(this,'ajaxBlock:unsetContent');
-                setAttr(td,'data-editing',0);
+                toggleAttr(td,'data-editing',false);
                 
                 trigHdlr(scroller,'scrollDrag:refresh');
             }
@@ -103,7 +103,7 @@ Component.QuickEdit = function()
             trigHdlrs(others,'quickEdit:revert');
             
             const td = trigHdlr(this,'quickEdit:getTd');
-            setAttr(td,'data-editing',1);
+            toggleAttr(td,'data-editing',true);
         }
     });
     
