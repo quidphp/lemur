@@ -32,7 +32,7 @@ class Polyfill extends Main\Service
     // retourne le javascript à lier en début de document
     final public function docOpenJs()
     {
-        return [0=>'js/vendor/polyfill/polyfill.js',1=>'js/vendor/polyfill/qsa-scope.js'];
+        return [0=>'js/polyfill/polyfill.js',1=>'js/polyfill/qsa-scope.js'];
     }
 }
 

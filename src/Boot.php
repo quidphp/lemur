@@ -20,8 +20,10 @@ abstract class Boot extends Core\Boot
     public static $config = [
         'types'=>['cms'], // ajout cms comme type
         'finderShortcut'=>[ // shortcut pour finder
+            'vendorFront'=>'[vendor]/quidphp/front',
             'vendorLemur'=>'[vendor]/quidphp/lemur'],
         'symlink'=>[
+            '[vendorFront]/polyfill'=>'[publicJs]/polyfill',
             '[vendorLemur]/vendor'=>'[publicJs]/vendor'],
         'roles'=>[
             'editor'=>[60]],
@@ -30,12 +32,12 @@ abstract class Boot extends Core\Boot
             'include'=>[
                 'to'=>'[publicJs]/include.js',
                 'from'=>[
-                    0=>'[vendorLemur]/js/include']],
+                    0=>'[vendorFront]/js/include']],
             'component'=>[
                 'to'=>'[publicJs]/component.js',
                 'from'=>[
-                    0=>'[vendorLemur]/js/import',
-                    1=>'[vendorLemur]/js/component']]],
+                    0=>'[vendorFront]/js/import',
+                    1=>'[vendorFront]/js/component']]],
 
         'compileJsOption'=>[
             'concatenator'=>[
@@ -47,8 +49,8 @@ abstract class Boot extends Core\Boot
                 'test'=>[
                     'to'=>'[publicJs]/test.js',
                     'from'=>[
-                        0=>'[vendorLemur]/js/import',
-                        1=>'[vendorLemur]/js/test']]]],
+                        0=>'[vendorFront]/js/import',
+                        1=>'[vendorFront]/js/test']]]],
 
         '@cms'=>[
             'service'=>[
@@ -64,26 +66,26 @@ abstract class Boot extends Core\Boot
                 'cms'=>[
                     'to'=>'[publicCss]/cms.css',
                     'from'=>[
-                        0=>'[vendorLemur]/css/include',
-                        1=>'[vendorLemur]/css/component',
+                        0=>'[vendorFront]/css/include',
+                        1=>'[vendorFront]/css/component',
                         2=>'[vendorLemur]/css/cms-component',
                         8=>'[vendorLemur]/css/cms']],
                 'icon'=>[
                     'to'=>'[publicCss]/cms-icon.css',
                     'from'=>[
-                        0=>'[vendorLemur]/css/include',
+                        0=>'[vendorFront]/css/include',
                         1=>'[vendorLemur]/css/cms-icon']],
                 'tinymce'=>[
                     'to'=>'[publicCss]/cms-tinymce.css',
                     'from'=>[
-                        0=>'[vendorLemur]/css/include',
+                        0=>'[vendorFront]/css/include',
                         2=>'[vendorLemur]/css/cms-tinymce']]],
 
             'compileJs'=>[
                 'cms'=>[
                     'to'=>'[publicJs]/cms.js',
                     'from'=>[
-                        0=>'[vendorLemur]/js/import',
+                        0=>'[vendorFront]/js/import',
                         1=>'[vendorLemur]/js/cms']]]]
     ];
 
