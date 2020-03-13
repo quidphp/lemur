@@ -115,7 +115,7 @@
         .table,
         .table-row,
         .table-cell {
-            @include responsiveBlock(true);
+            @include blockReset($important: true);
         }
 
         .table-cell {

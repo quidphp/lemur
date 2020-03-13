@@ -19,7 +19,7 @@ Component.TextareaExtra = function(option)
             trigger: ".trigger",
             target: ".popup",
             background: "tableRelation",
-            parseData: null
+            parse: null
         },
         tinymce: {}
     },option);

@@ -28,7 +28,7 @@ class Boot extends Base\Test
 
         // lang
         $lang = $boot->lang();
-        assert(count($lang->relation('contextType')) === 3);
+        assert(count($lang->relation('contextType')) >= 2);
         assert(!empty($lang->tableDescription('user')));
         assert(!empty($lang->colDescription('metaKeywords_en')));
         assert(!empty($lang->panelDescription('default')));

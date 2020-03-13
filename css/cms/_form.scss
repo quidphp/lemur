@@ -88,17 +88,13 @@
     border-radius: 5px;
     border: 1px solid $lightGray;
     height: auto;
-
-    &::-webkit-input-placeholder {
+    
+    &::placeholder {
         color: $darkGray;
     }
 
-    &::-moz-placeholder {
-        color: $darkGray;
-    }
-
-    &::-ms-input-placeholder {
-        olor: $darkGray;
+    &:-ms-input-placeholder {
+        color: $darkGray !important;
     }
 }
 
@@ -119,16 +115,12 @@
         color: $white !important;
         border: 1px solid $black;
 
-        &::-webkit-input-placeholder {
+        &::placeholder {
             color: $lightestGray;
         }
 
-        &::-moz-placeholder {
-            color: $lightestGray;
-        }
-
-        &::-ms-input-placeholder {
-            olor: $lightestGray;
+        &:-ms-input-placeholder {
+            color: $lightestGray !important;
         }
     }
 }

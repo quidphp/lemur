@@ -33,18 +33,18 @@
 }
 body > .background {
     @include Background(3, 0.1);
-
-    &[data-from='modal'] {
-        background-color: rgba(0, 0, 0, 0.4);
-    }
-
-    &[data-from='modal'],
-    &[data-from='clickOpen'],
-    &[data-from='searchAutoInfo'],
-    &[data-from='calendar'],
-    &[data-from='fakeselect'],
-    &[data-from='enumSet'],
-    &[data-from='tableRelation'] {
+}
+[data-background='modal'] body > .background {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+[data-background='modal'],
+[data-background='clickOpen'],
+[data-background='searchAutoInfo'],
+[data-background='calendar'],
+[data-background='fakeselect'],
+[data-background='enumSet'],
+[data-background='tableRelation'] {
+    body > .background {
         display: block;
         @include fadeIn(0.3s);
     }
@@ -305,7 +305,7 @@ main .inner > .top {
     }
 
     @include responsive() {
-        @include responsiveFlex(center);
+        @include flexCol(center);
 
         .title {
             justify-content: center;

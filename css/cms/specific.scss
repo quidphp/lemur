@@ -195,11 +195,11 @@
     }
 
     @include responsive() {
-        @include responsiveFlex(flex-start, flex-start);
+        @include flexCol(flex-start, flex-start);
 
         > .left,
         > .right {
-            @include responsiveSize();
+            @include sizeReset();
             width: 100%;
         }
 
@@ -242,7 +242,7 @@
         .left,
         .center,
         .right {
-            @include responsiveSize();
+            @include sizeReset();
 
             &.left {
                 display: none;
