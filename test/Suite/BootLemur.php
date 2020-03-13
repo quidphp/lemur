@@ -5,13 +5,11 @@ declare(strict_types=1);
  * This file is part of the QuidPHP package.
  * Author: Pierre-Philippe Emond <emondpph@gmail.com>
  * Website: https://quidphp.com
- * License: https://github.com/quidphp/site/blob/master/LICENSE
- * Readme: https://github.com/quidphp/site/blob/master/README.md
+ * License: https://github.com/quidphp/lemur/blob/master/LICENSE
+ * Readme: https://github.com/quidphp/lemur/blob/master/README.md
  */
 
 namespace Quid\Test\Suite {
-use Quid\Base;
-use Quid\Base\Html;
 use Quid\Lemur;
 use Quid\Test;
 
@@ -53,7 +51,6 @@ namespace Quid\Test\Suite\Assert {
 use Quid\Base;
 use Quid\Base\Html;
 use Quid\Lemur;
-use Quid\Main;
 
 \Quid\Main\Autoload::setClosure("Quid\Test\Suite\Assert",'Home',function() {
 
