@@ -135,7 +135,7 @@ td[data-quick-edit='1'][data-status='loading'] > .cell-inner > a.quick-edit {
 
 /* COMPONENT */
 body {
-    @include ClickOpen('.popup');
+    @include ClickOpen('.popup',5);
 
     .popup {
         @include popupCommon();
