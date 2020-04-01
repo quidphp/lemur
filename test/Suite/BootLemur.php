@@ -20,7 +20,7 @@ require dirname(__FILE__,4).'/core/test/Suite/BootCore.php';
 
 
 // bootLemur
-// class for booting the testsuite (with lemur)
+// class for booting the Quid\Lemur testsuite
 class BootLemur extends Test\Suite\BootCore
 {
     // config
