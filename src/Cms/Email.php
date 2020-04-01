@@ -15,7 +15,7 @@ use Quid\Core;
 use Quid\Lemur;
 
 // email
-// modal route to confirm the mailto link
+// class for the modal route to confirm the mailto link
 class Email extends Core\RouteAlias
 {
     // trait

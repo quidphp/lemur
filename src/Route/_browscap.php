@@ -13,7 +13,7 @@ namespace Quid\Lemur\Route;
 use Quid\Base\Html;
 
 // _browscap
-// trait that provides a method for generating text for the browser capabilities
+// trait with a method to generate text related to browser capabilities
 trait _browscap
 {
     // browscap

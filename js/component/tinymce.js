@@ -5,7 +5,7 @@
  */
  
 // tinymce
-// component to manage a tinymce wysiwyg input
+// component to manage a Tinymce wysiwyg input
 Component.Tinymce = function(option)
 {
     // not empty

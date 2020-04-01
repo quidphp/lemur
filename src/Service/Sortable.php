@@ -13,7 +13,7 @@ namespace Quid\Lemur\Service;
 use Quid\Main;
 
 // sortable
-// class to integrate sortable javascript library
+// class to integrate the sortable javascript library
 class Sortable extends Main\Service
 {
     // config

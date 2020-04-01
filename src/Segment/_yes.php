@@ -12,7 +12,7 @@ declare(strict_types=1);
 namespace Quid\Lemur\Segment;
 
 // _yes
-// trait that issues a method to deal with yes route segment (1)
+// trait that issues a method to deal with yes route segment
 trait _yes
 {
     // structureSegmentYes

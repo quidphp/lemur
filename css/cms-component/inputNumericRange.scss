@@ -7,7 +7,7 @@
  */
 
 // inputNumericRange
-// styles for the integerRange component
+// styles for the integerRange component of the CMS
 @mixin componentInputNumericRange($maxWidth: 120px) {
     @include InputNumericRange();
 

@@ -13,7 +13,7 @@ namespace Quid\Lemur\Cms;
 use Quid\Orm;
 
 // _colRelation
-// trait that provides methods related to a column relation route
+// trait that provides methods related to a column relation
 trait _colRelation
 {
     // trait

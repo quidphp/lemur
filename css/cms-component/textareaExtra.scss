@@ -7,7 +7,7 @@
  */
 
 // componentTextareaExtraSpecific
-// mixin pour un component textarea extra dans le formulaire
+// stylesheet for the textarea component of the CMS (with relation inserts)
 @mixin componentTextareaExtraSpecific() {
     .relations-container {
         @include flex(center, center, wrap);

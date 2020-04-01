@@ -14,7 +14,7 @@ use Quid\Base\Cli;
 use Quid\Core;
 
 // cliCompile
-// class for the cli route to compile assets (js and css)
+// class for a cli route to compile assets (js and css)
 class CliCompile extends Core\Route\CliCompile
 {
     // trait

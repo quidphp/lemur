@@ -14,7 +14,7 @@ use Quid\Core;
 use Quid\Lemur;
 
 // logHttp
-// class to represent a row of the logHttp table, with cms logic
+// class to represent a row of the logHttp table, with cms config
 class LogHttp extends Core\Row\LogHttp
 {
     // config

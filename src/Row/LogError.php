@@ -13,7 +13,7 @@ namespace Quid\Lemur\Row;
 use Quid\Core;
 
 // logError
-// class to represent a row of the logError table, with cms logic
+// class to represent a row of the logError table, with cms config
 class LogError extends Core\Row\LogError
 {
     // config

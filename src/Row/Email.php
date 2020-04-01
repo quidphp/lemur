@@ -14,7 +14,7 @@ use Quid\Core;
 use Quid\Lemur;
 
 // email
-// class to deal with a row of the email table, with cms logic
+// class to deal with a row of the email table, with cms config
 class Email extends Core\Row\Email
 {
     // config

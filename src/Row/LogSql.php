@@ -14,7 +14,7 @@ use Quid\Core;
 use Quid\Lemur;
 
 // logSql
-// class to represent a row of the logSql table, with cms logic
+// class to represent a row of the logSql table, with cms config
 class LogSql extends Core\Row\LogSql
 {
     // config

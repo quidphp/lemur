@@ -7,7 +7,7 @@
  */
 
 // com
-// stylesheet for the communication component
+// stylesheet for the communication component of the CMS
 @mixin com() {
     @include fixed(null, 15px, 10px);
     width: 35%;

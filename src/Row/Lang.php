@@ -14,7 +14,7 @@ use Quid\Core;
 use Quid\Lemur;
 
 // lang
-// class to work with a row of the lang table, with cms logic
+// class to work with a row of the lang table, with cms config
 class Lang extends Core\Row\Lang
 {
     // config

@@ -14,7 +14,7 @@ use Quid\Core;
 use Quid\Lemur;
 
 // log
-// class to represent a row of the log table, with cms logic
+// class to represent a row of the log table, with cms config
 class Log extends Core\Row\Log
 {
     // config

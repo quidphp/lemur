@@ -13,7 +13,7 @@ namespace Quid\Lemur\Service;
 use Quid\Main;
 
 // tinyMce
-// class that provides a method to integrate tinyMce WYSIWYG editor
+// class that provides a method to integrate the Tinymce WYSIWYG editor
 class TinyMce extends Main\Service
 {
     // config

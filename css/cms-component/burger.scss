@@ -7,7 +7,7 @@
  */
 
 // burger
-// stylesheet for the burger component
+// stylesheet for the burger component of the CMS
 @mixin burger() {
     @include abs(15px, null, null, 15px);
     @include transitions(background-color 0.3s);

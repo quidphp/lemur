@@ -14,7 +14,7 @@ use Quid\Core;
 use Quid\Lemur;
 
 // logCron
-// class to represent a row of the logCron table, with cms logic
+// class to represent a row of the logCron table, with cms config
 class LogCron extends Core\Row\LogCron
 {
     // config

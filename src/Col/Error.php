@@ -14,7 +14,7 @@ use Quid\Base;
 use Quid\Core;
 
 // error
-// extended class for a column that manages an error object as a value
+// extended class for a column that manages an error object
 class Error extends Core\Col\Error
 {
     // config

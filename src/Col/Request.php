@@ -14,7 +14,7 @@ use Quid\Base;
 use Quid\Core;
 
 // request
-// extended class for a column that manages a request object as a value
+// extended class for a column that manages a request object
 class Request extends Core\Col\Request
 {
     // config

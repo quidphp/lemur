@@ -13,6 +13,7 @@ namespace Quid\Lemur\Col;
 use Quid\Core;
 
 // media
+// extended class to work with a column containing a value which is a link to a file
 class Media extends Core\Col\Media
 {
     // config

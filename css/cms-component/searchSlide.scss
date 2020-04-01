@@ -7,7 +7,7 @@
  */
 
 // searchSlide
-// mixin for the searchSlide component
+// mixin for the searchSlide component of the CMS
 @mixin searchSlide() {
     > .form {
         @include flex();

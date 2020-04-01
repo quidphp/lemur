@@ -14,7 +14,7 @@ use Quid\Core;
 use Quid\Lemur;
 
 // activatePassword
-// abstract class for a route that activates a password that was previously reset
+// abstract class for a route to activate a password that was previously reset
 abstract class ActivatePassword extends Core\RouteAlias
 {
     // trait

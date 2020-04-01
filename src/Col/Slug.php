@@ -15,7 +15,7 @@ use Quid\Core;
 use Quid\Orm;
 
 // slug
-// class for a column dealing with URI slug
+// class for a column dealing with an URI slug
 class Slug extends Core\ColAlias
 {
     // config

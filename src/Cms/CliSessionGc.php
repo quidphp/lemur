@@ -13,7 +13,7 @@ namespace Quid\Lemur\Cms;
 use Quid\Core;
 
 // cliSessionGc
-// class for the cli route to remove expired sessions for the CMS
+// class for a cli route to remove expired sessions for the CMS
 class CliSessionGc extends Core\Route\CliSessionGc
 {
     // trait

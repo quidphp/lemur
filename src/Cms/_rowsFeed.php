@@ -15,7 +15,7 @@ use Quid\Base\Html;
 use Quid\Orm;
 
 // _rowsFeed
-// trait that grants methods related a rows feed with a load-more
+// trait that grants methods related to a rows feed (with a load-more)
 trait _rowsFeed
 {
     // rows

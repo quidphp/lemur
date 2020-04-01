@@ -14,7 +14,7 @@ use Quid\Base;
 use Quid\Base\Html;
 
 // _generalInput
-// trait that provides some methods for generating reusable general inputss
+// trait that provides some methods for generating reusable general inputs
 trait _generalInput
 {
     // makeCount

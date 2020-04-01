@@ -13,7 +13,7 @@ namespace Quid\Lemur\Row;
 use Quid\Core;
 
 // session
-// extended class for a row of the session table, with cms logic
+// extended class for a row of the session table, with cms config
 class Session extends Core\Row\Session
 {
     // config

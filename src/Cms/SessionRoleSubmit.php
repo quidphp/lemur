@@ -15,7 +15,7 @@ use Quid\Core;
 use Quid\Lemur;
 
 // sessionRoleSubmit
-// class for the route with the popup to apply a fake role to the current session
+// class for the route to submit and apply a fake role to the current session
 class SessionRoleSubmit extends Core\RouteAlias
 {
     // trait

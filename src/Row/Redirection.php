@@ -13,7 +13,7 @@ namespace Quid\Lemur\Row;
 use Quid\Core;
 
 // redirection
-// class to work with a row of the redirection table, with cms logic
+// class to work with a row of the redirection table, with cms config
 class Redirection extends Core\Row\Redirection
 {
     // config

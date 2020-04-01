@@ -14,7 +14,7 @@ use Quid\Core;
 use Quid\Orm;
 
 // _specificSlug
-// trait with methods to work with a specific resource represent by a URI slug
+// trait with methods to work with a specific resource represented by an URI slug
 trait _specificSlug
 {
     // canTrigger

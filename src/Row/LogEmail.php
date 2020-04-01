@@ -14,7 +14,7 @@ use Quid\Core;
 use Quid\Lemur;
 
 // logEmail
-// class to represent a row of the logEmail table, with cms logic
+// class to represent a row of the logEmail table, with cms config
 class LogEmail extends Core\Row\LogEmail
 {
     // config
