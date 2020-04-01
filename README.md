@@ -20,6 +20,7 @@ Once installed, the **Quid\Lemur** namespace will be available within your PHP a
 **QuidPHP/Lemur** requires the following:
 - PHP 7.3+
 - All other requirements specified in [quidphp/core](https://github.com/quidphp/core)
+- Minimal browser: Internet Explorer 11
 
 ## Dependency
 **QuidPHP/Lemur** has the following dependencies:
