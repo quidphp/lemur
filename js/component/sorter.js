@@ -5,7 +5,7 @@
  */
  
 // sorter
-// script with drag and drop related sorting functionnalities, uses Sortable
+// script with drag and drop related sorting functionnalities, uses SortableJs
 Component.Sorter = function(option) 
 {    
     // not empty
