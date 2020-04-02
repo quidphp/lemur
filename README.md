@@ -1,4 +1,9 @@
 # QuidPHP/Lemur
+[![Release](https://img.shields.io/github/v/release/quidphp/lemur)](https://packagist.org/packages/quidphp/lemur)
+[![License](https://img.shields.io/github/license/quidphp/lemur)](https://github.com/quidphp/lemur/blob/master/LICENSE)
+[![PHP Version](https://img.shields.io/packagist/php-v/quidphp/lemur)](https://www.php.net)
+[![Style CI](https://styleci.io/repos/206858806/shield)](https://styleci.io)
+[![Code Size](https://img.shields.io/github/languages/code-size/quidphp/lemur)](https://github.com/quidphp/lemur)
 
 ## About
 **QuidPHP/Lemur** contains the LemurCMS, a content management system built on top of the QuidPHP framework. It is part of the [QuidPHP](https://github.com/quidphp/project) package. 
