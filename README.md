@@ -269,7 +269,7 @@ All dependencies will be resolved by using the [Composer](https://getcomposer.or
     - [BootLemur](test/Suite/BootLemur.php) - Class for booting the Quid\Lemur testsuite
 - [Table](test/Table.php) - Class for testing Quid\Lemur\Table
 
-**QuidPHP/Lemur** testsuite can be run by creating a new [quidphp/project](https://github.com/quidphp/project).
+**QuidPHP/Lemur** PHP testsuite can be run by creating a new [quidphp/project](https://github.com/quidphp/project).
 
 ## JS
 
