@@ -665,6 +665,8 @@ class Route extends Base\Test
         assert($routes->withSegment()->count() > 5);
         assert($routes->withoutSegment()->count() > 5);
         assert($routes->allowed()->count() !== $routes->count());
+        $login::setType('assert');
+        $loginSubmit::setType('assert');
         assert($routes::makeBreadcrumbs('/',null,$login::make(),$loginSubmit::make()) === "<a href='/en/login' hreflang='en'>Login</a>/<a href='/en/login/submit' data-navigation='0' hreflang='en'>Login - Submit</a>");
         assert($routes::makeBreadcrumbs('/',5,$login::make(),$loginSubmit::make()) === "<a href='/en/login' hreflang='en'>Login</a>/<a href='/en/login/submit' data-navigation='0' hreflang='en'>Lo...</a>");
 
