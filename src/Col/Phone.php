@@ -20,7 +20,7 @@ class Phone extends Core\ColAlias
 {
     // config
     public static $config = [
-        'tag'=>'inputText',
+        'tag'=>'inputTel',
         'search'=>false,
         'validate'=>[1=>'phone'],
         'onComplex'=>true,

@@ -114,9 +114,7 @@ $red: #8d1e2d;
         }
     }
 
-    input[type='text'],
-    input[type='email'],
-    input[type='password'] {
+    @include inputs {
         width: 100%;
         max-width: 1000px;
     }

@@ -81,7 +81,7 @@ class Col extends Base\Test
         assert($date->valueComplex(mktime(0,0,0,8,8,1984)) === '08-08-1984');
 
         // formComplexAttr
-        assert(count($dateAdd->formAttr()) === 2);
+        assert(count($dateAdd->formAttr()) === 3);
         assert(count($dateAdd->formComplexAttr()) === 0);
 
         // formComplex
@@ -105,10 +105,10 @@ class Col extends Base\Test
         // getDataAttr
 
         // col
-        assert(count($col->attr()) === 68);
-        assert(strlen($date->formComplex()) === 260);
-        assert(strlen($date->formComplex('08-08-1984')) === 278);
-        assert(strlen($date->formComplex(mktime(0,0,0,8,8,1984))) === 278);
+        assert(count($col->attr()) === 69);
+        assert(strlen($date->formComplex()) === 280);
+        assert(strlen($date->formComplex('08-08-1984')) === 298);
+        assert(strlen($date->formComplex(mktime(0,0,0,8,8,1984))) === 298);
         assert($email->generalExcerptMin() === null);
         assert($jsonArray instanceof Lemur\Col\JsonArray);
         assert($jsonArray->required(null) === 'required');

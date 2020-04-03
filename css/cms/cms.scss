@@ -38,10 +38,7 @@ h3 {
 }
 
 /* FORM */
-input[type='text'],
-input[type='password'],
-input[type='email'],
-textarea {
+@include inputsTextarea {
     @include inputTextBase();
 }
 input[type='radio'],

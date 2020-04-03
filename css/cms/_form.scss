@@ -12,10 +12,7 @@
 // formBase
 // défini quelques styles par défaut pour les inputs de formulaire
 @mixin formBase() {
-    textarea,
-    input[type='text'],
-    input[type='email'],
-    input[type='password'] {
+    @include inputsTextarea {
         display: block;
         width: 100%;
     }

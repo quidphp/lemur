@@ -301,7 +301,7 @@ trait _relation
                 $placeholder = static::langText('common/filter')." ($size)";
 
                 $html .= Html::divOp('input-search');
-                $html .= Html::inputText(null,['name'=>true,'data-pattern'=>['minLength'=>$searchMinLength],'placeholder'=>$placeholder]);
+                $html .= Html::inputText(null,['name'=>true,'data-pattern'=>['minLength'=>$searchMinLength],'placeholder'=>$placeholder,'inputmode'=>'search']);
                 $html .= Html::button(null,['icon-solo','search']);
                 $html .= Html::divCl();
 

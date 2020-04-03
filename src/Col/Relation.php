@@ -207,7 +207,7 @@ abstract class Relation extends Core\Col\Relation
 
             $return .= Html::divOp(['data'=>['absolute-placeholder'=>true]]);
             $return .= Html::divOp('input');
-            $return .= Html::inputText(null,['placeholder'=>$placeholder,'name'=>true,'data'=>$data,'id'=>$id]);
+            $return .= Html::inputText(null,['placeholder'=>$placeholder,'name'=>true,'data'=>$data,'id'=>$id,'inputmode'=>'search']);
             if($option['button'] === true)
             $return .= Html::button(null,['icon-solo','search']);
             $return .= Html::divCl();

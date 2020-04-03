@@ -22,6 +22,7 @@ class Slug extends Core\ColAlias
     public static $config = [
         'tag'=>'inputText',
         'setPriority'=>9,
+        'keyboard'=>'url',
         'validate'=>[1=>'slug'],
         'include'=>true,
         'visible'=>['validate'=>'notEmpty'],

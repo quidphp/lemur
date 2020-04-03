@@ -87,7 +87,7 @@ trait _generalInput
 
                 $r .= Html::divOp('form');
                 $r .= Html::divOp('input');
-                $r .= Html::inputText($search,['name'=>true,'placeholder'=>$placeholder,'data'=>$data]);
+                $r .= Html::inputText($search,['name'=>true,'placeholder'=>$placeholder,'data'=>$data,'inputmode'=>'search']);
 
                 if($search !== null)
                 $r .= Html::a($uri,null,Base\Arr::append($attr['close'] ?? null,'close'));
@@ -117,7 +117,7 @@ trait _generalInput
 
             $data = ['href'=>$route,'char'=>static::getReplaceSegment(),'current'=>$limit,'pattern'=>'intCastNotEmpty','max'=>$maxPerPage];
             $r .= Html::divOp('limit');
-            $r .= Html::inputText($limit,['name'=>'limit','data'=>$data]);
+            $r .= Html::inputText($limit,['name'=>'limit','data'=>$data,'inputmode'=>'decimal']);
             $r .= Html::span(static::langText('lcf|common/limit'));
             $r .= Html::divCl();
         }
@@ -151,7 +151,7 @@ trait _generalInput
 
                 $r .= Html::divOp('center');
                 $r .= Html::span(static::langText('common/page'));
-                $r .= Html::inputText($general['current'],['name'=>'page','data'=>$data]);
+                $r .= Html::inputText($general['current'],['name'=>'page','data'=>$data,'inputmode'=>'decimal']);
                 $r .= Html::span(static::langText('lcf|common/on').' '.$total);
                 $r .= Html::divCl();
 

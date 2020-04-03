@@ -32,14 +32,14 @@ class Cols extends Base\Test
         // formComplex
 
         // formComplexWrap
-        assert(strlen($cols->formComplexWrap('table')['date']) === 362);
+        assert(strlen($cols->formComplexWrap('table')['date']) === 382);
 
         // specificComponentWrap
         assert($cols->specificComponentWrap('table')['userAdd'] === "<table><tr><td><label>Added by</label></td><td><div class='specific-component'><div class='empty-placeholder'>NULL</div></div></td></tr></table>");
-        assert(strlen($cols->specificComponentWrap('table')['date']) === 453);
+        assert(strlen($cols->specificComponentWrap('table')['date']) === 473);
 
         // cols
-        assert(strlen($cols->formComplex()['date']) === 260);
+        assert(strlen($cols->formComplex()['date']) === 280);
         assert(count($cols->group('panel')) === 2);
 
         return true;

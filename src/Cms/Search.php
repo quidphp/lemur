@@ -163,7 +163,7 @@ class Search extends Core\RouteAlias
 
             $r .= $this->formOpen();
             $r .= Html::divOp(['data'=>['absolute-placeholder'=>true,'only-height'=>true]]);
-            $r .= Html::inputText(null,['name'=>$name,'placeholder'=>$lang->text('search/submit'),'data'=>$data]);
+            $r .= Html::inputText(null,['name'=>$name,'placeholder'=>$lang->text('search/submit'),'data'=>$data,'inputmode'=>'search']);
             $r .= Html::submit(true,['button','icon-solo','search']);
             $r .= Html::divCl();
             $r .= Html::div(null,'popup');

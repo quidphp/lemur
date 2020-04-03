@@ -44,8 +44,8 @@ class Cell extends Base\Test
         // getDataAttr
 
         // cell
-        assert(count($cell->attr()) === 69);
-        assert(strlen($date->formComplex()) === 279);
+        assert(count($cell->attr()) === 70);
+        assert(strlen($date->formComplex()) === 299);
         assert($db->truncate($table) instanceof \PDOStatement);
         assert($cell->description() === 'Name to represent the element');
         assert($cell->description('%:') === 'Name to represent the element:');

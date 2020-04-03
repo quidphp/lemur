@@ -22,6 +22,7 @@ class IntegerRange extends Core\Col\Integer
     public static $config = [
         'complex'=>'inputNumericRange',
         'required'=>true,
+        'keyboard'=>'decimal',
         'permission'=>[
             '*'=>[
                 'nullPlaceholder'=>false]],

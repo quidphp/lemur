@@ -124,7 +124,7 @@ class Login extends Lemur\Route\Login
 
         $r .= Html::inputHidden($redirect,'redirect');
         $r .= Html::divOp('top');
-        $r .= $table->col('username')->formWrap('divtable',$usernameLabel.':',$username);
+        $r .= $table->col('username')->formWrap('divtable',$usernameLabel.':',$username,['inputmode'=>'email']);
         $r .= $table->col('password')->formWrap('divtable','%:');
         $r .= Html::divClose();
 
