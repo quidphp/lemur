@@ -408,12 +408,6 @@ class Route extends Base\Test
         assert(!$match->ip(['128.0.*.*']));
         assert($match->ip(['128.0.*.*','127.0.0.1']));
 
-        // browser
-        assert($match->browser(null));
-        assert($match->browser('Safari'));
-        assert(!$match->browser('Google'));
-        assert($match->browser(['Google','Safari']));
-
         // query
         assert(!$match->query(true));
         assert($match->query(false));
