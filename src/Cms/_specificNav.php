@@ -68,7 +68,7 @@ trait _specificNav
         $page = (!empty($specific['page']))? $specific['page']:1;
         if(is_int($page))
         {
-            $segments = ['page'=>$specific['page']];
+            $segments = ['page'=>$page];
 
             if(is_string($highlightSegment))
             $segments[$highlightSegment] = $row;

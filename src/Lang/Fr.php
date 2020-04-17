@@ -266,7 +266,8 @@ class Fr extends Core\Lang\Fr
                     'percent'=>'Pourcentage',
                     'total'=>'Total',
                     'host'=>'Hôte',
-                    'quantity'=>'Quantité'
+                    'quantity'=>'Quantité',
+                    'gender'=>'Gendre'
                 ],
 
                 // contact
@@ -726,7 +727,8 @@ class Fr extends Core\Lang\Fr
                         'percent'=>"Spécifie le pourcentage de l'élément",
                         'total'=>"Spécifie le total de l'élément",
                         'timezone'=>"Spécifie le fuseau horaire de l'élément",
-                        'quantity'=>"Spécifie la quantité de l'élément"
+                        'quantity'=>"Spécifie la quantité de l'élément",
+                        'gender'=>'Spécifie le gendre',
                     ],
 
                     // lang

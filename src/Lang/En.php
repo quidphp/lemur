@@ -266,7 +266,8 @@ class En extends Core\Lang\En
                     'percent'=>'Percent',
                     'total'=>'Total',
                     'host'=>'Host',
-                    'quantity'=>'Quantity'
+                    'quantity'=>'Quantity',
+                    'gender'=>'Gender'
                 ],
 
                 // contact
@@ -726,7 +727,8 @@ class En extends Core\Lang\En
                         'percent'=>'Specifies the percent of the element',
                         'total'=>'Specifies the total of the element',
                         'timezone'=>'Specifies the timezone of the element',
-                        'quantity'=>'Specifies the quantity of the element'
+                        'quantity'=>'Specifies the quantity of the element',
+                        'gender'=>'Specifies the gender'
                     ],
 
                     // lang
