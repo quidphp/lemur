@@ -189,11 +189,11 @@ $red: #8d1e2d;
 @mixin componentCryptGeneralSpecific() {
     .crypt-status {
         padding-top: 3px;
-        
+
         &.crypt-valid {
             color: $green;
         }
-        
+
         &.crypt-invalid {
             color: $red;
         }
