@@ -324,6 +324,12 @@ class En extends Core\Lang\En
                 ]
             ],
 
+            // crypt
+            'crypt'=>[
+                'valid'=>'Value exists and is decryptable',
+                'invalid'=>'Value exists but is not decryptable'
+            ],
+
             // tinymce
             'tinymce'=>[
                 'paragraph'=>'Paragraph',
@@ -706,7 +712,7 @@ class En extends Core\Lang\En
                         'metaImage_en'=>'Meta image to represent the English page, optional field',
                         'metaSearch_fr'=>'Specifies additional French search terms to find this line. This automatically generates.',
                         'metaSearch_en'=>'Specifies additional English search terms to find this line. This automatically generates.',
-                        'user_id'=>'User who created this entry',
+                        'user_id'=>'User related to this entry',
                         'session_id'=>'Session of the user who created this entry',
                         'request'=>'Summary of the HTTP request',
                         'userCommit'=>'User of the session',

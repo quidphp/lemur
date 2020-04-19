@@ -324,6 +324,12 @@ class Fr extends Core\Lang\Fr
                 ]
             ],
 
+            // crypt
+            'crypt'=>[
+                'valid'=>'La valeur existe et est décrytable',
+                'invalid'=>"La valeur existe mais n'est pas décrytable"
+            ],
+
             // tinymce
             'tinymce'=>[
                 'paragraph'=>'Paragraphe',

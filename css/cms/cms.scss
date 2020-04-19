@@ -229,3 +229,9 @@ body > .modal {
 [data-tag='inputNumericRange'] .specific-component {
     @include componentInputNumericRange();
 }
+
+// crypt
+[data-col='crypt'] .specific-component,
+[data-col='crypt'] .general-component {
+    @include componentCryptGeneralSpecific();
+}

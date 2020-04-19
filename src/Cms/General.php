@@ -1030,7 +1030,7 @@ class General extends Core\RouteAlias
         $option = Base\Arr::plus(['specific'=>null,'modify'=>false,'excerptMin'=>$cell->generalExcerptMin()],$option);
         $col = $cell->col();
 
-        $data = ['name'=>$cell->name(),'cell'=>$cell::className(true),'group'=>$col->group()];
+        $data = ['name'=>$cell->name(),'col'=>$col::className(true),'cell'=>$cell::className(true),'group'=>$col->group()];
         $table = $this->table();
         $generalEdit = GeneralEdit::make($cell);
         if($generalEdit->canTrigger())

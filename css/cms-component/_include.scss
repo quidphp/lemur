@@ -184,6 +184,22 @@ $red: #8d1e2d;
     }
 }
 
+// componentCryptGeneralSpecific
+// mixin pour le component de crypt
+@mixin componentCryptGeneralSpecific() {
+    .crypt-status {
+        padding-top: 3px;
+        
+        &.crypt-valid {
+            color: $green;
+        }
+        
+        &.crypt-invalid {
+            color: $red;
+        }
+    }
+}
+
 // componentRelationGeneral
 // mixin pour une cellule de relation dans le tableau general
 @mixin componentRelationGeneral() {
