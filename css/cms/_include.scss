@@ -49,7 +49,7 @@
 // peut être utilisé pour afficher du contenu provenant d'un éditeur WYSIWYG
 @mixin wysiwyg($fontColor: $color) {
     @include wysiwygAnchor($fontColor);
-    
+
     ul {
         @include ulOlMargin();
 
