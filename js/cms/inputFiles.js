@@ -91,6 +91,7 @@ Component.InputFiles = function()
         });
     }
     
+    
     // bindBlockCancelAction
     const bindBlockCancelAction = function() 
     {

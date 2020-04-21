@@ -102,15 +102,8 @@
                 @include ulOlMargin();
 
                 li {
+                    @include wysiwygAnchor(inherit);
                     padding-top: 3px;
-
-                    a {
-                        font-weight: bold;
-
-                        &:hover {
-                            text-decoration: underline;
-                        }
-                    }
                 }
             }
 

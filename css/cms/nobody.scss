@@ -103,6 +103,7 @@
         }
 
         .info {
+            @include wysiwyg($lightGray);
             padding-top: 5px;
             color: $lightGray;
             font-size: 90%;

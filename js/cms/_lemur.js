@@ -88,6 +88,9 @@ ael(document,'doc:mountCommon',function(event,node) {
     
     // tooltip
     trigSetup(Component.Tooltip.call(tooltip,{target: "body > .tooltip", targetContent: ".tooltip-content", offsetTop: -8}));
+    
+    // externalBlank
+    trigSetup(Component.ExternalBlank.call(node));
 });
 
 
@@ -141,7 +144,7 @@ ael(document,'doc:mountPage',function(event,node) {
 ael(document,'doc:ajaxProgress',function(event,percent,progressEvent) {
     const body = qs(this,"body");
     const progress = qs(body,".loading-progress");
-    const html = (percent >= 0 && percent < 100)? "<div class='percent'>"+percent+"%"+"</div>":"";
+    const html = (percent >= 0 && percent < 100)? Html.div(percent+"%",'percent'):"";
     setHtml(progress,html);
 });
 

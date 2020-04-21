@@ -47,7 +47,9 @@
 // wysiwyg
 // mixin avec quelques styles pour un bloc de style article
 // peut être utilisé pour afficher du contenu provenant d'un éditeur WYSIWYG
-@mixin wysiwyg() {
+@mixin wysiwyg($fontColor: $color) {
+    @include wysiwygAnchor($fontColor);
+    
     ul {
         @include ulOlMargin();
 
@@ -55,10 +57,14 @@
             padding: 2px 0;
         }
     }
+}
 
+// wysiwygAnchor
+// mixin avec les styles des ances pour un bloc de style article
+@mixin wysiwygAnchor($fontColor: $color) {
     a {
         font-weight: bold;
-        color: $color;
+        color: $fontColor;
 
         &:hover,
         &[data-triggered='1'] {
