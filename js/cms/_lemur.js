@@ -54,7 +54,7 @@ ael(document,'doc:mountCommon',function(event,node) {
     
     // select
     const select = qsa(node,"select");
-    trigSetup(Component.FakeSelect.call(select));
+    trigSetup(Component.FakeSelectConvert.call(select));
     
     // autre
     const anchorCorner = qsa(node,"[data-anchor-corner='1']");
@@ -64,6 +64,7 @@ ael(document,'doc:mountCommon',function(event,node) {
     const popupTriggerAjax = qsa(node,".popup-trigger.with-popup.with-ajax");
     const backToTop = qs(node,"footer .back-to-top");
     const tooltip = qsa(node,"[data-tooltip]");
+    const plural = qsa(node,"[data-plural]");
     
     // anchorCorner
     trigSetup(Component.AnchorCorner.call(anchorCorner));
@@ -91,6 +92,9 @@ ael(document,'doc:mountCommon',function(event,node) {
     
     // externalBlank
     trigSetup(Component.ExternalBlank.call(node));
+    
+    // plural
+    Component.Plural.call(plural);
 });
 
 
