@@ -25,7 +25,7 @@ Component.QuickEdit = function()
     setHdlrs(this,'quickEdit:',{
         
         isEditing: function() {
-            return (trigHdlr(this,'quickEdit:getTdEditing') != null)? true:false;
+            return trigHdlr(this,'quickEdit:getTdEditing') != null;
         },
         
         getTdOthers: function() {

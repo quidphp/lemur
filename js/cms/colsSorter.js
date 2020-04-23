@@ -65,7 +65,7 @@ Component.ColsSorter = function(option)
             const set = trigHdlr(this,'colsSorter:getCheckedSet');
             const current = getAttr(button,'data-current');
             
-            return (set !== current)? true:false;
+            return set !== current;
         }
     });
     

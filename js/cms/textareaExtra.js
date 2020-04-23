@@ -29,12 +29,12 @@ Component.TextareaExtra = function(option)
     setHdlrs(this,'textareaExtra:',{
         
         hasFilters: function() {
-            return (Arr.isNotEmpty(trigHdlr(this,'textareaExtra:getFilters')))? true:false;
+            return Arr.isNotEmpty(trigHdlr(this,'textareaExtra:getFilters'));
         },
         
         hasTinymce: function() {
             const parent = Ele.closest(this,".form-element");
-            return (Ele.match(parent,"[data-group='tinymce']"))? true:false;
+            return Ele.match(parent,"[data-group='tinymce']");
         },
         
         getTextarea: function() {

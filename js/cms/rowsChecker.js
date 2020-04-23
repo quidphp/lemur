@@ -94,7 +94,7 @@ Component.RowsChecker = function()
             const checkboxes = trigHdlr(this,'rowsChecker:getCheckboxes');
             const checked = trigHdlr(this,'rowsChecker:getCheckedCheckboxes');
             
-            return (checkboxes.length === checked.length)? true:false;
+            return checkboxes.length === checked.length;
         },
         
         areAllUpdateable: function() {
@@ -113,11 +113,11 @@ Component.RowsChecker = function()
             const toggleAll = trigHdlr(this,'rowsChecker:getToggleAll');
             const multiModify = trigHdlr(this,'rowsChecker:getMultiModify');
             const multiDelete = trigHdlr(this,'rowsChecker:getMultiDelete');
-            const oneChecked = (checked.length)? true:false;
-            const manyChecked = (checked.length > 1)? true:false;
+            const oneChecked = checked.length >= 1;
+            const manyChecked = checked.length > 1;
             const allChecked = trigHdlr(this,'rowsChecker:areAllChecked');
-            const showMulti = (manyChecked === true && trigHdlr(this,'rowsChecker:areAllUpdateable'))? true:false;
-            const showDelete = (oneChecked === true && trigHdlr(this,'rowsChecker:areAllDeleteable'))? true:false;
+            const showMulti = manyChecked === true && trigHdlr(this,'rowsChecker:areAllUpdateable');
+            const showDelete = oneChecked === true && trigHdlr(this,'rowsChecker:areAllDeleteable');
             
             toggleClass(toggleAll,'all-checked',allChecked);
             
