@@ -46,33 +46,33 @@
         @include flex(space-between, center, wrap);
 
         > .feed-filter {
-            @include tableRelationFull(".user-relation");
-            
+            @include tableRelationFull('.user-relation');
+
             .popup .results .feed-anchor {
                 @include filterElementLink();
             }
         }
     }
-    
+
     > .block-body {
         .nothing {
             @include nothing(true);
             padding: 20px;
         }
-        
+
         .row-element {
             @include blockFeedElement();
         }
-        
+
         .load-more {
             @include loadMore();
         }
     }
 }
 [data-route='home'] main .inner > .bottom .home-feed > .block-body .row-element > a {
-    @include flex(flex-start,stretch);
+    @include flex(flex-start, stretch);
     padding-left: 15px;
-    
+
     > .media {
         width: 10%;
         margin-right: 20px;
@@ -80,7 +80,7 @@
         background-repeat: no-repeat;
         background-position: center;
     }
-    
+
     > .title-commit {
         width: 80%;
 

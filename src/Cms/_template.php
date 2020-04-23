@@ -188,7 +188,7 @@ trait _template
     // retourne vrai si la route doit afficher la navigation
     final public function hasNav():bool
     {
-        return ($this->getAttr('mainNav') === true);
+        return $this->getAttr('mainNav') === true;
     }
 
 

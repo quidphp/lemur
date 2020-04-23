@@ -28,7 +28,7 @@ class AccountChangePasswordSubmit extends Lemur\Route\AccountChangePasswordSubmi
     // vérifie si la route peut être lancé
     final public function canTrigger():bool
     {
-        return (parent::canTrigger() && $this->hasPermission('accountChangePassword'));
+        return parent::canTrigger() && $this->hasPermission('accountChangePassword');
     }
 
 

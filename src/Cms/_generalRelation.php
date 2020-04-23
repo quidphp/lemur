@@ -328,7 +328,7 @@ trait _generalRelation
     // retourne vrai s'il faut afficher le empty not empty
     final protected function showEmptyNotEmpty():bool
     {
-        return ($this->getAttr('showEmptyNotEmpty') === true && $this->segment('col')->isFilterEmptyNotEmpty());
+        return $this->getAttr('showEmptyNotEmpty') === true && $this->segment('col')->isFilterEmptyNotEmpty();
     }
 
 

@@ -58,7 +58,7 @@ trait _searchGet
     // retourne vrai s'il y a une valeur de recherche
     final protected function hasSearchValue():bool
     {
-        return ($this->getSearchValue() !== null);
+        return $this->getSearchValue() !== null;
     }
 
 

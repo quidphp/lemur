@@ -26,7 +26,7 @@ trait _tableRelation
     // retourne vrai si la valeur de recherche est valide
     final protected function isSearchValueValid(string $value):bool
     {
-        return ($this->table()->isSearchTermValid($value));
+        return $this->table()->isSearchTermValid($value);
     }
 
 

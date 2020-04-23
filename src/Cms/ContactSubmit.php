@@ -26,7 +26,7 @@ class ContactSubmit extends Lemur\Route\ContactSubmit
     // retourne vrai si la route peut être trigger
     final public function canTrigger():bool
     {
-        return (parent::canTrigger() && $this->hasPermission('contact'));
+        return parent::canTrigger() && $this->hasPermission('contact');
     }
 
 

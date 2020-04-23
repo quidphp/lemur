@@ -185,7 +185,7 @@ trait _formSubmit
     // retourne vrai si le formulaire est un succès
     final protected function isSuccess()
     {
-        return ($this->success === true);
+        return $this->success === true;
     }
 
 

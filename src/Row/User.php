@@ -54,7 +54,7 @@ class User extends Core\Row\User
     // retourne vrai si le user permet l'envoie de courrier de bienvenue
     final public function allowWelcomeEmail():bool
     {
-        return ($this->isSomebody() && $this->isActive() && $this->isUpdateable() && $this->canReceiveEmail() && !empty($this->welcomeEmailModel()));
+        return $this->isSomebody() && $this->isActive() && $this->isUpdateable() && $this->canReceiveEmail() && !empty($this->welcomeEmailModel());
     }
 
 

@@ -51,7 +51,7 @@ abstract class LoginSubmit extends Core\RouteAlias
     // s'assure que le rôle réel (non fake) est bien nobody
     final public function canTrigger():bool
     {
-        return (parent::canTrigger() && static::session()->roles(false)->isNobody());
+        return parent::canTrigger() && static::session()->roles(false)->isNobody();
     }
 
 

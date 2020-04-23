@@ -64,7 +64,7 @@ class Search extends Core\RouteAlias
     // la route peut être triggé
     final public function canTrigger():bool
     {
-        return (parent::canTrigger() && $this->hasPermission('search'));
+        return parent::canTrigger() && $this->hasPermission('search');
     }
 
 

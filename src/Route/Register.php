@@ -37,7 +37,7 @@ abstract class Register extends Core\RouteAlias
     // retourne vrai si la route peut être lancé
     public function canTrigger():bool
     {
-        return (parent::canTrigger() && static::session()->roles(false)->isNobody() && static::session()->allowRegister());
+        return parent::canTrigger() && static::session()->roles(false)->isNobody() && static::session()->allowRegister();
     }
 
 

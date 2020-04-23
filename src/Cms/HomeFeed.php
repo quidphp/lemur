@@ -47,7 +47,7 @@ class HomeFeed extends Core\RouteAlias
     // retourne vrai si la route peut être triggé
     final public function canTrigger():bool
     {
-        return (parent::canTrigger() && $this->hasPermission('homeFeed'));
+        return parent::canTrigger() && $this->hasPermission('homeFeed');
     }
 
 

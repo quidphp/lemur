@@ -83,7 +83,7 @@ class SessionRole extends Core\RouteAlias
         $roles = static::boot()->roles();
 
         $return = $roles->filter(function(Main\Role $role) use ($current) {
-            return ($role->permission() <= $current);
+            return $role->permission() <= $current;
         });
 
         return $return;

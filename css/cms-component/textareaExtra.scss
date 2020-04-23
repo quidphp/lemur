@@ -13,7 +13,7 @@
         @include tableRelationFull();
         @include flex(center, center, wrap);
         padding-top: 3px;
-        
+
         .table-relation > .popup {
             @include tableRelationPopup();
         }
@@ -22,7 +22,7 @@
 
 // tableRelationFull
 // mxin for the full table relation select menu
-@mixin tableRelationFull($class: ".table-relation") {
+@mixin tableRelationFull($class: '.table-relation') {
     [data-absolute-placeholder] {
         margin: 3px;
 
@@ -35,7 +35,7 @@
     #{$class} {
         @include FakeSelectTrigger();
         @include fakeSelectTrigger();
-        
+
         > .popup {
             @include filterPopupBase();
 

@@ -71,7 +71,7 @@ class GeneralDelete extends Core\RouteAlias
     // si la route peut être lancé
     final public function canTrigger():bool
     {
-        return (parent::canTrigger() && $this->hasTable() && $this->table()->hasPermission('view','general','delete','rows','lemurDelete','multiDelete'));
+        return parent::canTrigger() && $this->hasTable() && $this->table()->hasPermission('view','general','delete','rows','lemurDelete','multiDelete');
     }
 
 

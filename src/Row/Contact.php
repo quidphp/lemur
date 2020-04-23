@@ -77,7 +77,7 @@ class Contact extends Core\RowAlias
     // retourne vrai si le visiteur dans l'entrée de contact a un courriel et un nom
     final public function hasEmailName()
     {
-        return ($this->cellName()->isNotEmpty() && $this->email()->is('email'));
+        return $this->cellName()->isNotEmpty() && $this->email()->is('email');
     }
 
 
@@ -246,7 +246,7 @@ class Contact extends Core\RowAlias
     // retourne vrai s'il est possible d'envoyer le email de contact
     final public static function canSendEmail():bool
     {
-        return (static::hasEmailModel() && !empty(static::getAdminEmail()));
+        return static::hasEmailModel() && !empty(static::getAdminEmail());
     }
 }
 

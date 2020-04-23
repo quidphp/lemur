@@ -21,7 +21,7 @@ trait _specificSlug
     // si la route peut être lancé
     final public function canTrigger():bool
     {
-        return (parent::canTrigger() && $this->rowExists() && $this->row()->isVisible());
+        return parent::canTrigger() && $this->rowExists() && $this->row()->isVisible();
     }
 
 
@@ -29,7 +29,7 @@ trait _specificSlug
     // retourne vrai si la route existe
     final public function rowExists():bool
     {
-        return ($this->segment('slug') instanceof Core\Row);
+        return $this->segment('slug') instanceof Core\Row;
     }
 
 
