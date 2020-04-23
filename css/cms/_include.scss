@@ -129,15 +129,6 @@
     }
 }
 
-// bigButtonLight
-// mixin pour les styles de base pour gros boutons avec hover clair
-@mixin bigButtonLight() {
-    @include bigButton();
-    @include hoverClickState("[data-tab='1']", "[data-selected='1']");
-    background-color: $white;
-    border: 1px solid $lightGray;
-}
-
 // scrollbar
 // mixin pour la scrollbar
 @mixin scrollbar($horizontal: null) {

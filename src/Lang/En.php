@@ -349,6 +349,10 @@ class En extends Core\Lang\En
 
             // tooltip
             'tooltip'=>[
+                'rowView'=>'The row cannot be edited',
+                'rowModify'=>'The row can be edited',
+                'tableView'=>'The table cannot be edited',
+                'tableModify'=>'The table can be edited',
                 'rememberMe'=>'Remember the username after logout',
                 'colsSorter'=>'Manage columns to display',
                 'filterIn'=>'Keep checked lines',
@@ -538,13 +542,8 @@ class En extends Core\Lang\En
             // home
             'home'=>[
                 'feed'=>'Recent activities',
+                'feedFilter'=>'Filter by user',
                 'overview'=>'Overview',
-            ],
-
-            // homeFeed
-            'homeFeed'=>[
-                'all'=>'Everybody',
-                'me'=>'Only me'
             ],
 
             // search
@@ -868,6 +867,7 @@ class En extends Core\Lang\En
                     'export'=>'Export',
                     'exportDownload'=>'Export - Download',
                     'homeFeed'=>'Home - Feed',
+                    'homeFeedRelation'=>'Home - Feed - Relation',
                     'general'=>'General',
                     'generalDelete'=>'General - Delete',
                     'generalEdit'=>'General - Quick Edit',

@@ -59,7 +59,7 @@ trait _export
     // retourne vrai si la valeur est un type valide
     final public static function isType($value):bool
     {
-        return (is_string($value) && in_array($value,static::getTypes(),true))? true:false;
+        return is_string($value) && in_array($value,static::getTypes(),true);
     }
 
 

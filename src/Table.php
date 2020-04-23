@@ -136,7 +136,7 @@ class Table extends Core\Table
     // retourne vrai si la table a des panels
     final public function hasPanel():bool
     {
-        return ($this->getAttr('panel') === true)? true:false;
+        return $this->getAttr('panel') === true;
     }
 }
 

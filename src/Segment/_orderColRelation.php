@@ -31,18 +31,15 @@ trait _orderColRelation
 
             else
             {
-                $db = static::db();
-                if($db->hasTable($keyValue['table']))
+                $table = static::tableSegment($keyValue);
+                $col = $keyValue['col'] ?? null;
+
+                if(!empty($table) && !empty($col) && $table->hasCol($col))
                 {
-                    $table = $db->table($keyValue['table']);
+                    $col = $table->col($col);
 
-                    if($table->hasCol($keyValue['col']))
-                    {
-                        $col = $table->col($keyValue['col']);
-
-                        if(static::isValidOrder($value,$col->relation()))
-                        $return = $value;
-                    }
+                    if(static::isValidOrder($value,$col->relation()))
+                    $return = $value;
                 }
             }
         }

@@ -40,7 +40,7 @@ trait _colRelation
     // retourne vrai si la valeur de recherche est valide
     final protected function isSearchValueValid(string $value):bool
     {
-        return ($this->segment('col')->isSearchTermValid($value))? true:false;
+        return $this->segment('col')->isSearchTermValid($value);
     }
 
 

@@ -52,7 +52,7 @@ class ExportDownload extends Core\RouteAlias
     // retourne vrai si l'encodage doit se fait en latin1
     final protected function isLatin1():bool
     {
-        return ($this->getAttr('latin1') === true)? true:false;
+        return ($this->getAttr('latin1') === true);
     }
 
 

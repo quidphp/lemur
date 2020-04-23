@@ -36,7 +36,7 @@ trait _module
     // retourne vrai si la route peut être trigger
     final public function canTrigger():bool
     {
-        return (parent::canTrigger() && $this->hasPermission('module'))? true:false;
+        return (parent::canTrigger() && $this->hasPermission('module'));
     }
 }
 ?>

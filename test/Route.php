@@ -643,7 +643,7 @@ class Route extends Base\Test
         $routes->init('cms');
 
         // routing
-        assert($app->count() === 54);
+        assert($app->count() === 55);
         assert($routes->type() === 'cms');
         assert($routes->keyParent()[Lemur\Cms\LoginSubmit::class] === Lemur\Cms\Login::class);
         assert(count($routes->hierarchy()) === 27);
@@ -684,15 +684,15 @@ class Route extends Base\Test
         assert($routes->sortDefault() === $routes);
 
         // map
-        assert($routes->isCount(54));
+        assert($routes->isCount(55));
         assert($routes->get('Sitemap') === Lemur\Cms\Sitemap::class);
         assert($routes->get(Lemur\Cms\Sitemap::class) === Lemur\Cms\Sitemap::class);
         assert(!$routes->in('Sitemap'));
         assert($routes->in(Lemur\Cms\Sitemap::class));
         assert($routes->exists('Sitemap'));
         assert($routes->exists(Lemur\Cms\Sitemap::class));
-        assert($routes->unset('Sitemap')->isCount(53));
-        assert($routes->add(Lemur\Cms\Sitemap::class)->isCount(54));
+        assert($routes->unset('Sitemap')->isCount(54));
+        assert($routes->add(Lemur\Cms\Sitemap::class)->isCount(55));
 
         return true;
     }

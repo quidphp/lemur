@@ -36,7 +36,7 @@ abstract class Contact extends Core\RouteAlias
     public function canTrigger():bool
     {
         $row = static::rowClass();
-        return (!empty($row) && parent::canTrigger() && static::db()->hasTable($row) && $row::canSendEmail())? true:false;
+        return (!empty($row) && parent::canTrigger() && static::db()->hasTable($row) && $row::canSendEmail());
     }
 
 

@@ -206,19 +206,26 @@ class Home extends Core\Route\Home
             $body = $homeFeed->trigger();
             $currentType = $homeFeed->segment('type');
 
-            $toggler = '';
-            foreach ($homeFeed::getFeedTypesRelation() as $type => $label)
-            {
-                $route = $homeFeed->changeSegment('type',$type);
-                $selected = ($type === $currentType)? 1:0;
-                $toggler .= $route->a($label,['toggler-element','data'=>['selected'=>$selected,'type'=>$type]]);
-            }
-
-            $head .= Html::div($toggler,'feed-togglers');
+            $head .= Html::div($this->makeFeedFilter($currentType),'feed-filter');
 
             $r .= Html::div($head,'block-head');
             $r .= Html::div($body,'block-body');
         }
+
+        return $r;
+    }
+
+
+    // makeFeedFilter
+    // génère le contenu pourle filtre du feed, permet de choisir un utilisateur
+    final protected function makeFeedFilter(int $type):string
+    {
+        $r = '';
+        $route = HomeFeedRelation::make();
+        $attr = ['data'=>['absolute-placeholder'=>true,'anchor-corner'=>true]];
+        $label = static::langText('home/feedFilter');
+        $filter = $route->makeTableRelation($label,'user-relation');
+        $r .= Html::divCond($filter,$attr);
 
         return $r;
     }
@@ -260,6 +267,7 @@ class Home extends Core\Route\Home
         $r = '';
         $session = static::session();
         $route = $session->routeTableGeneral($table);
+        $lang = static::lang();
 
         $r .= Html::h3($table->label());
 
@@ -276,8 +284,11 @@ class Home extends Core\Route\Home
         if($add->canTrigger())
         $tools .= $add->a(null,['icon-solo','add']);
 
-        $icon = ($table->hasPermission('update','lemurUpdate'))? 'modify':'view';
-        $tools .= $route->a(null,['icon-solo',$icon]);
+        $isUpdateable = $table->hasPermission('update','lemurUpdate');
+        $icon = ($isUpdateable === true)? 'modify':'view';
+        $tooltip = ($isUpdateable === true)? 'tooltip/tableModify':'tooltip/tableView';
+        $attr = ['icon-solo',$icon,'data-tooltip'=>$lang->text($tooltip)];
+        $tools .= $route->a(null,$attr);
 
         $r .= Html::divCond($tools,'tools');
 

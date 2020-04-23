@@ -349,6 +349,10 @@ class Fr extends Core\Lang\Fr
 
             // tooltip
             'tooltip'=>[
+                'rowView'=>'La ligne ne peut pas être modifié',
+                'rowModify'=>'La ligne peut être modifié',
+                'tableView'=>'La table ne peut pas être modifié',
+                'tableModify'=>'La table peut être modifié',
                 'rememberMe'=>"Se souvenir du nom d'utilisateur après la déconnexion",
                 'colsSorter'=>'Gestion des colonnes à afficher',
                 'filterIn'=>'Conserver les lignes cochés',
@@ -538,13 +542,8 @@ class Fr extends Core\Lang\Fr
             // home
             'home'=>[
                 'feed'=>'Dernières activitées',
+                'feedFilter'=>'Filtrer par utilisateur',
                 'overview'=>'Survol'
-            ],
-
-            // homeFeed
-            'homeFeed'=>[
-                'all'=>'Tous',
-                'me'=>'Seulement moi'
             ],
 
             // search
@@ -868,6 +867,7 @@ class Fr extends Core\Lang\Fr
                     'export'=>'Exportation',
                     'exportDownload'=>'Exportation - Téléchargement',
                     'homeFeed'=>'Accueil - Flux',
+                    'homeFeedRelation'=>'Accueil - Flux - Relation',
                     'general'=>'Général',
                     'generalDelete'=>'Général - Suppression',
                     'generalEdit'=>'General - Édition rapide',

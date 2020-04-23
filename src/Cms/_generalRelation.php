@@ -185,7 +185,7 @@ trait _generalRelation
             $label = $col->valueExcerpt($label);
 
             $label = Html::div($label,'label-content');
-            $active = (in_array($key,$selected,true))? true:false;
+            $active = (in_array($key,$selected,true));
             $filter = $current;
 
             $filter[$name] = [$key];
@@ -328,7 +328,7 @@ trait _generalRelation
     // retourne vrai s'il faut afficher le empty not empty
     final protected function showEmptyNotEmpty():bool
     {
-        return ($this->getAttr('showEmptyNotEmpty') === true && $this->segment('col')->isFilterEmptyNotEmpty())? true:false;
+        return ($this->getAttr('showEmptyNotEmpty') === true && $this->segment('col')->isFilterEmptyNotEmpty());
     }
 
 

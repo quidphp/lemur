@@ -20,7 +20,8 @@ class Money extends Core\Col\FloatingAlias
 {
     // config
     public static $config = [
-        'money'=>null // custom
+        'money'=>null, // custom
+        'check'=>false
     ];
 
 
@@ -44,7 +45,7 @@ class Money extends Core\Col\FloatingAlias
     final protected function onSet($return,array $row,?Orm\Cell $cell=null,array $option)
     {
         if(is_string($return))
-        $return = Base\Str::keepNumber($return);
+        $return = Base\Str::keepNumber($return,'.');
 
         return $return;
     }

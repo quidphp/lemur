@@ -78,7 +78,7 @@ class SpecificMultiSubmit extends Core\RouteAlias
     // si la route peut être lancé
     final public function canTrigger():bool
     {
-        return (parent::canTrigger() && $this->hasTable() && $this->table()->hasPermission('view','specific','update','rows','lemurUpdate','multiModify'))? true:false;
+        return (parent::canTrigger() && $this->hasTable() && $this->table()->hasPermission('view','specific','update','rows','lemurUpdate','multiModify'));
     }
 
 
@@ -137,7 +137,7 @@ class SpecificMultiSubmit extends Core\RouteAlias
 
             foreach ($rows as $key => $row)
             {
-                $deleteSource = ($row === $last)? true:false;
+                $deleteSource = ($row === $last);
                 $option = ['uploadDeleteSource'=>$deleteSource,'preValidate'=>true,'com'=>true,'catchException'=>true,'context'=>static::class];
                 $save = $row->setUpdateValid($post,$option);
                 $return[$key] = $save;

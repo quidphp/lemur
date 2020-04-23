@@ -112,7 +112,7 @@ abstract class Files extends Core\Col\Files
         $hasIndex = $this->hasIndex();
         $table = $this->table();
         $tag = $this->complexTag($attr);
-        $allowFileUpload = ($this->allowFileUpload() && Html::isFormTag($tag,true))? true:false;
+        $allowFileUpload = ($this->allowFileUpload() && Html::isFormTag($tag,true));
         $attr['tag'] = $this->getAttr('complex');
         $lang = $this->db()->lang();
         $i = null;
@@ -202,7 +202,7 @@ abstract class Files extends Core\Col\Files
         $table = $this->table();
         $file = ($hasIndex === true)? $value->file($index):$value->file();
         $exists = (!empty($file))? $file->isReadable():false;
-        $isImage = ($exists === true && $file instanceof Main\File\Image)? true:false;
+        $isImage = ($exists === true && $file instanceof Main\File\Image);
         $basename = ($exists === true)? $file->basename():false;
         $download = $table->hasPermission('download');
 

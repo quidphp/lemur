@@ -38,7 +38,7 @@ abstract class Files extends Core\Cell\Files
         if(!empty($file))
         {
             $hasVersion = $this->hasVersion();
-            $isImage = ($file instanceof Main\File\Image)? true:false;
+            $isImage = ($file instanceof Main\File\Image);
             $value = $file->basename();
             $value = Base\Str::excerpt(35,$value);
             $legendLink = null;

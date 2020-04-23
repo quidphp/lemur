@@ -57,7 +57,7 @@ class GeneralEditSubmit extends Core\RouteAlias
     // validation si la route peut être lancé
     final public function canTrigger():bool
     {
-        return (parent::canTrigger() && static::makeParent($this->segments())->canTrigger())? true:false;
+        return (parent::canTrigger() && static::makeParent($this->segments())->canTrigger());
     }
 
 

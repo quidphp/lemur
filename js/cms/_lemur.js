@@ -94,7 +94,7 @@ ael(document,'doc:mountCommon',function(event,node) {
     trigSetup(Component.ExternalBlank.call(node));
     
     // plural
-    Component.Plural.call(plural);
+    trigSetup(Component.Plural.call(plural));
 });
 
 
@@ -173,28 +173,7 @@ ael(document,'modal:accountChangePassword',function(event,modal) {
 ael(document,'route:home',function(event,node) {
     
     const feed = qs(node,"main .home-feed");
-    const feedTogglers = qsa(feed,".block-head .feed-togglers > a");
-    const feedBody = qs(feed,".block-body");
-    
-    // feedBody
-    trigSetup(Component.Feed.call(feedBody));
-    
-    // feedTogglers
-    Component.AjaxBlock.call(feedTogglers,{autoUnbind: true});
-    
-    setHdlr(feedTogglers,'ajaxBlock:getStatusNode',function(event) {
-        return feedBody;
-    });
-    
-    ael(feedTogglers,'ajaxBlock:before',function() {
-        toggleAttr(feedTogglers,'data-selected',false);
-        trigEvt(feedBody,'ajaxBlock:unmountContent');
-        toggleAttr(this,'data-selected',true);
-    });
-    
-    ael(feedTogglers,'ajaxBlock:success',function() {
-        trigEvt(feedBody,'feed:bind');
-    });
+    trigSetup(Component.HomeFeed.call(feed));
 });
 
 

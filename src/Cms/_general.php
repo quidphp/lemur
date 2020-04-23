@@ -33,7 +33,7 @@ trait _general
     // retouren vrai si la route est lié à une table
     final public function hasTable():bool
     {
-        return ($this->segment('table') instanceof Core\Table)? true:false;
+        return ($this->segment('table') instanceof Core\Table);
     }
 
 

@@ -39,6 +39,11 @@ form [data-table-relation='1'] .right .table-relation .popup .big-icon.video {
     @include bgimg64($iconVideo);
 }
 
+/* DATABASE */
+[data-route='home'] .home-feed .row-element .media {
+    @include bgimg64($iconDatabase);
+}
+
 /* INFO */
 body .icon-solo.info,
 body .with-icon.info,
@@ -70,6 +75,40 @@ body .with-icon.view,
     @include bgimg64($iconView);
 }
 
+/* EMAIL */
+body .icon-solo.email,
+body .with-icon.email,
+[data-route='home'] .home-feed .row-element[data-table='logEmail'] .media,
+[data-route='home'] .home-feed .row-element[data-table='email'] .media,
+[data-route='home'] .home-feed .row-element[data-table='queueEmail'] .media {
+    @include bgimg64($iconEmail);
+}
+
+/* REMOVE */
+body .icon-solo.remove,
+body .with-icon.remove,
+body .icon-solo.multi-delete,
+body .with-icon.multi-delete,
+body .icon-solo.truncate,
+body .with-icon.truncate,
+[data-route='home'] .home-feed .row-element[data-table='logError'] .media {
+    @include bgimg64($iconRemove);
+}
+
+/* LANG */
+body .icon-solo.lang,
+body .with-icon.lang,
+[data-route='home'] .home-feed .row-element[data-table='lang'] .media {
+    @include bgimg64($iconLang);
+}
+
+/* ACCOUNT */
+body .icon-solo.account,
+body .with-icon.account,
+[data-route='home'] .home-feed .row-element[data-table='user'] .media {
+    @include bgimg64($iconAccount);
+}
+
 /* RADIO + CHECKBOX */
 input[type='radio'] + label {
     @include bgimg64($iconRadioInactive);
@@ -87,9 +126,6 @@ input[type='checkbox']:checked + label {
 /* ICON */
 body .icon-solo,
 body .with-icon {
-    &.account {
-        @include bgimg64($iconAccount);
-    }
     &.add {
         @include bgimg64($iconAdd);
     }
@@ -111,17 +147,11 @@ body .with-icon {
     &.download {
         @include bgimg64($iconDownload);
     }
-    &.email {
-        @include bgimg64($iconEmail);
-    }
     &.filter {
         @include bgimg64($iconFilter);
     }
     &.help {
         @include bgimg64($iconHelp);
-    }
-    &.lang {
-        @include bgimg64($iconLang);
     }
     &.link {
         @include bgimg64($iconLink);
@@ -144,11 +174,6 @@ body .with-icon {
     }
     &.plus {
         @include bgimg64($iconPlus);
-    }
-    &.remove,
-    &.multi-delete,
-    &.truncate {
-        @include bgimg64($iconRemove);
     }
     &.reset,
     &.regenerate {

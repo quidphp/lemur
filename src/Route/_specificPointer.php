@@ -20,7 +20,7 @@ trait _specificPointer
     // si la route peut être lancé
     final public function canTrigger():bool
     {
-        return (parent::canTrigger() && $this->hasPointer() && $this->pointer()->isVisible())? true:false;
+        return (parent::canTrigger() && $this->hasPointer() && $this->pointer()->isVisible());
     }
 
 
@@ -28,7 +28,7 @@ trait _specificPointer
     // retourne vrai si le pointeur existe
     final protected function hasPointer():bool
     {
-        return ($this->segment('pointer') instanceof Core\Row)? true:false;
+        return ($this->segment('pointer') instanceof Core\Row);
     }
 
 

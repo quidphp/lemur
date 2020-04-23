@@ -95,7 +95,7 @@ abstract class Boot extends Core\Boot
     // retourne vrai si la clé de l'application roulant présentement est cms
     final public function isCms():bool
     {
-        return ($this->type() === 'cms')? true:false;
+        return $this->type() === 'cms';
     }
 }
 ?>

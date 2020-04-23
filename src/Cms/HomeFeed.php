@@ -23,7 +23,6 @@ class HomeFeed extends Core\RouteAlias
     use _common;
     use _rowsFeed;
     use Lemur\Segment\_page;
-    use Lemur\Segment\_boolean;
 
 
     // config
@@ -33,15 +32,14 @@ class HomeFeed extends Core\RouteAlias
             'fr'=>'accueil/flux/[page]/[type]'],
         'segment'=>[
             'page'=>'structureSegmentPage',
-            'type'=>'structureSegmentBoolean'],
+            'type'=>'structureSegmentType'],
         'match'=>[
             'ajax'=>true,
             'session'=>'canAccess'],
         'group'=>'home',
         'parent'=>Home::class,
         'history'=>false,
-        'limit'=>25,
-        'feed'=>['all','me']
+        'limit'=>25
     ];
 
 
@@ -49,7 +47,7 @@ class HomeFeed extends Core\RouteAlias
     // retourne vrai si la route peut être triggé
     final public function canTrigger():bool
     {
-        return (parent::canTrigger() && $this->hasPermission('homeFeed'))? true:false;
+        return (parent::canTrigger() && $this->hasPermission('homeFeed'));
     }
 
 
@@ -78,7 +76,10 @@ class HomeFeed extends Core\RouteAlias
                 $row = $table->row($id);
 
                 if(!empty($row))
-                $r .= Html::divCond($this->rowFeedOutput($row,$dateCol),'row-element');
+                {
+                    $attr = ['row-element','data-row'=>$row,'data-table'=>$table];
+                    $r .= Html::divCond($this->rowFeedOutput($row,$dateCol),$attr);
+                }
             }
 
             if(!empty($r))
@@ -99,38 +100,56 @@ class HomeFeed extends Core\RouteAlias
         $r = '';
         $route = $row->route();
         $table = $row->table();
-        $isUpdateable = ($table->hasPermission('view','lemurUpdate') && $row->isUpdateable())? true:false;
+        $isUpdateable = ($table->hasPermission('view','lemurUpdate') && $row->isUpdateable());
         $icon = ($isUpdateable === true)? 'modify':'view';
+        $tooltip = ($isUpdateable === true)? 'tooltip/rowModify':'tooltip/rowView';
         $commit = $row->cellsDateCommit()[$dateCol] ?? null;
+        $media = $row->cellsMediaFile();
         $label = $row->label(null,100);
+        $lang = static::lang();
 
-        $r .= Html::h3($label);
+        $attr = ['media'];
+        if(!empty($media))
+        $attr['style']['background-image'] = $media;
+        else
+        $attr[] = 'media-placeholder';
 
+        $r .= Html::div(null,$attr);
+
+        $middle = Html::h3($label);
         if(!empty($commit))
-        {
-            $html = '';
-            ['user'=>$user,'date'=>$date] = $commit;
+        $middle .= Html::divCond($this->rowFeedCommitOutput($commit),'commit');
+        $r .= Html::div($middle,'title-commit');
 
-            if(!empty($user))
-            {
-                $userRow = $user->relationRow();
-
-                if(!empty($userRow))
-                {
-                    $html = Html::span($user->label(),'label').':';
-                    $html .= Html::span($userRow->cellName(),'user');
-                    $html .= Html::span('-','separator');
-                    $html .= Html::span($date->get(),'date');
-                }
-            }
-
-            $r .= Html::divCond($html,'commit');
-        }
-
-        $icon = Html::div(null,['icon-solo',$icon]);
+        $attr = ['icon-solo',$icon,'data-tooltip'=>$lang->text($tooltip)];
+        $icon = Html::div(null,$attr);
         $r .= Html::div($icon,'tools');
 
         $r = $route->a($r);
+
+        return $r;
+    }
+
+
+    // rowFeedCommitOutput
+    // génère le rendu pour la ligne du dernier commit
+    final protected function rowFeedCommitOutput(array $commit):string
+    {
+        $r = '';
+        ['user'=>$user,'date'=>$date] = $commit;
+
+        if(!empty($user))
+        {
+            $userRow = $user->relationRow();
+
+            if(!empty($userRow))
+            {
+                $r = Html::span($user->label(),'label').':';
+                $r .= Html::span($userRow->cellName(),'user');
+                $r .= Html::span('-','separator');
+                $r .= Html::span($date->get(),'date');
+            }
+        }
 
         return $r;
     }
@@ -141,9 +160,7 @@ class HomeFeed extends Core\RouteAlias
     protected function makeIds():array
     {
         $return = [];
-        $type = $this->segment('type');
         $session = $this->session();
-        $currentUser = $session->user();
         $db = $this->db();
         $tables = $db->tables()->filter(['hasPermission'=>true],'view','homeFeed');
 
@@ -159,7 +176,7 @@ class HomeFeed extends Core\RouteAlias
                     if(empty($user))
                     continue;
 
-                    $ids = $this->makeIdsTable($date,$user,$currentUser,$table,$ids);
+                    $ids = $this->makeIdsTable($date,$user,$table,$ids);
                 }
             }
 
@@ -175,7 +192,7 @@ class HomeFeed extends Core\RouteAlias
 
     // makeIdsTable
     // méthode utilisé pour faire la requête et aller chercher les ids pour une table
-    final protected function makeIdsTable(Lemur\Col $date,Lemur\Col $user,Lemur\Row\User $currentUser,Core\Table $table,array $return):array
+    final protected function makeIdsTable(Lemur\Col $date,Lemur\Col $user,Core\Table $table,array $return):array
     {
         $type = $this->segment('type');
         $name = $table->name();
@@ -184,8 +201,8 @@ class HomeFeed extends Core\RouteAlias
         $dateCommit = $table->colsDateCommit();
 
         // me
-        if($type === 1)
-        $where[] = [$user,'=',$currentUser];
+        if($type instanceof Lemur\Row\User)
+        $where[] = [$user,'=',$type];
 
         // date pas vide
         $where[] = [$date,true];
@@ -210,24 +227,25 @@ class HomeFeed extends Core\RouteAlias
     }
 
 
-    // getFeedTypes
-    // retourn les types possibles pour le feed
-    public static function getFeedTypes():array
+    // structureSegmentType
+    // gère le segment d'uri pour le type, qui peut être 0 (all) ou un id de user
+    final public static function structureSegmentType(string $type,$value,array &$keyValue)
     {
-        return static::$config['feed'];
-    }
+        $return = false;
 
+        if($value instanceof Lemur\Row\User)
+        $value = $value->primary();
 
-    // getFeedTypesRelation
-    // retoune un tableau les types possibles et leur noms
-    public static function getFeedTypesRelation():array
-    {
-        $return = [];
-        $lang = static::lang();
+        if($type === 'make')
+        $return = (is_int($value) && $value >= 0)? $value:false;
 
-        foreach (static::getFeedTypes() as $key => $value)
+        elseif($type === 'match')
         {
-            $return[$key] = $lang->relation(['homeFeed',$value]);
+            if($value === 0)
+            $return = $value;
+
+            else
+            $return = Lemur\Row\User::row($value);
         }
 
         return $return;

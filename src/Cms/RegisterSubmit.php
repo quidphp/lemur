@@ -26,7 +26,7 @@ class RegisterSubmit extends Lemur\Route\RegisterSubmit
     // retourne vrai si la route peut être lancé
     final public function canTrigger():bool
     {
-        return (parent::canTrigger() && $this->hasPermission('register'))? true:false;
+        return (parent::canTrigger() && $this->hasPermission('register'));
     }
 }
 

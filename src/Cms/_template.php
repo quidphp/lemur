@@ -143,7 +143,7 @@ trait _template
             if($this->hasPermission('sessionInfo'))
             {
                 $route = PopupSession::make();
-                $popup = ($route->canTrigger())? true:false;
+                $popup = ($route->canTrigger());
                 $attr = ['popup-trigger'];
                 $html = '';
 
@@ -188,7 +188,7 @@ trait _template
     // retourne vrai si la route doit afficher la navigation
     final public function hasNav():bool
     {
-        return ($this->getAttr('mainNav') === true)? true:false;
+        return ($this->getAttr('mainNav') === true);
     }
 
 
@@ -438,7 +438,7 @@ trait _template
 
         $copyright = static::langText('footer/version',['version'=>$version]);
         $route = PopupBoot::make($this);
-        $popup = ($route->canTrigger() && $route->isValidSegment())? true:false;
+        $popup = ($route->canTrigger() && $route->isValidSegment());
 
         $attr = ['popup-trigger'];
         $html = '';

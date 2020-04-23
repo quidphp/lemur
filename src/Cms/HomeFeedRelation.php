@@ -14,14 +14,13 @@ use Quid\Base\Html;
 use Quid\Core;
 use Quid\Lemur;
 
-// tableRelation
+// homeFeedRelation
 // class for the route which manages table relation, used by some inputs in the CMS
-class TableRelation extends Core\RouteAlias
+class HomeFeedRelation extends Core\RouteAlias
 {
     // trait
     use _common;
     use _tableRelation;
-    use Lemur\Segment\_table;
     use Lemur\Segment\_orderTableRelation;
     use Lemur\Segment\_page;
 
@@ -29,13 +28,13 @@ class TableRelation extends Core\RouteAlias
     // config
     public static $config = [
         'path'=>[
-            'en'=>'table/relation/[table]/[order]/[page]',
-            'fr'=>'table/relation/[table]/[order]/[page]'],
+            'en'=>'home/feed/relation/[order]/[page]',
+            'fr'=>'accueil/flux//relation/[order]/[page]'],
         'segment'=>[
-            'table'=>'structureSegmentTable',
             'order'=>'structureSegmentOrderTableRelation',
             'page'=>'structureSegmentPage'],
-        'method'=>'tableRelationOutput'
+        'method'=>'homeFeedRelationOutput',
+        'row'=>Lemur\Row\User::class
     ];
 
 
@@ -46,7 +45,7 @@ class TableRelation extends Core\RouteAlias
         $return = false;
         $table = $this->table();
 
-        if(parent::canTrigger() && $table->hasPermission('view','relation','tableRelation'))
+        if(parent::canTrigger() && $this->hasPermission('homeFeed','homeFeedUser') && $table->hasPermission('view','relation','tableRelation'))
         $return = true;
 
         return $return;
@@ -57,7 +56,7 @@ class TableRelation extends Core\RouteAlias
     // retourne la table pour la route
     final public function table():Lemur\Table
     {
-        return $this->segment('table');
+        return static::session()->user()->table();
     }
 
 
@@ -85,5 +84,5 @@ class TableRelation extends Core\RouteAlias
 }
 
 // init
-TableRelation::__init();
+HomeFeedRelation::__init();
 ?>

@@ -10,24 +10,37 @@
 // stylesheet for the textarea component of the CMS (with relation inserts)
 @mixin componentTextareaExtraSpecific() {
     .relations-container {
+        @include tableRelationFull();
         @include flex(center, center, wrap);
         padding-top: 3px;
-
-        [data-absolute-placeholder] {
-            margin: 3px;
-
-            &[data-absolute-placeholder='ready'] .table-relation[data-active='1'] {
-                z-index: 4;
-                @include abs(0, null, null, 0);
-            }
+        
+        .table-relation > .popup {
+            @include tableRelationPopup();
         }
+    }
+}
 
-        .table-relation {
-            @include FakeSelectTrigger();
-            @include fakeSelectTrigger();
+// tableRelationFull
+// mxin for the full table relation select menu
+@mixin tableRelationFull($class: ".table-relation") {
+    [data-absolute-placeholder] {
+        margin: 3px;
 
-            > .popup {
-                @include tableRelationPopup();
+        &[data-absolute-placeholder='ready'] .table-relation[data-active='1'] {
+            z-index: 4;
+            @include abs(0, null, null, 0);
+        }
+    }
+
+    #{$class} {
+        @include FakeSelectTrigger();
+        @include fakeSelectTrigger();
+        
+        > .popup {
+            @include filterPopupBase();
+
+            .top {
+                @include filterPopupTop();
             }
         }
     }
@@ -36,12 +49,6 @@
 // tableRelationPopup
 // mixin pour le popup de relation de table
 @mixin tableRelationPopup() {
-    @include filterPopupBase();
-
-    .top {
-        @include filterPopupTop();
-    }
-
     .results ul li {
         &:not(:first-child) {
             border-top: 1px solid $lightGray;

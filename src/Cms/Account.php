@@ -27,7 +27,7 @@ class Account extends Lemur\Route\Account
     // vérifie si le user peut aller voir son compte
     public function canTrigger():bool
     {
-        return (parent::canTrigger() && $this->hasPermission('account'))? true:false;
+        return parent::canTrigger() && $this->hasPermission('account');
     }
 
 

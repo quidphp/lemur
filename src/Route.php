@@ -56,6 +56,7 @@ abstract class Route extends Core\Route
                     'homeInfo'=>true,
                     'homePopup'=>true,
                     'homeFeed'=>true,
+                    'homeFeedUser'=>true,
                     'homeOverview'=>true],
                 'nobody'=>['search'=>false,'logout'=>false,'contact'=>false,'register'=>true,'resetPassword'=>true],
                 'shared'=>['access'=>false],

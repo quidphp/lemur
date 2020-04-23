@@ -31,7 +31,7 @@ class UserPassword extends Core\Col\UserPassword
         if(Html::isFormTag($tag))
         {
             $value = $this->value($value);
-            $required = (empty($value))? true:false;
+            $required = (empty($value));
             $inputs = $this->inputs($attr,$required);
 
             foreach ($inputs as $attr)

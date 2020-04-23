@@ -31,14 +31,10 @@ trait _orderTableRelation
 
             else
             {
-                $db = static::db();
-                if($db->hasTable($keyValue['table']))
-                {
-                    $table = $db->table($keyValue['table']);
+                $table = static::tableSegment($keyValue);
 
-                    if(static::isValidOrder($value,$table->relation()))
-                    $return = $value;
-                }
+                if(!empty($table) && static::isValidOrder($value,$table->relation()))
+                $return = $value;
             }
         }
 

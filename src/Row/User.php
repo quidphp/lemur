@@ -36,6 +36,7 @@ class User extends Core\Row\User
                 'subAdmin'=>['fakeRoles'=>true],
                 'admin'=>['fakeRoles'=>true]],
             'route'=>[
+                'homeFeed'=>Lemur\Cms\HomeFeed::class,
                 'userWelcome'=>Lemur\Cms\UserWelcome::class],
             'specificOperation'=>[self::class,'specificOperation']],
     ];
@@ -53,7 +54,7 @@ class User extends Core\Row\User
     // retourne vrai si le user permet l'envoie de courrier de bienvenue
     final public function allowWelcomeEmail():bool
     {
-        return ($this->isSomebody() && $this->isActive() && $this->isUpdateable() && $this->canReceiveEmail() && !empty($this->welcomeEmailModel()))? true:false;
+        return ($this->isSomebody() && $this->isActive() && $this->isUpdateable() && $this->canReceiveEmail() && !empty($this->welcomeEmailModel()));
     }
 
 
@@ -111,6 +112,19 @@ class User extends Core\Row\User
     public function activatePasswordRoute():string
     {
         return Lemur\Route\ActivatePassword::class;
+    }
+
+
+    // homeFeedRelationOutput
+    // génère le output pour le homeFeedRelation de la page d'accueil du CMS
+    final public function homeFeedRelationOutput():string
+    {
+        $return = null;
+        $route = $this->route('homeFeed');
+        $label = $this->namePrimary();
+        $return .= $route->a($label,'feed-anchor');
+
+        return $return;
     }
 
 

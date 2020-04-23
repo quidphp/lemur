@@ -64,7 +64,7 @@ trait _relation
     // retourne vrai si la route gère les pages
     final public function hasPage():bool
     {
-        return ($this->hasSegment('page'))? true:false;
+        return ($this->hasSegment('page'));
     }
 
 
@@ -72,7 +72,7 @@ trait _relation
     // retourne vrai si c'est la première page
     final public function isFirstPage():bool
     {
-        return ($this->hasPage() && $this->segment('page') === 1)? true:false;
+        return ($this->hasPage() && $this->segment('page') === 1);
     }
 
 

@@ -11,15 +11,15 @@
 
 /* HOME */
 [data-route='home'] main .inner > .bottom {
-    @include flex(center, flex-start, wrap);
+    @include flex(center, flex-start);
 
     > .left {
         flex-grow: 1;
     }
 
     > .right {
+        min-width: 275px;
         margin-left: 20px;
-        width: 33%;
     }
 
     .block {
@@ -45,49 +45,59 @@
         padding-right: 10px;
         @include flex(space-between, center, wrap);
 
-        > .feed-togglers {
-            @include flex(center);
-
-            > .toggler-element {
-                @include bigButtonLight();
-
-                &:not(:first-child) {
-                    margin-left: 5px;
-                }
+        > .feed-filter {
+            @include tableRelationFull(".user-relation");
+            
+            .popup .results .feed-anchor {
+                @include filterElementLink();
             }
         }
     }
-
+    
     > .block-body {
         .nothing {
             @include nothing(true);
             padding: 20px;
         }
-
+        
         .row-element {
             @include blockFeedElement();
-
-            > a {
-                .commit {
-                    font-size: 90%;
-
-                    > .label {
-                        text-decoration: underline;
-                    }
-
-                    > .user {
-                        margin-left: 3px;
-                    }
-
-                    > .separator {
-                        margin: 0 5px;
-                    }
-                }
-            }
         }
-
+        
         .load-more {
             @include loadMore();
+        }
+    }
+}
+[data-route='home'] main .inner > .bottom .home-feed > .block-body .row-element > a {
+    @include flex(flex-start,stretch);
+    padding-left: 15px;
+    
+    > .media {
+        width: 10%;
+        margin-right: 20px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+    
+    > .title-commit {
+        width: 80%;
+
+        > .commit {
+            font-size: 90%;
+
+            > .label {
+                text-decoration: underline;
+            }
+
+            > .user {
+                margin-left: 3px;
+            }
+
+            > .separator {
+                margin: 0 5px;
+            }
         }
     }
 }

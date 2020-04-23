@@ -32,7 +32,7 @@ class Logout extends Lemur\Route\Logout
     // retourne vrai si la route peut être lancé
     final public function canTrigger():bool
     {
-        return (parent::canTrigger() && $this->hasPermission('logout'))? true:false;
+        return (parent::canTrigger() && $this->hasPermission('logout'));
     }
 }
 

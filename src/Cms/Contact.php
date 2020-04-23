@@ -32,7 +32,7 @@ class Contact extends Lemur\Route\Contact
     // retourne vrai si la route peut être trigger
     final public function canTrigger():bool
     {
-        return (parent::canTrigger() && $this->hasPermission('contact'))? true:false;
+        return (parent::canTrigger() && $this->hasPermission('contact'));
     }
 
 

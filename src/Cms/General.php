@@ -63,7 +63,7 @@ class General extends Core\RouteAlias
     // si la route peut être lancé
     final public function canTrigger():bool
     {
-        return (parent::canTrigger() && $this->hasTable() && $this->hasTablePermission('view','general'))? true:false;
+        return (parent::canTrigger() && $this->hasTable() && $this->hasTablePermission('view','general'));
     }
 
 
@@ -129,7 +129,7 @@ class General extends Core\RouteAlias
     // retouren vrai si la route est lié à une table
     final public function hasTable():bool
     {
-        return ($this->segment('table') instanceof Core\Table)? true:false;
+        return ($this->segment('table') instanceof Core\Table);
     }
 
 

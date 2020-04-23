@@ -34,7 +34,7 @@ trait _cli
     // retourne vrai si la route peut être trigger
     final public function canTrigger():bool
     {
-        return (parent::canTrigger() && $this->hasPermission('cli'))? true:false;
+        return parent::canTrigger() && $this->hasPermission('cli');
     }
 
 

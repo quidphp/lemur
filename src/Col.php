@@ -47,7 +47,7 @@ class Col extends Core\Col
     // retourne vrai si la colonne doit apparaître dans general
     final public function isGeneral():bool
     {
-        return ($this->getAttr('general',true) === true)? true:false;
+        return $this->getAttr('general',true) === true;
     }
 
 
@@ -55,7 +55,7 @@ class Col extends Core\Col
     // retourne vrai si la recherche est requise pour la relation
     final public function isRelationSearchRequired():bool
     {
-        return ($this->getAttr('relationSearchRequired') === true)? true:false;
+        return $this->getAttr('relationSearchRequired') === true;
     }
 
 

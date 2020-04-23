@@ -105,7 +105,7 @@ class SpecificAdd extends Core\RouteAlias
     // retourne vrai si la route doit apparaître sur sa propre ligne dans le menu
     final public function hasSpecificAddNavLink():bool
     {
-        return ($this->table()->getAttr('specificAddNavLink') === true)? true:false;
+        return ($this->table()->getAttr('specificAddNavLink') === true);
     }
 
 
