@@ -15,19 +15,18 @@
 
         > .feed-filter {
             @include tableRelationFull('.user-relation');
-            
+
             .user-relation {
-                
                 > .feed-reset {
-                    @include abs(-8px,-8px);
+                    @include abs(-8px, -8px);
                     z-index: 1;
                     display: none;
                 }
-                
+
                 &[data-selected='1'] > .feed-reset {
                     display: block;
                 }
-                
+
                 > .popup .results .feed-anchor {
                     @include filterElementLink();
                 }
@@ -49,7 +48,7 @@
             @include loadMore();
         }
     }
-    
+
     > .block-body .row-element > a {
         @include flex(flex-start, stretch);
         padding-left: 15px;
