@@ -21,7 +21,7 @@ class CliSessionGc extends Core\Route\CliSessionGc
 
 
     // config
-    public static $config = [];
+    public static array $config = [];
 }
 
 // init

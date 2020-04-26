@@ -27,7 +27,7 @@ class SpecificDuplicate extends Core\RouteAlias
 
 
     // config
-    public static $config = [
+    public static array $config = [
         'path'=>[
             'en'=>'table/[table]/[primary]/duplicate',
             'fr'=>'table/[table]/[primary]/dupliquer'],
@@ -45,7 +45,7 @@ class SpecificDuplicate extends Core\RouteAlias
 
 
     // dynamique
-    protected $duplicate = null; // garde une copie de la nouvelle ligne
+    protected ?Core\Row $duplicate = null; // garde une copie de la nouvelle ligne
 
 
     // canTrigger

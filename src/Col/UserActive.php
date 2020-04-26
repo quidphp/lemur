@@ -18,7 +18,7 @@ use Quid\Core;
 class UserActive extends Core\Col\UserActive
 {
     // config
-    public static $config = [];
+    public static array $config = [];
 
 
     // formComplex

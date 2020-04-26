@@ -30,7 +30,7 @@ class Specific extends Core\RouteAlias
 
 
     // config
-    public static $config = [
+    public static array $config = [
         'path'=>[
             'en'=>'table/[table]/[primary]',
             'fr'=>'table/[table]/[primary]'],
@@ -288,24 +288,8 @@ class Specific extends Core\RouteAlias
                 if(!empty($specific['prev']))
                 $r .= $specific['prev'];
 
-                if(!empty($specific['count']))
-                {
-                    $popup = $general->generalInfoPopup(true);
-                    $attr = ['popup-trigger'];
-                    $html = '';
-
-                    if(!empty($popup))
-                    {
-                        $attr = Base\Arr::append($attr,['with-popup','with-text-solo','data'=>['anchor-corner'=>true,'absolute-placeholder'=>true]]);
-                        $html .= Html::button($specific['count'],'popup-title');
-                        $html .= static::makeDivPopup($popup);
-                    }
-
-                    else
-                    $html .= Html::div($specific['count'],'popup-title');
-
-                    $r .= Html::div($html,$attr);
-                }
+                if(!empty($specific['countArray']))
+                $r .= Html::divCond($this->makeNavCount(...array_values($specific['countArray'])),'nav-count');
 
                 if(!empty($specific['next']))
                 $r .= $specific['next'];
@@ -319,9 +303,55 @@ class Specific extends Core\RouteAlias
 
                 if($table->hasPermission('navBack') && !empty($specific['back']))
                 $r .= $specific['back'];
+
+                $r .= $this->makeNavPopup($general);
             }
 
             $r .= Html::divCl();
+        }
+
+        return $r;
+    }
+
+
+    // makeNavCount
+    // génère le count dans la barre de navigation spécifique
+    // la position est un input changeable
+    final protected function makeNavCount(int $position,string $text,int $total):string
+    {
+        $r = '';
+        $table = $this->table();
+
+        if($table->hasPermission('navCount') && $position > 0)
+        {
+            $segment = ['table'=>$table,'position'=>true];
+            $route = SpecificPosition::make($segment);
+            $maxPerPage = $total;
+            $data = ['href'=>$route,'char'=>static::getReplaceSegment(),'current'=>$position,'pattern'=>'intCastNotEmpty','max'=>$maxPerPage];
+            $input = Html::inputText($position,['name'=>'limit','data'=>$data,'inputmode'=>'decimal']);
+
+            $r .= Html::div($input,'count-input');
+            $r .= Html::div($text,'count-text');
+            $r .= Html::div($total,'count-total');
+        }
+
+        return $r;
+    }
+
+
+    // makeNavPopup
+    // génère le popup de general, à placer à droite de la barre de navigation spécifique
+    final protected function makeNavPopup(General $general):string
+    {
+        $r = '';
+        $popup = $general->generalInfoPopup(true);
+
+        if(!empty($popup))
+        {
+            $attr = Base\Arr::append(['popup-trigger','with-popup','with-icon-solo','data'=>['anchor-corner'=>true,'absolute-placeholder'=>true]]);
+            $r .= Html::button(null,'popup-title');
+            $r .= static::makeDivPopup($popup);
+            $r = Html::div($r,$attr);
         }
 
         return $r;
@@ -446,7 +476,7 @@ class Specific extends Core\RouteAlias
         if($key === null)
         $key = $row->getViewRouteType() ?? static::boot()->typePrimary();
 
-        if($table->hasPermission('viewApp') && $session->canViewRow($row))
+        if($table->hasPermission('viewRoute') && $session->canViewRow($row))
         {
             $row = $this->row();
             $route = $row->routeSafe($key);

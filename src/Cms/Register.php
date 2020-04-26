@@ -21,7 +21,7 @@ class Register extends Lemur\Route\Register
 
 
     // config
-    public static $config = [
+    public static array $config = [
         'parent'=>Login::class
     ];
 

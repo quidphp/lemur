@@ -23,7 +23,7 @@ class Home extends Core\Route\Home
 
 
     // config
-    public static $config = [
+    public static array $config = [
         'match'=>[
             'session'=>'canAccess'],
         'popup'=>[
@@ -80,7 +80,8 @@ class Home extends Core\Route\Home
     {
         $r = '';
         $tables = $this->db()->tables();
-        $total = $tables->filter(['hasPermission'=>true],'view')->total(true,true);
+        $closure = fn($table) => $table->hasPermission('view');
+        $total = $tables->filter($closure)->total(true,true);
         $popup = $this->makeHomePopup();
 
         $attr = ['popup-trigger'];
@@ -206,7 +207,8 @@ class Home extends Core\Route\Home
             $body = $homeFeed->trigger();
             $currentType = $homeFeed->segment('type');
 
-            $head .= Html::div($this->makeFeedFilter($currentType),'feed-filter');
+            $reset = $homeFeed->a(null,['icon-solo','close','feed-reset']);
+            $head .= Html::div($this->makeFeedFilter($currentType,$reset),'feed-filter');
 
             $r .= Html::div($head,'block-head');
             $r .= Html::div($body,'block-body');
@@ -218,13 +220,14 @@ class Home extends Core\Route\Home
 
     // makeFeedFilter
     // génère le contenu pourle filtre du feed, permet de choisir un utilisateur
-    final protected function makeFeedFilter(int $type):string
+    final protected function makeFeedFilter(int $type,string $after):string
     {
         $r = '';
         $route = HomeFeedRelation::make();
         $attr = ['data'=>['absolute-placeholder'=>true,'anchor-corner'=>true]];
         $label = static::langText('home/feedFilter');
-        $filter = $route->makeTableRelation($label,'user-relation');
+
+        $filter = $route->makeTableRelation($label,$after,'user-relation');
         $r .= Html::divCond($filter,$attr);
 
         return $r;
@@ -237,7 +240,7 @@ class Home extends Core\Route\Home
     {
         $r = '';
         $tables = $this->db()->tables();
-        $tables = $tables->filter(['hasPermission'=>true],'view','homeOverview');
+        $tables = $tables->filter(fn($table) => $table->hasPermission('view','homeOverview'));
         $tables = $tables->sortBy('label');
 
         if($tables->isNotEmpty())

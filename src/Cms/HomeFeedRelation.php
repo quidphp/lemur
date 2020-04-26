@@ -26,7 +26,7 @@ class HomeFeedRelation extends Core\RouteAlias
 
 
     // config
-    public static $config = [
+    public static array $config = [
         'path'=>[
             'en'=>'home/feed/relation/[order]/[page]',
             'fr'=>'accueil/flux//relation/[order]/[page]'],

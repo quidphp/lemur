@@ -17,7 +17,7 @@ use Quid\Base;
 trait _searchGet
 {
     // config
-    public static $configSearch = [
+    public static array $configSearch = [
         'search'=>[
             'decode'=>1,
             'query'=>'s']

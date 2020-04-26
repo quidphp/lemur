@@ -22,7 +22,7 @@ class PopupSession extends Core\RouteAlias
 
 
     // config
-    public static $config = [
+    public static array $config = [
         'path'=>[
             'en'=>'popup/session',
             'fr'=>'popup/session'],

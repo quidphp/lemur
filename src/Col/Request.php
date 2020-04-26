@@ -18,7 +18,7 @@ use Quid\Core;
 class Request extends Core\Col\Request
 {
     // config
-    public static $config = [];
+    public static array $config = [];
 
 
     // onGet

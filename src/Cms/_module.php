@@ -20,7 +20,7 @@ trait _module
 
 
     // config
-    public static $configModule = [
+    public static array $configModule = [
         'match'=>[
             'role'=>['>='=>'admin']],
         'response'=>[

@@ -17,7 +17,7 @@ use Quid\Core;
 abstract class Route extends Core\Route
 {
     // config
-    public static $config = [
+    public static array $config = [
         '@cms'=>[
             'metaTitle'=>['typeLabel'=>true],
             'jsInit'=>'Lemur.InitDoc();',

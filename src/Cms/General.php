@@ -34,7 +34,7 @@ class General extends Core\RouteAlias
 
 
     // config
-    public static $config = [
+    public static array $config = [
         'path'=>[
             'en'=>'table/[table]/[page]/[limit]/[order]/[direction]/[cols]/[filter]/[in]/[notIn]/[highlight]',
             'fr'=>'table/[table]/[page]/[limit]/[order]/[direction]/[cols]/[filter]/[in]/[notIn]/[highlight]'],
@@ -165,7 +165,10 @@ class General extends Core\RouteAlias
         $return = $this->segment('cols');
 
         else
-        $return = $table->cols()->general()->filter(['isVisibleGeneral'=>true]);
+        {
+            $closure = fn($col) => $col->isVisibleGeneral();
+            $return = $table->cols()->general()->filter($closure);
+        }
 
         if(!empty($return) && $this->hasSegment('filter'))
         {
@@ -193,7 +196,8 @@ class General extends Core\RouteAlias
 
         if($this->hasSegment('cols'))
         {
-            $cols = $this->table()->cols()->general()->filter(['isVisibleGeneral'=>true]);
+            $closure = fn($col) => $col->isVisibleGeneral();
+            $cols = $this->table()->cols()->general()->filter($closure);
 
             if($this->segment('cols')->names() !== $cols->names())
             $return = true;
@@ -930,7 +934,7 @@ class General extends Core\RouteAlias
             $close = ['icon-solo','close'];
             $label = Html::span(null,['filter','icon-solo']);
 
-            $route = GeneralRelation::getOverloadClass();
+            $route = GeneralRelation::classOverload();
             $relHtml = $route::makeGeneralRelation($col,$this,$filter,$class,$close,$label);
 
             if(!empty($relHtml))

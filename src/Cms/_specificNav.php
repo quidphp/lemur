@@ -50,7 +50,10 @@ trait _specificNav
             }
 
             if(!empty($specific['position']) && !empty($specific['total']))
-            $return['count'] = Html::span($specific['position'].' '.static::langText('lc|common/on').' '.$specific['total'],$attributes['count']);
+            {
+                $return['countArray'] = [$specific['position'],static::langText('lc|common/on'),$specific['total']];
+                $return['count'] = Html::span(implode(' ',$return['countArray']),$attributes['count']);
+            }
 
             if(!empty($specific['next']))
             {

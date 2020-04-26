@@ -18,7 +18,7 @@ use Quid\Core;
 class UserRole extends Core\Col\UserRole
 {
     // config
-    public static $config = [
+    public static array $config = [
         'sortable'=>false,
         'complex'=>'radio', // ici possible de mettre checkbox pour multiples roles
         'preValidate'=>['setMaxCount'=>1]

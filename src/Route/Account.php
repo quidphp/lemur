@@ -17,7 +17,7 @@ use Quid\Core;
 abstract class Account extends Core\RouteAlias
 {
     // config
-    public static $config = [
+    public static array $config = [
         'path'=>[
             'en'=>'my-account',
             'fr'=>'mon-compte'],
@@ -32,7 +32,7 @@ abstract class Account extends Core\RouteAlias
     // retourne la classe pour soumettre
     final public static function submitClass():string
     {
-        return AccountSubmit::getOverloadClass();
+        return AccountSubmit::classOverload();
     }
 
 

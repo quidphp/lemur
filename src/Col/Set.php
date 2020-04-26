@@ -19,7 +19,7 @@ use Quid\Core;
 class Set extends Core\Col\Set
 {
     // config
-    public static $config = [
+    public static array $config = [
         '@cms'=>[
             'sortable'=>true,
             'relationHtmlSortable'=>"<div class='choice'><div class='choice-in'><button type='button' class='icon-solo move'></button>%</div></div>"]

@@ -17,7 +17,7 @@ use Quid\Core;
 class LogError extends Core\Row\LogError
 {
     // config
-    public static $config = [
+    public static array $config = [
         'permission'=>[
             'contributor'=>['update'=>false,'delete'=>false],
             'editor'=>['update'=>false,'delete'=>false],

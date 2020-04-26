@@ -17,7 +17,7 @@ use Quid\Core;
 class En extends Core\Lang\En
 {
     // config
-    public static $config = [
+    public static array $config = [
 
         // login
         'login'=>[
@@ -834,7 +834,8 @@ class En extends Core\Lang\En
                     'template'=>'Template',
                     'visibility'=>'Visibility',
                     'meta'=>'Meta',
-                    'param'=>'Parameters'
+                    'param'=>'Parameters',
+                    'data'=>'Data'
                 ],
 
                 // description
@@ -850,8 +851,9 @@ class En extends Core\Lang\En
                     'contact'=>'This panel contains contact fields.',
                     'template'=>'This panel contains the fields related to the layout.',
                     'visibility'=>'This panel contains the fields related to the visibility of the element.',
-                    'meta'=>'This panel contains fields related to the metadata of the line',
-                    'param'=>'This panel contains fields related to the parameters of the line'
+                    'meta'=>'This panel contains fields related to the metadata of the line.',
+                    'param'=>'This panel contains fields related to the parameters of the line.',
+                    'data'=>'This panel contains fields related to raw data.'
                 ]
             ],
 
@@ -887,6 +889,7 @@ class En extends Core\Lang\En
                     'specificDuplicate'=>'Dupliquer',
                     'specificMulti'=>'Specific - Multiple',
                     'specificMultiSubmit'=>'Specific - Multiple - Submit',
+                    'specificPosition'=>'Specific - Position',
                     'specificRelation'=>'Specific - Relation',
                     'specificSubmit'=>'Specific - Submit',
                     'tableRelation'=>'Table Relation',

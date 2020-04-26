@@ -22,7 +22,7 @@ class CliClearLog extends Core\Route\CliClearLog
 
 
     // config
-    public static $config = [
+    public static array $config = [
         'logCron'=>null
     ];
 }

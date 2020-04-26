@@ -18,7 +18,7 @@ use Quid\Core;
 class Serialize extends Core\Col\Serialize
 {
     // config
-    public static $config = [
+    public static array $config = [
         'complex'=>'div'
     ];
 

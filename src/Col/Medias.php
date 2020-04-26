@@ -10,6 +10,7 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Col;
+use Quid\Base;
 use Quid\Core;
 
 // medias
@@ -17,19 +18,14 @@ use Quid\Core;
 class Medias extends Core\Col\Medias
 {
     // config
-    public static $config = [];
+    public static array $config = [];
 
 
     // formComplexUpdate
     // génère l'élément de formulaire complexe média lors d'une mise à jour
     final protected function formComplexUpdate(Core\Cell $value,array $attr,array $option):string
     {
-        $return = '';
-
-        foreach($this->indexRange() as $index)
-        {
-            $return .= $this->commonFormComplexUpdate($index,$value,$attr,$option);
-        }
+        $return = Base\Arr::accumulate('',$this->indexRange(),fn($index) => $this->commonFormComplexUpdate($index,$value,$attr,$option));
 
         if(empty($return))
         $return = $this->formComplexEmptyPlaceholder($value);

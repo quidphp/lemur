@@ -25,7 +25,7 @@ trait _template
 
 
     // config
-    public static $configTemplate = [
+    public static array $configTemplate = [
         'mainNav'=>true
     ];
 
@@ -265,7 +265,7 @@ trait _template
         $return = [];
         $boot = static::boot();
         $routes = $boot->routes();
-        $return = $routes->filter(['inMenu'=>true],$type);
+        $return = $routes->filter(fn($route) => $route::inMenu($type));
 
         return $return;
     }
@@ -369,7 +369,7 @@ trait _template
     {
         if($table->hasPermission(...$navAdd))
         {
-            $specificAdd = SpecificAdd::getOverloadClass();
+            $specificAdd = SpecificAdd::classOverload();
             $attr[] = 'with-specific-add';
             $route = $specificAdd::make($table);
             $html .= $route->makeNavLink();
@@ -575,7 +575,7 @@ trait _template
     {
         $return = [];
         $routes = static::boot()->routes();
-        $routes = $routes->filter(['group'=>$group]);
+        $routes = $routes->filter(fn($route) => $route::group() === $group);
 
         if($routes->isNotEmpty())
         {

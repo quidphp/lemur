@@ -19,7 +19,7 @@ use Quid\Orm;
 class Money extends Core\Col\FloatingAlias
 {
     // config
-    public static $config = [
+    public static array $config = [
         'money'=>null, // custom
         'check'=>false
     ];
@@ -31,9 +31,10 @@ class Money extends Core\Col\FloatingAlias
     {
         $return = parent::onGet($return,$option);
         $return = ($return instanceof Orm\Cell)? $this->value($return):$return;
+        $moneyAttr = $this->getAttr('money');
 
-        if(is_numeric($return))
-        $return = Base\Num::moneyFormat($return,null,$this->getAttr('money'));
+        if(is_numeric($return) && $moneyAttr !== false)
+        $return = Base\Num::moneyFormat($return,null,$moneyAttr);
 
         return $return;
     }

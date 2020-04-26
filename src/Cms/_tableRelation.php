@@ -74,18 +74,18 @@ trait _tableRelation
 
     // makeTableRelation
     // génère le html pour le clickOpen
-    final public function makeTableRelation(?string $label=null,$attr=null):string
+    final public function makeTableRelation(?string $label=null,?string $after=null,$attr=null):string
     {
         $r = '';
         $table = $this->table();
         $relation = $this->relation();
-        $label = $label ?? $table->label();
-        $title = Html::span($label,'title');
+        $label ??= $table->label();
+        $title = Html::span($label,['title','data-title'=>$label]);
         $title .= Html::span(null,'ico');
 
         [$html,$data] = static::commonInsideClickOpen($relation,$this);
         $attr = Base\Attr::append($attr,['data'=>$data]);
-        $r .= static::makeClickOpen($html,$title,null,$attr);
+        $r .= static::makeClickOpen($html,$title,$after,$attr);
 
         return $r;
     }

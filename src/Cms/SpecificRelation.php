@@ -28,7 +28,7 @@ class SpecificRelation extends Core\RouteAlias
 
 
     // config
-    public static $config = [
+    public static array $config = [
         'path'=>[
             'en'=>'specific/relation/[table]/[col]/[selected]/[order]/[page]',
             'fr'=>'specifique/relation/[table]/[col]/[selected]/[order]/[page]'],

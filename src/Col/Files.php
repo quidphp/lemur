@@ -21,7 +21,7 @@ use Quid\Main;
 abstract class Files extends Core\Col\Files
 {
     // config
-    public static $config = [
+    public static array $config = [
         'complex'=>'inputFile',
         'permission'=>[
             '*'=>[
@@ -79,7 +79,7 @@ abstract class Files extends Core\Col\Files
             $attr['tag'] = $this->getAttr('complex');
             $option['multi'] = $hasMultiple;
 
-            foreach($this->indexRange() as $i)
+            foreach ($this->indexRange() as $i)
             {
                 $int = $i + 1;
                 $return .= Html::divOp(['file-block','empty']);

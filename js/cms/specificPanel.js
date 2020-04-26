@@ -38,13 +38,9 @@ Component.SpecificPanel = function(option)
         },
         
         getCurrentPanel: function() {
-            return Arr.find(trigHdlr(this,'tabs:getTargets'),function() {
-                return Ele.match(this,"[data-current-panel='1']");
+            return Arr.find(trigHdlr(this,'tabs:getTargets'),function(ele) {
+                return Ele.match(ele,"[data-current-panel='1']");
             });
-        },
-        
-        getLinks: function() {
-            return qsa(document,"a.hash-follow");
         }
     });
     
@@ -55,15 +51,16 @@ Component.SpecificPanel = function(option)
     
     
     // event
+    ael(this,'specificPanel:setHash',function(event,hash) {
+        const input = trigHdlr(this,'specificPanel:getInput');
+        trigHdlr(input,'input:setValue',hash);
+    });
+    
     ael(this,'tabs:afterChange',function(event,tab,oldTab) {
         const hash = trigHdlr(tab,'tab:getHash');
-        const input = trigHdlr(this,'specificPanel:getInput');
-        const links = trigHdlr(this,'specificPanel:getLinks');
-        trigHdlr(input,'input:setValue',hash);
         
-        Arr.each(links,function() {
-            this.hash = hash;
-        });
+        if(Str.is(hash))
+        trigEvt(this,'specificPanel:setHash',hash);
     });
     
     

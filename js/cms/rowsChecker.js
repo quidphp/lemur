@@ -25,20 +25,20 @@ Component.RowsChecker = function()
         },
         
         getToolsButton: function() {
-            return Arr.filter(trigHdlr(this,'rowsChecker:getTools'),function() {
-                return Ele.match(this,'button');
+            return Arr.filter(trigHdlr(this,'rowsChecker:getTools'),function(ele) {
+                return Ele.match(ele,'button');
             });
         },
         
         getMultiModify: function() {
-            return Arr.find(trigHdlr(this,'rowsChecker:getToolsButton'),function() {
-                return Ele.match(this,'.multi-modify');
+            return Arr.find(trigHdlr(this,'rowsChecker:getToolsButton'),function(ele) {
+                return Ele.match(ele,'.multi-modify');
             });
         },
         
         getMultiDelete: function() {
-            return Arr.find(trigHdlr(this,'rowsChecker:getTools'),function() {
-                return Ele.match(this,".multi-delete-form");
+            return Arr.find(trigHdlr(this,'rowsChecker:getTools'),function(ele) {
+                return Ele.match(ele,".multi-delete-form");
             }); 
         },
         
@@ -79,8 +79,8 @@ Component.RowsChecker = function()
         },
         
         getCheckedCheckboxes: function() {
-            return Arr.filter(trigHdlr(this,'rowsChecker:getCheckboxes'),function() {
-                return Ele.match(this,':checked');
+            return Arr.filter(trigHdlr(this,'rowsChecker:getCheckboxes'),function(ele) {
+                return Ele.match(ele,':checked');
             });
         },
         
@@ -99,12 +99,12 @@ Component.RowsChecker = function()
         
         areAllUpdateable: function() {
             const rows = trigHdlr(this,'rowsChecker:getCheckedRows');
-            return Ele.matchAll(rows,"[data-updateable='1']");
+            return Ele.every(rows,"[data-updateable='1']");
         },
         
         areAllDeleteable: function() {
             const rows = trigHdlr(this,'rowsChecker:getCheckedRows');
-            return Ele.matchAll(rows,"[data-deleteable='1']");
+            return Ele.every(rows,"[data-deleteable='1']");
         },
         
         refresh: function() {

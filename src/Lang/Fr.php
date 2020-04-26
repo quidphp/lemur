@@ -17,7 +17,7 @@ use Quid\Core;
 class Fr extends Core\Lang\Fr
 {
     // config
-    public static $config = [
+    public static array $config = [
 
         // login
         'login'=>[
@@ -834,7 +834,8 @@ class Fr extends Core\Lang\Fr
                     'template'=>'Mise en page',
                     'visibility'=>'Visibilité',
                     'meta'=>'Meta',
-                    'param'=>'Paramètres'
+                    'param'=>'Paramètres',
+                    'data'=>'Données'
                 ],
 
                 // description
@@ -850,8 +851,9 @@ class Fr extends Core\Lang\Fr
                     'contact'=>'Ce panneau contient les champs de contact.',
                     'template'=>'Ce panneau contient les champs en lien avec la mise en page.',
                     'visibility'=>"Ce panneau contient les champs en lien avec la visibilité de l'élément.",
-                    'meta'=>'Ce panneau contient des champs en lien avec les méta-données de la ligne',
-                    'param'=>'Ce panneau contient des champs en lien avec les paramètres de la ligne'
+                    'meta'=>'Ce panneau contient des champs en lien avec les méta-données de la ligne.',
+                    'param'=>'Ce panneau contient des champs en lien avec les paramètres de la ligne.',
+                    'param'=>'Ce panneau contient des champs en lien avec les données brutes.'
                 ]
             ],
 
@@ -887,6 +889,7 @@ class Fr extends Core\Lang\Fr
                     'specificDuplicate'=>'Dupliquer',
                     'specificMulti'=>'Spécifique - Multiple',
                     'specificMultiSubmit'=>'Spécifique - Multiple - Soumettre',
+                    'specificPosition'=>'Spécifique - Position',
                     'specificRelation'=>'Spécifique - Relation',
                     'specificSubmit'=>'Spécifique - Soumettre',
                     'tableRelation'=>'Relation de table',

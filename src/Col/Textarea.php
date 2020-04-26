@@ -21,7 +21,7 @@ use Quid\Orm;
 class Textarea extends Core\ColAlias
 {
     // config
-    public static $config = [
+    public static array $config = [
         'tag'=>'textarea',
         'search'=>true,
         'check'=>['kind'=>'text'],
@@ -133,7 +133,7 @@ class Textarea extends Core\ColAlias
             if($route->canTrigger())
             {
                 $attr = ['data'=>['absolute-placeholder'=>true,'anchor-corner'=>true]];
-                $filter = $route->makeTableRelation(null,'table-relation');
+                $filter = $route->makeTableRelation(null,null,'table-relation');
                 $r .= Html::divCond($filter,$attr);
             }
         }

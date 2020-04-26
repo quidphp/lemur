@@ -18,7 +18,7 @@ use Quid\Core;
 abstract class ResetPassword extends Core\RouteAlias
 {
     // config
-    public static $config = [
+    public static array $config = [
         'path'=>[
             'en'=>'password/reset',
             'fr'=>'mot-de-passe/reinitialisation'],

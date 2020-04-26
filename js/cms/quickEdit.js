@@ -29,7 +29,7 @@ Component.QuickEdit = function()
         },
         
         getTdOthers: function() {
-            const nodes = Ele.wrap($nodes);
+            const nodes = Ele.toArray($nodes);
             return Arr.valueStrip(this,nodes);
         },
         

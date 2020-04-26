@@ -19,7 +19,7 @@ use Quid\Orm;
 class Excerpt extends Core\ColAlias
 {
     // config
-    public static $config = [
+    public static array $config = [
         'include'=>true,
         'required'=>false,
         'check'=>['kind'=>'text'],

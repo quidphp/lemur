@@ -28,7 +28,7 @@ class SpecificMulti extends Core\RouteAlias
 
 
     // config
-    public static $config = [
+    public static array $config = [
         'path'=>[
             'en'=>'table/[table]/multiple/[primaries]',
             'fr'=>'table/[table]/multiple/[primaries]'],
@@ -86,9 +86,7 @@ class SpecificMulti extends Core\RouteAlias
     // retourne l'objet rows
     final protected function rows():Core\Rows
     {
-        return $this->cache(__METHOD__,function() {
-            return $this->table()->rows(...$this->segment('primaries'));
-        });
+        return $this->cache(__METHOD__,fn() => $this->table()->rows(...$this->segment('primaries')));
     }
 
 

@@ -17,7 +17,7 @@ use Quid\Core;
 abstract class Logout extends Core\RouteAlias
 {
     // config
-    public static $config = [
+    public static array $config = [
         'path'=>[
             'en'=>'logout',
             'fr'=>'deconnexion'],

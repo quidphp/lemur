@@ -25,7 +25,7 @@ trait _relation
 
 
     // config
-    public static $configRelationCms = [
+    public static array $configRelationCms = [
         'limit'=>20,
          'query'=>['s'],
         'history'=>false,

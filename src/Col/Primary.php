@@ -18,7 +18,7 @@ use Quid\Core;
 class Primary extends Core\Col\Primary
 {
     // config
-    public static $config = [];
+    public static array $config = [];
 
 
     // getDataAttr

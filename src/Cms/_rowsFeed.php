@@ -19,7 +19,7 @@ use Quid\Orm;
 trait _rowsFeed
 {
     // rows
-    protected $ids = null;
+    protected ?array $ids = null;
 
 
     // makeIds
@@ -108,7 +108,7 @@ trait _rowsFeed
     // retourne l'objet rows pour la page courante (mais seulement les visibles)
     final public function rowsVisible():Orm\RowsIndex
     {
-        return $this->rows()->filter(['isVisible'=>true]);
+        return $this->rows()->filter(fn($row) => $row->isVisible());
     }
 
 

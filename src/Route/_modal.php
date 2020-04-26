@@ -17,7 +17,7 @@ use Quid\Base;
 trait _modal
 {
     // config
-    public static $configModal = [
+    public static array $configModal = [
         'match'=>[
             'ajax'=>true],
         'group'=>'modal',

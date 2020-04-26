@@ -26,7 +26,7 @@ class HomeFeed extends Core\RouteAlias
 
 
     // config
-    public static $config = [
+    public static array $config = [
         'path'=>[
             'en'=>'home/feed/[page]/[type]',
             'fr'=>'accueil/flux/[page]/[type]'],
@@ -162,7 +162,7 @@ class HomeFeed extends Core\RouteAlias
         $return = [];
         $session = $this->session();
         $db = $this->db();
-        $tables = $db->tables()->filter(['hasPermission'=>true],'view','homeFeed');
+        $tables = $db->tables()->filter(fn($table) => $table->hasPermission('view','homeFeed'));
 
         if($tables->isNotEmpty())
         {
@@ -237,7 +237,7 @@ class HomeFeed extends Core\RouteAlias
         $value = $value->primary();
 
         if($type === 'make')
-        $return = (is_int($value) && $value >= 0)? $value:false;
+        $return = (is_int($value) && $value >= 0)? $value:0;
 
         elseif($type === 'match')
         {

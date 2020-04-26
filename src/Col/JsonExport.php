@@ -20,7 +20,7 @@ use Quid\Orm;
 class JsonExport extends Core\Col\JsonAlias
 {
     // config
-    public static $config = [
+    public static array $config = [
         'cell'=>Lemur\Cell\JsonExport::class,
         'complex'=>'div',
         'onComplex'=>true,

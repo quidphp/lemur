@@ -21,7 +21,7 @@ class CliVersion extends Core\Route\CliVersion
 
 
     // config
-    public static $config = [];
+    public static array $config = [];
 }
 
 // init

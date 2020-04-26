@@ -17,14 +17,14 @@ use Quid\Core;
 class Cols extends Core\Cols
 {
     // config
-    public static $config = [];
+    public static array $config = [];
 
 
     // general
     // retourne un objet cols avec toutes les colonnes dans general
     final public function general():self
     {
-        return $this->filter(['isGeneral'=>true]);
+        return $this->filter(fn($col) => $col->isGeneral());
     }
 
 

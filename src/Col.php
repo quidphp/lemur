@@ -19,7 +19,7 @@ use Quid\Core;
 class Col extends Core\Col
 {
     // config
-    public static $config = [
+    public static array $config = [
         'general'=>null, // la colonne est considéré comme général
         'onComplex'=>null, // callable pour onComplex, si true alors utilise la méthode onGet lors de la création des éléments de formulaires complexes
         'panel'=>null, // retourne le panel de la colonne

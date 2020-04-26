@@ -21,7 +21,7 @@ use Quid\Orm;
 class JsonArray extends Core\Col\JsonAlias
 {
     // config
-    public static $config = [
+    public static array $config = [
         'required'=>true,
         'sortable'=>true,
         'complex'=>'add-remove',

@@ -17,7 +17,7 @@ use Quid\Core;
 class Table extends Core\Table
 {
     // config
-    public static $config = [
+    public static array $config = [
         'panel'=>true, // si panel sont actifs ou non
         'permission'=>[
             'subAdmin'=>[
@@ -77,8 +77,9 @@ class Table extends Core\Table
                     'specificOperation'=>true, // accès au module opération dans la page du formulaire
                     'relationChilds'=>true, // affiche le bloc enfants direct
                     'nav'=>true, // afficher la boîte de navigation...
+                    'navCount'=>true, // ... avec le count au centre
                     'navBack'=>true, // ... avec le bouton retour
-                    'viewApp'=>true, // permettre le lien vers l'application si possible
+                    'viewRoute'=>true, // permettre le lien vers l'application si possible
                     'duplicate'=>false, // permettre la duplication
                     'panelDescription'=>true, // accès aux descriptions de panneaux
                     'colInfoPopup'=>false, // popup d'informations pour la colonne

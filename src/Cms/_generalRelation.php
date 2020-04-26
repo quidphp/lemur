@@ -23,7 +23,7 @@ trait _generalRelation
 
 
     // config
-    public static $configGeneralRelation = [
+    public static array $configGeneralRelation = [
         'showCount'=>false, // affiche le total pour chaque filtre
         'showEmptyNotEmpty'=>false, // offre le choix de filtrer par vide/pas vide
     ];

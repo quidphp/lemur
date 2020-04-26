@@ -20,7 +20,7 @@ use Quid\Main;
 class Contact extends Core\RowAlias
 {
     // config
-    public static $config = [
+    public static array $config = [
         'parent'=>'system',
         'priority'=>953,
         'cols'=>[
@@ -176,7 +176,7 @@ class Contact extends Core\RowAlias
         $table = static::tableFromFqcn();
         $cols = (empty($cols))? static::getColsForm():$cols;
 
-        foreach($table->cols(...$cols) as $col)
+        foreach ($table->cols(...$cols) as $col)
         {
             $name = $col->name();
             $value = (is_array($flash) && array_key_exists($name,$flash))? $flash[$name]:null;
@@ -229,7 +229,7 @@ class Contact extends Core\RowAlias
     {
         $return = null;
         $roles = static::boot()->roles();
-        $role = $roles->first(['isAdmin'=>true]);
+        $role = $roles->find(fn($role) => $role->isAdmin());
 
         if(!empty($role))
         {

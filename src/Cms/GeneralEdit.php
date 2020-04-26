@@ -28,7 +28,7 @@ class GeneralEdit extends Core\RouteAlias
 
 
     // config
-    public static $config = [
+    public static array $config = [
         'path'=>[
             'en'=>'table/[table]/[primary]/[col]',
             'fr'=>'table/[table]/[primary]/[col]'],

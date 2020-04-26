@@ -18,7 +18,7 @@ use Quid\Core;
 class Error extends Core\Col\Error
 {
     // config
-    public static $config = [];
+    public static array $config = [];
 
 
     // onGet

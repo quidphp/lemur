@@ -20,7 +20,7 @@ use Quid\Main;
 class User extends Core\Row\User
 {
     // config
-    public static $config = [
+    public static array $config = [
         'permission'=>[
             '*'=>['cmsLogin'=>false],
             'contributor'=>['cmsLogin'=>true],
@@ -155,7 +155,8 @@ class User extends Core\Row\User
         $col = $cell->col();
         $relation = $col->relation();
         $table = $relation->relationTable();
-        $cols = $table->cols()->filter(['isAttrNotEmpty'=>true],'relationExport');
+        $closure = fn($col) => $col->isAttrNotEmpty('relationExport');
+        $cols = $table->cols()->filter($closure);
         $cols = $cols->sortBy('getAttr',true,'relationExport');
 
         if($type === 'col')

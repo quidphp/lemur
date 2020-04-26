@@ -46,8 +46,10 @@ trait _cols
 
             if(!empty($table))
             {
+                $closure = fn($col) => $col->isVisibleGeneral();
+
                 if($value === null)
-                $return = $table->cols()->general()->filter(['isVisibleGeneral'=>true]);
+                $return = $table->cols()->general()->filter($closure);
 
                 elseif(is_string($value) && !empty($value))
                 {
@@ -55,7 +57,7 @@ trait _cols
 
                     $array = Base\Str::explodeTrimClean($default,$value);
                     $count = count($array);
-                    $value = $table->cols(...$array)->filter(['isVisibleGeneral'=>true]);
+                    $value = $table->cols(...$array)->filter($closure);
 
                     if($value->isCount($count))
                     $return = $value;

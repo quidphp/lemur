@@ -26,6 +26,10 @@
 
     > .limit {
         @include componentInputNumeric();
+        
+        > span {
+            margin-left: 5px;
+        }
     }
 
     @include responsive() {
@@ -110,6 +114,10 @@
     .center {
         @include componentInputNumeric();
         display: flex;
+        
+        > input[type='text'] {
+            margin: 0 5px;
+        }
     }
 }
 

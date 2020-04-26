@@ -22,7 +22,7 @@ class PopupBoot extends Core\RouteAlias
 
 
     // config
-    public static $config = [
+    public static array $config = [
         'path'=>[
             'en'=>'popup/boot/[route]',
             'fr'=>'popup/demerrage/[route]'],

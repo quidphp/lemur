@@ -27,7 +27,7 @@ class SpecificAdd extends Core\RouteAlias
 
 
     // config
-    public static $config = [
+    public static array $config = [
         'path'=>[
             'en'=>'table/[table]/add/0',
             'fr'=>'table/[table]/ajouter/0'],
@@ -42,7 +42,7 @@ class SpecificAdd extends Core\RouteAlias
 
 
     // dynamique
-    protected $flash = null; // garde une copie des données flash
+    protected ?array $flash = null; // garde une copie des données flash
 
 
     // onBefore

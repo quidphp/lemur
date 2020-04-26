@@ -19,7 +19,7 @@ use Quid\Orm;
 class Percent extends Core\Col\FloatingAlias
 {
     // config
-    public static $config = [
+    public static array $config = [
         'percent'=>null // custom
     ];
 

@@ -25,7 +25,7 @@ class SessionRole extends Core\RouteAlias
 
 
     // config
-    public static $config = [
+    public static array $config = [
         'path'=>[
             'en'=>'session/exploration',
             'fr'=>'session/exploration'],
@@ -81,10 +81,7 @@ class SessionRole extends Core\RouteAlias
         $session = static::session();
         $current = $session->role(false)->permission();
         $roles = static::boot()->roles();
-
-        $return = $roles->filter(function(Main\Role $role) use ($current) {
-            return $role->permission() <= $current;
-        });
+        $return = $roles->filter(fn(Main\Role $role) => $role->permission() <= $current);
 
         return $return;
     }

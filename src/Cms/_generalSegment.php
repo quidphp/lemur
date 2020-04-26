@@ -24,7 +24,7 @@ trait _generalSegment
 
 
     // config
-    public static $configGeneralSegment = [
+    public static array $configGeneralSegment = [
         'maxPerPage'=>100,
         'query'=>['s']
     ];
@@ -90,7 +90,7 @@ trait _generalSegment
     // retourne les rows visible de la route
     final public function rowsVisible():Core\Rows
     {
-        return $this->rows()->filter(['isVisible'=>true]);
+        return $this->rows()->filter(fn($row) => $row->isVisible());
     }
 
 

@@ -17,7 +17,7 @@ use Quid\Lemur;
 class AccountChangePasswordSubmit extends Lemur\Route\AccountChangePasswordSubmit
 {
     // config
-    public static $config = [
+    public static array $config = [
         'match'=>[
             'session'=>'canAccess'],
         'parent'=>AccountChangePassword::class

@@ -16,7 +16,7 @@ namespace Quid\Lemur\Cms;
 trait _link
 {
     // config
-    public static $configLink = [
+    public static array $configLink = [
         'group'=>'link',
         'sitemap'=>false,
         'navigation'=>false,

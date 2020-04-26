@@ -17,7 +17,7 @@ use Quid\Core;
 class Media extends Core\Col\Media
 {
     // config
-    public static $config = [];
+    public static array $config = [];
 
 
     // formComplexUpdate

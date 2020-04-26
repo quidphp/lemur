@@ -28,7 +28,7 @@ class Calendar extends Core\RouteAlias
 
 
     // config
-    public static $config = [
+    public static array $config = [
         'path'=>[
             'en'=>'calendar/[timestamp]/[format]/[selected]',
             'fr'=>'calendrier/[timestamp]/[format]/[selected]'],
@@ -48,14 +48,9 @@ class Calendar extends Core\RouteAlias
     // change les callback pour le calendrier
     final public function setCallback(Main\Calendar $return):Main\Calendar
     {
-        $return->setCallback('prev',function(int $value) {
-            $route = $this->changeSegments(['timestamp'=>$value]);
-            return $route->a(null,['ajax','prev']);
-        })
-        ->setCallback('next',function(int $value) {
-            $route = $this->changeSegments(['timestamp'=>$value]);
-            return $route->a(null,['ajax','next']);
-        })
+        $return
+        ->setCallback('prev',fn(int $value) => $this->changeSegments(['timestamp'=>$value])->a(null,['ajax','prev']))
+        ->setCallback('next',fn(int $value) => $this->changeSegments(['timestamp'=>$value])->a(null,['ajax','next']))
         ->setCallback('day',function(int $value,int $timestamp,array $attr) {
             $attr = ($this->isDayDisabled($value,$timestamp))? ['disabled'=>true]:null;
             return Html::button($value,$attr);

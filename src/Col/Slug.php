@@ -19,7 +19,7 @@ use Quid\Orm;
 class Slug extends Core\ColAlias
 {
     // config
-    public static $config = [
+    public static array $config = [
         'tag'=>'inputText',
         'setPriority'=>9,
         'keyboard'=>'url',
@@ -39,7 +39,7 @@ class Slug extends Core\ColAlias
 
 
     // replaceMode
-    protected static $replaceMode = ['=slug']; // défini les colonnes à ne pas merger récursivement
+    protected static array $replaceMode = ['=slug']; // défini les colonnes à ne pas merger récursivement
 
 
     // slugExists

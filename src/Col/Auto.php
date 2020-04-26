@@ -19,7 +19,7 @@ use Quid\Orm;
 class Auto extends Core\ColAlias
 {
     // config
-    public static $config = [
+    public static array $config = [
         'complex'=>'div',
         'setPriority'=>9,
         'include'=>true,

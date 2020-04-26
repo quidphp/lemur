@@ -43,8 +43,8 @@ Component.ColsSorter = function(option)
         },
         
         getCheckedCheckboxes: function() {
-            return Arr.filter(trigHdlr(this,'colsSorter:getCheckboxes'),function() {
-                return Ele.match(this,':checked');
+            return Arr.filter(trigHdlr(this,'colsSorter:getCheckboxes'),function(ele) {
+                return Ele.match(ele,':checked');
             });
         },
         

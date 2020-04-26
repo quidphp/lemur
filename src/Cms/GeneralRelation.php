@@ -29,7 +29,7 @@ class GeneralRelation extends Core\RouteAlias
 
 
     // config
-    public static $config = [
+    public static array $config = [
         'path'=>[
             'en'=>'general/relation/[table]/[col]/[selected]/[order]/[page]',
             'fr'=>'general/relation/[table]/[col]/[selected]/[order]/[page]'],

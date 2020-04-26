@@ -54,7 +54,7 @@ ael(document,'doc:mountCommon',function(event,node) {
     
     // select
     const select = qsa(node,"select");
-    trigSetup(Component.FakeSelectConvert.call(select));
+    trigSetup(Component.SelectConvert.call(select));
     
     // autre
     const anchorCorner = qsa(node,"[data-anchor-corner='1']");
@@ -285,15 +285,25 @@ ael(document,'specificForm:unmount',function(event,node) {
 // comportement communs pour les pages spécifiques
 ael(document,'group:specific',function(event,node) {
     
-    const form = qs(node,"main .inner > .specific-form");
+    const mainInner = qs(node,"main .inner");
+    const nav = qs(mainInner,"> .top .nav");
+    const form = qs(mainInner,"> .specific-form");
     const panel = qsa(form,".panel");
-
+    
+    // nav
+    trigSetup(Component.SpecificNav.call(nav));
+    
     // champs simples
     trigEvt(this,'specificForm:pageMount',form);
     
     // avec panel
     if(Arr.length(panel) > 1)
-    trigSetup(Component.SpecificPanel.call(form),true);
+    {
+        trigSetup(Component.SpecificPanel.call(form),true);
+        ael(form,'specificPanel:setHash',function(event,hash) {
+            trigHdlr(nav,'specificNav:setHash',hash);
+        });
+    }
     
     else
     trigEvt(this,'specificForm:tabFull',form);

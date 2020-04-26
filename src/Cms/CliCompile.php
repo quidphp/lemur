@@ -22,7 +22,7 @@ class CliCompile extends Core\Route\CliCompile
 
 
     // config
-    public static $config = [];
+    public static array $config = [];
 }
 
 // init

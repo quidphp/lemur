@@ -19,7 +19,7 @@ use Quid\Orm;
 class Phone extends Core\ColAlias
 {
     // config
-    public static $config = [
+    public static array $config = [
         'tag'=>'inputTel',
         'search'=>false,
         'validate'=>[1=>'phone'],

@@ -68,7 +68,7 @@ Component.SpecificComponents = function()
         
         match: function(node) {
             let r = undefined;
-            Ele.check(node);
+            Ele.typecheck(node);
             
             Arr.each($components,function() {
                 if(Ele.match(node,this.match))
@@ -83,13 +83,13 @@ Component.SpecificComponents = function()
         },
         
         setup: function(nodes,view) {
-            Ele.each(nodes,function() {
+            Arr.each(nodes,function() {
                 const $this = this;
                 const comp = trigHdlr(document,'specificComponents:match',this);
                 const node = qs(this,'.specific-component');
                 const hasInput = qs(node,Dom.selectorInput(true));
                 let found = false;
-                Ele.check(node);
+                Ele.typecheck(node);
                 
                 if(comp != null && comp.setupOnView == view && hasInput != null)
                 {

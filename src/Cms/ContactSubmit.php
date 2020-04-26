@@ -17,7 +17,7 @@ use Quid\Lemur;
 class ContactSubmit extends Lemur\Route\ContactSubmit
 {
     // config
-    public static $config = [
+    public static array $config = [
         'parent'=>Contact::class
     ];
 

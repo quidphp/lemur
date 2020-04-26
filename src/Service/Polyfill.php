@@ -17,7 +17,7 @@ use Quid\Main;
 class Polyfill extends Main\Service
 {
     // config
-    public static $config = [];
+    public static array $config = [];
 
 
     // docOpenJs

@@ -16,7 +16,7 @@ namespace Quid\Lemur\Route;
 trait _searchPost
 {
     // config
-    public static $configSearch = [
+    public static array $configSearch = [
         'searchName'=>'search'
     ];
 

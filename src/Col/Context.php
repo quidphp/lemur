@@ -18,7 +18,7 @@ use Quid\Core;
 class Context extends Core\Col\Context
 {
     // config
-    public static $config = [];
+    public static array $config = [];
 
 
     // varExport

@@ -22,7 +22,7 @@ abstract class ResetPasswordSubmit extends Core\RouteAlias
 
 
     // config
-    public static $config = [
+    public static array $config = [
         'path'=>[
             'en'=>'password/reset/submit',
             'fr'=>'mot-de-passe/reinitialisation/soumettre'],

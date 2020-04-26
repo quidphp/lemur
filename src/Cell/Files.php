@@ -20,7 +20,7 @@ use Quid\Main;
 abstract class Files extends Core\Cell\Files
 {
     // config
-    public static $config = [];
+    public static array $config = [];
 
 
     // commonGeneralOutput

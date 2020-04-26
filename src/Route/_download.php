@@ -18,7 +18,7 @@ use Quid\Main;
 trait _download
 {
     // config
-    public static $configDownload = [
+    public static array $configDownload = [
         'navigation'=>false,
         'sitemap'=>false,
         'toScreen'=>false

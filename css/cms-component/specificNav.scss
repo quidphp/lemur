@@ -1,0 +1,63 @@
+// compileOnSave: false
+
+/*
+ * This file is part of the QuidPHP package.
+ * Website: https://quidphp.com
+ * License: https://github.com/quidphp/lemur/blob/master/LICENSE
+ */
+
+// specificNav
+// stylesheet for the speciic nav component of the CMS
+@mixin specificNavComponent() {
+    @include specificNavLinks();
+    
+    > .nav-count {
+        @include flex(flex-start,center);
+        
+        > .count-input {
+            @include componentInputNumeric();
+        }
+        
+        > .count-text {
+            margin: 0 5px;
+        }
+    }
+}
+
+// specificNavLinks
+// mixin pour le bloc avec liens de navigation
+@mixin specificNavLinks() {
+    @include iflex(flex-end, center, wrap);
+    background-color: $lightestGray;
+    border: 1px solid $lightGray;
+    padding: 6px 12px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 6px -4px $gray;
+    font-size: 90%;
+    
+    > a {
+        color: $black;
+        font-weight: bold;
+        
+        &:hover,
+        &[data-triggered='1'] {
+            color: $darkGray;
+        }
+    }
+    
+    > * {
+        margin: 0 6px;
+        
+        &:first-child {
+            margin-left: 0;
+        }
+        
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+    
+    @include responsive() {
+        justify-content: center;
+    }
+}

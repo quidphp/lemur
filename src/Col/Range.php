@@ -19,7 +19,7 @@ use Quid\Core;
 class Range extends Core\Col\JsonAlias
 {
     // config
-    public static $config = [
+    public static array $config = [
         'required'=>true,
         'check'=>['kind'=>'char'],
         'preValidate'=>'array',

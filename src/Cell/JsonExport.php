@@ -17,7 +17,7 @@ use Quid\Core;
 class JsonExport extends Core\CellAlias
 {
     // config
-    public static $config = [];
+    public static array $config = [];
 
 
     // isInvalidValue

@@ -26,7 +26,7 @@ class Search extends Core\RouteAlias
 
 
     // config
-    public static $config = [
+    public static array $config = [
         'path'=>[
             'en'=>'search',
             'fr'=>'recherche'],

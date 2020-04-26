@@ -18,7 +18,7 @@ use Quid\Core;
 class Medias extends Core\Cell\Medias
 {
     // config
-    public static $config = [];
+    public static array $config = [];
 
 
     // generalOutput
@@ -29,7 +29,7 @@ class Medias extends Core\Cell\Medias
         $slider = [];
         $col = $this->col();
 
-        foreach($col->indexRange() as $index)
+        foreach ($col->indexRange() as $index)
         {
             $value = $this->commonGeneralOutput($index,$option);
 

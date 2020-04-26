@@ -20,7 +20,7 @@
     }
 }
 [data-group='specific'] main .inner > .top .right .nav {
-    @include navSpace();
+    @include specificNavComponent();
 }
 
 /* FORM */

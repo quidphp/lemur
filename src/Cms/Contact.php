@@ -22,7 +22,7 @@ class Contact extends Lemur\Route\Contact
 
 
     // config
-    public static $config = [
+    public static array $config = [
         'formWrap'=>'divtable',
         'pattern'=>'%:'
     ];

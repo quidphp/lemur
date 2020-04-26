@@ -17,7 +17,7 @@ use Quid\Core;
 class ContextType extends Core\Col\ContextType
 {
     // config
-    public static $config = [
+    public static array $config = [
         'sortable'=>false
     ];
 }

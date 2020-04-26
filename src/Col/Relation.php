@@ -20,7 +20,7 @@ use Quid\Lemur;
 abstract class Relation extends Core\Col\Relation
 {
     // config
-    public static $config = [
+    public static array $config = [
         'specificLink'=>false,
         '@cms'=>[
             'anchorCorner'=>[self::class,'hasAnchorCorner'],

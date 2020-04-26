@@ -22,7 +22,7 @@ class CliClearCache extends Core\Route\CliClearCache
 
 
     // config
-    public static $config = [];
+    public static array $config = [];
 }
 
 // init

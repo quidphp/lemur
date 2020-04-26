@@ -23,7 +23,7 @@ abstract class ActivatePassword extends Core\RouteAlias
 
 
     // config
-    public static $config = [
+    public static array $config = [
         'path'=>[
             'en'=>'password/activate/[primary]/[hash]',
             'fr'=>'mot-de-passe/activation/[primary]/[hash]'],

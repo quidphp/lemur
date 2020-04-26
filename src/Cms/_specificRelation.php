@@ -22,7 +22,7 @@ trait _specificRelation
 
 
     // config
-    public static $configSpecificRelation = [
+    public static array $configSpecificRelation = [
         'showCount'=>false // affiche le total pour chaque élément
     ];
 

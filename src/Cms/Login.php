@@ -22,7 +22,7 @@ class Login extends Lemur\Route\Login
 
 
     // config
-    public static $config = [
+    public static array $config = [
         'path'=>[
             null,
             'fr'=>'connexion',

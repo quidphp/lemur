@@ -17,7 +17,7 @@ use Quid\Base\Html;
 trait _page
 {
     // config
-    public static $configCmsPage = [
+    public static array $configCmsPage = [
         'match'=>[
             'session'=>'canAccess']
     ];

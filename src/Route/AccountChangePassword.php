@@ -19,7 +19,7 @@ use Quid\Lemur;
 abstract class AccountChangePassword extends Core\RouteAlias
 {
     // config
-    public static $config = [
+    public static array $config = [
         'path'=>[
             'en'=>'my-account/change-password',
             'fr'=>'mon-compte/mot-de-passe'],

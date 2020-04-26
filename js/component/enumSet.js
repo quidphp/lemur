@@ -78,8 +78,8 @@ Component.EnumSet = function(option)
         
         isChoiceIn: function(value) {
             const radioCheckbox = trigHdlr(this,'enumSet:getRadioCheckbox');
-            const find = Arr.find(radioCheckbox,function() {
-                return Ele.match(this,"[value='"+value+"']")
+            const find = Arr.find(radioCheckbox,function(ele) {
+                return Ele.match(ele,"[value='"+value+"']")
             });
             
             return find != null;
@@ -223,7 +223,7 @@ Component.EnumSet = function(option)
                 Ele.append(current,html);
                 
                 const radioCheckbox = trigHdlr(this,'enumSet:getRadioCheckbox');
-                Ele.each(radioCheckbox,function() {
+                Arr.each(radioCheckbox,function() {
                     if(!trigHdlr(this,'input:isBinded'))
                     Component.Input.call(this);
                 });

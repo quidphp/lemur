@@ -17,7 +17,7 @@ use Quid\Main;
 class TinyMce extends Main\Service
 {
     // config
-    public static $config = [];
+    public static array $config = [];
 
 
     // docOpenJs

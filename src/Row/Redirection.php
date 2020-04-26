@@ -17,7 +17,7 @@ use Quid\Core;
 class Redirection extends Core\Row\Redirection
 {
     // config
-    public static $config = [
+    public static array $config = [
         '@cms'=>[
             'permission'=>[
                 'contributor'=>['view'=>false],

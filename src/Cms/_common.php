@@ -54,9 +54,9 @@ trait _common
 
     // panelInputName
     // retourne le nom du input pour panel
-    final public static function panelInputName():string
+    final public static function panelInputName(bool $dash=true):string
     {
-        return '-panel-';
+        return ($dash === true)? '-panel-':'panel';
     }
 
 

@@ -20,7 +20,7 @@ use Quid\Lemur;
 class Date extends Core\Col\Date
 {
     // config
-    public static $config = [
+    public static array $config = [
         'anchorCorner'=>true,
         'absolutePlaceholder'=>true,
         'onComplex'=>true,

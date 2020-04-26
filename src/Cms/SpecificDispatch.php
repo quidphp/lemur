@@ -25,7 +25,7 @@ class SpecificDispatch extends Core\RouteAlias
 
 
     // config
-    public static $config = [
+    public static array $config = [
         'path'=>[
             'en'=>'table/[table]/[primary]/dispatch',
             'fr'=>'table/[table]/[primary]/envoyer'],

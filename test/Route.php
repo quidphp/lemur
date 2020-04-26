@@ -150,7 +150,7 @@ class Route extends Base\Test
         assert($loginMake->submitTitle('% ok') === "<button type='submit'>Login ok</button>");
         assert($loginSubmit::make() instanceof $loginSubmit);
         assert(Lemur\Route\ActivatePassword::make() instanceof Suite\Assert\ActivatePassword);
-        assert($loginSubmit::getOverloadClass() === Lemur\Cms\LoginSubmit::class);
+        assert($loginSubmit::classOverload() === Lemur\Cms\LoginSubmit::class);
         assert($loginSubmit::makeParent() instanceof Lemur\Cms\Login);
         assert(count($loginMake->tagAttr('a',['class','#id'])) === 2);
         assert($loginMake->tagOption('form') === null);
@@ -643,7 +643,7 @@ class Route extends Base\Test
         $routes->init('cms');
 
         // routing
-        assert($app->count() === 55);
+        assert($app->count() === 56);
         assert($routes->type() === 'cms');
         assert($routes->keyParent()[Lemur\Cms\LoginSubmit::class] === Lemur\Cms\Login::class);
         assert(count($routes->hierarchy()) === 27);
@@ -673,10 +673,10 @@ class Route extends Base\Test
         assert($routes->pair('priority')['Home'] === 1);
         assert(is_numeric($routes->pairStr('priority')));
         assert($routes->pair('label','%:',null,['error'=>false])['Home'] === 'Home:');
-        assert($routes->filter(['group'=>'home'])->isCount(2));
-        assert($routes->first(['group'=>'home']) === Lemur\Cms\Home::class);
-        assert($routes->filter(['group'=>'error','priority'=>992])->isEmpty());
-        assert($routes->filter(['group'=>'error','priority'=>999])->isCount(1));
+        assert($routes->filter(fn($route) => $route::group() === 'home')->isCount(2));
+        assert($routes->find(fn($route) => $route::group() === 'home') === Lemur\Cms\Home::class);
+        assert($routes->filter(fn($route) => $route::group() === 'error' && $route::priority() === 992)->isEmpty());
+        assert($routes->filter(fn($route) => $route::group() === 'error' && $route::priority() === 999)->isCount(1));
         assert(count($routes->group('group')) === 14);
         assert($routes->sortBy('name',false)->index(1) === Lemur\Cms\TableRelation::class);
         assert($routes->sortBy('name',false) !== $routes);
@@ -684,15 +684,15 @@ class Route extends Base\Test
         assert($routes->sortDefault() === $routes);
 
         // map
-        assert($routes->isCount(55));
+        assert($routes->isCount(56));
         assert($routes->get('Sitemap') === Lemur\Cms\Sitemap::class);
         assert($routes->get(Lemur\Cms\Sitemap::class) === Lemur\Cms\Sitemap::class);
         assert(!$routes->in('Sitemap'));
         assert($routes->in(Lemur\Cms\Sitemap::class));
         assert($routes->exists('Sitemap'));
         assert($routes->exists(Lemur\Cms\Sitemap::class));
-        assert($routes->unset('Sitemap')->isCount(54));
-        assert($routes->add(Lemur\Cms\Sitemap::class)->isCount(55));
+        assert($routes->unset('Sitemap')->isCount(55));
+        assert($routes->add(Lemur\Cms\Sitemap::class)->isCount(56));
 
         return true;
     }

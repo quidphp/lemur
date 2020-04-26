@@ -25,7 +25,7 @@ class UserWelcome extends Core\RouteAlias
 
 
     // config
-    public static $config = [
+    public static array $config = [
         'path'=>[
             'en'=>'user/[primary]/welcome-email',
             'fr'=>'utilisateur/[primary]/courriel-bienvenue'],

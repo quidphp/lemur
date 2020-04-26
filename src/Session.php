@@ -17,7 +17,7 @@ use Quid\Core;
 class Session extends Core\Session
 {
     // config
-    public static $config = [];
+    public static array $config = [];
 
 
     // allowWelcomeEmail

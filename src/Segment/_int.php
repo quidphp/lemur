@@ -20,9 +20,10 @@ trait _int
     final public static function structureSegmentInt(string $type,$value,array &$keyValue)
     {
         $return = false;
+        $minimum = static::structureSegmentIntMinimum();
 
         if($type === 'make')
-        $return = (is_int($value) && $value >= 0)? $value:false;
+        $return = (is_int($value) && $value >= $minimum)? $value:false;
 
         elseif($type === 'match')
         {
@@ -33,7 +34,7 @@ trait _int
 
             else
             {
-                $return = (is_int($value) && $value >= 0)? $value:false;
+                $return = (is_int($value) && $value >= $minimum)? $value:false;
 
                 $possible = static::structureSegmentIntPossible();
                 if($return !== false && !empty($possible))
@@ -42,6 +43,14 @@ trait _int
         }
 
         return $return;
+    }
+
+
+    // structureSegmentIntMinimum
+    // retourne la valeur minimum pour le int
+    final public static function structureSegmentIntMinimum():int
+    {
+        return 0;
     }
 
 
