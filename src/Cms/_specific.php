@@ -19,7 +19,7 @@ use Quid\Main;
 trait _specific
 {
     //  configSpecific
-    public static array $configCmsSpecific = [
+    protected static array $configCmsSpecific = [
         'formWrap'=>"<div class='left'><div class='label'>%label%</div>%description%%details%</div><div class='right'>%form%</div>%popup%",
         'popup'=>[
             'name','isRequired','shouldBeUnique','isEditable','priority','pattern','preValidate','validate','compare','type','length','unsigned',

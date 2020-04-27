@@ -23,7 +23,7 @@ class About extends Core\RouteAlias
 
 
     // config
-    public static array $config = [
+    protected static array $config = [
         'path'=>[
             'en'=>'about',
             'fr'=>'a-propos']

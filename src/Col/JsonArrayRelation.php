@@ -20,7 +20,7 @@ use Quid\Lemur;
 class JsonArrayRelation extends Core\ColAlias
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'cell'=>Lemur\Cell\JsonArrayRelation::class,
         'required'=>true,
         'relationCols'=>null // custom

@@ -50,8 +50,8 @@ Component.SpecificNav = function()
         const links = trigHdlr(this,'specificNav:getLinks');
         const input = trigHdlr(this,'specificNav:getInput');
 
-        Arr.each(links,function() {
-            this.hash = hash;
+        Arr.each(links,function(ele) {
+            ele.hash = hash;
         });
         
         if(input != null)

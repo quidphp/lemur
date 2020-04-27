@@ -20,7 +20,7 @@ use Quid\Lemur;
 abstract class Relation extends Core\Col\Relation
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'specificLink'=>false,
         '@cms'=>[
             'anchorCorner'=>[self::class,'hasAnchorCorner'],
@@ -145,7 +145,7 @@ abstract class Relation extends Core\Col\Relation
         {
             $method = 'formComplex'.ucfirst($tag);
 
-            if(method_exists($this,$method))
+            if($this->hasMethod($method))
             $return = $this->$method($value,$attr,$option);
 
             elseif(Html::isRelationTag($tag))

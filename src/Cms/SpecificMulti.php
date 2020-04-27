@@ -28,7 +28,7 @@ class SpecificMulti extends Core\RouteAlias
 
 
     // config
-    public static array $config = [
+    protected static array $config = [
         'path'=>[
             'en'=>'table/[table]/multiple/[primaries]',
             'fr'=>'table/[table]/multiple/[primaries]'],

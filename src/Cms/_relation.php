@@ -25,7 +25,7 @@ trait _relation
 
 
     // config
-    public static array $configRelationCms = [
+    protected static array $configRelationCms = [
         'limit'=>20,
          'query'=>['s'],
         'history'=>false,
@@ -207,7 +207,7 @@ trait _relation
         $return = $lang->take('relationOrder/key');
 
         if(!empty($allowed['value']))
-        $return = Base\Arr::append($return,$lang->take('relationOrder/value'));
+        $return = Base\Arr::merge($return,$lang->take('relationOrder/value'));
 
         return $return;
     }

@@ -22,7 +22,7 @@ use Quid\Orm;
 abstract class Video extends Core\ColAlias
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'tag'=>'inputText',
         'search'=>false,
         'cell'=>Lemur\Cell\Video::class,

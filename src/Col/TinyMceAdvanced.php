@@ -16,7 +16,7 @@ namespace Quid\Lemur\Col;
 class TinyMceAdvanced extends TinyMceAlias
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'tinymce'=>[ // custom, ce merge à la classe parent
             'plugins'=>'autolink code charmap fullscreen hr link lists paste print searchreplace visualblocks wordcount image media table',
             'toolbar'=>'styleselect removeformat visualblocks | bold italic underline | bullist numlist | link image media charmap hr table | searchreplace print code fullscreen',

@@ -19,7 +19,7 @@ use Quid\Orm;
 class Slug extends Core\ColAlias
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'tag'=>'inputText',
         'setPriority'=>9,
         'keyboard'=>'url',

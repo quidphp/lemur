@@ -18,7 +18,7 @@ use Quid\Core;
 class Relation extends Core\Cell\Relation
 {
     // config
-    public static array $config = [];
+    protected static array $config = [];
 
 
     // generalOutput

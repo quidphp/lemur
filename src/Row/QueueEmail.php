@@ -18,7 +18,7 @@ use Quid\Lemur;
 class QueueEmail extends Core\Row\QueueEmail
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'cols'=>[
             'json'=>['class'=>Lemur\Col\JsonExport::class]],
         'permission'=>[

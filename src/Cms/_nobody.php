@@ -24,7 +24,7 @@ trait _nobody
 
 
     // config
-    public static array $configNobody = [
+    protected static array $configNobody = [
         'mainNav'=>false,
         'docOpen'=>[
             'body'=>['background-image'=>'%background%']]

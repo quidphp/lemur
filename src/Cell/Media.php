@@ -17,7 +17,7 @@ use Quid\Core;
 class Media extends Core\Cell\Media
 {
     // config
-    public static array $config = [];
+    protected static array $config = [];
 
 
     // generalOutput

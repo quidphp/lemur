@@ -17,7 +17,7 @@ use Quid\Core;
 abstract class Account extends Core\RouteAlias
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'path'=>[
             'en'=>'my-account',
             'fr'=>'mon-compte'],

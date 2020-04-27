@@ -22,7 +22,7 @@ abstract class AccountChangePasswordSubmit extends Core\RouteAlias
 
 
     // config
-    public static array $config = [
+    protected static array $config = [
         'path'=>[
             'en'=>'my-account/change-password/submit',
             'fr'=>'mon-compte/mot-de-passe/soumettre'],

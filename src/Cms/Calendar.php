@@ -28,7 +28,7 @@ class Calendar extends Core\RouteAlias
 
 
     // config
-    public static array $config = [
+    protected static array $config = [
         'path'=>[
             'en'=>'calendar/[timestamp]/[format]/[selected]',
             'fr'=>'calendrier/[timestamp]/[format]/[selected]'],

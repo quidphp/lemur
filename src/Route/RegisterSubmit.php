@@ -23,7 +23,7 @@ abstract class RegisterSubmit extends Core\RouteAlias
 
 
     // config
-    public static array $config = [
+    protected static array $config = [
         'path'=>[
             'en'=>'register/submit',
             'fr'=>'enregistrement/soumettre'],
@@ -111,7 +111,7 @@ abstract class RegisterSubmit extends Core\RouteAlias
         $default = $this->getDataDefault($post);
         $passwordConfirm = $password['passwordConfirm'];
         $keep = $this->getBaseFields();
-        $keep = Base\Arr::append($keep,$this->getOtherFields());
+        $keep = Base\Arr::merge($keep,$this->getOtherFields());
         $keep[] = $password['password'];
 
         $return['data'] = Base\Arr::gets($keep,$post);
@@ -200,7 +200,7 @@ abstract class RegisterSubmit extends Core\RouteAlias
     // retourne les champs de base et autres
     final public function getBaseAndOtherFields():array
     {
-        return Base\Arr::append($this->getBaseFields(),$this->getOtherFields());
+        return Base\Arr::merge($this->getBaseFields(),$this->getOtherFields());
     }
 }
 

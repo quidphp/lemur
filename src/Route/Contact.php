@@ -20,7 +20,7 @@ use Quid\Lemur;
 abstract class Contact extends Core\RouteAlias
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'path'=>[
             'en'=>'contact-us',
             'fr'=>'nous-joindre'],

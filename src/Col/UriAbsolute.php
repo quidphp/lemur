@@ -18,7 +18,7 @@ use Quid\Core;
 class UriAbsolute extends Core\Col\UriAbsolute
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         '@cms'=>[
             'generalExcerptMin'=>null]
     ];

@@ -223,9 +223,9 @@ Component.EnumSet = function(option)
                 Ele.append(current,html);
                 
                 const radioCheckbox = trigHdlr(this,'enumSet:getRadioCheckbox');
-                Arr.each(radioCheckbox,function() {
-                    if(!trigHdlr(this,'input:isBinded'))
-                    Component.Input.call(this);
+                Arr.each(radioCheckbox,function(ele) {
+                    if(!trigHdlr(ele,'input:isBinded'))
+                    Component.Input.call(ele);
                 });
                 
                 trigEvt(this,'clickOpen:close');

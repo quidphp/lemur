@@ -19,7 +19,7 @@ use Quid\Core;
 class IntegerRange extends Core\Col\Integer
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'complex'=>'inputNumericRange',
         'required'=>true,
         'keyboard'=>'decimal',

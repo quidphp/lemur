@@ -18,7 +18,7 @@ use Quid\Lemur;
 class LogEmail extends Core\Row\LogEmail
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'cols'=>[
             'json'=>['class'=>Lemur\Col\JsonExport::class]],
         'permission'=>[

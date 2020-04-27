@@ -19,7 +19,7 @@ use Quid\Orm;
 class Percent extends Core\Col\FloatingAlias
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'percent'=>null // custom
     ];
 
@@ -43,7 +43,7 @@ class Percent extends Core\Col\FloatingAlias
     final protected function onSet($return,array $row,?Orm\Cell $cell=null,array $option)
     {
         if(is_string($return))
-        $return = Base\Str::keepNumber($return);
+        $return = Base\Str::keepNum($return);
 
         return $return;
     }

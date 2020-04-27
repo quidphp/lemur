@@ -22,7 +22,7 @@ class Row extends Core\Row implements Main\Contract\Meta
 
 
     // config
-    public static array $config = [];
+    protected static array $config = [];
 
 
     // getDataAttr

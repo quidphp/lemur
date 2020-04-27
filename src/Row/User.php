@@ -20,7 +20,7 @@ use Quid\Main;
 class User extends Core\Row\User
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'permission'=>[
             '*'=>['cmsLogin'=>false],
             'contributor'=>['cmsLogin'=>true],

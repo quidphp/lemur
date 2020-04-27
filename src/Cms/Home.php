@@ -23,7 +23,7 @@ class Home extends Core\Route\Home
 
 
     // config
-    public static array $config = [
+    protected static array $config = [
         'match'=>[
             'session'=>'canAccess'],
         'popup'=>[
@@ -94,7 +94,7 @@ class Home extends Core\Route\Home
 
         if(!empty($popup))
         {
-            $attr = Base\Arr::append($attr,['with-popup','with-icon','data'=>['anchor-corner'=>true,'absolute-placeholder'=>true]]);
+            $attr = Base\Arr::merge($attr,['with-popup','with-icon','data'=>['anchor-corner'=>true,'absolute-placeholder'=>true]]);
             $tag = 'button';
         }
 

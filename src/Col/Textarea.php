@@ -21,7 +21,7 @@ use Quid\Orm;
 class Textarea extends Core\ColAlias
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'tag'=>'textarea',
         'search'=>true,
         'check'=>['kind'=>'text'],

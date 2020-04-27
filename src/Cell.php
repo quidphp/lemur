@@ -19,7 +19,7 @@ use Quid\Core;
 class Cell extends Core\Cell
 {
     // config
-    public static array $config = [];
+    protected static array $config = [];
 
 
     // generalComponent

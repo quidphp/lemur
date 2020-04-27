@@ -20,7 +20,7 @@ trait _popup
 
 
     // config
-    public static array $configPopup = [
+    protected static array $configPopup = [
         'match'=>[
             'ajax'=>true,
             'session'=>'canAccess'],

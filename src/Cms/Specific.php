@@ -30,7 +30,7 @@ class Specific extends Core\RouteAlias
 
 
     // config
-    public static array $config = [
+    protected static array $config = [
         'path'=>[
             'en'=>'table/[table]/[primary]',
             'fr'=>'table/[table]/[primary]'],
@@ -348,7 +348,7 @@ class Specific extends Core\RouteAlias
 
         if(!empty($popup))
         {
-            $attr = Base\Arr::append(['popup-trigger','with-popup','with-icon-solo','data'=>['anchor-corner'=>true,'absolute-placeholder'=>true]]);
+            $attr = Base\Arr::merge(['popup-trigger','with-popup','with-icon-solo','data'=>['anchor-corner'=>true,'absolute-placeholder'=>true]]);
             $r .= Html::button(null,'popup-title');
             $r .= static::makeDivPopup($popup);
             $r = Html::div($r,$attr);

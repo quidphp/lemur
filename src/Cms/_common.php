@@ -24,7 +24,7 @@ trait _common
     {
         $return = false;
 
-        if(method_exists($this,'table'))
+        if($this->hasMethod('table'))
         {
             $table = $this->table()->name();
 

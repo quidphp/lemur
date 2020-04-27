@@ -18,7 +18,7 @@ use Quid\Core;
 class UserPassword extends Core\Col\UserPassword
 {
     // config
-    public static array $config = [];
+    protected static array $config = [];
 
 
     // formComplex

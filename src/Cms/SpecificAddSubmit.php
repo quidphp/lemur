@@ -25,7 +25,7 @@ class SpecificAddSubmit extends Core\RouteAlias
 
 
     // config
-    public static array $config = [
+    protected static array $config = [
         'path'=>[
             'en'=>'table/[table]/add/0/submit',
             'fr'=>'table/[table]/ajouter/0/soumettre'],

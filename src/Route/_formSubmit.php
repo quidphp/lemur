@@ -17,7 +17,7 @@ use Quid\Lemur;
 trait _formSubmit
 {
     // config
-    public static array $configFormSubmit = [
+    protected static array $configFormSubmit = [
         'log'=>Lemur\Row\Log::class, // la classe ou logger le formulaire
         'logType'=>'form', // clé à utiliser pour le type de log
         'flashPost'=>false // si on flash post automatiquement lors d'une failure ou fallback

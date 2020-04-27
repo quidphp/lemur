@@ -23,7 +23,7 @@ trait _cli
 
 
     // config
-    public static array $configCliCms = [
+    protected static array $configCliCms = [
         'match'=>[
             'cli'=>null],
         'history'=>false

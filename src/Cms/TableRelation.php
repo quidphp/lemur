@@ -27,7 +27,7 @@ class TableRelation extends Core\RouteAlias
 
 
     // config
-    public static array $config = [
+    protected static array $config = [
         'path'=>[
             'en'=>'table/relation/[table]/[order]/[page]',
             'fr'=>'table/relation/[table]/[order]/[page]'],

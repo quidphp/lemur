@@ -17,7 +17,7 @@ use Quid\Lemur;
 trait _meta
 {
     // config
-    public static array $configMeta = [
+    protected static array $configMeta = [
         'meta'=>[ // permet de définir les cellules pour les méta-données
             'metaTitle'=>['metaTitle_[lang]','name_[lang]'],
             'metaKeywords'=>'metaKeywords_[lang]',

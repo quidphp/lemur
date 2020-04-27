@@ -19,7 +19,7 @@ use Quid\Orm;
 class Phone extends Core\ColAlias
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'tag'=>'inputTel',
         'search'=>false,
         'validate'=>[1=>'phone'],
@@ -48,7 +48,7 @@ class Phone extends Core\ColAlias
     final protected function onSet($return,array $row,?Orm\Cell $cell=null,array $option)
     {
         if(is_string($return))
-        $return = Base\Str::keepNumber($return);
+        $return = Base\Str::keepNum($return);
 
         return $return;
     }

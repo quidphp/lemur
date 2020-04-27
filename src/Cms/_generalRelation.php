@@ -23,7 +23,7 @@ trait _generalRelation
 
 
     // config
-    public static array $configGeneralRelation = [
+    protected static array $configGeneralRelation = [
         'showCount'=>false, // affiche le total pour chaque filtre
         'showEmptyNotEmpty'=>false, // offre le choix de filtrer par vide/pas vide
     ];
@@ -104,7 +104,7 @@ trait _generalRelation
             }
         }
 
-        $return = Base\Arr::append($return,$this->relationKeyValue($value));
+        $return = Base\Arr::merge($return,$this->relationKeyValue($value));
 
         return $return;
     }
@@ -117,7 +117,7 @@ trait _generalRelation
         $return = [];
         $not = array_keys($selected);
         $emptyNotEmpty = $this->getEmptyNotEmptyKeyValue($not);
-        $return = Base\Arr::append($emptyNotEmpty,$array);
+        $return = Base\Arr::merge($emptyNotEmpty,$array);
 
         return $return;
     }

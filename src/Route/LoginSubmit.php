@@ -22,7 +22,7 @@ abstract class LoginSubmit extends Core\RouteAlias
 
 
     // config
-    public static array $config = [
+    protected static array $config = [
         'path'=>[
             'en'=>'login/submit',
             'fr'=>'connexion/soumettre'],

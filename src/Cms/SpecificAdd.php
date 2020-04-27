@@ -27,7 +27,7 @@ class SpecificAdd extends Core\RouteAlias
 
 
     // config
-    public static array $config = [
+    protected static array $config = [
         'path'=>[
             'en'=>'table/[table]/add/0',
             'fr'=>'table/[table]/ajouter/0'],

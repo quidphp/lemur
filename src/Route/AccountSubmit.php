@@ -23,7 +23,7 @@ abstract class AccountSubmit extends Core\RouteAlias
 
 
     // config
-    public static array $config = [
+    protected static array $config = [
         'path'=>[
             'en'=>'my-account/submit',
             'fr'=>'mon-compte/soumettre'],

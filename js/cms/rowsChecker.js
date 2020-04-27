@@ -21,25 +21,29 @@ Component.RowsChecker = function()
         },
         
         getTools: function() {
-            return qsa(trigHdlr(this,'rowsChecker:getToolsContainer'),".tool-element");
+            const container = trigHdlr(this,'rowsChecker:getToolsContainer');
+            return (container != null)? qsa(container,".tool-element"):null;
         },
         
         getToolsButton: function() {
-            return Arr.filter(trigHdlr(this,'rowsChecker:getTools'),function(ele) {
+            const tools = trigHdlr(this,'rowsChecker:getTools') || [];
+            return Arr.filter(tools,function(ele) {
                 return Ele.match(ele,'button');
             });
         },
         
         getMultiModify: function() {
-            return Arr.find(trigHdlr(this,'rowsChecker:getToolsButton'),function(ele) {
+            const toolsButton = trigHdlr(this,'rowsChecker:getToolsButton') || [];
+            return Arr.find(toolsButton,function(ele) {
                 return Ele.match(ele,'.multi-modify');
             });
         },
         
         getMultiDelete: function() {
-            return Arr.find(trigHdlr(this,'rowsChecker:getTools'),function(ele) {
+            const tools = trigHdlr(this,'rowsChecker:getTools') || [];
+            return Arr.find(tools,function(ele) {
                 return Ele.match(ele,".multi-delete-form");
-            }); 
+            });
         },
         
         getToolsMulti: function() {
@@ -62,15 +66,11 @@ Component.RowsChecker = function()
         },
         
         getCheckedRows: function() {
-            const r = [];
             const checked = trigHdlr(this,'rowsChecker:getCheckedCheckboxes');
             
-            Arr.each(checked,function() {
-                const row = trigHdlr(this,'checkbox:getTr');
-                r.push(row);
+            return Arr.accumulate([],checked,function(ele) {
+                return trigHdlr(ele,'checkbox:getTr');
             });
-            
-            return r;
         },
         
         getCheckboxes: function() {

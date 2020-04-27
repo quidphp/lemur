@@ -17,7 +17,7 @@ use Quid\Base;
 class TinyMce extends TextareaAlias
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'search'=>true,
         'tag'=>'textarea',
         'check'=>['kind'=>'text'],

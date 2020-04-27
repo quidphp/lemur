@@ -24,7 +24,7 @@ trait _generalSegment
 
 
     // config
-    public static array $configGeneralSegment = [
+    protected static array $configGeneralSegment = [
         'maxPerPage'=>100,
         'query'=>['s']
     ];

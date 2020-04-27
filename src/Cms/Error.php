@@ -21,7 +21,7 @@ class Error extends Core\Route\Error
 
 
     // config
-    public static array $config = [];
+    protected static array $config = [];
 
 
     // trigger

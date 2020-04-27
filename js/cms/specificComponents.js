@@ -67,26 +67,17 @@ Component.SpecificComponents = function()
         },
         
         match: function(node) {
-            let r = undefined;
             Ele.typecheck(node);
             
-            Arr.each($components,function() {
-                if(Ele.match(node,this.match))
-                {
-                    r = this;
-                    return false;
-                }
-                
+            return Arr.find($components,function(ele) {
+                return Ele.match(node,ele.match);
             });
-            
-            return r;
         },
         
         setup: function(nodes,view) {
-            Arr.each(nodes,function() {
-                const $this = this;
-                const comp = trigHdlr(document,'specificComponents:match',this);
-                const node = qs(this,'.specific-component');
+            Arr.each(nodes,function(ele) {
+                const comp = trigHdlr(document,'specificComponents:match',ele);
+                const node = qs(ele,'.specific-component');
                 const hasInput = qs(node,Dom.selectorInput(true));
                 let found = false;
                 Ele.typecheck(node);

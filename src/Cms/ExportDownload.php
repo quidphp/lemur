@@ -24,7 +24,7 @@ class ExportDownload extends Core\RouteAlias
 
 
     // config
-    public static array $config = [
+    protected static array $config = [
         'path'=>[
             'en'=>'export/[type]/[table]/[order]/[direction]/[filter]/[in]/[notIn]',
             'fr'=>'exportation/[type]/[table]/[order]/[direction]/[filter]/[in]/[notIn]'],

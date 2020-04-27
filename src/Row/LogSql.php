@@ -18,7 +18,7 @@ use Quid\Lemur;
 class LogSql extends Core\Row\LogSql
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'cols'=>[
             'json'=>['class'=>Lemur\Col\JsonExport::class]],
         'permission'=>[

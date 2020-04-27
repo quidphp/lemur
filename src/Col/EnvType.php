@@ -18,7 +18,7 @@ use Quid\Core;
 class EnvType extends Core\Col\EnvType
 {
     // config
-    public static array $config = [];
+    protected static array $config = [];
 
 
     // varExport

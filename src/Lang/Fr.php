@@ -17,7 +17,7 @@ use Quid\Core;
 class Fr extends Core\Lang\Fr
 {
     // config
-    public static array $config = [
+    protected static array $config = [
 
         // login
         'login'=>[

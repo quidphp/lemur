@@ -27,7 +27,7 @@ class SpecificDelete extends Core\RouteAlias
 
 
     // config
-    public static array $config = [
+    protected static array $config = [
         'path'=>[
             'en'=>'table/[table]/[primary]/delete',
             'fr'=>'table/[table]/[primary]/effacer'],

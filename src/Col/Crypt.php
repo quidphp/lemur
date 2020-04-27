@@ -20,7 +20,7 @@ use Quid\Orm;
 class Crypt extends Core\ColAlias
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'tag'=>'inputText',
         'check'=>['kind'=>'char'],
         'secretKey'=>null

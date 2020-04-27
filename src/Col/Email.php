@@ -19,7 +19,7 @@ use Quid\Core;
 class Email extends Core\Col\Email
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         '@cms'=>[
             'generalExcerptMin'=>null]
     ];

@@ -90,10 +90,10 @@ trait _generalInput
                 $r .= Html::inputText($search,['name'=>true,'placeholder'=>$placeholder,'data'=>$data,'inputmode'=>'search']);
 
                 if($search !== null)
-                $r .= Html::a($uri,null,Base\Arr::append($attr['close'] ?? null,'close'));
+                $r .= Html::a($uri,null,Base\Arr::merge($attr['close'] ?? null,'close'));
 
                 $r .= Html::divCl();
-                $r .= Html::button(null,Base\Arr::append($attr['search'] ?? null,'search'));
+                $r .= Html::button(null,Base\Arr::merge($attr['search'] ?? null,'search'));
                 $r .= Html::divCl();
             }
         }
@@ -142,7 +142,7 @@ trait _generalInput
                 if(!empty($general['prev']))
                 {
                     $route = $this->changeSegment('page',$general['prev']);
-                    $r .= $route->a(null,Base\Arr::append($attr,'prev'));
+                    $r .= $route->a(null,Base\Arr::merge($attr,'prev'));
                 }
 
                 $route = $this->changeSegment('page',true);
@@ -158,7 +158,7 @@ trait _generalInput
                 if(!empty($general['next']))
                 {
                     $route = $this->changeSegment('page',$general['next']);
-                    $r .= $route->a(null,Base\Arr::append($attr,'next'));
+                    $r .= $route->a(null,Base\Arr::merge($attr,'next'));
                 }
             }
         }

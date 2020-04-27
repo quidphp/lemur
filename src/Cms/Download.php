@@ -27,7 +27,7 @@ class Download extends Core\RouteAlias
 
 
     // config
-    public static array $config = [
+    protected static array $config = [
         'path'=>[
             'en'=>'download/[table]/[primary]/[col]/[index]',
             'fr'=>'telechargement/[table]/[primary]/[col]/[index]'],

@@ -16,7 +16,7 @@ namespace Quid\Lemur\Col;
 class Fragment extends SlugAlias
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'unique'=>false,
         'validate'=>[1=>'fragment']
     ];

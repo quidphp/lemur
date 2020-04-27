@@ -23,7 +23,7 @@ class CliPreload extends Core\Route\CliPreload
 
 
     // config
-    public static array $config = [
+    protected static array $config = [
         'compile'=>[
             'closure'=>[
                 'from'=>[

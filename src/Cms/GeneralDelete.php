@@ -26,7 +26,7 @@ class GeneralDelete extends Core\RouteAlias
 
 
     // config
-    public static array $config = [
+    protected static array $config = [
         'path'=>[
             'en'=>'table/[table]/multi/delete',
             'fr'=>'table/[table]/multiple/effacer'],

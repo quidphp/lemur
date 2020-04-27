@@ -34,7 +34,7 @@ class General extends Core\RouteAlias
 
 
     // config
-    public static array $config = [
+    protected static array $config = [
         'path'=>[
             'en'=>'table/[table]/[page]/[limit]/[order]/[direction]/[cols]/[filter]/[in]/[notIn]/[highlight]',
             'fr'=>'table/[table]/[page]/[limit]/[order]/[direction]/[cols]/[filter]/[in]/[notIn]/[highlight]'],
@@ -413,7 +413,7 @@ class General extends Core\RouteAlias
 
             if(!empty($popup))
             {
-                $attr = Base\Arr::append($attr,['with-popup','with-icon','data'=>['anchor-corner'=>true,'absolute-placeholder'=>true]]);
+                $attr = Base\Arr::merge($attr,['with-popup','with-icon','data'=>['anchor-corner'=>true,'absolute-placeholder'=>true]]);
                 $r .= Html::button($title,'popup-title');
                 $r .= static::makeDivPopup($popup);
             }
@@ -451,7 +451,7 @@ class General extends Core\RouteAlias
     final protected function infoPopupValues():array
     {
         $return = array_keys($this->segments());
-        $return = Base\Arr::append($return,$this->getAttr('popup'));
+        $return = Base\Arr::merge($return,$this->getAttr('popup'));
 
         return $return;
     }
@@ -490,7 +490,7 @@ class General extends Core\RouteAlias
 
                             if($col->isFilterEmptyNotEmpty())['array'=>$rel,'value'=>$v] = $this->infoPopupFilterEmptyNotEmpty($v,$col,$rel);
 
-                            $rel = Base\Arr::append($rel,$col->relation()->get($v));
+                            $rel = Base\Arr::merge($rel,$col->relation()->get($v));
                             $label = $col->label();
                             $value[$label] = $rel;
                         }

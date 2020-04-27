@@ -22,7 +22,7 @@ class ResetPassword extends Lemur\Route\ResetPassword
 
 
     // config
-    public static array $config = [
+    protected static array $config = [
         'parent'=>Login::class
     ];
 

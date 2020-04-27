@@ -23,7 +23,7 @@ class Export extends Core\RouteAlias
     use Lemur\Route\_modal;
 
     // config
-    public static array $config = [
+    protected static array $config = [
         'path'=>[
             'en'=>'popup/export/[table]/[order]/[direction]/[filter]/[in]/[notIn]',
             'fr'=>'popup/exportation/[table]/[order]/[direction]/[filter]/[in]/[notIn]'],

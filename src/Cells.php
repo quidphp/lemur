@@ -17,7 +17,7 @@ use Quid\Core;
 class Cells extends Core\Cells
 {
     // config
-    public static array $config = [];
+    protected static array $config = [];
 
 
     // formComplex

@@ -17,7 +17,7 @@ use Quid\Core;
 class Robots extends Core\Route\Robots
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'allow'=>false
     ];
 }

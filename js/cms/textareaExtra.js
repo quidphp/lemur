@@ -19,6 +19,7 @@ Component.TextareaExtra = function(option)
             trigger: ".trigger",
             target: ".popup",
             background: "tableRelation",
+            focusableTarget: "button.insert",
             parse: null
         },
         tinymce: {}

@@ -23,7 +23,7 @@ class Email extends Core\RouteAlias
 
 
     // config
-    public static array $config = [
+    protected static array $config = [
         'path'=>[
             'fr'=>'courriel',
             'en'=>'email'],

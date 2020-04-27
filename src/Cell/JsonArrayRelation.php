@@ -17,7 +17,7 @@ use Quid\Core;
 class JsonArrayRelation extends Core\CellAlias
 {
     // config
-    public static array $config = [];
+    protected static array $config = [];
 
 
     // relationRow

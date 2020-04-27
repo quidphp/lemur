@@ -18,7 +18,7 @@ use Quid\Main;
 trait _calendar
 {
     // config
-    public static array $configCalendar = [
+    protected static array $configCalendar = [
         'calendar'=>Main\Calendar::class // classe du calendrier
     ];
 

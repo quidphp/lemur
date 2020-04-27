@@ -20,7 +20,7 @@ use Quid\Main;
 class Contact extends Core\RowAlias
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'parent'=>'system',
         'priority'=>953,
         'cols'=>[

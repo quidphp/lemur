@@ -17,7 +17,7 @@ use Quid\Core;
 class Table extends Core\Table
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'panel'=>true, // si panel sont actifs ou non
         'permission'=>[
             'subAdmin'=>[

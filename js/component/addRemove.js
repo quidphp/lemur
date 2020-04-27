@@ -99,8 +99,8 @@ Component.AddRemove = function(option)
         bindInsert.call(this);
         bindSorter.call(this);
         
-        Arr.each(items,function() {
-            bindElement.call($this,this);
+        Arr.each(items,function(ele) {
+            bindElement.call($this,ele);
         });
     });
     

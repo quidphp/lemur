@@ -25,7 +25,7 @@ trait _template
 
 
     // config
-    public static array $configTemplate = [
+    protected static array $configTemplate = [
         'mainNav'=>true
     ];
 
@@ -149,7 +149,7 @@ trait _template
 
                 if($popup === true)
                 {
-                    $attr = Base\Arr::append($attr,['with-ajax','with-popup','with-icon','data'=>['anchor-corner'=>true,'absolute-placeholder'=>true]]);
+                    $attr = Base\Arr::merge($attr,['with-ajax','with-popup','with-icon','data'=>['anchor-corner'=>true,'absolute-placeholder'=>true]]);
                     $html .= $route->a($username,'popup-title');
                     $html .= static::makeDivPopup();
                 }
@@ -348,7 +348,7 @@ trait _template
                         }
 
                         if($this->isTableTop($keys))
-                        $attr = Base\Arr::append($attr,['data-carousel'=>1,'top']);
+                        $attr = Base\Arr::merge($attr,['data-carousel'=>1,'top']);
                     }
 
                     else
@@ -447,7 +447,7 @@ trait _template
         {
             $html .= $route->a($copyright,'popup-title');
             $html .= static::makeDivPopup();
-            $attr = Base\Arr::append($attr,['with-ajax','with-popup','with-icon','data'=>['anchor-corner'=>true,'absolute-placeholder'=>true]]);
+            $attr = Base\Arr::merge($attr,['with-ajax','with-popup','with-icon','data'=>['anchor-corner'=>true,'absolute-placeholder'=>true]]);
         }
 
         else
@@ -500,7 +500,7 @@ trait _template
         if($this->hasPermission('linkType'))
         $return = $this->footerLinkType();
 
-        $return = Base\Arr::append($return,$this->footerRouteGroup('link'));
+        $return = Base\Arr::merge($return,$this->footerRouteGroup('link'));
 
         return $return;
     }

@@ -18,7 +18,7 @@ use Quid\Lemur;
 class Email extends Core\Row\Email
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'cols'=>[
             'content_fr'=>['class'=>Lemur\Col\Textarea::class],
             'content_en'=>['class'=>Lemur\Col\Textarea::class]],

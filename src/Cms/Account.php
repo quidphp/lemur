@@ -17,7 +17,7 @@ use Quid\Lemur;
 class Account extends Lemur\Route\Account
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'match'=>[
             'session'=>'canAccess']
     ];

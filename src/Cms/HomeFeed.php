@@ -26,7 +26,7 @@ class HomeFeed extends Core\RouteAlias
 
 
     // config
-    public static array $config = [
+    protected static array $config = [
         'path'=>[
             'en'=>'home/feed/[page]/[type]',
             'fr'=>'accueil/flux/[page]/[type]'],
@@ -220,7 +220,7 @@ class HomeFeed extends Core\RouteAlias
         if(!empty($ids))
         {
             $ids = Base\Column::replace($ids,['-table-'=>$name,'-dateCol'=>$date->name()]);
-            $return = Base\Arr::append($return,$ids);
+            $return = Base\Arr::merge($return,$ids);
         }
 
         return $return;

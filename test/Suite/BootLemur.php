@@ -24,7 +24,7 @@ require dirname(__FILE__,4).'/core/test/Suite/BootCore.php';
 class BootLemur extends Test\Suite\BootCore
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'typeAs'=>['assert'=>'cms'],
         'routeNamespace'=>['assert'=>[Lemur\Cms::class,Test\Suite\Assert::class]],
         'assert'=>[
@@ -58,7 +58,7 @@ use Quid\Lemur;
 class Home extends Lemur\Cms\Home
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'selectedUri'=>false,
         'jsInit'=>'document.addEventListener("DOMContentLoaded", function() {
             const attr = [["data-success-color","data-success"],["data-failure-color","data-failure"]];
@@ -122,7 +122,7 @@ use Quid\Lemur;
 class ActivatePassword extends Lemur\Cms\ActivatePassword
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'path'=>[
             'en'=>'activate/password/[primary]/[hash]',
             'fr'=>'activer/mot-de-passe/[primary]/[hash]']
@@ -139,7 +139,7 @@ use Quid\Lemur;
 class Error extends Lemur\Cms\Error
 {
     // config
-    public static array $config = [];
+    protected static array $config = [];
 }
 });
 }
@@ -152,7 +152,7 @@ use Quid\Lemur;
 class Sitemap extends Lemur\Cms\Sitemap
 {
     // config
-    public static array $config = [];
+    protected static array $config = [];
 }
 });
 }
@@ -168,7 +168,7 @@ use Quid\Core;
 class System extends Core\Route
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'type'=>'cms',
         'user'=>'extended',
         'group'=>'module'
@@ -195,7 +195,7 @@ use Quid\Test\Suite;
 class OrmCol extends Lemur\Row
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'cols'=>[
             'wysiwyg'=>['class'=>Lemur\Col\TinyMce::class],
             'other'=>['relation'=>[2,3,4]],
@@ -236,7 +236,7 @@ use Quid\Test\Suite;
 class User extends Lemur\Row\UserAlias
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'emailModel'=>[
             'resetPassword'=>'resetPassword',
             'registerConfirm'=>'registerConfirm'],

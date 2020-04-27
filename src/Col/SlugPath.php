@@ -17,7 +17,7 @@ use Quid\Base;
 class SlugPath extends SlugAlias
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'validate'=>[1=>'slugPath']
     ];
 

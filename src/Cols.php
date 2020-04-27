@@ -17,7 +17,7 @@ use Quid\Core;
 class Cols extends Core\Cols
 {
     // config
-    public static array $config = [];
+    protected static array $config = [];
 
 
     // general

@@ -17,7 +17,7 @@ use Quid\Core;
 abstract class Boot extends Core\Boot
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'types'=>['cms'], // ajout cms comme type
         'finderShortcut'=>[ // shortcut pour finder
             'vendorFront'=>'[vendor]/quidphp/front',

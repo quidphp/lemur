@@ -21,7 +21,7 @@ use Quid\Main;
 abstract class Files extends Core\Col\Files
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'complex'=>'inputFile',
         'permission'=>[
             '*'=>[
