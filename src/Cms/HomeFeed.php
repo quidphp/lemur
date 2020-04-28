@@ -47,7 +47,7 @@ class HomeFeed extends Core\RouteAlias
     // retourne vrai si la route peut être triggé
     final public function canTrigger():bool
     {
-        return parent::canTrigger() && $this->hasPermission('homeFeed');
+        return parent::canTrigger() && $this->hasPermission('home','homeFeed');
     }
 
 
@@ -98,34 +98,38 @@ class HomeFeed extends Core\RouteAlias
     final public function rowFeedOutput(Lemur\Row $row,string $dateCol):string
     {
         $r = '';
-        $route = $row->route();
         $table = $row->table();
-        $isUpdateable = ($table->hasPermission('view','lemurUpdate') && $row->isUpdateable());
-        $icon = ($isUpdateable === true)? 'modify':'view';
-        $tooltip = ($isUpdateable === true)? 'tooltip/rowModify':'tooltip/rowView';
-        $commit = $row->cellsDateCommit()[$dateCol] ?? null;
-        $media = $row->cellsMediaFile();
-        $label = $row->label(null,100);
-        $lang = static::lang();
+        $route = $row->route();
 
-        $attr = ['media'];
-        if(!empty($media))
-        $attr['style']['background-image'] = $media;
-        else
-        $attr[] = 'media-placeholder';
+        if($route->canTrigger())
+        {
+            $isUpdateable = ($table->hasPermission('lemurUpdate') && $row->isUpdateable());
+            $icon = ($isUpdateable === true)? 'modify':'view';
+            $tooltip = ($isUpdateable === true)? 'tooltip/rowModify':'tooltip/rowView';
+            $commit = $row->cellsDateCommit()[$dateCol] ?? null;
+            $media = $row->cellsMediaFile();
+            $label = $row->label(null,100);
+            $lang = static::lang();
 
-        $r .= Html::div(null,$attr);
+            $attr = ['media'];
+            if(!empty($media))
+            $attr['style']['background-image'] = $media;
+            else
+            $attr[] = 'media-placeholder';
 
-        $middle = Html::h3($label);
-        if(!empty($commit))
-        $middle .= Html::divCond($this->rowFeedCommitOutput($commit),'commit');
-        $r .= Html::div($middle,'title-commit');
+            $r .= Html::div(null,$attr);
 
-        $attr = ['icon-solo',$icon,'data-tooltip'=>$lang->text($tooltip)];
-        $icon = Html::div(null,$attr);
-        $r .= Html::div($icon,'tools');
+            $middle = Html::h3($label);
+            if(!empty($commit))
+            $middle .= Html::divCond($this->rowFeedCommitOutput($commit),'commit');
+            $r .= Html::div($middle,'title-commit');
 
-        $r = $route->a($r);
+            $attr = ['icon-solo',$icon,'data-tooltip'=>$lang->text($tooltip)];
+            $icon = Html::div(null,$attr);
+            $r .= Html::div($icon,'tools');
+
+            $r = $route->a($r);
+        }
 
         return $r;
     }

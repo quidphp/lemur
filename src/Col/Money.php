@@ -16,12 +16,11 @@ use Quid\Orm;
 
 // money
 // class for a column managing money (money formatted string)
-class Money extends Core\Col\FloatingAlias
+class Money extends Core\Col\NumAlias
 {
     // config
     protected static array $config = [
-        'money'=>null, // custom
-        'check'=>false
+        'money'=>null // custom
     ];
 
 
@@ -45,6 +44,8 @@ class Money extends Core\Col\FloatingAlias
     // enlève tous les caractères non numérique
     final protected function onSet($return,array $row,?Orm\Cell $cell=null,array $option)
     {
+        $return = parent::onSet($return,$row,$cell,$option);
+
         if(is_string($return))
         $return = Base\Str::keepNum($return,'.');
 

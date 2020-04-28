@@ -28,7 +28,6 @@ abstract class ResetPasswordSubmit extends Core\RouteAlias
             'fr'=>'mot-de-passe/reinitialisation/soumettre'],
         'match'=>[
             'method'=>'post',
-            'session'=>'allowResetPasswordEmail',
             'role'=>'nobody',
             'post'=>['email'],
             'timeout'=>true,
@@ -47,7 +46,8 @@ abstract class ResetPasswordSubmit extends Core\RouteAlias
     // retourne vrai si la route peut être lancé
     public function canTrigger():bool
     {
-        return parent::canTrigger() && static::session()->roles(false)->isNobody() && static::session()->allowResetPasswordEmail();
+        $session = static::session();
+        return parent::canTrigger() && $session->roles(false)->isNobody() && $session->user()->allowResetPasswordEmail();
     }
 
 
@@ -101,7 +101,7 @@ abstract class ResetPasswordSubmit extends Core\RouteAlias
         $post = $this->onBeforeCommit($post);
 
         if($post !== null)
-        $return = $class::resetPasswordProcess($post['email'],$replace,$option);
+        $return = $class::resetPasswordProcess($post['email'],true,$replace,$option);
 
         if(empty($return))
         $this->failureComplete();

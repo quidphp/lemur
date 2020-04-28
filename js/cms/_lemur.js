@@ -182,49 +182,53 @@ ael(document,'route:home',function(event,node) {
 ael(document,'route:general',function(event,node) {
     
     const main = qs(node,"main");
-    const scroller = qs(main,".container .scroller");
     const search = qs(main,".left > .search");
     const pageLimit = qsa(main,"input[name='limit'],input[name='page']");
-    const table = qs(scroller,"table");
-    const filter = qsa(table,"th.filterable .filter-outer");
-    const colsSorter = qs(table,"th.action");
-    const filesSlider = qsa(table,"td[data-group='media'] .slider");
-    const quickEdit = qsa(table,"td[data-quick-edit='1'] a.quick-edit");
-    const highlight = qsa(table,"tr.highlight");
-    
+    const scroller = qs(main,".container .scroller");
+
     // page + limit
     Component.InputNumericHref.call(pageLimit);
     
     // search
     trigSetup(Component.SearchSlide.call(search,{trigger: "> .form input[type='text']", target: "> .in"}));
-    
-    // rowsChecker
-    trigSetup(Component.RowsChecker.call(main));
-    
-    // colsSorter
-    trigSetup(Component.ColsSorter.call(colsSorter));
-    
-    // filter
-    trigSetup(Component.Filter.call(filter,{trigger: ".trigger", target: ".popup"}));
-    
-    // quickEdit
-    trigSetup(Component.QuickEdit.call(quickEdit));
-    
-    // highlight 
-    ael(highlight,'mouseover',function(event) {
-        toggleClass(this,'highlight',false);
-    });
-    
-    // dragScroll
-    trigSetup(Component.ScrollDrag.call(scroller,{selector: 'tbody',targetTag: 'div'}));
 
-    // filesSlider
-    trigSetup(Component.TabsNav.call(filesSlider,{target: ".slider-element", prev: ".prev", next: ".next"}));
-    
-    // unmount
-    aelOnce(this,'route:general:unmount',function(event,node) {
-        trigHdlrs(quickEdit,'quickEdit:revert');
-    });
+    if(scroller != null)
+    {
+        const table = qs(scroller,"table");
+        const filter = qsa(table,"th.filterable .filter-outer");
+        const colsSorter = qs(table,"th.action");
+        const filesSlider = qsa(table,"td[data-group='media'] .slider");
+        const quickEdit = qsa(table,"td[data-quick-edit='1'] a.quick-edit");
+        const highlight = qsa(table,"tr.highlight");
+        
+        // rowsChecker
+        trigSetup(Component.RowsChecker.call(main));
+        
+        // colsSorter
+        trigSetup(Component.ColsSorter.call(colsSorter));
+        
+        // filter
+        trigSetup(Component.Filter.call(filter,{trigger: ".trigger", target: ".popup"}));
+        
+        // quickEdit
+        trigSetup(Component.QuickEdit.call(quickEdit));
+        
+        // highlight 
+        ael(highlight,'mouseover',function(event) {
+            toggleClass(this,'highlight',false);
+        });
+        
+        // dragScroll
+        trigSetup(Component.ScrollDrag.call(scroller,{selector: 'tbody',targetTag: 'div'}));
+
+        // filesSlider
+        trigSetup(Component.TabsNav.call(filesSlider,{target: ".slider-element", prev: ".prev", next: ".next"}));
+        
+        // unmount
+        aelOnce(this,'route:general:unmount',function(event,node) {
+            trigHdlrs(quickEdit,'quickEdit:revert');
+        });
+    }
 });
 
 

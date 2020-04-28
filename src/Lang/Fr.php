@@ -657,8 +657,8 @@ class Fr extends Core\Lang\Fr
                     // *
                     '*'=>[
                         'id'=>'Clé primaire et unique. Obligatoire',
-                        'context'=>"Défini le contexte lors de la création de l'élément, pour administrateur.",
-                        'envType'=>"Défini l'environnement et le type lors de la création de l'élément, pour administrateur.",
+                        'context'=>"Défini le contexte lors de la création de l'élément - pour administrateur.",
+                        'envType'=>"Défini l'environnement et le type lors de la création de l'élément - pour administrateur.",
                         'metaKeywords_fr'=>'Mots clefs séparés par des virgules, champ facultatif',
                         'metaKeywords_en'=>'Mots clefs séparés par des virgules, champ facultatif',
                         'metaDescription_fr'=>'Aucune balise HTML, champ facultatif',
@@ -719,12 +719,12 @@ class Fr extends Core\Lang\Fr
                         'storage_fr'=>"Fichier à lier à l'élément.",
                         'storage_en'=>"Fichier à lier à l'élément.",
                         'storages'=>"Fichiers(s) à lier à l'élément",
-                        'pointer'=>'Pointeur table -> id. Ne pas modifier, pour administrateur.',
+                        'pointer'=>'Pointeur table -> id. Ne pas modifier - pour administrateur.',
                         'email'=>"Adresse courriel de l'élément",
                         'color'=>'Spécifier un code couleur (Hex)',
                         'menu'=>"Spécifie si l'élément doit s'afficher dans le menu",
-                        'route'=>'Spécifie la route à utiliser (pour administrateur)',
-                        'method'=>'Spécifie la méthode à utiliser (pour administrateur)',
+                        'route'=>'Spécifie la route à utiliser - pour administrateur',
+                        'method'=>'Spécifie la méthode à utiliser - pour administrateur',
                         'featured'=>"Spécifie si l'élément doit être placé à la une",
                         'website'=>"Site web en lien avec l'élément, mettre l'adresse complête",
                         'author'=>"Spécifie l'auteur de l'élément",
@@ -774,8 +774,9 @@ class Fr extends Core\Lang\Fr
 
                     // email
                     'email'=>[
-                        'key'=>'Clé unique du modèle de courriel. Pour administrateur',
-                        'type'=>"Content-Type utilisé lors de l'envoie. Pour administrateur"
+                        'type'=>'Le modèle de courriel est accessible dans ces types - pour administrateur',
+                        'contentType'=>"Content-Type utilisé lors de l'envoie - pour administrateur",
+                        'key'=>'Clé unique du modèle de courriel. Pour administrateur'
                     ],
 
                     // log

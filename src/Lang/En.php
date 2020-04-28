@@ -657,8 +657,8 @@ class En extends Core\Lang\En
                     // *
                     '*'=>[
                         'id'=>'Primary and unique key. Required',
-                        'context'=>'Defines the context when creating the element, for administrator.',
-                        'envType'=>'Defines the environment and type when creating the element, for administrator.',
+                        'context'=>'Defines the context when creating the element - for admin.',
+                        'envType'=>'Defines the environment and type when creating the element - for admin.',
                         'metaKeywords_fr'=>'Keywords separated by commas, optional field',
                         'metaKeywords_en'=>'Keywords separated by commas, optional field',
                         'metaDescription_fr'=>'No HTML tags, optional field',
@@ -719,12 +719,12 @@ class En extends Core\Lang\En
                         'storage_fr'=>'File to link to the entry.',
                         'storage_en'=>'File to link to the entry.',
                         'storages'=>'File(s) to link to the entry.',
-                        'pointer'=>'Pointer table -> id. Do not modify, for administrator.',
+                        'pointer'=>'Pointer table -> id. Do not modify - for admin.',
                         'email'=>'Email address of the entry',
                         'color'=>'Specify a color code (Hex)',
                         'menu'=>'Specifies whether the item should appear in the menu',
-                        'route'=>'Specify the route to use (for administrator)',
-                        'method'=>'Specifies the method to use (for administrator)',
+                        'route'=>'Specify the route to use - for admin',
+                        'method'=>'Specifies the method to use - for admin',
                         'featured'=>'Specifies whether the item should be featured',
                         'website'=>'Web site linked to the element, put the full address',
                         'author'=>'Specifies the author of the element',
@@ -774,8 +774,9 @@ class En extends Core\Lang\En
 
                     // email
                     'email'=>[
-                        'key'=>'Unique key of the email template',
-                        'type'=>'Content-Type to be used, for administrator'
+                        'type'=>'The email model is accessible within these types - for admin',
+                        'contentType'=>'Content-Type to be used - for admin',
+                        'key'=>'Unique key of the email template'
                     ],
 
                     // log
@@ -787,19 +788,19 @@ class En extends Core\Lang\En
                     // logSql
                     'logSql'=>[
                         'type'=>'Type of sql query',
-                        'json'=>'SQL data - for administrator'
+                        'json'=>'SQL data - for admin'
                     ],
 
                     // logCron
                     'logCron'=>[
                         'key'=>'Key of cron',
-                        'json'=>'CRON script data - for administrator'
+                        'json'=>'CRON script data - for admin'
                     ],
 
                     // logError
                     'logError'=>[
                         'type'=>'Type of error',
-                        'json'=>'Data and backtrace of the error - for administrator'
+                        'json'=>'Data and backtrace of the error - for admin'
                     ],
 
                     // logEmail
@@ -845,7 +846,7 @@ class En extends Core\Lang\En
                     'en'=>'This panel contains the English language fields.',
                     'relation'=>'This panel contains the fields that have relationships with other tables.',
                     'media'=>'This panel contains fields that contain files and media.',
-                    'admin'=>'This panel contains advanced fields for administrator.',
+                    'admin'=>'This panel contains advanced fields for admin.',
                     'profile'=>'This panel contains the fields related to a user profile.',
                     'localization'=>'This panel contains fields related to geolocation.',
                     'contact'=>'This panel contains contact fields.',

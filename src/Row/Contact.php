@@ -19,6 +19,10 @@ use Quid\Main;
 // class to work with a row of the contact table, stores contact messages
 class Contact extends Core\RowAlias
 {
+    // trait
+    use Core\Row\_emailModel;
+
+
     // config
     protected static array $config = [
         'parent'=>'system',
@@ -45,42 +49,6 @@ class Contact extends Core\RowAlias
     ];
 
 
-    // contactAdminEmailModel
-    // retourne le modele de courriel pour envoyer à l'administrateur si existant
-    final public function contactAdminEmailModel():?Main\Contract\Email
-    {
-        $return = null;
-        $key = $this->getAttr('emailModel/contactAdmin');
-
-        if(!empty($key))
-        $return = Core\Row\Email::find($key);
-
-        return $return;
-    }
-
-
-    // contactConfirmEmailModel
-    // retourne le modele de courriel pour envoyer au visiteur si existant
-    final public function contactConfirmEmailModel():?Main\Contract\Email
-    {
-        $return = null;
-        $key = $this->getAttr('emailModel/contactConfirm');
-
-        if(!empty($key))
-        $return = Core\Row\Email::find($key);
-
-        return $return;
-    }
-
-
-    // hasEmailName
-    // retourne vrai si le visiteur dans l'entrée de contact a un courriel et un nom
-    final public function hasEmailName()
-    {
-        return $this->cellName()->isNotEmpty() && $this->email()->is('email');
-    }
-
-
     // email
     // retourne la cellule du email
     final public function email(...$args)
@@ -91,18 +59,15 @@ class Contact extends Core\RowAlias
 
     // toEmail
     // retourne email=>name lors de l'envoie dans un email
-    final public function toEmail():?array
+    final public function toEmail():array
     {
-        $return = null;
+        $email = $this->email()->value();
+        $name = $this->cellName()->value();
 
-        if($this->hasEmailName())
-        {
-            $email = $this->email()->value();
-            $name = $this->cellName()->value();
-            $return = [$email=>$name];
-        }
+        if(empty($email) || empty($name))
+        static::throw();
 
-        return $return;
+        return [$email=>$name];
     }
 
 
@@ -110,48 +75,15 @@ class Contact extends Core\RowAlias
     // lors de l'insertion d'un nouveau contact, envoie le email
     final protected function onInserted(array $option)
     {
-        $this->sendEmail($option);
+        $this->sendEmails(true,$option);
 
         return;
     }
 
 
-    // sendEmail
-    // envoie les courriels de confirmation à l'administrateur et au visiteur
-    final protected function sendEmail(?array $option=null):int
-    {
-        $return = 0;
-        $option = Base\Arr::plus(['mailer'=>null,'method'=>'dispatch'],$option);
-
-        $replace = $this->getReplaceEmail();
-        $method = $option['method'];
-        $adminEmail = static::getAdminEmail();
-        $contactAdmin = $this->contactAdminEmailModel();
-        $contactConfirm = $this->contactConfirmEmailModel();
-
-        if(!empty($contactConfirm))
-        {
-            $send = $contactConfirm->$method($option['mailer'],$this,$replace);
-
-            if($send === true)
-            $return++;
-        }
-
-        if(!empty($contactAdmin) && !empty($adminEmail))
-        {
-            $send = $contactAdmin->$method($option['mailer'],$adminEmail,$replace);
-
-            if($send === true)
-            $return++;
-        }
-
-        return $return;
-    }
-
-
-    // getReplaceEmail
+    // getEmailReplace
     // retourne le tableau de remplacement pour les courriels
-    protected function getReplaceEmail():array
+    protected function getEmailReplace():array
     {
         $return = [];
         $boot = static::boot();
@@ -159,10 +91,73 @@ class Contact extends Core\RowAlias
         $cells = $this->cells()->gets(...static::getColsForm());
         $model = '%label%: %get%';
 
-        $return['name'] = $boot->label();
-        $return['host'] = $boot->schemeHost(true);
+        $return['contactUserName'] = $this->email()->value();
         $return['link'] = $this->route('cms')->uriAbsolute();
         $return['data'] = implode(PHP_EOL,$cells->htmlStr($model,false,$option));
+
+        return $return;
+    }
+
+
+    // contactConfirmEmail
+    // retourne un tableau avec tout ce qu'il faut pour envoyer le courriel pour confirmer le formulaire de contact
+    final protected function contactConfirmEmail($type=true,?array $replace=null):array
+    {
+        return $this->getEmailArray('contactConfirm',$type,$this->prepareEmailReplace($this->contactConfirmEmailReplace(),$replace));
+    }
+
+
+    // contactConfirmEmailReplace
+    // retourne les valeurs de remplacement pour le courriel de confirmation du formulaire de contact
+    protected function contactConfirmEmailReplace():array
+    {
+        return [];
+    }
+
+
+    // contactAdminEmail
+    // retourne un tableau avec tout ce qu'il faut pour envoyer le courriel pour notifier le contact à l'administrateur
+    final protected function contactAdminEmail($type=true,?array $replace=null):array
+    {
+        return $this->getEmailArray('contactAdmin',$type,$this->prepareEmailReplace($this->contactAdminEmailReplace(),$replace));
+    }
+
+
+    // contactAdminEmailReplace
+    // retourne les valeurs de remplacement pour le courriel pour notifier le contact à l'administrateur
+    protected function contactAdminEmailReplace():array
+    {
+        return [];
+    }
+
+
+    // sendContactConfirmEmail
+    // envoie le courriel de confirmation du contact
+    final public function sendContactConfirmEmail($type=true,?array $replace=null,?array $option=null):bool
+    {
+        return $this->sendEmail($this->contactConfirmEmail($type,$replace),$this,$option);
+    }
+
+
+    // sendContactAdminEmail
+    // envoie le courriel de confirmation de contact à l'administrateur
+    final public function sendContactAdminEmail($type=true,?array $replace=null,?array $option=null):bool
+    {
+        return $this->sendEmail($this->contactAdminEmail($type,$replace),static::getAdminEmail(),$option);
+    }
+
+
+    // sendEmail
+    // envoie les courriels de confirmation au visiteur et à l'administrateur
+    final protected function sendEmails($type=true,?array $option=null):array
+    {
+        $return = [];
+
+        if($this->hasEmailModel('contactConfirm',$type))
+        $return[] = $this->sendContactConfirmEmail();
+
+        if($this->hasEmailModel('contactAdmin',$type))
+        $return[] = $this->sendContactAdminEmail();
 
         return $return;
     }
@@ -195,58 +190,6 @@ class Contact extends Core\RowAlias
     final protected static function getColsForm():array
     {
         return static::$config['colsForm'];
-    }
-
-
-    // hasEmailModel
-    // retourne vrai si les modèles de courriels existents
-    final public static function hasEmailModel():bool
-    {
-        $return = false;
-        $boot = static::boot();
-        $db = $boot->db();
-        $class = Core\Row\Email::class;
-
-        if($db->hasTable($class))
-        {
-            foreach (static::$config['emailModel'] as $value)
-            {
-                $model = $class::find($value);
-                $return = (empty($model))? false:true;
-
-                if($return === false)
-                break;
-            }
-        }
-
-        return $return;
-    }
-
-
-    // getAdminEmail
-    // retourne le email du premier utilisateur administrateur
-    public static function getAdminEmail():?array
-    {
-        $return = null;
-        $roles = static::boot()->roles();
-        $role = $roles->find(fn($role) => $role->isAdmin());
-
-        if(!empty($role))
-        {
-            $user = User::findByRole($role);
-            if(!empty($user))
-            $return = $user->toEmail();
-        }
-
-        return $return;
-    }
-
-
-    // canSendEmail
-    // retourne vrai s'il est possible d'envoyer le email de contact
-    final public static function canSendEmail():bool
-    {
-        return static::hasEmailModel() && !empty(static::getAdminEmail());
     }
 }
 

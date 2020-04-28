@@ -45,7 +45,7 @@ class HomeFeedRelation extends Core\RouteAlias
         $return = false;
         $table = $this->table();
 
-        if(parent::canTrigger() && $this->hasPermission('homeFeed','homeFeedUser') && $table->hasPermission('view','relation','tableRelation'))
+        if(parent::canTrigger() && $this->hasPermission('home','homeFeed','homeFeedUser') && $table->hasPermission('view','relation','tableRelation'))
         $return = true;
 
         return $return;

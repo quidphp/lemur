@@ -100,7 +100,7 @@ class UserWelcome extends Core\RouteAlias
         $post = $this->onBeforeCommit($post);
 
         if($post !== null)
-        $return = $row->sendWelcomeEmail($replace,$option);
+        $return = $row->sendWelcomeEmail(true,$replace,$option);
 
         if(empty($return))
         $this->failureComplete();

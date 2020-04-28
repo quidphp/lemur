@@ -25,7 +25,7 @@ abstract class Register extends Core\RouteAlias
             'fr'=>'enregistrement'],
         'match'=>[
             'role'=>'nobody',
-            'session'=>'allowRegister'],
+            'session'=>'canAccess'],
         'parent'=>Login::class,
         'row'=>Lemur\Row\User::class,
         'group'=>'nobody',
@@ -37,7 +37,7 @@ abstract class Register extends Core\RouteAlias
     // retourne vrai si la route peut être lancé
     public function canTrigger():bool
     {
-        return parent::canTrigger() && static::session()->roles(false)->isNobody() && static::session()->allowRegister();
+        return parent::canTrigger() && static::session()->roles(false)->isNobody() && static::session()->user()->allowRegister();
     }
 
 

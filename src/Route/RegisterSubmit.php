@@ -30,7 +30,7 @@ abstract class RegisterSubmit extends Core\RouteAlias
         'match'=>[
             'method'=>'post',
             'role'=>'nobody',
-            'session'=>'allowRegister',
+            'session'=>'canAccess',
             'post'=>['username','email','password','passwordConfirm'],
             'timeout'=>true,
             'csrf'=>true,
@@ -58,7 +58,7 @@ abstract class RegisterSubmit extends Core\RouteAlias
     // retourne vrai si la route peut être lancé
     public function canTrigger():bool
     {
-        return parent::canTrigger() && static::session()->roles(false)->isNobody() && static::session()->allowRegister();
+        return parent::canTrigger() && static::session()->roles(false)->isNobody() && static::session()->user()->allowRegister();
     }
 
 

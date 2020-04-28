@@ -28,7 +28,7 @@ class User extends Core\Row\User
             'subAdmin'=>['cmsLogin'=>true],
             'admin'=>['cmsLogin'=>true]],
         'emailModel'=>[
-            'userWelcome'=>null],
+            'userWelcome'=>'userWelcome'],
         '@cms'=>[
             'permission'=>[
                 'contributor'=>['insert'=>false],
@@ -42,53 +42,37 @@ class User extends Core\Row\User
     ];
 
 
-    // onWelcomeEmailSent
-    // lorsque le courriel de bienvenue a été envoyé à l'utilisateur
-    final protected function onWelcomeEmailSent():void
-    {
-        return;
-    }
-
-
     // allowWelcomeEmail
     // retourne vrai si le user permet l'envoie de courrier de bienvenue
-    final public function allowWelcomeEmail():bool
+    final public function allowWelcomeEmail($type=true):bool
     {
-        return $this->isSomebody() && $this->isActive() && $this->isUpdateable() && $this->canReceiveEmail() && !empty($this->welcomeEmailModel());
+        return $this->isSomebody() && $this->isActive() && $this->isUpdateable() && $this->canReceiveEmail() && $this->hasEmailModel('userWelcome');
     }
 
 
-    // welcomeEmail
+    // userWelcomeEmail
     // retourne un tableau avec tout ce qu'il faut pour envoyer le courriel de bienvenue
-    final public function welcomeEmail(?array $replace=null):?array
+    final protected function userWelcomeEmail($type=true,?array $replace=null):array
     {
-        return $this->getEmailArray('welcome',$replace);
+        return $this->getEmailArray('userWelcome',$type,$this->prepareEmailReplace($this->userWelcomeEmailReplace(),$replace));
     }
 
 
-    // welcomeEmailModel
-    // retourne le model pour le courriel de bienvenue ou null
-    final public function welcomeEmailModel():?Main\Contract\Email
-    {
-        return $this->getEmailModel('userWelcome');
-    }
-
-
-    // welcomeEmailReplace
+    // userWelcomeEmailReplace
     // retourne les valeurs de remplacement pour le courriel de bienvenue
-    public function welcomeEmailReplace():array
+    protected function userWelcomeEmailReplace():array
     {
-        return $this->getEmailReplace();
+        return [];
     }
 
 
     // sendWelcomeEmail
     // envoie le courriel de bienvenue
     // plusieurs exceptions peuvent être envoyés
-    final public function sendWelcomeEmail(?array $replace=null,?array $option=null):bool
+    final public function sendWelcomeEmail($type=true,?array $replace=null,?array $option=null):bool
     {
-        $return = false;
-        $closure = function(array $return) {
+        $array = $this->userWelcomeEmail($type,$replace);
+        $array['closure'] = function(array $return) {
             if(empty($return['password']) || !is_string($return['password']))
             {
                 $newOption = $this->getAttr('crypt/passwordNew');
@@ -101,9 +85,8 @@ class User extends Core\Row\User
 
             return $return;
         };
-        $return = $this->sendEmail('welcome',$this,$replace,$closure,$option);
 
-        return $return;
+        return $this->sendEmail($array,$this,$option);
     }
 
 

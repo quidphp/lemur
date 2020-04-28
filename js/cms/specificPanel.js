@@ -53,6 +53,7 @@ Component.SpecificPanel = function(option)
     // event
     ael(this,'specificPanel:setHash',function(event,hash) {
         const input = trigHdlr(this,'specificPanel:getInput');
+        if(input != null)
         trigHdlr(input,'input:setValue',hash);
     });
     

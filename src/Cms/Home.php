@@ -66,7 +66,7 @@ class Home extends Core\Route\Home
         $r .= Html::divOp('title');
         $r .= $this->makeH1(static::boot()->typeLabel());
 
-        if($this->hasPermission('homeInfo'))
+        if($this->hasPermission('home','homeInfo'))
         $r .= $this->makeInfo();
         $r .= Html::divCl();
 
@@ -112,7 +112,7 @@ class Home extends Core\Route\Home
     {
         $return = null;
 
-        if($this->hasPermission('popup','homePopup'))
+        if($this->hasPermission('popup','home','homePopup'))
         {
             $values = $this->getAttr('popup');
             $closure = $this->infoPopupClosure();
@@ -186,7 +186,7 @@ class Home extends Core\Route\Home
     {
         $r = '';
 
-        if($this->hasPermission('homeOverview'))
+        if($this->hasPermission('home','homeOverview'))
         $r .= Html::divCond($this->makeHomeOverview(),['home-overview','block']);
 
         return $r;
@@ -224,11 +224,14 @@ class Home extends Core\Route\Home
     {
         $r = '';
         $route = HomeFeedRelation::make();
-        $attr = ['data'=>['absolute-placeholder'=>true,'anchor-corner'=>true]];
-        $label = static::langText('home/feedFilter');
+        if($route->canTrigger())
+        {
+            $attr = ['data'=>['absolute-placeholder'=>true,'anchor-corner'=>true]];
+            $label = static::langText('home/feedFilter');
 
-        $filter = $route->makeTableRelation($label,$after,'user-relation');
-        $r .= Html::divCond($filter,$attr);
+            $filter = $route->makeTableRelation($label,$after,'user-relation');
+            $r .= Html::divCond($filter,$attr);
+        }
 
         return $r;
     }
@@ -270,30 +273,34 @@ class Home extends Core\Route\Home
         $r = '';
         $session = static::session();
         $route = $session->routeTableGeneral($table);
-        $lang = static::lang();
 
-        $r .= Html::h3($table->label());
+        if($route->canTrigger())
+        {
+            $lang = static::lang();
 
-        $total = $table->total(true,true);
-        $count = Html::span($total['row'].' '.static::langPlural($total['row'],'lcf|common/row'));
-        $count .= Html::span('&nbsp;'.static::langText('lcf|common/and').'&nbsp;');
-        $count .= Html::span($total['col'].' '.static::langPlural($total['col'],'lcf|common/col'));
-        $r .= Html::divCond($count,'count');
+            $r .= Html::h3($table->label());
 
-        $r = $route->a($r);
+            $total = $table->total(true,true);
+            $count = Html::span($total['row'].' '.static::langPlural($total['row'],'lcf|common/row'));
+            $count .= Html::span('&nbsp;'.static::langText('lcf|common/and').'&nbsp;');
+            $count .= Html::span($total['col'].' '.static::langPlural($total['col'],'lcf|common/col'));
+            $r .= Html::divCond($count,'count');
 
-        $tools = '';
-        $add = SpecificAdd::make($table);
-        if($add->canTrigger())
-        $tools .= $add->a(null,['icon-solo','add']);
+            $r = $route->a($r);
 
-        $isUpdateable = $table->hasPermission('update','lemurUpdate');
-        $icon = ($isUpdateable === true)? 'modify':'view';
-        $tooltip = ($isUpdateable === true)? 'tooltip/tableModify':'tooltip/tableView';
-        $attr = ['icon-solo',$icon,'data-tooltip'=>$lang->text($tooltip)];
-        $tools .= $route->a(null,$attr);
+            $tools = '';
+            $add = SpecificAdd::make($table);
+            if($add->canTrigger())
+            $tools .= $add->a(null,['icon-solo','add']);
 
-        $r .= Html::divCond($tools,'tools');
+            $isUpdateable = $table->hasPermission('update','lemurUpdate');
+            $icon = ($isUpdateable === true)? 'modify':'view';
+            $tooltip = ($isUpdateable === true)? 'tooltip/tableModify':'tooltip/tableView';
+            $attr = ['icon-solo',$icon,'data-tooltip'=>$lang->text($tooltip)];
+            $tools .= $route->a(null,$attr);
+
+            $r .= Html::divCond($tools,'tools');
+        }
 
         return $r;
     }

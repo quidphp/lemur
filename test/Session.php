@@ -22,9 +22,6 @@ class Session extends Base\Test
         // prepare
         $s = Lemur\Boot::inst()->session();
 
-        // allowWelcomeEmail
-        assert(!$s->allowWelcomeEmail());
-
         // routeTableGeneral
 
         return true;

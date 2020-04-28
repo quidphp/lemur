@@ -23,8 +23,7 @@ abstract class ResetPassword extends Core\RouteAlias
             'en'=>'password/reset',
             'fr'=>'mot-de-passe/reinitialisation'],
         'match'=>[
-            'role'=>'nobody',
-            'session'=>'allowResetPasswordEmail'],
+            'role'=>'nobody'],
         'sitemap'=>false,
         'parent'=>Login::class,
         'group'=>'nobody'
@@ -35,7 +34,8 @@ abstract class ResetPassword extends Core\RouteAlias
     // retourne vrai si la route peut être lancé
     public function canTrigger():bool
     {
-        return parent::canTrigger() && static::session()->roles(false)->isNobody() && static::session()->allowResetPasswordEmail();
+        $session = static::session();
+        return parent::canTrigger() && $session->roles(false)->isNobody() && $session->user()->allowResetPasswordEmail();
     }
 
 

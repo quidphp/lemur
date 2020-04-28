@@ -19,7 +19,8 @@ trait _page
     // config
     protected static array $configCmsPage = [
         'match'=>[
-            'session'=>'canAccess']
+            'session'=>'canAccess'],
+        'group'=>'page'
     ];
 
 

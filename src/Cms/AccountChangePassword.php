@@ -33,7 +33,7 @@ class AccountChangePassword extends Lemur\Route\AccountChangePassword
     // vérifie si la route peut être lancé
     final public function canTrigger():bool
     {
-        return parent::canTrigger() && $this->hasPermission('accountChangePassword');
+        return parent::canTrigger() && static::session()->isSomebody() && $this->hasPermission('accountChangePassword');
     }
 
 
