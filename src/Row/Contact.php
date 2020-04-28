@@ -10,10 +10,8 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Row;
-use Quid\Base;
 use Quid\Base\Html;
 use Quid\Core;
-use Quid\Main;
 
 // contact
 // class to work with a row of the contact table, stores contact messages

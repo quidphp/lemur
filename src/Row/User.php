@@ -13,7 +13,6 @@ namespace Quid\Lemur\Row;
 use Quid\Base;
 use Quid\Core;
 use Quid\Lemur;
-use Quid\Main;
 
 // user
 // extended class for a row of the user table, with cms logic
