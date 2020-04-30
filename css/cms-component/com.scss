@@ -9,7 +9,7 @@
 // com
 // stylesheet for the communication component of the CMS
 @mixin com() {
-    @include transition(right,0.5s);
+    @include transition(right, 0.5s);
     @include fixed(null, 15px, 10px);
     width: 35%;
     z-index: 2;
