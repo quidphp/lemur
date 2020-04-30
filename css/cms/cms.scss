@@ -235,3 +235,8 @@ body > .modal {
 [data-col='crypt'] .general-component {
     @include componentCryptGeneralSpecific();
 }
+
+// error
+[data-col='error'] .specific-component {
+    @include componentErrorSpecific();
+}

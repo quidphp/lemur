@@ -87,9 +87,10 @@ class GeneralEditSubmit extends Core\RouteAlias
         $name = $cell->name();
         $post = $this->post();
         $post = $this->onBeforeCommit($post);
+        $timestamp = $this->request()->postTimestamp();
 
         if($post !== null && array_key_exists($name,$post))
-        $return = $row->setUpdateValid($post,['preValidate'=>true,'com'=>true,'catchException'=>true,'context'=>static::class]);
+        $return = $row->setUpdateValid($post,['preValidate'=>true,'com'=>true,'catchException'=>true,'timestamp'=>$timestamp,'context'=>static::class]);
 
         if(empty($return))
         $this->failureComplete();

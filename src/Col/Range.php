@@ -13,6 +13,7 @@ namespace Quid\Lemur\Col;
 use Quid\Base;
 use Quid\Base\Html;
 use Quid\Core;
+use Quid\Orm;
 
 // range
 // class for a column managing a range (minimum, maximum, increment)
@@ -67,9 +68,9 @@ class Range extends Core\Col\JsonAlias
 
     // onGet
     // sur onGet retourne un tableau associatif avec min, max ou inc
-    final protected function onGet($return,array $option)
+    final protected function onGet($return,?Orm\Cell $cell=null,array $option)
     {
-        $return = parent::onGet($return,$option);
+        $return = parent::onGet($return,$cell,$option);
 
         if(is_array($return) && Base\Arr::isRange($return))
         $return = Base\Arr::keysChange([0=>'min',1=>'max',2=>'inc'],$return);

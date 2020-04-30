@@ -62,14 +62,23 @@ class SpecificDelete extends Core\RouteAlias
 
     // routeSuccess
     // retourne la route en cas de succès ou échec de la suppression
-    // renvoie à la même pas ou l'élément se trouvait, sauf si c'était le dernier (renvoie à la première page)
+    // renvoie à la même page ou l'élément se trouvait, sauf si c'était le dernier (renvoie à la première page)
+    // en cas d'échec de la suppression, renvoie vers specific
     final public function routeSuccess():Core\Route
     {
-        $return = $this->general();
-        $rows = $return->rows();
+        $return = null;
 
-        if($rows->isEmpty())
-        $return = $return->changeSegment('page',1);
+        if($this->success === true)
+        {
+            $return = $this->general();
+            $rows = $return->rows();
+
+            if($rows->isEmpty())
+            $return = $return->changeSegment('page',1);
+        }
+
+        else
+        $return = $this->row()->route();
 
         return $return;
     }
@@ -82,9 +91,10 @@ class SpecificDelete extends Core\RouteAlias
         $return = null;
         $post = $this->post();
         $post = $this->onBeforeCommit($post);
+        $timestamp = $this->request()->postTimestamp();
 
         if($post !== null)
-        $return = $this->row()->delete(['com'=>true,'context'=>static::class]);
+        $return = $this->row()->delete(['com'=>true,'timestamp'=>$timestamp,'context'=>static::class]);
 
         if(empty($return))
         $this->failureComplete();

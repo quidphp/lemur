@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Quid\Lemur\Col;
 use Quid\Base;
 use Quid\Core;
+use Quid\Orm;
 
 // uriAbsolute
 // extended class for a column managing an absolute uri
@@ -26,9 +27,9 @@ class UriAbsolute extends Core\Col\UriAbsolute
 
     // onGet
     // sur onGet retourne le courriel dans un lien a:mailto
-    final protected function onGet($return,array $option)
+    final protected function onGet($return,?Orm\Cell $cell=null,array $option)
     {
-        $return = $this->value($return);
+        $return = parent::onGet($return,$cell,$option);
         $option['context'] = (empty($option['context']))? null:$option['context'];
 
         if(is_string($return) && !empty($return) && $option['context'] !== 'noHtml')

@@ -72,14 +72,14 @@ class User extends Core\Row\User
     {
         $array = $this->userWelcomeEmail($type,$replace);
         $array['closure'] = function(array $return) {
-            if(empty($return['password']) || !is_string($return['password']))
+            if(empty($return['userPassword']) || !is_string($return['userPassword']))
             {
                 $newOption = $this->getAttr('crypt/passwordNew');
                 $password = Base\Crypt::passwordNew($newOption);
 
                 if($this->setPassword([$password]) !== 1)
                 static::throw('cannotChangePassword');
-                $return['password'] = $password;
+                $return['userPassword'] = $password;
             }
 
             return $return;

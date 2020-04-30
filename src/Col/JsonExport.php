@@ -38,9 +38,9 @@ class JsonExport extends Core\Col\JsonAlias
 
     // onGet
     // onGet spécial si contexte est cms, retourne le résultat debug/export
-    final protected function onGet($return,array $option)
+    final protected function onGet($return,?Orm\Cell $cell=null,array $option)
     {
-        $return = parent::onGet($return,$option);
+        $return = parent::onGet($return,$cell,$option);
 
         if(is_array($return) && !empty($option['context']) && $option['context'] === 'cms:specific')
         $return = static::varExport($return);
@@ -52,12 +52,12 @@ class JsonExport extends Core\Col\JsonAlias
     // onSet
     // gère la logique onSet pour jsonExport
     // si la valeur est trop longue, n'envoie pas d'erreur mais retourne un tableau avec la clé incomplete à true
-    final protected function onSet($return,array $row,?Orm\Cell $cell=null,array $option)
+    final protected function onSet($return,?Orm\Cell $cell=null,array $row,array $option)
     {
-        $return = parent::onSet($return,$row,$cell,$option);
+        $return = parent::onSet($return,$cell,$row,$option);
 
         if(!empty($return) && $this->validate($return) !== true)
-        $return = parent::onSet(static::invalidValue(),$row,$cell,$option);
+        $return = parent::onSet(static::invalidValue(),$cell,$row,$option);
 
         return $return;
     }

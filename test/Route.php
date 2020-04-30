@@ -54,7 +54,7 @@ class Route extends Base\Test
         assert($obj2->type() === $type);
 
         // getBaseReplace
-        assert(count($obj->getBaseReplace()) === 31);
+        assert(count($obj->getBaseReplace()) === 32);
 
         // prepareTitle
 
@@ -122,7 +122,7 @@ class Route extends Base\Test
         assert($obj2->title() === 'Login - Submit');
         assert($obj2->title(3) === 'Log');
         assert(!empty($obj->docOpen()));
-        assert(count($obj->getReplace()) === 31);
+        assert(count($obj->getReplace()) === 32);
         assert(!$obj2->isSelectedUri());
         assert($obj2->hasUri());
         assert(!$route::make()->hasUri());
@@ -143,8 +143,8 @@ class Route extends Base\Test
         assert($obj2->aOpenTitle(3) === "<a href='/en/login/submit' data-navigation='0' hreflang='en'>Log");
         assert($obj2->aOpenTitle('%:','#id class2') === "<a href='/en/login/submit' data-navigation='0' id='id' class='class2' hreflang='en'>Login - Submit:");
         $loginMake = $login::make();
-        assert(strlen($obj2->formOpen()) === 265);
-        assert(strlen($loginMake->formOpen(['method'=>'post'])) === 238);
+        assert(strlen($obj2->formOpen()) === 344);
+        assert(strlen($loginMake->formOpen(['method'=>'post'])) === 317);
         assert($loginMake->formSubmit(null,'nameOK') === "<form action='/en/login' method='get'><button name='nameOK' type='submit'></button></form>");
         assert($loginMake::submitLabel('% ok') === "<button type='submit'>Login ok</button>");
         assert($loginMake->submitTitle('% ok') === "<button type='submit'>Login ok</button>");

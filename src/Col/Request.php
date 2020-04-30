@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Quid\Lemur\Col;
 use Quid\Base;
 use Quid\Core;
+use Quid\Orm;
 
 // request
 // extended class for a column that manages a request object
@@ -23,9 +24,9 @@ class Request extends Core\Col\Request
 
     // onGet
     // sur onGet recrée l'objet request, si cms var export
-    final protected function onGet($return,array $option)
+    final protected function onGet($return,?Orm\Cell $cell=null,array $option)
     {
-        $return = parent::onGet($return,$option);
+        $return = parent::onGet($return,$cell,$option);
 
         if(!empty($return) && !empty($option['context']) && $option['context'] === 'cms:specific')
         $return = Base\Debug::export($return->safeInfo());

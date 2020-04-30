@@ -35,7 +35,7 @@ class Auto extends Core\ColAlias
 
     // onSet
     // sur onSet créer les valeurs automatiques à partir des colonnes spécifiés et du séparateur
-    final protected function onSet($return,array $row,?Orm\Cell $cell=null,array $option)
+    final protected function onSet($return,?Orm\Cell $cell=null,array $row,array $option)
     {
         $return = '';
         $attr = $this->autoAttr();

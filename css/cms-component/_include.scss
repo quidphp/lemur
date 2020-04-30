@@ -246,3 +246,11 @@ $red: #8d1e2d;
         padding-top: 10px;
     }
 }
+
+// componentErrorSpecific
+// mixin pour le rendu de l'erreur
+@mixin componentErrorSpecific() {
+    background-color: $white;
+    border: 2px solid $red;
+    padding: 10px;
+}

@@ -19,14 +19,13 @@ use Quid\Orm;
 
 // video
 // extended abstract class for a column containing a video from a third-party service
-abstract class Video extends Core\ColAlias
+abstract class Video extends Core\Col\JsonAlias
 {
     // config
     protected static array $config = [
         'tag'=>'inputText',
         'search'=>false,
         'cell'=>Lemur\Cell\Video::class,
-        'onGet'=>[Base\Json::class,'onGet'],
         'preValidate'=>['uriAbsolute'],
         'check'=>['kind'=>'text'],
         'descriptionExcerpt'=>500, // custom, longueur maximale de la description
@@ -58,17 +57,14 @@ abstract class Video extends Core\ColAlias
 
     // onGet
     // sur onGet retourne l'objet video s'il y a une valeur
-    final protected function onGet($return,array $option)
+    final protected function onGet($return,?Orm\Cell $cell=null,array $option)
     {
-        if(!$return instanceof Main\Video)
-        {
-            $return = $this->value($return);
+        $return = parent::onGet($return,$cell,$option);
 
-            if(is_string($return) && Base\Json::is($return))
-            {
-                $service = $this->getService();
-                $return = $service::makeVideo($return);
-            }
+        if(is_array($return))
+        {
+            $service = $this->getService();
+            $return = $service::makeVideo($return);
         }
 
         if(!empty($return) && !empty($option['context']) && $option['context'] === 'cms:general' && $return instanceof Main\Video)
@@ -80,8 +76,9 @@ abstract class Video extends Core\ColAlias
 
     // onSet
     // gère la logique onSet pour la vidéo
-    final protected function onSet($return,array $row,?Orm\Cell $cell=null,array $option)
+    final protected function onSet($return,?Orm\Cell $cell=null,array $row,array $option)
     {
+        $return = parent::onSet($return,$cell,$row,$option);
         $hasChanged = true;
 
         if(!empty($cell))
@@ -112,7 +109,7 @@ abstract class Video extends Core\ColAlias
     {
         $return = '';
         $value = $this->value($value);
-        $value = $this->onGet($value,(array) $option);
+        $value = $this->onGet($value,null,(array) $option);
 
         if($value instanceof Main\Video)
         {

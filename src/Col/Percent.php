@@ -26,11 +26,11 @@ class Percent extends Core\Col\NumAlias
 
     // onGet
     // ramène le nombre flottant dans un format de pourcentage
-    final protected function onGet($return,array $option)
+    final protected function onGet($return,?Orm\Cell $cell=null,array $option)
     {
-        $return = $this->value($return);
+        $return = parent::onGet($return,$cell,$option);
 
-        if(!empty($return))
+        if(is_scalar($return))
         $return = Base\Num::percentFormat($return,null,$this->getAttr('percent'));
 
         return $return;
@@ -40,9 +40,9 @@ class Percent extends Core\Col\NumAlias
     // onSet
     // gère la logique onSet pour un champ de pourcentage
     // enlève tous les caractères non numérique
-    final protected function onSet($return,array $row,?Orm\Cell $cell=null,array $option)
+    final protected function onSet($return,?Orm\Cell $cell=null,array $row,array $option)
     {
-        $return = parent::onSet($return,$row,$cell,$option);
+        $return = parent::onSet($return,$cell,$row,$option);
 
         if(is_string($return))
         $return = Base\Str::keepNum($return);

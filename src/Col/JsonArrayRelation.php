@@ -14,6 +14,7 @@ use Quid\Base;
 use Quid\Base\Html;
 use Quid\Core;
 use Quid\Lemur;
+use Quid\Orm;
 
 // jsonArrayRelation
 // class to manage a column containing a relation value to another column which is a jsonArray
@@ -29,16 +30,15 @@ class JsonArrayRelation extends Core\ColAlias
 
     // onGet
     // méthode onGet pour jsonArrayRelation
-    final protected function onGet($return,array $option)
+    final protected function onGet($return,?Orm\Cell $cell=null,array $option)
     {
-        if($return instanceof Core\Cell)
-        {
-            $value = $return->value();
-            $return = (is_int($value))? $return->relationIndex($value):null;
-        }
+        $return = parent::onGet($return,$cell,$option);
 
-        else
-        $return = parent::onGet($return,$option);
+        if(!empty($cell))
+        {
+            $value = $cell->value();
+            $return = (is_int($value))? $cell->relationIndex($value):null;
+        }
 
         return $return;
     }

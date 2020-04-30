@@ -33,30 +33,25 @@ class Excerpt extends Core\ColAlias
 
     // onSet
     // sur onSet génère le résumé à partir de la colonne spécifié dans config
-    final protected function onSet($return,array $row,?Orm\Cell $cell=null,array $option)
+    final protected function onSet($return,?Orm\Cell $cell=null,array $row,array $option)
     {
-        $return = $this->value($return);
+        $attr = $this->getAttr('makeExcerpt');
 
-        if(empty($return))
+        if(empty($return) && is_array($attr) && Base\Arr::keysExists(['method','length','col'],$attr))
         {
-            $attr = $this->getAttr('makeExcerpt');
+            $lang = $this->patternType();
+            $method = $attr['method'];
+            $length = $attr['length'];
+            $col = $attr['col'];
+            $opt = $attr['option'] ?? null;
 
-            if(is_array($attr) && Base\Arr::keysExists(['method','length','col'],$attr))
+            if(static::isCallable($method) && is_int($length) && is_string($col))
             {
-                $lang = $this->patternType();
-                $method = $attr['method'];
-                $length = $attr['length'];
-                $col = $attr['col'];
-                $opt = $attr['option'] ?? null;
+                if(is_string($lang))
+                $col = Base\Lang::field($col,$lang);
 
-                if(static::isCallable($method) && is_int($length) && is_string($col))
-                {
-                    if(is_string($lang))
-                    $col = Base\Lang::field($col,$lang);
-
-                    if(array_key_exists($col,$row) && is_string($row[$col]) && strlen($row[$col]))
-                    $return = $method($length,$row[$col],$opt);
-                }
+                if(array_key_exists($col,$row) && is_string($row[$col]) && strlen($row[$col]))
+                $return = $method($length,$row[$col],$opt);
             }
         }
 

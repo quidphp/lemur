@@ -26,10 +26,9 @@ class Money extends Core\Col\NumAlias
 
     // onGet
     // ramène le nombre flottant dans un format monétaire
-    final protected function onGet($return,array $option)
+    final protected function onGet($return,?Orm\Cell $cell=null,array $option)
     {
-        $return = parent::onGet($return,$option);
-        $return = ($return instanceof Orm\Cell)? $this->value($return):$return;
+        $return = parent::onGet($return,$cell,$option);
         $moneyAttr = $this->getAttr('money');
 
         if(is_numeric($return) && $moneyAttr !== false)
@@ -42,9 +41,9 @@ class Money extends Core\Col\NumAlias
     // onSet
     // gère la logique onSet pour un champ argent
     // enlève tous les caractères non numérique
-    final protected function onSet($return,array $row,?Orm\Cell $cell=null,array $option)
+    final protected function onSet($return,?Orm\Cell $cell=null,array $row,array $option)
     {
-        $return = parent::onSet($return,$row,$cell,$option);
+        $return = parent::onSet($return,$cell,$row,$option);
 
         if(is_string($return))
         $return = Base\Str::keepNum($return,'.');

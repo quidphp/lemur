@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Quid\Lemur\Col;
 use Quid\Base;
 use Quid\Core;
+use Quid\Orm;
 
 // envType
 // class for the CMS envType column, updates itself automatically on commit
@@ -31,9 +32,9 @@ class EnvType extends Core\Col\EnvType
 
     // onGet
     // onGet spécial si contexte est cms, retourne le résultat debug/export
-    final protected function onGet($return,array $option)
+    final protected function onGet($return,?Orm\Cell $cell=null,array $option)
     {
-        $return = parent::onGet($return,$option);
+        $return = parent::onGet($return,$cell,$option);
 
         if(is_array($return) && !empty($option['context']) && $option['context'] === 'cms:specific')
         $return = static::varExport($return);

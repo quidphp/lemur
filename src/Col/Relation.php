@@ -14,6 +14,7 @@ use Quid\Base;
 use Quid\Base\Html;
 use Quid\Core;
 use Quid\Lemur;
+use Quid\Orm;
 
 // relation
 // extended abstract class extended for a relation
@@ -120,13 +121,12 @@ abstract class Relation extends Core\Col\Relation
     // onGet
     // logique onGet pour un champ files
     // affichage spéciale si le contexte est cms:general
-    protected function onGet($return,array $option)
+    protected function onGet($return,?Orm\Cell $cell=null,array $option)
     {
-        if($return instanceof Core\Cell\Relation && !$return->isNull() && !empty($option['context']) && is_string($option['context']) && strpos($option['context'],':general') !== false)
-        $return = $return->generalOutput($option);
+        $return = parent::onGet($return,$cell,$option);
 
-        else
-        $return = parent::onGet($return,$option);
+        if(!empty($cell) && !$cell->isNull() && !empty($option['context']) && is_string($option['context']) && strpos($option['context'],':general') !== false)
+        $return = $cell->generalOutput($option);
 
         return $return;
     }

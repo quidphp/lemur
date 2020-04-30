@@ -13,6 +13,7 @@ namespace Quid\Lemur\Col;
 use Quid\Base;
 use Quid\Base\Html;
 use Quid\Core;
+use Quid\Orm;
 
 // set
 // class for a column containing a set relation (many)
@@ -59,13 +60,12 @@ class Set extends Core\Col\Set
     // onGet
     // logique onGet pour un champ relation
     // affichage spéciale si le contexte est cms:general
-    final protected function onGet($return,array $option)
+    final protected function onGet($return,?Orm\Cell $cell=null,array $option)
     {
-        if($return instanceof Core\Cell\Relation && !$return->isNull() && !empty($option['context']) && is_string($option['context']) && strpos($option['context'],':general') !== false)
-        $return = $return->generalOutput($option);
+        $return = parent::onGet($return,$cell,$option);
 
-        else
-        $return = parent::onGet($return,$option);
+        if(!empty($cell) && !$cell->isNull() && !empty($option['context']) && is_string($option['context']) && strpos($option['context'],':general') !== false)
+        $return = $cell->generalOutput($option);
 
         return $return;
     }
@@ -90,7 +90,7 @@ class Set extends Core\Col\Set
             {
                 $return = Base\Arr::gets($value,$all);
                 $all = Base\Arr::unsets($value,$all);
-                $return = Base\Arr::merge($return,$all);
+                $return = Base\Arr::replace($return,$all);
             }
 
             if(empty($return))

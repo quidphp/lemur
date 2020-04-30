@@ -111,7 +111,7 @@ trait _formSubmit
         $log = $this->getAttr('log');
         $type = $this->logFormType();
         $data = $this->logFormData();
-        $log::logOnCloseDown($type,$data);
+        $log::logCloseDown($type,$data);
 
         return;
     }

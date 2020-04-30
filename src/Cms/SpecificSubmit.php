@@ -69,12 +69,11 @@ class SpecificSubmit extends Core\RouteAlias
         $return = null;
         $post = $this->post();
         $post = $this->onBeforeCommit($post);
+        $timestamp = $this->request()->postTimestamp();
+        $row = $this->row();
 
         if($post !== null)
-        {
-            $row = $this->row();
-            $return = $row->setUpdateValid($post,['preValidate'=>true,'com'=>true,'catchException'=>true,'context'=>static::class]);
-        }
+        $return = $row->setUpdateValid($post,['preValidate'=>true,'com'=>true,'catchException'=>true,'timestamp'=>$timestamp,'context'=>static::class]);
 
         if(empty($return))
         $this->failureComplete();

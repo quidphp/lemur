@@ -13,6 +13,7 @@ namespace Quid\Lemur;
 use Quid\Base;
 use Quid\Base\Html;
 use Quid\Core;
+use Quid\Orm;
 
 // col
 // extended class to represent an existing column within a table, adds cms config
@@ -90,15 +91,20 @@ class Col extends Core\Col
     // onComplex
     // permet de formater une valeur simple vers un type plus complexe
     // utilisé lors de la génération d'un élément de formulaire, si onComplex est true renvoie à onGet
-    final protected function onComplex($return,array $option)
+    final protected function onComplex($return,?Orm\Cell $cell=null,array $option)
     {
         $onComplex = $this->getAttr('onComplex');
 
         if($onComplex === true)
-        $return = $this->onGet($return,$option);
+        $return = $this->onGet($return,$cell,$option);
 
         else
-        $return = $this->attrCallback('onComplex',true,$return,$option);
+        {
+            $return = $this->value($return);
+
+            if(!empty($onComplex))
+            $return = $onComplex($return,$cell,$option);
+        }
 
         return $return;
     }
@@ -109,12 +115,9 @@ class Col extends Core\Col
     final public function valueComplex($return=true,?array $option=null)
     {
         $option = (array) $option;
-
-        if($return instanceof Cell)
-        $option['cell'] = $return;
-
+        $cell = ($return instanceof Cell)? $return:null;
         $return = $this->value($return);
-        $return = $this->onComplex($return,$option);
+        $return = $this->onComplex($return,$cell,$option);
 
         return $return;
     }

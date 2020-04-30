@@ -40,7 +40,7 @@ class Contact extends Core\RowAlias
             '*'=>['insert'=>true]],
         '@cms'=>[
             'permission'=>[
-                '*'=>['lemurInsert'=>false],
+                '*'=>['lemurInsert'=>false,'lemurUpdate'=>false],
                 'contributor'=>['view'=>false],
                 'editor'=>['view'=>false],
                 'admin'=>['truncate'=>true,'lemurTruncate'=>true]]]
@@ -55,12 +55,20 @@ class Contact extends Core\RowAlias
     }
 
 
+    // fullName
+    // retourne le nom complet de la personne qui contacte
+    final public function fullName():string
+    {
+        return $this->cellName()->value();
+    }
+
+
     // toEmail
     // retourne email=>name lors de l'envoie dans un email
     final public function toEmail():array
     {
         $email = $this->email()->value();
-        $name = $this->cellName()->value();
+        $name = $this->fullName();
 
         if(empty($email) || empty($name))
         static::throw();
@@ -89,9 +97,9 @@ class Contact extends Core\RowAlias
         $cells = $this->cells()->gets(...static::getColsForm());
         $model = '%label%: %get%';
 
-        $return['contactUserName'] = $this->email()->value();
-        $return['link'] = $this->route('cms')->uriAbsolute();
-        $return['data'] = implode(PHP_EOL,$cells->htmlStr($model,false,$option));
+        $return['contactUserName'] = $this->fullName();
+        $return['contactCmsLink'] = $this->route('cms')->uriAbsolute();
+        $return['contactData'] = implode(PHP_EOL,$cells->htmlStr($model,false,$option));
 
         return $return;
     }

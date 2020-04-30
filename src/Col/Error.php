@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Quid\Lemur\Col;
 use Quid\Base;
 use Quid\Core;
+use Quid\Orm;
 
 // error
 // extended class for a column that manages an error object
@@ -23,12 +24,12 @@ class Error extends Core\Col\Error
 
     // onGet
     // sur onGet recrée l'objet error si c'est du json, si cms var export
-    final protected function onGet($return,array $option)
+    final protected function onGet($return,?Orm\Cell $cell=null,array $option)
     {
-        $return = parent::onGet($return,$option);
+        $return = parent::onGet($return,$cell,$option);
 
         if(!empty($return) && !empty($option['context']) && $option['context'] === 'cms:specific')
-        $return = Base\Debug::export($return);
+        $return = $return->html();
 
         return $return;
     }
