@@ -207,7 +207,7 @@ trait _relation
         $return = $lang->take('relationOrder/key');
 
         if(!empty($allowed['value']))
-        $return = Base\Arr::merge($return,$lang->take('relationOrder/value'));
+        $return = Base\Arr::replace($return,$lang->take('relationOrder/value'));
 
         return $return;
     }

@@ -134,6 +134,8 @@ class Fr extends Core\Lang\Fr
 
             // label
             'label'=>[
+                'cliClearCache'=>'Vider les caches',
+                'cliClearLog'=>'Vider les logs',
                 'account'=>'Mon compte',
                 'accountSubmit'=>'Mon compte - Soumettre',
                 'accountChangePassword'=>'Changer mon mot de passe',

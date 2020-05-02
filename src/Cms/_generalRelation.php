@@ -104,7 +104,7 @@ trait _generalRelation
             }
         }
 
-        $return = Base\Arr::merge($return,$this->relationKeyValue($value));
+        $return = Base\Arr::replace($return,$this->relationKeyValue($value));
 
         return $return;
     }
@@ -117,7 +117,7 @@ trait _generalRelation
         $return = [];
         $not = array_keys($selected);
         $emptyNotEmpty = $this->getEmptyNotEmptyKeyValue($not);
-        $return = Base\Arr::merge($emptyNotEmpty,$array);
+        $return = Base\Arr::replace($emptyNotEmpty,$array);
 
         return $return;
     }

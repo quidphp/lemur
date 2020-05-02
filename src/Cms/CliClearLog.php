@@ -10,19 +10,29 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Cms;
-use Quid\Base\Cli;
 use Quid\Core;
 
 // cliClearLog
 // class for a cli route to remove all log data
-class CliClearLog extends Core\Route\CliClearLog
+class CliClearLog extends Core\RouteAlias
 {
     // trait
     use _cli;
+    use Core\Route\_cliClear;
 
 
     // config
     protected static array $config = [
+        'path'=>['-clearlog'],
+        'clear'=>[
+            '[storageLog]',
+            '[storageError]',
+            Core\Row\Log::class,
+            Core\Row\LogCron::class,
+            Core\Row\LogEmail::class,
+            Core\Row\LogError::class,
+            Core\Row\LogHttp::class,
+            Core\Row\LogSql::class],
         'logCron'=>null
     ];
 }

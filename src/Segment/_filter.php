@@ -158,7 +158,7 @@ trait _filter
             }
 
             else
-            $return = Base\Arr::merge($return,$val);
+            $return = Base\Arr::replace($return,$val);
         }
 
         return $return;

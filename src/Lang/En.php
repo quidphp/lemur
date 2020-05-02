@@ -134,6 +134,8 @@ class En extends Core\Lang\En
 
             // label
             'label'=>[
+                'cliClearCache'=>'Empty caches',
+                'cliClearLog'=>'Empty logs',
                 'account'=>'My account',
                 'accountSubmit'=>'My account - Submit',
                 'accountChangePassword'=>'Change my password',

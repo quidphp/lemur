@@ -488,7 +488,9 @@ class General extends Core\RouteAlias
                             if(!is_array($v))
                             $v = [$v];
 
-                            if($col->isFilterEmptyNotEmpty())['array'=>$rel,'value'=>$v] = $this->infoPopupFilterEmptyNotEmpty($v,$col,$rel);
+                            if($col->isFilterEmptyNotEmpty()) {
+                                ['array'=>$rel,'value'=>$v] = $this->infoPopupFilterEmptyNotEmpty($v,$col,$rel);
+                            }
 
                             $rel = Base\Arr::merge($rel,$col->relation()->get($v));
                             $label = $col->label();
