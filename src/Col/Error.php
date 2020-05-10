@@ -28,7 +28,7 @@ class Error extends Core\Col\Error
         $return = parent::onGet($return,$cell,$option);
 
         if(!empty($return) && !empty($option['context']) && $option['context'] === 'cms:specific')
-        $return = $return->html();
+        $return = $return->html(true);
 
         return $return;
     }

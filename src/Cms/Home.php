@@ -154,7 +154,7 @@ class Home extends Core\Route\Home
     // mainTopRight
     // génère le html pour la partie en haut à droite de la page d'accueil
     // ceci peut être étendu
-    final protected function mainTopRight():string
+    protected function mainTopRight():string
     {
         return '';
     }
