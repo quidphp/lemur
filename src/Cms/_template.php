@@ -621,26 +621,21 @@ trait _template
     {
         $r = '';
         $com = static::sessionCom();
-        $comText = $com->flush();
+        $html = $com->flush();
 
-        if(!empty($comText))
+        $data = ['html'=>$html];
+        $route = Specific::make(true);
+        if($this->hasPermission('comSpecific'))
         {
-            $route = Specific::make(true);
-            $data = ['href'=>$route,'char'=>$route::getReplaceSegment(),'com'=>1];
-            $attr = ['com','data'=>$data];
-
-            $r = Html::divOp('top');
-            $r .= Html::div(null,'triangle');
-            $r .= Html::button(Base\Datetime::format(4),'date');
-            $r .= Html::divCl();
-            $r .= Html::div(null,'spacer');
-            $r .= Html::div($comText,'bottom');
-
-            $r = Html::div($r,'scroller');
-            $r .= Html::button(null,['icon-solo','close']);
-
-            $r = static::makeDivPopup($r,$attr);
+            $data['href'] = $route;
+            $data['char'] = $route::getReplaceSegment();
         }
+        $attr = ['com','data'=>$data];
+
+        $r = Html::div($r,'scroller');
+        $r .= Html::button(null,['icon-solo','close']);
+
+        $r = static::makeDivPopup($r,$attr);
 
         return $r;
     }

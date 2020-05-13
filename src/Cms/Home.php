@@ -64,13 +64,21 @@ class Home extends Core\Route\Home
         $r = '';
 
         $r .= Html::divOp('title');
-        $r .= $this->makeH1(static::boot()->typeLabel());
+        $r .= $this->makeH1($this->makeH1Title());
 
         if($this->hasPermission('home','homeInfo'))
         $r .= $this->makeInfo();
         $r .= Html::divCl();
 
         return $r;
+    }
+
+
+    // makeH1Title
+    // retourne le contenu du h1
+    protected function makeH1Title():string
+    {
+        return static::boot()->typeLabel();
     }
 
 

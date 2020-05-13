@@ -39,6 +39,7 @@ abstract class Route extends Core\Route
                     'account'=>true,
                     'contact'=>true,
                     'search'=>true,
+                    'comSpecific'=>true,
                     'accountChangePassword'=>true,
                     'sessionInfo'=>true,
                     'sessionPopup'=>true,

@@ -9,36 +9,22 @@
 // com
 // stylesheet for the communication component of the CMS
 @mixin com() {
-    @include transition(right, 0.5s);
-    @include fixed(null, 15px, 10px);
+    @include transition(bottom, 0.5s);
+    @include fixed(null, 15px, -50%);
     width: 35%;
     z-index: 2;
     font-size: 110%;
-
+    
+    &[data-status='visible'] {
+        bottom: 10px;
+    }
+    
     .close {
         @include abs(10px, 15px);
         z-index: 4;
 
         &:hover {
             opacity: 0.8;
-        }
-    }
-
-    &[data-com='1'] > .scroller {
-        .top .triangle {
-            @include triangle(bottom, $darkColor, 10px);
-        }
-
-        .bottom {
-            visibility: visible;
-        }
-    }
-
-    &[data-status='hidden'] {
-        right: -50%;
-
-        @include responsive() {
-            display: none;
         }
     }
 
@@ -51,8 +37,12 @@
         overflow-x: hidden;
         overflow-y: auto;
         text-align: left;
+        min-height: 50px;
         max-height: 50vh;
-
+    }
+    
+    > .scroller > .com-element {
+        
         .top {
             @include flex();
 
@@ -74,48 +64,49 @@
             padding-bottom: 3px;
             border-bottom: 1px solid $gray;
         }
+    }
+    
+    > .scroller > .com-element > .bottom {
+        @include transition(height, 0.5s);
+        height: 0;
+        overflow: hidden;
+        visibility: hidden;
 
-        .bottom {
-            @include transition(height, 0.5s);
-            height: 0;
-            overflow: hidden;
-            visibility: hidden;
+        .table > span,
+        .row > span {
+            font-weight: bold;
+        }
 
-            .table > span,
-            .row > span {
-                font-weight: bold;
-            }
+        .row.insert,
+        .row.update {
+            > span {
+                @include transitions(color 0.3s);
+                cursor: pointer;
 
-            .row.insert,
-            .row.update {
-                > span {
-                    @include transitions(color 0.3s);
-                    cursor: pointer;
-
-                    &:hover,
-                    &[data-triggered='1'] {
-                        color: $darkGray;
-                    }
-                }
-            }
-
-            ul {
-                @include ulOlMargin();
-
-                li {
-                    @include wysiwygAnchor(inherit);
-                    padding-top: 3px;
-                }
-            }
-
-            > ul {
-                margin-left: 2rem;
-
-                > li {
-                    padding-top: 8px;
+                &:hover,
+                &[data-triggered='1'] {
+                    color: $darkGray;
                 }
             }
         }
+
+        ul {
+            @include ulOlMargin();
+
+            li {
+                @include wysiwygAnchor(inherit);
+                padding-top: 3px;
+            }
+        }
+
+        > ul {
+            margin-left: 2rem;
+
+            > li {
+                padding-top: 8px;
+            }
+        }
+        
         .pos {
             color: $green;
         }
@@ -124,9 +115,19 @@
         }
     }
 
+    > .scroller > .com-element[data-open='1'] {
+        .top .triangle {
+            @include triangle(bottom, $darkColor, 10px);
+        }
+
+        .bottom {
+            visibility: visible;
+        }
+    }
+    
     @include responsive() {
         max-height: inherit;
-        display: block;
+        display: none;
         width: 100%;
         position: relative;
         right: 0;
@@ -134,6 +135,10 @@
         padding: 5px;
         margin-bottom: 10px;
         z-index: auto;
+        
+        &[data-status='visible'] {
+            display: block;
+        }
     }
 
     @include print() {

@@ -19,10 +19,12 @@ Component.Com = function(option)
     
     // option
     const $option = Pojo.replaceRecursive({
+        attrStatus: "data-status",
+        attrHtml: "data-html",
         clickOpen: {
-            attr: "data-com",
-            trigger: ".scroller .date", 
-            target: ".scroller .bottom", 
+            attr: "data-open",
+            trigger: ".date", 
+            target: ".bottom", 
             clickOutside: false,
             background: false, 
             targetHeight: true,
@@ -32,38 +34,148 @@ Component.Com = function(option)
     
     
     // components
-    Component.ClickOpenTrigger.call(this,$option.clickOpen)
     Component.HrefReplaceChar.call(this);
+    
+    
+    // handler
+    setHdlrs(this,'com:',{
+        
+        show: function(focus) {
+            setAttr(this,$option.attrStatus,'visible');
+            
+            if(focus === true && Ele.isFocusable(this))
+            Ele.focus(this);
+        },
+        
+        hide: function() {
+            setAttr(this,$option.attrStatus,'hidden');
+        },
+        
+        setAndShow: function(content,method) {
+            if(Str.isNotEmpty(content))
+            setAndShow.call(this,content,method);
+        },
+        
+        setHtmlAndShow: function(content) {
+            if(Str.isNotEmpty(content))
+            setHtmlAndShow.call(this,content);
+        },
+        
+        getClose: function() {
+            return Ele.typecheck(qs(this,"> .close"));
+        },
+        
+        getScroller: function() {
+            return Ele.typecheck(qs(this,"> .scroller"));
+        },
+        
+        getComElement: function() {
+            return qs(this,".com-element");
+        }
+    });
     
     
     // event
     ael(this,'keyboardEscape:blocked',function() {
-        trigEvt(this,'com:hide');
+        trigHdlr(this,'com:hide');
     });
-    
-    ael(this,'com:hide',function() {
-        setAttr(this,'data-status','hidden');
-    })
     
     ael(document,'keyboardEscape:catched',function() {
-        trigEvt($nodes,'com:hide');
+        trigHdlrs($nodes,'com:hide');
     });
     
     
-    // delegate
-    aelDelegate(this,'click','.close',function(event) {
-        const delegate = event.delegateTarget;
-        trigEvt(delegate,'com:hide');
-    });
-    
-
     // bind
     aelOnce(this,'component:setup',function() {
-        bindLinks.call(this);
+        bindDocument.call(this);
+        bindClose.call(this);
         
-        if(Ele.isFocusable(this))
-        Ele.focus(this);
+        const content = getAttr(this,$option.attrHtml);
+        if(Str.isNotEmpty(content))
+        {
+            Ele.removeAttr(this,$option.attrHtml);
+            setHtmlAndShow.call(this,content);
+        }
     });
+    
+    
+    // bindDocument
+    const bindDocument = function()
+    {
+        const $this = this;
+        
+        setHdlr(document,'doc:getCom',function() {
+            return $this;
+        });
+    }
+    
+    
+    // setAndShow
+    const setAndShow = function(content,method)
+    {
+        let newHtml = '';
+        Str.typecheck(content,true);
+        method = (Str.isNotEmpty(method))? method:'pos';
+        
+        newHtml = Html.span(content);
+        newHtml = Html.li(newHtml,method);
+        newHtml = Html.ul(newHtml);
+        
+        setHtmlAndShow.call(this,newHtml);
+    }
+    
+    
+    // setHtmlAndShow
+    const setHtmlAndShow = function(content)
+    {
+        const $this = this;
+        const scroller = trigHdlr(this,'com:getScroller');
+        const html = makeHtml.call(this,content);
+        setHtml(scroller,html);
+        
+        const comElement = trigHdlr(this,'com:getComElement');
+        if(comElement !== null)
+        {
+            trigSetup(Component.ClickOpenTrigger.call(comElement,$option.clickOpen));
+            trigEvt(comElement,'clickOpen:open');
+            
+            bindLinks.call(this);
+            trigHdlr(this,'com:show',true);
+        }
+    }
+    
+    
+    // makeHtml
+    const makeHtml = function(content)
+    {
+        let r = '';
+        Str.typecheck(content,true);
+        const date = Datetime.toSecond();
+        
+        let top = '';
+        top += Html.div(null,'triangle');
+        top += Html.button(date,'date');
+        
+        r += Html.div(top,'top');
+        r += Html.div(null,'spacer');
+        r += Html.div(content,'bottom');
+        
+        r = Html.div(r,'com-element');
+        
+        return r;
+    }
+    
+    
+    // bindClose
+    const bindClose = function()
+    {
+        const $this = this;
+        const close = trigHdlr(this,'com:getClose');
+        
+        ael(close,'click',function() {
+            trigHdlr($this,'com:hide');
+        });
+    }
     
     
     // bindLinks
@@ -84,13 +196,17 @@ Component.Com = function(option)
     // redirect
     const redirect = function(table,primary,clickEvent)
     {
-        let href = trigHdlr(this,'hrefReplaceChar:make',table);
+        const char = getAttr(this,'data-char');
         
-        if(Str.isNotEmpty(href))
+        if(char != null)
         {
-            const char = getAttr(this,'data-char');
-            href = href.replace(char,primary);
-            trigHdlr(document,'history:href',href,clickEvent);
+            let href = trigHdlr(this,'hrefReplaceChar:make',table);
+            
+            if(Str.isNotEmpty(href))
+            {
+                href = href.replace(char,primary);
+                trigHdlr(document,'history:href',href,clickEvent);
+            }
         }
     }
     

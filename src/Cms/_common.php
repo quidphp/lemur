@@ -62,16 +62,14 @@ trait _common
 
     // makeDivPopup
     // génère la balise pour le popup avec le tabindex
-    final public static function makeDivPopup($value=null,$attr='popup',?int $tabindex=0)
+    final public static function makeDivPopup($value=null,$attr='popup',?int $tabindex=0):string
     {
         $attr = (array) $attr;
 
         if(is_int($tabindex))
         $attr['tabindex'] = $tabindex;
 
-        $return = Html::div($value,$attr);
-
-        return $return;
+        return Html::div($value,$attr);
     }
 
 

@@ -144,7 +144,7 @@ class Route extends Base\Test
         assert($obj2->aOpenTitle('%:','#id class2') === "<a href='/en/login/submit' data-navigation='0' id='id' class='class2' hreflang='en'>Login - Submit:");
         $loginMake = $login::make();
         assert(strlen($obj2->formOpen()) === 344);
-        assert(strlen($loginMake->formOpen(['method'=>'post'])) === 317);
+        assert(strlen($loginMake->formOpen(['method'=>'post'])) === 148);
         assert($loginMake->formSubmit(null,'nameOK') === "<form action='/en/login' method='get'><button name='nameOK' type='submit'></button></form>");
         assert($loginMake::submitLabel('% ok') === "<button type='submit'>Login ok</button>");
         assert($loginMake->submitTitle('% ok') === "<button type='submit'>Login ok</button>");
