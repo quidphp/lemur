@@ -98,26 +98,29 @@
 // inputTextEvents
 // mixin avec des styles de base pour les events dans les inputs/textarea
 @mixin inputTextEvents() {
-    &:hover,
-    &:focus {
-        background-color: $lightYellow;
-    }
-
     &[disabled] {
         background-color: $gray;
+        cursor: no-drop;
     }
-
-    &[data-validate='invalid'] {
-        background-color: $red !important;
-        color: $white !important;
-        border: 1px solid $black;
-
-        &::placeholder {
-            color: $lightestGray;
+    
+    &:not(:disabled) {
+        &:hover,
+        &:focus {
+            background-color: $lightYellow;
         }
+        
+        &[data-validate='invalid'] {
+            background-color: $red !important;
+            color: $white !important;
+            border: 1px solid $black;
 
-        &:-ms-input-placeholder {
-            color: $lightestGray !important;
+            &::placeholder {
+                color: $lightestGray;
+            }
+
+            &:-ms-input-placeholder {
+                color: $lightestGray !important;
+            }
         }
     }
 }
@@ -178,19 +181,25 @@
     border: 1px solid $darkColor;
 
     &.selected,
-    &:hover {
+    &:not(:disabled):hover {
         background-color: $darkColor;
         border: 1px solid $darkerColor;
         opacity: 1;
     }
 
     &[data-triggered='1'],
-    &:active {
+    &:not(:disabled):active {
         background-color: $darkerColor;
         border: 1px solid $black;
     }
-
-    &.icon-solo {
+    
+    &:disabled {
+        cursor: no-drop;
+    }
+    
+    &.icon-solo,
+    &.icon-solo:hover,
+    &.icon-solo:active {
         background-color: transparent;
         border: transparent;
         padding: 0;

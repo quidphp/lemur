@@ -10,6 +10,7 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Segment;
+use Quid\Base;
 
 // _int
 // trait that issues a method to deal with a simple integer route segment
@@ -21,6 +22,7 @@ trait _int
     {
         $return = false;
         $minimum = static::structureSegmentIntMinimum();
+        $value = Base\Obj::cast($value);
 
         if($type === 'make')
         $return = (is_int($value) && $value >= $minimum)? $value:false;
