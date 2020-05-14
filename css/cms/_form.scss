@@ -102,13 +102,13 @@
         background-color: $gray;
         cursor: no-drop;
     }
-    
+
     &:not(:disabled) {
         &:hover,
         &:focus {
             background-color: $lightYellow;
         }
-        
+
         &[data-validate='invalid'] {
             background-color: $red !important;
             color: $white !important;
@@ -192,11 +192,11 @@
         background-color: $darkerColor;
         border: 1px solid $black;
     }
-    
+
     &:disabled {
         cursor: no-drop;
     }
-    
+
     &.icon-solo,
     &.icon-solo:hover,
     &.icon-solo:active {
