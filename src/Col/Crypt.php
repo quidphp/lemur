@@ -93,11 +93,15 @@ class Crypt extends Core\ColAlias
     final protected function makeCryptStatus(Orm\Cell $value):string
     {
         $return = '';
-        $value = $value->get();
-        $lang = $this->db()->lang();
-        $status = (!empty($value))? 'valid':'invalid';
-        $label = $lang->text(['crypt',$status]);
-        $return .= Html::div($label,['crypt-status',"crypt-$status"]);
+
+        if(!empty($value->value()))
+        {
+            $get = $value->get();
+            $lang = $this->db()->lang();
+            $status = (!empty($get))? 'valid':'invalid';
+            $label = $lang->text(['crypt',$status]);
+            $return .= Html::div($label,['crypt-status',"crypt-$status"]);
+        }
 
         return $return;
     }
