@@ -90,6 +90,7 @@
 
     .popup {
         @include popupList();
+        @include popupListAnchor();
     }
 
     @include print() {
@@ -106,15 +107,6 @@
         content: '';
         height: 10px;
         display: block;
-    }
-
-    a {
-        color: $black;
-
-        &:hover,
-        &[data-triggered='1'] {
-            color: $color;
-        }
     }
 
     ul {
@@ -140,6 +132,19 @@
         > ul {
             padding-top: 5px;
             word-break: break-all;
+        }
+    }
+}
+
+// popupListAnchor
+// mixin pour le style des ancres dans un popup list
+@mixin popupListAnchor() {
+    a {
+        color: $black;
+
+        &:hover,
+        &[data-triggered='1'] {
+            color: $color;
         }
     }
 }
