@@ -46,7 +46,7 @@
 
             .choice {
                 padding: 5px 0;
-                
+
                 .choice-in {
                     @include flex();
                     @include inputChoice(4px);
