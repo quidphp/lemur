@@ -45,10 +45,15 @@
             }
 
             .choice {
-                @include inputChoice(4px);
+                padding: 5px 0;
+                
+                .choice-in {
+                    @include flex();
+                    @include inputChoice(4px);
 
-                .move {
-                    margin-right: 5px;
+                    .move {
+                        margin-right: 5px;
+                    }
                 }
             }
 

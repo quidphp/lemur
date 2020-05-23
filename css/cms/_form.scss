@@ -49,7 +49,12 @@
     @include labelBase($label, $labelHover);
 
     .choice {
-        @include inputChoice();
+        padding: 5px 0;
+        
+        .choice-in {
+            @include flex();
+            @include inputChoice();
+        }
     }
 
     .table {
@@ -128,42 +133,37 @@
 // inputChoice
 // style utilisé pour faire un choix parmis plusieurs input radio ou checkbox
 @mixin inputChoice($paddingtb: 8px) {
-    padding: 5px 0;
+    line-height: 1.1;
 
-    .choice-in {
-        @include flex();
-        line-height: 1.1;
+    input[type='radio'] + label,
+    input[type='checkbox'] + label,
+    input[type='radio']:checked + label,
+    input[type='checkbox']:checked + label {
+        @include transitions(box-shadow 0.3s, background-color 0.3s, border 0.3s);
+        padding: $paddingtb 10px $paddingtb 30px;
+        background-position: 10px 50%;
+        cursor: pointer;
+        background-color: $lighterGray;
+        border: 1px solid $lightGray;
+        border-radius: 5px;
+        box-shadow: 2px 2px 6px -4px $lightGray;
 
-        input[type='radio'] + label,
-        input[type='checkbox'] + label,
-        input[type='radio']:checked + label,
-        input[type='checkbox']:checked + label {
-            @include transitions(box-shadow 0.3s, background-color 0.3s, border 0.3s);
-            padding: $paddingtb 10px $paddingtb 30px;
-            background-position: 10px 50%;
-            cursor: pointer;
-            background-color: $lighterGray;
-            border: 1px solid $lightGray;
-            border-radius: 5px;
-            box-shadow: 2px 2px 6px -4px $lightGray;
-
-            &:hover {
-                color: $black;
-                border: 1px solid $gray;
-                background-color: $lightYellow;
-                box-shadow: 2px 2px 6px -4px $gray;
-            }
-
-            &:active {
-                border: 1px solid $darkColor;
-            }
+        &:hover {
+            color: $black;
+            border: 1px solid $gray;
+            background-color: $lightYellow;
+            box-shadow: 2px 2px 6px -4px $gray;
         }
 
-        input[type='radio']:checked + label,
-        input[type='checkbox']:checked + label {
-            background-color: $white;
-            box-shadow: 2px 2px 6px -4px $black;
+        &:active {
+            border: 1px solid $darkColor;
         }
+    }
+
+    input[type='radio']:checked + label,
+    input[type='checkbox']:checked + label {
+        background-color: $white;
+        box-shadow: 2px 2px 6px -4px $black;
     }
 }
 
