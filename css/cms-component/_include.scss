@@ -105,7 +105,7 @@ $red: #8d1e2d;
         .choice-in {
             @include flex();
             @include inputChoice();
-            
+
             > span {
                 visibility: hidden;
                 margin-left: 5px;
