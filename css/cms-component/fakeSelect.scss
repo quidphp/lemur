@@ -39,6 +39,7 @@
 
     &[data-disabled='1'] > .trigger {
         background-color: $gray;
+        cursor: no-drop;
     }
 
     > .trigger {
@@ -55,11 +56,11 @@
     }
 
     &[data-active='1'] > .trigger,
-    > .trigger:hover {
+    &:not([data-disabled='1']) > .trigger:hover {
         background-color: $lightYellow;
     }
 
-    > .trigger:active {
+    &:not([data-disabled='1']) > .trigger:active {
         background-color: $lightGray;
     }
 }
