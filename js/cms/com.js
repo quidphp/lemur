@@ -62,11 +62,11 @@ Component.Com = function(option)
         },
         
         getClose: function() {
-            return Ele.typecheck(qs(this,"> .close"));
+            return qs(this,"> .close",true);
         },
         
         getScroller: function() {
-            return Ele.typecheck(qs(this,"> .scroller"));
+            return qs(this,"> .scroller",true);
         },
         
         getComElement: function() {

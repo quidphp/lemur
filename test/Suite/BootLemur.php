@@ -85,7 +85,7 @@ class Home extends Lemur\Cms\Home
     final public function trigger()
     {
         $return = '';
-        $isCli = Base\Cli::is();
+        $isCli = Base\Server::isCli();
         $boot = static::boot();
         $assertJs = $boot->getAttr('assert/assertJs');
 

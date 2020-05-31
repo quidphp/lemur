@@ -229,7 +229,6 @@ class Specific extends Core\RouteAlias
             if(is_string($table) && $db->hasTable($table) && is_array($array) && !empty($array))
             {
                 $table = $db->table($table);
-                $routeClass = $table->routeClass('general');
 
                 foreach ($array as $colName => $primaries)
                 {
@@ -240,11 +239,29 @@ class Specific extends Core\RouteAlias
 
                         if($table->hasPermission('view'))
                         {
-                            $segment = ['table'=>$table,'filter'=>[$colName=>$primary]];
-                            $route = $routeClass::make($segment);
-                            $text = $table->label().' / '.$col->label()." ($c)";
-                            $html = $route->a($text);
-                            $r .= Html::liCond($html);
+                            $route = null;
+
+                            if($c === 1 && $table->hasPermission('specific'))
+                            {
+                                $primary = current($primaries);
+                                $routeClass = $table->routeClass('cms');
+                                $segment = ['table'=>$table,'primary'=>$primary];
+                                $route = $routeClass::make($segment);
+                            }
+
+                            elseif($c > 1 && $table->hasPermission('general'))
+                            {
+                                $routeClass = $table->routeClass('general');
+                                $segment = ['table'=>$table,'filter'=>[$colName=>$primary]];
+                                $route = $routeClass::make($segment);
+                            }
+
+                            if(!empty($route))
+                            {
+                                $text = $table->label().' / '.$col->label()." ($c)";
+                                $html = $route->a($text);
+                                $r .= Html::liCond($html);
+                            }
                         }
 
                         else

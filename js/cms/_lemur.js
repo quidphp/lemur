@@ -303,10 +303,11 @@ ael(document,'group:specific',function(event,node) {
     // avec panel
     if(Arr.length(panel) > 1)
     {
-        trigSetup(Component.SpecificPanel.call(form),true);
+        Component.SpecificPanel.call(form);
         ael(form,'specificPanel:setHash',function(event,hash) {
             trigHdlr(nav,'specificNav:setHash',hash);
         });
+        trigSetup(form,true);
     }
     
     else
