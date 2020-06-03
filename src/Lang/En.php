@@ -382,7 +382,7 @@ class En extends Core\Lang\En
                     'getLoginLifetime'=>'Login lifetime',
                     'getLifetime'=>'Cookie lifetime',
                     'expire'=>'Cookie expire',
-                    'getCookieParams'=>'Cookie paramters',
+                    'getCookieParams'=>'Cookie parameters',
                     'getGarbageCollect'=>'Session garbage collect',
                     'userAgent'=>'User agent',
                     'roles'=>'Roles',
