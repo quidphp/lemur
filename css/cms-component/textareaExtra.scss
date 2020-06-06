@@ -13,11 +13,11 @@
         @include tableRelationFull();
         @include flex(center, center, wrap);
         padding-top: 3px;
-        
+
         [data-absolute-placeholder] {
             margin: 3px;
         }
-        
+
         .table-relation > .popup {
             @include tableRelationPopup();
         }
