@@ -20,7 +20,6 @@ Component.EnumSet = function(option)
         search: ".input input[type='text']",
         closeUnsetContent: true,
         inputSearch: {
-            useCurrent: false,
             button: null
         },
         sorter: {

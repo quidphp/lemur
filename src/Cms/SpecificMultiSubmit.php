@@ -63,7 +63,7 @@ class SpecificMultiSubmit extends Core\RouteAlias
 
             if(is_array($primaries) && !empty($primaries) && $rows->count() === count($primaries) && $rows->isMinCount(2) && $rows->exists(...$primaries))
             {
-                if($rows->pairEqual(true,'isUpdateable'))
+                if($rows->every(fn($row) => $row->isUpdateable()))
                 $return = true;
             }
 

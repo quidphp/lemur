@@ -31,8 +31,6 @@ class Crypt extends Core\ColAlias
     // logique onGet pour un champ crypt
     protected function onGet($return,?Orm\Cell $cell=null,array $option)
     {
-        $return = parent::onGet($return,$cell,$option);
-
         if(!empty($cell) && !empty($option['context']) && is_string($option['context']) && strpos($option['context'],':general') !== false)
         $return = $this->makeCryptStatus($cell);
 
@@ -57,8 +55,6 @@ class Crypt extends Core\ColAlias
     // si la valeur est une string vide, utilise la valeur courant de la cell
     protected function onSet($return,?Orm\Cell $cell=null,array $row,array $option)
     {
-        $return = parent::onSet($return,$cell,$row,$option);
-
         if(is_string($return))
         {
             if(strlen($return))

@@ -36,8 +36,6 @@ class Textarea extends Core\ColAlias
     // la seule chose géré est le remplacement des liens absoluts pour leur version relatives
     final protected function onSet($return,?Orm\Cell $cell=null,array $row,array $option)
     {
-        $return = parent::onSet($return,$cell,$row,$option);
-
         if(is_string($return))
         $return = $this->absoluteReplace($return);
 

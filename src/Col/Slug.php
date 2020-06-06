@@ -82,8 +82,6 @@ class Slug extends Core\ColAlias
     // génère le slug à partir de name_[lang] si vide
     final protected function onSet($return,?Orm\Cell $cell=null,array $row,array $option)
     {
-        $return = parent::onSet($return,$cell,$row,$option);
-
         if($this->slugDo($return,$cell))
         {
             $slug = $this->slugAttr();

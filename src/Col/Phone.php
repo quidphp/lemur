@@ -33,8 +33,6 @@ class Phone extends Core\ColAlias
     // ramène le numéro de téléphone dans un format nord-américain
     final protected function onGet($return,?Orm\Cell $cell=null,array $option)
     {
-        $return = parent::onGet($return,$cell,$option);
-
         if(is_scalar($return))
         $return = Base\Num::phoneFormat($return,null,$this->getAttr('phone'));
 
@@ -47,8 +45,6 @@ class Phone extends Core\ColAlias
     // enlève tous les caractères non numérique
     final protected function onSet($return,?Orm\Cell $cell=null,array $row,array $option)
     {
-        $return = parent::onSet($return,$cell,$row,$option);
-
         if(is_string($return))
         $return = Base\Str::keepNum($return);
 

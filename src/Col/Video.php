@@ -108,7 +108,7 @@ abstract class Video extends Core\Col\JsonAlias
     {
         $return = '';
         $value = $this->value($value);
-        $value = $this->onGet($value,null,(array) $option);
+        $value = $this->get($value,$option);
 
         if($value instanceof Main\Video)
         {

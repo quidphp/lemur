@@ -28,27 +28,6 @@ class JsonExport extends Core\Col\JsonAlias
     ];
 
 
-    // varExport
-    // permet d'envoyer un array dans var export
-    final public static function varExport(array $return)
-    {
-        return Base\Debug::export($return);
-    }
-
-
-    // onGet
-    // onGet spécial si contexte est cms, retourne le résultat debug/export
-    final protected function onGet($return,?Orm\Cell $cell=null,array $option)
-    {
-        $return = parent::onGet($return,$cell,$option);
-
-        if(is_array($return) && !empty($option['context']) && $option['context'] === 'cms:specific')
-        $return = static::varExport($return);
-
-        return $return;
-    }
-
-
     // onSet
     // gère la logique onSet pour jsonExport
     // si la valeur est trop longue, n'envoie pas d'erreur mais retourne un tableau avec la clé incomplete à true

@@ -118,7 +118,7 @@ class Login extends Lemur\Route\Login
         $flash = $session->flash();
         $redirect = $flash->get('login/redirect');
         $username = $flash->get('login/credential');
-        $username = (empty($username))? $session->remember('credential'):$username;
+        $username = $username ?: $session->remember('credential');
         $usernameLabel = static::langText('login/usernameEmail');
         $remember = $flash->get('login/remember') ?? true;
 

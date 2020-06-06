@@ -93,18 +93,14 @@ class Col extends Core\Col
     // utilisé lors de la génération d'un élément de formulaire, si onComplex est true renvoie à onGet
     final protected function onComplex($return,?Orm\Cell $cell=null,array $option)
     {
+        $return = $this->value($return);
         $onComplex = $this->getAttr('onComplex');
 
         if($onComplex === true)
-        $return = $this->onGet($return,$cell,$option);
+        $return = $this->attrOrMethodCall('onGet',$return,$cell,$option);
 
-        else
-        {
-            $return = $this->value($return);
-
-            if(!empty($onComplex))
-            $return = $onComplex($return,$cell,$option);
-        }
+        elseif(!empty($onComplex))
+        $return = $onComplex($return,$cell,$option);
 
         return $return;
     }
@@ -169,10 +165,15 @@ class Col extends Core\Col
         else
         {
             $return = Base\Obj::cast($value);
+
+            if(is_array($return))
+            $return = Base\Debug::export($return);
+
+            else
             $return = Base\Str::cast($return);
         }
 
-        if(empty($return))
+        if(Base\Vari::isReallyEmpty($return))
         $return = $this->formComplexEmptyPlaceholder($value);
 
         return $return;

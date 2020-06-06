@@ -14,12 +14,14 @@
 // avec un header et un body
 @mixin block() {
     .block-head {
+        @include flex();
         background-color: $color;
         border: 1px solid $darkerColor;
         position: relative;
         padding: 10px 20px;
         color: $white;
         border-radius: 5px 5px 0 0;
+        min-height: 55px;
     }
 
     .block-body {

@@ -13,7 +13,11 @@
         @include tableRelationFull();
         @include flex(center, center, wrap);
         padding-top: 3px;
-
+        
+        [data-absolute-placeholder] {
+            margin: 3px;
+        }
+        
         .table-relation > .popup {
             @include tableRelationPopup();
         }
@@ -23,13 +27,9 @@
 // tableRelationFull
 // mxin for the full table relation select menu
 @mixin tableRelationFull($class: '.table-relation') {
-    [data-absolute-placeholder] {
-        margin: 3px;
-
-        &[data-absolute-placeholder='ready'] #{$class}[data-active='1'] {
-            z-index: 4;
-            @include abs(0, null, null, 0);
-        }
+    [data-absolute-placeholder='ready'] #{$class}[data-active='1'] {
+        z-index: 4;
+        @include abs(0, null, null, 0);
     }
 
     #{$class} {

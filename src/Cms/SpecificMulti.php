@@ -54,7 +54,7 @@ class SpecificMulti extends Core\RouteAlias
         {
             $rows = $this->rows();
 
-            if($rows->isMinCount(2) && $rows->pairEqual(true,'isUpdateable'))
+            if($rows->isMinCount(2) && $rows->every(fn($row) => $row->isUpdateable()))
             $return = true;
         }
 

@@ -721,7 +721,7 @@ class General extends Core\RouteAlias
         if($this->hasTablePermission('view','cols') && $cols->isNotEmpty() && $currentCols->isNotEmpty())
         {
             $loopCols = $currentCols->clone();
-            $notIn = $cols->not($currentCols);
+            $notIn = $cols->filterReject($currentCols);
             $loopCols->add($notIn);
 
             $defaultSegment = static::getDefaultSegment();
