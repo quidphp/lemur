@@ -136,11 +136,11 @@ Component.Com = function(option)
         const comElement = trigHdlr(this,'com:getComElement');
         if(comElement !== null)
         {
+            trigHdlr(this,'com:show',true);
             trigSetup(Component.ClickOpenTrigger.call(comElement,$option.clickOpen));
             trigEvt(comElement,'clickOpen:open');
             
             bindLinks.call(this);
-            trigHdlr(this,'com:show',true);
         }
     }
     
