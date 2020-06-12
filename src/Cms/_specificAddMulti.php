@@ -78,7 +78,7 @@ trait _specificAddMulti
         $r = '';
         $route = $this->routeSubmit();
         $hasPanel = $this->hasPanel();
-        $attr = ['specific-form',($hasPanel === true)? 'with-panel':null];
+        $attr = ['specific-form','tabindex'=>-1,($hasPanel === true)? 'with-panel':null];
 
         $r .= $route->formOpen($attr);
         $r .= $this->makeFormHidden();

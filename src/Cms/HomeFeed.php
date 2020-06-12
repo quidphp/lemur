@@ -78,7 +78,7 @@ class HomeFeed extends Core\RouteAlias
                 if(!empty($row))
                 {
                     $attr = ['row-element','data-row'=>$row,'data-table'=>$table];
-                    $r .= Html::divCond($this->rowFeedOutput($row,$dateCol),$attr);
+                    $r .= Html::divCond($row->lemurHomeFeedOutput($dateCol),$attr);
                 }
             }
 
@@ -88,72 +88,6 @@ class HomeFeed extends Core\RouteAlias
 
         else
         $r .= Html::div(static::langText('common/nothing'),'nothing');
-
-        return $r;
-    }
-
-
-    // rowFeedOutput
-    // génère le rendu html pour la row
-    final public function rowFeedOutput(Lemur\Row $row,string $dateCol):string
-    {
-        $r = '';
-        $table = $row->table();
-        $route = $row->route();
-
-        if($route->canTrigger())
-        {
-            $isUpdateable = ($table->hasPermission('lemurUpdate') && $row->isUpdateable());
-            $icon = ($isUpdateable === true)? 'modify':'view';
-            $tooltip = ($isUpdateable === true)? 'tooltip/rowModify':'tooltip/rowView';
-            $commit = $row->cellsDateCommit()[$dateCol] ?? null;
-            $media = $row->cellsMediaFile();
-            $label = $row->label(null,100);
-            $lang = static::lang();
-
-            $attr = ['media'];
-            if(!empty($media))
-            $attr['style']['background-image'] = $media;
-            else
-            $attr[] = 'media-placeholder';
-
-            $r .= Html::div(null,$attr);
-
-            $middle = Html::h3($label);
-            if(!empty($commit))
-            $middle .= Html::divCond($this->rowFeedCommitOutput($commit),'commit');
-            $r .= Html::div($middle,'title-commit');
-
-            $attr = ['icon-solo',$icon,'data-tooltip'=>$lang->text($tooltip)];
-            $icon = Html::div(null,$attr);
-            $r .= Html::div($icon,'tools');
-
-            $r = $route->a($r);
-        }
-
-        return $r;
-    }
-
-
-    // rowFeedCommitOutput
-    // génère le rendu pour la ligne du dernier commit
-    final protected function rowFeedCommitOutput(array $commit):string
-    {
-        $r = '';
-        ['user'=>$user,'date'=>$date] = $commit;
-
-        if(!empty($user))
-        {
-            $userRow = $user->relationRow();
-
-            if(!empty($userRow))
-            {
-                $r = Html::span($user->label(),'label').':';
-                $r .= Html::span($userRow->cellName(),'user');
-                $r .= Html::span('-','separator');
-                $r .= Html::span($date->get(),'date');
-            }
-        }
 
         return $r;
     }

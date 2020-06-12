@@ -10,6 +10,7 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Col;
+use Quid\Base;
 use Quid\Base\Html;
 use Quid\Core;
 use Quid\Lemur;
@@ -28,19 +29,30 @@ abstract class Video extends Core\Col\JsonAlias
         'preValidate'=>['uriAbsolute'],
         'check'=>['kind'=>'text'],
         'descriptionExcerpt'=>500, // custom, longueur maximale de la description
-        'service'=>null // classe du service utilisé, à spécifier
+        'services'=>null, // classe des services, à spécifier
+        '@cms'=>[
+            'generalExcerptMin'=>null]
     ];
 
 
     // getService
     // retourne le service à utiliser
-    final public function getService():Main\Service
+    // envoie une exception si non valide
+    final public function getService(string $uri):Main\Service
     {
         $return = null;
-        $service = $this->getAttr('service');
+        $services = $this->getAttr('services');
 
-        if(!empty($service))
-        $return = new $service();
+        if(is_array($services))
+        {
+            $service = Base\Arr::find($services,fn($service) => $service::isValidInput($uri));
+
+            if(!empty($service))
+            $return = new $service();
+        }
+
+        if(empty($return))
+        static::throw('couldNotFindVideoService',$uri);
 
         return $return;
     }
@@ -60,14 +72,19 @@ abstract class Video extends Core\Col\JsonAlias
     {
         $return = parent::onGet($return,$cell,$option);
 
-        if(is_array($return))
-        {
-            $service = $this->getService();
-            $return = $service::makeVideo($return);
-        }
+        if(!empty($return) && !empty($option['context']) && $option['context'] === 'cms:general' && !empty($cell))
+        $return = $cell->html();
 
-        if(!empty($return) && !empty($option['context']) && $option['context'] === 'cms:general' && $return instanceof Main\Video)
-        $return = Html::a($return->absolute(),true);
+        elseif(is_array($return))
+        {
+            $input = $return['input'] ?? null;
+
+            if(is_string($input))
+            {
+                $service = $this->getService($input);
+                $return = $service::makeVideo($return);
+            }
+        }
 
         return $return;
     }
@@ -79,6 +96,7 @@ abstract class Video extends Core\Col\JsonAlias
     {
         $return = parent::onSet($return,$cell,$row,$option);
         $hasChanged = true;
+        $input = null;
 
         if(!empty($cell))
         {
@@ -91,10 +109,18 @@ abstract class Video extends Core\Col\JsonAlias
             }
         }
 
-        if(!empty($return) && $hasChanged === true)
+        if(!empty($return) && is_string($return) && $hasChanged === true)
         {
-            $service = $this->getService();
-            $return = $service->query($return);
+            $input = $return;
+
+            if(Base\Json::is($return))
+            $input = Base\Json::decode($return)['input'] ?? null;
+
+            if(is_string($input))
+            {
+                $service = $this->getService($input);
+                $return = $service->query($input);
+            }
         }
 
         return $return;

@@ -10,6 +10,7 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Cell;
+use Quid\Base;
 use Quid\Core;
 
 // media
@@ -25,6 +26,14 @@ class Media extends Core\Cell\Media
     final public function generalOutput(?array $option=null):string
     {
         return $this->commonGeneralOutput(null,$option);
+    }
+
+
+    // outputTableRelation
+    // génère le output tableRelation pour media
+    final public function outputTableRelation():array
+    {
+        return Base\Arr::clean([$this->commonTableRelationOutput()]);
     }
 }
 

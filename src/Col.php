@@ -46,9 +46,17 @@ class Col extends Core\Col
 
     // isGeneral
     // retourne vrai si la colonne doit apparaître dans general
+    // si la valeur de la colonne est la string lang, envoie dans generalCurrentLang de col (en fonction du code lang de boot)
     final public function isGeneral():bool
     {
-        return $this->getAttr('general',true) === true;
+        $return = false;
+
+        if($this->getAttr('general') === 'lang')
+        $return = static::generalCurrentLang($this);
+        else
+        $return = $this->getAttr('general',true) === true;
+
+        return $return;
     }
 
 

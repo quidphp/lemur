@@ -141,7 +141,8 @@
 
         > a {
             @include inbl();
-
+            background-color: $gray;
+            
             &:hover,
             &[data-triggered='1'] {
                 opacity: 0.8;
@@ -219,13 +220,19 @@
     @include imageLegend();
 
     a {
+        text-align: center;
+        
         .thumbnail,
         .media-placeholder {
+            @include inbl();
             @include transitions(opacity 0.3s);
             text-align: center;
-            display: block;
         }
-
+        
+        .thumbnail {
+            background-color: $gray;
+        }
+        
         &:hover,
         &[data-triggered='1'] {
             .thumbnail,

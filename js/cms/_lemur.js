@@ -1,4 +1,4 @@
-/*
+    /*
  * This file is part of the QuidPHP package.
  * Website: https://quidphp.com
  * License: https://github.com/quidphp/lemur/blob/master/LICENSE
@@ -34,6 +34,9 @@ ael(document,'doc:mountInitial',function(event,body) {
     // modal
     const modal = qs(body,"> .modal");
     trigSetup(Component.Modal.call(modal));
+    
+    // generalComponents
+    trigSetup(Component.GeneralComponents.call(this));
     
     // specificComponents
     trigSetup(Component.SpecificComponents.call(this));
@@ -200,6 +203,7 @@ ael(document,'route:general',function(event,node) {
         const filesSlider = qsa(table,"td[data-group='media'] .slider");
         const quickEdit = qsa(table,"td[data-quick-edit='1'] a.quick-edit");
         const highlight = qsa(table,"tr.highlight");
+        const components = qsa(table,"tbody td[data-col]");
         
         // rowsChecker
         trigSetup(Component.RowsChecker.call(main));
@@ -224,9 +228,13 @@ ael(document,'route:general',function(event,node) {
         // filesSlider
         trigSetup(Component.TabsNav.call(filesSlider,{target: ".slider-element", prev: ".prev", next: ".next"}));
         
+        // generalComponents
+        trigHdlr(this,'generalComponents:setup',components);
+        
         // unmount
         aelOnce(this,'route:general:unmount',function(event,node) {
             trigHdlrs(quickEdit,'quickEdit:revert');
+            trigHdlr(this,'generalComponents:teardown',components);
         });
     }
 });

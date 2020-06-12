@@ -158,8 +158,9 @@ trait _specific
             {
                 if($cols->isNotEmpty())
                 {
+                    $tooltip = $lang->panelDescription($key);
                     $r .= Html::liOp();
-                    $r .= Html::aOpen("#$key",null);
+                    $r .= Html::aOpen("#$key",null,['data-tooltip'=>$tooltip]);
                     $r .= Html::h3($lang->panelLabel($key));
                     $r .= Html::aCl();
                     $r .= Html::liCl();
@@ -245,9 +246,6 @@ trait _specific
 
         if(!empty($panel))
         {
-            $showDescription = ($table->hasPermission('panelDescription') && count($panel) > 1);
-            $firstKey = key($panel);
-
             foreach ($panel as $key => $cols)
             {
                 if($cols->isNotEmpty())
@@ -263,16 +261,7 @@ trait _specific
                     }
                     $attr = ['panel','data'=>$data];
 
-                    $description = '';
-                    if($showDescription === true && is_string($key))
-                    {
-                        $description = Html::divCond($lang->panelDescription($key),'panel-description');
-                        if(!empty($description))
-                        $attr[] = 'with-description';
-                    }
-
                     $r .= Html::divOp($attr);
-                    $r .= $description;
 
                     $fields = '';
                     foreach ($cols as $col)

@@ -20,15 +20,11 @@
         }
     }
 
-    > .cell-inner {
-        padding-right: 10px;
-
-        > a.quick-edit {
-            @include abs(0px, 0px);
-            z-index: 1;
-            display: none;
-            border-bottom-left-radius: 3px;
-        }
+    > .cell-inner > a.quick-edit {
+        @include abs(0px, 0px);
+        z-index: 1;
+        display: none;
+        border-bottom-left-radius: 3px;
     }
 
     &:hover > .cell-inner > a.quick-edit,
@@ -46,7 +42,7 @@
 
     > .cell-inner .quick-edit-container {
         display: none;
-        padding: 8px 40px 8px 10px;
+        padding: 8px 60px 8px 10px;
         height: 100%;
     }
 

@@ -150,7 +150,8 @@ Component.Com = function(option)
     {
         let r = '';
         Str.typecheck(content,true);
-        const date = Datetime.toSecond();
+        const locale = trigHdlr(document,'doc:getAttr','data-locale');
+        const date = Datetime.localeFormat(locale);
         
         let top = '';
         top += Html.div(null,'triangle');

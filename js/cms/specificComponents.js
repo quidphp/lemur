@@ -12,7 +12,7 @@ Component.SpecificComponents = function()
     Vari.check(this,document);
     
     
-    // option components
+    // components
     const $components = [
         {
             match: "[data-group='date']",
@@ -62,13 +62,7 @@ Component.SpecificComponents = function()
     // handler
     setHdlrs(this,'specificComponents:',{
         
-        get: function() {
-            return $components;
-        },
-        
         match: function(node) {
-            Ele.typecheck(node);
-            
             return Arr.find($components,function(ele) {
                 return Ele.match(node,ele.match);
             });
@@ -77,10 +71,9 @@ Component.SpecificComponents = function()
         setup: function(nodes,view) {
             Arr.each(nodes,function(ele) {
                 const comp = trigHdlr(document,'specificComponents:match',ele);
-                const node = qs(ele,'.specific-component');
+                const node = qs(ele,'.specific-component',true);
                 const hasInput = qs(node,Dom.selectorInput(true));
                 let found = false;
-                Ele.typecheck(node);
                 
                 if(comp != null && comp.setupOnView == view && hasInput != null)
                 {

@@ -91,12 +91,6 @@
         display: block;
     }
 }
-[data-group='specific'] main .inner > .specific-form.with-panel .panel.with-description {
-    > .panel-description {
-        font-size: 90%;
-        margin-bottom: 10px;
-    }
-}
 
 [data-group='specific'] main .inner > .specific-form .panel {
     @include print() {

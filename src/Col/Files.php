@@ -28,6 +28,7 @@ abstract class Files extends Core\Col\Files
             '*'=>[
                 'mediaLegend'=>true]],
         '@cms'=>[
+            'versionDefault'=>['lemurHome'=>-1,'lemurGeneral'=>-1],
             'route'=>['download'=>Lemur\Cms\Download::class]]
     ];
 

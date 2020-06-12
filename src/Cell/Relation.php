@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Quid\Lemur\Cell;
 use Quid\Base\Html;
 use Quid\Core;
+use Quid\Main;
 
 // relation
 // abstract class extended by the enum and set cells
@@ -46,6 +47,50 @@ class Relation extends Core\Cell\Relation
                 }
 
                 $return = Html::ulCond($return);
+            }
+        }
+
+        return $return;
+    }
+
+
+    // hasImage
+    // une relation peut contenir une image si la table est source de media
+    final public function hasImage():bool
+    {
+        $return = false;
+        $table = $this->relationTable();
+
+        if(!empty($table))
+        {
+            $class = $table->rowClass();
+            if($class::isMediaSource())
+            $return = true;
+        }
+
+        return $return;
+    }
+
+
+    // getFirstImage
+    // retourne la première image de la relation
+    final public function getFirstImage($version=null,?string $type=null):?Main\File
+    {
+        $return = null;
+
+        if($this->isRelationTable())
+        {
+            $values = $this->pair(true);
+
+            if($values instanceof Core\Row)
+            $values = $values->toRows();
+
+            foreach ($values as $row)
+            {
+                $return = $row->getFirstImage($version,$type);
+
+                if(!empty($return))
+                break;
             }
         }
 

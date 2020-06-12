@@ -50,6 +50,25 @@ class Medias extends Core\Cell\Medias
     }
 
 
+    // outputTableRelation
+    // génère le output tableRelation pour medias
+    final public function outputTableRelation():array
+    {
+        $return = [];
+        $col = $this->col();
+
+        foreach ($col->indexRange() as $index)
+        {
+            $output = $this->commonTableRelationOutput($index);
+
+            if(!empty($output))
+            $return[] = $output;
+        }
+
+        return $return;
+    }
+
+
     // makeGeneralSlider
     // génère le slider pour les images
     final protected function makeGeneralSlider(array $slider):string

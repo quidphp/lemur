@@ -25,7 +25,6 @@ abstract class Files extends Core\Cell\Files
 
     // commonGeneralOutput
     // génère le output pour général
-    // retourne seulement la première image de la cellule
     final protected function commonGeneralOutput(?int $index=null,?array $option=null):string
     {
         $return = '';
@@ -52,7 +51,7 @@ abstract class Files extends Core\Cell\Files
             if($isImage === true)
             {
                 if($hasVersion === true)
-                $file = $this->commonFile($index,-1);
+                $file = $this->commonFile($index,$this->getVersionDefault('lemurGeneral'));
 
                 if(!empty($file))
                 {
@@ -81,6 +80,49 @@ abstract class Files extends Core\Cell\Files
                 $return .= Html::divOp('legend');
                 $return .= Html::spanOr($legendLink,$value);
                 $return .= Html::divCl();
+            }
+        }
+
+        return $return;
+    }
+
+
+    // commonTableRelationOutput
+    // génère le output table relation pour une image dans la cellule
+    final public function commonTableRelationOutput(?int $index=null):?array
+    {
+        $return = null;
+        $file = $this->commonFile($index);
+
+        if(!empty($file))
+        {
+            $row = $this->row();
+            $rowName = $row->cellName()->value();
+            $name = $file->basename();
+            $isImage = ($file instanceof Main\File\Image);
+            $uri = $file->pathToUri();
+
+            if($isImage === false || !empty($uri))
+            {
+                $return = [];
+                $return['thumbnail'] = ($isImage === true)? $uri:null;
+                $return['name'] = $name;
+                $return['content'] = '';
+                $return['isImage'] = $isImage;
+
+                $excerpt = Base\Str::excerpt(50,$rowName);
+
+                if($isImage === true)
+                $return['from'] = Html::img($uri,$rowName);
+                else
+                $return['from'] = Html::div(null,['big-icon','storage']);
+
+                $return['from'] .= Html::span($excerpt,'legend');
+
+                if($isImage === true)
+                $return['to'] = Html::img($uri,$rowName);
+                else
+                $return['to'] = Html::a($uri,$rowName,['target'=>false]);
             }
         }
 
