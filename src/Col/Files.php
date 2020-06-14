@@ -15,7 +15,6 @@ use Quid\Base\Html;
 use Quid\Core;
 use Quid\Lemur;
 use Quid\Main;
-use Quid\Orm;
 
 // files
 // extended abstract class extended by the media and medias cols

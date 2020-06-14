@@ -10,9 +10,7 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Col;
-use Quid\Base\Html;
 use Quid\Core;
-use Quid\Orm;
 
 // primary
 // extended class for dealing with a column which has an auto increment primary key

@@ -14,7 +14,6 @@ use Quid\Base;
 use Quid\Base\Html;
 use Quid\Core;
 use Quid\Lemur;
-use Quid\Orm;
 
 // relation
 // extended abstract class extended for a relation

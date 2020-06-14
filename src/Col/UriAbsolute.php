@@ -10,10 +10,8 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Col;
-use Quid\Base;
 use Quid\Core;
 use Quid\Lemur;
-use Quid\Orm;
 
 // uriAbsolute
 // extended class for a column managing an absolute uri

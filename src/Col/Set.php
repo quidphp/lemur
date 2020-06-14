@@ -13,7 +13,6 @@ namespace Quid\Lemur\Col;
 use Quid\Base;
 use Quid\Base\Html;
 use Quid\Core;
-use Quid\Orm;
 
 // set
 // class for a column containing a set relation (many)
