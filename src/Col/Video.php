@@ -72,10 +72,7 @@ abstract class Video extends Core\Col\JsonAlias
     {
         $return = parent::onGet($return,$cell,$option);
 
-        if(!empty($return) && !empty($option['context']) && $option['context'] === 'cms:general' && !empty($cell))
-        $return = $cell->html();
-
-        elseif(is_array($return))
+        if(is_array($return))
         {
             $input = $return['input'] ?? null;
 

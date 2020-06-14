@@ -32,20 +32,6 @@ class Primary extends Core\Col\Primary
 
         return $return;
     }
-
-
-    // onGet
-    // logique onGet pour un champ primary
-    // affichage d'un lien si le contexte est cms:general
-    protected function onGet($return,?Orm\Cell $cell=null,array $option)
-    {
-        $return = parent::onGet($return,$cell,$option);
-
-        if(!empty($cell) && !$cell->isNull() && !empty($option['context']) && $option['context'] === 'cms:general' && !empty($option['specific']))
-        $return = Html::a($option['specific'],$cell);
-
-        return $return;
-    }
 }
 
 // init

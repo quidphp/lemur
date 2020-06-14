@@ -94,6 +94,10 @@ Component.QuickEdit = function()
     ael(this,'ajaxBlock:unmountContent',function() {
         const node = trigHdlr(this,'ajaxBlock:getContentNode');
         trigEvt(document,'specificForm:unmount',node);
+        
+        const form = qs(node,'form');
+        if(form != null)
+        trigTeardown(form);
     });
     
     ael(this,'ajaxBlock:beforeMount',function(event,data,isError) {

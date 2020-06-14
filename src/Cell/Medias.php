@@ -23,7 +23,7 @@ class Medias extends Core\Cell\Medias
 
     // generalOutput
     // génère le output pour général, retourne seulement la première image de la cellule
-    final public function generalOutput(?array $option=null):string
+    final public function generalOutput(array $option):string
     {
         $return = '';
         $slider = [];

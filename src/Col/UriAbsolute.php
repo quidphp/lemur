@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Quid\Lemur\Col;
 use Quid\Base;
 use Quid\Core;
+use Quid\Lemur;
 use Quid\Orm;
 
 // uriAbsolute
@@ -20,32 +21,10 @@ class UriAbsolute extends Core\Col\UriAbsolute
 {
     // config
     protected static array $config = [
+        'cell'=>Lemur\Cell\Uri::class,
         '@cms'=>[
             'generalExcerptMin'=>null]
     ];
-
-
-    // onGet
-    // sur onGet retourne le courriel dans un lien a:mailto
-    final protected function onGet($return,?Orm\Cell $cell=null,array $option)
-    {
-        $return = parent::onGet($return,$cell,$option);
-        $option['context'] = (empty($option['context']))? null:$option['context'];
-
-        if(is_string($return) && !empty($return) && $option['context'] !== 'noHtml')
-        {
-            if($option['context'] === 'cms:general' && empty($option['excerpt']))
-            $option['excerpt'] = 30;
-
-            $title = true;
-            if(!empty($option['excerpt']))
-            $title = Base\Str::excerpt($option['excerpt'],$return);
-
-            $return = Base\Html::a($return,$title);
-        }
-
-        return $return;
-    }
 }
 
 // init

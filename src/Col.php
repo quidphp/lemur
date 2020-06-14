@@ -89,7 +89,7 @@ class Col extends Core\Col
     {
         $return = '';
         $compAttr = $this->getSpecificComponentAttr();
-        $option = Base\Arr::plus(['context'=>'cms:specific'],$option);
+        $option = (array) $option;
         $return = Html::div($this->formComplex($value,$attr,$option),$compAttr);
 
         return $return;
@@ -105,11 +105,22 @@ class Col extends Core\Col
         $onComplex = $this->getAttr('onComplex');
 
         if($onComplex === true)
-        $return = $this->attrOrMethodCall('onGet',$return,$cell,$option);
+        {
+            $return = $this->attrOrMethodCall('onGet',$return,$cell,$option);
+            $return = $this->specificComplexOutput($return,$cell,$option);
+        }
 
         elseif(!empty($onComplex))
         $return = $onComplex($return,$cell,$option);
 
+        return $return;
+    }
+
+
+    // specificComplexOutput
+    // utilisé pour le output onComplex pour formComplex
+    public function specificComplexOutput($return,?Orm\Cell $cell=null,array $option)
+    {
         return $return;
     }
 

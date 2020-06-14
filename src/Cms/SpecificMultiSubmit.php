@@ -136,7 +136,7 @@ class SpecificMultiSubmit extends Core\RouteAlias
             foreach ($rows as $key => $row)
             {
                 $deleteSource = ($row === $last);
-                $option = ['uploadDeleteSource'=>$deleteSource,'preValidate'=>true,'com'=>true,'catchException'=>true,'context'=>static::class];
+                $option = ['uploadDeleteSource'=>$deleteSource,'preValidate'=>true,'com'=>true,'catchException'=>true];
                 $save = $row->setUpdateValid($post,$option);
                 $return[$key] = $save;
             }

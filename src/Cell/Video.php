@@ -80,6 +80,14 @@ class Video extends Core\CellAlias
     }
 
 
+    // generalOutput
+    // génère le output général pour une cellule video
+    final public function generalOutput(array $option):?string
+    {
+        return $this->html();
+    }
+
+
     // outputTableRelation
     // génère le tableau de output pour une vidéo
     final public function outputTableRelation():array

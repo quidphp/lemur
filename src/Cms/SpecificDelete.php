@@ -94,7 +94,7 @@ class SpecificDelete extends Core\RouteAlias
         $timestamp = $this->request()->postTimestamp();
 
         if($post !== null)
-        $return = $this->row()->delete(['com'=>true,'timestamp'=>$timestamp,'context'=>static::class]);
+        $return = $this->row()->delete(['com'=>true,'timestamp'=>$timestamp]);
 
         if(empty($return))
         $this->failureComplete();

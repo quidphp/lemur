@@ -28,8 +28,8 @@ class Cell extends Core\Cell
     final public function generalComponent($attr=null,?array $option=null):string
     {
         $return = '';
-        $option = Base\Arr::plus(['specific'=>null,'context'=>'cms:general'],$option);
-        $value = $this->get($option);
+        $option = (array) $option;
+        $value = $this->generalOutput($option);
         $col = $this->col();
         $placeholder = $col->emptyPlaceholder($value);
         $attr = $this->getGeneralComponentAttr($attr);
@@ -43,6 +43,14 @@ class Cell extends Core\Cell
     }
 
 
+    // generalOutput
+    // génère le output général pour le cms
+    public function generalOutput(array $option)
+    {
+        return $this->get($option);
+    }
+
+
     // specificComponent
     // génère le html pour le specific component de la cellule
     // utilisé dans les formulaires spécifiques de lemur
@@ -50,7 +58,7 @@ class Cell extends Core\Cell
     {
         $return = '';
         $compAttr = $this->getSpecificComponentAttr();
-        $option = Base\Arr::plus(['context'=>'cms:specific'],$option);
+        $option = (array) $option;
         $form = $this->formComplex($attr,$option);
         $return = Html::div($form,$compAttr);
 

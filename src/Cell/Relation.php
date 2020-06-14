@@ -24,7 +24,7 @@ class Relation extends Core\Cell\Relation
 
     // generalOutput
     // génère le output pour général dans un ul li
-    final public function generalOutput(?array $option=null):?string
+    final public function generalOutput(array $option):?string
     {
         $return = null;
         $relation = $this->relationKeyValue();

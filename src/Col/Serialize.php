@@ -24,16 +24,11 @@ class Serialize extends Core\Col\Serialize
     ];
 
 
-    // onGet
-    // onGet spécial si contexte est cms, retourne le résultat debug/export
-    final protected function onGet($return,?Orm\Cell $cell=null,array $option)
+    // specificComplexOutput
+    // utilisé pour le output de serialize pour formComplex
+    final public function specificComplexOutput($return,?Orm\Cell $cell=null,array $option)
     {
-        $return = parent::onGet($return,$cell,$option);
-
-        if(is_array($return) && !empty($option['context']) && $option['context'] === 'cms:specific')
-        $return = Base\Debug::export($return);
-
-        return $return;
+        return Base\Debug::export($return);
     }
 }
 

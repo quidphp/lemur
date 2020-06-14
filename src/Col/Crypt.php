@@ -13,6 +13,7 @@ namespace Quid\Lemur\Col;
 use Quid\Base;
 use Quid\Base\Html;
 use Quid\Core;
+use Quid\Lemur;
 use Quid\Orm;
 
 // crypt
@@ -21,6 +22,7 @@ class Crypt extends Core\ColAlias
 {
     // config
     protected static array $config = [
+        'cell'=>Lemur\Cell\Crypt::class,
         'tag'=>'inputText',
         'check'=>['kind'=>'char'],
         'secretKey'=>null
@@ -31,19 +33,13 @@ class Crypt extends Core\ColAlias
     // logique onGet pour un champ crypt
     protected function onGet($return,?Orm\Cell $cell=null,array $option)
     {
-        if(!empty($cell) && !empty($option['context']) && is_string($option['context']) && strpos($option['context'],':general') !== false)
-        $return = $this->makeCryptStatus($cell);
+        if(!empty($cell))
+        $return = $cell->value();
 
-        else
+        if(is_string($return) && strlen($return))
         {
-            if(!empty($cell))
-            $return = $cell->value();
-
-            if(is_string($return) && strlen($return))
-            {
-                $secret = $this->getSecretKey();
-                $return = Base\Crypt::opensslDecrypt($return,$secret);
-            }
+            $secret = $this->getSecretKey();
+            $return = Base\Crypt::opensslDecrypt($return,$secret);
         }
 
         return $return;
@@ -78,26 +74,7 @@ class Crypt extends Core\ColAlias
         $return = parent::formComplex(null,$attr,$option);
 
         if($value instanceof Orm\Cell)
-        $return .= $this->makeCryptStatus($value);
-
-        return $return;
-    }
-
-
-    // makeCryptStatus
-    // génère la balise pour donner le statut sur le cryptage
-    final protected function makeCryptStatus(Orm\Cell $value):string
-    {
-        $return = '';
-
-        if(!empty($value->value()))
-        {
-            $get = $value->get();
-            $lang = $this->db()->lang();
-            $status = (!empty($get))? 'valid':'invalid';
-            $label = $lang->text(['crypt',$status]);
-            $return .= Html::div($label,['crypt-status',"crypt-$status"]);
-        }
+        $return .= $value->makeCryptStatus();
 
         return $return;
     }

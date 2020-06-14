@@ -57,20 +57,6 @@ class Set extends Core\Col\Set
     }
 
 
-    // onGet
-    // logique onGet pour un champ relation
-    // affichage spéciale si le contexte est cms:general
-    final protected function onGet($return,?Orm\Cell $cell=null,array $option)
-    {
-        $return = parent::onGet($return,$cell,$option);
-
-        if(!empty($cell) && !$cell->isNull() && !empty($option['context']) && is_string($option['context']) && strpos($option['context'],':general') !== false)
-        $return = $cell->generalOutput($option);
-
-        return $return;
-    }
-
-
     // prepareStandardRelation
     // retourne la relation pour un input avec choice
     // si sortable, met les éléments cochés en ordre au début de la liste

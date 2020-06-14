@@ -93,13 +93,12 @@ class Contact extends Core\RowAlias
     {
         $return = [];
         $boot = static::boot();
-        $option = ['context'=>'noHtml'];
         $cells = $this->cells()->gets(...static::getColsForm());
         $model = '%label%: %get%';
 
         $return['contactUserName'] = $this->fullName();
         $return['contactCmsLink'] = $this->route('cms')->uriAbsolute();
-        $return['contactData'] = implode(PHP_EOL,$cells->htmlStr($model,false,$option));
+        $return['contactData'] = implode(PHP_EOL,$cells->htmlStr($model,false));
 
         return $return;
     }

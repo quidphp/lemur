@@ -118,20 +118,6 @@ abstract class Relation extends Core\Col\Relation
     }
 
 
-    // onGet
-    // logique onGet pour un champ files
-    // affichage spéciale si le contexte est cms:general
-    protected function onGet($return,?Orm\Cell $cell=null,array $option)
-    {
-        $return = parent::onGet($return,$cell,$option);
-
-        if(!empty($cell) && !$cell->isNull() && !empty($option['context']) && is_string($option['context']) && strpos($option['context'],':general') !== false)
-        $return = $cell->generalOutput($option);
-
-        return $return;
-    }
-
-
     // formComplex
     // génère un élément de formulaire pour les relations
     public function formComplex($value=true,?array $attr=null,?array $option=null):string

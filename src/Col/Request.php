@@ -22,16 +22,11 @@ class Request extends Core\Col\Request
     protected static array $config = [];
 
 
-    // onGet
-    // sur onGet recrée l'objet request, si cms var export
-    final protected function onGet($return,?Orm\Cell $cell=null,array $option)
+    // specificComplexOutput
+    // utilisé pour le output de request pour formComplex
+    final public function specificComplexOutput($return,?Orm\Cell $cell=null,array $option)
     {
-        $return = parent::onGet($return,$cell,$option);
-
-        if(!empty($return) && !empty($option['context']) && $option['context'] === 'cms:specific')
-        $return = Base\Debug::export($return->safeInfo());
-
-        return $return;
+        return ($return instanceof Core\Request)? Base\Debug::export($return->safeInfo()):null;
     }
 }
 

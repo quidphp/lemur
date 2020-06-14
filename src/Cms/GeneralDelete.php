@@ -126,7 +126,7 @@ class GeneralDelete extends Core\RouteAlias
         $timestamp = $this->request()->postTimestamp();
 
         if($post !== null)
-        $return = $this->rows()->delete(['com'=>true,'timestamp'=>$timestamp,'context'=>static::class]);
+        $return = $this->rows()->delete(['com'=>true,'timestamp'=>$timestamp]);
 
         if(empty($return))
         $this->failureComplete();
