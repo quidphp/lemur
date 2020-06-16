@@ -36,6 +36,15 @@ class Col extends Core\Col
     ];
 
 
+    // panels
+    protected static array $panels = [ // détermine les panels à utiliser à partir des patterns
+        'en'=>'en',
+        'fr'=>'fr',
+        'enum'=>'relation',
+        'set'=>'relation'
+    ];
+
+
     // isQuickEditable
     // retourne vrai si la colonne est éditable rapidement via le cms
     final public function isQuickEditable():bool
@@ -77,6 +86,23 @@ class Col extends Core\Col
 
         if(empty($return) || !is_string($return))
         $return = 'default';
+
+        return $return;
+    }
+
+
+    // prepareAttr
+    // permet de préparer certains attributs pour lemur
+    protected function prepareAttr(array $return,Orm\ColSchema $schema):array
+    {
+        $return = parent::prepareAttr($return,$schema);
+
+        if(!isset($return['panel']))
+        {
+            $patternType = $schema->patternType();
+            if(!empty($patternType) && array_key_exists($patternType,static::$panels))
+            $return['panel'] = static::$panels[$patternType];
+        }
 
         return $return;
     }

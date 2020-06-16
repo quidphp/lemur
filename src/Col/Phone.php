@@ -22,7 +22,7 @@ class Phone extends Core\ColAlias
     protected static array $config = [
         'tag'=>'inputTel',
         'search'=>false,
-        'validate'=>[1=>'phone'],
+        'validate'=>['phone'],
         'onComplex'=>true,
         'check'=>['kind'=>'char'],
         'phone'=>null // custom

@@ -72,13 +72,21 @@ class Textarea extends Core\ColAlias
     }
 
 
+    // getTableRelation
+    // retourne un tableau avec les table de relation
+    final public function getTableRelation():?array
+    {
+        return $this->getAttr('tableRelation',true);
+    }
+
+
     // hasTableRelation
     // retourne vrai si le textarea a des table relation
     final public function hasTableRelation():bool
     {
         $return = false;
         $table = $this->table();
-        $relations = $this->getAttr('tableRelation');
+        $relations = $this->getTableRelation();
 
         if(is_array($relations) && !empty($relations) && $table->hasPermission('relation','tableRelation'))
         $return = true;
@@ -107,7 +115,7 @@ class Textarea extends Core\ColAlias
 
         if($this->hasTableRelation() && Html::isFormTag($tag,true))
         {
-            $relations = $this->getAttr('tableRelation');
+            $relations = $this->getTableRelation();
             $tables = $this->db()->tables();
             $tables = $tables->gets(...array_values($relations));
 

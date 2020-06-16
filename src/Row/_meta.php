@@ -59,16 +59,20 @@ trait _meta
 
         if(is_array($meta) && !empty($meta))
         {
-            foreach ($meta as $name => $version)
+            foreach ($meta as $name => $args)
             {
                 if(is_string($name) && $this->hasCell($name))
                 {
-                    if(!is_array($version))
-                    $version = [$version];
+                    if(!is_array($args))
+                    $args = [$args];
 
                     $cell = $this->cell($name);
-                    $return = $cell->file(...$version);
-                    break;
+
+                    if($cell->hasImage())
+                    {
+                        $return = $cell->getFirstImage(...$args);
+                        break;
+                    }
                 }
             }
         }

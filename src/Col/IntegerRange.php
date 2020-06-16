@@ -23,6 +23,7 @@ class IntegerRange extends Core\Col\Integer
         'complex'=>'inputNumericRange',
         'required'=>true,
         'keyboard'=>'decimal',
+        'detailMaxLength'=>false,
         'permission'=>[
             '*'=>[
                 'nullPlaceholder'=>false]],
@@ -31,14 +32,6 @@ class IntegerRange extends Core\Col\Integer
             'max'=>100,
             'inc'=>1]
     ];
-
-
-    // showDetailsMaxLength
-    // n'affiche pas le max length
-    public function showDetailsMaxLength():bool
-    {
-        return false;
-    }
 
 
     // validateClosure

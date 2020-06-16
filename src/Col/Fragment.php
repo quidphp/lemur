@@ -18,7 +18,7 @@ class Fragment extends SlugAlias
     // config
     protected static array $config = [
         'unique'=>false,
-        'validate'=>[1=>'fragment']
+        'validate'=>['fragment']
     ];
 }
 

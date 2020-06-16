@@ -24,6 +24,7 @@ class Range extends Core\Col\JsonAlias
         'required'=>true,
         'check'=>['kind'=>'char'],
         'preValidate'=>'array',
+        'detailMaxLength'=>false,
         'rangeDefault'=>[ // custom
             'min'=>0,
             'max'=>10,
@@ -35,14 +36,6 @@ class Range extends Core\Col\JsonAlias
     // hasFormLabelId
     // le champ contient différents labels
     final public function hasFormLabelId(?array $attr=null,bool $complex=false):bool
-    {
-        return false;
-    }
-
-
-    // showDetailsMaxLength
-    // n'affiche pas le max length
-    public function showDetailsMaxLength():bool
     {
         return false;
     }

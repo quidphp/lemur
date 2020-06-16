@@ -18,7 +18,7 @@ class SlugPath extends SlugAlias
 {
     // config
     protected static array $config = [
-        'validate'=>[1=>'slugPath']
+        'validate'=>['slugPath']
     ];
 
 

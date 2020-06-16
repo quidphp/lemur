@@ -26,8 +26,10 @@ abstract class Video extends Core\Col\JsonAlias
         'tag'=>'inputText',
         'search'=>false,
         'cell'=>Lemur\Cell\Video::class,
+        'detailPreValidate'=>true,
         'preValidate'=>['uriAbsolute'],
         'check'=>['kind'=>'text'],
+        'detailMaxLength'=>false,
         'descriptionExcerpt'=>500, // custom, longueur maximale de la description
         'services'=>null, // classe des services, à spécifier
         '@cms'=>[
@@ -55,14 +57,6 @@ abstract class Video extends Core\Col\JsonAlias
         static::throw('couldNotFindVideoService',$uri);
 
         return $return;
-    }
-
-
-    // showDetailsMaxLength
-    // n'affiche pas le détail sur le maxLength de la colonne
-    final public function showDetailsMaxLength():bool
-    {
-        return false;
     }
 
 

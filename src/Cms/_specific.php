@@ -22,7 +22,7 @@ trait _specific
     protected static array $configCmsSpecific = [
         'formWrap'=>"<div class='left'><div class='label'>%label%</div>%description%%details%</div><div class='right'>%form%</div>%popup%",
         'popup'=>[
-            'name','isRequired','shouldBeUnique','isEditable','priority','pattern','preValidate','validate','compare','type','length','unsigned',
+            'name','isRequired','shouldBeUnique','isEditable','priority','pattern','preValidate','schemaValidate','validate','compare','type','length','isUnsigned',
             'default','acceptsNull','collation','isRelation','isOrderable','isFilterable','isSearchable','isExportable','classFqcn','classCell']
     ];
 
@@ -206,6 +206,9 @@ trait _specific
             elseif($key === 'preValidate')
             $value = $col->rulePreValidate(true);
 
+            elseif($key === 'schemaValidate')
+            $value = $col->ruleSchemaValidate(true);
+
             elseif($key === 'validate')
             $value = $col->ruleValidate(true);
 
@@ -222,6 +225,9 @@ trait _specific
                 if($value === null && $col->hasNullDefault())
                 $value = 'NULL';
             }
+
+            elseif(in_array($key,['isUnsigned','acceptsNull','type','length','collation'],true))
+            $value = $col->schema()->$key();
 
             else
             $value = $col->$key();

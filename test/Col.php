@@ -44,11 +44,11 @@ class Col extends Base\Test
         // isQuickEditable
         assert($col->isQuickEditable());
 
-        // isRelationSearchRequired
-        assert(is_bool($lang->isRelationSearchRequired()));
-
         // isGeneral
         assert($col->isGeneral());
+
+        // isRelationSearchRequired
+        assert(is_bool($lang->isRelationSearchRequired()));
 
         // panel
         assert($email->panel() === 'default');
@@ -105,7 +105,7 @@ class Col extends Base\Test
         // getDataAttr
 
         // col
-        assert(count($col->attr()) === 70);
+        assert(count($col->attr()) === 63);
         assert(strlen($date->formComplex()) === 280);
         assert(strlen($date->formComplex('08-08-1984')) === 298);
         assert(strlen($date->formComplex(mktime(0,0,0,8,8,1984))) === 298);

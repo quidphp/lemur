@@ -23,7 +23,7 @@ class Slug extends Core\ColAlias
         'tag'=>'inputText',
         'setPriority'=>9,
         'keyboard'=>'url',
-        'validate'=>[1=>'slug'],
+        'validate'=>['slug'],
         'include'=>true,
         'visible'=>['validate'=>'notEmpty'],
         'duplicate'=>false,
@@ -149,7 +149,7 @@ class Slug extends Core\ColAlias
         $return = 0;
         $tablesCols = $this->getAttr('slugChangeTablesCols');
         $uri = $this->getAttr('slugChangeUri');
-        $langCode = $this->langCode();
+        $langCode = $this->schema()->nameLangCode();
 
         if(is_array($tablesCols) && !empty($tablesCols) && is_string($uri) && !empty($uri) && is_string($langCode))
         {
@@ -282,7 +282,7 @@ class Slug extends Core\ColAlias
     final public function slugKeyFromArr(array $row):?string
     {
         $return = null;
-        $lang = $this->langCode();
+        $lang = $this->schema()->nameLangCode();
         $key = $this->getAttr('slugKey');
 
         if(is_string($key))

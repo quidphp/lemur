@@ -39,7 +39,7 @@ class Excerpt extends Core\ColAlias
 
         if(empty($return) && is_array($attr) && Base\Arr::keysExists(['method','length','col'],$attr))
         {
-            $lang = $this->patternType();
+            $lang = $this->schema()->patternType();
             $method = $attr['method'];
             $length = $attr['length'];
             $col = $attr['col'];
