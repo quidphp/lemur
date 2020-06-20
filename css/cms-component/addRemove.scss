@@ -42,7 +42,7 @@
     }
 
     > .insert {
-        @include transitions(opacity 0.3s,background-color 0.3s);
+        @include transitions(opacity 0.3s, background-color 0.3s);
         padding: 5px;
         text-align: center;
         background-color: $lighterGray;
@@ -59,17 +59,16 @@
             @include inbl();
             margin-left: 5px;
         }
-        
+
         &:disabled {
             display: none;
         }
-        
+
         &:not(:disabled) {
-            
             &:hover {
                 background-color: $lightGray;
             }
-            
+
             &:active {
                 background-color: $gray;
             }
