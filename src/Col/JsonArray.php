@@ -104,6 +104,29 @@ class JsonArray extends Core\Col\JsonAlias
     }
 
 
+    // getSpecificComponentAttr
+    // ajoute le max count comme attribut
+    public function getSpecificComponentAttr(array $return):array
+    {
+        $return = parent::getSpecificComponentAttr($return);
+
+        $maxCount = $this->getMaxCount();
+        if(is_int($maxCount))
+        $return['data-max-count'] = $maxCount;
+
+        return $return;
+    }
+
+
+    // getMaxCount
+    // retourne le compte maximale pour le json array
+    final public function getMaxCount():?int
+    {
+        $validate = $this->getAttr('validate');
+        return $validate['jsonMaxCount'] ?? null;
+    }
+
+
     // makeModelUtils
     // génère les outils pour le model comme move et delete
     final protected function makeModelUtils():string

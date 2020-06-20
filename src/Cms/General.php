@@ -166,8 +166,8 @@ class General extends Core\RouteAlias
 
         else
         {
-            $closure = fn($col) => $col->isVisibleGeneral();
-            $return = $table->cols()->general()->filter($closure);
+            $closure = fn($col) => $col->isGeneral() && $col->isVisibleGeneral();
+            $return = $table->cols()->filter($closure);
         }
 
         if(!empty($return) && $this->hasSegment('filter'))
@@ -196,8 +196,8 @@ class General extends Core\RouteAlias
 
         if($this->hasSegment('cols'))
         {
-            $closure = fn($col) => $col->isVisibleGeneral();
-            $cols = $this->table()->cols()->general()->filter($closure);
+            $closure = fn($col) => $col->isGeneral() && $col->isVisibleGeneral();
+            $cols = $this->table()->cols()->filter($closure);
 
             if($this->segment('cols')->names() !== $cols->names())
             $return = true;

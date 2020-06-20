@@ -47,6 +47,7 @@ class SpecificDispatch extends Core\RouteAlias
             'timeLimit'=>60],
         'parent'=>Specific::class,
         'group'=>'submit',
+        'navigation'=>false,
         'form'=>[
             'attr'=>[
                 'data-unload'=>true,

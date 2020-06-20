@@ -42,6 +42,7 @@ class SpecificAddSubmit extends Core\RouteAlias
         'parent'=>SpecificAdd::class,
         'group'=>'submit',
         'flashPost'=>true,
+        'navigation'=>true,
         'form'=>[
             'attr'=>[
                 'data-unload'=>true,

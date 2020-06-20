@@ -22,14 +22,15 @@ Component.AddRemove = function(option)
         insert: '.insert',
         playground: '.playground',
         draggable: ".ele",
-        handle: ".move"
+        handle: ".move",
+        attrMaxCount: "data-max-count"
     },option);
     
     
     // handler
     setHdlrs(this,'addRemove:',{
         getInsert: function() {
-            return qs(this,$option.insert);
+            return qs(this,$option.insert,true);
         },
         
         getInsertHtml: function() {
@@ -38,7 +39,7 @@ Component.AddRemove = function(option)
         },
         
         getPlayground: function() {
-            return qs(this,$option.playground);
+            return qs(this,$option.playground,true);
         },
         
         getItems: function() {
@@ -57,6 +58,10 @@ Component.AddRemove = function(option)
             return Arr.valueLast(trigHdlr(this,'addRemove:getItems'));
         },
         
+        getMaxCount: function() {
+            return getAttr(this,$option.attrMaxCount,'int');
+        },
+        
         insert: function() {
             const html = trigHdlr(this,'addRemove:getInsertHtml');
             
@@ -68,6 +73,8 @@ Component.AddRemove = function(option)
                 const inserted = trigHdlr(this,'addRemove:getLast');
                 bindElement.call(this,inserted);
                 trigEvt(this,'addRemove:inserted',inserted);
+                
+                syncInsert.call(this);
             }
         },
         
@@ -80,8 +87,7 @@ Component.AddRemove = function(option)
             trigEvt(this,'addRemove:removed',removed);
             Ele.remove(removed);
             
-            if(!trigHdlr(this,'addRemove:length'))
-            trigHdlr(this,'addRemove:insert');
+            syncInsert.call(this);
         }
     });
     
@@ -102,6 +108,8 @@ Component.AddRemove = function(option)
         Arr.each(items,function(ele) {
             bindElement.call($this,ele);
         });
+        
+        syncInsert.call(this);
     });
     
     
@@ -160,6 +168,23 @@ Component.AddRemove = function(option)
         });
         
         trigSetup(element);
+    }
+    
+    // syncInsert
+    const syncInsert = function()
+    {
+        const maxCount = trigHdlr(this,'addRemove:getMaxCount');
+        const length = trigHdlr(this,'addRemove:length');
+        const insert = trigHdlr(this,'addRemove:getInsert');
+        
+        if(!trigHdlr(this,'addRemove:length'))
+        trigHdlr(this,'addRemove:insert');
+        
+        if(Integer.is(maxCount) && length >= maxCount)
+        setProp(insert,'disabled',true);
+        
+        else
+        setProp(insert,'disabled',false);
     }
     
     return this;

@@ -30,7 +30,9 @@ trait _modal
     // retourne le lien dialog
     final public function aDialog($value=null,$attr=null):string
     {
-        return $this->a(($value === null)? $this->title():$value,Base\Attr::append($attr,['data'=>['modal'=>static::name(true)]]));
+        $title = ($value === null)? $this->title():$value;
+        $attr = Base\Attr::append($attr,['data'=>['modal'=>static::name(true)]]);
+        return $this->a($title,$attr);
     }
 }
 ?>

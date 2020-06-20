@@ -20,14 +20,22 @@ class JsonArray extends Core\CellAlias
     protected static array $config = [];
 
 
+    // getData
+    // retourne les données du json array
+    final public function getData():array
+    {
+        return $this->get() ?? [];
+    }
+
+
     // index
     // retourne un index de jsonArray
     final public function index(int $value)
     {
         $return = null;
-        $get = $this->get();
+        $data = $this->getData();
 
-        if(is_array($get) && array_key_exists($value,$get))
+        if(array_key_exists($value,$data))
         $return = $get[$value];
 
         return $return;

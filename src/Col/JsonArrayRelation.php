@@ -69,6 +69,34 @@ class JsonArrayRelation extends Core\ColAlias
 
         return $return;
     }
+
+
+    // fromCell
+    // retourne la cellule from de la ligne courante
+    final public function fromCell():string
+    {
+        $return = null;
+        $relationCols = $this->getAttr('relationCols');
+
+        if(is_array($relationCols) && count($relationCols) === 2)
+        $return = $relationCols[0];
+
+        return $return;
+    }
+
+
+    // toCell
+    // retourne la cellule to de la ligne de relation
+    final public function toCell():string
+    {
+        $return = null;
+        $relationCols = $this->getAttr('relationCols');
+
+        if(is_array($relationCols) && count($relationCols) === 2)
+        $return = $relationCols[1];
+
+        return $return;
+    }
 }
 
 // init

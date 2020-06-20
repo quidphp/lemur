@@ -71,12 +71,13 @@ class PopupSession extends Core\RouteAlias
             if($user->hasCell($key))
             {
                 $value = $user->cell($key);
+                $col = $value->col();
                 $label = $value->label();
 
-                if($value->isRelation())
+                if($col->isRelation())
                 $value = $value->pair(true);
 
-                elseif($value->isDate())
+                elseif($col->isDate())
                 $value = $value->format(1);
             }
 

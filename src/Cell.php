@@ -56,7 +56,8 @@ class Cell extends Core\Cell
     final public function specificComponent(?array $attr=null,?array $option=null):string
     {
         $return = '';
-        $compAttr = $this->getSpecificComponentAttr();
+        $compAttr = [];
+        $compAttr = $this->getSpecificComponentAttr($compAttr);
         $option = (array) $option;
         $form = $this->formComplex($attr,$option);
         $return = Html::div($form,$compAttr);
@@ -120,7 +121,7 @@ class Cell extends Core\Cell
 
     // getSpecificComponentAttr
     // retourne les attr pour le specific component
-    final public function getSpecificComponentAttr($return=null):array
+    final public function getSpecificComponentAttr(array $return):array
     {
         return $this->col()->getSpecificComponentAttr($return);
     }

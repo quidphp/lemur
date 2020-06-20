@@ -220,16 +220,15 @@
     @include imageLegend();
 
     a {
-        text-align: center;
-
         .thumbnail,
         .media-placeholder {
-            @include inbl();
             @include transitions(opacity 0.3s);
-            text-align: center;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .thumbnail {
+        .thumbnail > img {
             background-color: $gray;
         }
 

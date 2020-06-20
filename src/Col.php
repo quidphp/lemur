@@ -114,7 +114,8 @@ class Col extends Core\Col
     final public function specificComponent($value,?array $attr=null,?array $option=null):string
     {
         $return = '';
-        $compAttr = $this->getSpecificComponentAttr();
+        $compAttr = [];
+        $compAttr = $this->getSpecificComponentAttr($compAttr);
         $option = (array) $option;
         $return = Html::div($this->formComplex($value,$attr,$option),$compAttr);
 
@@ -286,11 +287,8 @@ class Col extends Core\Col
 
     // getSpecificComponentAttr
     // retourne les attr pour le specific component
-    final public function getSpecificComponentAttr($return=null):array
+    public function getSpecificComponentAttr(array $return):array
     {
-        if(!is_array($return))
-        $return = (array) $return;
-
         $return[] = 'specific-component';
 
         if($this->getAttr('anchorCorner',true))

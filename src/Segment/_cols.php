@@ -46,10 +46,10 @@ trait _cols
 
             if(!empty($table))
             {
-                $closure = fn($col) => $col->isVisibleGeneral();
+                $closure = fn($col) => $col->isGeneral() && $col->isVisibleGeneral();
 
                 if($value === null)
-                $return = $table->cols()->general()->filter($closure);
+                $return = $table->cols()->filter($closure);
 
                 elseif(is_string($value) && !empty($value))
                 {

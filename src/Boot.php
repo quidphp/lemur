@@ -80,7 +80,8 @@ abstract class Boot extends Core\Boot
                     'to'=>'[publicCss]/cms-tinymce.css',
                     'from'=>[
                         0=>'[vendorFront]/css/include',
-                        2=>'[vendorLemur]/css/cms-tinymce']]],
+                        1=>'[vendorLemur]/css/cms-component',
+                        3=>'[vendorLemur]/css/cms-tinymce']]],
 
             'compileJs'=>[
                 'cms'=>[

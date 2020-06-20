@@ -42,12 +42,13 @@
     }
 
     > .insert {
-        @include transitions(background-color 0.3s);
+        @include transitions(opacity 0.3s,background-color 0.3s);
         padding: 5px;
         text-align: center;
-        background-color: $lightGray;
+        background-color: $lighterGray;
         border-radius: 3px;
         width: 100%;
+        border: 1px solid $lightGray;
 
         > span {
             @include inbl();
@@ -58,9 +59,20 @@
             @include inbl();
             margin-left: 5px;
         }
-
-        &:hover {
-            background-color: $gray;
+        
+        &:disabled {
+            display: none;
+        }
+        
+        &:not(:disabled) {
+            
+            &:hover {
+                background-color: $lightGray;
+            }
+            
+            &:active {
+                background-color: $gray;
+            }
         }
     }
 }

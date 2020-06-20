@@ -28,15 +28,23 @@ class JsonArrayRelation extends Core\CellAlias
         $return = null;
         $fromCell = $this->fromCell();
         $row = $this->row();
+        $cell = $row->cell($fromCell);
+        $return = $cell->relationRow();
 
-        if(!empty($fromCell))
-        {
-            $cell = $row->cell($fromCell);
-            $return = $cell->relationRow();
-        }
+        return $return;
+    }
 
-        else
-        static::throw();
+
+    // relationCell
+    // retourne la cellule de la row de relation
+    final public function relationCell():?Core\cell
+    {
+        $return = null;
+        $toCell = $this->toCell();
+        $row = $this->relationRow();
+
+        if(!empty($row))
+        $return = $row->cell($toCell);
 
         return $return;
     }
@@ -44,26 +52,13 @@ class JsonArrayRelation extends Core\CellAlias
 
     // relationIndex
     // retourne la valeur index du input jsonArray
-    // relationCols doit contenir deux noms de colonnes
-    // peut envoyer une exception
     final public function relationIndex(int $value)
     {
         $return = null;
-        $toCell = $this->toCell();
+        $cell = $this->relationCell();
 
-        if(!empty($toCell))
-        {
-            $relation = $this->relationRow();
-
-            if(!empty($relation))
-            {
-                $cell = $relation->cell($toCell);
-                $return = $cell->index($value);
-            }
-        }
-
-        else
-        static::throw();
+        if(!empty($cell))
+        $return = $cell->index($value);
 
         return $return;
     }
@@ -71,29 +66,17 @@ class JsonArrayRelation extends Core\CellAlias
 
     // fromCell
     // retourne la cellule from de la ligne courante
-    final public function fromCell():?string
+    final public function fromCell():string
     {
-        $return = null;
-        $relationCols = $this->getAttr('relationCols');
-
-        if(is_array($relationCols) && count($relationCols) === 2)
-        $return = $relationCols[0];
-
-        return $return;
+        return $this->col()->fromCell();
     }
 
 
     // toCell
     // retourne la cellule to de la ligne de relation
-    final public function toCell():?string
+    final public function toCell():string
     {
-        $return = null;
-        $relationCols = $this->getAttr('relationCols');
-
-        if(is_array($relationCols) && count($relationCols) === 2)
-        $return = $relationCols[1];
-
-        return $return;
+        return $this->col()->toCell();
     }
 }
 
