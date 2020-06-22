@@ -46,13 +46,15 @@ trait _cols
 
             if(!empty($table))
             {
-                $closure = fn($col) => $col->isGeneral() && $col->isVisibleGeneral();
-
                 if($value === null)
-                $return = $table->cols()->filter($closure);
+                {
+                    $closure = fn($col) => $col->isGeneral() && $col->isVisibleGeneral();
+                    $return = $table->cols()->filter($closure);
+                }
 
                 elseif(is_string($value) && !empty($value))
                 {
+                    $closure = fn($col) => $col->isVisibleGeneral();
                     $default = static::getDefaultSegment();
 
                     $array = Base\Str::explodeTrimClean($default,$value);

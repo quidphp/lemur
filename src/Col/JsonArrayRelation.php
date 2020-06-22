@@ -20,11 +20,14 @@ use Quid\Orm;
 // class to manage a column containing a relation value to another column which is a jsonArray
 class JsonArrayRelation extends Core\ColAlias
 {
+    // trait
+    use _jsonRelation;
+
+
     // config
     protected static array $config = [
         'cell'=>Lemur\Cell\JsonArrayRelation::class,
-        'required'=>true,
-        'relationCols'=>null // custom
+        'required'=>true
     ];
 
 
@@ -41,6 +44,23 @@ class JsonArrayRelation extends Core\ColAlias
         }
 
         return $return;
+    }
+
+
+    // onSet
+    // gère la logique onSet pour jsonArrayRelation
+    final protected function onSet($return,?Orm\Cell $cell=null,array $row,array $option)
+    {
+        $fromCell = $this->fromCell();
+        if(!empty($row[$fromCell]))
+        {
+            $cellForm = $this->relationCell($row[$fromCell]);
+
+            if(empty($cellForm) || !$cellForm->isDataValid($return))
+            $return = null;
+        }
+
+        return parent::onSet($return,$cell,$row,$option);
     }
 
 
@@ -66,34 +86,6 @@ class JsonArrayRelation extends Core\ColAlias
 
         else
         $return = Base\Debug::export($value);
-
-        return $return;
-    }
-
-
-    // fromCell
-    // retourne la cellule from de la ligne courante
-    final public function fromCell():string
-    {
-        $return = null;
-        $relationCols = $this->getAttr('relationCols');
-
-        if(is_array($relationCols) && count($relationCols) === 2)
-        $return = $relationCols[0];
-
-        return $return;
-    }
-
-
-    // toCell
-    // retourne la cellule to de la ligne de relation
-    final public function toCell():string
-    {
-        $return = null;
-        $relationCols = $this->getAttr('relationCols');
-
-        if(is_array($relationCols) && count($relationCols) === 2)
-        $return = $relationCols[1];
 
         return $return;
     }

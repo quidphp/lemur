@@ -20,6 +20,14 @@ class JsonArray extends Core\CellAlias
     protected static array $config = [];
 
 
+    // isDataValid
+    // retourne vrai si les réponses sont valides
+    public function isDataValid($value):bool
+    {
+        return is_int($value) && array_key_exists($value,$this->getData());
+    }
+
+
     // getData
     // retourne les données du json array
     final public function getData():array
@@ -36,7 +44,7 @@ class JsonArray extends Core\CellAlias
         $data = $this->getData();
 
         if(array_key_exists($value,$data))
-        $return = $get[$value];
+        $return = $data[$value];
 
         return $return;
     }

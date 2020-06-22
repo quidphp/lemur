@@ -23,7 +23,7 @@ trait _media
     protected static array $configMedia = [
         'relationOutputExcerpt'=>50,
         'relation'=>[
-            'method'=>'relationOutput','separator'=>'<br/>','order'=>['id'=>'desc'],'output'=>'name_[lang]'],
+            'method'=>'relationOutput','separator'=>'<br/>','order'=>['id'=>'desc'],'output'=>'id','orderUseName'=>true],
     ];
 
 
