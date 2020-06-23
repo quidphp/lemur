@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Quid\Lemur\Col;
 use Quid\Base;
 use Quid\Core;
+use Quid\Lemur;
 use Quid\Orm;
 
 // phone
@@ -20,6 +21,7 @@ class Phone extends Core\ColAlias
 {
     // config
     protected static array $config = [
+        'cell'=>Lemur\Cell\Phone::class,
         'tag'=>'inputTel',
         'search'=>false,
         'validate'=>['phone'],

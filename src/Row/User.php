@@ -104,7 +104,8 @@ class User extends Core\Row\User
         $return = null;
         $route = $this->route('homeFeed');
         $label = $this->namePrimary();
-        $return .= $route->a($label,'feed-anchor');
+        $attr = ['feed-anchor','data-id'=>$this->id()];
+        $return .= $route->a($label,$attr);
 
         return $return;
     }

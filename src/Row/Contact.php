@@ -10,6 +10,7 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Row;
+use Quid\Base;
 use Quid\Base\Html;
 use Quid\Core;
 
@@ -92,15 +93,22 @@ class Contact extends Core\RowAlias
     protected function getEmailReplace():array
     {
         $return = [];
-        $boot = static::boot();
-        $cells = $this->cells()->gets(...static::getColsForm());
-        $model = '%label%: %get%';
-
         $return['contactUserName'] = $this->fullName();
         $return['contactCmsLink'] = $this->route('cms')->uriAbsolute();
-        $return['contactData'] = implode(PHP_EOL,$cells->htmlStr($model,false));
+        $return['contactData'] = $this->outputString();
 
         return $return;
+    }
+
+
+    // outputString
+    // génère le string d'output pour la ligne contact
+    final protected function outputString():string
+    {
+        $cells = $this->cells()->gets(...static::getColsForm());
+        $lines = $cells->accumulate([],fn($cell) => $cell->label().': '.$cell->pair(true));
+
+        return Base\Str::lineImplode($lines);
     }
 
 

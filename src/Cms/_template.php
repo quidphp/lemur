@@ -200,7 +200,7 @@ trait _template
         $boot = static::boot();
         $logo = $boot->getOption('logo');
         $label = $boot->label();
-        $schemeHost = $boot->schemeHost();
+        $home = Home::make();
 
         $r .= Html::divOp('nav-fixed');
 
@@ -210,13 +210,13 @@ trait _template
         if(!empty($logo))
         {
             $img = Html::imgCond($logo,$label);
-            $r .= Html::a($schemeHost,$img,'logo');
+            $r .= $home->a($img,'logo');
         }
 
         else
         {
             $label = Html::span($label);
-            $r .= Html::a($schemeHost,$label,'boot-label');
+            $r .= $home->a($label,'boot-label');
         }
 
         $r .= Html::divCl();
