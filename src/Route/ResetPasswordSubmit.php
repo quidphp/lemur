@@ -56,8 +56,6 @@ abstract class ResetPasswordSubmit extends Core\RouteAlias
     final protected function onSuccess():void
     {
         static::timeoutIncrement('success');
-
-        return;
     }
 
 
@@ -66,8 +64,6 @@ abstract class ResetPasswordSubmit extends Core\RouteAlias
     final protected function onFailure():void
     {
         static::timeoutIncrement('failure');
-
-        return;
     }
 
 

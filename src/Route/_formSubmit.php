@@ -112,8 +112,6 @@ trait _formSubmit
         $type = $this->logFormType();
         $data = $this->logFormData();
         $log::logCloseDown($type,$data);
-
-        return;
     }
 
 
@@ -156,8 +154,6 @@ trait _formSubmit
     {
         $this->setSuccess();
         $this->onSuccess();
-
-        return;
     }
 
 
@@ -167,8 +163,6 @@ trait _formSubmit
     {
         $this->setFlash();
         $this->onFailure();
-
-        return;
     }
 
 
@@ -194,8 +188,6 @@ trait _formSubmit
     final protected function setSuccess(bool $value=true):void
     {
         $this->success = $value;
-
-        return;
     }
 
 
@@ -206,8 +198,6 @@ trait _formSubmit
     {
         if($this->getAttr('flashPost') === true)
         $this->session()->flashPost($this);
-
-        return;
     }
 
 
@@ -224,8 +214,6 @@ trait _formSubmit
     final public function trigger()
     {
         $this->proceed();
-
-        return;
     }
 }
 ?>

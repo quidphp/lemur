@@ -68,8 +68,6 @@ abstract class RegisterSubmit extends Core\RouteAlias
     {
         static::sessionCom()->stripFloor();
         static::timeoutIncrement('success');
-
-        return;
     }
 
 
@@ -79,8 +77,6 @@ abstract class RegisterSubmit extends Core\RouteAlias
     {
         static::sessionCom()->stripFloor();
         static::timeoutIncrement('failure');
-
-        return;
     }
 
 

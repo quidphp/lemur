@@ -39,7 +39,7 @@ Component.TextareaExtra = function(option)
         },
         
         getTextarea: function() {
-            return qs(this,'textarea');
+            return qs(this,'textarea',true);
         },
         
         getFilters: function() {

@@ -60,8 +60,6 @@ abstract class LoginSubmit extends Core\RouteAlias
     protected function onSuccess():void
     {
         static::timeoutReset('trigger');
-
-        return;
     }
 
 
@@ -165,8 +163,6 @@ abstract class LoginSubmit extends Core\RouteAlias
         $flash->set('login/credential',$post['credential']);
         $flash->set('login/redirect',$post['redirect']);
         $flash->set('login/remember',$post['remember']);
-
-        return;
     }
 }
 

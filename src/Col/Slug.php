@@ -137,8 +137,6 @@ class Slug extends Core\ColAlias
                 $this->com($text,$cell,'pos');
             }
         }
-
-        return;
     }
 
 

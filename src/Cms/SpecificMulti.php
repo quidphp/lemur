@@ -77,8 +77,6 @@ class SpecificMulti extends Core\RouteAlias
         $table = $this->table();
         $session = static::session();
         $session->routeTableGeneral($table)->addSelectedUri();
-
-        return;
     }
 
 

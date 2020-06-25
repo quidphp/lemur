@@ -35,7 +35,7 @@ Component.ColsSorter = function(option)
         
         getScroller: function() {
             const popup = trigHdlr(this,'clickOpen:getTarget');
-            return qs(popup,'.scroller');
+            return qs(popup,'.scroller',true);
         },
         
         getCheckboxes: function() {
@@ -49,7 +49,8 @@ Component.ColsSorter = function(option)
         },
         
         getButton: function() {
-            return qs(trigHdlr(this,'clickOpen:getTarget'),"button[name='cols']");
+            const target = trigHdlr(this,'clickOpen:getTarget');
+            return qs(target,"button[name='cols']",true);
         },
         
         getCheckedSet: function() {

@@ -26,6 +26,7 @@ class Col extends Core\Col
         'panel'=>null, // retourne le panel de la colonne
         'relationSearchRequired'=>false, // si la recherche est obligatoire pour une relation
         '@cms'=>[
+            'onGeneralOutput'=>null, // callback pour général output
             'anchorCorner'=>false,
             'absolutePlaceholder'=>false,
             'filter'=>true,

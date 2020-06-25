@@ -26,8 +26,6 @@ trait _specificSubmit
     {
         $panel = $this->currentPanel();
         static::session()->flash()->set('currentPanel',$panel);
-
-        return;
     }
 
 

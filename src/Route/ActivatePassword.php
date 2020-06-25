@@ -55,8 +55,6 @@ abstract class ActivatePassword extends Core\RouteAlias
         $primary = $user->primary();
         $hash = $this->segment('hash');
         $user::activatePasswordProcess($primary,$hash,['com'=>true]);
-
-        return;
     }
 
 

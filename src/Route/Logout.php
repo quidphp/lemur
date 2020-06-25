@@ -53,8 +53,6 @@ abstract class Logout extends Core\RouteAlias
     {
         static::session()->logoutProcess(['com'=>true]);
         $this->onLogout();
-
-        return;
     }
 }
 

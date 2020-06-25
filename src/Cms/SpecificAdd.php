@@ -88,8 +88,6 @@ class SpecificAdd extends Core\RouteAlias
             $session = static::session();
             $session->routeTableGeneral($table)->addSelectedUri();
         }
-
-        return;
     }
 
 

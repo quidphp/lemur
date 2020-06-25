@@ -44,8 +44,6 @@ abstract class AccountChangePasswordSubmit extends Core\RouteAlias
     {
         $com = static::session()->com();
         $com->keepCeiling();
-
-        return;
     }
 
 

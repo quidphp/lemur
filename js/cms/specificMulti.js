@@ -67,11 +67,11 @@ Component.SpecificMulti = function(option)
             },
             
             getCheckbox: function() {
-                return qs(this,".disabler input[type='checkbox']");
+                return qs(this,".disabler input[type='checkbox']",true);
             },
             
             getComponent: function() {
-                return qs(this,'.specific-component');
+                return qs(this,'.specific-component',true);
             },
             
             refresh: function() {

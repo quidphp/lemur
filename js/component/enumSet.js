@@ -38,7 +38,7 @@ Component.EnumSet = function(option)
     setHdlrs(this,'enumSet:',{
         
         getCurrent: function() {
-            return qs(this,'.current');
+            return qs(this,'.current',true);
         },
         
         getChoices: function() {

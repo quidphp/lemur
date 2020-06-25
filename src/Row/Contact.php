@@ -83,8 +83,6 @@ class Contact extends Core\RowAlias
     final protected function onInserted(array $option)
     {
         $this->sendEmails(true,$option);
-
-        return;
     }
 
 

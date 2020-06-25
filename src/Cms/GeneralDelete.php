@@ -87,8 +87,6 @@ class GeneralDelete extends Core\RouteAlias
             if(is_array($ids) && !empty($ids) && Base\Arr::onlyNumeric($ids))
             $this->ids = Base\Arr::cast($ids);
         }
-
-        return;
     }
 
 

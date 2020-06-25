@@ -65,8 +65,6 @@ class UserWelcome extends Core\RouteAlias
     final protected function onSuccess()
     {
         static::sessionCom()->pos('user/welcome/success');
-
-        return;
     }
 
 
@@ -75,8 +73,6 @@ class UserWelcome extends Core\RouteAlias
     final protected function onFailure()
     {
         static::sessionCom()->neg('user/welcome/failure');
-
-        return;
     }
 
 

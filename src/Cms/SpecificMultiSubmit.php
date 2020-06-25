@@ -89,8 +89,6 @@ class SpecificMultiSubmit extends Core\RouteAlias
         $post = $this->post();
         if(empty($post))
         static::sessionCom()->neg('multiModify/emptyPost');
-
-        return;
     }
 
 

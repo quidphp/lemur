@@ -143,7 +143,7 @@ Component.AddRemove = function(option)
         setHdlrs(element,'addRemoveEle:',{
             
             getRemove: function() {
-                return qs(this,'.remove');
+                return qs(this,'.remove',true);
             },
             
             getIndex: function() {

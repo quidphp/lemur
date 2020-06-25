@@ -70,8 +70,6 @@ class Specific extends Core\RouteAlias
 
         if($user->route()->uri() === $this->uri())
         Account::make()->addSelectedUri();
-
-        return;
     }
 
 

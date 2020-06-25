@@ -94,8 +94,6 @@ class General extends Core\RouteAlias
         $table = $this->table();
         $session = $this->session();
         $session->routeTableGeneral($table)->addSelectedUri();
-
-        return;
     }
 
 
@@ -109,8 +107,6 @@ class General extends Core\RouteAlias
             $nav = $this->session()->nav();
             $nav->unset([static::class,$table]);
         }
-
-        return;
     }
 
 
@@ -199,7 +195,7 @@ class General extends Core\RouteAlias
             $closure = fn($col) => $col->isGeneral() && $col->isVisibleGeneral();
             $cols = $this->table()->cols()->filter($closure);
 
-            if($this->segment('cols')->names() !== $cols->names())
+            if($this->segment('cols')->keys() !== $cols->keys())
             $return = true;
         }
 
@@ -726,7 +722,7 @@ class General extends Core\RouteAlias
 
             $defaultSegment = static::getDefaultSegment();
             $route = $this->changeSegment('cols',true);
-            $current = implode($defaultSegment,$currentCols->names());
+            $current = implode($defaultSegment,$currentCols->keys());
             $data = ['href'=>$route,'char'=>static::getReplaceSegment(),'current'=>$current,'separator'=>$defaultSegment];
             $inAttr = Base\Attr::append($inAttr,['data'=>['anchor-corner'=>true]]);
             $session = static::session();

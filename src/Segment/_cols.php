@@ -30,7 +30,7 @@ trait _cols
                 $default = static::getDefaultSegment();
 
                 if($value instanceof Core\Cols)
-                $value = $value->names();
+                $value = $value->keys();
 
                 if(is_array($value))
                 $value = implode($default,$value);

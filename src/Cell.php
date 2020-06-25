@@ -46,7 +46,9 @@ class Cell extends Core\Cell
     // génère le output général pour le cms
     public function generalOutput(array $option)
     {
-        return $this->get($option);
+        $callback = $this->getAttr('onGeneralOutput');
+
+        return (!empty($callback))? $callback($this,$option):$this->get($option);
     }
 
 

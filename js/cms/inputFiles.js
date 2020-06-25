@@ -44,19 +44,19 @@ Component.InputFiles = function()
             },
             
             getCancelAction: function() {
-                return qs(this,".message .close");
+                return qs(this,".message .close",true);
             },
             
             getInputFile: function() {
-                return qs(this,"input[type='file']");
+                return qs(this,"input[type='file']",true);
             },
             
             getInputHidden: function() {
-                return qs(this,"input[type='hidden']"); 
+                return qs(this,"input[type='hidden']",true); 
             },
             
             getActionText: function() {
-                return qs(this,".action-text");
+                return qs(this,".action-text",true);
             }
         });
         

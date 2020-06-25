@@ -17,11 +17,11 @@ Component.HomeFeed = function(option)
     setHdlrs(this,'homeFeed:',{
         
         getBody: function() {
-            return qs(this,".block-body");
+            return qs(this,".block-body",true);
         },
         
         getFilter: function() {
-            return qs(this,".block-head .user-relation");
+            return qs(this,".block-head .user-relation",true);
         }
     });
     

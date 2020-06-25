@@ -68,8 +68,6 @@ class SpecificDuplicate extends Core\RouteAlias
     final protected function onSuccess():void
     {
         $this->getDuplicate()->updateCom('duplicate/success','pos',null,null,null,true);
-
-        return;
     }
 
 
@@ -78,8 +76,6 @@ class SpecificDuplicate extends Core\RouteAlias
     final protected function onFailure():void
     {
         $this->row()->table()->insertCom('duplicate/failure','neg',null,null,null,true);
-
-        return;
     }
 
 

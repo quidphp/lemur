@@ -43,15 +43,18 @@ Component.QuickEdit = function()
         },
         
         getCellInner: function() {
-            return qs(trigHdlr(this,'quickEdit:getTd'),"> .cell-inner");
+            const td = trigHdlr(this,'quickEdit:getTd');
+            return qs(td,"> .cell-inner",true);
         },
         
         getGeneralComponent: function() {
-            return qs(trigHdlr(this,'quickEdit:getCellInner'),"> .general-component");
+            const inner = trigHdlr(this,'quickEdit:getCellInner');
+            return qs(inner,"> .general-component",true);
         },
         
         getEditContainer: function() {
-            return qs(trigHdlr(this,'quickEdit:getCellInner'),"> .quick-edit-container");
+            const inner = trigHdlr(this,'quickEdit:getCellInner');
+            return qs(inner,"> .quick-edit-container",true);
         },
         
         getScroller: function() {

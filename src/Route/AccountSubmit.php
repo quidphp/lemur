@@ -52,8 +52,6 @@ abstract class AccountSubmit extends Core\RouteAlias
     {
         static::sessionCom()->stripFloor();
         static::timeoutIncrement('success');
-
-        return;
     }
 
 
@@ -62,8 +60,6 @@ abstract class AccountSubmit extends Core\RouteAlias
     final protected function onFailure():void
     {
         static::timeoutIncrement('failure');
-
-        return;
     }
 
 

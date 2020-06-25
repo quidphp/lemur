@@ -44,8 +44,6 @@ class SessionRoleSubmit extends Core\RouteAlias
     {
         $com = static::session()->com();
         $com->neg('sessionRole/failure');
-
-        return;
     }
 
 

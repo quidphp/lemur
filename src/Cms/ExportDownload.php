@@ -120,8 +120,6 @@ class ExportDownload extends Core\RouteAlias
                 $offset += $limit;
             }
         }
-
-        return;
     }
 
 
