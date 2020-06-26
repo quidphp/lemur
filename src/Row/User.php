@@ -65,7 +65,6 @@ class User extends Core\Row\User
 
     // sendWelcomeEmail
     // envoie le courriel de bienvenue
-    // plusieurs exceptions peuvent être envoyés
     final public function sendWelcomeEmail($type=true,?array $replace=null,?array $option=null):bool
     {
         $array = $this->userWelcomeEmail($type,$replace);

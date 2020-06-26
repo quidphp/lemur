@@ -138,13 +138,7 @@ trait _relation
     // retourne vrai si la route gère l'ordre
     final public function hasOrder():bool
     {
-        $return = false;
-        $relation = $this->relation();
-
-        if($this->hasSegment('order') && $this->getAttr('order') === true && $relation->size() > 1)
-        $return = true;
-
-        return $return;
+        return $this->hasSegment('order') && $this->getAttr('order') === true && $this->relation()->size() > 0;
     }
 
 
@@ -281,7 +275,7 @@ trait _relation
         if($route->canTrigger())
         {
             $searchMinLength = $relation->searchMinLength();
-            $size = $relation->size();
+
             $limit = $route->limit();
             $query = $route->getSearchQuery();
             $data = ['query'=>$query,'separator'=>static::getDefaultSegment(),'char'=>static::getReplaceSegment()];
@@ -293,6 +287,7 @@ trait _relation
             if($route->hasOrderSelect())
             $order = $route->orderSelect();
 
+            $size = $relation->size();
             if($size > $limit)
             {
                 $html .= Html::divOp('top');

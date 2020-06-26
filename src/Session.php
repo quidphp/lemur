@@ -21,7 +21,6 @@ class Session extends Core\Session
     // routeTableGeneral
     // retourne une route general à partir d'un objet table
     // la session peut générer la route à partir de la dernière route de la même table conservé dans l'objet nav de session
-    // plusieurs exceptions peuvent être envoyés
     final public function routeTableGeneral(Core\Table $table,bool $nav=true,string $segment='table',string $key='general'):Route
     {
         $return = null;
