@@ -99,6 +99,7 @@
 // popupList
 // mixin avec style pour un popup contenant une liste (ul li)
 @mixin popupList() {
+    @include popupListsUlOl();
     padding: 10px 15px 0;
 
     &:after {
@@ -106,7 +107,11 @@
         height: 10px;
         display: block;
     }
+}
 
+// popupListsUlOl
+// mixin pour les lists ul ol dans un popup list
+@mixin popupListsUlOl() {
     ul {
         @include ulOlMargin();
     }
