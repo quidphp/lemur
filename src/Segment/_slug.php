@@ -15,7 +15,8 @@ trait _slug
 {
     // structureSegmentSlug
     // gère le segment d'uri pour un slug
-    final public static function structureSegmentSlug(string $type,$value,array &$keyValue)
+    // cette méthode utilise le quatrième argument (lang) utilisé seulement pour make
+    final public static function structureSegmentSlug(string $type,$value,array &$keyValue,?string $lang=null)
     {
         $return = false;
         $table = static::tableSegment($keyValue);
@@ -30,7 +31,7 @@ trait _slug
                 $value = $table->row($value);
 
                 if(is_a($value,$rowClass,true))
-                $return = $value->cellKey();
+                $return = $value->cellKey($lang);
 
                 elseif(is_string($value) && !empty($value))
                 $return = $value;
