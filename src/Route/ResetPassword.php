@@ -61,9 +61,10 @@ abstract class ResetPassword extends Core\RouteAlias
         $route = $this->submitRoute();
         $submit = static::langText('resetPassword/submit');
         $attr = $this->submitAttr();
+        $table = $this->db()->tables()->get('user');
 
         $r .= $route->formOpen();
-        $field = $this->db()->tables()->get('user')->col('email')->formPlaceholder(null,null,['data-required'=>true]);
+        $field = $table->col('email')->formPlaceholder(null,null,['inputmode'=>'email','data-required'=>true]);
 
         $r .= Html::divOp('fields');
         $r .= Html::divCond($field,'field');

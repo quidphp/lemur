@@ -58,7 +58,7 @@
 }
 
 // wysiwygAnchor
-// mixin avec les styles des ances pour un bloc de style article
+// mixin avec les styles des ancres pour un bloc de style article
 @mixin wysiwygAnchor($fontColor: $color) {
     a {
         font-weight: bold;

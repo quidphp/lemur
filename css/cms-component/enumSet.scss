@@ -31,7 +31,7 @@
 
         .input {
             width: 100%;
-            @include flex(stretch, stretch, wrap);
+            @include flex(flex-start, stretch, wrap);
 
             input[type='text'] {
                 width: 80%;

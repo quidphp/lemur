@@ -88,13 +88,9 @@
     border-radius: 5px;
     border: 1px solid $lightGray;
     height: auto;
-
-    &::placeholder {
+    
+    @include inputPlaceholder() {
         color: $darkGray;
-    }
-
-    &:-ms-input-placeholder {
-        color: $darkGray !important;
     }
 }
 
