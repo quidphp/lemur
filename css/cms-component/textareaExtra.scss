@@ -55,7 +55,7 @@
         .insert {
             @include transitions(background-color 0.3s);
             @include imageLegend();
-            @include hoverClickState();
+            @include hoverClickStateBackground();
             padding: 5px 10px;
             text-align: center;
             width: 100%;

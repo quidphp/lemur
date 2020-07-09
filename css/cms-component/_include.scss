@@ -149,7 +149,7 @@ $red: #8d1e2d;
     padding: 0;
 
     > a {
-        @include hoverClickState();
+        @include hoverClickStateBackground();
         display: block;
         height: 100%;
         padding: 8px 10px;

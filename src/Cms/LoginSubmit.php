@@ -26,7 +26,7 @@ class LoginSubmit extends Lemur\Route\LoginSubmit
 
     // routeSuccess
     // retourne la route vers laquelle redirigé en cas de succès par défaut, si rien dans la mémoire
-    final public function routeSuccessDefault():Lemur\Route
+    final public function routeSuccessDefault()
     {
         return Home::make();
     }

@@ -42,7 +42,7 @@ abstract class LoginSubmit extends Core\RouteAlias
 
     // routeSuccessDefault
     // retourne la route vers laquelle redirigé en cas de succès par défaut, si rien dans la mémoire
-    abstract public function routeSuccessDefault():Lemur\Route;
+    abstract public function routeSuccessDefault();
 
 
     // canTrigger
@@ -63,7 +63,7 @@ abstract class LoginSubmit extends Core\RouteAlias
 
     // routeSuccess
     // retourne la route vers laquelle redirigé en cas de succès (si rien dans la mémoire)
-    final public function routeSuccess():Lemur\Route
+    final public function routeSuccess()
     {
         $return = $this->routeSuccessMemory();
 

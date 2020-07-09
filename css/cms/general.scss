@@ -180,7 +180,7 @@
     width: 40px;
 }
 [data-route='general'] main .container > .scroller > table > tbody > tr > td.action .cell-inner {
-    @include hoverClickState();
+    @include hoverClickStateBackground();
 }
 
 /* ORDER */

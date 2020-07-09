@@ -41,7 +41,7 @@
             }
 
             button {
-                @include hoverClickState();
+                @include hoverClickStateBackground();
                 width: 32px;
                 height: auto;
                 background-color: $lightGray;

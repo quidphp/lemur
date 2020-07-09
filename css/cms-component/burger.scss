@@ -10,7 +10,7 @@
     @include abs(15px, null, null, 15px);
     @include transitions(background-color 0.3s);
     @include wh(32px);
-    @include hoverClickState();
+    @include hoverClickStateBackground();
     display: none;
     background-color: $white;
     border: 1px solid $darkColor;

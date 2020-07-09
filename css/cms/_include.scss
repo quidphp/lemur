@@ -275,8 +275,8 @@
     }
 }
 
-// hoverClickState
-@mixin hoverClickState($selector: "[data-triggered='1']", $selector2: null) {
+// hoverClickStateBackground
+@mixin hoverClickStateBackground($selector: "[data-triggered='1']", $selector2: null) {
     &:hover {
         background-color: $lightYellow;
     }
