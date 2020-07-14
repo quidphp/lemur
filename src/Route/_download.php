@@ -51,7 +51,7 @@ trait _download
     // file
     // retourne l'objet fichier à downloader ou null
     // par défaut prend celle de la cell
-    final public function file():?Main\File
+    public function file():?Main\File
     {
         $return = null;
         $cell = $this->cell();

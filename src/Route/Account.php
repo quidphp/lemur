@@ -58,9 +58,9 @@ abstract class Account extends Core\RouteAlias
     }
 
 
-    // row
+    // rowUser
     // retourne la row user
-    final public function row():Core\Row
+    final public function rowUser():Core\Row
     {
         return static::session()->user();
     }

@@ -48,7 +48,7 @@ trait _int
 
     // structureSegmentIntMinimum
     // retourne la valeur minimum pour le int
-    final public static function structureSegmentIntMinimum():int
+    public static function structureSegmentIntMinimum():int
     {
         return 0;
     }
@@ -56,7 +56,7 @@ trait _int
 
     // structureSegmentIntDefault
     // retourne la valeur par défaut pour le segment (false)
-    final public static function structureSegmentIntDefault()
+    public static function structureSegmentIntDefault()
     {
         return false;
     }
@@ -64,7 +64,7 @@ trait _int
 
     // structureSegmentIntPossible
     // retourne un tableau avec les int possible pour la route
-    final public static function structureSegmentIntPossible():?array
+    public static function structureSegmentIntPossible():?array
     {
         return null;
     }

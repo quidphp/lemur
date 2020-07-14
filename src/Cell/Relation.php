@@ -83,12 +83,15 @@ class Relation extends Core\Cell\Relation
             if($values instanceof Core\Row)
             $values = $values->toRows();
 
-            foreach ($values as $row)
+            if(is_iterable($values))
             {
-                $return = $row->getFirstImage($version,$type);
+                foreach ($values as $row)
+                {
+                    $return = $row->getFirstImage($version,$type);
 
-                if(!empty($return))
-                break;
+                    if(!empty($return))
+                    break;
+                }
             }
         }
 
