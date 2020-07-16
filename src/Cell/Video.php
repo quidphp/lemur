@@ -66,13 +66,13 @@ class Video extends Core\CellAlias
 
     // html
     // output le html de la vidéo
-    final public function html():?string
+    final public function html(bool $withMeta=true):?string
     {
         $return = null;
         $video = $this->video();
 
         if(!empty($video))
-        $return = $this->col()->html($video);
+        $return = $this->col()->html($video,$withMeta);
 
         return $return;
     }
@@ -82,7 +82,7 @@ class Video extends Core\CellAlias
     // génère le output général pour une cellule video
     final public function generalOutput(array $option):?string
     {
-        return $this->html();
+        return $this->html(false);
     }
 
 

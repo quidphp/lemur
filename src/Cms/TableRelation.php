@@ -69,7 +69,7 @@ class TableRelation extends Core\RouteAlias
         {
             foreach ($array as $key => $value)
             {
-                $r .= Html::li($value);
+                $r .= Html::liCond($value);
             }
 
             if(!empty($r) && is_int($loadMore))

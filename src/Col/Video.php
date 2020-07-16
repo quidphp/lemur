@@ -141,28 +141,32 @@ abstract class Video extends Core\Col\JsonAlias
 
     // html
     // fait le html video à d'un objet video
-    final public function html(Main\Video $value):?string
+    final public function html(Main\Video $value,bool $withMeta=true):?string
     {
         $return = '';
-        $excerpt = $this->getAttr('descriptionExcerpt');
-        $date = $value->date(0);
-        $excerpt = $value->description($excerpt);
         $html = $value->html();
-        $content = '';
+        $return .= Html::divCond($html,'video-player');
 
-        if(!empty($date))
-        $content = Html::span($date);
-
-        if(!empty($excerpt))
+        if($withMeta === true)
         {
-            if(strlen($content))
-            $content .= ' - ';
+            $excerpt = $this->getAttr('descriptionExcerpt');
+            $date = $value->date(0);
+            $excerpt = $value->description($excerpt);
+            $content = '';
 
-            $content .= Html::span($excerpt);
+            if(!empty($date))
+            $content = Html::span($date);
+
+            if(!empty($excerpt))
+            {
+                if(strlen($content))
+                $content .= ' - ';
+
+                $content .= Html::span($excerpt);
+            }
+
+            $return .= Html::divCond($content,'video-meta');
         }
-
-        $return .= Html::div($html,'video-player');
-        $return .= Html::divCond($content,'video-meta');
 
         return $return;
     }

@@ -80,7 +80,7 @@ trait _specificRelation
                 }
 
                 $value = Html::button($value,[$class,'data'=>$data]);
-                $r .= Html::li($value);
+                $r .= Html::liCond($value);
             }
 
             if(!empty($r) && is_int($loadMore))

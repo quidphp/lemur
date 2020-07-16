@@ -73,7 +73,7 @@ trait _calendar
             $return->setSelected($selected);
         }
 
-        $return = $this->setCallback($return);
+        $this->setCallback($return);
 
         return $return;
     }
@@ -81,7 +81,7 @@ trait _calendar
 
     // setCallback
     // méthode abstraite pour ajouter des callback à l'objet calendrier
-    abstract protected function setCallback(Main\Calendar $value):Main\Calendar;
+    abstract protected function setCallback(Main\Calendar $value):void;
 
 
     // html

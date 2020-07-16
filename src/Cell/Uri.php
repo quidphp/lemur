@@ -30,14 +30,14 @@ class Uri extends Core\CellAlias
 
     // anchor
     // génère le anchor pour un uri
-    final public function anchor(?int $excerpt=null):?string
+    final public function anchor($excerpt=null):?string
     {
         $return = $this->get();
         $excerpt ??= 30;
 
         if(is_string($return))
         {
-            $title = (!empty($excerpt))? Base\Str::excerpt($excerpt,$return):true;
+            $title = (is_int($excerpt))? Base\Str::excerpt($excerpt,$return):true;
             $return = Html::a($return,$title);
         }
 

@@ -262,7 +262,7 @@ trait _generalRelation
                         elseif(!empty($minus))
                         $value .= $minus->a(null,['icon-solo','minus']);
 
-                        $r .= Html::li($value,$liAttr);
+                        $r .= Html::liCond($value,$liAttr);
                     }
 
                     else
