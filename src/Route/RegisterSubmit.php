@@ -28,7 +28,6 @@ abstract class RegisterSubmit extends Core\RouteAlias
         'match'=>[
             'method'=>'post',
             'role'=>'nobody',
-            'session'=>'canAccess',
             'post'=>['username','email','password','passwordConfirm'],
             'timeout'=>true,
             'csrf'=>true,

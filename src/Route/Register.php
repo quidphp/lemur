@@ -22,8 +22,7 @@ abstract class Register extends Core\RouteAlias
             'en'=>'register',
             'fr'=>'enregistrement'],
         'match'=>[
-            'role'=>'nobody',
-            'session'=>'canAccess'],
+            'role'=>'nobody'],
         'parent'=>Login::class,
         'row'=>Lemur\Row\User::class,
         'group'=>'nobody',
