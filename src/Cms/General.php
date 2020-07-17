@@ -882,39 +882,6 @@ class General extends Core\RouteAlias
     }
 
 
-    // makeTableHeaderOrder
-    // génère un lien pour ordonner dans un header de table
-    final protected function makeTableHeaderOrder(Core\Col $col,array $array,$icon=null):array
-    {
-        [$html,$thAttr] = $array;
-
-        if($this->hasTablePermission('order'))
-        {
-            $thAttr[] = 'orderable';
-            $active = ($col === $this->segment('order'));
-
-            if($active === true)
-            {
-                $dataDirection = $this->segment('direction');
-                $direction = $col->db()->syntaxCall('invertOrderDirection',$dataDirection);
-                $thAttr[] = 'ordering';
-            }
-
-            else
-            $direction = $dataDirection = $col->direction(true);
-
-            $thAttr['data']['direction'] = $dataDirection;
-
-            $route = $this->changeSegments(['order'=>$col,'direction'=>$direction]);
-            $uri = $route->uri();
-            $span = Html::span(null,$icon);
-            $html .= Html::a($uri,$span,'right');
-        }
-
-        return [$html,$thAttr];
-    }
-
-
     // makeTableHeaderFilter
     // génère un filtre dans un header de table
     final protected function makeTableHeaderFilter(Core\Col $col,array $array):array

@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Lemur\Cms;
 use Quid\Base;
 use Quid\Base\Html;
+use Quid\Core;
 
 // _generalInput
 // trait that provides some methods for generating reusable general inputs
@@ -17,9 +18,10 @@ trait _generalInput
 {
     // makeCount
     // fait le count pour une page general
-    final protected function makeCount():string
+    final protected function makeCount(?string $rowWord=null):string
     {
         $r = '';
+        $rowWord ??= 'common/row';
         $sql = $this->sql();
 
         $table = $this->table();
@@ -41,20 +43,20 @@ trait _generalInput
         {
             $r .= $tableCount;
             $r .= ' ';
-            $r .= static::langPlural($tableCount,'lcf|common/row');
+            $r .= static::langPlural($tableCount,'lcf|'.$rowWord);
         }
 
         else
         {
             $r .= $whatCount;
             $r .= ' ';
-            $r .= static::langPlural($whatCount,'lcf|common/row');
+            $r .= static::langPlural($whatCount,'lcf|'.$rowWord);
             $r .= ' ';
             $r .= static::langPlural($whatCount,'lcf|common/filtered');
             $r .= ', ';
             $r .= $tableCount;
             $r .= ' ';
-            $r .= static::langPlural($tableCount,'lcf|common/row');
+            $r .= static::langPlural($tableCount,'lcf|'.$rowWord);
             $r .= ' ';
             $r .= static::langText('lcf|common/total');
         }
@@ -102,10 +104,11 @@ trait _generalInput
 
     // makeInputLimit
     // construit le input limit
-    final protected function makeInputLimit():string
+    final protected function makeInputLimit(?string $text=null):string
     {
         $r = '';
         $sql = $this->sql();
+        $text ??= static::langText('lcf|common/limit');
 
         if($this->hasTablePermission('limit','perPage') && $sql->isTriggerCountNotEmpty())
         {
@@ -116,7 +119,7 @@ trait _generalInput
             $data = ['href'=>$route,'char'=>static::getReplaceSegment(),'current'=>$limit,'pattern'=>'intCastNotEmpty','max'=>$maxPerPage];
             $r .= Html::divOp('limit');
             $r .= Html::inputText($limit,['name'=>'limit','data'=>$data,'inputmode'=>'decimal']);
-            $r .= Html::span(static::langText('lcf|common/limit'));
+            $r .= Html::span($text);
             $r .= Html::divCl();
         }
 
@@ -235,6 +238,50 @@ trait _generalInput
         $return = implode('',$return);
 
         return $return;
+    }
+
+
+    // makeTableHeaderOrder
+    // génère un lien pour ordonner dans un header de table
+    final protected function makeTableHeaderOrder(Core\Col $col,array $array,$icon=null):array
+    {
+        [$html,$thAttr] = $array;
+
+        if($this->hasTablePermission('order'))
+        {
+            $thAttr[] = 'orderable';
+            $active = ($col === $this->segment('order'));
+
+            if($active === true)
+            {
+                $dataDirection = $this->segment('direction');
+                $direction = $col->db()->syntaxCall('invertOrderDirection',$dataDirection);
+                $thAttr[] = 'ordering';
+            }
+
+            else
+            $direction = $dataDirection = $col->direction(true);
+
+            $thAttr['data']['direction'] = $dataDirection;
+
+            $route = $this->changeSegments(['page'=>1,'order'=>$col,'direction'=>$direction]);
+            $uri = $route->uri();
+
+            if(empty($html))
+            {
+                $html = Html::a($uri,$col->label());
+                if(!empty($icon))
+                $html .= Html::span(null,$icon);
+            }
+
+            elseif(!empty($icon))
+            {
+                $span = Html::span(null,$icon);
+                $html .= Html::a($uri,$span,'right');
+            }
+        }
+
+        return [$html,$thAttr];
     }
 }
 ?>

@@ -63,7 +63,7 @@ trait _specificSlug
 
     // rowsAllSegmentWhere
     // retourne la valeur where pour la requête des rows allSegment
-    final public static function rowsAllSegmentWhere()
+    public static function rowsAllSegmentWhere()
     {
         return true;
     }
