@@ -169,7 +169,12 @@ abstract class RegisterSubmit extends Core\RouteAlias
     // retourne les champs de base
     final public function getBaseFields():array
     {
-        return $this->getAttr('baseFields') ?? [];
+        $return = $this->getAttr('baseFields');
+
+        if(static::isCallable($return))
+        $return = $return();
+
+        return $return ?? [];
     }
 
 
