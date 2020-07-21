@@ -36,10 +36,14 @@
     > a {
         color: $black;
         font-weight: bold;
-
-        &:hover,
-        &[data-triggered='1'] {
+        
+        @include hoverAndSelected() {
             color: $darkGray;
+        }
+        
+        @include activeAndClick() {
+            color: $darkGray;
+            text-decoration: underline;
         }
     }
 

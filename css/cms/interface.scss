@@ -163,8 +163,7 @@ body > pre {
                 background-color: $lighterGray;
             }
 
-            &:active,
-            &[data-triggered='1'] {
+            @include activeAndClick() {
                 background-color: $lightYellow;
             }
         }
@@ -200,9 +199,13 @@ header {
         color: $white;
         display: none;
 
-        &:hover,
-        &[data-triggered='1'] {
+        &:hover {
             color: $lightGray;
+        }
+        
+        @include activeAndClick() {
+            color: $lightGray;
+            text-decoration: underline;
         }
     }
 
@@ -220,11 +223,6 @@ header {
         .right {
             padding: 0 15px 0 10px;
             @include flex(center, center, wrap);
-
-            > a[data-triggered='1'],
-            > a.active {
-                background-color: $darkColor;
-            }
 
             .popup-trigger > .popup-title {
                 color: $lightGray;
@@ -288,10 +286,14 @@ main .inner > .top {
 
         > a {
             @include inbl();
-
-            &:hover,
-            &[data-triggered='1'] {
+            
+            &:hover {
                 color: $darkGray;
+            }
+            
+            @include activeAndClick() {
+                color: $darkGray;
+                text-decoration: underline;
             }
         }
     }

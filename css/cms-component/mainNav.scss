@@ -24,11 +24,17 @@
             }
 
             &:hover > a:first-child,
-            &:hover > .trigger,
-            > a:first-child[data-triggered='1'] {
+            &:hover > .trigger {
                 background-color: $color;
             }
-
+            
+            > a:first-child {
+                @include activeAndClick() {
+                    background-color: $color;
+                    text-decoration: underline;
+                }
+            }
+            
             &[data-carousel='1'] > a:first-child,
             &[data-carousel='1'] > .trigger {
                 background-color: $darkColor;
@@ -40,7 +46,7 @@
             }
 
             &[data-carousel='1'] > a:first-child,
-            > a:first-child.selected {
+            > a:first-child#{$defaultSelectedState} {
                 background-color: $color;
                 text-decoration: underline;
             }
@@ -98,14 +104,17 @@
                 color: $white;
                 font-size: 90%;
                 border-top: 1px solid $color;
-
-                &:hover,
-                &.selected,
-                &[data-triggered='1'] {
+                
+                @include hoverAndSelected() {
                     background-color: $color;
                 }
-
-                &.selected {
+                
+                &#{$defaultSelectedState} {
+                    text-decoration: underline;
+                }
+                
+                @include activeAndClick() {
+                    background-color: $color;
                     text-decoration: underline;
                 }
             }

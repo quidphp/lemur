@@ -174,14 +174,14 @@
     background-color: $color;
     border: 1px solid $darkColor;
 
-    &.selected,
+    &#{$defaultSelectedState},
     &:not(:disabled):hover {
         background-color: $darkColor;
         border: 1px solid $darkerColor;
         opacity: 1;
     }
 
-    &[data-triggered='1'],
+    &#{$defaultClickState},
     &:not(:disabled):active {
         background-color: $darkerColor;
         border: 1px solid $black;

@@ -45,7 +45,7 @@
                 background-color: $lighterGray;
             }
 
-            &.selected > button {
+            &#{$defaultSelectedState} > button {
                 background-color: $lightYellow !important;
             }
         }

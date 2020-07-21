@@ -66,7 +66,7 @@ abstract class AccountChangePassword extends Core\RouteAlias
         {
             $label = static::langText('accountChangePassword/'.$name);
             $attr = ['name'=>$name,'placeholder'=>$label,'data-required'=>true];
-            $form .= $col->form(null,$attr);
+            $form = $col->form(null,$attr);
             $html .= Html::div($form,'field');
         }
         $r .= Html::div($html,'fields');

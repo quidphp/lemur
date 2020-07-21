@@ -149,11 +149,7 @@
             a.icon-solo {
                 @include abs(50%, 5px);
                 @include wh(16px, true, null, true);
-
-                &:hover,
-                &[data-triggered='1'] {
-                    opacity: 0.5;
-                }
+                @include statesOpacity();
             }
         }
     }
@@ -190,7 +186,7 @@
 // mixin de style de base pour le lien dans le popup
 @mixin filterElementLink() {
     @include transitions(background-color 0.3s);
-    @include hoverClickStateBackground($selector2: '.selected');
+    @include hoverClickStateBackground($selector2: $defaultSelectedState);
     cursor: pointer;
     display: block;
     text-align: center;

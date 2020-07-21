@@ -137,10 +137,7 @@
     }
 
     .close {
-        &:hover,
-        &[data-triggered='1'] {
-            opacity: 0.8;
-        }
+        @include statesOpacity();
     }
 
     .cell-inner {
@@ -206,7 +203,7 @@
     }
 
     .right:hover,
-    .right[data-triggered='1'],
+    .right#{$defaultClickState},
     &.ordering .right {
         background-color: $darkerColor;
 
@@ -226,12 +223,12 @@
         @include triangle(bottom, $white, 12px);
     }
     &[data-direction='asc'] .right:hover .triangle,
-    &[data-direction='asc'] .right[data-triggered='1'] .triangle,
+    &[data-direction='asc'] .right#{$defaultClickState} .triangle,
     &[data-direction='asc'].ordering .right .triangle {
         @include triangle(top, $lightYellow, 12px);
     }
     &[data-direction='desc'] .right:hover .triangle,
-    &[data-direction='desc'] .right[data-triggered='1'] .triangle,
+    &[data-direction='desc'] .right#{$defaultClickState} .triangle,
     &[data-direction='desc'].ordering .right .triangle {
         @include triangle(bottom, $lightYellow, 12px);
     }

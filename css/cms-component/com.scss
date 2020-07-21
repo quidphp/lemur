@@ -79,10 +79,13 @@
             > span {
                 @include transitions(color 0.3s);
                 cursor: pointer;
-
-                &:hover,
-                &[data-triggered='1'] {
+                
+                @include hoverAndSelected() {
                     color: $darkGray;
+                }
+                
+                @include activeAndClick() {
+                    text-decoration: underline;
                 }
             }
         }

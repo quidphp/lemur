@@ -63,9 +63,12 @@
     a {
         font-weight: bold;
         color: $fontColor;
-
-        &:hover,
-        &[data-triggered='1'] {
+        
+        @include hoverAndSelected() {
+            opacity: 0.8;
+        }
+        
+        @include activeAndClick() {
             text-decoration: underline;
         }
     }
@@ -215,10 +218,7 @@
     }
 
     .icon-solo {
-        &:hover,
-        &[data-triggered='1'] {
-            opacity: 0.6 !important;
-        }
+        @include statesOpacity();
     }
 }
 
@@ -232,14 +232,14 @@
     display: block;
     text-decoration: none;
 
-    &:hover,
-    &[data-triggered='1'] {
+    @include hoverAndSelected() {
         background-color: $darkGray;
         color: $white;
     }
-
-    &:active {
+    
+    @include activeAndClick() {
         background-color: $black;
+        color: $white;
     }
 
     &[data-status='loading'] {
@@ -276,7 +276,7 @@
 }
 
 // hoverClickStateBackground
-@mixin hoverClickStateBackground($selector: "[data-triggered='1']", $selector2: null) {
+@mixin hoverClickStateBackground($selector: $defaultClickState, $selector2: null) {
     &:hover {
         background-color: $lightYellow;
     }
@@ -295,5 +295,30 @@
         &#{$selector2} {
             background-color: $lightYellow;
         }
+    }
+}
+
+// statesOpacity
+@mixin statesOpacity($opacity1:0.8,$opacity2:0.6) {
+    @include hoverAndSelected() {
+        opacity: $opacity1;
+    }
+    
+    @include activeAndClick() {
+        opacity: $opacity2;
+    }
+}
+
+// blackAnchorState
+@mixin blackAnchorState() {
+    color: $black;
+    
+    @include hoverAndSelected() {
+        color: $darkGray;
+    }
+    
+    @include activeAndClick() {
+        color: $darkGray;
+        text-decoration: underline;
     }
 }

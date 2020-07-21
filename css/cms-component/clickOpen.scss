@@ -72,7 +72,8 @@
         }
 
         &[data-active='1'],
-        &:hover {
+        &:hover,
+        &:active {
             .popup-title {
                 color: $white;
                 border-radius: 5px;
@@ -144,10 +145,13 @@
 @mixin popupListAnchor() {
     a {
         color: $black;
-
-        &:hover,
-        &[data-triggered='1'] {
+        
+        @include hoverAndSelected() {
             color: $color;
+        }
+        
+        @include activeAndClick() {
+            text-decoration: underline;
         }
     }
 }
@@ -168,13 +172,12 @@
             color: $white;
             border-top: 0;
             padding: 10px 35px 10px 20px;
-
-            &:hover,
-            &.selected {
+            
+            @include hoverAndSelected() {
                 background-color: $color;
             }
-
-            &.selected {
+            
+            @include activeAndClick() {
                 text-decoration: underline;
             }
         }

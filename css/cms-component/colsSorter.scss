@@ -14,7 +14,7 @@
 
     &[data-active='1'] .cell-inner .trigger,
     .cell-inner:hover .trigger,
-    .cell-inner .trigger.selected {
+    .cell-inner .trigger#{$defaultSelectedState} {
         background-color: $darkerColor;
     }
 
@@ -56,13 +56,9 @@
             }
 
             > button.check {
+                @include statesOpacity();
                 @include abs(15px, 20px);
                 display: none;
-
-                &:hover,
-                &[data-triggered='1'] {
-                    opacity: 0.8;
-                }
             }
 
             > .scroller {

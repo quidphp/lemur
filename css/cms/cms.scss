@@ -85,10 +85,7 @@ body .icon-solo {
 /* OPACITY */
 body .icon-solo.search,
 html body .icon-solo.move {
-    &:hover,
-    &[data-triggered='1'] {
-        opacity: 0.6;
-    }
+    @include statesOpacity();
 }
 
 /* LOADING */

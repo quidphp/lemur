@@ -15,7 +15,10 @@ use Quid\Core;
 class Session extends Core\Session
 {
     // config
-    protected static array $config = [];
+    protected static array $config = [
+        '@cms'=>[
+            'loginLifetimeCom'=>true] // s'il faut afficher la communication de déconnexion à cause du lifetime
+    ];
 
 
     // routeTableGeneral

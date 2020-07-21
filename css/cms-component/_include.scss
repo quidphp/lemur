@@ -39,14 +39,7 @@ $red: #8d1e2d;
 
     a {
         @include inbl(bottom);
-        color: $black;
-
-        &:hover,
-        &.selected,
-        &[data-triggered='1'] {
-            color: $darkGray;
-            text-decoration: underline;
-        }
+        @include blackAnchorState();
     }
 
     iframe {
@@ -86,13 +79,7 @@ $red: #8d1e2d;
     }
 
     a {
-        color: $black;
-
-        &:hover,
-        &[data-triggered='1'] {
-            color: $darkGray;
-            text-decoration: underline;
-        }
+        @include blackAnchorState();
     }
 
     .fakeselect {
@@ -153,9 +140,13 @@ $red: #8d1e2d;
         display: block;
         height: 100%;
         padding: 8px 10px;
-
-        &:hover,
-        &[data-triggered='1'] {
+        
+        @include hoverAndSelected() {
+            text-decoration: none !important;
+            color: $black !important;
+        }
+        
+        @include activeAndClick() {
             text-decoration: none !important;
             color: $black !important;
         }

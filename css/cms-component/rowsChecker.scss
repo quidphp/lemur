@@ -47,9 +47,8 @@
 
         button {
             @include wh();
-
-            &.selected,
-            &:hover {
+            
+            @include hoverAndSelected() {
                 background-color: $darkerColor;
             }
 
