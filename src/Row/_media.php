@@ -126,11 +126,8 @@ trait _media
         if(!empty($html))
         {
             $html = Html::divCond($html,'triggers');
-
-            $return .= Html::divOp('medias');
-            $return .= Html::div($namePrimary,'legend');
-            $return .= $html;
-            $return .= Html::divCl();
+            $html = Html::div($namePrimary,'legend').$html;
+            $return .= Html::div($html,'medias');
         }
 
         return $return;
@@ -155,9 +152,8 @@ trait _media
                 else
                 $ratio = Html::div($value['to'],'media');
 
-                $html .= Html::divOp(['wrap',$type]);
-                $html .= Html::div($ratio,'ratio');
-                $html .= Html::divCl();
+                $ratioHtml = Html::div($ratio,'ratio');
+                $html .= Html::div($ratioHtml,['wrap',$type]);
                 $info = '';
 
                 if($option['name'] === true)

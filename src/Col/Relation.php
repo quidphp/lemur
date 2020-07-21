@@ -186,27 +186,22 @@ abstract class Relation extends Core\Col\Relation
             if(is_array($attr) && array_key_exists('id',$attr))
             unset($attr['id']);
 
-            $return .= Html::divOp(['input-popup']);
-
-            $return .= Html::divOp(['data'=>['absolute-placeholder'=>true]]);
-            $return .= Html::divOp('input');
-            $return .= Html::inputText(null,['placeholder'=>$placeholder,'name'=>true,'data'=>$data,'id'=>$id,'inputmode'=>'search']);
+            $inputHtml = Html::inputText(null,['placeholder'=>$placeholder,'name'=>true,'data'=>$data,'id'=>$id,'inputmode'=>'search']);
             if($option['button'] === true)
-            $return .= Html::button(null,['icon-solo','search']);
-            $return .= Html::divCl();
-            $return .= Html::divCl();
+            $inputHtml .= Html::button(null,['icon-solo','search']);
+            $return .= Html::div($inputHtml,'input');
 
-            $return .= Html::divOp(['popup','tabindex'=>0]);
-            $return .= $route->orderSelect();
-            $return .= Html::div(null,'results');
-            $return .= Html::divCl();
+            $return = Html::div($return,['data'=>['absolute-placeholder'=>true]]);
 
-            $return .= Html::divCl();
+            $popupHtml = $route->orderSelect();
+            $popupHtml .= Html::div(null,'results');
+            $return .= Html::div($popupHtml,['popup','tabindex'=>0]);
 
-            $return .= Html::divOp('current');
-            $return .= $this->formHidden();
-            $return .= $this->formComplexSearchChoices($value,$attr,$option);
-            $return .= Html::divCl();
+            $return = Html::div($return,'input-popup');
+
+            $currentHtml = $this->formHidden();
+            $currentHtml .= $this->formComplexSearchChoices($value,$attr,$option);
+            $return .= Html::div($currentHtml,'current');
         }
 
         return $return;

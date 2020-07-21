@@ -289,20 +289,19 @@ trait _relation
             $size = $relation->size();
             if($size > $limit)
             {
-                $html .= Html::divOp('top');
                 $placeholder = static::langText('common/filter')." ($size)";
 
                 $searchHtml = Html::inputText(null,['name'=>true,'data-pattern'=>['minLength'=>$searchMinLength],'placeholder'=>$placeholder,'inputmode'=>'search']);
                 $searchHtml .= Html::button(null,['icon-solo','search']);
-                $html .= Html::div($searchHtml,'input-search');
+                $topHtml = Html::div($searchHtml,'input-search');
 
                 if(!empty($order))
                 {
-                    $html .= Html::div(null,'spacing');
-                    $html .= $order;
+                    $topHtml .= Html::div(null,'spacing');
+                    $topHtml .= $order;
                 }
 
-                $html .= Html::divCl();
+                $html .= Html::div($topHtml,'top');
             }
 
             elseif($size > 1 && !empty($order))
@@ -321,16 +320,13 @@ trait _relation
     final public static function makeClickOpen(?string $value=null,?string $title=null,?string $after=null,$attr=null,?array $option=null):string
     {
         $r = '';
-        $r .= Html::divOp($attr);
         $r .= Html::button($title,'trigger');
         $r .= Html::div($value,['popup','tabindex'=>0]);
 
         if(is_string($after))
         $r .= $after;
 
-        $r .= Html::divCl();
-
-        return $r;
+        return Html::div($r,$attr);
     }
 }
 ?>

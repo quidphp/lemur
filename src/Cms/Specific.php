@@ -291,7 +291,6 @@ class Specific extends Core\RouteAlias
             $general = $this->general();
             $attr = ['first'=>'hash-follow','prev'=>'hash-follow','next'=>'hash-follow','last'=>'hash-follow'];
             $specific = $this->makeSpecificNav($general,$row,'primary','highlight',$attr);
-            $r .= Html::divOp('nav');
 
             if(!empty($specific))
             {
@@ -320,7 +319,7 @@ class Specific extends Core\RouteAlias
                 $r .= $this->makeNavPopup($general);
             }
 
-            $r .= Html::divCl();
+            $r = Html::div($r,'nav');
         }
 
         return $r;

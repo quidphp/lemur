@@ -85,16 +85,15 @@ trait _generalInput
                 $uri = Base\Uri::removeQuery($this->changeSegments(['page'=>1])->uri());
                 $data = ['href'=>$uri,'char'=>$searchQuery,'current'=>$search,'pattern'=>['minLength'=>$searchMinLength]];
 
-                $r .= Html::divOp('form');
-                $r .= Html::divOp('input');
-                $r .= Html::inputText($search,['name'=>true,'placeholder'=>$placeholder,'data'=>$data,'inputmode'=>'search']);
+                $inputHtml = Html::inputText($search,['name'=>true,'placeholder'=>$placeholder,'data'=>$data,'inputmode'=>'search']);
 
                 if($search !== null)
-                $r .= Html::a($uri,null,Base\Arr::merge($attr['close'] ?? null,'close'));
+                $inputHtml .= Html::a($uri,null,Base\Arr::merge($attr['close'] ?? null,'close'));
 
-                $r .= Html::divCl();
+                $r .= Html::div($inputHtml,'input');
+
                 $r .= Html::button(null,Base\Arr::merge($attr['search'] ?? null,'search'));
-                $r .= Html::divCl();
+                $r = Html::div($r,'form');
             }
         }
 

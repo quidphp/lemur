@@ -85,21 +85,15 @@ trait _specific
     {
         $r = '';
         $table = $this->table();
-
-        $r .= Html::divOp('top');
-        $r .= Html::divOp('left');
-
-        $r .= Html::div($this->makeTitleBox(),'title');
+        $html = Html::div($this->makeTitleBox(),'title');
 
         if($table->hasPermission('description'))
-        $r .= Html::divCond($table->description(),['description','sub-title']);
+        $html .= Html::divCond($table->description(),['description','sub-title']);
 
-        $r .= Html::divCl();
-
+        $r .= Html::div($html,'left');
         $r .= Html::divCond($this->makeNav(),'right');
-        $r .= Html::divCl();
 
-        return $r;
+        return Html::div($r,'top');
     }
 
 
@@ -108,11 +102,8 @@ trait _specific
     final protected function makeFormTop():string
     {
         $r = '';
-
-        $r .= Html::divOp('left');
-        $r .= $this->makeFormPanel();
-        $r .= Html::divCl();
-
+        $panel = $this->makeFormPanel();
+        $r .= Html::div($panel,'left');
         $r .= Html::divCond($this->makeOperation('top'),'right');
 
         return $r;
@@ -263,16 +254,14 @@ trait _specific
                     }
                     $attr = ['panel','data'=>$data];
 
-                    $r .= Html::divOp($attr);
-
                     $fields = '';
                     foreach ($cols as $col)
                     {
                         $fields .= $this->makeFormOne($col);
                     }
-                    $r .= Html::divCond($fields,'form-fields');
+                    $html = Html::divCond($fields,'form-fields');
 
-                    $r .= Html::divCl();
+                    $r .= Html::div($html,$attr);
                 }
             }
         }

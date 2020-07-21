@@ -86,19 +86,17 @@ class JsonArray extends Core\Col\JsonAlias
     // génère le model pour jsonArray
     public function makeModel($value,array $attr,?Core\Cell $cell=null,array $option):string
     {
-        $return = Html::divOp('ele');
+        $return = '';
 
         if(!empty($cell) && array_key_exists('index',$option))
         $return .= $this->beforeModel($option['index'],$value,$cell);
 
-        $return .= Html::divOp('current');
-        $return .= $this->form($value,$attr,$option);
-        $return .= Html::divCl();
+        $html = $this->form($value,$attr,$option);
+        $return .= Html::div($html,'current');
 
         $return .= $this->makeModelUtils();
-        $return .= Html::divCl();
 
-        return $return;
+        return Html::div($return,'ele');
     }
 
 
@@ -129,7 +127,7 @@ class JsonArray extends Core\Col\JsonAlias
     // génère les outils pour le model comme move et delete
     final protected function makeModelUtils():string
     {
-        $return = Html::divOp('utils');
+        $return = '';
         $lang = $this->db()->lang();
 
         if($this->getAttr('sortable'))
@@ -137,9 +135,8 @@ class JsonArray extends Core\Col\JsonAlias
 
         $data = ['confirm'=>$lang->text('common/confirm')];
         $return .= Html::button(null,['icon-solo','remove','data'=>$data]);
-        $return .= Html::divCl();
 
-        return $return;
+        return Html::div($return,'utils');
     }
 
 
@@ -169,14 +166,13 @@ class JsonArray extends Core\Col\JsonAlias
             $option = Base\Arr::plus(['multi'=>true],$option);
             $model = $this->makeModel(null,$attr,null,$option);
             $data = ['html'=>$model];
-            $return .= Html::divOp('playground');
 
+            $html = '';
             foreach ($value as $i => $v)
             {
-                $return .= $this->makeModel($v,$attr,$cell,Base\Arr::plus($option,['index'=>$i]));
+                $html .= $this->makeModel($v,$attr,$cell,Base\Arr::plus($option,['index'=>$i]));
             }
-
-            $return .= Html::divCl();
+            $return .= Html::div($html,'playground');
 
             $buttonHtml = Html::span($lang->text('common/insert'));
             $buttonHtml .= Html::span(null,['icon-solo','add']);

@@ -121,21 +121,19 @@ class Login extends Lemur\Route\Login
         $remember = $flash->get('login/remember') ?? true;
 
         $r .= Html::inputHidden($redirect,'redirect');
-        $r .= Html::divOp('top');
-        $r .= $table->col('username')->formWrap('divtable',$usernameLabel.':',$username,['inputmode'=>'email']);
-        $r .= $table->col('password')->formWrap('divtable','%:');
-        $r .= Html::divCl();
 
-        $r .= Html::divOp('bottom');
-        $r .= Html::divOp('left');
+        $topHtml = $table->col('username')->formWrap('divtable',$usernameLabel.':',$username,['inputmode'=>'email']);
+        $topHtml .= $table->col('password')->formWrap('divtable','%:');
+        $r .= Html::div($topHtml,'top');
+
         $label = [static::langText('login/remember'),['data-tooltip'=>static::langText('tooltip/rememberMe')]];
-        $r .= Html::formWrap($label,['inputCheckbox',1,['name'=>'remember','checked'=>$remember]],'reverse');
-        $r .= Html::divCl();
+        $formWrap = Html::formWrap($label,['inputCheckbox',1,['name'=>'remember','checked'=>$remember]],'reverse');
+        $bottomHtml = Html::div($formWrap,'left');
 
-        $r .= Html::divOp('right');
-        $r .= Html::submit(static::label(),$this->submitAttr());
-        $r .= Html::divCl();
-        $r .= Html::divCl();
+        $submit = Html::submit(static::label(),$this->submitAttr());
+        $bottomHtml .= Html::div($submit,'right');
+
+        $r .= Html::div($bottomHtml,'bottom');
         $r .= Html::formCl();
 
         return $r;

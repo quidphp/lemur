@@ -719,12 +719,10 @@ class General extends Core\RouteAlias
             $session = static::session();
 
             $checkbox = [];
-            $htmlWrap = Html::divOp('choice');
-            $htmlWrap .= Html::divOp('choice-in');
-            $htmlWrap .= Html::button(null,['icon-solo','move']);
+            $htmlWrap = Html::button(null,['icon-solo','move']);
             $htmlWrap .= '%';
-            $htmlWrap .= Html::divCl();
-            $htmlWrap .= Html::divCl();
+            $htmlWrap = Html::div($htmlWrap,'choice-in');
+            $htmlWrap = Html::div($htmlWrap,'choice');
 
             $attr = ['name'=>'col','data-required'=>true];
             $option = ['value'=>[],'html'=>$htmlWrap];

@@ -65,19 +65,19 @@ abstract class Files extends Core\Col\Files
 
             foreach ($this->indexRange() as $i)
             {
+                $html = '';
                 $int = $i + 1;
-                $return .= Html::divOp(['file-block','empty']);
 
                 if($hasMultiple === true)
                 {
                     $count = Html::div($int,'count');
-                    $return .= Html::div($count,'count-circle');
+                    $html .= Html::div($count,'count-circle');
                 }
 
-                $return .= Html::divOp('form');
-                $return .= $this->form(null,$attr,$option);
-                $return .= Html::divCl();
-                $return .= Html::divCl();
+                $formHtml = $this->form(null,$attr,$option);
+                $html .= Html::div($formHtml,'form');
+
+                $return .= Html::div($html,['file-block','empty']);
             }
         }
 
@@ -115,7 +115,6 @@ abstract class Files extends Core\Col\Files
         if($allowFileUpload === true || $isEmpty === false)
         {
             $class = ($isEmpty === true)? 'empty':'not-empty';
-            $return .= Html::divOp(['file-block',$class]);
 
             if(is_int($i))
             {
@@ -154,21 +153,20 @@ abstract class Files extends Core\Col\Files
 
             if($allowFileUpload === true)
             {
-                $return .= Html::divOp('form');
-                $return .= $this->form(null,$attr,$option);
+                $formHtml = $this->form(null,$attr,$option);
                 $path = ($hasIndex === true)? $value->cellPathBasename($index):$value->cellPathBasename($index);
 
                 $hidden = Base\Json::encode(['action'=>null,'path'=>$path]);
-                $return .= $this->formHidden($hidden,Base\Arr::plus($attr,['disabled'=>true]),$option);
+                $formHtml .= $this->formHidden($hidden,Base\Arr::plus($attr,['disabled'=>true]),$option);
 
                 $messageHtml = Html::div(null,'action-text');
                 $messageHtml .= Html::div(null,['icon-solo','close']);
-                $return .= Html::div($messageHtml,'message');
+                $formHtml .= Html::div($messageHtml,'message');
 
-                $return .= Html::divCl();
+                $return .= Html::div($formHtml,'form');
             }
 
-            $return .= Html::divCl();
+            $return = Html::div($return,['file-block',$class]);
         }
 
         return $return;

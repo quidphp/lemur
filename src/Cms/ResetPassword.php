@@ -63,17 +63,13 @@ class ResetPassword extends Lemur\Route\ResetPassword
     {
         $r = '';
         $route = $this->submitRoute();
-        $r = $route->formOpen();
         $table = $this->db()->tables()->get('user');
+        $submit = Html::submit(static::label(),$this->submitAttr());
+        $colHtml = $table->col('email')->formWrap('divtable','%:',null,['data-required'=>true]);
 
-        $r .= Html::divOp('top');
-        $r .= $table->col('email')->formWrap('divtable','%:',null,['data-required'=>true]);
-        $r .= Html::divCl();
-
-        $r .= Html::divOp('bottom');
-        $r .= Html::submit(static::label(),$this->submitAttr());
-        $r .= Html::divCl();
-
+        $r .= $route->formOpen();
+        $r .= Html::div($colHtml,'top');
+        $r .= Html::div($submit,'bottom');
         $r .= Html::formCl();
 
         return $r;

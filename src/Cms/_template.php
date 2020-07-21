@@ -100,10 +100,9 @@ trait _template
         $r .= $home->a($boot->label(),'boot-label');
         $r .= Html::button(null,['burger-menu','icon-solo','burger']);
 
-        $r .= Html::divOp('top');
-        $r .= Html::div($this->headerLeft(),'left');
-        $r .= Html::div($this->headerRight(),'right');
-        $r .= Html::divCl();
+        $html = Html::div($this->headerLeft(),'left');
+        $html .= Html::div($this->headerRight(),'right');
+        $r .= Html::div($html,'top');
 
         return $r;
     }
@@ -200,31 +199,26 @@ trait _template
         $label = $boot->label();
         $home = Home::make();
 
-        $r .= Html::divOp('nav-fixed');
-
-        $r .= Html::divOp('nav-top');
-        $r .= Html::button(null,['nav-close','icon-solo','close']);
+        $html = Html::button(null,['nav-close','icon-solo','close']);
 
         if(!empty($logo))
         {
             $img = Html::imgCond($logo,$label);
-            $r .= $home->a($img,'logo');
+            $html .= $home->a($img,'logo');
         }
 
         else
         {
             $label = Html::span($label);
-            $r .= $home->a($label,'boot-label');
+            $html .= $home->a($label,'boot-label');
         }
 
-        $r .= Html::divCl();
+        $r .= Html::div($html,'nav-top');
 
         if(static::sessionUser()->isSomebody())
         $r .= Html::navCond($this->nav());
 
-        $r .= Html::divCl();
-
-        return $r;
+        return Html::div($r,'nav-fixed');
     }
 
 
@@ -466,7 +460,9 @@ trait _template
         $r = '';
         $popup = '';
         $top = null;
-        foreach ($array as $value) {
+
+        foreach ($array as $value)
+        {
             if($value instanceof Lemur\Route)
             {
                 $top = ($value::classFqcn() === static::class)? 'top':$top;
@@ -481,10 +477,9 @@ trait _template
         if(!empty($popup))
         {
             $attr = [$top,'with-submenu','data'=>['anchor-corner'=>true]];
-            $r .= Html::divOp($attr);
-            $r .= Html::button($label,['with-icon','no-border','trigger',$type]);
-            $r .= static::makeDivPopup($popup);
-            $r .= Html::divCl();
+            $html = Html::button($label,['with-icon','no-border','trigger',$type]);
+            $html .= static::makeDivPopup($popup);
+            $r .= Html::div($html,$attr);
         }
 
         return $r;
