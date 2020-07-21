@@ -7,7 +7,7 @@ declare(strict_types=1);
  * License: https://github.com/quidphp/lemur/blob/master/LICENSE
  */
 
-namespace Quid\Lemur\Cms;
+namespace Quid\Lemur\Route;
 use Quid\Base;
 use Quid\Base\Html;
 use Quid\Orm;
@@ -16,6 +16,12 @@ use Quid\Orm;
 // trait that grants methods related to a rows feed (with a load-more)
 trait _rowsFeed
 {
+    // config
+    protected static array $configRowsFeed = [
+        'limit'=>10
+    ];
+
+
     // rows
     protected ?array $ids = null;
 
@@ -120,8 +126,9 @@ trait _rowsFeed
         if(is_int($pageNext))
         {
             $route = $this->changeSegment('page',$pageNext);
-            $text = Html::span(static::langText('common/loadMore',$replace),'text');
-            $r .= $route->a($text,'load-more');
+            $text = static::langText('common/loadMore',$replace);
+            $html = Html::span($text,'text');
+            $r .= $route->a($html,'load-more');
         }
 
         return $r;

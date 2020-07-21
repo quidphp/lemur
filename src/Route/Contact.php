@@ -69,16 +69,12 @@ abstract class Contact extends Core\RouteAlias
         $r = '';
         $route = $this->submitRoute();
         $submit = static::langText('contact/submit');
+        $submitHtml = Html::submit($submit,$this->submitAttr());
 
         $r .= $route->formOpen();
         $r .= Html::div($this->makeFormRow(),'fields');
         $r .= Html::divCond($this->makeCaptcha(),'captcha');
-
-        $attr = $this->submitAttr();
-        $r .= Html::divOp('action');
-        $r .= Html::submit($submit,$attr);
-        $r .= Html::divCl();
-
+        $r .= Html::div($submitHtml,'action');
         $r .= Html::formCl();
 
         return $r;

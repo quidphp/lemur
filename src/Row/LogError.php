@@ -14,19 +14,12 @@ use Quid\Core;
 // class to represent a row of the logError table, with cms config
 class LogError extends Core\Row\LogError
 {
+    // trait
+    use _log;
+
+
     // config
-    protected static array $config = [
-        'permission'=>[
-            'contributor'=>['update'=>false,'delete'=>false],
-            'editor'=>['update'=>false,'delete'=>false],
-            'subAdmin'=>['update'=>false]],
-        '@cms'=>[
-            'permission'=>[
-                'contributor'=>['view'=>false],
-                'editor'=>['view'=>false],
-                'subAdmin'=>['lemurInsert'=>false],
-                'admin'=>['lemurInsert'=>false,'lemurTruncate'=>true]]]
-    ];
+    protected static array $config = [];
 }
 
 // init

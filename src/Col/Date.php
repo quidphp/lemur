@@ -59,10 +59,10 @@ class Date extends Core\Col\Date
             $placeholderMaxLength = strlen($placeholder);
             $attr = Base\Attr::append($attr,['placeholder'=>$placeholder,'maxlength'=>$placeholderMaxLength]);
             $return .= $this->form($value,$attr,$option);
-            $return .= Html::divOp('calendar-popup');
+
             $data = ['char'=>$route::getReplaceSegment(),'format'=>$formatCalendar,'current'=>$timestamp,'href'=>$route];
-            $return .= Html::div(null,['calendar','data'=>$data]);
-            $return .= Html::divCl();
+            $popup = Html::div(null,['calendar','data'=>$data]);
+            $return .= Html::div($popup,'calendar-popup');
         }
 
         else

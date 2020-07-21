@@ -86,20 +86,15 @@ abstract class Register extends Core\RouteAlias
         $r = '';
         $route = $this->submitRoute();
         $r .= $route->formOpen();
+        $submit = Html::submit(static::label(),$this->submitAttr());
 
-        $r .= Html::divOp('top');
+        $html = Html::divCond($this->makeFormBase(),['base','part']);
+        $html .= Html::divCond($this->makeFormPassword(),['passwords','part']);
+        $html .= Html::divCond($this->makeFormOther(),['other','part']);
 
-        $r .= Html::divCond($this->makeFormBase(),['base','part']);
-        $r .= Html::divCond($this->makeFormPassword(),['passwords','part']);
-        $r .= Html::divCond($this->makeFormOther(),['other','part']);
-
-        $r .= Html::divClose();
-
-        $r .= Html::divOp('bottom');
-        $r .= Html::submit(static::label(),$this->submitAttr());
-        $r .= Html::divClose();
-
-        $r .= Html::formClose();
+        $r .= Html::div($html,'top');
+        $r .= Html::div($submit,'bottom');
+        $r .= Html::formCl();
 
         return $r;
     }

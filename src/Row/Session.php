@@ -16,6 +16,7 @@ class Session extends Core\Row\Session
 {
     // config
     protected static array $config = [
+        'cacheEmpty'=>false,
         '@cms'=>[
             'permission'=>[
                 '*'=>['homeFeed'=>false],

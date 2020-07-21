@@ -20,7 +20,9 @@ class CliCompile extends Core\Route\CliCompile
 
 
     // config
-    protected static array $config = [];
+    protected static array $config = [
+        'template'=>false
+    ];
 }
 
 // init

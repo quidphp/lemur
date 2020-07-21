@@ -156,7 +156,7 @@
 // mixin pour le popup d'un sous-menu
 @mixin subMenuPopup() {
     background-color: $darkColor;
-    max-width: 200px;
+    max-width: 225px;
     border: 0;
 
     > ul > li {

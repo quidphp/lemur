@@ -124,19 +124,19 @@ class Login extends Lemur\Route\Login
         $r .= Html::divOp('top');
         $r .= $table->col('username')->formWrap('divtable',$usernameLabel.':',$username,['inputmode'=>'email']);
         $r .= $table->col('password')->formWrap('divtable','%:');
-        $r .= Html::divClose();
+        $r .= Html::divCl();
 
         $r .= Html::divOp('bottom');
         $r .= Html::divOp('left');
         $label = [static::langText('login/remember'),['data-tooltip'=>static::langText('tooltip/rememberMe')]];
         $r .= Html::formWrap($label,['inputCheckbox',1,['name'=>'remember','checked'=>$remember]],'reverse');
-        $r .= Html::divClose();
+        $r .= Html::divCl();
 
         $r .= Html::divOp('right');
         $r .= Html::submit(static::label(),$this->submitAttr());
-        $r .= Html::divClose();
-        $r .= Html::divClose();
-        $r .= Html::formClose();
+        $r .= Html::divCl();
+        $r .= Html::divCl();
+        $r .= Html::formCl();
 
         return $r;
     }

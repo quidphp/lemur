@@ -105,10 +105,9 @@ trait _common
 
                 if(strlen($html))
                 {
-                    $r .= Html::liOp();
-                    $r .= Html::span($label.':');
-                    $r .= $html;
-                    $r .= Html::liCl();
+                    $liHtml = Html::span($label.':');
+                    $liHtml .= $html;
+                    $r .= Html::li($liHtml);
                 }
             }
         }

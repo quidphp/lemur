@@ -71,34 +71,24 @@ trait _nobody
         $anchor = $route->a($boot->label());
         $buttons = $this->makeButtons();
 
-        $r .= Html::divOp('box');
-
-        $r .= Html::divOp('hgroup');
-        $r .= Html::h1($anchor);
-        $r .= Html::h2($boot->typeLabel());
-        $r .= Html::h3(static::label());
-        $r .= Html::divCond($this->makeInfo(),'info');
-        $r .= Html::divCl();
+        $hgroupHtml = Html::h1($anchor);
+        $hgroupHtml .= Html::h2($boot->typeLabel());
+        $hgroupHtml .= Html::h3(static::label());
+        $hgroupHtml .= Html::divCond($this->makeInfo(),'info');
+        $r .= Html::div($hgroupHtml,'hgroup');
 
         $r .= Html::divCond($this->browscap(),'browscap');
         $r .= Html::div($this->makeForm(),'form');
+
         $buttons = Base\Arr::clean($buttons);
-
-        if(!empty($buttons))
+        $buttonsHtml = '';
+        foreach ($buttons as $key => $value)
         {
-            $r .= Html::divOp('buttons');
-
-            foreach ($buttons as $key => $value)
-            {
-                $r .= Html::div($value,'button');
-            }
-
-            $r .= Html::divCl();
+            $buttonsHtml .= Html::div($value,'button');
         }
+        $r .= Html::divCond($buttonsHtml,'buttons');
 
-        $r .= Html::divCl();
-
-        return $r;
+        return Html::div($r,'box');
     }
 
 
@@ -115,7 +105,6 @@ trait _nobody
     final protected function makeRegister():string
     {
         $r = '';
-
         $route = Register::make();
         if($route->canTrigger())
         $r .= $route->aTitle();
@@ -129,7 +118,6 @@ trait _nobody
     final protected function makeLogin():string
     {
         $r = '';
-
         $route = Login::make();
         if($route->canTrigger())
         $r .= $route->aTitle();
@@ -143,7 +131,6 @@ trait _nobody
     final protected function makeResetPassword():string
     {
         $r = '';
-
         $route = ResetPassword::make();
         if($route->canTrigger())
         $r .= $route->a(static::langText('resetPassword/forgot'));

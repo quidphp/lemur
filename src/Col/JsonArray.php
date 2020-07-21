@@ -178,10 +178,9 @@ class JsonArray extends Core\Col\JsonAlias
 
             $return .= Html::divCl();
 
-            $return .= Html::buttonOp(['insert','data'=>$data]);
-            $return .= Html::span($lang->text('common/insert'));
-            $return .= Html::span(null,['icon-solo','add']);
-            $return .= Html::buttonCl();
+            $buttonHtml = Html::span($lang->text('common/insert'));
+            $buttonHtml .= Html::span(null,['icon-solo','add']);
+            $return .= Html::button($buttonHtml,['insert','data'=>$data]);
         }
 
         else

@@ -313,8 +313,12 @@ trait _template
                     if(!empty($table))
                     {
                         $route = $session->routeTableGeneral($table,true);
-                        $option = ($route->routeRequest()->isSegmentParsedFromValue())? ['query'=>false]:null;
-                        $routeHtml .= $route->aTitle(null,null,null,$option);
+
+                        if($route->routeRequest()->isSegmentParsedFromValue())
+                        $routeHtml .= $route->aWithoutQuery($route->title());
+
+                        else
+                        $routeHtml .= $route->aTitle();
 
                         ['html'=>$routeHtml,'attr'=>$attr] = $this->navMenuSpecificAdd($routeHtml,$attr,$navAdd,$table);
                     }
@@ -329,10 +333,9 @@ trait _template
 
                         if(!empty($subNav))
                         {
-                            $html .= Html::buttonOp('trigger');
-                            $html .= Html::span(null,['triangle']);
-                            $html .= Html::span($label);
-                            $html .= Html::buttonCl();
+                            $buttonHtml = Html::span(null,['triangle']);
+                            $buttonHtml .= Html::span($label);
+                            $html .= Html::button($buttonHtml,'trigger');
 
                             if(!empty($table))
                             {
@@ -409,9 +412,8 @@ trait _template
 
         if($this->hasPermission('backToTop'))
         {
-            $r .= Html::divOp('back-to-top');
-            $r .= Html::button(static::langText('footer/backToTop'),['with-icon','top','no-border']);
-            $r .= Html::divCl();
+            $buttonHtml = Html::button(static::langText('footer/backToTop'),['with-icon','top','no-border']);
+            $r .= Html::div($buttonHtml,'back-to-top');
         }
 
         if($this->hasPermission('link'))

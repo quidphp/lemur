@@ -15,21 +15,17 @@ use Quid\Lemur;
 // class to represent a row of the log table, with cms config
 class Log extends Core\Row\Log
 {
+    // trait
+    use _log;
+
+
     // config
     protected static array $config = [
         'cols'=>[
             'json'=>['class'=>Lemur\Col\JsonExport::class]],
-        'permission'=>[
-            'contributor'=>['update'=>false,'delete'=>false],
-            'editor'=>['update'=>false,'delete'=>false],
-            'subAdmin'=>['update'=>false]],
         '@cms'=>[
             'permission'=>[
-                '*'=>['homeFeed'=>false],
-                'contributor'=>['view'=>false],
-                'editor'=>['view'=>false],
-                'subAdmin'=>['lemurInsert'=>false],
-                'admin'=>['lemurInsert'=>false,'lemurTruncate'=>true]]]
+                '*'=>['homeFeed'=>false]]]
     ];
 }
 

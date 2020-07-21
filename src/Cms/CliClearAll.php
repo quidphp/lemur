@@ -10,9 +10,9 @@ declare(strict_types=1);
 namespace Quid\Lemur\Cms;
 use Quid\Core;
 
-// cliClearCache
-// class for a cli route to remove all cached data
-class CliClearCache extends Core\RouteAlias
+// cliClearAll
+// class for a cli route to remove all cached and logged data
+class CliClearAll extends Core\RouteAlias
 {
     // trait
     use _cli;
@@ -21,19 +21,27 @@ class CliClearCache extends Core\RouteAlias
 
     // config
     protected static array $config = [
-        'path'=>['-clearcache'],
-        'parent'=>CliClearAll::class,
+        'path'=>['-clearall'],
         'clear'=>[
+            '[storageLog]',
+            '[storageError]',
             '[storageCache]',
             '[publicCss]',
             '[publicJs]',
             '[publicMedia]',
             '[publicStorage]',
+            Core\Row\Log::class,
+            Core\Row\LogCron::class,
+            Core\Row\LogEmail::class,
+            Core\Row\LogError::class,
+            Core\Row\LogHttp::class,
+            Core\Row\LogSql::class,
+            Core\Row\QueueEmail::class,
             Core\Row\CacheRoute::class],
         'template'=>false
     ];
 }
 
 // init
-CliClearCache::__init();
+CliClearAll::__init();
 ?>

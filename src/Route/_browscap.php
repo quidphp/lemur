@@ -19,9 +19,10 @@ trait _browscap
     final protected function browscap():string
     {
         $r = '';
-        $r .= Html::noscript(static::langText('browscap/noscript'));
-        $r .= Html::div(static::langText('browscap/cookie'),'cookie-disabled');
-        $r .= Html::div(static::langText('browscap/unsupported'),'unsupported-browser');
+        $lang = static::lang();
+        $r .= Html::noscript($lang->text('browscap/noscript'));
+        $r .= Html::div($lang->text('browscap/cookie'),'cookie-disabled');
+        $r .= Html::div($lang->text('browscap/unsupported'),'unsupported-browser');
 
         return $r;
     }

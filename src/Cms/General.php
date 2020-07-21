@@ -339,16 +339,15 @@ class General extends Core\RouteAlias
                 $replace = ['count'=>$minLength];
                 $note = $lang->plural($minLength,'general/searchNote',$replace);
 
-                $r .= Html::divOp('in');
-                $r .= Html::divOp('first');
-                $r .= Html::span($lang->text('general/note').':');
-                $r .= Html::span($note,'note');
-                $r .= Html::divCl();
-                $r .= Html::divOp('second');
-                $r .= Html::span($lang->text('general/searchIn').':');
-                $r .= Html::span(implode(', ',$cols->pair('label')),'labels');
-                $r .= Html::divCl();
-                $r .= Html::divCl();
+                $firstHtml = Html::span($lang->text('general/note').':');
+                $firstHtml .= Html::span($note,'note');
+                $r .= Html::div($firstHtml,'first');
+
+                $secondHtml = Html::span($lang->text('general/searchIn').':');
+                $secondHtml .= Html::span(implode(', ',$cols->pair('label')),'labels');
+                $r .= Html::div($secondHtml,'second');
+
+                $r .= Html::div($r,'in');
             }
         }
 
@@ -594,12 +593,12 @@ class General extends Core\RouteAlias
         if($route->canTrigger() && !empty($table->rowsCount(true,true)))
         {
             $data = ['confirm'=>static::langText('common/confirm')];
-            $r .= Html::divOp(['truncate','operation-element']);
             $r .= $route->formOpen(['data'=>$data]);
             $r .= $this->tableHiddenInput();
             $r .= Html::submit($route->label(),['with-icon','truncate']);
-            $r .= Html::formClose();
-            $r .= Html::divCl();
+            $r .= Html::formCl();
+
+            $r = Html::div($r,['truncate','operation-element']);
         }
 
         return $r;
@@ -661,11 +660,12 @@ class General extends Core\RouteAlias
         $r = '';
         $table = $this->table();
         $route = GeneralDelete::make(['table'=>$table,'primaries'=>true]);
+        $lang = static::lang();
 
         if($route->canTrigger())
         {
             $defaultSegment = static::getDefaultSegment();
-            $tooltip = static::lang()->text('tooltip/multiDelete');
+            $tooltip = $lang->text('tooltip/multiDelete');
             $data = ['confirm'=>static::langText('common/confirm'),'separator'=>$defaultSegment,'tooltip'=>$tooltip];
 
             $r .= $route->formOpen(['tool-element','multi-delete-form','data'=>$data]);
@@ -711,6 +711,7 @@ class General extends Core\RouteAlias
         $currentCols = $this->getCurrentCols();
         $hasSpecificCols = $this->hasSpecificCols();
         $inAttr = ['cell-inner'];
+        $lang = static::lang();
 
         if($this->hasTablePermission('view','cols') && $cols->isNotEmpty() && $currentCols->isNotEmpty())
         {
@@ -732,6 +733,7 @@ class General extends Core\RouteAlias
             $htmlWrap .= '%';
             $htmlWrap .= Html::divCl();
             $htmlWrap .= Html::divCl();
+
             $attr = ['name'=>'col','data-required'=>true];
             $option = ['value'=>[],'html'=>$htmlWrap];
             foreach ($loopCols as $key => $value)
@@ -745,10 +747,9 @@ class General extends Core\RouteAlias
                 }
             }
 
-            $tooltip = static::lang()->text('tooltip/colsSorter');
-            $r .= Html::buttonOp(['trigger','data-tooltip'=>$tooltip,($hasSpecificCols === true)? 'selected':null]);
-            $r .= Html::span(null,['icon-solo','icon-center','cols']);
-            $r .= Html::buttonCl();
+            $tooltip = $lang->text('tooltip/colsSorter');
+            $buttonHtml = Html::span(null,['icon-solo','icon-center','cols']);
+            $r .= Html::button($buttonHtml,['trigger','data-tooltip'=>$tooltip,($hasSpecificCols === true)? 'selected':null]);
 
             $html = Html::checkbox($checkbox,$attr,$option);
             $html = Html::div($html,'scroller');
@@ -779,18 +780,16 @@ class General extends Core\RouteAlias
             $table = $this->table();
             $cols = $this->getCurrentCols();
             $sql = $this->sql();
+            $lang = static::lang();
 
             $tableIsEmpty = $table->isRowsEmpty(true);
             $isEmpty = $sql->isTriggerCountEmpty();
             $class = ($isEmpty === true)? 'empty':'not-empty';
 
-            $r .= Html::divOp(['container',$class]);
-
             if($isEmpty === true || $cols->isEmpty())
             {
-                $r .= Html::divOp('notFound');
-                $r .= Html::h3(static::langText('general/notFound'));
-                $r .= Html::divCl();
+                $notFoundHtml = Html::h3($lang->text('general/notFound'));
+                $r .= Html::div($notFoundHtml,'notFound');
             }
 
             if($cols->isNotEmpty() && $tableIsEmpty === false)
@@ -798,30 +797,25 @@ class General extends Core\RouteAlias
                 if($isEmpty === false)
                 {
                     $page = Html::divCond($this->makePageInput(['triangle']),'page-input');
-
-                    $r .= Html::divOp('above');
-                    $r .= Html::div($this->makeTool(),'left');
-                    $r .= Html::divCond($page,'right');
-                    $r .= Html::divCl();
+                    $aboveHtml = Html::div($this->makeTool(),'left');
+                    $aboveHtml .= Html::divCond($page,'right');
+                    $r .= Html::div($aboveHtml,'above');
                 }
 
-                $r .= Html::divOp('scroller');
                 $attr = ['data'=>['name'=>$table->name(),'table'=>$table::className(true)]];
-                $r .= Html::tableOpen(null,null,null,$attr);
-                $r .= $this->makeTableHeader();
-                $r .= $this->makeTableBody();
-                $r .= Html::tableCl();
-                $r .= Html::divCl();
+                $header = $this->makeTableHeader();
+                $body = $this->makeTableBody();
+                $table = Html::table([$header],$body,null,$attr);
+                $r .= Html::div($table,'scroller');
 
                 if($isEmpty === false)
                 {
-                    $r .= Html::divOp('bellow');
-                    $r .= Html::divCond($page,'right');
-                    $r .= Html::divCl();
+                    $bellowHtml = Html::divCond($page,'right');
+                    $r .= Html::div($bellowHtml,'bellow');
                 }
             }
 
-            $r .= Html::divCl();
+            $r = Html::div($r,['container',$class]);
         }
 
         return $r;
@@ -830,28 +824,27 @@ class General extends Core\RouteAlias
 
     // makeTableHeader
     // génère le header de la table
-    final protected function makeTableHeader():string
+    final protected function makeTableHeader():array
     {
-        $r = '';
+        $return = [];
         $table = $this->table();
         $cols = $this->getCurrentCols();
 
         if($cols->isNotEmpty())
         {
-            $ths = [];
             $permission['order'] = $this->hasTablePermission('order','direction');
             $count = $cols->count();
 
             if($this->hasTablePermission('rows'))
             {
                 $html = $this->makeRows();
-                $ths[] = [$html,'rows'];
+                $return[] = [$html,'rows'];
             }
 
             if($this->hasTablePermission('action'))
             {
                 $html = $this->makeCols();
-                $ths[] = [$html,'action'];
+                $return[] = [$html,'action'];
             }
 
             foreach ($cols as $col)
@@ -872,13 +865,11 @@ class General extends Core\RouteAlias
                 }
 
                 $in = $filter.Html::div($in,'cell-inner');
-                $ths[] = [$in,$thAttr];
+                $return[] = [$in,$thAttr];
             }
-
-            $r = Html::thead($ths);
         }
 
-        return $r;
+        return $return;
     }
 
 
@@ -913,9 +904,9 @@ class General extends Core\RouteAlias
 
     // makeTableBody
     // génère le body de la table
-    final protected function makeTableBody():string
+    final protected function makeTableBody():array
     {
-        $r = '';
+        $return = [];
         $cols = $this->getCurrentCols();
         $rows = $this->rows();
         $highlight = $this->getHighlight();
@@ -923,7 +914,6 @@ class General extends Core\RouteAlias
         if($cols->isNotEmpty() && $rows->isNotEmpty())
         {
             $table = $this->table();
-            $trs = [];
             $rowsPermission = $this->hasTablePermission('rows');
             $actionPermission = $this->hasTablePermission('action');
             $specificPermission = $this->hasTablePermission('specific');
@@ -979,13 +969,11 @@ class General extends Core\RouteAlias
                     $array[] = $this->makeTableBodyCell($cell,$option);
                 }
 
-                $trs[] = [$array,$rowAttr];
+                $return[] = [$array,$rowAttr];
             }
-
-            $r .= Html::tbody(...$trs);
         }
 
-        return $r;
+        return $return;
     }
 
 
@@ -993,7 +981,6 @@ class General extends Core\RouteAlias
     // génère le contenu à afficher dans une cellule de table
     final protected function makeTableBodyCell(Core\Cell $cell,?array $option=null):array
     {
-        $r = [];
         $option = Base\Arr::plus(['specific'=>null,'modify'=>false,'excerptMin'=>$cell->generalExcerptMin()],$option);
         $col = $cell->col();
 
@@ -1016,9 +1003,8 @@ class General extends Core\RouteAlias
         }
 
         $html = Html::div($html,'cell-inner');
-        $r = [$html,$attr];
 
-        return $r;
+        return [$html,$attr];
     }
 }
 

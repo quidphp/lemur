@@ -109,22 +109,19 @@ class SessionRole extends Core\RouteAlias
         $r = '';
         $route = $this->submitRoute();
         $session = static::session();
+        $html = '';
+        $field = Html::divCond($this->rolesForm(),'field');
 
         $r .= $route->formOpen();
-        $r .= Html::divOp('fields');
-        $r .= Html::divCond($this->rolesForm(),'field');
-        $r .= Html::divCl();
-
-        $r .= Html::divOp('action');
+        $r .= Html::div($field,'fields');
 
         if($session->hasFakeRoles())
-        $r .= Html::submit(static::langText('sessionRole/reset'),['name'=>'reset','class'=>['with-icon','reset']]);
+        $html .= Html::submit(static::langText('sessionRole/reset'),['name'=>'reset','class'=>['with-icon','reset']]);
 
-        $r .= Html::submit(static::langText('sessionRole/submit'),['name'=>'submit','class'=>['with-icon','modify']]);
+        $html .= Html::submit(static::langText('sessionRole/submit'),['name'=>'submit','class'=>['with-icon','modify']]);
 
-        $r .= Html::divCl();
-
-        $r .= Html::formClose();
+        $r .= Html::div($html,'action');
+        $r .= Html::formCl();
 
         return $r;
     }

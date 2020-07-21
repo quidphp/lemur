@@ -75,9 +75,8 @@ abstract class Files extends Core\Cell\Files
 
             if($withLegend === true)
             {
-                $return .= Html::divOp('legend');
-                $return .= Html::spanOr($legendLink,$value);
-                $return .= Html::divCl();
+                $legend = Html::spanOr($legendLink,$value);
+                $return .= Html::div($legend,'legend');
             }
         }
 

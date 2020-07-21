@@ -60,15 +60,15 @@ class Home extends Lemur\Cms\Home
         'selectedUri'=>false,
         'jsInit'=>'document.addEventListener("DOMContentLoaded", function() {
             const attr = [["data-success-color","data-success"],["data-failure-color","data-failure"]];
-            const jsDiv = Lemur.Doc.scopedQuery(this,"#javascript");
+            const jsDiv = Quid.Doc.scopedQuery(this,"#javascript");
             if(jsDiv != null)
             {
-                const span = Lemur.Ele.scopedQuery(jsDiv,"span:last-child");
-                const index = (Lemur.TestSuite() === true)? 0:1;
-                const color = Lemur.Ele.getAttr(jsDiv,attr[index][0]);
-                const text = Lemur.Ele.getAttr(jsDiv,attr[index][1]);
-                Lemur.Ele.setHtml(span,text);
-                Lemur.Ele.setCss(span,"color",color);
+                const span = Quid.Ele.scopedQuery(jsDiv,"span:last-child");
+                const index = (Quid.TestSuite() === true)? 0:1;
+                const color = Quid.Ele.getAttr(jsDiv,attr[index][0]);
+                const text = Quid.Ele.getAttr(jsDiv,attr[index][1]);
+                Quid.Ele.setHtml(span,text);
+                Quid.Ele.setCss(span,"color",color);
             }
         });',
         'docOpen'=>[
@@ -94,10 +94,9 @@ class Home extends Lemur\Cms\Home
             if($assertJs === true)
             {
                 $data = ['success'=>'Success','success-color'=>'green','failure'=>'Failure','failure-color'=>'red'];
-                $return .= Html::divOp(['#javascript','data'=>$data,'style'=>['padding'=>'5px 0','border-bottom'=>'2px solid black']]);
-                $return .= Html::span('JavaScript: ');
-                $return .= Html::span('Idle');
-                $return .= Html::divCl();
+                $html = Html::span('JavaScript: ');
+                $html .= Html::span('Idle');
+                $return .= Html::div($html,['#javascript','data'=>$data,'style'=>['padding'=>'5px 0','border-bottom'=>'2px solid black']]);
             }
         }
 

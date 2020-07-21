@@ -19,7 +19,7 @@ class HomeFeed extends Core\RouteAlias
 {
     // trait
     use _common;
-    use _rowsFeed;
+    use Lemur\Route\_rowsFeed;
     use Lemur\Segment\_page;
 
 

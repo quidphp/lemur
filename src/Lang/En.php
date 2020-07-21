@@ -132,6 +132,7 @@ class En extends Core\Lang\En
 
             // label
             'label'=>[
+                'cliClearAll'=>'Empty caches and logs',
                 'cliClearCache'=>'Empty caches',
                 'cliClearLog'=>'Empty logs',
                 'account'=>'My account',
@@ -609,6 +610,7 @@ class En extends Core\Lang\En
                     'email'=>'Email content sent by the app',
                     'lang'=>'All other text content in the application and CMS',
                     'redirection'=>'Specifies the redirection from one URL to another',
+                    'cacheRoute'=>'Contains the generated route caches',
                     'log'=>'Log of activities',
                     'logCron'=>'Log of background scripts',
                     'logEmail'=>'Log of emails',
@@ -748,6 +750,11 @@ class En extends Core\Lang\En
                         'key'=>'URL to redirect',
                         'value'=>'Destination of the redirection',
                         'type'=>'The redirection is active within these types.'
+                    ],
+
+                    // cacheRoute
+                    'cacheRoute'=>[
+                        'data'=>'Contains the cached data'
                     ],
 
                     // user

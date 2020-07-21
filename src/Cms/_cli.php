@@ -24,6 +24,7 @@ trait _cli
     protected static array $configCliCms = [
         'match'=>[
             'cli'=>null],
+        'template'=>true,
         'history'=>false
     ];
 
@@ -40,7 +41,7 @@ trait _cli
     // génère le cli ou le template
     final public function trigger()
     {
-        return (Base\Server::isCli())? $this->cliWrap():$this->template();
+        return ($this->getAttr('template') === true && !Base\Server::isCli())? $this->template():$this->cliWrap();
     }
 
 

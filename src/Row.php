@@ -21,7 +21,11 @@ class Row extends Core\Row implements Main\Contract\Meta
 
 
     // config
-    protected static array $config = [];
+    protected static array $config = [
+        '@cms'=>[
+            'cacheEmpty'=>true
+        ]
+    ];
 
 
     // getDataAttr

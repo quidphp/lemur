@@ -157,11 +157,9 @@ trait _specific
                 if($cols->isNotEmpty())
                 {
                     $tooltip = $lang->panelDescription($key);
-                    $r .= Html::liOp();
-                    $r .= Html::aOpen("#$key",null,['data-tooltip'=>$tooltip]);
-                    $r .= Html::h3($lang->panelLabel($key));
-                    $r .= Html::aCl();
-                    $r .= Html::liCl();
+                    $h3Html = Html::h3($lang->panelLabel($key));
+                    $liHtml = Html::a("#$key",$h3Html,['data-tooltip'=>$tooltip]);
+                    $r .= Html::li($liHtml);
                 }
             }
 
@@ -323,10 +321,9 @@ trait _specific
 
             if(!empty($colPopup))
             {
-                $popup = Html::divOp(['popup-trigger','with-popup','with-icon-solo','data'=>['anchor-corner'=>true,'absolute-placeholder'=>true]]);
-                $popup .= Html::button(null,'popup-title');
+                $popup = Html::button(null,'popup-title');
                 $popup .= static::makeDivPopup($colPopup);
-                $popup .= Html::divCl();
+                $popup = Html::div($popup,['popup-trigger','with-popup','with-icon-solo','data'=>['anchor-corner'=>true,'absolute-placeholder'=>true]]);
                 $attr['data']['col-popup'] = true;
                 $replace['popup'] = $popup;
             }

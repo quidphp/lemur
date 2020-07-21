@@ -36,12 +36,9 @@ trait _page
     final protected function main():string
     {
         $r = '';
-
-        $r .= Html::divOp('top');
-        $r .= Html::divCond($this->mainTopLeft(),'left');
-        $r .= Html::divCond($this->mainTopRight(),'right');
-        $r .= Html::divCl();
-
+        $html = Html::divCond($this->mainTopLeft(),'left');
+        $html .= Html::divCond($this->mainTopRight(),'right');
+        $r .= Html::div($html,'top');
         $r .= Html::div($this->mainBottom(),'bottom');
 
         return $r;
@@ -53,9 +50,8 @@ trait _page
     final protected function mainTopLeft():string
     {
         $r = '';
-        $r .= Html::divOp('title');
-        $r .= $this->makeH1($this->title());
-        $r .= Html::divCl();
+        $h1Html = $this->makeH1($this->title());
+        $r .= Html::div($h1Html,'title');
         $r .= Html::divCond($this->getSubTitle(),'sub-title');
 
         return $r;

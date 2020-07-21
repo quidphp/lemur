@@ -161,10 +161,9 @@ abstract class Files extends Core\Col\Files
                 $hidden = Base\Json::encode(['action'=>null,'path'=>$path]);
                 $return .= $this->formHidden($hidden,Base\Arr::plus($attr,['disabled'=>true]),$option);
 
-                $return .= Html::divOp('message');
-                $return .= Html::div(null,'action-text');
-                $return .= Html::div(null,['icon-solo','close']);
-                $return .= Html::divCl();
+                $messageHtml = Html::div(null,'action-text');
+                $messageHtml .= Html::div(null,['icon-solo','close']);
+                $return .= Html::div($messageHtml,'message');
 
                 $return .= Html::divCl();
             }
@@ -261,24 +260,23 @@ abstract class Files extends Core\Col\Files
                     $file = $cellVersions->get($key);
                     $key = ucfirst($key);
 
-                    $return .= Html::liOp();
-                    $return .= Html::span($key.':');
+                    $liHtml = Html::span($key.':');
 
                     if(!empty($file))
                     {
                         if($file->isFilePathToUri())
                         {
                             $uri = Base\Str::excerpt(50,$file->pathToUri());
-                            $return .= Base\Html::a($file,$uri);
+                            $liHtml .= Base\Html::a($file,$uri);
                         }
 
-                        $return .= Html::span($file->size(true),'filesize');
+                        $liHtml .= Html::span($file->size(true),'filesize');
                     }
 
                     else
-                    $return .= Html::span($lang->text('common/notFound'),'notFound');
+                    $liHtml .= Html::span($lang->text('common/notFound'),'notFound');
 
-                    $return .= Html::liCl();
+                    $return .= Html::li($liHtml);
                 }
 
                 $return = Html::ulCond($return);

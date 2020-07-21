@@ -117,13 +117,11 @@ trait _generalInput
             $maxPerPage = $this->getAttr('maxPerPage');
 
             $data = ['href'=>$route,'char'=>static::getReplaceSegment(),'current'=>$limit,'pattern'=>'intCastNotEmpty','max'=>$maxPerPage];
-            $r .= Html::divOp('limit');
             $r .= Html::inputText($limit,['name'=>'limit','data'=>$data,'inputmode'=>'decimal']);
             $r .= Html::span($text);
-            $r .= Html::divCl();
         }
 
-        return $r;
+        return Html::divCond($r,'limit');
     }
 
 
@@ -150,11 +148,10 @@ trait _generalInput
                 $total = $general['total'];
                 $data = ['href'=>$route,'char'=>static::getReplaceSegment(),'current'=>$general['current'],'pattern'=>'intCastNotEmpty','max'=>$total];
 
-                $r .= Html::divOp('center');
-                $r .= Html::span(static::langText('common/page'));
-                $r .= Html::inputText($general['current'],['name'=>'page','data'=>$data,'inputmode'=>'decimal']);
-                $r .= Html::span(static::langText('lcf|common/on').' '.$total);
-                $r .= Html::divCl();
+                $centerHtml = Html::span(static::langText('common/page'));
+                $centerHtml .= Html::inputText($general['current'],['name'=>'page','data'=>$data,'inputmode'=>'decimal']);
+                $centerHtml .= Html::span(static::langText('lcf|common/on').' '.$total);
+                $r .= Html::div($centerHtml,'center');
 
                 if(!empty($general['next']))
                 {

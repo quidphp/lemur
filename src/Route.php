@@ -18,7 +18,7 @@ abstract class Route extends Core\Route
     protected static array $config = [
         '@cms'=>[
             'metaTitle'=>['typeLabel'=>true],
-            'jsInit'=>'Lemur.InitDoc();',
+            'jsInit'=>'Quid.InitDoc();',
             'docOpen'=>[
                 'head'=>[
                     'css'=>[

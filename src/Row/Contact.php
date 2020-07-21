@@ -23,7 +23,8 @@ class Contact extends Core\RowAlias
     // config
     protected static array $config = [
         'parent'=>'system',
-        'priority'=>953,
+        'priority'=>954,
+        'cacheEmpty'=>false,
         'cols'=>[
             'context'=>['class'=>Core\Col\Context::class],
             'name'=>['required'=>true],
@@ -184,10 +185,8 @@ class Contact extends Core\RowAlias
         {
             $name = $col->name();
             $value = (is_array($flash) && array_key_exists($name,$flash))? $flash[$name]:null;
-
-            $r .= Html::divOp(['field','data-field'=>$col]);
-            $r .= $col->formWrap($formWrap,$pattern,$value,$attr);
-            $r .= Html::divCl();
+            $wrap = $col->formWrap($formWrap,$pattern,$value,$attr);
+            $r .= Html::div($wrap,['field','data-field'=>$col]);
         }
 
         return $r;

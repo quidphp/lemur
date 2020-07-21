@@ -268,7 +268,6 @@ trait _relation
     // méthode commune utilisé pour générer l'intérieur d'un clickOpen
     protected static function commonInsideClickOpen(Orm\Relation $relation,Core\Route $route)
     {
-        $return = [];
         $html = '';
         $data = [];
 
@@ -293,10 +292,9 @@ trait _relation
                 $html .= Html::divOp('top');
                 $placeholder = static::langText('common/filter')." ($size)";
 
-                $html .= Html::divOp('input-search');
-                $html .= Html::inputText(null,['name'=>true,'data-pattern'=>['minLength'=>$searchMinLength],'placeholder'=>$placeholder,'inputmode'=>'search']);
-                $html .= Html::button(null,['icon-solo','search']);
-                $html .= Html::divCl();
+                $searchHtml = Html::inputText(null,['name'=>true,'data-pattern'=>['minLength'=>$searchMinLength],'placeholder'=>$placeholder,'inputmode'=>'search']);
+                $searchHtml .= Html::button(null,['icon-solo','search']);
+                $html .= Html::div($searchHtml,'input-search');
 
                 if(!empty($order))
                 {
@@ -313,10 +311,7 @@ trait _relation
             $html .= Html::div(null,'results');
         }
 
-        $return[] = $html;
-        $return[] = $data;
-
-        return $return;
+        return [$html,$data];
     }
 
 

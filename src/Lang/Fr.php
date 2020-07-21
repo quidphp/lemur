@@ -132,6 +132,7 @@ class Fr extends Core\Lang\Fr
 
             // label
             'label'=>[
+                'cliClearAll'=>'Vider les caches et logs',
                 'cliClearCache'=>'Vider les caches',
                 'cliClearLog'=>'Vider les logs',
                 'account'=>'Mon compte',
@@ -609,6 +610,7 @@ class Fr extends Core\Lang\Fr
                     'email'=>"Contenu relatif aux courriels envoyés par l'application",
                     'lang'=>"Tous les autres contenus textes présents dans l'application et le CMS",
                     'redirection'=>"Spécifie les redirections d'une URL à une autre",
+                    'cacheRoute'=>'Contient les caches des routes générés',
                     'log'=>'Log des activités',
                     'logCron'=>"Log des scripts d'arrière-plan",
                     'logEmail'=>'Log des envoies courriel',

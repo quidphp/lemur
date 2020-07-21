@@ -17,6 +17,7 @@ class QueueEmail extends Core\Row\QueueEmail
 {
     // config
     protected static array $config = [
+        'cacheEmpty'=>false,
         'cols'=>[
             'json'=>['class'=>Lemur\Col\JsonExport::class]],
         'permission'=>[

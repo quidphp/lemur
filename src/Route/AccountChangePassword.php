@@ -60,26 +60,22 @@ abstract class AccountChangePassword extends Core\RouteAlias
         $col = $table->col($colPassword);
 
         $r .= $route->formOpen();
-        $r .= Html::divOp('fields');
 
+        $html = '';
         foreach ($fields as $name)
         {
             $label = static::langText('accountChangePassword/'.$name);
             $attr = ['name'=>$name,'placeholder'=>$label,'data-required'=>true];
-
-            $r .= Html::divOp('field');
-            $r .= $col->form(null,$attr);
-            $r .= Html::divCl();
+            $form .= $col->form(null,$attr);
+            $html .= Html::div($form,'field');
         }
-
-        $r .= Html::divCl();
+        $r .= Html::div($html,'fields');
 
         $attr = $this->submitAttr();
-        $r .= Html::divOp('action');
-        $r .= Html::submit($submit,$attr);
-        $r .= Html::divCl();
+        $submitHtml = Html::submit($submit,$attr);
+        $r .= Html::div($submitHtml,'action');
 
-        $r .= Html::formClose();
+        $r .= Html::formCl();
 
         return $r;
     }

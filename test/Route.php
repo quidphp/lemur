@@ -141,8 +141,8 @@ class Route extends Base\Test
         assert($obj2->aOpenTitle(3) === "<a href='/en/login/submit' data-navigation='0' hreflang='en'>Log");
         assert($obj2->aOpenTitle('%:','#id class2') === "<a href='/en/login/submit' data-navigation='0' id='id' class='class2' hreflang='en'>Login - Submit:");
         $loginMake = $login::make();
-        assert(strlen($obj2->formOpen()) === 344);
-        assert(strlen($loginMake->formOpen(['method'=>'post'])) === 148);
+        assert(strlen($obj2->formOpen()) === 379);
+        assert(strlen($loginMake->formOpen(['method'=>'post'])) === 183);
         assert($loginMake->formSubmit(null,'nameOK') === "<form action='/en/login' method='get'><button name='nameOK' type='submit'></button></form>");
         assert($loginMake::submitLabel('% ok') === "<button type='submit'>Login ok</button>");
         assert($loginMake->submitTitle('% ok') === "<button type='submit'>Login ok</button>");
@@ -641,12 +641,12 @@ class Route extends Base\Test
         $routes->init('cms');
 
         // routing
-        assert($app->count() === 56);
+        assert($app->count() === 57);
         assert($routes->type() === 'cms');
         assert($routes->keyParent()[Lemur\Cms\LoginSubmit::class] === Lemur\Cms\Login::class);
-        assert(count($routes->hierarchy()) === 27);
+        assert(count($routes->hierarchy()) === 26);
         assert(count($routes->childsRecursive($login)) === 5);
-        assert($routes->tops()->isCount(27));
+        assert($routes->tops()->isCount(26));
         assert($routes->tops() !== $routes);
         assert($routes->top($loginSubmit) === $login);
         assert($routes->parents($loginSubmit)->isCount(1));
@@ -682,15 +682,15 @@ class Route extends Base\Test
         assert($routes->sortDefault() === $routes);
 
         // map
-        assert($routes->isCount(56));
+        assert($routes->isCount(57));
         assert($routes->get('Sitemap') === Lemur\Cms\Sitemap::class);
         assert($routes->get(Lemur\Cms\Sitemap::class) === Lemur\Cms\Sitemap::class);
         assert(!$routes->in('Sitemap'));
         assert($routes->in(Lemur\Cms\Sitemap::class));
         assert($routes->exists('Sitemap'));
         assert($routes->exists(Lemur\Cms\Sitemap::class));
-        assert($routes->unset('Sitemap')->isCount(55));
-        assert($routes->add(Lemur\Cms\Sitemap::class)->isCount(56));
+        assert($routes->unset('Sitemap')->isCount(56));
+        assert($routes->add(Lemur\Cms\Sitemap::class)->isCount(57));
 
         return true;
     }

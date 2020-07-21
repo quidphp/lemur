@@ -105,43 +105,35 @@ class Search extends Core\RouteAlias
         $tables = $this->db()->tables();
         $search = $this->getSearchValue();
 
-        if(!empty($array))
+        foreach ($array as $key => $value)
         {
-            $r .= Html::ulOp();
-
-            foreach ($array as $key => $value)
+            if(is_array($value) && !empty($value))
             {
-                if(is_array($value) && !empty($value))
+                $table = $tables->get($key);
+                $count = count($value);
+
+                if($count === 1)
                 {
-                    $table = $tables->get($key);
-                    $count = count($value);
-
-                    if($count === 1)
-                    {
-                        $primary = current($value);
-                        $route = Specific::make(['table'=>$table,'primary'=>$primary]);
-                        $uri = $route->uri();
-                        $title = $route->title();
-                    }
-
-                    else
-                    {
-                        $route = General::make(['table'=>$table]);
-                        $searchQuery = $route->getSearchQuery();
-                        $uri = Base\Uri::changeQuery([$searchQuery=>$search],$route->uri());
-                        $title = $route->title("% ($count)");
-                    }
-
-                    $r .= Html::liOp();
-                    $r .= Html::a($uri,$title);
-                    $r .= Html::liCl();
+                    $primary = current($value);
+                    $route = Specific::make(['table'=>$table,'primary'=>$primary]);
+                    $uri = $route->uri();
+                    $title = $route->title();
                 }
-            }
 
-            $r .= Html::ulCl();
+                else
+                {
+                    $route = General::make(['table'=>$table]);
+                    $searchQuery = $route->getSearchQuery();
+                    $uri = Base\Uri::changeQuery([$searchQuery=>$search],$route->uri());
+                    $title = $route->title("% ($count)");
+                }
+
+                $liHtml = Html::a($uri,$title);
+                $r .= Html::li($liHtml);
+            }
         }
 
-        return $r;
+        return Html::ulCond($r);
     }
 
 
@@ -160,13 +152,13 @@ class Search extends Core\RouteAlias
             $data = ['required'=>true,'pattern'=>['minLength'=>$minLength]];
 
             $r .= $this->formOpen();
-            $r .= Html::divOp(['data'=>['absolute-placeholder'=>true,'only-height'=>true]]);
-            $r .= Html::inputText(null,['name'=>$name,'placeholder'=>$lang->text('search/submit'),'data'=>$data,'inputmode'=>'search']);
-            $r .= Html::submit(true,['button','icon-solo','search']);
-            $r .= Html::divCl();
+            $searchHtml = Html::inputText(null,['name'=>$name,'placeholder'=>$lang->text('search/submit'),'data'=>$data,'inputmode'=>'search']);
+            $searchHtml .= Html::submit(true,['button','icon-solo','search']);
+            $r .= Html::div($searchHtml,['data'=>['absolute-placeholder'=>true,'only-height'=>true]]);
+
             $r .= Html::div(null,'popup');
             $r .= Html::div($this->makeSearchInfo($minLength,$tables),'search-info');
-            $r .= Html::formClose();
+            $r .= Html::formCl();
         }
 
         return $r;
@@ -182,14 +174,13 @@ class Search extends Core\RouteAlias
         $replace = ['count'=>$minLength];
         $note = $lang->plural($minLength,'search/config',$replace);
 
-        $r .= Html::divOp('first');
-        $r .= Html::span($lang->text('search/note').':');
-        $r .= Html::span($note,'note');
-        $r .= Html::divCl();
-        $r .= Html::divOp('second');
-        $r .= Html::span($lang->text('search/in').':');
-        $r .= Html::span(implode(', ',$tables->pair('label')),'labels');
-        $r .= Html::divCl();
+        $firstHtml = Html::span($lang->text('search/note').':');
+        $firstHtml .= Html::span($note,'note');
+        $r .= Html::div($firstHtml,'first');
+
+        $secondHtml = Html::span($lang->text('search/in').':');
+        $secondHtml .= Html::span(implode(', ',$tables->pair('label')),'labels');
+        $r .= Html::div($secondHtml,'second');
 
         return $r;
     }
