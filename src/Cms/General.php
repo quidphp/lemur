@@ -289,35 +289,27 @@ class General extends Core\RouteAlias
     {
         $r = '';
         $table = $this->table();
+        $lang = static::lang();
 
-        $r .= Html::divOp('top');
-
-        $r .= Html::divOp('left');
-
-        $r .= Html::divOp('title');
-        $r .= $this->makeH1($this->table()->label());
-        $r .= $this->makeInfo();
-        $r .= Html::divCl();
+        $titleHtml = $this->makeH1($this->table()->label());
+        $titleHtml .= $this->makeInfo();
+        $leftHtml = Html::div($titleHtml,'title');
 
         if($this->hasTablePermission('description'))
-        $r .= Html::divCond($table->description(),['description','sub-title']);
+        $leftHtml .= Html::divCond($table->description(),['description','sub-title']);
 
-        $placeholder = static::langText('general/search');
-        $r .= Html::divOp('search');
-        $r .= $this->makeSearch($placeholder,['close'=>['icon-solo'],'search'=>['icon-solo']]);
-        $r .= $this->makeSearchNote();
-        $r .= Html::divCl();
+        $placeholder = $lang->text('general/search');
+        $searchHtml = $this->makeSearch($placeholder,['close'=>['icon-solo'],'search'=>['icon-solo']]);
+        $searchHtml .= $this->makeSearchNote();
+        $leftHtml .= Html::div($searchHtml,'search');
 
-        $r .= Html::divCl();
+        $r .= Html::div($leftHtml,'left');
 
-        $r .= Html::divOp('right');
-        $r .= Html::divCond($this->makeOperation(),'operation');
-        $r .= $this->makeInputLimit();
-        $r .= Html::divCl();
+        $rightHtml = Html::divCond($this->makeOperation(),'operation');
+        $rightHtml .= $this->makeInputLimit();
+        $r .= Html::div($rightHtml,'right');
 
-        $r .= Html::divCl();
-
-        return $r;
+        return Html::div($r,'top');
     }
 
 
@@ -347,7 +339,7 @@ class General extends Core\RouteAlias
                 $secondHtml .= Html::span(implode(', ',$cols->pair('label')),'labels');
                 $r .= Html::div($secondHtml,'second');
 
-                $r .= Html::div($r,'in');
+                $r = Html::div($r,'in');
             }
         }
 
