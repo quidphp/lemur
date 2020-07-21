@@ -27,14 +27,14 @@
             &:hover > .trigger {
                 background-color: $color;
             }
-            
+
             > a:first-child {
                 @include activeAndClick() {
                     background-color: $color;
                     text-decoration: underline;
                 }
             }
-            
+
             &[data-carousel='1'] > a:first-child,
             &[data-carousel='1'] > .trigger {
                 background-color: $darkColor;
@@ -104,15 +104,15 @@
                 color: $white;
                 font-size: 90%;
                 border-top: 1px solid $color;
-                
+
                 @include hoverAndSelected() {
                     background-color: $color;
                 }
-                
+
                 &#{$defaultSelectedState} {
                     text-decoration: underline;
                 }
-                
+
                 @include activeAndClick() {
                     background-color: $color;
                     text-decoration: underline;

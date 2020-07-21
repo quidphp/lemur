@@ -63,11 +63,11 @@
     a {
         font-weight: bold;
         color: $fontColor;
-        
+
         @include hoverAndSelected() {
             opacity: 0.8;
         }
-        
+
         @include activeAndClick() {
             text-decoration: underline;
         }
@@ -236,7 +236,7 @@
         background-color: $darkGray;
         color: $white;
     }
-    
+
     @include activeAndClick() {
         background-color: $black;
         color: $white;
@@ -299,11 +299,11 @@
 }
 
 // statesOpacity
-@mixin statesOpacity($opacity1:0.8,$opacity2:0.6) {
+@mixin statesOpacity($opacity1: 0.8, $opacity2: 0.6) {
     @include hoverAndSelected() {
         opacity: $opacity1;
     }
-    
+
     @include activeAndClick() {
         opacity: $opacity2;
     }
@@ -312,11 +312,11 @@
 // blackAnchorState
 @mixin blackAnchorState() {
     color: $black;
-    
+
     @include hoverAndSelected() {
         color: $darkGray;
     }
-    
+
     @include activeAndClick() {
         color: $darkGray;
         text-decoration: underline;

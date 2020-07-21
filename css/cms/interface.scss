@@ -202,7 +202,7 @@ header {
         &:hover {
             color: $lightGray;
         }
-        
+
         @include activeAndClick() {
             color: $lightGray;
             text-decoration: underline;
@@ -286,11 +286,11 @@ main .inner > .top {
 
         > a {
             @include inbl();
-            
+
             &:hover {
                 color: $darkGray;
             }
-            
+
             @include activeAndClick() {
                 color: $darkGray;
                 text-decoration: underline;

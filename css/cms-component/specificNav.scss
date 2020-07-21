@@ -36,11 +36,11 @@
     > a {
         color: $black;
         font-weight: bold;
-        
+
         @include hoverAndSelected() {
             color: $darkGray;
         }
-        
+
         @include activeAndClick() {
             color: $darkGray;
             text-decoration: underline;
