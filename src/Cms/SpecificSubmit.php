@@ -49,14 +49,9 @@ class SpecificSubmit extends Core\RouteAlias
     // validation avant le lancement
     final public function canTrigger():bool
     {
-        $return = false;
         $table = $this->table();
         $row = $this->segment('primary');
-
-        if(parent::canTrigger() && !empty($table) && $table->hasPermission('view','specific','update','lemurUpdate') && !empty($row) && $row->isUpdateable())
-        $return = true;
-
-        return $return;
+        return parent::canTrigger() && !empty($table) && $table->hasPermission('view','specific','update','lemurUpdate') && !empty($row) && $row->isUpdateable();
     }
 
 

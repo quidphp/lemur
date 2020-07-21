@@ -50,14 +50,9 @@ class SpecificDuplicate extends Core\RouteAlias
     // validation avant le lancement
     final public function canTrigger():bool
     {
-        $return = false;
         $table = $this->table();
         $row = $this->segment('primary');
-
-        if(parent::canTrigger() && !empty($table) && $table->hasPermission('view','specific','insert','lemurInsert','duplicate') && !empty($row))
-        $return = true;
-
-        return $return;
+        return parent::canTrigger() && !empty($table) && $table->hasPermission('view','specific','insert','lemurInsert','duplicate') && !empty($row);
     }
 
 

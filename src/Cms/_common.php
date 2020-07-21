@@ -25,9 +25,7 @@ trait _common
         if($this->hasMethod('table'))
         {
             $table = $this->table()->name();
-
-            if(!empty($table) && in_array($table,$value,true))
-            $return = true;
+            $return = (!empty($table) && in_array($table,$value,true));
         }
 
         return $return;

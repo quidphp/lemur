@@ -69,13 +69,8 @@ trait _specific
     // retourne vrai si la route a des panneaux
     final protected function hasPanel():bool
     {
-        $return = false;
         $panel = $this->panel();
-
-        if(count($panel) > 1)
-        $return = true;
-
-        return $return;
+        return count($panel) > 1;
     }
 
 

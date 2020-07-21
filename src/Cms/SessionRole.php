@@ -41,8 +41,7 @@ class SessionRole extends Core\RouteAlias
         if(parent::canTrigger() && $session->allowFakeRoles())
         {
             $roles = $session->roles(false);
-            if($this->rolesHasPermission('sessionFakeRole',$roles))
-            $return = true;
+            $return = ($this->rolesHasPermission('sessionFakeRole',$roles));
         }
 
         return $return;

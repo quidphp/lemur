@@ -49,9 +49,7 @@ class Search extends Core\RouteAlias
         if(parent::onBefore())
         {
             $search = $this->getSearchValue();
-
-            if($search !== null)
-            $return = true;
+            $return = ($search !== null);
         }
 
         return $return;
@@ -70,13 +68,8 @@ class Search extends Core\RouteAlias
     // retourne vrai si le terme de recherche est valide
     final protected function isSearchValueValid(string $value):bool
     {
-        $return = false;
         $searchable = $this->searchable();
-
-        if($searchable->isNotEmpty() && $searchable->isSearchTermValid($value))
-        $return = true;
-
-        return $return;
+        return $searchable->isNotEmpty() && $searchable->isSearchTermValid($value);
     }
 
 

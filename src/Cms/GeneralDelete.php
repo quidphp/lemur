@@ -56,9 +56,7 @@ class GeneralDelete extends Core\RouteAlias
         {
             $ids = $this->request()->get('primaries');
             $this->makeIds((string) $ids);
-
-            if(!empty($this->ids))
-            $return = true;
+            $return = (!empty($this->ids));
         }
 
         return $return;

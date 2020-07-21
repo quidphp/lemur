@@ -36,9 +36,7 @@ trait _export
         {
             $sql = $this->sql();
             $total = $sql->triggerRowCount();
-
-            if($total > 0)
-            $return = true;
+            $return = ($total > 0);
         }
 
         return $return;

@@ -34,9 +34,7 @@ class Set extends Core\Col\Set
         {
             $tag = $this->complexTag();
             $relation = $this->relation();
-
-            if(in_array($tag,['checkbox','search'],true) && $relation->size() > 1)
-            $return = true;
+            $return = (in_array($tag,['checkbox','search'],true) && $relation->size() > 1);
         }
 
         return $return;

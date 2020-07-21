@@ -62,8 +62,7 @@ class Relation extends Core\Cell\Relation
         if(!empty($table))
         {
             $class = $table->rowClass();
-            if($class::isMediaSource())
-            $return = true;
+            $return = ($class::isMediaSource());
         }
 
         return $return;

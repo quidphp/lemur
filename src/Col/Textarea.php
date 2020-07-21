@@ -82,14 +82,9 @@ class Textarea extends Core\ColAlias
     // retourne vrai si le textarea a des table relation
     final public function hasTableRelation():bool
     {
-        $return = false;
         $table = $this->table();
         $relations = $this->getTableRelation();
-
-        if(is_array($relations) && !empty($relations) && $table->hasPermission('relation','tableRelation'))
-        $return = true;
-
-        return $return;
+        return is_array($relations) && !empty($relations) && $table->hasPermission('relation','tableRelation');
     }
 
 

@@ -40,13 +40,8 @@ class HomeFeedRelation extends Core\RouteAlias
     // validation pour le lancement de la route
     final public function canTrigger():bool
     {
-        $return = false;
         $table = $this->table();
-
-        if(parent::canTrigger() && $this->hasPermission('home','homeFeed','homeFeedUser') && $table->hasPermission('view','relation','tableRelation'))
-        $return = true;
-
-        return $return;
+        return parent::canTrigger() && $this->hasPermission('home','homeFeed','homeFeedUser') && $table->hasPermission('view','relation','tableRelation');
     }
 
 

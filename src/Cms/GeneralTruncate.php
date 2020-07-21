@@ -44,13 +44,8 @@ class GeneralTruncate extends Core\RouteAlias
     // retourne vrai si la route peut être triggé
     final public function canTrigger():bool
     {
-        $return = false;
         $table = $this->table();
-
-        if(parent::canTrigger() && !empty($table) && $table->hasPermission('view','general','truncate','lemurTruncate'))
-        $return = true;
-
-        return $return;
+        return parent::canTrigger() && !empty($table) && $table->hasPermission('view','general','truncate','lemurTruncate');
     }
 
 

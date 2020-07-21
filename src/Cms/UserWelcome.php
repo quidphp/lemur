@@ -49,10 +49,7 @@ class UserWelcome extends Core\RouteAlias
         $table = $row->table();
 
         if(parent::canTrigger() && $this->hasPermission('userWelcome') && $table->hasPermission('view','update'))
-        {
-            if($row->allowWelcomeEmail() && $row !== static::session()->user())
-            $return = true;
-        }
+        $return = ($row->allowWelcomeEmail() && $row !== static::session()->user());
 
         return $return;
     }

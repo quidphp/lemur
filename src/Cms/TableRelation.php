@@ -41,13 +41,8 @@ class TableRelation extends Core\RouteAlias
     // validation pour le lancement de la route
     final public function canTrigger():bool
     {
-        $return = false;
         $table = $this->table();
-
-        if(parent::canTrigger() && $table->hasPermission('view','relation','tableRelation'))
-        $return = true;
-
-        return $return;
+        return parent::canTrigger() && $table->hasPermission('view','relation','tableRelation');
     }
 
 

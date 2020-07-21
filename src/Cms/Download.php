@@ -50,9 +50,7 @@ class Download extends Core\RouteAlias
         if(parent::canTrigger() && $table instanceof Core\Table && $table->hasPermission('download'))
         {
             $col = $this->segment('col');
-
-            if(!empty($col) && $col->isMedia())
-            $return = true;
+            $return = (!empty($col) && $col->isMedia());
         }
 
         return $return;

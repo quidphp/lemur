@@ -66,13 +66,8 @@ class SpecificAdd extends Core\RouteAlias
     // validation avant le lancement de la route
     final public function canTrigger():bool
     {
-        $return = false;
         $table = $this->segment('table');
-
-        if(parent::canTrigger() && $table instanceof Core\Table && $table->hasPermission('view','specific','insert','lemurInsert'))
-        $return = true;
-
-        return $return;
+        return parent::canTrigger() && $table instanceof Core\Table && $table->hasPermission('view','specific','insert','lemurInsert');
     }
 
 

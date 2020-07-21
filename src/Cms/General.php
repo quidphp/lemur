@@ -192,9 +192,7 @@ class General extends Core\RouteAlias
         {
             $closure = fn($col) => $col->isGeneral() && $col->isVisibleGeneral();
             $cols = $this->table()->cols()->filter($closure);
-
-            if($this->segment('cols')->keys() !== $cols->keys())
-            $return = true;
+            $return = ($this->segment('cols')->keys() !== $cols->keys());
         }
 
         return $return;

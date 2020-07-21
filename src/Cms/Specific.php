@@ -46,13 +46,8 @@ class Specific extends Core\RouteAlias
     // validation avant le lancement de la route
     final public function canTrigger():bool
     {
-        $return = false;
         $table = $this->segment('table');
-
-        if(parent::canTrigger() && $table instanceof Core\Table && $table->hasPermission('view','specific'))
-        $return = true;
-
-        return $return;
+        return parent::canTrigger() && $table instanceof Core\Table && $table->hasPermission('view','specific');
     }
 
 
@@ -109,14 +104,9 @@ class Specific extends Core\RouteAlias
     // retourne vrai si la row peut être modifié
     final public function isUpdateable(?array $option=null):bool
     {
-        $return = false;
         $table = $this->table();
         $row = $this->row();
-
-        if($table->hasPermission('update','lemurUpdate') && $row->isUpdateable($option))
-        $return = true;
-
-        return $return;
+        return $table->hasPermission('update','lemurUpdate') && $row->isUpdateable($option);
     }
 
 
@@ -124,14 +114,9 @@ class Specific extends Core\RouteAlias
     // retourne vrai si la row peut être effacé
     final public function isDeleteable(?array $option=null):bool
     {
-        $return = false;
         $table = $this->table();
         $row = $this->row();
-
-        if($table->hasPermission('delete','lemurDelete') && $row->isDeleteable($option))
-        $return = true;
-
-        return $return;
+        return $table->hasPermission('delete','lemurDelete') && $row->isDeleteable($option);
     }
 
 
@@ -152,15 +137,10 @@ class Specific extends Core\RouteAlias
     // retourne vrai si le panneau est visible
     final protected function isPanelVisible(Core\Cols $cols):bool
     {
-        $return = true;
         $row = $this->row();
         $cells = $row->cells()->gets($cols);
         $session = static::session();
-
-        if($cells->isHidden($session))
-        $return = false;
-
-        return $return;
+        return !$cells->isHidden($session);
     }
 
 

@@ -124,8 +124,7 @@ trait _generalSegment
             $newSegments = Base\Arr::keysStrip($not,$newSegments);
             $newSegments = Base\Obj::cast($newSegments);
 
-            if($segments !== $newSegments)
-            $return = true;
+            $return = ($segments !== $newSegments);
         }
 
         return $return;

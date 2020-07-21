@@ -209,13 +209,8 @@ trait _relation
     // retourne vrai si l'ordre est valable pour la route
     final public static function isValidOrder($value,object $relation):bool
     {
-        $return = false;
         $orders = static::validOrders($relation);
-
-        if(is_scalar($value) && !empty($orders) && array_key_exists((int) $value,$orders))
-        $return = true;
-
-        return $return;
+        return is_scalar($value) && !empty($orders) && array_key_exists((int) $value,$orders);
     }
 
 

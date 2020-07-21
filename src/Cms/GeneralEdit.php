@@ -54,10 +54,7 @@ class GeneralEdit extends Core\RouteAlias
         $col = $this->segment('col');
 
         if(parent::canTrigger() && $table instanceof Core\Table && $table->hasPermission('view','general','lemurUpdate','quickEdit'))
-        {
-            if($row->isUpdateable() && $col->isQuickEditable())
-            $return = true;
-        }
+        $return = ($row->isUpdateable() && $col->isQuickEditable());
 
         return $return;
     }

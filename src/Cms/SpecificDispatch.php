@@ -73,13 +73,8 @@ class SpecificDispatch extends Core\RouteAlias
     // validation avant le lancement de la route
     final public function canTrigger():bool
     {
-        $return = false;
         $table = $this->table();
-
-        if(parent::canTrigger() && !empty($table) && $table->hasPermission('view','specific'))
-        $return = true;
-
-        return $return;
+        return parent::canTrigger() && !empty($table) && $table->hasPermission('view','specific');
     }
 
 

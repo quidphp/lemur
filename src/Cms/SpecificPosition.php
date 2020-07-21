@@ -40,14 +40,9 @@ class SpecificPosition extends Core\RouteAlias
     // validation avant le lancement de la route
     final public function canTrigger():bool
     {
-        $return = false;
         $table = $this->table();
         $specific = $this->specific();
-
-        if(parent::canTrigger() && $table->hasPermission('view','specific') && !empty($specific))
-        $return = true;
-
-        return $return;
+        return parent::canTrigger() && $table->hasPermission('view','specific') && !empty($specific);
     }
 
 
