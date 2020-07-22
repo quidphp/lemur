@@ -79,11 +79,11 @@
             margin-bottom: 2px;
             > a {
                 color: $white;
-                
+
                 &:hover {
                     color: $lightGray;
                 }
-                
+
                 @include activeAndClick() {
                     color: $lightGray;
                     text-decoration: underline;
@@ -192,11 +192,11 @@
             text-align: center;
             background-color: $darkColor;
             color: $white;
-            
+
             @include hoverAndSelected() {
                 background-color: $darkerColor;
             }
-            
+
             @include activeAndClick() {
                 background-color: $darkerColor;
                 text-decoration: underline;

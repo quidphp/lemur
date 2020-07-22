@@ -47,7 +47,7 @@
 
         button {
             @include wh();
-            
+
             @include hoverAndSelected() {
                 background-color: $darkerColor;
             }

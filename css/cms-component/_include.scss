@@ -140,12 +140,12 @@ $red: #8d1e2d;
         display: block;
         height: 100%;
         padding: 8px 10px;
-        
+
         @include hoverAndSelected() {
             text-decoration: none !important;
             color: $black !important;
         }
-        
+
         @include activeAndClick() {
             text-decoration: none !important;
             color: $black !important;

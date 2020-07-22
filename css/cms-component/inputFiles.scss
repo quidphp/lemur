@@ -225,14 +225,14 @@
         .thumbnail > img {
             background-color: $gray;
         }
-        
+
         @include hoverAndSelected() {
             .thumbnail,
             .media-placeholder {
                 opacity: 0.8;
             }
         }
-        
+
         @include activeAndClick() {
             .thumbnail,
             .media-placeholder {

@@ -145,11 +145,11 @@
 @mixin popupListAnchor() {
     a {
         color: $black;
-        
+
         @include hoverAndSelected() {
             color: $color;
         }
-        
+
         @include activeAndClick() {
             text-decoration: underline;
         }
@@ -172,11 +172,11 @@
             color: $white;
             border-top: 0;
             padding: 10px 35px 10px 20px;
-            
+
             @include hoverAndSelected() {
                 background-color: $color;
             }
-            
+
             @include activeAndClick() {
                 text-decoration: underline;
             }
