@@ -19,7 +19,7 @@ class Email extends Core\Col\Email
     protected static array $config = [
         'cell'=>Lemur\Cell\Uri::class,
         '@cms'=>[
-            'generalExcerptMin'=>null]
+            'generalExcerpt'=>null]
     ];
 }
 

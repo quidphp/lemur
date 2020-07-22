@@ -23,6 +23,8 @@ class Col extends Core\Col
         'onComplex'=>null, // callable pour onComplex, si true alors utilise la méthode onGet lors de la création des éléments de formulaires complexes
         'panel'=>null, // retourne le panel de la colonne
         'relationSearchRequired'=>false, // si la recherche est obligatoire pour une relation
+        'relationExcerpt'=>75, // longueur de l'excerpt, utilisé entre autre pour les relations
+        'generalExcerpt'=>null, // excerpt min pour l'affichage dans general du cms
         '@cms'=>[
             'onGeneralOutput'=>null, // callback pour général output
             'anchorCorner'=>false,
@@ -31,7 +33,7 @@ class Col extends Core\Col
             'filterEmptyNotEmpty'=>true,
             'quickEdit'=>true,
             'relationExport'=>null, // si la colonne doit être incluses comme exporation de relation (par exemple user s'exporte en plusieurs champs dans le CSV)
-            'generalExcerptMin'=>100]
+            'generalExcerpt'=>100]
     ];
 
 
@@ -76,6 +78,14 @@ class Col extends Core\Col
     }
 
 
+    // generalExcerpt
+    // retourne la longueur de l'excerpt pour general
+    final public function generalExcerpt():?int
+    {
+        return $this->getAttr('generalExcerpt');
+    }
+
+
     // panel
     // retourne le panel de la colonne
     // retourne la string default si vide
@@ -105,6 +115,27 @@ class Col extends Core\Col
 
         return $return;
     }
+
+
+    // valueExcerpt
+    // créer une version résumé de la valeur si la longueur dépasse l'attribut excerpt
+    final public function valueExcerpt($return,?array $option=null)
+    {
+        $option = Base\Arr::plus(['mb'=>true,'stripTags'=>true],$option);
+        $excerpt = $this->getAttr('relationExcerpt');
+
+        if(is_int($excerpt))
+        {
+            if(is_array($return))
+            $return = Base\Arr::valuesExcerpt($excerpt,$return,true,$option);
+
+            elseif(is_string($return))
+            $return = Html::excerpt($excerpt,$return,$option);
+        }
+
+        return $return;
+    }
+
 
 
     // specificComponent

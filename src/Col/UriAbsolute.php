@@ -19,7 +19,7 @@ class UriAbsolute extends Core\Col\UriAbsolute
     protected static array $config = [
         'cell'=>Lemur\Cell\Uri::class,
         '@cms'=>[
-            'generalExcerptMin'=>null]
+            'generalExcerpt'=>null]
     ];
 }
 

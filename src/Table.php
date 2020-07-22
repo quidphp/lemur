@@ -32,7 +32,6 @@ class Table extends Core\Table
             'generalOperation'=>null, // pour le cms, méthode pour ajouter un bouton en haut à droite dans general
             'specificOperation'=>null, // pour le cms, méthode pour ajouter un bouton en haut à droite dans specific
             'order'=>['id'=>'desc'],
-            'relation'=>['appendPrimary'=>true],
             'route'=>[
                 0=>Cms\Specific::class,
                 'general'=>Cms\General::class,

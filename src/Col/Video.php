@@ -31,7 +31,7 @@ abstract class Video extends Core\Col\JsonAlias
         'descriptionExcerpt'=>500, // custom, longueur maximale de la description
         'services'=>null, // classe des services, à spécifier
         '@cms'=>[
-            'generalExcerptMin'=>null]
+            'generalExcerpt'=>null]
     ];
 
 

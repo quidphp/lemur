@@ -30,6 +30,9 @@ class BootLemur extends Test\Suite\BootCore
                 Lemur::class=>Test\Lemur::class],
             'frontEnd'=>['front'=>'[vendorFront]','lemur'=>'[vendorLemur]'],
             'assertJs'=>true],
+        'config'=>[
+            Lemur\Col::class=>[
+                'generalExcerpt'=>100]],
         'compile'=>true,
         'compileCss'=>false,
         'compileJsOption'=>['compress'=>false],

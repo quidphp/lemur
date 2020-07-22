@@ -87,36 +87,25 @@ class ExportDownload extends Core\RouteAlias
     // insertRows
     // insère les lignes dans l'objet
     // fait le par chunk car c'est trop long s'il y a plusieurs lignes
-    final protected function insertRows(Main\File $file,Orm\Sql $sql,int $limit=100):void
+    final protected function insertRows(Main\File $file,Orm\Sql $sql,int $chunk=50):void
     {
         $offset = 0;
         $total = $sql->triggerRowCount();
         $type = $this->segment('type');
         $option = ['header'=>true,'latin1'=>$this->isLatin1(),'type'=>$type,'bom'=>true];
-        $storage = $this->session()->storage();
-
-        if(!$storage instanceof Core\Row)
-        static::throw('sessionStorageNeedsToBeRow');
-
-        $not = Orm\RowsIndex::newOverload($storage,static::sessionUser());
 
         if(is_int($total) && $total > 0)
         {
-            while ($offset < $total)
-            {
-                $sql->limit($limit,$offset);
-                $rows = $sql->triggerRows();
+            $session = static::session();
+            $not = Orm\RowsIndex::newOverload($session->storage(),$session->user());
 
-                if(!empty($rows) && $rows->isNotEmpty())
-                {
-                    $rows->writeFile($file,$option);
-                    $option['bom'] = false;
-                    $option['header'] = false;
-                    $rows->unlink($not);
-                }
+            $sql->triggerRowsChunk($chunk,function($row,int $index) use($file,$not,&$option) {
+                $row->writeFile($file,$option);
+                $option['header'] = false;
+                $option['bom'] = false;
 
-                $offset += $limit;
-            }
+                return $not->in($row)? null:true;
+            });
         }
     }
 

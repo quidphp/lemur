@@ -29,6 +29,18 @@ class Cell extends Base\Test
         $dateAdd = $row->cell('dateAdd');
         $date = $row->cell('date');
         $cell = $row->cell('name');
+        $primary = $row->cell('id');
+        $userAdd = $row->cell('userAdd');
+
+        // generalComponent
+
+        // generalOutput
+
+        // generalExcerpt
+        assert($primary->generalExcerpt() === 100);
+        assert($userAdd->generalExcerpt() === null);
+
+        // specificComponent
 
         // complexTag
         assert($dateAdd->formComplex() === 'February 9, 2009 22:10:34');
@@ -40,6 +52,10 @@ class Cell extends Base\Test
         // specificComponentWrap
 
         // getDataAttr
+
+        // getGeneralComponentAttr
+
+        // getSpecificComponentAttr
 
         // cell
         assert(count($cell->attr()) === 65);

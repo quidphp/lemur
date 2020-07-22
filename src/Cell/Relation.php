@@ -32,7 +32,8 @@ class Relation extends Core\Cell\Relation
             $col = $this->col();
             $max = $col->getAttr('generalMax');
             $total = count($relation);
-            $array = $col->prepareRelationPlainGeneral($relation);
+            $array = $col->relationExcerptOutput($relation);
+            $array = $col->prepareRelationPlainGeneral($array);
 
             if(!empty($array))
             {

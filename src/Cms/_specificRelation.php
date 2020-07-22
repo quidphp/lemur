@@ -70,7 +70,7 @@ trait _specificRelation
                 $html = $col->formComplexSearchChoices($key);
                 $class = (in_array($key,$selected,true))? 'selected':null;
                 $data = ['value'=>$key,'html'=>$html];
-                $value = $col->valueExcerpt($value);
+                $value = $this->relationExcerptOutput($value,$key);
                 $value = Html::span($value,'label-content');
 
                 if($this->showCount())

@@ -21,6 +21,7 @@ abstract class Files extends Core\Col\Files
     // config
     protected static array $config = [
         'complex'=>'inputFile',
+        'generalExcerpt'=>null,
         'permission'=>[
             '*'=>[
                 'mediaLegend'=>true]],

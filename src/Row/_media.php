@@ -19,9 +19,9 @@ trait _media
 {
     // configMedia
     protected static array $configMedia = [
-        'relationOutputExcerpt'=>50,
+        'relationExcerptOutput'=>50,
         'relation'=>[
-            'method'=>'relationOutput','separator'=>'<br/>','order'=>['id'=>'desc'],'output'=>'id','orderUseName'=>true],
+            'method'=>'relationOutput','separator'=>'<br/>','order'=>['id'=>'desc']],
     ];
 
 
@@ -76,7 +76,7 @@ trait _media
     final public function relationOutput():string
     {
         $return = '';
-        $excerpt = $this->getAttr('relationOutputExcerpt');
+        $excerpt = $this->getAttr('relationExcerptOutput');
         $namePrimary = $this->namePrimary(null,$excerpt);
         $image = $this->getFirstImage(null,'lemurRelation');
 

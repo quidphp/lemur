@@ -53,7 +53,9 @@ class General extends Core\RouteAlias
         'sitemap'=>true,
         'popup'=>[
             'search','primary','priority','engine','collation','autoIncrement','updateTime',
-            'classFqcn','classRow','classRows','classCols','classCells','sql']
+            'classFqcn','classRow','classRows','classCols','classCells','sql'],
+        'multiModifyMax'=>50,
+        'multiDeleteMax'=>100
     ];
 
 
@@ -630,7 +632,7 @@ class General extends Core\RouteAlias
             if($route->canTrigger())
             {
                 $tooltip = $lang->text('tooltip/multiModify');
-                $data = ['href'=>$route,'char'=>$char,'separator'=>$defaultSegment,'tooltip'=>$tooltip];
+                $data = ['href'=>$route,'char'=>$char,'separator'=>$defaultSegment,'tooltip'=>$tooltip,'max'=>$this->getAttr('multiModifyMax')];
                 $r .= Html::button(null,['tool-element','icon-solo','multi-modify','data'=>$data]);
             }
 
@@ -656,7 +658,7 @@ class General extends Core\RouteAlias
         {
             $defaultSegment = static::getDefaultSegment();
             $tooltip = $lang->text('tooltip/multiDelete');
-            $data = ['confirm'=>static::langText('common/confirm'),'separator'=>$defaultSegment,'tooltip'=>$tooltip];
+            $data = ['confirm'=>static::langText('common/confirm'),'separator'=>$defaultSegment,'tooltip'=>$tooltip,'max'=>$this->getAttr('multiDeleteMax')];
 
             $r .= $route->formOpen(['tool-element','multi-delete-form','data'=>$data]);
             $r .= $this->tableHiddenInput();
@@ -969,7 +971,7 @@ class General extends Core\RouteAlias
     // génère le contenu à afficher dans une cellule de table
     final protected function makeTableBodyCell(Core\Cell $cell,?array $option=null):array
     {
-        $option = Base\Arr::plus(['specific'=>null,'modify'=>false,'excerptMin'=>$cell->generalExcerptMin()],$option);
+        $option = Base\Arr::plus(['specific'=>null,'modify'=>false,'excerptMin'=>$cell->generalExcerpt()],$option);
         $col = $cell->col();
 
         $data = ['name'=>$cell->name(),'col'=>$col::className(true),'cell'=>$cell::className(true),'group'=>$col->group()];

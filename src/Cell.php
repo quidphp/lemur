@@ -45,8 +45,15 @@ class Cell extends Core\Cell
     public function generalOutput(array $option)
     {
         $callback = $this->getAttr('onGeneralOutput');
-
         return (!empty($callback))? $callback($this,$option):$this->get($option);
+    }
+
+
+    // generalExcerpt
+    // retourne la longueur de l'excerpt pour general
+    final public function generalExcerpt():?int
+    {
+        return $this->col()->generalExcerpt();
     }
 
 

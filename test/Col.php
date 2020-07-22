@@ -48,8 +48,16 @@ class Col extends Base\Test
         // isRelationSearchRequired
         assert(is_bool($lang->isRelationSearchRequired()));
 
+        // generalExcerpt
+        assert($col->generalExcerpt() === 100);
+
         // panel
         assert($email->panel() === 'default');
+
+        // prepareAttr
+
+        // valueExcerpt
+        assert($col->valueExcerpt('test') === 'test');
 
         // specificComponent
 
@@ -69,8 +77,8 @@ class Col extends Base\Test
         assert($media->formComplex() === "<div class='file-block empty'><div class='form'><input name='media' type='file'/></div></div>");
         assert($multi->complexTag() === 'multiselect');
         assert($check->complexTag() === 'search');
-        assert(strlen($array->formComplex(null,['data-required'=>null])) === 177);
-        assert(strlen($array->formComplex()) === 195);
+        assert(strlen($array->formComplex(null,['data-required'=>null])) === 187);
+        assert(strlen($array->formComplex()) === 205);
         assert(strlen($multi->formComplex(2)) === 165);
         assert(strlen($multi->formComplex([2,5])) === 185);
         assert(strlen($password->formComplex()) === 285);
@@ -107,7 +115,7 @@ class Col extends Base\Test
         assert(strlen($date->formComplex()) === 280);
         assert(strlen($date->formComplex('08-08-1984')) === 298);
         assert(strlen($date->formComplex(mktime(0,0,0,8,8,1984))) === 298);
-        assert($email->generalExcerptMin() === null);
+        assert($email->generalExcerpt() === null);
         assert($jsonArray instanceof Lemur\Col\JsonArray);
         assert($jsonArray->required(null) === 'required');
         assert($jsonArray->required([]) === 'required');

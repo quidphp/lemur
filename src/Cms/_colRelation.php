@@ -18,6 +18,12 @@ trait _colRelation
     use _relation;
 
 
+    // config
+    protected static array $configColRelation = [
+        'appendPrimary'=>true
+    ];
+
+
     // relation
     // retourne l'objet relation de la colonne
     final public function relation():Orm\Relation
@@ -42,6 +48,15 @@ trait _colRelation
     }
 
 
+    // shouldAppendPrimary
+    // retourne vrai s'il faut append le primary
+    final public function shouldAppendPrimary($key):bool
+    {
+        $col = $this->segment('col');
+        return $this->getAttr('appendPrimary') === true && is_int($key) && $col->isRelation() && $col->shouldAppendPrimary();
+    }
+
+
     // relationKeyValue
     // retourne les keyValue à partir de valeur de relation
     final protected function relationKeyValue(array $values):?array
@@ -51,6 +66,21 @@ trait _colRelation
 
         if($col->canRelation())
         $return = $col->relation()->keyValue($values,true,false);
+
+        return $return;
+    }
+
+
+    // relationExcerptOutput
+    // permet de faire le output d'une ligne de relation
+    // ajoute le primary à la fin de la valeur de la relation s'il faut le faire
+    final protected function relationExcerptOutput($return,$key):string
+    {
+        $col = $this->segment('col');
+        $return = $col->valueExcerpt($return);
+
+        if($this->shouldAppendPrimary($key))
+        $return = Orm\Relation::appendPrimary($return,$key);
 
         return $return;
     }

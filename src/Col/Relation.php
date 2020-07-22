@@ -12,6 +12,7 @@ use Quid\Base;
 use Quid\Base\Html;
 use Quid\Core;
 use Quid\Lemur;
+use Quid\Orm;
 
 // relation
 // extended abstract class extended for a relation
@@ -20,7 +21,10 @@ abstract class Relation extends Core\Col\Relation
     // config
     protected static array $config = [
         'specificLink'=>false,
+        'appendPrimary'=>false,
+        'generalExcerpt'=>null,
         '@cms'=>[
+            'appendPrimary'=>true,
             'anchorCorner'=>[self::class,'hasAnchorCorner'],
             'absolutePlaceholder'=>[self::class,'hasAbsolutePlaceholder'],
             'sortable'=>null,
@@ -36,6 +40,15 @@ abstract class Relation extends Core\Col\Relation
     public function isSortable():bool
     {
         return false;
+    }
+
+
+    // shouldAppendPrimary
+    // retourne vrai s'il faut rajouter la valeur primaire de la relation
+    final public function shouldAppendPrimary():bool
+    {
+        $table = $this->relation()->relationTable();
+        return $this->getAttr('appendPrimary') === true && !empty($table) && !$table->relation()->isOutputMethod();
     }
 
 
@@ -88,13 +101,14 @@ abstract class Relation extends Core\Col\Relation
     // prepareRelationPlainGeneral
     // méthode utilisé pour préparer l'affichage des relations plains (sans formulaire)
     // crée les routes spécifiques
-    final public function prepareRelationPlainGeneral(array $array):array
+    final public function prepareRelationPlainGeneral(array $array,?bool $appendPrimary=null):array
     {
         $return = [];
         $array = parent::prepareRelationPlainGeneral($array);
         $route = $this->routeClassSafe('specific');
         $relation = $this->relation();
         $table = null;
+        $appendPrimary ??= $this->shouldAppendPrimary();
 
         if($relation->isRelationTable())
         $table = $relation->relationTable();
@@ -224,7 +238,7 @@ abstract class Relation extends Core\Col\Relation
             $tag = ($this->isSet())? 'checkbox':'radio';
             $attr = Base\Arr::plus($attr,['tag'=>$tag]);
             $option = Base\Arr::plus($option,['value'=>$value]);
-            $relation = $this->valueExcerpt($relation);
+            $relation = $this->relationExcerptOutput($relation);
             $relation = $this->prepareRelationRadioCheckbox($relation);
             $return = $this->formComplexOutput($relation,$attr,$option);
         }
@@ -244,7 +258,7 @@ abstract class Relation extends Core\Col\Relation
         $attr = Base\Arr::plus($attr,['tag'=>$tag]);
         $option = Base\Arr::plus($option,['value'=>$value]);
         $relation = $this->prepareStandardRelation($value);
-        $relation = $this->valueExcerpt($relation);
+        $relation = $this->relationExcerptOutput($relation);
 
         if($tag === 'select' && !array_key_exists('title',$option))
         $option['title'] = true;
@@ -277,7 +291,7 @@ abstract class Relation extends Core\Col\Relation
 
             if(!empty($value))
             {
-                $value = $this->valueExcerpt($value);
+                $value = $this->relationExcerptOutput($value);
                 $value = $this->prepareRelationPlainGeneral($value);
                 $value = $this->relationPlainHtml($value);
                 $return .= $this->formComplexOutput($value,$attr,$option);
@@ -290,7 +304,7 @@ abstract class Relation extends Core\Col\Relation
 
             if($value !== null)
             {
-                $value = $this->valueExcerpt($value);
+                $value = $this->relationExcerptOutput($value);
 
                 if(!Base\Html::isFormTag($tag))
                 $value = $this->relationPlainHtml($value);
@@ -325,6 +339,25 @@ abstract class Relation extends Core\Col\Relation
     {
         $return['autoHidden'] = $autoHidden;
         $return['html'] = $this->getAttr('relationHtml');
+
+        return $return;
+    }
+
+
+    // relationExcerptOutput
+    // permet de faire le output et excerpt pour la relation
+    final public function relationExcerptOutput($return,?bool $appendPrimary=null):array
+    {
+        $return = $this->valueExcerpt($return);
+        $appendPrimary ??= $this->shouldAppendPrimary();
+
+        if($appendPrimary === true)
+        {
+            foreach ($return as $key => $value)
+            {
+                $return[$key] = Orm\Relation::appendPrimary($value,$key);
+            }
+        }
 
         return $return;
     }
