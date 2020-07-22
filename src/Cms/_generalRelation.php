@@ -11,7 +11,6 @@ namespace Quid\Lemur\Cms;
 use Quid\Base;
 use Quid\Base\Html;
 use Quid\Core;
-use Quid\Orm;
 
 // _generalRelation
 // trait that provides methods to make a filter from a relation
