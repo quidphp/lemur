@@ -283,7 +283,10 @@ abstract class Relation extends Core\Col\Relation
         $value = $this->valueComplex($value,$option);
         $relation = $this->relation();
         $value = $relation->getKeyValue($value,true,true,$option);
+
+        if(is_array($value) && !empty($value))
         $value = $this->relationExcerptOutput($value);
+
         $table = $relation->relationTable();
 
         if(!empty($value))
@@ -313,9 +316,7 @@ abstract class Relation extends Core\Col\Relation
     // méthode pouvant être étendu
     protected function prepareStandardRelation($value):array
     {
-        $return = $this->relation()->all(false);
-
-        return $return;
+        return $this->relation()->all(false);
     }
 
 
