@@ -74,10 +74,10 @@ trait _colRelation
     // relationExcerptOutput
     // permet de faire le output d'une ligne de relation
     // ajoute le primary à la fin de la valeur de la relation s'il faut le faire
-    final protected function relationExcerptOutput($return,$key):string
+    final protected function relationExcerptOutput(string $return,$key):string
     {
         $col = $this->segment('col');
-        $return = $col->valueExcerpt($return);
+        $return = $col->relationExcerpt($return);
 
         if($this->shouldAppendPrimary($key))
         $return = Orm\Relation::appendPrimary($return,$key);

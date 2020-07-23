@@ -56,8 +56,8 @@ class Col extends Base\Test
 
         // prepareAttr
 
-        // valueExcerpt
-        assert($col->valueExcerpt('test') === 'test');
+        // relationExcerpt
+        assert($col->relationExcerpt('test') === 'test');
 
         // specificComponent
 

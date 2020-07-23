@@ -144,12 +144,14 @@ class Specific extends Core\RouteAlias
     }
 
 
-    // makeTitleBox
-    // génère le titre pour la page specific
-    final protected function makeTitleBox():string
+    // makeSubTitleBox
+    // génère le bloc sous le title box
+    final protected function makeSubTitleBox():string
     {
-        $r = $this->makeH1($this->makeTitle());
-        $r .= Html::divCond($this->makeRelationChilds(),['relation-childs','popup-trigger','with-icon','with-popup','data'=>['anchor-corner'=>true,'absolute-placeholder'=>true]]);
+        $r = '';
+        $attr = ['popup-trigger','with-icon','with-popup','data'=>['anchor-corner'=>true,'absolute-placeholder'=>true]];
+        $r .= Html::divCond($this->makeRelationChilds(),Base\Arr::plus('relation-childs',$attr));
+        $r .= Html::divCond($this->makeRelationParents(),Base\Arr::plus('relation-parent',$attr));
 
         return $r;
     }
@@ -163,30 +165,47 @@ class Specific extends Core\RouteAlias
     }
 
 
-    // makeRelationChilds
-    // génère le block pour les enfants direct
-    final protected function makeRelationChilds():string
+    // makeRelationCommon
+    // méthode utilisé par makeRelationChilds et makeRelationParents
+    final protected function makeRelationCommon(string $type,string $outputMethod,int $countLevel):string
     {
         $r = '';
         $table = $this->table();
 
-        if($table->hasPermission('relationChilds'))
+        if($table->hasPermission($type))
         {
             $row = $this->row();
-            $relationChilds = $row->relationChilds();
+            $relation = $row->$type();
 
-            if(is_array($relationChilds) && !empty($relationChilds))
+            if(is_array($relation) && !empty($relation))
             {
-                $count = Base\Arrs::countLevel(2,$relationChilds);
-                $text = static::langPlural($count,'specific/relationChilds',['count'=>$count]);
+                $count = Base\Arrs::countLevel($countLevel,$relation);
+                $text = static::langPlural($count,['specific',$type],['count'=>$count]);
                 $r .= Html::button($text,'popup-title');
 
-                $html = Html::ul($this->makeRelationChildsInner($relationChilds));
+                $html = $this->$outputMethod($relation);
+                $html = Html::ul($html);
                 $r .= static::makeDivPopup($html);
             }
         }
 
         return $r;
+    }
+
+
+    // makeRelationChilds
+    // génère le block pour les enfants direct
+    final protected function makeRelationChilds():string
+    {
+        return $this->makeRelationCommon('relationChilds','makeRelationChildsInner',2);
+    }
+
+
+    // makeRelationParents
+    // génère le block pour les parents direct
+    final protected function makeRelationParents():string
+    {
+        return $this->makeRelationCommon('relationParents','makeRelationParentsInner',1);
     }
 
 
@@ -252,6 +271,33 @@ class Specific extends Core\RouteAlias
             $text = Html::span(static::langText('specific/relationChildsNoAccess'),'not-accessible');
             $text .= "($no)";
             $r .= Html::li($text);
+        }
+
+        return $r;
+    }
+
+
+    // makeRelationParentsInner
+    // retourne le contenu du popup pour les parents de relation
+    final protected function makeRelationParentsInner(array $array):string
+    {
+        $r = '';
+        $lis = [];
+
+        foreach ($array as $table => $rows)
+        {
+            foreach ($rows as $row)
+            {
+                $route = $row->route();
+                $title = $route->title();
+                $lis[$title] = $route->a($title);
+            }
+        }
+
+        $lis = Base\Arr::keysSort($lis);
+        foreach ($lis as $anchor)
+        {
+            $r .= Html::li($anchor);
         }
 
         return $r;

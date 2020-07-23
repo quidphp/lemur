@@ -38,11 +38,17 @@ trait _specificAddMulti
     }
 
 
-    // makeTitleBox
-    // génère le titre pour la page
-    final protected function makeTitleBox():string
+    // makeSubTitleBox
+    // génère le bloc sous le title box
+    final protected function makeSubTitleBox():string
     {
-        return $this->makeH1($this->makeTitle());
+        $r = '';
+        $table = $this->table();
+
+        if($table->hasPermission('description'))
+        $r .= $table->description();
+
+        return $r;
     }
 
 

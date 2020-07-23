@@ -101,14 +101,13 @@ abstract class Relation extends Core\Col\Relation
     // prepareRelationPlainGeneral
     // méthode utilisé pour préparer l'affichage des relations plains (sans formulaire)
     // crée les routes spécifiques
-    final public function prepareRelationPlainGeneral(array $array,?bool $appendPrimary=null):array
+    final public function prepareRelationPlainGeneral(array $array):array
     {
         $return = [];
         $array = parent::prepareRelationPlainGeneral($array);
         $route = $this->routeClassSafe('specific');
         $relation = $this->relation();
         $table = null;
-        $appendPrimary ??= $this->shouldAppendPrimary();
 
         if($relation->isRelationTable())
         $table = $relation->relationTable();
@@ -283,35 +282,23 @@ abstract class Relation extends Core\Col\Relation
         $tag = $this->complexTag($attr);
         $value = $this->valueComplex($value,$option);
         $relation = $this->relation();
+        $value = $relation->getKeyValue($value,true,true,$option);
+        $value = $this->relationExcerptOutput($value);
+        $table = $relation->relationTable();
 
-        if($relation->isRelationTable())
+        if(!empty($value))
         {
-            $table = $relation->relationTable();
-            $value = $relation->getKeyValue($value,true,true,$option);
-
-            if(!empty($value))
+            if(!empty($table))
             {
-                $value = $this->relationExcerptOutput($value);
                 $value = $this->prepareRelationPlainGeneral($value);
                 $value = $this->relationPlainHtml($value);
-                $return .= $this->formComplexOutput($value,$attr,$option);
             }
+
+            elseif(!Base\Html::isFormTag($tag))
+            $value = $this->relationPlainHtml($value);
         }
 
-        else
-        {
-            $value = $relation->get($value,true,true,$option);
-
-            if($value !== null)
-            {
-                $value = $this->relationExcerptOutput($value);
-
-                if(!Base\Html::isFormTag($tag))
-                $value = $this->relationPlainHtml($value);
-
-                $return .= $this->formComplexOutput($value,$attr,$option);
-            }
-        }
+        $return .= $this->formComplexOutput($value,$attr,$option);
 
         if(empty($return))
         $return = $this->formComplexEmptyPlaceholder($value);
@@ -346,17 +333,17 @@ abstract class Relation extends Core\Col\Relation
 
     // relationExcerptOutput
     // permet de faire le output et excerpt pour la relation
-    final public function relationExcerptOutput($return,?bool $appendPrimary=null):array
+    final public function relationExcerptOutput(array $return,?bool $appendPrimary=null):array
     {
-        $return = $this->valueExcerpt($return);
         $appendPrimary ??= $this->shouldAppendPrimary();
 
-        if($appendPrimary === true)
+        foreach ($return as $key => $value)
         {
-            foreach ($return as $key => $value)
-            {
-                $return[$key] = Orm\Relation::appendPrimary($value,$key);
-            }
+            if(is_string($value))
+            $return[$key] = $value = $this->relationExcerpt($value);
+
+            if($appendPrimary === true)
+            $return[$key] = Orm\Relation::appendPrimary($value,$key);
         }
 
         return $return;

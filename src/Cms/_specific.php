@@ -79,16 +79,21 @@ trait _specific
     final protected function makeTop():string
     {
         $r = '';
-        $table = $this->table();
         $html = Html::div($this->makeTitleBox(),'title');
-
-        if($table->hasPermission('description'))
-        $html .= Html::divCond($table->description(),['description','sub-title']);
+        $html .= Html::divCond($this->makeSubTitleBox(),'sub-title');
 
         $r .= Html::div($html,'left');
         $r .= Html::divCond($this->makeNav(),'right');
 
         return Html::div($r,'top');
+    }
+
+
+    // makeTitleBox
+    // génère le titre pour la page specific
+    final protected function makeTitleBox():string
+    {
+        return $this->makeH1($this->makeTitle());
     }
 
 

@@ -8,17 +8,28 @@
 // stylesheet for the specific form page of the CMS
 
 /* TOP */
-[data-group='specific'] main .inner > .top .left {
-    .relation-childs .not-accessible {
-        font-style: italic;
-    }
-
-    .popup span {
-        font-weight: normal;
-    }
-}
 [data-group='specific'] main .inner > .top .right .nav {
     @include specificNavComponent();
+}
+
+/* TOP SPECIFIC */
+[data-route='specific'] main .inner > .top .left > .sub-title {
+    @include flex();
+    
+    > .popup-trigger {
+        
+        &:not(:last-child) {
+            margin-right: 5px;
+        }
+        
+        .relation-childs .not-accessible {
+            font-style: italic;
+        }
+
+        .popup span {
+            font-weight: normal;
+        }
+    }
 }
 
 /* FORM */

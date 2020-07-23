@@ -73,6 +73,7 @@ class Table extends Core\Table
                     'specific'=>true, // accès à la page du formulaire
                     'specificOperation'=>true, // accès au module opération dans la page du formulaire
                     'relationChilds'=>true, // affiche le bloc enfants direct
+                    'relationParents'=>true, // affiche le bloc parents direct
                     'nav'=>true, // afficher la boîte de navigation...
                     'navCount'=>true, // ... avec le count au centre
                     'navBack'=>true, // ... avec le bouton retour

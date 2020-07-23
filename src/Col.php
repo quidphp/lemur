@@ -117,25 +117,18 @@ class Col extends Core\Col
     }
 
 
-    // valueExcerpt
+    // relationExcerpt
     // créer une version résumé de la valeur si la longueur dépasse l'attribut excerpt
-    final public function valueExcerpt($return,?array $option=null)
+    final public function relationExcerpt(string $return,?array $option=null):string
     {
         $option = Base\Arr::plus(['mb'=>true,'stripTags'=>true],$option);
         $excerpt = $this->getAttr('relationExcerpt');
 
         if(is_int($excerpt))
-        {
-            if(is_array($return))
-            $return = Base\Arr::valuesExcerpt($excerpt,$return,true,$option);
-
-            elseif(is_string($return))
-            $return = Html::excerpt($excerpt,$return,$option);
-        }
+        $return = Html::excerpt($excerpt,$return,$option);
 
         return $return;
     }
-
 
 
     // specificComponent
@@ -144,12 +137,10 @@ class Col extends Core\Col
     final public function specificComponent($value,?array $attr=null,?array $option=null):string
     {
         $return = '';
-        $compAttr = [];
-        $compAttr = $this->getSpecificComponentAttr($compAttr);
+        $compAttr = $this->getSpecificComponentAttr([]);
         $option = (array) $option;
-        $return = Html::div($this->formComplex($value,$attr,$option),$compAttr);
 
-        return $return;
+        return Html::div($this->formComplex($value,$attr,$option),$compAttr);
     }
 
 

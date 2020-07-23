@@ -585,6 +585,7 @@ class En extends Core\Lang\En
                 'mediaRegenerate'=>'This media will be regenerated on next modification.',
                 'mediaDelete'=>'This media will be deleted on next modification.',
                 'relationChilds'=>'[count] direct child%s%',
+                'relationParents'=>'[count] direct parent%s%',
                 'relationChildsNoAccess'=>'Not accessible',
                 'modifyTop'=>'Modify',
                 'modifyBottom'=>'Modify',

@@ -585,6 +585,7 @@ class Fr extends Core\Lang\Fr
                 'mediaRegenerate'=>'Ce média sera regénéré lors de la prochaine modification.',
                 'mediaDelete'=>'Ce média sera effacé lors de la prochaine modification.',
                 'relationChilds'=>'[count] enfant%s% direct%s%',
+                'relationParents'=>'[count] parent%s% direct%s%',
                 'relationChildsNoAccess'=>'Inaccessible',
                 'modifyTop'=>'Modifier',
                 'modifyBottom'=>'Modifier',
