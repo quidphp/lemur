@@ -15,13 +15,12 @@
 /* TOP SPECIFIC */
 [data-route='specific'] main .inner > .top .left > .sub-title {
     @include flex();
-    
+
     > .popup-trigger {
-        
         &:not(:last-child) {
             margin-right: 5px;
         }
-        
+
         .relation-childs .not-accessible {
             font-style: italic;
         }
