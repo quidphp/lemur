@@ -116,7 +116,7 @@ trait _relation
         {
             $page = $this->segment('page');
             $limit = $this->limit();
-            $total = (is_int($total))? $total:$this->relation()->size();
+            $total ??= $this->relation()->size();
             $from = (($page * $limit) + 1);
             $to = ($pageNext * $limit);
             $to = ($to > $total)? $total:$to;

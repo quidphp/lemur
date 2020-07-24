@@ -170,58 +170,55 @@ trait _generalRelation
     {
         $return = [];
 
-        if(Base\Arr::isKey($key))
-        {
-            $col = $this->segment('col');
-            $name = $col->name();
-            $route = $this->getRoute();
-            $selected = $this->segment('selected');
-            $current = $route->segment('filter');
-            $current = (is_array($current))? $current:[];
-            $currentName = (array_key_exists($name,$current))? $current[$name]:null;
-            $label = $this->relationExcerptOutput($label,$key);
+        if(!Base\Arr::isKey($key))
+        static::throw();
 
-            $label = Html::div($label,'label-content');
-            $active = (in_array($key,$selected,true));
+        $col = $this->segment('col');
+        $name = $col->name();
+        $route = $this->getRoute();
+        $selected = $this->segment('selected');
+        $current = $route->segment('filter');
+        $current = (is_array($current))? $current:[];
+        $currentName = (array_key_exists($name,$current))? $current[$name]:null;
+        $label = $this->relationExcerptOutput($label,$key);
+
+        $label = Html::div($label,'label-content');
+        $active = (in_array($key,$selected,true));
+        $filter = $current;
+
+        $filter[$name] = [$key];
+        $route = $route->changeSegments(['filter'=>$filter,'page'=>1]);
+        $plus = null;
+        $minus = null;
+
+        if(!empty($current) && !empty($currentName))
+        {
             $filter = $current;
 
-            $filter[$name] = [$key];
-            $route = $route->changeSegments(['filter'=>$filter,'page'=>1]);
-            $plus = null;
-            $minus = null;
+            if(!array_key_exists($name,$filter) || !is_array($filter[$name]))
+            $filter[$name] = [];
 
-            if(!empty($current) && !empty($currentName))
+            if(in_array($key,$filter[$name],true) && $active === true)
             {
-                $filter = $current;
-
-                if(!array_key_exists($name,$filter) || !is_array($filter[$name]))
-                $filter[$name] = [];
-
-                if(in_array($key,$filter[$name],true) && $active === true)
-                {
-                    $filter[$name] = Base\Arr::valueStrip($key,$filter[$name]);
-                    $minus = $route->changeSegments(['filter'=>$filter,'page'=>1]);
-                }
-
-                else
-                {
-                    $filter[$name][] = $key;
-                    $plus = $route->changeSegments(['filter'=>$filter,'page'=>1]);
-                }
+                $filter[$name] = Base\Arr::valueStrip($key,$filter[$name]);
+                $minus = $route->changeSegments(['filter'=>$filter,'page'=>1]);
             }
 
-            if($this->showCount() === true)
-            $label .= $this->makeShowCount($route);
-
-            $return['label'] = $label;
-            $return['active'] = $active;
-            $return['route'] = $route;
-            $return['plus'] = $plus;
-            $return['minus'] = $minus;
+            else
+            {
+                $filter[$name][] = $key;
+                $plus = $route->changeSegments(['filter'=>$filter,'page'=>1]);
+            }
         }
 
-        else
-        static::throw();
+        if($this->showCount() === true)
+        $label .= $this->makeShowCount($route);
+
+        $return['label'] = $label;
+        $return['active'] = $active;
+        $return['route'] = $route;
+        $return['plus'] = $plus;
+        $return['minus'] = $minus;
 
         return $return;
     }

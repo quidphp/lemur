@@ -184,7 +184,7 @@ class Contact extends Core\RowAlias
         foreach ($table->cols(...$cols) as $col)
         {
             $name = $col->name();
-            $value = (is_array($flash) && array_key_exists($name,$flash))? $flash[$name]:null;
+            $value = $flash[$name] ?? null;
             $wrap = $col->formWrap($formWrap,$pattern,$value,$attr);
             $r .= Html::div($wrap,['field','data-field'=>$col]);
         }

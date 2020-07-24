@@ -31,7 +31,7 @@ trait _primaries
                 $value = $value->primary();
 
                 if($value instanceof Core\Rows)
-                $value = $value->primaries();
+                $value = $value->keys();
 
                 if(is_array($value))
                 $value = implode($default,$value);
@@ -62,7 +62,7 @@ trait _primaries
                 }
 
                 elseif($value instanceof Core\Rows)
-                $return = $value->primaries();
+                $return = $value->keys();
             }
         }
 
