@@ -111,16 +111,10 @@ class SpecificDuplicate extends Core\RouteAlias
         if($post !== null)
         $return = $row->duplicate($option);
 
-        if(empty($return))
-        $this->failureComplete();
+        if(!empty($return))
+        $this->duplicate = $return;
 
-        else
-        {
-            $this->duplicate = $return;
-            $this->successComplete();
-        }
-
-        return $return;
+        return $this->proceedAfter($return);
     }
 }
 

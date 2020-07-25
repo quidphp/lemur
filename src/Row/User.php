@@ -76,6 +76,7 @@ class User extends Core\Row\User
 
                 if($this->setPassword([$password]) !== 1)
                 static::throw('cannotChangePassword');
+
                 $return['userPassword'] = $password;
             }
 

@@ -93,13 +93,7 @@ class UserWelcome extends Core\RouteAlias
         if($post !== null)
         $return = $row->sendWelcomeEmail(true,$replace,$option);
 
-        if(empty($return))
-        $this->failureComplete();
-
-        else
-        $this->successComplete();
-
-        return $return;
+        return $this->proceedAfter($return);
     }
 
 

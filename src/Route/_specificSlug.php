@@ -51,10 +51,7 @@ trait _specificSlug
         {
             $str = $name->name();
             $pattern = Orm\ColSchema::stripPattern($str) ?? $str;
-            $return = $row->cellPattern($pattern,$lang);
-
-            if(empty($return))
-            $return = $name;
+            $return = $row->cellPattern($pattern,$lang) ?: $name;
         }
 
         return $return;

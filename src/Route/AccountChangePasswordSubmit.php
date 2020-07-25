@@ -65,13 +65,7 @@ abstract class AccountChangePasswordSubmit extends Core\RouteAlias
         if($post !== null)
         $return = $session->changePassword($post['newPassword'],$post['newPasswordConfirm'],$post['oldPassword'],['com'=>true]);
 
-        if(empty($return))
-        $this->failureComplete();
-
-        else
-        $this->successComplete();
-
-        return $return;
+        return $this->proceedAfter($return);
     }
 
 

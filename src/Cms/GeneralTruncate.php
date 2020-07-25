@@ -68,13 +68,7 @@ class GeneralTruncate extends Core\RouteAlias
         if($post !== null)
         $return = $this->table()->truncate(['com'=>true]);
 
-        if(empty($return))
-        $this->failureComplete();
-
-        else
-        $this->successComplete();
-
-        return $return;
+        return $this->proceedAfter($return);
     }
 }
 

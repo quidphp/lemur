@@ -50,11 +50,7 @@ trait _calendar
     // génère l'objet calendrier
     final protected function calendar():Main\Calendar
     {
-        $class = $this->getAttr('calendar');
-
-        if(empty($class))
-        static::throw('noCalendarClassProvided');
-
+        $class = $this->getAttr('calendar') ?: static::throw('noCalendarClassProvided');
         $timestamp = $this->getTimestamp();
         $return = $class::newOverload($timestamp);
         $timestamp = $return->timestamp();

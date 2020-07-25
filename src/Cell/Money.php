@@ -10,24 +10,24 @@ declare(strict_types=1);
 namespace Quid\Lemur\Cell;
 use Quid\Core;
 
-// phone
-// class to manage a cell containing an phone number
-class Phone extends Core\CellAlias
+// money
+// class to manage a cell managing money (money formatted string)
+class Money extends Core\Cell\NumAlias
 {
     // config
     protected static array $config = [];
 
 
     // pair
-    // retourne le numéro de téléphone formatté, sinon renvoie à parent
+    // retourne la valeur monétaire formatté, sinon renvoie à parent
     final public function pair($value=null,...$args)
     {
         $return = $this;
 
-        if($value === true)
-        $return = $this->get();
+        if(in_array($value,[true,'$'],true))
+        $return = $this->moneyFormat(...$args);
 
-        elseif($value !== null)
+        else
         $return = parent::pair($value,...$args);
 
         return $return;
@@ -35,5 +35,5 @@ class Phone extends Core\CellAlias
 }
 
 // init
-Phone::__init();
+Money::__init();
 ?>

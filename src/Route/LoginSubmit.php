@@ -65,12 +65,7 @@ abstract class LoginSubmit extends Core\RouteAlias
     // retourne la route vers laquelle redirigé en cas de succès (si rien dans la mémoire)
     final public function routeSuccess()
     {
-        $return = $this->routeSuccessMemory();
-
-        if(empty($return))
-        $return = $this->routeSuccessDefault();
-
-        return $return;
+        return $this->routeSuccessMemory() ?: $this->routeSuccessDefault();
     }
 
 
@@ -119,13 +114,7 @@ abstract class LoginSubmit extends Core\RouteAlias
             $return = $session->loginProcess($post['credential'],$post['password'],['remember'=>$remember,'com'=>true]);
         }
 
-        if(empty($return))
-        $this->failureComplete();
-
-        else
-        $this->successComplete();
-
-        return $return;
+        return $this->proceedAfter($return);
     }
 
 

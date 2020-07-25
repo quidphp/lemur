@@ -23,11 +23,7 @@ class Media extends Core\Col\Media
     final protected function formComplexUpdate(Core\Cell $value,array $attr,array $option):string
     {
         $return = $this->commonFormComplexUpdate(null,$value,$attr,$option);
-
-        if(empty($return))
-        $return = $this->formComplexEmptyPlaceholder($value);
-
-        return $return;
+        return $return ?: $this->formComplexEmptyPlaceholder($value);
     }
 }
 

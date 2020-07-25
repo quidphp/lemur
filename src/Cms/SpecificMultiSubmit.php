@@ -133,13 +133,7 @@ class SpecificMultiSubmit extends Core\RouteAlias
             }
         }
 
-        if(empty($return))
-        $this->failureComplete();
-
-        else
-        $this->successComplete();
-
-        return $return;
+        return $this->proceedAfter($return);
     }
 
 }

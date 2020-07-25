@@ -19,7 +19,6 @@ class Phone extends Core\ColAlias
 {
     // config
     protected static array $config = [
-        'cell'=>Lemur\Cell\Phone::class,
         'tag'=>'inputTel',
         'search'=>false,
         'validate'=>['phone'],

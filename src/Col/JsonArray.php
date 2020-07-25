@@ -38,12 +38,7 @@ class JsonArray extends Core\Col\JsonAlias
         if($this->getAttr('clean'))
         $return = Base\Arr::clean($return);
 
-        $return = array_values($return);
-
-        if(empty($return))
-        $return = null;
-
-        return $return;
+        return array_values($return) ?: null;
     }
 
 

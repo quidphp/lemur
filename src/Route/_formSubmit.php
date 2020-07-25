@@ -175,7 +175,7 @@ trait _formSubmit
 
     // isSuccess
     // retourne vrai si le formulaire est un succès
-    final protected function isSuccess()
+    final protected function isSuccess():bool
     {
         return $this->success === true;
     }
@@ -212,6 +212,21 @@ trait _formSubmit
     final public function trigger()
     {
         $this->proceed();
+    }
+
+
+    // proceedAfter
+    // méthode appelé après le trigger et le process
+    // envoie à failure ou success, selon la valeur de return
+    final protected function proceedAfter($return)
+    {
+        if(empty($return))
+        $this->failureComplete();
+
+        else
+        $this->successComplete();
+
+        return $return;
     }
 }
 ?>

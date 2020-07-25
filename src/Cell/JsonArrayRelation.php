@@ -18,23 +18,6 @@ class JsonArrayRelation extends Core\CellAlias
     protected static array $config = [];
 
 
-    // pair
-    // si value est true, renvoie la valeur de la jsonArray
-    // sinon renvoie à parent
-    final public function pair($value=null,...$args)
-    {
-        $return = $this;
-
-        if($value === true)
-        $return = $this->get();
-
-        elseif($value !== null)
-        $return = parent::pair($value,...$args);
-
-        return $return;
-    }
-
-
     // relationRow
     // retourne la row de relation pour la cellule
     // peut envoyer une exception

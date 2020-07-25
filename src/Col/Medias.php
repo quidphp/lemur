@@ -24,11 +24,7 @@ class Medias extends Core\Col\Medias
     final protected function formComplexUpdate(Core\Cell $value,array $attr,array $option):string
     {
         $return = Base\Arr::accumulate('',$this->indexRange(),fn($index) => $this->commonFormComplexUpdate($index,$value,$attr,$option));
-
-        if(empty($return))
-        $return = $this->formComplexEmptyPlaceholder($value);
-
-        return $return;
+        return $return ?: $this->formComplexEmptyPlaceholder($value);
     }
 }
 

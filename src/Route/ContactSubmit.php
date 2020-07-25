@@ -105,13 +105,7 @@ abstract class ContactSubmit extends Core\RouteAlias
         if($post !== null)
         $return = $table->insert($post,['com'=>true]);
 
-        if(empty($return))
-        $this->failureComplete();
-
-        else
-        $this->successComplete();
-
-        return $return;
+        return $this->proceedAfter($return);
     }
 
 

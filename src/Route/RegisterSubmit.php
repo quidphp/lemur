@@ -130,13 +130,7 @@ abstract class RegisterSubmit extends Core\RouteAlias
         if($post !== null)
         $return = $class::registerProcess($post['data'],$post['passwordConfirm'],$option);
 
-        if(empty($return))
-        $this->failureComplete();
-
-        else
-        $this->successComplete();
-
-        return $return;
+        return $this->proceedAfter($return);
     }
 
 

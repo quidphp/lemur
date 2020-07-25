@@ -78,13 +78,7 @@ class SpecificAddSubmit extends Core\RouteAlias
             $return = $table->insert($post,['preValidate'=>true,'com'=>true,'catchException'=>false]);
         }
 
-        if(empty($return))
-        $this->failureComplete();
-
-        else
-        $this->successComplete();
-
-        return $return;
+        return $this->proceedAfter($return);
     }
 }
 

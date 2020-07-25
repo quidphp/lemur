@@ -105,13 +105,7 @@ abstract class AccountSubmit extends Core\RouteAlias
         if($post !== null)
         $return = $row->setUpdateValid($post['data'],$option);
 
-        if(is_int($return))
-        $this->successComplete();
-
-        else
-        $this->failureComplete();
-
-        return $return;
+        return $this->proceedAfter($return);
     }
 
 

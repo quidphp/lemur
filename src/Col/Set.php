@@ -74,8 +74,7 @@ class Set extends Core\Col\Set
                 $return = Base\Arr::replace($return,$all);
             }
 
-            if(empty($return))
-            $return = $all;
+            $return = $return ?: $all;
         }
 
         else

@@ -81,12 +81,7 @@ class Crypt extends Core\ColAlias
     // retourne le secret à utiliser pour la génération du cryptage
     final public function getSecretKey():string
     {
-        $return = $this->getAttr('secret');
-
-        if(empty($return))
-        $return = static::boot()->getSecretKey();
-
-        return $return;
+        return $this->getAttr('secret') ?: static::boot()->getSecretKey();
     }
 }
 

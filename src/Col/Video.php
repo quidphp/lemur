@@ -51,10 +51,7 @@ abstract class Video extends Core\Col\JsonAlias
             $return = new $service();
         }
 
-        if(empty($return))
-        static::throw('couldNotFindVideoService',$uri);
-
-        return $return;
+        return $return ?: static::throw('couldNotFindVideoService',$uri);
     }
 
 

@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Lemur\Col;
 use Quid\Base;
 use Quid\Core;
+use Quid\Lemur;
 use Quid\Orm;
 
 // money
@@ -18,6 +19,7 @@ class Money extends Core\Col\NumAlias
 {
     // config
     protected static array $config = [
+        'cell'=>Lemur\Cell\Money::class,
         'money'=>null // custom
     ];
 
