@@ -48,7 +48,7 @@ abstract class Relation extends Core\Col\Relation
     final public function shouldAppendPrimary():bool
     {
         $table = $this->relation()->relationTable();
-        return $this->getAttr('appendPrimary') === true && !empty($table) && !$table->relation()->isOutputMethod();
+        return $this->getAttr('appendPrimary') === true && !empty($table) && !$table->relation()->isOutputMethod() && $table->getAttr('relationAppendPrimary') === true;
     }
 
 
@@ -300,6 +300,9 @@ abstract class Relation extends Core\Col\Relation
             elseif(!Base\Html::isFormTag($tag))
             $value = $this->relationPlainHtml($value);
         }
+
+        else
+        $value = null;
 
         $return .= $this->formComplexOutput($value,$attr,$option);
 

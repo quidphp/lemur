@@ -28,8 +28,8 @@ abstract class ResetPasswordSubmit extends Core\RouteAlias
             'method'=>'post',
             'role'=>'nobody',
             'post'=>['email'],
-            'timeout'=>true,
-            'csrf'=>true,
+            'timeout'=>false,
+            'csrf'=>false,
             'genuine'=>true],
         'timeout'=>[
             'failure'=>['max'=>8,'timeout'=>600],

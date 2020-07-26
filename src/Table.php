@@ -16,6 +16,7 @@ class Table extends Core\Table
 {
     // config
     protected static array $config = [
+        'relationAppendPrimary'=>false,
         'panel'=>true, // si panel sont actifs ou non
         'permission'=>[
             'subAdmin'=>[
@@ -28,6 +29,7 @@ class Table extends Core\Table
                 'drop'=>true,
                 'nullPlaceholder'=>true]],
         '@cms'=>[
+            'relationAppendPrimary'=>true, // s'il faut append le primary pour les relations
             'specificAddNavLink'=>null, // pour le cms, permet de diviser le lien add et view en deux
             'generalOperation'=>null, // pour le cms, méthode pour ajouter un bouton en haut à droite dans general
             'specificOperation'=>null, // pour le cms, méthode pour ajouter un bouton en haut à droite dans specific

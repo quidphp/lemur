@@ -44,7 +44,7 @@ class Phone extends Core\ColAlias
     final protected function onSet($return,?Orm\Cell $cell=null,array $row,array $option)
     {
         if(is_string($return))
-        $return = Base\Str::keepNum($return);
+        $return = Base\Str::keepNumber($return);
 
         return $return;
     }
