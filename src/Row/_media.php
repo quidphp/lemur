@@ -147,6 +147,8 @@ trait _media
 
             if(is_array($value) && !empty($value))
             {
+                $type = (!empty($value['isImage']))? 'photo':'video';
+
                 if(!empty($value['isImage']))
                 $ratio = Html::div(null,['media','bgimg'=>$value['thumbnail']]);
                 else

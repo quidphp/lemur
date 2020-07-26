@@ -298,33 +298,37 @@ ael(document,'specificForm:unmount',function(event,node) {
 ael(document,'group:specific',function(event,node) {
     
     const mainInner = qs(node,"main .inner");
-    const nav = qs(mainInner,"> .top .nav");
     const form = qs(mainInner,"> .specific-form");
-    const panel = qsa(form,".panel");
     
     // nav
+    const nav = qs(mainInner,"> .top .nav");
     trigSetup(Component.SpecificNav.call(nav));
     
-    // champs simples
-    trigEvt(this,'specificForm:pageMount',form);
-    
-    // avec panel
-    if(Arr.length(panel) > 1)
+    if(form != null)
     {
-        Component.SpecificPanel.call(form);
-        ael(form,'specificPanel:setHash',function(event,hash) {
-            trigHdlr(nav,'specificNav:setHash',hash);
+        const panel = qsa(form,".panel");
+        
+        // champs simples
+        trigEvt(this,'specificForm:pageMount',form);
+        
+        // avec panel
+        if(Arr.length(panel) > 1)
+        {
+            Component.SpecificPanel.call(form);
+            ael(form,'specificPanel:setHash',function(event,hash) {
+                trigHdlr(nav,'specificNav:setHash',hash);
+            });
+            trigSetup(form,true);
+        }
+        
+        else
+        trigEvt(this,'specificForm:tabFull',form);
+        
+        // unmount
+        aelOnce(this,'group:specific:unmount',function(event,node) {
+            trigEvt(this,'specificForm:unmount',form);
         });
-        trigSetup(form,true);
     }
-    
-    else
-    trigEvt(this,'specificForm:tabFull',form);
-    
-    // unmount
-    aelOnce(this,'group:specific:unmount',function(event,node) {
-        trigEvt(this,'specificForm:unmount',form);
-    });
 });
 
 
