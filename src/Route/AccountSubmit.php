@@ -29,9 +29,9 @@ abstract class AccountSubmit extends Core\RouteAlias
             'method'=>'post',
             'session'=>'canAccess',
             'post'=>['email'],
-            'timeout'=>false,
+            'timeout'=>true,
             'genuine'=>true,
-            'csrf'=>false],
+            'csrf'=>true],
         'timeout'=>[
             'failure'=>['max'=>25,'timeout'=>600],
             'success'=>['max'=>25,'timeout'=>600]],
