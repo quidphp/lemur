@@ -25,6 +25,7 @@ class Fr extends Core\Lang\Fr
 
         // resetPassword
         'resetPassword'=>[
+            'email'=>'Courriel',
             'forgot'=>'Mot de passe oublié ?',
             'submit'=>'Soumettre'
         ],

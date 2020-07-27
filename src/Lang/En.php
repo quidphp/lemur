@@ -25,6 +25,7 @@ class En extends Core\Lang\En
 
         // resetPassword
         'resetPassword'=>[
+            'email'=>'Email',
             'forgot'=>'Forgot your password ?',
             'submit'=>'Submit'
         ],
