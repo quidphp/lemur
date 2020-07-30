@@ -36,6 +36,38 @@ trait _template
     }
 
 
+    // getHtmlAttr
+    // retourne les attributs html généraux
+    final public function getHtmlAttr($value=null)
+    {
+        return $this->getRouteHtmlAttr() ?: null;
+    }
+
+
+    // getPageHtmlAttr
+    // retourne les attributs html spécifique à la route
+    protected function getRouteHtmlAttr():array
+    {
+        return [];
+    }
+
+
+    // getCacheReplace
+    // retourne les éléments de cache
+    final protected function getCacheReplace():array
+    {
+        return $this->getRouteCacheReplace();
+    }
+
+
+    // getRouteCacheReplace
+    // retourne les éléments de cache spécifique à la route
+    protected function getRouteCacheReplace():array
+    {
+        return [];
+    }
+
+
     // template
     // génère le template pour le cms
     final protected function template():string
