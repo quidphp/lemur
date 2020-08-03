@@ -33,7 +33,7 @@ class Home extends Core\Route\Home
 
     // main
     // génère main pour home
-    final protected function main():string
+    protected function main():string
     {
         $r = Html::divCond($this->mainTop(),'top');
         $r .= Html::divCond($this->mainBottom(),'bottom');
@@ -55,7 +55,7 @@ class Home extends Core\Route\Home
 
     // mainTopLeft
     // génère le html pour la partie en haut à gauche de la page d'accueil
-    final protected function mainTopLeft():string
+    protected function mainTopLeft():string
     {
         $r = $this->makeH1($this->makeH1Title());
 
