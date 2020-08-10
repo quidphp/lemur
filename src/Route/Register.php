@@ -26,7 +26,8 @@ abstract class Register extends Core\RouteAlias
         'parent'=>Login::class,
         'row'=>Lemur\Row\User::class,
         'group'=>'nobody',
-        'formWrap'=>"<div class='table %class%'><div class='table-row'><div class='table-cell label-cell'>%label%</div><div class='table-cell form-cell'>%form%</div></div></div>"
+        'formWrap'=>"<div class='table %class%'><div class='table-row'><div class='table-cell label-cell'>%label%</div><div class='table-cell form-cell'>%form%</div></div></div>",
+        'formPattern'=>'%:'
     ];
 
 
@@ -59,6 +60,14 @@ abstract class Register extends Core\RouteAlias
     final public function getFormWrap():string
     {
         return $this->getAttr('formWrap');
+    }
+
+
+    // getFormPattern
+    // retourne la string formPattern
+    final public function getFormPattern():string
+    {
+        return $this->getAttr('formPattern');
     }
 
 
@@ -109,15 +118,17 @@ abstract class Register extends Core\RouteAlias
         $fields = $this->getBaseFields();
         $flash = $this->flash();
         $formWrap = $this->getFormWrap();
+        $pattern = $this->getFormPattern();
 
         foreach ($fields as $value)
         {
             $col = $table->col($value);
+            $name = $col->name();
             $v = $flash[$value] ?? $col->default();
             $class = ($col->isRequired())? 'required':'not-required';
             $description = Html::divCond($col->description(),'description');
             $method = ($col->isRelation())? 'formComplexWrap':'formWrap';
-            $r .= $col->$method($formWrap,'%:',$v,null,['class'=>$class,'description'=>$description]);
+            $r .= $col->$method($formWrap,$pattern,$v,null,['class'=>$class,'name'=>$name,'description'=>$description]);
         }
 
         return $r;
@@ -135,8 +146,9 @@ abstract class Register extends Core\RouteAlias
         $label = static::langText('register/confirmPassword');
         $replace = ['class'=>'required','description'=>null];
         $formWrap = $this->getFormWrap();
+        $pattern = $this->getFormPattern();
 
-        $r .= $col->formWrap($formWrap,'%:',null,['data-required'=>true],$replace);
+        $r .= $col->formWrap($formWrap,$pattern,null,['data-required'=>true],$replace);
         $r .= $col->formWrap($formWrap,$label.':',null,['data-required'=>true,'name'=>$fields['passwordConfirm']],$replace);
 
         return $r;
