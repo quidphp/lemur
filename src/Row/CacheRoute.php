@@ -23,7 +23,7 @@ class CacheRoute extends Core\Row\CacheRoute
             'data'=>['class'=>Lemur\Col\JsonExport::class]],
         '@cms'=>[
             'permission'=>[
-                '*'=>['homeFeed'=>false],
+                '*'=>['homeFeed'=>false,'truncate'=>true],
                 'contributor'=>['view'=>false,'lemurDelete'=>false],
                 'editor'=>['view'=>false,'lemurDelete'=>false],
                 'subAdmin'=>['lemurInsert'=>false,'lemurDelete'=>false],
