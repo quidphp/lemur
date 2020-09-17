@@ -113,7 +113,7 @@ abstract class RegisterSubmit extends Core\RouteAlias
 
         $return['data'] = Base\Arr::gets($keep,$post);
         $return['data'] = Base\Arr::replace($return['data'],$default);
-        $return['passwordConfirm'] = $post[$passwordConfirm];
+        $return['passwordConfirm'] = (string) $post[$passwordConfirm];
 
         return $return;
     }
