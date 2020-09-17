@@ -29,6 +29,10 @@
             font-weight: normal;
         }
     }
+    
+    @include responsive() {
+        justify-content: center;
+    }
 }
 
 /* FORM */

@@ -51,6 +51,10 @@ abstract class RegisterSubmit extends Core\RouteAlias
     ];
 
 
+    // dynamique
+    protected ?Lemur\Row $user = null;
+
+
     // canTrigger
     // retourne vrai si la route peut être lancé
     public function canTrigger():bool
@@ -61,7 +65,7 @@ abstract class RegisterSubmit extends Core\RouteAlias
 
     // onSuccess
     // traite le succès
-    final protected function onSuccess():void
+    protected function onSuccess():void
     {
         static::sessionCom()->stripFloor();
         static::timeoutIncrement('success');
@@ -79,7 +83,7 @@ abstract class RegisterSubmit extends Core\RouteAlias
 
     // routeSuccess
     // méthode abstraite, retourne l'objet route en cas de succès
-    final protected function routeSuccess():Lemur\Route
+    protected function routeSuccess():Lemur\Route
     {
         return Login::make();
     }
@@ -128,7 +132,7 @@ abstract class RegisterSubmit extends Core\RouteAlias
         $post = $this->onBeforeCommit($post);
 
         if($post !== null)
-        $return = $class::registerProcess($post['data'],$post['passwordConfirm'],$option);
+        $return = $this->user = $class::registerProcess($post['data'],$post['passwordConfirm'],$option);
 
         return $this->proceedAfter($return);
     }
