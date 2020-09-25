@@ -29,6 +29,13 @@ class TinyMceAdvanced extends TinyMceAlias
             'table_cell_advtab'=>true,
             'table_style_by_css'=>true,
             'style_formats'=>[
+                11=>['title'=>'superscript','format'=>'superscript'],
+                12=>['title'=>'header1','format'=>'h1'],
+                13=>['title'=>'header2','format'=>'h2'],
+                14=>['title'=>'header3','format'=>'h3'],
+                15=>['title'=>'header4','format'=>'h4'],
+                16=>['title'=>'header5','format'=>'h5'],
+                17=>['title'=>'header6','format'=>'h6'],
                 20=>['title'=>'alignLeft','wrapper'=>true,'selector'=>'*','attributes'=>['class'=>'align-left']],
                 21=>['title'=>'alignCenter','wrapper'=>true,'selector'=>'*','attributes'=>['class'=>'align-center']],
                 22=>['title'=>'alignRight','wrapper'=>true,'selector'=>'*','attributes'=>['class'=>'align-right']],

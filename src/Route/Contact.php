@@ -83,13 +83,13 @@ abstract class Contact extends Core\RouteAlias
 
     // makeFormRow
     // génère la partie du formulaire qui se fait via la row
-    final protected function makeFormRow():string
+    final public function makeFormRow(?array $attr=null,?array $cols=null):string
     {
         $r = '';
         $route = $this->submitRoute();
         $row = static::rowClass();
         $flash = Base\Arr::replace($this->getFormData(),static::session()->flash()->get($route));
-        $r .= $row::makeForm($this->getAttr('formWrap'),$this->getAttr('pattern'),$flash);
+        $r .= $row::makeForm($this->getAttr('formWrap'),$this->getAttr('pattern'),$flash,$attr,$cols);
 
         return $r;
     }

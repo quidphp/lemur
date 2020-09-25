@@ -24,8 +24,8 @@ class TinyMce extends TextareaAlias
         'language'=>['fr'=>'fr_FR'], // tableau pour convertir un code de language quid vers tinymce
         'group'=>'tinymce',
         'tinymce'=>[ // config pour tinymce qui sera mis en attribut dans la tag textarea
-            'plugins'=>'autolink code charmap fullscreen hr link lists paste print searchreplace visualblocks wordcount',
-            'toolbar'=>'styleselect removeformat visualblocks | bold italic underline | bullist numlist | link charmap hr | searchreplace print code fullscreen',
+            'plugins'=>'autolink code charmap fullscreen link paste print searchreplace visualblocks wordcount',
+            'toolbar'=>'styleselect removeformat visualblocks | bold italic underline | link charmap | searchreplace print code fullscreen',
             'branding'=>false,
             'add_unload_trigger'=>false,
             'cache_suffix'=>'?v=%version%',
@@ -41,14 +41,7 @@ class TinyMce extends TextareaAlias
             'toolbar_drawer'=>'sliding',
             'visualblocks_default_state'=>true,
             'style_formats'=>[
-                10=>['title'=>'paragraph','format'=>'p','wrapper'=>true],
-                11=>['title'=>'superscript','format'=>'superscript'],
-                12=>['title'=>'header1','format'=>'h1'],
-                13=>['title'=>'header2','format'=>'h2'],
-                14=>['title'=>'header3','format'=>'h3'],
-                15=>['title'=>'header4','format'=>'h4'],
-                16=>['title'=>'header5','format'=>'h5'],
-                17=>['title'=>'header6','format'=>'h6']
+                10=>['title'=>'paragraph','format'=>'p','wrapper'=>true]
             ]]
     ];
 
