@@ -197,7 +197,7 @@ abstract class Files extends Core\Col\Files
             $html .= Html::span($basename,'filename');
 
             if($file->isFilePathToUri())
-            $html = Base\Html::a($file,$basename,'filename');
+            $html = Html::a($file,$basename,'filename');
 
             if($download === true)
             {
@@ -216,7 +216,7 @@ abstract class Files extends Core\Col\Files
                 else
                 $thumbnail = $file;
 
-                $return .= Base\Html::img($thumbnail);
+                $return .= Html::img($thumbnail);
             }
             else
             $return .= Html::div(null,'media-placeholder');
@@ -266,7 +266,7 @@ abstract class Files extends Core\Col\Files
                         if($file->isFilePathToUri())
                         {
                             $uri = Base\Str::excerpt(50,$file->pathToUri());
-                            $liHtml .= Base\Html::a($file,$uri);
+                            $liHtml .= Html::a($file,$uri);
                         }
 
                         $liHtml .= Html::span($file->size(true),'filesize');

@@ -33,7 +33,7 @@ class Cell extends Core\Cell
         if(is_string($placeholder))
         $value = Html::div($placeholder,'empty-placeholder');
 
-        else
+        elseif(is_string($value))
         $value = Html::xss($value);
 
         return Html::div($value,$attr,$option);

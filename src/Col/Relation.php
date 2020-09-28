@@ -297,7 +297,7 @@ abstract class Relation extends Core\Col\Relation
                 $value = $this->relationPlainHtml($value);
             }
 
-            elseif(!Base\Html::isFormTag($tag))
+            elseif(!Html::isFormTag($tag))
             $value = $this->relationPlainHtml($value);
         }
 

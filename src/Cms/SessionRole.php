@@ -89,7 +89,6 @@ class SessionRole extends Core\RouteAlias
     // génère le formulaire des rôles
     final protected function rolesForm():string
     {
-        $return = null;
         $table = static::tableFromRowClass();
         $col = $table->col('role');
         $session = static::session();
@@ -97,9 +96,8 @@ class SessionRole extends Core\RouteAlias
         $value = (!empty($fakeRoles))? $fakeRoles->keys():null;
         $roles = $this->roles()->pair('label');
         $wrap = "<div class='choice'>%</div>";
-        $return = Base\Html::checkboxesWithHidden($roles,$col->name(),['checked'=>$value,'html'=>$wrap]);
 
-        return $return;
+        return Html::checkboxesWithHidden($roles,$col->name(),['checked'=>$value,'html'=>$wrap]);
     }
 
 

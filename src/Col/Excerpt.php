@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Quid\Lemur\Col;
 use Quid\Base;
+use Quid\Base\Html;
 use Quid\Core;
 use Quid\Orm;
 
@@ -22,7 +23,7 @@ class Excerpt extends Core\ColAlias
         'required'=>false,
         'check'=>['kind'=>'text'],
         'makeExcerpt'=>[ // custom
-            'method'=>[Base\Html::class,'excerpt'],
+            'method'=>[Html::class,'excerpt'],
             'option'=>['suffix'=>'...'],
             'length'=>500,
             'col'=>'content']

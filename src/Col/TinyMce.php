@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Quid\Lemur\Col;
 use Quid\Base;
+use Quid\Base\Html;
 
 // tinyMce
 // class for a column which transforms the textarea in a simple tinymce WYSIWYG editor
@@ -109,7 +110,7 @@ class TinyMce extends TextareaAlias
         $return = null;
         $tag = $this->complexTag($attr);
 
-        if(Base\Html::isFormTag($tag,true))
+        if(Html::isFormTag($tag,true))
         $attr = Base\Attr::append(['data'=>['tinymce'=>$this->tinymceData()]],$attr);
 
         else
