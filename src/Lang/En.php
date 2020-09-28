@@ -535,6 +535,7 @@ class En extends Core\Lang\En
             // footer
             'footer'=>[
                 'backToTop'=>'Back to top',
+                'print'=>'Print',
                 'link'=>'Link',
                 'lang'=>'Language',
                 'module'=>'Module',

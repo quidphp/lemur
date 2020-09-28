@@ -437,10 +437,10 @@ trait _template
         $version = $boot->version(true,$showQuid,true);
 
         if($this->hasPermission('backToTop'))
-        {
-            $buttonHtml = Html::button(static::langText('footer/backToTop'),['with-icon','top','no-border']);
-            $r .= Html::div($buttonHtml,'back-to-top');
-        }
+        $r .= $this->footerBackToTop();
+
+        if($this->hasPermission('print'))
+        $r .= $this->footerPrint();
 
         if($this->hasPermission('link'))
         $r .= $this->footerElement('link',$this->footerLink());
@@ -482,6 +482,24 @@ trait _template
         $r .= Html::div($html,$attr);
 
         return $r;
+    }
+
+
+    // footerBackToTop
+    // génère le bouton pour retourner vers le haut de la page
+    final protected function footerBackToTop():string
+    {
+        $buttonHtml = Html::button(static::langText('footer/backToTop'),['with-icon','top','no-border']);
+        return  Html::div($buttonHtml,'back-to-top');
+    }
+
+
+    // footerPrint
+    // génère le bouton pour imprimer la page
+    final protected function footerPrint():string
+    {
+        $buttonHtml = Html::button(static::langText('footer/print'),['with-icon','print','no-border']);
+        return  Html::div($buttonHtml,'print');
     }
 
 
@@ -531,6 +549,9 @@ trait _template
 
         return $return;
     }
+
+
+    // footerPrint
 
 
     // footerLinkType

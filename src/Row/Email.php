@@ -23,7 +23,7 @@ class Email extends Core\Row\Email
         '@cms'=>[
             'permission'=>[
                 'contributor'=>['view'=>false],
-                'editor'=>['view'=>false]]]
+                'editor'=>['view'=>true,'insert'=>false,'delete'=>false]]]
     ];
 }
 

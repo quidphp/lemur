@@ -68,6 +68,7 @@ ael(document,'doc:mountCommon',function(event,node) {
     const backToTop = qs(node,"footer .back-to-top");
     const tooltip = qsa(node,"[data-tooltip]");
     const plural = qsa(node,"[data-plural]");
+    const print = qsa(node, 'button.print');
     
     // anchorCorner
     trigSetup(Component.AnchorCorner.call(anchorCorner));
@@ -98,6 +99,9 @@ ael(document,'doc:mountCommon',function(event,node) {
     
     // plural
     trigSetup(Component.Plural.call(plural));
+    
+    // print
+    Component.ClickPrint.call(print);
 });
 
 

@@ -535,6 +535,7 @@ class Fr extends Core\Lang\Fr
             // footer
             'footer'=>[
                 'backToTop'=>'Retour vers le haut',
+                'print'=>'Imprimer',
                 'link'=>'Lien',
                 'lang'=>'Langue',
                 'module'=>'Module',
@@ -752,6 +753,11 @@ class Fr extends Core\Lang\Fr
                         'key'=>'URL à rediriger',
                         'value'=>'Destination de la redirection',
                         'type'=>'La redirection est active dans ces types.'
+                    ],
+
+                    // cacheRoute
+                    'cacheRoute'=>[
+                        'data'=>'Contiens les données mises en cache'
                     ],
 
                     // user

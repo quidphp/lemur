@@ -173,6 +173,9 @@ body .with-icon {
     &.plus {
         @include bgimg64($iconPlus);
     }
+    &.print {
+        @include bgimg64($iconPrint);
+    }
     &.reset,
     &.regenerate {
         @include bgimg64($iconReset);
