@@ -265,8 +265,8 @@ class Route extends Base\Test
         assert($obj::sessionCom() instanceof Core\Com);
         assert($obj::sessionUser() instanceof Core\Row\User);
         assert($obj::lang() instanceof Core\Lang);
-        assert($obj::langText('label') === 'Assert');
-        assert($obj::langPlural(2,'label') === 'Asserts');
+        assert($obj::lang()->text('label') === 'Assert');
+        assert($obj::lang()->plural(2,'label') === 'Asserts');
         assert($obj::service('mailer') instanceof Main\Service);
         assert($obj::serviceMailer() instanceof Main\ServiceMailer);
 

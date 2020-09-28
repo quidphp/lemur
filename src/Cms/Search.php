@@ -81,10 +81,11 @@ class Search extends Core\RouteAlias
         $search = $this->getSearchValue();
         $searchable = $this->searchable();
         $results = $searchable->search($search);
+        $lang = static::lang();
         $r .= $this->makeResults($results);
 
         if(empty($r))
-        $r = Html::h3(static::langText('search/notFound'));
+        $r = Html::h3($lang->text('search/notFound'));
 
         return $r;
     }

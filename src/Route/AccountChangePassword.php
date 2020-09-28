@@ -53,7 +53,8 @@ abstract class AccountChangePassword extends Core\RouteAlias
     {
         $r = '';
         $route = $this->submitRoute();
-        $submit = static::langText('accountChangePassword/submit');
+        $lang = static::lang();
+        $submit = $lang->text('accountChangePassword/submit');
         $fields = $route->getFields();
         $colPassword = $this->getAttr('colPassword');
         $table = static::tableFromRowClass();
@@ -64,7 +65,7 @@ abstract class AccountChangePassword extends Core\RouteAlias
         $html = '';
         foreach ($fields as $name)
         {
-            $label = static::langText('accountChangePassword/'.$name);
+            $label = $lang->text('accountChangePassword/'.$name);
             $attr = ['name'=>$name,'placeholder'=>$label,'data-required'=>true];
             $form = $col->form(null,$attr);
             $html .= Html::div($form,'field');

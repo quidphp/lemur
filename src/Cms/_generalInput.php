@@ -23,6 +23,7 @@ trait _generalInput
         $r = '';
         $rowWord ??= 'common/row';
         $sql = $this->sql();
+        $lang = static::lang();
 
         $table = $this->table();
         $where = $table->where();
@@ -43,22 +44,22 @@ trait _generalInput
         {
             $r .= $tableCount;
             $r .= ' ';
-            $r .= static::langPlural($tableCount,'lcf|'.$rowWord);
+            $r .= $lang->plural($tableCount,'lcf|'.$rowWord);
         }
 
         else
         {
             $r .= $whatCount;
             $r .= ' ';
-            $r .= static::langPlural($whatCount,'lcf|'.$rowWord);
+            $r .= $lang->plural($whatCount,'lcf|'.$rowWord);
             $r .= ' ';
-            $r .= static::langPlural($whatCount,'lcf|common/filtered');
+            $r .= $lang->plural($whatCount,'lcf|common/filtered');
             $r .= ', ';
             $r .= $tableCount;
             $r .= ' ';
-            $r .= static::langPlural($tableCount,'lcf|'.$rowWord);
+            $r .= $lang->plural($tableCount,'lcf|'.$rowWord);
             $r .= ' ';
-            $r .= static::langText('lcf|common/total');
+            $r .= $lang->text('lcf|common/total');
         }
 
         return $r;
@@ -107,7 +108,8 @@ trait _generalInput
     {
         $r = '';
         $sql = $this->sql();
-        $text ??= static::langText('lcf|common/limit');
+        $lang = static::lang();
+        $text ??= $lang->text('lcf|common/limit');
 
         if($this->hasTablePermission('limit','perPage') && $sql->isTriggerCountNotEmpty())
         {
@@ -134,6 +136,7 @@ trait _generalInput
         {
             $sql = $this->sql();
             $general = $sql->general();
+            $lang = static::lang();
 
             if(!empty($general) && $general['total'] > 1)
             {
@@ -147,9 +150,9 @@ trait _generalInput
                 $total = $general['total'];
                 $data = ['href'=>$route,'char'=>static::getReplaceSegment(),'current'=>$general['current'],'pattern'=>'intCastNotEmpty','max'=>$total];
 
-                $centerHtml = Html::span(static::langText('common/page'));
+                $centerHtml = Html::span($lang->text('common/page'));
                 $centerHtml .= Html::inputText($general['current'],['name'=>'page','data'=>$data,'inputmode'=>'decimal']);
-                $centerHtml .= Html::span(static::langText('lcf|common/on').' '.$total);
+                $centerHtml .= Html::span($lang->text('lcf|common/on').' '.$total);
                 $r .= Html::div($centerHtml,'center');
 
                 if(!empty($general['next']))

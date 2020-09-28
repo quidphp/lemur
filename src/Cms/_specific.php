@@ -184,7 +184,8 @@ trait _specific
     final protected function colInfoPopupClosure(Core\Col $col):\Closure
     {
         return function(string $key) use($col) {
-            $return = [static::langText(['popup','col',$key])];
+            $lang = static::lang();
+            $return = [$lang->text(['popup','col',$key])];
             $value = null;
 
             if($key === 'pattern')

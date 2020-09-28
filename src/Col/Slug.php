@@ -131,7 +131,8 @@ class Slug extends Core\ColAlias
 
             if(is_int($replaced) && $replaced > 0 && $option['com'] === true)
             {
-                $text = static::langPlural($replaced,'com/pos/slug/updated',['count'=>$replaced]);
+                $lang = $this->db()->lang();
+                $text = $lang->plural($replaced,'com/pos/slug/updated',['count'=>$replaced]);
                 $this->com($text,$cell,'pos');
             }
         }

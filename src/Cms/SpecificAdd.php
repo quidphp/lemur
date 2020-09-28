@@ -150,7 +150,7 @@ class SpecificAdd extends Core\RouteAlias
         {
             $r .= $this->table()->label(null,$lang);
             $r .= ' | ';
-            $r .= static::langText('specific/add');
+            $r .= static::lang()->text('specific/add');
         }
 
         return $r;
@@ -183,8 +183,9 @@ class SpecificAdd extends Core\RouteAlias
 
         if($table->hasPermission('nav','navBack'))
         {
+            $lang = static::lang();
             $general = $this->general();
-            $r .= Html::div($general->a(static::langText('specific/back')),'nav');
+            $r .= Html::div($general->a($lang->text('specific/back')),'nav');
         }
 
         return $r;
@@ -195,7 +196,8 @@ class SpecificAdd extends Core\RouteAlias
     // génère le submit pour le formulaire d'ajout
     final protected function makeFormSubmit(string $type):string
     {
-        return Html::submit(static::langText('specific/add'),['with-icon','add']);
+        $text = static::lang()->text('specific/add');
+        return Html::submit($text,['with-icon','add']);
     }
 
 

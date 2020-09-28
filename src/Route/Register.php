@@ -142,8 +142,9 @@ abstract class Register extends Core\RouteAlias
         $r = '';
         $fields = $this->getPasswordFields();
         $table = static::tableFromRowClass();
+        $lang = static::lang();
         $col = $table->col($fields['password']);
-        $label = static::langText('register/confirmPassword');
+        $label = $lang->text('register/confirmPassword');
         $replace = ['class'=>'required','description'=>null];
         $formWrap = $this->getFormWrap();
         $pattern = $this->getFormPattern();

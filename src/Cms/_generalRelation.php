@@ -47,6 +47,7 @@ trait _generalRelation
         $r = '';
         $grab = $this->relationGrab();
         $emptyNotEmpty = $this->showEmptyNotEmpty();
+        $lang = static::lang();
 
         if(!empty($grab))
         {
@@ -71,7 +72,7 @@ trait _generalRelation
         $r = Html::divCond($r,'relation-wrap');
 
         if(empty($r))
-        $r .= Html::h3(static::langText('common/nothing'));
+        $r .= Html::h3($lang->text('common/nothing'));
 
         return $r;
     }
@@ -127,12 +128,13 @@ trait _generalRelation
     final protected function getEmptyNotEmptyKeyValue(?array $not=null):array
     {
         $return = [];
+        $lang = static::lang();
 
         foreach (['00'=>'isEmpty','01'=>'isNotEmpty'] as $key => $label)
         {
             if($not === null || !in_array($key,$not,true))
             {
-                $label = static::langText(['common',$label]);
+                $label = $lang->text(['common',$label]);
                 $label = "-- $label --";
                 $return[$key] = $label;
             }

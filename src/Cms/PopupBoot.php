@@ -47,9 +47,9 @@ class PopupBoot extends Core\RouteAlias
     {
         return function(string $key):array {
             $return = [];
-            $label = null;
             $value = null;
             $boot = static::boot();
+            $lang = static::lang();
 
             if(in_array($key,['envLabel','typeLabel','paths','schemeHosts','classFqcn'],true))
             $value = $boot->$key();
@@ -78,8 +78,7 @@ class PopupBoot extends Core\RouteAlias
             else
             $value = Base\Server::$key();
 
-            if($label === null)
-            $label = static::langText(['popup','boot',$key]);
+            $label = $lang->text(['popup','boot',$key]);
 
             $return = [$label,$value];
 

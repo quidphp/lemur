@@ -54,6 +54,7 @@ trait _tableRelation
     {
         $r = '';
         $grab = $this->relationGrab();
+        $lang = static::lang();
 
         if(!empty($grab))
         {
@@ -64,7 +65,7 @@ trait _tableRelation
         }
 
         if(empty($r))
-        $r .= Html::h3(static::langText('common/nothing'));
+        $r .= Html::h3($lang->text('common/nothing'));
 
         return $r;
     }

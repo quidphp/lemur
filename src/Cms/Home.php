@@ -83,14 +83,15 @@ class Home extends Core\Route\Home
         $closure = fn($table) => $table->hasPermission('view');
         $total = $tables->filter($closure)->total(true,true);
         $popup = $this->makeHomePopup();
+        $lang = static::lang();
 
         $attr = ['popup-trigger'];
         $tag = 'div';
-        $title = Html::span($total['table'].' '.static::langPlural($total['table'],'lcf|common/table'));
+        $title = Html::span($total['table'].' '.$lang->plural($total['table'],'lcf|common/table'));
         $title .= Html::span(',&nbsp;');
-        $title .= Html::span($total['row'].' '.static::langPlural($total['row'],'lcf|common/row'));
-        $title .= Html::span('&nbsp;'.static::langText('lcf|common/and').'&nbsp;');
-        $title .= Html::span($total['col'].' '.static::langPlural($total['col'],'lcf|common/col'));
+        $title .= Html::span($total['row'].' '.$lang->plural($total['row'],'lcf|common/row'));
+        $title .= Html::span('&nbsp;'.$lang->text('lcf|common/and').'&nbsp;');
+        $title .= Html::span($total['col'].' '.$lang->plural($total['col'],'lcf|common/col'));
 
         if(!empty($popup))
         {
@@ -128,7 +129,8 @@ class Home extends Core\Route\Home
     final protected function infoPopupClosure():\Closure
     {
         return function(string $key) {
-            $return = [static::langText(['popup','home',$key])];
+            $lang = static::lang();
+            $return = [$lang->text(['popup','home',$key])];
             $value = null;
             $db = $this->db();
 
@@ -200,10 +202,11 @@ class Home extends Core\Route\Home
         $r = '';
         $segment = ['type'=>$this->getAttr('feedType')];
         $homeFeed = HomeFeed::make($segment);
+        $lang = static::lang();
 
         if($homeFeed->canTrigger())
         {
-            $head = Html::h2(static::langText('home/feed'));
+            $head = Html::h2($lang->text('home/feed'));
             $body = $homeFeed->trigger();
             $currentType = $homeFeed->segment('type');
 
@@ -224,10 +227,12 @@ class Home extends Core\Route\Home
     {
         $r = '';
         $route = HomeFeedRelation::make();
+        $lang = static::lang();
+
         if($route->canTrigger())
         {
             $attr = ['data'=>['absolute-placeholder'=>true,'anchor-corner'=>true]];
-            $label = static::langText('home/feedFilter');
+            $label = $lang->text('home/feedFilter');
 
             $filter = $route->makeTableRelation($label,$after,'user-relation');
             $r .= Html::divCond($filter,$attr);
@@ -245,6 +250,7 @@ class Home extends Core\Route\Home
         $tables = $this->db()->tables();
         $tables = $tables->filter(fn($table) => $table->hasPermission('view','homeOverview'));
         $tables = $tables->sortBy('label');
+        $lang = static::lang();
 
         if($tables->isNotEmpty())
         {
@@ -256,7 +262,7 @@ class Home extends Core\Route\Home
 
             if(!empty($body))
             {
-                $title = Html::h2(static::langText('home/overview'));
+                $title = Html::h2($lang->text('home/overview'));
                 $r .= Html::div($title,'block-head');
                 $r .= Html::div($body,'block-body');
             }
@@ -281,9 +287,9 @@ class Home extends Core\Route\Home
             $r .= Html::h3($table->label());
 
             $total = $table->total(true,true);
-            $count = Html::span($total['row'].' '.static::langPlural($total['row'],'lcf|common/row'));
-            $count .= Html::span('&nbsp;'.static::langText('lcf|common/and').'&nbsp;');
-            $count .= Html::span($total['col'].' '.static::langPlural($total['col'],'lcf|common/col'));
+            $count = Html::span($total['row'].' '.$lang->plural($total['row'],'lcf|common/row'));
+            $count .= Html::span('&nbsp;'.$lang->text('lcf|common/and').'&nbsp;');
+            $count .= Html::span($total['col'].' '.$lang->plural($total['col'],'lcf|common/col'));
             $r .= Html::divCond($count,'count');
 
             $r = $route->a($r);

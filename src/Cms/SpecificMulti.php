@@ -117,8 +117,9 @@ class SpecificMulti extends Core\RouteAlias
 
         if($table->hasPermission('nav','navBack'))
         {
+            $lang = static::lang();
             $general = $this->general()->changeSegment('highlight',$this->rows());
-            $r .= Html::div($general->a(static::langText('specific/back')),'nav');
+            $r .= Html::div($general->a($lang->text('specific/back')),'nav');
         }
 
         return $r;
@@ -140,11 +141,10 @@ class SpecificMulti extends Core\RouteAlias
     // génère le submit pour le formulaire d'ajout
     final protected function makeFormSubmit(string $type):string
     {
-        $return = null;
         $text = 'specific/modify'.ucfirst($type);
-        $return = Html::submit(static::langText($text),['with-icon','modify']);
+        $text = static::lang()->text($text);
 
-        return $return;
+        return Html::submit($text,['with-icon','modify']);
     }
 
 
@@ -152,7 +152,7 @@ class SpecificMulti extends Core\RouteAlias
     // permet de changer le tableau de remplacement pour un élément du formulaire
     protected function makeFormOneReplace(Core\Col $col,array $return):array
     {
-        $label = static::langText('specific/activateField');
+        $label = static::lang()->text('specific/activateField');
         $disabler = Html::checkbox([0=>$label]);
         $return['disabler'] = $disabler;
 

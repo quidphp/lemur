@@ -24,7 +24,6 @@ class Cell extends Core\Cell
     // utilisé dans le tableau général de lemur
     final public function generalComponent($attr=null,?array $option=null):string
     {
-        $return = '';
         $option = (array) $option;
         $value = $this->generalOutput($option);
         $col = $this->col();
@@ -34,9 +33,10 @@ class Cell extends Core\Cell
         if(is_string($placeholder))
         $value = Html::div($placeholder,'empty-placeholder');
 
-        $return = Html::div($value,$attr,$option);
+        else
+        $value = Html::xss($value);
 
-        return $return;
+        return Html::div($value,$attr,$option);
     }
 
 
@@ -62,14 +62,12 @@ class Cell extends Core\Cell
     // utilisé dans les formulaires spécifiques de lemur
     final public function specificComponent(?array $attr=null,?array $option=null):string
     {
-        $return = '';
         $compAttr = [];
         $compAttr = $this->getSpecificComponentAttr($compAttr);
         $option = (array) $option;
         $form = $this->formComplex($attr,$option);
-        $return = Html::div($form,$compAttr);
 
-        return $return;
+        return Html::div($form,$compAttr);
     }
 
 

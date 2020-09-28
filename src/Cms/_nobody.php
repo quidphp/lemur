@@ -132,8 +132,10 @@ trait _nobody
     {
         $r = '';
         $route = ResetPassword::make();
+        $lang = static::lang();
+
         if($route->canTrigger())
-        $r .= $route->a(static::langText('resetPassword/forgot'));
+        $r .= $route->a($lang->text('resetPassword/forgot'));
 
         return $r;
     }

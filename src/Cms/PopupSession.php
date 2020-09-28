@@ -64,6 +64,7 @@ class PopupSession extends Core\RouteAlias
             $value = null;
             $session = static::session();
             $user = $session->user();
+            $lang = static::lang();
             $sessionKeys = ['primary','requestCount','ip','lang','userAgent','name','getLifetime','expire','getCookieParams','getLoginLifetime','getGarbageCollect'];
 
             if($user->hasCell($key))
@@ -116,7 +117,7 @@ class PopupSession extends Core\RouteAlias
             $value = $user->$key();
 
             if($label === null)
-            $label = static::langText(['popup','session',$key]);
+            $label = $lang->text(['popup','session',$key]);
 
             $return = [$label,$value];
 

@@ -111,6 +111,7 @@ trait _relation
     {
         $r = '';
         $pageNext = $this->pageNext();
+        $lang = static::lang();
 
         if(is_int($pageNext))
         {
@@ -123,7 +124,7 @@ trait _relation
 
             $replace = ['from'=>$from,'to'=>$to,'total'=>$total];
             $route = $this->changeSegment('page',$pageNext);
-            $text = static::langText('relationFeed/loadMore',$replace);
+            $text = $lang->text('relationFeed/loadMore',$replace);
 
             $text = Html::span($text,'text');
             $r .= $route->a($text,'load-more');
@@ -268,6 +269,7 @@ trait _relation
 
         if($route->canTrigger())
         {
+            $lang = static::lang();
             $searchMinLength = $relation->searchMinLength();
 
             $limit = $route->limit();
@@ -284,7 +286,7 @@ trait _relation
             $size = $relation->size();
             if($size > $limit)
             {
-                $placeholder = static::langText('common/filter')." ($size)";
+                $placeholder = $lang->text('common/filter')." ($size)";
 
                 $searchHtml = Html::inputText(null,['name'=>true,'data-pattern'=>['minLength'=>$searchMinLength],'placeholder'=>$placeholder,'inputmode'=>'search']);
                 $searchHtml .= Html::button(null,['icon-solo','search']);

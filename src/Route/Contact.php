@@ -67,8 +67,9 @@ abstract class Contact extends Core\RouteAlias
     protected function makeForm():string
     {
         $r = '';
+        $lang = static::lang();
         $route = $this->submitRoute();
-        $submit = static::langText('contact/submit');
+        $submit = $lang->text('contact/submit');
         $submitHtml = Html::submit($submit,$this->submitAttr());
 
         $r .= $route->formOpen();
@@ -111,7 +112,8 @@ abstract class Contact extends Core\RouteAlias
 
             if(!empty($font))
             {
-                $label = static::langText($label);
+                $lang = static::lang();
+                $label = $lang->text($label);
                 $captcha = [true,$font,'captcha',null,$options];
                 $r .= Html::captchaFormWrap($label,'br',$captcha);
             }

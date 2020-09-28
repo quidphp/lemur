@@ -48,16 +48,17 @@ class Export extends Core\RouteAlias
         $sql = $this->sql();
         $total = $sql->triggerRowCount();
         $longExport = $this->longExport();
-        $count = $total.' '.static::langPlural($total,'lc|common/row');
+        $lang = static::lang();
+        $count = $total.' '.$lang->plural($total,'lc|common/row');
 
         $r .= Html::h1(static::label());
         $r .= Html::h2($table->label());
         $r .= Html::div($count,'count');
-        $r .= Html::h3(static::langText('export/choice').':');
+        $r .= Html::h3($lang->text('export/choice').':');
         $r .= Html::divCond($this->makeChoices(),'choices');
 
         if($total > $longExport)
-        $r .= Html::div(static::langText('export/long'),'note');
+        $r .= Html::div($lang->text('export/long'),'note');
 
         $r = Html::div($r,'inner-centered');
 
@@ -72,6 +73,7 @@ class Export extends Core\RouteAlias
         $r = '';
         $segment = $this->segments();
         $route = ExportDownload::make($segment);
+        $lang = static::lang();
 
         foreach (static::getTypes() as $value)
         {
@@ -79,7 +81,7 @@ class Export extends Core\RouteAlias
 
             if($route->canTrigger())
             {
-                $label = static::langText(['export',$value]);
+                $label = $lang->text(['export',$value]);
                 $r .= $route->a($label,['with-icon','download']);
             }
         }

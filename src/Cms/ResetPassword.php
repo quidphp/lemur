@@ -53,7 +53,7 @@ class ResetPassword extends Lemur\Route\ResetPassword
     // retourne le message d'information
     final protected function makeInfo():string
     {
-        return static::langText('resetPassword/info');
+        return static::lang()->text('resetPassword/info');
     }
 
 

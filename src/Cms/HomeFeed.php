@@ -64,6 +64,7 @@ class HomeFeed extends Core\RouteAlias
         $r = '';
         $ids = $this->pageSlice();
         $tables = $this->db()->tables();
+        $lang = static::lang();
 
         if(!empty($ids))
         {
@@ -85,7 +86,7 @@ class HomeFeed extends Core\RouteAlias
         }
 
         else
-        $r .= Html::div(static::langText('common/nothing'),'nothing');
+        $r .= Html::div($lang->text('common/nothing'),'nothing');
 
         return $r;
     }

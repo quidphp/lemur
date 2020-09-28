@@ -61,9 +61,10 @@ class SessionRole extends Core\RouteAlias
     final public function trigger():string
     {
         $r = '';
+        $lang = static::lang();
 
-        $r .= Html::h1(static::langText('sessionRole/title'));
-        $r .= Html::divCond(static::langText('sessionRole/info'),'info');
+        $r .= Html::h1($lang->text('sessionRole/title'));
+        $r .= Html::divCond($lang->text('sessionRole/info'),'info');
         $r .= Html::divCond($this->makeForm(),'form');
 
         return $r;
@@ -108,6 +109,7 @@ class SessionRole extends Core\RouteAlias
         $r = '';
         $route = $this->submitRoute();
         $session = static::session();
+        $lang = static::lang();
         $html = '';
         $field = Html::divCond($this->rolesForm(),'field');
 
@@ -115,9 +117,9 @@ class SessionRole extends Core\RouteAlias
         $r .= Html::div($field,'fields');
 
         if($session->hasFakeRoles())
-        $html .= Html::submit(static::langText('sessionRole/reset'),['name'=>'reset','class'=>['with-icon','reset']]);
+        $html .= Html::submit($lang->text('sessionRole/reset'),['name'=>'reset','class'=>['with-icon','reset']]);
 
-        $html .= Html::submit(static::langText('sessionRole/submit'),['name'=>'submit','class'=>['with-icon','modify']]);
+        $html .= Html::submit($lang->text('sessionRole/submit'),['name'=>'submit','class'=>['with-icon','modify']]);
 
         $r .= Html::div($html,'action');
         $r .= Html::formCl();

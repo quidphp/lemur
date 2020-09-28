@@ -179,7 +179,7 @@ class Col extends Core\Col
     {
         $option = (array) $option;
         $cell = ($return instanceof Cell)? $return:null;
-        $return = $this->value($return);
+        $return = $this->value($return,$option);
         $return = $this->onComplex($return,$cell,$option);
 
         return $return;
@@ -218,15 +218,15 @@ class Col extends Core\Col
         $return = '';
         $tag = $this->complexTag($attr);
 
-        if(Base\Html::isFormTag($tag))
+        if(Html::isFormTag($tag))
         {
-            $isTextTag = Base\Html::isTextTag($tag);
+            $isTextTag = Html::isTextTag($tag);
             $attr = $this->formComplexAttr($attr);
 
             if(empty($attr['placeholder']) && $isTextTag === true && $this->hasNullPlaceholder())
             $attr['placeholder'] = 'NULL';
 
-            $return = Base\Html::$tag($value,$attr,$option);
+            $return = Html::$tag($value,$attr,$option);
         }
 
         else
@@ -238,6 +238,8 @@ class Col extends Core\Col
 
             else
             $return = Base\Str::cast($return);
+
+            $return = Html::xss($return);
         }
 
         if(Base\Vari::isReallyEmpty($return))
@@ -251,7 +253,7 @@ class Col extends Core\Col
     // le html si rien à afficher
     final public function formComplexNothing():string
     {
-        return Base\Html::div($this->db()->lang()->text('common/nothing'),'nothing');
+        return Html::div($this->db()->lang()->text('common/nothing'),'nothing');
     }
 
 
@@ -259,7 +261,7 @@ class Col extends Core\Col
     // le html pour un placeholder vide ('' ou null)
     final public function formComplexEmptyPlaceholder($value):string
     {
-        return Base\Html::divCond($this->emptyPlaceholder($value),'empty-placeholder');
+        return Html::divCond($this->emptyPlaceholder($value),'empty-placeholder');
     }
 
 

@@ -67,11 +67,12 @@ class About extends Core\RouteAlias
         $r = '';
         $boot = static::boot();
         $replace = $this->getContentReplaceArray();
+        $lang = static::lang();
 
         $r .= Html::h1(static::label());
         $r .= Html::h2($boot->label());
         $r .= Html::h3($boot->typeLabel());
-        $r .= Html::divCond(static::langText('about/content',$replace),'content');
+        $r .= Html::divCond($lang->text('about/content',$replace),'content');
 
         return $r;
     }
@@ -81,7 +82,8 @@ class About extends Core\RouteAlias
     // retourne le lien web pour le framework
     final public static function framework($attr=null):string
     {
-        return Html::a(static::langText('about/uri'),static::langText('about/framework'),$attr);
+        $lang = static::lang();
+        return Html::a($lang->text('about/uri'),$lang->text('about/framework'),$attr);
     }
 
 
@@ -89,7 +91,8 @@ class About extends Core\RouteAlias
     // retourne le lien email de l'auteur
     final public static function authorEmail():string
     {
-        return Html::a(static::langText('about/email'),true);
+        $lang = static::lang();
+        return Html::a($lang->text('about/email'),true);
     }
 }
 

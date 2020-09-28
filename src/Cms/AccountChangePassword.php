@@ -56,9 +56,10 @@ class AccountChangePassword extends Lemur\Route\AccountChangePassword
     final public function trigger():string
     {
         $r = '';
+        $lang = static::lang();
 
         $r .= Html::h1(static::label());
-        $r .= Html::divCond(static::langText('accountChangePassword/info'),'info');
+        $r .= Html::divCond($lang->text('accountChangePassword/info'),'info');
         $r .= Html::divCond($this->makeForm(),'form');
 
         return $r;

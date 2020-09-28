@@ -70,11 +70,10 @@ trait _page
     // retourne le sous=titre à afficher pour la page, par défaut passe par lang text
     final public function getSubTitle():?string
     {
-        $return = null;
         $className = static::className(true);
-        $return = static::langText([$className,'subTitle']);
+        $lang = static::lang();
 
-        return $return;
+        return $lang->text([$className,'subTitle']);
     }
 }
 ?>

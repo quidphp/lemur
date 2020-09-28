@@ -176,11 +176,12 @@ class Specific extends Core\RouteAlias
         {
             $row = $this->row();
             $relation = $row->$type();
+            $lang = static::lang();
 
             if(is_array($relation) && !empty($relation))
             {
                 $count = Base\Arrs::countLevel($countLevel,$relation);
-                $text = static::langPlural($count,['specific',$type],['count'=>$count]);
+                $text = $lang->plural($count,['specific',$type],['count'=>$count]);
                 $r .= Html::button($text,'popup-title');
 
                 $html = $this->$outputMethod($relation);
@@ -268,7 +269,8 @@ class Specific extends Core\RouteAlias
 
         if($no > 0)
         {
-            $text = Html::span(static::langText('specific/relationChildsNoAccess'),'not-accessible');
+            $lang = static::lang();
+            $text = Html::span($lang->text('specific/relationChildsNoAccess'),'not-accessible');
             $text .= "($no)";
             $r .= Html::li($text);
         }
@@ -317,6 +319,7 @@ class Specific extends Core\RouteAlias
             $general = $this->general();
             $attr = ['first'=>'hash-follow','prev'=>'hash-follow','next'=>'hash-follow','last'=>'hash-follow'];
             $specific = $this->makeSpecificNav($general,$row,'primary','highlight',$attr);
+            $lang = static::lang();
 
             if(!empty($specific))
             {
@@ -337,7 +340,7 @@ class Specific extends Core\RouteAlias
 
                 $route = SpecificAdd::make($table);
                 if($route->canTrigger())
-                $r .= $route->a(static::langText('specific/add'));
+                $r .= $route->a($lang->text('specific/add'));
 
                 if($table->hasPermission('navBack') && !empty($specific['back']))
                 $r .= $specific['back'];
@@ -510,6 +513,7 @@ class Specific extends Core\RouteAlias
         $row = $this->row();
         $table = $this->table();
         $session = $this->session();
+        $lang = static::lang();
 
         if($key === null)
         $key = $row->getViewRouteType() ?? static::boot()->typePrimary();
@@ -520,7 +524,7 @@ class Specific extends Core\RouteAlias
             $route = $row->routeSafe($key);
 
             if(!empty($route) && $route::hasPath() && $route->canTrigger())
-            $r .= $route->a(static::langText('specific/view'),['with-icon','view','operation-element','target'=>false]);
+            $r .= $route->a($lang->text('specific/view'),['with-icon','view','operation-element','target'=>false]);
         }
 
         return $r;
@@ -537,10 +541,11 @@ class Specific extends Core\RouteAlias
         if($table->hasPermission('duplicate'))
         {
             $route = SpecificDuplicate::make($this->segments());
+            $lang = static::lang();
 
             if($route->canTrigger())
             {
-                $data = ['confirm'=>static::langText('common/confirm')];
+                $data = ['confirm'=>$lang->text('common/confirm')];
                 $attr = ['with-icon','copy','operation-element','name'=>'--duplicate--','value'=>1,'data'=>$data];
                 $r .= $route->submitLabel(null,$attr);
             }
@@ -563,8 +568,9 @@ class Specific extends Core\RouteAlias
 
             else
             {
+                $lang = static::lang();
                 $text = 'specific/modify'.ucfirst($type);
-                $r .= Html::submit(static::langText($text),['name'=>'--modify--','operation-element','value'=>1,'with-icon','modify']);
+                $r .= Html::submit($lang->text($text),['name'=>'--modify--','operation-element','value'=>1,'with-icon','modify']);
             }
         }
 
@@ -594,9 +600,10 @@ class Specific extends Core\RouteAlias
 
         if($this->isDeleteable())
         {
-            $data = ['confirm'=>static::langText('common/confirm')];
+            $lang = static::lang();
+            $data = ['confirm'=>$lang->text('common/confirm')];
             $attr = ['name'=>'--delete--','value'=>1,'with-icon','remove','data'=>$data];
-            $r .= Html::submit(static::langText('specific/remove'),$attr);
+            $r .= Html::submit($lang->text('specific/remove'),$attr);
         }
 
         return $r;

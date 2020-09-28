@@ -53,7 +53,8 @@ class Email extends Core\RouteAlias
         $r = '';
         $email = $this->email();
         $data = ['mailto'=>1];
-        $anchor = Html::a($email,static::langText('email/send'),['with-icon','email','data'=>$data]);
+        $lang = static::lang();
+        $anchor = Html::a($email,$lang->text('email/send'),['with-icon','email','data'=>$data]);
 
         $r .= Html::h1(static::label());
         $r .= Html::h2($email);

@@ -85,6 +85,7 @@ class Contact extends Lemur\Route\Contact
     {
         $r = '';
         $adminEmail = $this->getAdminEmail();
+        $lang = static::lang();
         $replace = [];
 
         if(!empty($adminEmail))
@@ -93,7 +94,7 @@ class Contact extends Lemur\Route\Contact
             $replace['name'] = current($adminEmail);
         }
 
-        $info = static::langText('contact/info',$replace);
+        $info = $lang->text('contact/info',$replace);
 
         $r .= Html::h1(static::label());
         $r .= Html::divCond($info,'info');

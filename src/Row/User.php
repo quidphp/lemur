@@ -118,8 +118,9 @@ class User extends Core\Row\User
 
         if(!empty($route) && $route->canTrigger())
         {
+            $lang = static::lang();
             $route = $route::make($row);
-            $data = ['confirm'=>static::langText('common/confirm')];
+            $data = ['confirm'=>$lang->text('common/confirm')];
             $attr = ['name'=>'--userWelcome--','value'=>1,'with-icon','email','data'=>$data];
             $r .= $route->submitTitle(null,$attr);
         }

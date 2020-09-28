@@ -375,9 +375,10 @@ class General extends Core\RouteAlias
 
         if($this->hasTablePermission('reset') && $this->canReset($this->getSearchValue(),['table','highlight']))
         {
+            $lang = static::lang();
             $option = ['query'=>false];
             $route = $this->keepSegments('table');
-            $r .= $route->a(static::langText('general/reset'),['with-icon','reset','operation-element'],null,$option);
+            $r .= $route->a($lang->text('general/reset'),['with-icon','reset','operation-element'],null,$option);
         }
 
         return $r;
@@ -447,7 +448,8 @@ class General extends Core\RouteAlias
     final protected function infoPopupClosure():\Closure
     {
         return function(string $key) {
-            $return = [static::langText(['popup','general',$key])];
+            $lang = static::lang();
+            $return = [$lang->text(['popup','general',$key])];
             $value = null;
             $table = $this->table();
 
@@ -456,7 +458,7 @@ class General extends Core\RouteAlias
                 $value = $this->segment($key);
 
                 if($key === 'direction')
-                $value = (is_string($value))? static::langText('direction/'.strtolower($value)):null;
+                $value = (is_string($value))? $lang->text('direction/'.strtolower($value)):null;
 
                 elseif($key === 'filter')
                 {
@@ -530,6 +532,7 @@ class General extends Core\RouteAlias
     final protected function infoPopupFilterEmptyNotEmpty(array $value,Core\Col $col,array $array):array
     {
         $return = ['array'=>$array,'value'=>$value];
+        $lang = static::lang();
 
         foreach ($value as $k => $v)
         {
@@ -537,7 +540,7 @@ class General extends Core\RouteAlias
             {
                 unset($return['value'][$k]);
                 $key = ((int) $v === 0)? 'isEmpty':'isNotEmpty';
-                $label = static::langText(['common',$key]);
+                $label = $lang->text(['common',$key]);
                 $return['array'][] = $label;
             }
         }
@@ -553,9 +556,10 @@ class General extends Core\RouteAlias
         $r = '';
         $table = $this->table();
         $route = SpecificAdd::make($table);
+        $lang = static::lang();
 
         if($route->canTrigger())
-        $r .= $route->a(static::langText('general/add'),['with-icon','add','operation-element']);
+        $r .= $route->a($lang->text('general/add'),['with-icon','add','operation-element']);
 
         return $r;
     }
@@ -581,10 +585,11 @@ class General extends Core\RouteAlias
         $r = '';
         $table = $this->table();
         $route = GeneralTruncate::make($table);
+        $lang = static::lang();
 
         if($route->canTrigger() && !empty($table->rowsCount(true,true)))
         {
-            $data = ['confirm'=>static::langText('common/confirm')];
+            $data = ['confirm'=>$lang->text('common/confirm')];
             $r .= $route->formOpen(['data'=>$data]);
             $r .= $this->tableHiddenInput();
             $r .= Html::submit($route->label(),['with-icon','truncate']);
@@ -658,7 +663,7 @@ class General extends Core\RouteAlias
         {
             $defaultSegment = static::getDefaultSegment();
             $tooltip = $lang->text('tooltip/multiDelete');
-            $data = ['confirm'=>static::langText('common/confirm'),'separator'=>$defaultSegment,'tooltip'=>$tooltip,'max'=>$this->getAttr('multiDeleteMax')];
+            $data = ['confirm'=>$lang->text('common/confirm'),'separator'=>$defaultSegment,'tooltip'=>$tooltip,'max'=>$this->getAttr('multiDeleteMax')];
 
             $r .= $route->formOpen(['tool-element','multi-delete-form','data'=>$data]);
             $r .= $this->tableHiddenInput();

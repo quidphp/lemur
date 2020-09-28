@@ -113,11 +113,12 @@ class Login extends Lemur\Route\Login
         $r = $route->formOpen();
         $table = $this->db()->tables()->get('user');
         $session = static::session();
+        $lang = static::lang();
         $flash = $session->flash();
         $redirect = $flash->get('login/redirect');
         $username = $flash->get('login/credential');
         $username = $username ?: $session->remember('credential');
-        $usernameLabel = static::langText('login/usernameEmail');
+        $usernameLabel = $lang->text('login/usernameEmail');
         $remember = $flash->get('login/remember') ?? true;
 
         $r .= Html::inputHidden($redirect,'redirect');
@@ -126,7 +127,7 @@ class Login extends Lemur\Route\Login
         $topHtml .= $table->col('password')->formWrap('divtable','%:');
         $r .= Html::div($topHtml,'top');
 
-        $label = [static::langText('login/remember'),['data-tooltip'=>static::langText('tooltip/rememberMe')]];
+        $label = [$lang->text('login/remember'),['data-tooltip'=>$lang->text('tooltip/rememberMe')]];
         $formWrap = Html::formWrap($label,['inputCheckbox',1,['name'=>'remember','checked'=>$remember]],'reverse');
         $bottomHtml = Html::div($formWrap,'left');
 

@@ -125,8 +125,9 @@ trait _rowsFeed
 
         if(is_int($pageNext))
         {
+            $lang = static::lang();
             $route = $this->changeSegment('page',$pageNext);
-            $text = static::langText('common/loadMore',$replace);
+            $text = $lang->text('common/loadMore',$replace);
             $html = Html::span($text,'text');
             $r .= $route->a($html,'load-more');
         }

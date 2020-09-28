@@ -168,6 +168,7 @@ trait _template
             $user = $session->user();
             $username = $user->username()->pair(15);
             $dateLogin = $user->dateLogin();
+            $lang = static::lang();
 
             if($this->hasPermission('sessionInfo'))
             {
@@ -195,7 +196,7 @@ trait _template
 
             $route = AccountChangePassword::make();
             if($route->canTrigger())
-            $r .= $route->aDialog(static::langText('accountChangePassword/link'),['with-icon','no-border','password']);
+            $r .= $route->aDialog($lang->text('accountChangePassword/link'),['with-icon','no-border','password']);
 
             $route = SessionRole::make();
             if($route->canTrigger())
@@ -435,6 +436,7 @@ trait _template
         $boot = static::boot();
         $showQuid = $boot->getOption('versionQuid') ?? true;
         $version = $boot->version(true,$showQuid,true);
+        $lang = static::lang();
 
         if($this->hasPermission('backToTop'))
         $r .= $this->footerBackToTop();
@@ -462,7 +464,7 @@ trait _template
         if($route->canTrigger())
         $r .= $route->aDialog(null,['with-icon','email','no-border']);
 
-        $copyright = static::langText('footer/version',['version'=>$version]);
+        $copyright = $lang->text('footer/version',['version'=>$version]);
         $route = PopupBoot::make($this);
         $popup = ($route->canTrigger() && $route->isValidSegment());
 
@@ -489,7 +491,8 @@ trait _template
     // génère le bouton pour retourner vers le haut de la page
     final protected function footerBackToTop():string
     {
-        $buttonHtml = Html::button(static::langText('footer/backToTop'),['with-icon','top','no-border']);
+        $lang = static::lang();
+        $buttonHtml = Html::button($lang->text('footer/backToTop'),['with-icon','top','no-border']);
         return  Html::div($buttonHtml,'back-to-top');
     }
 
@@ -498,7 +501,8 @@ trait _template
     // génère le bouton pour imprimer la page
     final protected function footerPrint():string
     {
-        $buttonHtml = Html::button(static::langText('footer/print'),['with-icon','print','no-border']);
+        $lang = static::lang();
+        $buttonHtml = Html::button($lang->text('footer/print'),['with-icon','print','no-border']);
         return  Html::div($buttonHtml,'print');
     }
 
@@ -510,6 +514,7 @@ trait _template
         $r = '';
         $popup = '';
         $top = null;
+        $lang = static::lang();
 
         foreach ($array as $value)
         {
@@ -522,7 +527,7 @@ trait _template
             $popup .= Html::li($value);
         }
         $popup = Html::ulCond($popup);
-        $label = static::langText(['footer',$type]);
+        $label = $lang->text(['footer',$type]);
 
         if(!empty($popup))
         {

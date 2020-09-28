@@ -24,6 +24,7 @@ trait _specificNav
         $sql = $general->sql();
         $specific = $sql->specific($row);
         $attributes = [];
+        $lang = static::lang();
 
         foreach (['first','prev','count','next','last','back'] as $v)
         {
@@ -38,31 +39,31 @@ trait _specificNav
             if(!empty($specific['first']))
             {
                 $route = $this->changeSegment($segment,$specific['first']);
-                $return['first'] = $route->a(static::langText('common/first'),$attributes['first']);
+                $return['first'] = $route->a($lang->text('common/first'),$attributes['first']);
             }
 
             if(!empty($specific['prev']))
             {
                 $route = $this->changeSegment($segment,$specific['prev']);
-                $return['prev'] = $route->a(static::langText('common/prev'),$attributes['prev']);
+                $return['prev'] = $route->a($lang->text('common/prev'),$attributes['prev']);
             }
 
             if(!empty($specific['position']) && !empty($specific['total']))
             {
-                $return['countArray'] = [$specific['position'],static::langText('lc|common/on'),$specific['total']];
+                $return['countArray'] = [$specific['position'],$lang->text('lc|common/on'),$specific['total']];
                 $return['count'] = Html::span(implode(' ',$return['countArray']),$attributes['count']);
             }
 
             if(!empty($specific['next']))
             {
                 $route = $this->changeSegment($segment,$specific['next']);
-                $return['next'] = $route->a(static::langText('common/next'),$attributes['next']);
+                $return['next'] = $route->a($lang->text('common/next'),$attributes['next']);
             }
 
             if(!empty($specific['last']))
             {
                 $route = $this->changeSegment($segment,$specific['last']);
-                $return['last'] = $route->a(static::langText('common/last'),$attributes['last']);
+                $return['last'] = $route->a($lang->text('common/last'),$attributes['last']);
             }
         }
 
@@ -75,7 +76,7 @@ trait _specificNav
             $segments[$highlightSegment] = $row;
 
             $back = $general->changeSegments($segments);
-            $return['back'] = $back->a(static::langText('common/back'),$attributes['back']);
+            $return['back'] = $back->a($lang->text('common/back'),$attributes['back']);
         }
 
         return $return;
