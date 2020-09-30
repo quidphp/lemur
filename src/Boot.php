@@ -31,11 +31,6 @@ abstract class Boot extends Core\Boot
                 'to'=>'[publicJs]/include.js',
                 'from'=>[
                     0=>'[vendorFront]/js/include']],
-            'navigation'=>[
-                'to'=>'[publicJs]/navigation.js',
-                'from'=>[
-                    0=>'[vendorFront]/js/import',
-                    1=>'[vendorFront]/js/navigation']],
             'component'=>[
                 'to'=>'[publicJs]/component.js',
                 'from'=>[
@@ -47,14 +42,6 @@ abstract class Boot extends Core\Boot
             'concatenator'=>[
                 'start'=>"\"use strict\";\n\n(function() {\n\n",
                 'end'=>"\n\n})();"]],
-
-        '@dev'=>[
-            'compileJs'=>[
-                'test'=>[
-                    'to'=>'[publicJs]/test.js',
-                    'from'=>[
-                        0=>'[vendorFront]/js/import',
-                        1=>'[vendorFront]/js/test']]]],
 
         '@cms'=>[
             'service'=>[

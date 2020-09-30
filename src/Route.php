@@ -26,7 +26,6 @@ abstract class Route extends Core\Route
                         'icon'=>'css/cms-icon.css'],
                     'js'=>[
                         'include'=>'js/include.js',
-                        'navigation'=>'js/navigation.js',
                         'component'=>'js/component.js',
                         'type'=>'js/%type%.js']]],
             'permission'=>[
@@ -65,13 +64,8 @@ abstract class Route extends Core\Route
                 'user'=>['access'=>false],
                 'subAdmin'=>['popup'=>true,'sessionFakeRole'=>true,'userWelcome'=>true],
                 'admin'=>['popup'=>true,'sessionFakeRole'=>true,'userWelcome'=>true],
-                'cli'=>['cli'=>true]],
-        '@dev'=>[
-            'docOpen'=>[
-                'head'=>[
-                    'js'=>[
-                        'test'=>'js/test.js']]],
-        ]]
+                'cli'=>['cli'=>true]]
+        ]
     ];
 }
 
