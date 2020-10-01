@@ -45,7 +45,7 @@ abstract class Boot extends Core\Boot
 
         '@cms'=>[
             'service'=>[
-                'polyfill'=>Service\Polyfill::class,
+                'polyfill'=>[Service\Polyfill::class,['mode'=>'ie11']],
                 'sortable'=>Service\Sortable::class,
                 'tinymce'=>Service\TinyMce::class],
             'option'=>[
