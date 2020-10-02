@@ -227,7 +227,7 @@ header {
         .right {
             padding: 0 15px 0 10px;
             @include flex(center, center, wrap);
-
+            
             .popup-trigger > .popup-title {
                 color: $lightGray;
             }

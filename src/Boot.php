@@ -20,9 +20,6 @@ abstract class Boot extends Core\Boot
         'finderShortcut'=>[ // shortcut pour finder
             'vendorFront'=>'[vendor]/quidphp/front',
             'vendorLemur'=>'[vendor]/quidphp/lemur'],
-        'symlink'=>[
-            '[vendorFront]/polyfill'=>'[publicJs]/polyfill',
-            '[vendorLemur]/vendor'=>'[publicJs]/vendor'],
         'roles'=>[
             'editor'=>[60]],
 

@@ -174,19 +174,26 @@
     background-color: $color;
     border: 1px solid $darkColor;
 
+    &.active {
+        background-color: $lightYellow;
+        color: $black;
+    }
+    
     &#{$defaultSelectedState},
     &:not(:disabled):hover {
         background-color: $darkColor;
         border: 1px solid $darkerColor;
         opacity: 1;
+        color: $white;
     }
 
     &#{$defaultClickState},
     &:not(:disabled):active {
         background-color: $darkerColor;
         border: 1px solid $black;
+        color: $white;
     }
-
+    
     &:disabled {
         cursor: no-drop;
     }

@@ -9,20 +9,32 @@ declare(strict_types=1);
 
 namespace Quid\Lemur\Service;
 use Quid\Main;
+use Quid\Routing;
 
 // sortable
 // class to integrate the sortable javascript library
 class Sortable extends Main\Service
 {
+    // trait
+    use Routing\_service;
+
+
     // config
-    protected static array $config = [];
+    protected static array $config = [
+        'github'=>'https://github.com/SortableJS/sortablejs',
+        'paths'=>[
+            'basename'=>'sortable.js',
+            'serverFrom'=>'[vendorLemur]/vendor/%basename%',
+            'serverTo'=>'[publicJs]/%basename%',
+            'public'=>'js/%basename%']
+    ];
 
 
     // docOpenJs
     // retourne le javascript à lier en début de document
     final public function docOpenJs()
     {
-        return 'js/vendor/sortable/sortable.js';
+        return $this->getPublicPath() ?? null;
     }
 }
 

@@ -9,20 +9,32 @@ declare(strict_types=1);
 
 namespace Quid\Lemur\Service;
 use Quid\Main;
+use Quid\Routing;
 
 // tinyMce
 // class that provides a method to integrate the Tinymce WYSIWYG editor
 class TinyMce extends Main\Service
 {
+    // trait
+    use Routing\_service;
+
+
     // config
-    protected static array $config = [];
+    protected static array $config = [
+        'github'=>'https://github.com/tinymce/tinymce',
+        'paths'=>[
+            'basename'=>'tinymce',
+            'serverFrom'=>'[vendorLemur]/vendor/%basename%',
+            'serverTo'=>'[publicJs]/%basename%',
+            'public'=>'js/%basename%/tinymce.min.js']
+    ];
 
 
     // docOpenJs
     // retourne le javascript à lier en début de document
     final public function docOpenJs()
     {
-        return 'js/vendor/tinymce/tinymce.min.js';
+        return $this->getPublicPath() ?? null;
     }
 }
 
