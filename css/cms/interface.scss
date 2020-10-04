@@ -120,11 +120,12 @@ body > pre {
     display: block;
     padding-left: 220px;
 }
-[data-error='fatal'] body {
+[data-error='fatal'] body,
+[data-error='content-type'] body {
     height: auto;
     min-height: 100%;
     padding: 10px;
-    border: 10px solid $red;
+    border: 20px solid $red;
     background-color: $white;
 
     > .route-wrap {

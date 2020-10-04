@@ -28,6 +28,11 @@ abstract class Boot extends Core\Boot
                 'to'=>'[publicJs]/include.js',
                 'from'=>[
                     0=>'[vendorFront]/js/include']],
+            'navigation'=>[
+                'to'=>'[publicJs]/navigation.js',
+                'from'=>[
+                    0=>'[vendorFront]/js/import',
+                    1=>'[vendorFront]/js/navigation']],
             'component'=>[
                 'to'=>'[publicJs]/component.js',
                 'from'=>[

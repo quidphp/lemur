@@ -26,6 +26,7 @@ abstract class Route extends Core\Route
                         'icon'=>'css/cms-icon.css'],
                     'js'=>[
                         'include'=>'js/include.js',
+                        'navigation'=>'js/navigation.js',
                         'component'=>'js/component.js',
                         'type'=>'js/%type%.js']]],
             'permission'=>[
