@@ -47,7 +47,6 @@ trait _generalSegment
     final public function sql():Orm\Sql
     {
         return $this->cache(__METHOD__,function() {
-            $return = null;
             $table = $this->table();
             $array = $this->generalSegments();
 
@@ -69,9 +68,7 @@ trait _generalSegment
                 unset($array[$key]);
             }
 
-            $return = $table->sql($array);
-
-            return $return;
+            return $table->sql($array);
         });
     }
 
