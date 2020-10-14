@@ -33,20 +33,24 @@ class Login extends Lemur\Route\Login
     final protected function onBefore()
     {
         $return = parent::onBefore();
-        $routeRequest = $this->routeRequest();
-        $lang = static::boot()->lang();
-        $langCode = $lang->currentLang();
-        $path = $routeRequest->routePath($langCode);
-        $request = $this->request();
-        $pathMatch = $request->pathMatch();
 
-        if(!empty($pathMatch) && $pathMatch !== $path)
+        if($return === true)
         {
-            $session = static::session();
-            $flash = $session->flash();
-            $redirect = $this->request()->absolute();
-            $flash->set('login/redirect',$redirect);
-            $return = false;
+            $routeRequest = $this->routeRequest();
+            $lang = static::boot()->lang();
+            $langCode = $lang->currentLang();
+            $path = $routeRequest->routePath($langCode);
+            $request = $this->request();
+            $pathMatch = $request->pathMatch();
+
+            if(!empty($pathMatch) && $pathMatch !== $path)
+            {
+                $session = static::session();
+                $flash = $session->flash();
+                $redirect = $this->request()->absolute();
+                $flash->set('login/redirect',$redirect);
+                $return = false;
+            }
         }
 
         return $return;
