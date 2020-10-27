@@ -52,7 +52,7 @@ class Route extends Base\Test
         assert($obj2->type() === $type);
 
         // getBaseReplace
-        assert(count($obj->getBaseReplace()) === 35);
+        assert(count($obj->getBaseReplace()) === 36);
 
         // prepareTitle
 
@@ -120,7 +120,7 @@ class Route extends Base\Test
         assert($obj2->title() === 'Login - Submit');
         assert($obj2->title(3) === 'Log');
         assert(!empty($obj->docOpen()));
-        assert(count($obj->getReplace()) === 35);
+        assert(count($obj->getReplace()) === 36);
         assert(!$obj2->isSelectedUri());
         assert($obj2->hasUri());
         assert(!$route::make()->hasUri());
