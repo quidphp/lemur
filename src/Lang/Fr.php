@@ -414,9 +414,9 @@ class Fr extends Core\Lang\Fr
                     'diskSpace'=>'Espace disque',
                     'phpImportantExtension'=>'Extensions PHP importantes',
                     'phpImportantIni'=>'Ini PHP importantes',
-                    'phpOverview'=>'Code PHP (src)',
-                    'jsOverview'=>'Code JS (src)',
-                    'cssOverview'=>'Code CSS (src)',
+                    'phpOverview'=>'Code PHP',
+                    'jsOverview'=>'Code JS',
+                    'cssOverview'=>'Code CSS',
                 ],
 
                 // home

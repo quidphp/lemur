@@ -8,6 +8,7 @@ declare(strict_types=1);
  */
 
 namespace Quid\Lemur\Cms;
+use Quid\Base;
 
 // _popup
 // trait that provides some initial configuration for a CMS popup route
@@ -40,7 +41,8 @@ trait _popup
     final protected function popup():?string
     {
         $return = null;
-        $values = $this->getAttr('popup');
+        $values = $this->getAttr('popup') ?? [];
+        $values = Base\Arr::keysSort($values);
         $closure = $this->popupClosure();
         $return = static::makeInfoPopup($values,$closure);
 

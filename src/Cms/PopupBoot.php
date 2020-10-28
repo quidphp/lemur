@@ -27,9 +27,11 @@ class PopupBoot extends Core\RouteAlias
         'segment'=>[
             'route'=>'structureSegmentRoute'],
         'popup'=>[
-            'phpVersion','quidVersion','envLabel','typeLabel','classFqcn','classRoute','hostname','httpProtocol','ip',
-            'os','isCaseSensitive','processId','user','group','serverType','sapi','paths','phpOverview','jsOverview','cssOverview','schemeHosts','memory',
-            'diskSpace','phpImportantExtension','phpImportantIni']
+            0=>'phpVersion','quidVersion','envLabel','typeLabel','classFqcn','classRoute','hostname','httpProtocol',
+            25=>'ip','os','isCaseSensitive','processId','user','group','serverType','sapi','paths',
+            50=>'phpOverview',
+            75=>'jsOverview','cssOverview',
+            100=>'schemeHosts','memory','diskSpace','phpImportantExtension','phpImportantIni']
     ];
 
 
@@ -46,7 +48,6 @@ class PopupBoot extends Core\RouteAlias
     final protected function popupClosure():\Closure
     {
         return function(string $key):array {
-            $return = [];
             $value = null;
             $boot = static::boot();
             $lang = static::lang();
@@ -61,7 +62,7 @@ class PopupBoot extends Core\RouteAlias
             $value = $boot->pathOverview('src','php');
 
             elseif($key === 'jsOverview')
-            $value = $boot->pathOverview('js',['js','jsx']);
+            $value = $boot->pathOverview('js','js');
 
             elseif($key === 'cssOverview')
             $value = $boot->pathOverview('css',['css','scss']);
@@ -75,14 +76,15 @@ class PopupBoot extends Core\RouteAlias
             elseif($key === 'ip')
             $value = Base\Server::ip(true);
 
+            elseif($boot->hasMethod($key))
+            $value = $boot->$key();
+
             else
             $value = Base\Server::$key();
 
             $label = $lang->text(['popup','boot',$key]);
 
-            $return = [$label,$value];
-
-            return $return;
+            return [$label,$value];
         };
     }
 

@@ -414,9 +414,9 @@ class En extends Core\Lang\En
                     'diskSpace'=>'Disk space',
                     'phpImportantExtension'=>'Important PHP extensions',
                     'phpImportantIni'=>'Important PHP ini',
-                    'phpOverview'=>'PHP code (src)',
-                    'jsOverview'=>'JS code (src)',
-                    'cssOverview'=>'CSS code (src)',
+                    'phpOverview'=>'PHP code',
+                    'jsOverview'=>'JS code',
+                    'cssOverview'=>'CSS code',
                 ],
 
                 // home
