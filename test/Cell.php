@@ -58,7 +58,7 @@ class Cell extends Base\Test
         // getSpecificComponentAttr
 
         // cell
-        assert(count($cell->attr()) === 65);
+        assert(count($cell->attr()) === 67);
         assert(strlen($date->formComplex()) === 299);
         assert($db->truncate($table) instanceof \PDOStatement);
         assert($cell->description() === 'Name to represent the element');

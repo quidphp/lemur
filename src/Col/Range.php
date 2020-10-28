@@ -39,9 +39,9 @@ class Range extends Core\Col\JsonAlias
     }
 
 
-    // validateClosure
+    // onValidate
     // retourne la closure pour la validation de range
-    final public function validateClosure():?\Closure
+    final public function onValidate():?\Closure
     {
         return function(string $context,$value=null) {
             $return = null;

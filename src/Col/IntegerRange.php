@@ -32,9 +32,9 @@ class IntegerRange extends Core\Col\Integer
     ];
 
 
-    // validateClosure
+    // onValidate
     // retourne la closure pour la validation de range
-    final public function validateClosure():?\Closure
+    final public function onValidate():?\Closure
     {
         return function(string $context,$value=null) {
             $return = null;
