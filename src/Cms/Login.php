@@ -47,7 +47,7 @@ class Login extends Lemur\Route\Login
             {
                 $session = static::session();
                 $flash = $session->flash();
-                $redirect = $this->request()->absolute();
+                $redirect = $request->relative();
                 $flash->set('login/redirect',$redirect);
                 $return = false;
             }

@@ -121,7 +121,7 @@ class Col extends Base\Test
         assert($jsonArray->required([]) === 'required');
         assert($jsonArray->required('') === 'required');
         assert($jsonArray->completeValidation(null) === ['required']);
-        assert(count($jsonArray->completeValidation([])) === 3);
+        assert(count($jsonArray->completeValidation([])) === 2);
         assert($jsonArray->completeValidation('') === ['required']);
         assert($jsonArray->completeValidation(Base\Json::encode(['test'])) === true);
         assert($phone instanceof Lemur\Col\Phone);
