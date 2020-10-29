@@ -45,7 +45,7 @@ class IntegerRange extends Core\Col\Integer
             elseif($context === 'validate')
             {
                 $range = $this->getRange();
-                $return = (array_key_exists($value,$range));
+                $return = array_key_exists($value,$range);
             }
 
             return $return;

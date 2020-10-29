@@ -79,6 +79,9 @@ class PopupBoot extends Core\RouteAlias
             elseif($boot->hasMethod($key))
             $value = $boot->$key();
 
+            elseif($this->hasMethod($key))
+            $value = $this->$key();
+
             else
             $value = Base\Server::$key();
 
