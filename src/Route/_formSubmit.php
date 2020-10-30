@@ -18,7 +18,8 @@ trait _formSubmit
     protected static array $configFormSubmit = [
         'log'=>Lemur\Row\Log::class, // la classe ou logger le formulaire
         'logType'=>'form', // clé à utiliser pour le type de log
-        'flashPost'=>false // si on flash post automatiquement lors d'une failure ou fallback
+        'flashPost'=>false, // si on flash post automatiquement lors d'une failure ou fallback
+        'flashNotStart'=>'password' // retire du flash les champs qui comment par
     ];
 
 
@@ -195,7 +196,7 @@ trait _formSubmit
     final protected function setFlash():void
     {
         if($this->getAttr('flashPost') === true)
-        $this->session()->flashPost($this);
+        $this->session()->flashPost($this,true,false,$this->getAttr('flashNotStart'));
     }
 
 
@@ -203,7 +204,7 @@ trait _formSubmit
     // retourne le tableau post pour le formulaire
     final protected function post():array
     {
-        return $this->request()->post(true,false,true);
+        return $this->request()->post(true,false,null,true);
     }
 
 
