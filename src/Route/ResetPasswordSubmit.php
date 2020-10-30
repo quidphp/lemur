@@ -123,7 +123,7 @@ abstract class ResetPasswordSubmit extends Core\RouteAlias
 
     // getOption
     // option pour le reset password
-    final protected function getOption():?array
+    protected function getOption():?array
     {
         return ['com'=>true];
     }
