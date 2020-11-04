@@ -23,7 +23,8 @@ class User extends Core\Row\User
             'contributor'=>['cmsLogin'=>true],
             'editor'=>['cmsLogin'=>true],
             'subAdmin'=>['cmsLogin'=>true],
-            'admin'=>['cmsLogin'=>true]],
+            'admin'=>['cmsLogin'=>true],
+            'cli'=>['cmsLogin'=>true]],
         'emailModel'=>[
             'userWelcome'=>'userWelcome'],
         '@cms'=>[
