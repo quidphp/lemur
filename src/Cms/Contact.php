@@ -55,7 +55,7 @@ class Contact extends Lemur\Route\Contact
     final public function getFormData():array
     {
         $return = [];
-        $user = static::sessionUser();
+        $user = static::session()->user();
 
         $return['name'] = $user->fullName();
         $return['phone'] = ($user->hasCell('phone'))? $user->cell('phone'):null;

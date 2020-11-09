@@ -248,7 +248,7 @@ trait _template
 
         $r .= Html::div($html,'nav-top');
 
-        if(static::sessionUser()->isSomebody())
+        if(static::session()->user()->isSomebody())
         $r .= Html::navCond($this->nav());
 
         return Html::div($r,'nav-fixed');
@@ -303,7 +303,7 @@ trait _template
     final protected function navMenu(array $array,int $i=0):string
     {
         $r = '';
-        $session = $this->session();
+        $session = static::session();
         $tables = $this->db()->tables();
         $lang = $this->lang();
         $navAdd = ['insert','lemurInsert','mainNavAdd'];

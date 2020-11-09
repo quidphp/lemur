@@ -76,7 +76,7 @@ class General extends Core\RouteAlias
         if(parent::onBefore())
         {
             $table = $this->table();
-            $nav = $this->session()->nav();
+            $nav = static::session()->nav();
             $highlight = $this->getHighlight();
             $route = (!empty($highlight))? $this->changeSegment('highlight',null):$this;
             $nav->set([static::class,$table],$route->uri());
@@ -92,7 +92,7 @@ class General extends Core\RouteAlias
     final protected function onPrepared()
     {
         $table = $this->table();
-        $session = $this->session();
+        $session = static::session();
         $session->routeTableGeneral($table)->addSelectedUri();
     }
 
@@ -104,7 +104,7 @@ class General extends Core\RouteAlias
         if($this->hasTable())
         {
             $table = $this->table();
-            $nav = $this->session()->nav();
+            $nav = static::session()->nav();
             $nav->unset([static::class,$table]);
         }
     }

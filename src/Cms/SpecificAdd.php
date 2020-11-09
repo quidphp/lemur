@@ -52,7 +52,7 @@ class SpecificAdd extends Core\RouteAlias
         if(parent::onBefore())
         {
             $table = $this->table();
-            $flash = $this->session()->flash();
+            $flash = static::session()->flash();
             $route = SpecificAddSubmit::make($table);
             $this->flash = $flash->get($route);
             $return = true;

@@ -41,7 +41,7 @@ class Account extends Lemur\Route\Account
     // après trigger renvoie vers la page specifique du user
     protected function onAfter()
     {
-        return static::sessionUser()->route();
+        return static::session()->user()->route();
     }
 }
 

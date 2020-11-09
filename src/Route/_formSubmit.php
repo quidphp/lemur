@@ -196,7 +196,7 @@ trait _formSubmit
     final protected function setFlash():void
     {
         if($this->getAttr('flashPost') === true)
-        $this->session()->flashPost($this,true,false,$this->getAttr('flashNotStart'));
+        static::session()->flashPost($this,true,false,$this->getAttr('flashNotStart'));
     }
 
 

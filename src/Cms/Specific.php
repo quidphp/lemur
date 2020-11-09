@@ -512,7 +512,7 @@ class Specific extends Core\RouteAlias
         $r = '';
         $row = $this->row();
         $table = $this->table();
-        $session = $this->session();
+        $session = static::session();
         $lang = static::lang();
 
         if($key === null)

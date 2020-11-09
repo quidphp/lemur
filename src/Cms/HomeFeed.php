@@ -97,7 +97,7 @@ class HomeFeed extends Core\RouteAlias
     protected function makeIds():array
     {
         $return = [];
-        $session = $this->session();
+        $session = static::session();
         $db = $this->db();
         $tables = $db->tables()->filter(fn($table) => $table->hasPermission('view','homeFeed'));
 
