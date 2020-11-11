@@ -19,7 +19,7 @@ class Redirection extends Core\Row\Redirection
         '@cms'=>[
             'permission'=>[
                 'contributor'=>['view'=>false],
-                'editor'=>['view'=>false],
+                'editor'=>['view'=>true,'insert'=>false,'delete'=>false],
                 'subAdmin'=>['export'=>true],
                 'admin'=>['export'=>true]]]
     ];

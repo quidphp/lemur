@@ -320,19 +320,6 @@ trait _template
                 if(is_string($key) && !empty($key))
                 {
                     $table = $tables->get($key);
-
-                    if(empty($table) && is_array($value) && count($value) === 1)
-                    {
-                        $newKey = key($value);
-                        $newTable = $tables->get($newKey);
-                        if(!empty($newTable) && !$newTable->hasPermission(...$navAdd))
-                        {
-                            $key = $newKey;
-                            $value = null;
-                            $table = $newTable;
-                        }
-                    }
-
                     $html = '';
                     $routeHtml = '';
                     $attr = [];
