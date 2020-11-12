@@ -66,8 +66,8 @@ class Route extends Base\Test
         // row
         assert($obj->row() === null);
 
-        // getOtherMeta
-        assert($obj->getOtherMeta() === null);
+        // getOtherMetas
+        assert($obj->getOtherMetas() === []);
 
         // host
         assert($loginSubmit::host() === $boot->host(true,$type));

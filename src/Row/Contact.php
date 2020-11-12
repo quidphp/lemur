@@ -100,7 +100,7 @@ class Contact extends Core\RowAlias
 
     // outputString
     // génère le string d'output pour la ligne contact
-    final protected function outputString():string
+    final public function outputString():string
     {
         $cells = $this->cells()->gets(...static::getColsForm());
         $lines = $cells->accumulate([],fn($cell) => $cell->label().': '.$cell->pair(true));
