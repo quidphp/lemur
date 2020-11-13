@@ -63,7 +63,7 @@ class Row extends Core\Row implements Main\Contract\Meta
             $lang = static::lang();
 
             $attr = ['media'];
-            if(!empty($image))
+            if(!empty($image) && $image->isFilePathToUri())
             $attr['style']['background-image'] = $image;
             else
             $attr[] = 'media-placeholder';
