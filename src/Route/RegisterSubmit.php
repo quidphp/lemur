@@ -44,6 +44,7 @@ abstract class RegisterSubmit extends Core\RouteAlias
         'otherFields'=>null,
         'group'=>'submit',
         'flashPost'=>true,
+        'row'=>Lemur\Row\User::class,
         'log'=>null,
         'form'=>[
             'attr'=>[
