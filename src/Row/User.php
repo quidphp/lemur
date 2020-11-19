@@ -64,6 +64,16 @@ class User extends Core\Row\User
     }
 
 
+    // generateNewPassword
+    // génère et retourne un nouveau mot de passe
+    // ceci n'est pas enregistré dans la base de données
+    final public function generateNewPassword():string
+    {
+        $newOption = $this->getAttr('crypt/passwordNew');
+        return Base\Crypt::passwordNew($newOption);
+    }
+
+
     // sendWelcomeEmail
     // envoie le courriel de bienvenue
     final public function sendWelcomeEmail($type=true,?array $replace=null,?array $option=null):bool
@@ -72,8 +82,7 @@ class User extends Core\Row\User
         $array['closure'] = function(array $return) {
             if(empty($return['userPassword']) || !is_string($return['userPassword']))
             {
-                $newOption = $this->getAttr('crypt/passwordNew');
-                $password = Base\Crypt::passwordNew($newOption);
+                $password = $this->generateNewPassword();
 
                 if($this->setPassword([$password]) !== 1)
                 static::throw('cannotChangePassword');

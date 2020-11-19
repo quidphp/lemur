@@ -328,8 +328,8 @@ class Fr extends Core\Lang\Fr
 
             // crypt
             'crypt'=>[
-                'valid'=>'La valeur existe et est décrytable',
-                'invalid'=>"La valeur existe mais n'est pas décrytable"
+                'valid'=>'La valeur existe et est décryptable',
+                'invalid'=>"La valeur existe mais n'est pas décryptable"
             ],
 
             // tinymce

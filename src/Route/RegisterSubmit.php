@@ -98,13 +98,20 @@ abstract class RegisterSubmit extends Core\RouteAlias
     }
 
 
+    // getBasePost
+    // retourne le post de base, à partir de l'objet request
+    protected function getBasePost():array
+    {
+        return $this->request()->post(true,true);
+    }
+
+
     // post
     // retourne le tableau post pour l'enregistrement
     public function post():array
     {
         $return = [];
-        $request = $this->request();
-        $post = $request->post(true,true);
+        $post = $this->getBasePost();
         $password = $this->getPasswordFields();
         $default = $this->getDataDefault($post);
         $passwordConfirm = $password['passwordConfirm'];
