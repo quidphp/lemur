@@ -21,6 +21,23 @@ abstract class Files extends Core\Cell\Files
     protected static array $config = [];
 
 
+    // commonDownloadRoute
+    // retourne la route pour le téléchargement
+    final protected function commonDownloadRoute(?int $index=null):Core\Route
+    {
+        $return = null;
+        $col = $this->col();
+        $array = ['table'=>$this,'primary'=>$this,'col'=>$this];
+
+        if($this->hasIndex())
+        $array['index'] = $index;
+
+        $return = $col->route('download',$array);
+
+        return $return;
+    }
+
+
     // commonGeneralOutput
     // génère le output pour général
     final protected function commonGeneralOutput(?int $index=null,?array $option=null):string

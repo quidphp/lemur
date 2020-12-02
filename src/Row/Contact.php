@@ -198,6 +198,15 @@ class Contact extends Core\RowAlias
     }
 
 
+    // canSendEmail
+    // retourne vrai si on peut envoyer des emails de cette table
+    // par défaut vérifie présence du modèle contactAdmin
+    public static function canSendEmail():bool
+    {
+        return static::hasEmailModelStatic('contactAdmin');
+    }
+
+
     // getCols
     // retourne les colonnes à mettre dans le formulaire
     final protected static function getColsForm():array

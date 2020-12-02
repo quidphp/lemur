@@ -19,6 +19,14 @@ class Media extends Core\Cell\Media
     protected static array $config = [];
 
 
+    // downloadRoute
+    // retourne la route pour le téléchargement
+    final public function downloadRoute():Core\Route
+    {
+        return $this->commonDownloadRoute();
+    }
+
+
     // generalOutput
     // génère le output pour général
     final public function generalOutput(array $option):string

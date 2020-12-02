@@ -205,7 +205,10 @@ Component.Com = function(option)
             
             if(Str.isNotEmpty(href))
             {
-                href = href.replace(char,primary);
+                const replace = {};
+                replace[char] = primary;
+                
+                href = Str.replace(replace,href);
                 trigHdlr(document,'history:href',href,clickEvent);
             }
         }

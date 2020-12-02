@@ -19,6 +19,14 @@ class Medias extends Core\Cell\Medias
     protected static array $config = [];
 
 
+    // downloadRoute
+    // retourne la route pour le téléchargement
+    final public function downloadRoute(int $index):Core\Route
+    {
+        return $this->commonDownloadRoute($index);
+    }
+
+
     // generalOutput
     // génère le output pour général, retourne seulement la première image de la cellule
     final public function generalOutput(array $option):string
