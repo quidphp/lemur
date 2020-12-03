@@ -31,7 +31,7 @@ trait _nobody
 
     // makeButtons
     // fait les boutons sous le formulaire
-    abstract protected function makeButtons():string;
+    abstract protected function makeButtons():array;
 
 
     // onReplace

@@ -44,17 +44,15 @@ class Calendar extends Core\RouteAlias
 
     // setCallback
     // change les callback pour le calendrier
-    final public function setCallback(Main\Calendar $return):Main\Calendar
+    final public function setCallback(Main\Calendar $value):void
     {
-        $return
+        $value
         ->setCallback('prev',fn(int $value) => $this->changeSegments(['timestamp'=>$value])->a(null,['ajax','prev']))
         ->setCallback('next',fn(int $value) => $this->changeSegments(['timestamp'=>$value])->a(null,['ajax','next']))
         ->setCallback('day',function(int $value,int $timestamp,array $attr) {
             $attr = ($this->isDayDisabled($value,$timestamp))? ['disabled'=>true]:null;
             return Html::button($value,$attr);
         });
-
-        return $return;
     }
 
 
