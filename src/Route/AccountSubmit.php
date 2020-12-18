@@ -40,7 +40,8 @@ abstract class AccountSubmit extends Core\RouteAlias
         'group'=>'submit',
         'form'=>[
             'attr'=>[
-                'data-unload'=>true]]
+                'data-unload'=>true]],
+        'includeFiles'=>false
     ];
 
 
@@ -84,7 +85,7 @@ abstract class AccountSubmit extends Core\RouteAlias
     {
         $return = [];
         $request = $this->request();
-        $post = $request->post(true,true);
+        $post = $request->post(true,true,null,$this->getAttr('includeFiles'));
         $keep = $this->getBaseFields();
         $return['data'] = Base\Arr::gets($keep,$post);
 
