@@ -269,7 +269,7 @@ class Fr extends Core\Lang\Fr
                     'total'=>'Total',
                     'host'=>'Hôte',
                     'quantity'=>'Quantité',
-                    'gender'=>'Gendre'
+                    'gender'=>'Genre'
                 ],
 
                 // contact
