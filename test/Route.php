@@ -171,7 +171,7 @@ class Route extends Base\Test
         assert($route::name(true) === 'error');
         assert($route::name(false) === 'Error');
         assert($route::name() === 'Error');
-        assert($route::priority() === 999);
+        assert($route::priority() === 9999);
         assert($route::parent() === null);
         assert($loginSubmit::parent() === Lemur\Cms\Login::class);
         assert($loginSubmit::paths() === ['en'=>'login/submit','fr'=>'connexion/soumettre']);
@@ -674,7 +674,7 @@ class Route extends Base\Test
         assert($routes->filter(fn($route) => $route::group() === 'home')->isCount(2));
         assert($routes->find(fn($route) => $route::group() === 'home') === Lemur\Cms\Home::class);
         assert($routes->filter(fn($route) => $route::group() === 'error' && $route::priority() === 992)->isEmpty());
-        assert($routes->filter(fn($route) => $route::group() === 'error' && $route::priority() === 999)->isCount(1));
+        assert($routes->filter(fn($route) => $route::group() === 'error' && $route::priority() === 9999)->isCount(1));
         assert(count($routes->group('group')) === 14);
         assert($routes->sortBy('name',false)->index(1) === Lemur\Cms\TableRelation::class);
         assert($routes->sortBy('name',false) !== $routes);
