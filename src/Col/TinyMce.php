@@ -57,7 +57,7 @@ class TinyMce extends TextareaAlias
 
     // tinymceData
     // retourne les données de tinymce
-    final public function tinymceData():array
+    final public function tinymceData(?array $option=null):array
     {
         $return = (array) $this->getAttr('tinymce');
         $boot = static::boot();
@@ -99,7 +99,7 @@ class TinyMce extends TextareaAlias
             $return['style_formats'] = array_values($return['style_formats']);
         }
 
-        return $return;
+        return Base\Arr::replace($return,$option);
     }
 
 
