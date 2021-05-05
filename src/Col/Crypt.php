@@ -21,7 +21,6 @@ class Crypt extends Core\ColAlias
     protected static array $config = [
         'cell'=>Lemur\Cell\Crypt::class,
         'tag'=>'inputText',
-        'check'=>['kind'=>'char'],
         'secretKey'=>null
     ];
 
