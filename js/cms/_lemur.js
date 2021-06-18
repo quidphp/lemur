@@ -178,7 +178,6 @@ ael(document,'modal:accountChangePassword',function(event,modal) {
 // home
 // comportement pour la page d'accueil du CMS une fois connecté
 ael(document,'route:home',function(event,node) {
-    
     const feed = qs(node,"main .home-feed");
     trigSetup(Component.HomeFeed.call(feed));
 });
@@ -339,7 +338,6 @@ ael(document,'group:specific',function(event,node) {
 // specificMulti
 // comportement pour la page de modification multiple
 ael(document,'route:specificMulti',function(event) {
-    
     const form = qs(this,"main .inner > form.specific-form");
     trigSetup(Component.SpecificMulti.call(form));
 });
