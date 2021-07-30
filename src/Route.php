@@ -68,6 +68,14 @@ abstract class Route extends Core\Route
                 'cli'=>['cli'=>true]]
         ]
     ];
+
+
+    // tableSegmentGeneral
+    // retourne un objet table, utilisé pour les segments généraux
+    protected static function tableSegmentGeneral(array &$keyValue):?Table
+    {
+        return static::tableSegment($keyValue);
+    }
 }
 
 // init
