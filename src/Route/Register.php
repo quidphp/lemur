@@ -26,6 +26,7 @@ abstract class Register extends Core\RouteAlias
         'parent'=>Login::class,
         'row'=>Lemur\Row\User::class,
         'group'=>'nobody',
+        'passwordDescription'=>false,
         'formWrap'=>"<div class='table %class%'><div class='table-row'><div class='table-cell label-cell'>%label%</div><div class='table-cell form-cell'>%form%</div></div></div>",
         'formPattern'=>'%:'
     ];
@@ -137,7 +138,8 @@ abstract class Register extends Core\RouteAlias
 
     // makeFormPassword
     // génère la deuxième partie du formulaire d'enregistrement pour les mots de passes
-    final protected function makeFormPassword():string
+    // possibilité de mettre la description pour le mot de passe via l'attribut passwordDescription
+    protected function makeFormPassword():string
     {
         $r = '';
         $fields = $this->getPasswordFields();
@@ -145,12 +147,18 @@ abstract class Register extends Core\RouteAlias
         $lang = static::lang();
         $col = $table->col($fields['password']);
         $label = $lang->text('register/confirmPassword');
-        $replace = ['class'=>'required','description'=>null];
+
+        $description = Html::divCond($col->description(),'description');
+        $replaceConfirm = ['class'=>'required','description'=>null];
+        $replace = $replaceConfirm;
+        if($this->getAttr('passwordDescription') === true)
+        $replace['description'] = $description;
+
         $formWrap = $this->getFormWrap();
         $pattern = $this->getFormPattern();
 
         $r .= $col->formWrap($formWrap,$pattern,null,['data-required'=>true],$replace);
-        $r .= $col->formWrap($formWrap,$label.':',null,['data-required'=>true,'name'=>$fields['passwordConfirm']],$replace);
+        $r .= $col->formWrap($formWrap,$label.':',null,['data-required'=>true,'name'=>$fields['passwordConfirm']],$replaceConfirm);
 
         return $r;
     }
