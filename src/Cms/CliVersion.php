@@ -19,9 +19,7 @@ class CliVersion extends Core\Route\CliVersion
 
 
     // config
-    protected static array $config = [
-        'priority'=>800
-    ];
+    protected static array $config = [];
 }
 
 // init

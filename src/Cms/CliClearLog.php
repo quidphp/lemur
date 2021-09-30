@@ -22,6 +22,7 @@ class CliClearLog extends Core\RouteAlias
     // config
     protected static array $config = [
         'path'=>['-clearlog'],
+        'priority'=>8003,
         'parent'=>CliClearAll::class,
         'clear'=>[
             '[storageLog]',

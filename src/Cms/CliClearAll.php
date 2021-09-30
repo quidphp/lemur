@@ -22,6 +22,7 @@ class CliClearAll extends Core\RouteAlias
     // config
     protected static array $config = [
         'path'=>['-clearall'],
+        'priority'=>8001,
         'clear'=>[
             '[storageLog]',
             '[storageError]',

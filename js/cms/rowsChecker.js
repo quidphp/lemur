@@ -113,9 +113,9 @@ Component.RowsChecker = function()
             const toolsContainer = trigHdlr(this,'rowsChecker:getToolsContainer');
             const toggleAll = trigHdlr(this,'rowsChecker:getToggleAll');
             const multiModify = trigHdlr(this,'rowsChecker:getMultiModify');
-            const multiModifyMax = getAttr(multiModify,'data-max','int');
+            const multiModifyMax = (multiModify != null)? getAttr(multiModify,'data-max','int'):0;
             const multiDelete = trigHdlr(this,'rowsChecker:getMultiDelete');
-            const multiDeleteMax = getAttr(multiDelete,'data-max','int');
+            const multiDeleteMax = (multiDelete != null)? getAttr(multiDelete,'data-max','int'):0;
             const oneChecked = checkedLength >= 1;
             const manyChecked = checkedLength > 1;
             const allChecked = trigHdlr(this,'rowsChecker:areAllChecked');
@@ -125,7 +125,11 @@ Component.RowsChecker = function()
             toggleClass(toggleAll,'all-checked',allChecked);
             
             trigHdlr(toolsContainer,(oneChecked === true)? 'toolsContainer:show':'toolsContainer:hide');
+            
+            if(multiModify != null)
             trigHdlr(multiModify,(showMulti === true)? 'toolMulti:show':'toolMulti:hide');
+            
+            if(multiDelete != null)
             trigHdlr(multiDelete,(showDelete === true)? 'toolMulti:show':'toolMulti:hide');
         }
     });

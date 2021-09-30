@@ -19,7 +19,7 @@ abstract class Login extends Core\RouteAlias
         'path'=>[
             'en'=>'login',
             'fr'=>'connexion'],
-        'priority'=>998,
+        'priority'=>1000,
         'match'=>[
             'role'=>'nobody'],
         'group'=>'nobody'

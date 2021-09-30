@@ -72,6 +72,14 @@ abstract class Register extends Core\RouteAlias
     }
 
 
+    // withPasswordDescription
+    // retourne vrai s'il faut afficher la description du mot de passe
+    final public function withPasswordDescription():bool
+    {
+        return $this->getAttr('passwordDescription');
+    }
+
+
     // flash
     // retourne les données flash pour le formulaire
     protected function flash():?array
@@ -151,7 +159,7 @@ abstract class Register extends Core\RouteAlias
         $description = Html::divCond($col->description(),'description');
         $replaceConfirm = ['class'=>'required','description'=>null];
         $replace = $replaceConfirm;
-        if($this->getAttr('passwordDescription') === true)
+        if($this->withPasswordDescription())
         $replace['description'] = $description;
 
         $formWrap = $this->getFormWrap();

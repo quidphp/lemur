@@ -22,6 +22,7 @@ class CliClearCache extends Core\RouteAlias
     // config
     protected static array $config = [
         'path'=>['-clearcache'],
+        'priority'=>8002,
         'parent'=>CliClearAll::class,
         'clear'=>[
             '[storageCache]',

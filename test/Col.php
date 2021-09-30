@@ -125,7 +125,7 @@ class Col extends Base\Test
         assert($jsonArray->completeValidation('') === ['required']);
         assert($jsonArray->completeValidation(Base\Json::encode(['test'])) === true);
         assert($phone instanceof Lemur\Col\Phone);
-        assert($phone->get(5144839999) === '(514) 483-9999');
+        assert($phone->get(5144839999) === '514-483-9999');
         assert($slug instanceof Lemur\Col\Slug);
         assert(is_array($slug->slugAttr()));
         assert($slug->slugDateConvert('date','12-05-2018') === '2018-12-05');
