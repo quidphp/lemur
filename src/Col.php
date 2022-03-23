@@ -25,6 +25,7 @@ class Col extends Core\Col
         'relationSearchRequired'=>false, // si la recherche est obligatoire pour une relation
         'relationExcerpt'=>75, // longueur de l'excerpt, utilisé entre autre pour les relations
         'generalExcerpt'=>null, // excerpt min pour l'affichage dans general du cms
+        'generalXss'=>true, // si le component général doit être filtré via html:xss
         '@cms'=>[
             'onGeneralOutput'=>null, // callback pour général output
             'anchorCorner'=>false,

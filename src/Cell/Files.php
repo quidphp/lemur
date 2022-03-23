@@ -74,6 +74,7 @@ abstract class Files extends Core\Cell\Files
                     $legendLink = $original->pathToUri();
 
                     $img = Html::img($file);
+
                     if(!empty($img))
                     $return .= Html::div($img,'thumbnail');
                 }
