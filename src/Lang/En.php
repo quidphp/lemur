@@ -397,6 +397,7 @@ class En extends Core\Lang\En
                     'envLabel'=>'Environment',
                     'typeLabel'=>'Type',
                     'httpProtocol'=>'HTTP protocol',
+                    'speed'=>'Speed',
                     'hostname'=>'Hostname',
                     'ip'=>'Ip',
                     'os'=>'OS',

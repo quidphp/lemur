@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Lemur\Cms;
 use Quid\Base;
 use Quid\Core;
+use Quid\Lemur;
 
 // popupBoot
 // class for the popup route with the boot information
@@ -17,17 +18,19 @@ class PopupBoot extends Core\RouteAlias
 {
     // trait
     use _popup;
+    use Lemur\Segment\_numeric;
 
 
     // config
     protected static array $config = [
         'path'=>[
-            'en'=>'popup/boot/[route]',
-            'fr'=>'popup/demerrage/[route]'],
+            'en'=>'popup/boot/[route]/[speed]',
+            'fr'=>'popup/demerrage/[route]/[speed]'],
         'segment'=>[
-            'route'=>'structureSegmentRoute'],
+            'route'=>'structureSegmentRoute',
+            'speed'=>'structureSegmentNumeric'],
         'popup'=>[
-            0=>'phpVersion','quidVersion','envLabel','typeLabel','classFqcn','classRoute','hostname','httpProtocol',
+            0=>'phpVersion','quidVersion','envLabel','typeLabel','classFqcn','classRoute','hostname','httpProtocol','speed',
             25=>'ip','os','isCaseSensitive','processId','user','group','serverType','sapi','paths',
             50=>'phpOverview',
             75=>'jsOverview','cssOverview',
@@ -58,6 +61,9 @@ class PopupBoot extends Core\RouteAlias
             elseif($key === 'classRoute')
             $value = $this['route'];
 
+            elseif($key === 'speed')
+            $value = $this['speed'];
+
             elseif($key === 'phpOverview')
             $value = $boot->pathOverview('src','php');
 
@@ -76,6 +82,9 @@ class PopupBoot extends Core\RouteAlias
             elseif($key === 'ip')
             $value = Base\Server::ip(true);
 
+            elseif(Base\Classe::hasMethod($key,Base\Server::class))
+            $value = Base\Server::$key();
+
             elseif($boot->hasMethod($key))
             $value = $boot->$key();
 
@@ -83,7 +92,7 @@ class PopupBoot extends Core\RouteAlias
             $value = $this->$key();
 
             else
-            $value = Base\Server::$key();
+            static::throw($key);
 
             $label = $lang->text(['popup','boot',$key]);
 

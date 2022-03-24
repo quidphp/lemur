@@ -397,6 +397,7 @@ class Fr extends Core\Lang\Fr
                     'envLabel'=>'Environnement',
                     'typeLabel'=>'Type',
                     'httpProtocol'=>'Protocole HTTP',
+                    'speed'=>'Vitesse',
                     'hostname'=>"Nom d'hôte",
                     'ip'=>'Ip',
                     'os'=>'OS',

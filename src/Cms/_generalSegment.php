@@ -44,6 +44,7 @@ trait _generalSegment
     // sql
     // crée et conserve l'objet sql à partir des segments fournis par generalSegments
     // les segments dont la table n'a pas la permission sont effacés
+    // s'il y a un array in, à ce moment ajoute comme where id > 1 pour battre le whereOnlyId dans la syntaxe (et permettre order, limit etc)
     final public function sql():Orm\Sql
     {
         return $this->cache(__METHOD__,function() {
@@ -56,6 +57,9 @@ trait _generalSegment
                 if(!empty($where))
                 $array['where'] = $where;
             }
+
+            if(array_key_exists('in',$array) && !empty($array['in']) && empty($array['where']))
+            $array['where'] = [['id','>',1]];
 
             if(array_key_exists('limit',$array) && !is_int($array['limit']))
             $array['limit'] = $table->limit();

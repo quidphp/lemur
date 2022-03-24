@@ -111,7 +111,7 @@ class Col extends Base\Test
         // getDataAttr
 
         // col
-        assert(count($col->attr()) === 69);
+        assert(count($col->attr()) === 68);
         assert(strlen($date->formComplex()) === 280);
         assert(strlen($date->formComplex('08-08-1984')) === 298);
         assert(strlen($date->formComplex(mktime(0,0,0,8,8,1984))) === 298);

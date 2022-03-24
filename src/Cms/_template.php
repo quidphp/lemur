@@ -452,7 +452,8 @@ trait _template
         $r .= $route->aDialog(null,['with-icon','email','no-border']);
 
         $copyright = $lang->text('footer/version',['version'=>$version]);
-        $route = PopupBoot::make($this);
+        $segment = ['route'=>$this,'speed'=>Base\Debug::speed()];
+        $route = PopupBoot::make($segment);
         $popup = ($route->canTrigger() && $route->isValidSegment());
 
         $attr = ['popup-trigger'];
