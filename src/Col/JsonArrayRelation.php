@@ -31,7 +31,7 @@ class JsonArrayRelation extends Core\ColAlias
 
     // onGet
     // méthode onGet pour jsonArrayRelation
-    final protected function onGet($return,?Orm\Cell $cell=null,array $option)
+    final protected function onGet($return,?Orm\Cell $cell,array $option)
     {
         $return = parent::onGet($return,$cell,$option);
 
@@ -47,7 +47,7 @@ class JsonArrayRelation extends Core\ColAlias
 
     // onSet
     // gère la logique onSet pour jsonArrayRelation
-    final protected function onSet($return,?Orm\Cell $cell=null,array $row,array $option)
+    final protected function onSet($return,?Orm\Cell $cell,array $row,array $option)
     {
         $fromCell = $this->fromCell();
         if(!empty($row[$fromCell]))

@@ -147,7 +147,7 @@ class Col extends Core\Col
     // onComplex
     // permet de formater une valeur simple vers un type plus complexe
     // utilisé lors de la génération d'un élément de formulaire, si onComplex est true renvoie à onGet
-    final protected function onComplex($return,?Orm\Cell $cell=null,array $option)
+    final protected function onComplex($return,?Orm\Cell $cell,array $option)
     {
         $return = $this->value($return);
         $onComplex = $this->getAttr('onComplex');
@@ -167,7 +167,7 @@ class Col extends Core\Col
 
     // specificComplexOutput
     // utilisé pour le output onComplex pour formComplex
-    public function specificComplexOutput($return,?Orm\Cell $cell=null,array $option)
+    public function specificComplexOutput($return,?Orm\Cell $cell,array $option)
     {
         return $return;
     }

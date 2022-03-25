@@ -28,7 +28,7 @@ class JsonExport extends Core\Col\JsonAlias
     // onSet
     // gère la logique onSet pour jsonExport
     // si la valeur est trop longue, n'envoie pas d'erreur mais retourne un tableau avec la clé incomplete à true
-    final protected function onSet($return,?Orm\Cell $cell=null,array $row,array $option)
+    final protected function onSet($return,?Orm\Cell $cell,array $row,array $option)
     {
         $return = parent::onSet($return,$cell,$row,$option);
 

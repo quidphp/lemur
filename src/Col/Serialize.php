@@ -24,7 +24,7 @@ class Serialize extends Core\Col\Serialize
 
     // specificComplexOutput
     // utilisé pour le output de serialize pour formComplex
-    final public function specificComplexOutput($return,?Orm\Cell $cell=null,array $option)
+    final public function specificComplexOutput($return,?Orm\Cell $cell,array $option)
     {
         return Base\Debug::export($return);
     }

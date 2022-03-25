@@ -22,7 +22,7 @@ class Request extends Core\Col\Request
 
     // specificComplexOutput
     // utilisé pour le output de request pour formComplex
-    final public function specificComplexOutput($return,?Orm\Cell $cell=null,array $option)
+    final public function specificComplexOutput($return,?Orm\Cell $cell,array $option)
     {
         return ($return instanceof Core\Request)? Base\Debug::export($return->safeInfo()):null;
     }

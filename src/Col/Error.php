@@ -22,7 +22,7 @@ class Error extends Core\Col\Error
 
     // specificComplexOutput
     // utilisé pour le output de l'erreur pour formComplex
-    final public function specificComplexOutput($return,?Orm\Cell $cell=null,array $option)
+    final public function specificComplexOutput($return,?Orm\Cell $cell,array $option)
     {
         return ($return instanceof Main\Error)? $return->html(true):null;
     }

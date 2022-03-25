@@ -57,7 +57,7 @@ abstract class Video extends Core\Col\JsonAlias
 
     // onGet
     // sur onGet retourne l'objet video s'il y a une valeur
-    final protected function onGet($return,?Orm\Cell $cell=null,array $option)
+    final protected function onGet($return,?Orm\Cell $cell,array $option)
     {
         $return = parent::onGet($return,$cell,$option);
 
@@ -78,7 +78,7 @@ abstract class Video extends Core\Col\JsonAlias
 
     // onSet
     // gère la logique onSet pour la vidéo
-    final protected function onSet($return,?Orm\Cell $cell=null,array $row,array $option)
+    final protected function onSet($return,?Orm\Cell $cell,array $row,array $option)
     {
         $return = parent::onSet($return,$cell,$row,$option);
         $hasChanged = true;

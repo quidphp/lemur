@@ -27,7 +27,7 @@ class Crypt extends Core\ColAlias
 
     // onGet
     // logique onGet pour un champ crypt
-    protected function onGet($return,?Orm\Cell $cell=null,array $option)
+    protected function onGet($return,?Orm\Cell $cell,array $option)
     {
         if(!empty($cell))
         $return = $cell->value();
@@ -45,7 +45,7 @@ class Crypt extends Core\ColAlias
     // onSet
     // gère la logique onSet pour crypt
     // si la valeur est une string vide, utilise la valeur courant de la cell
-    protected function onSet($return,?Orm\Cell $cell=null,array $row,array $option)
+    protected function onSet($return,?Orm\Cell $cell,array $row,array $option)
     {
         if(is_string($return))
         {

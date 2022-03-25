@@ -32,7 +32,7 @@ class Textarea extends Core\ColAlias
     // onSet
     // gère la logique onSet pour textarea
     // la seule chose géré est le remplacement des liens absoluts pour leur version relatives
-    final protected function onSet($return,?Orm\Cell $cell=null,array $row,array $option)
+    final protected function onSet($return,?Orm\Cell $cell,array $row,array $option)
     {
         if(is_string($return))
         $return = $this->absoluteReplace($return);

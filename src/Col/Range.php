@@ -59,7 +59,7 @@ class Range extends Core\Col\JsonAlias
 
     // onGet
     // sur onGet retourne un tableau associatif avec min, max ou inc
-    final protected function onGet($return,?Orm\Cell $cell=null,array $option)
+    final protected function onGet($return,?Orm\Cell $cell,array $option)
     {
         $return = parent::onGet($return,$cell,$option);
 

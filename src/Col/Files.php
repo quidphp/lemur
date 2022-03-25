@@ -91,7 +91,7 @@ abstract class Files extends Core\Col\Files
 
     // commonFormComplexUpdate
     // génère l'élément de formulaire complexe média lors d'une mise à jour
-    final protected function commonFormComplexUpdate(?int $index=null,Core\Cell $value,array $attr,array $option):string
+    final protected function commonFormComplexUpdate(?int $index,Core\Cell $value,array $attr,array $option):string
     {
         $return = '';
         $hasIndex = $this->hasIndex();
@@ -176,7 +176,7 @@ abstract class Files extends Core\Col\Files
 
     // commonFormComplexUpdateInfo
     // génère la partie info du formulaire complexe media
-    final protected function commonFormComplexUpdateInfo(?int $index=null,Core\Cell $value,array $attr,array $option):string
+    final protected function commonFormComplexUpdateInfo(?int $index,Core\Cell $value,array $attr,array $option):string
     {
         $return = '';
         $hasIndex = $this->hasIndex();
@@ -242,7 +242,7 @@ abstract class Files extends Core\Col\Files
 
     // commonFormComplexUpdateVersion
     // génère la partie versions du formulaire complexe media
-    final protected function commonFormComplexUpdateVersion(?int $index=null,Core\Cell $value,array $attr,array $option):string
+    final protected function commonFormComplexUpdateVersion(?int $index,Core\Cell $value,array $attr,array $option):string
     {
         $return = '';
 

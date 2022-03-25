@@ -44,7 +44,7 @@ class JsonArray extends Core\Col\JsonAlias
 
     // onGet
     // logique onGet pour un champ jsonArray
-    protected function onGet($return,?Orm\Cell $cell=null,array $option)
+    protected function onGet($return,?Orm\Cell $cell,array $option)
     {
         $return = parent::onGet($return,$cell,$option);
 
@@ -57,7 +57,7 @@ class JsonArray extends Core\Col\JsonAlias
 
     // onSet
     // gère la logique onSet pour jsonArray, prepare est utilisé sur le tableau
-    protected function onSet($return,?Orm\Cell $cell=null,array $row,array $option)
+    protected function onSet($return,?Orm\Cell $cell,array $row,array $option)
     {
         if(is_array($return))
         $return = $this->prepare($return);
@@ -79,7 +79,7 @@ class JsonArray extends Core\Col\JsonAlias
 
     // makeModel
     // génère le model pour jsonArray
-    public function makeModel($value,array $attr,?Core\Cell $cell=null,array $option):string
+    public function makeModel($value,array $attr,?Core\Cell $cell,array $option):string
     {
         $return = '';
 

@@ -42,7 +42,7 @@ class Slug extends Core\ColAlias
 
     // slugExists
     // méthode appelé lorsque le slug retourné existe déjà
-    final protected function slugExists(string $return,array $row,?Core\Cell $cell=null,array $option):string
+    final protected function slugExists(string $return,array $row,?Core\Cell $cell,array $option):string
     {
         $slug = $this->slugAttr(true);
         $keep = $return;
@@ -78,7 +78,7 @@ class Slug extends Core\ColAlias
     // onSet
     // gère la logique set pour slug
     // génère le slug à partir de name_[lang] si vide
-    final protected function onSet($return,?Orm\Cell $cell=null,array $row,array $option)
+    final protected function onSet($return,?Orm\Cell $cell,array $row,array $option)
     {
         if($this->slugDo($return,$cell))
         {
