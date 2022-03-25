@@ -37,7 +37,7 @@ class TinyMce extends TextareaAlias
             'entity_encoding'=>'raw',
             'fix_list_elements'=>true,
             'style_formats_autohide'=>true,
-            'preview_styles'=>"font-family font-size font-weight font-style text-decoration text-transform color background-color border border-radius outline text-shadow",
+            'preview_styles'=>'font-family font-size font-weight font-style text-decoration text-transform color background-color border border-radius outline text-shadow',
             'paste_as_text'=>true,
             'paste_block_drop'=>true,
             'visualblocks_default_state'=>true,
@@ -67,7 +67,7 @@ class TinyMce extends TextareaAlias
 
         if(is_array($languages) && array_key_exists($currentLang,$languages))
         $return['language'] = $languages[$currentLang];
-        
+
         if(!empty($return['content_css']))
         {
             $return['content_css'] = (array) $return['content_css'];
