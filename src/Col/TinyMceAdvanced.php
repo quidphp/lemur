@@ -16,18 +16,13 @@ class TinyMceAdvanced extends TinyMceAlias
     // config
     protected static array $config = [
         'tinymce'=>[ // custom, ce merge à la classe parent
-            'plugins'=>'autolink advlist code charmap fullscreen hr link lists paste print searchreplace visualblocks wordcount image media table',
-            'toolbar'=>'styleselect removeformat visualblocks | bold italic underline | bullist numlist | link image media charmap hr table | searchreplace print code fullscreen',
+            'plugins'=>'autolink advlist code charmap fullscreen link lists searchreplace visualblocks wordcount image media table',
+            'toolbar'=>'styles removeformat visualblocks | bold italic underline | bullist numlist | link image media charmap hr table | searchreplace code fullscreen',
             'media_alt_source'=>false,
             'media_poster'=>false,
             'table_appearance_options'=>false,
             'table_default_attributes'=>['border'=>0],
-            'table_default_styles'=>['width'=>'100%','border-collapsed'=>'collapse'],
-            'table_responsive_width'=>true,
-            'table_advtab'=>true,
-            'table_row_advtab'=>true,
-            'table_cell_advtab'=>true,
-            'table_style_by_css'=>true,
+            'table_default_styles'=>['width'=>'100%','border-collapse'=>'collapse'],
             'style_formats'=>[
                 11=>['title'=>'superscript','format'=>'superscript'],
                 12=>['title'=>'header1','format'=>'h1'],

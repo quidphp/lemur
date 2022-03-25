@@ -24,9 +24,10 @@ class TinyMce extends Main\Service
         'github'=>'https://github.com/tinymce/tinymce',
         'paths'=>[
             'basename'=>'tinymce',
-            'serverFrom'=>'[vendorLemur]/vendor/%basename%',
+            'serverFrom'=>'[vendor]/tinymce/%basename%',
             'serverTo'=>'[publicJs]/%basename%',
-            'public'=>'js/%basename%/tinymce.min.js']
+            'public'=>'js/%basename%/tinymce.min.js',
+            'extra'=>['[vendorLemur]/service/%basename%/langs'=>'[publicJs]/%basename%/langs']]
     ];
 
 

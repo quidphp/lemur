@@ -25,25 +25,25 @@ class TinyMce extends TextareaAlias
         'language'=>['fr'=>'fr_FR'], // tableau pour convertir un code de language quid vers tinymce
         'group'=>'tinymce',
         'tinymce'=>[ // config pour tinymce qui sera mis en attribut dans la tag textarea
-            'plugins'=>'autolink code charmap fullscreen link paste print searchreplace visualblocks wordcount',
-            'toolbar'=>'styleselect removeformat visualblocks | bold italic underline | link charmap | searchreplace print code fullscreen',
+            'plugins'=>'autolink code charmap fullscreen link searchreplace visualblocks wordcount',
+            'toolbar'=>'styles removeformat visualblocks | bold italic underline | link charmap | searchreplace code fullscreen',
+            'toolbar_mode'=>'sliding',
+            'menubar'=>false,
             'branding'=>false,
-            'add_unload_trigger'=>false,
-            'cache_suffix'=>'?v=%version%',
+            'language'=>null,
             'content_css'=>['[public]/css/%type%-tinymce.css'],
+            'cache_suffix'=>'?v=%version%',
             'convert_urls'=>false,
             'entity_encoding'=>'raw',
             'fix_list_elements'=>true,
-            'language'=>null,
-            'menubar'=>false,
-            'paste_as_text'=>true,
-            'preview_styles'=>true,
             'style_formats_autohide'=>true,
-            'toolbar_drawer'=>'sliding',
+            'preview_styles'=>"font-family font-size font-weight font-style text-decoration text-transform color background-color border border-radius outline text-shadow",
+            'paste_as_text'=>true,
+            'paste_block_drop'=>true,
             'visualblocks_default_state'=>true,
             'style_formats'=>[
-                10=>['title'=>'paragraph','format'=>'p','wrapper'=>true]
-            ]]
+                10=>['title'=>'paragraph','format'=>'p','wrapper'=>true]]
+        ]
     ];
 
 
@@ -67,24 +67,27 @@ class TinyMce extends TextareaAlias
 
         if(is_array($languages) && array_key_exists($currentLang,$languages))
         $return['language'] = $languages[$currentLang];
-
-        $return['content_css'] = (array) $return['content_css'];
-        foreach ($return['content_css'] as $key => $value)
+        
+        if(!empty($return['content_css']))
         {
-            if(is_string($value))
+            $return['content_css'] = (array) $return['content_css'];
+            foreach ($return['content_css'] as $key => $value)
             {
-                $value = str_replace('%type%',$boot->type(),$value);
-                $return['content_css'][$key] = Base\Uri::absolute($value);
-            }
+                if(is_string($value))
+                {
+                    $value = str_replace('%type%',$boot->type(),$value);
+                    $return['content_css'][$key] = Base\Uri::absolute($value);
+                }
 
-            else
-            unset($return['content_css'][$key]);
+                else
+                unset($return['content_css'][$key]);
+            }
         }
 
-        if(is_string($return['cache_suffix']))
+        if(!empty($return['cache_suffix']) && is_string($return['cache_suffix']))
         $return['cache_suffix'] = str_replace('%version%',$boot->version(),$return['cache_suffix']);
 
-        if(is_array($return['style_formats']))
+        if(!empty($return['style_formats']) && is_array($return['style_formats']))
         {
             foreach ($return['style_formats'] as $key => $value)
             {

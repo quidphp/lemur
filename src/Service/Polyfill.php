@@ -24,21 +24,22 @@ class Polyfill extends Main\Service
         'github'=>['https://github.com/Financial-Times/polyfill-service','https://github.com/jonathantneal/element-qsa-scope'],
         'paths'=>[
             'basename'=>null,
-            'serverFrom'=>'[vendorFront]/vendor/%basename%',
+            'serverFrom'=>'[vendorFront]/service/%basename%',
             'serverTo'=>'[publicJs]/%basename%',
             'public'=>'js/%basename%'],
         'mode'=>null // choix ie11 ou edge
 
-        // ie11
-        // Array.from,Array.prototype.find,Array.prototype.fill,Array.prototype.includes,Array.prototype.keys,Array.prototype.values
-        // CustomEvent,Map,Object.assign,Object.is,Object.values,Set,String.prototype.endsWith,String.prototype.includes,
-        // String.prototype.startsWith,requestAnimationFrame, URL, smoothscroll, promise, location.origin, element.matches,
-        // element.closest, element.remove, element.classList, element.append, element.prepend, HTML template
-        // https://polyfill.io/v3/polyfill.js?version=3.53.1&flags=gated%2Calways&features=Array.from%2CArray.prototype.find%2CArray.prototype.includes%2CArray.prototype.keys%2CArray.prototype.values%2CArray.prototype.fill%2CCustomEvent%2CMap%2CObject.assign%2CObject.is%2CObject.values%2CSet%2CString.prototype.endsWith%2CString.prototype.includes%2CString.prototype.startsWith%2CrequestAnimationFrame%2CURL%2Csmoothscroll%2CPromise%2Clocation.origin%2CHTMLTemplateElement%2CElement.prototype.matches%2CElement.prototype.closest%2CElement.prototype.remove%2CElement.prototype.classList%2CElement.prototype.append%2CElement.prototype.prepend
+        /*
+        ie11
+        Array.from,Array.prototype.fill,Array.prototype.find,Array.prototype.includes,Array.prototype.keys,Array.prototype.values,CustomEvent,Element.prototype.append,
+        Element.prototype.classList,Element.prototype.closest,Element.prototype.matches,Element.prototype.prepend,Element.prototype.remove,HTMLTemplateElement,Map,Object.assign,
+        Object.is,Object.values,Promise,Set,String.prototype.endsWith,String.prototype.includes,String.prototype.startsWith,URL,location.origin,requestAnimationFrame,smoothscroll
+        https://polyfill.io/v3/polyfill.js?version=3.110.1&features=Array.from%2CArray.prototype.find%2CArray.prototype.includes%2CArray.prototype.keys%2CArray.prototype.values%2CArray.prototype.fill%2CCustomEvent%2CMap%2CObject.assign%2CObject.is%2CObject.values%2CSet%2CString.prototype.endsWith%2CString.prototype.includes%2CString.prototype.startsWith%2CrequestAnimationFrame%2CURL%2Csmoothscroll%2CPromise%2Clocation.origin%2CHTMLTemplateElement%2CElement.prototype.matches%2CElement.prototype.closest%2CElement.prototype.remove%2CElement.prototype.classList%2CElement.prototype.append%2CElement.prototype.prepend&flags=gated%2Calways
 
-        // edge
-        // URL, smoothscroll
-        // https://polyfill.io/v3/polyfill.js?version=3.53.1&flags=gated%2Calways&features=n%2CURL%2Csmoothscroll
+        edge
+        URL,smoothscroll
+        https://polyfill.io/v3/polyfill.js?version=3.110.1&features=URL%2Csmoothscroll&flags=gated%2Calways
+        */
     ];
 
 
