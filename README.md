@@ -46,7 +46,7 @@ All dependencies will be resolved by using the [Composer](https://getcomposer.or
 
 ## Included
 **QuidPHP/Lemur** comes bundled with the following front-end packages:
-- [tinymce/tinymce](https://github.com/tinymce/tinymce) - French language pack for Tinymce
+- [tinymce/tinymce](https://github.com/tinymce/tinymce) - Tinymce - French language pack for Tinymce
 - [SortableJs/Sortable](https://github.com/SortableJS/Sortable) - Sortable - A JavaScript library for reorderable drag-and-drop lists on modern browsers and touch devices
 
 ## Comment
