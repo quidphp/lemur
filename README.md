@@ -23,7 +23,8 @@ Once installed, the **Quid\Lemur** namespace will be available within your PHP a
 
 ## Requirement
 **QuidPHP/Lemur** requires the following:
-- PHP 7.3 or 7.4
+- PHP 7.4, 8.0 or 8.1
+- Mysql (>= 8.0) or MariaDB (>= 10.5) database
 - All other requirements specified in [quidphp/core](https://github.com/quidphp/core)
 - Minimal browser: Internet Explorer 11
 
@@ -32,23 +33,24 @@ Once installed, the **Quid\Lemur** namespace will be available within your PHP a
 - [quidphp/base](https://github.com/quidphp/base) - Quid\Base - PHP library that provides a set of low-level static methods
 - [quidphp/main](https://github.com/quidphp/main) - Quid\Main - PHP library that provides a set of base objects and collections 
 - [quidphp/orm](https://github.com/quidphp/orm) - Quid\Orm - PHP library that provides database access and a comprehensive ORM
-- [quidphp/routing](https://github.com/quidphp/routing) - Quid\Routing - PHP library that provides a simple route matching and triggering procedure
+- [quidphp/routing](https://github.com/quidphp/routing) - Quid\Routing - PHP library that provides a route matching and triggering procedure
 - [quidphp/core](https://github.com/quidphp/core) - Quid\Core - PHP library that provides an extendable platform to create dynamic applications
 - [quidphp/front](https://github.com/quidphp/front) - Quid\Front - QuidPHP JavaScript and CSS front-end assets
 - [verot/class.upload.php](https://github.com/verot/class.upload.php) - Verot\Upload - A popular PHP class used for resizing images
 - [phpmailer/phpmailer](https://github.com/phpmailer/phpmailer) - PHPMailer\PHPMailer - The classic email sending library for PHP
 - [tedivm/jshrink](https://github.com/tedious/JShrink) - JShrink - Javascript Minifier built in PHP
 - [scssphp/scssphp](https://github.com/scssphp/scssphp) - ScssPhp\ScssPhp - SCSS compiler written in PHP
+- [tinymce/tinymce](https://github.com/tinymce/tinymce) - Tinymce - The world's #1 JavaScript library for rich text editing
 
 All dependencies will be resolved by using the [Composer](https://getcomposer.org) installation process.
 
 ## Included
 **QuidPHP/Lemur** comes bundled with the following front-end packages:
-- [tinymce/tinymce](https://github.com/tinymce/tinymce) - Tinymce - The world's #1 JavaScript library for rich text editing
+- [tinymce/tinymce](https://github.com/tinymce/tinymce) - French language pack for Tinymce
 - [SortableJs/Sortable](https://github.com/SortableJS/Sortable) - Sortable - A JavaScript library for reorderable drag-and-drop lists on modern browsers and touch devices
 
 ## Comment
-**QuidPHP/Lemur** code is commented and all methods are explained. However, most of the comments are currently written in French.
+**QuidPHP/Lemur** code is commented and all methods are explained. However, most of the comments are written in French.
 
 ## PHP
 
@@ -62,18 +64,22 @@ All dependencies will be resolved by using the [Composer](https://getcomposer.or
 - *Coding*: No curly braces are used in a IF statement if the condition can be resolved in only one statement.
 
 ### Overview
-**QuidPHP/Lemur** contains 192 classes and traits. Here is an overview:
+**QuidPHP/Lemur** contains 203 classes and traits. Here is an overview:
 - [Boot](src/Boot.php) - Extended abstract class for the object that bootstraps the cms
 - [Cell](src/Cell.php) - Extended class to represent an existing cell within a row
+    - [Crypt](src/Cell/Crypt.php) - Extended class for a cell with crypted data
     - [Files](src/Cell/Files.php) - Abstract class extended by the media and medias cells
     - [JsonArray](src/Cell/JsonArray.php) - Class to manage a cell containing a json array
     - [JsonArrayRelation](src/Cell/JsonArrayRelation.php) - Class to manage a cell containing a relation value to another cell containing a json array
     - [JsonExport](src/Cell/JsonExport.php) - Class for a cell that contains json which should be exported (similar to var_export)
     - [Media](src/Cell/Media.php) - Class to work with a cell containing a value which is a link to a file
     - [Medias](src/Cell/Medias.php) - Class to manage a cell containing a value which is a link to many files
+    - [Money](src/Cell/Money.php) - Class to manage a cell managing money (money formatted string)
+    - [Phone](src/Cell/Phone.php) - Class for a cell managing phone numbers
+    - [Primary](src/Cell/Primary.php) - Class for dealing with a cell of a column which has an auto increment primary key
     - [Relation](src/Cell/Relation.php) - Abstract class extended by the enum and set cells
+    - [Uri](src/Cell/Uri.php) - Class to manage a cell containing an URI
     - [Video](src/Cell/Video.php) - Class to manage a cell containing a video from a third-party service
-- [Cells](src/Cells.php) - Extended class for a collection of many cells within a same row
 - [Cms](src/Cms)
     - [About](src/Cms/About.php) - Class for the about popup route of the CMS
     - [Account](src/Cms/Account.php) - Class for the account route of the CMS, by default redirects to the user's specific route
@@ -81,6 +87,7 @@ All dependencies will be resolved by using the [Composer](https://getcomposer.or
     - [AccountChangePasswordSubmit](src/Cms/AccountChangePasswordSubmit.php) - Class for the submit change password route in the CMS
     - [ActivatePassword](src/Cms/ActivatePassword.php) - Class for activating the password in the CMS
     - [Calendar](src/Cms/Calendar.php) - Class for the calendar route of the CMS
+    - [CliClearAll](src/Cms/CliClearAll.php) - Class for a cli route to remove all cached and logged data
     - [CliClearCache](src/Cms/CliClearCache.php) - Class for a cli route to remove all cached data
     - [CliClearLog](src/Cms/CliClearLog.php) - Class for a cli route to remove all log data
     - [CliCompile](src/Cms/CliCompile.php) - Class for a cli route to compile assets (js and css)
@@ -102,6 +109,7 @@ All dependencies will be resolved by using the [Composer](https://getcomposer.or
     - [GeneralTruncate](src/Cms/GeneralTruncate.php) - Class for the route which allows truncating a table from the general page of the CMS
     - [Home](src/Cms/Home.php) - Class for the home route of the CMS
     - [HomeFeed](src/Cms/HomeFeed.php) - Class for the route feed of the home page for the CMS
+    - [HomeFeedRelation](src/Cms/HomeFeedRelation.php) - Class for the route which manages table relation, used by some inputs in the CMS
     - [Login](src/Cms/Login.php) - Class for the login route of the CMS
     - [LoginSubmit](src/Cms/LoginSubmit.php) - Class for the login submit route of the CMS
     - [Logout](src/Cms/Logout.php) - Class for the logout route of the CMS
@@ -124,6 +132,7 @@ All dependencies will be resolved by using the [Composer](https://getcomposer.or
     - [SpecificDuplicate](src/Cms/SpecificDuplicate.php) - Class for the specific duplicate route, to process a row duplication in the CMS
     - [SpecificMulti](src/Cms/SpecificMulti.php) - Class for the specific multi route of the CMS, generates the update form for multiple rows
     - [SpecificMultiSubmit](src/Cms/SpecificMultiSubmit.php) - Class for the submit multi specific route, to process the update of multiple rows in the CMS
+    - [SpecificPosition](src/Cms/SpecificPosition.php) - Class for a route that redirects to the proper specific route according to a position
     - [SpecificRelation](src/Cms/SpecificRelation.php) - Class for the route which manages specific relation - enumSet inputs in the specific form
     - [SpecificSubmit](src/Cms/SpecificSubmit.php) - Class for the submit specific route, to process the update of a row in the CMS
     - [TableRelation](src/Cms/TableRelation.php) - Class for the route which manages table relation, used by some inputs in the CMS
@@ -142,20 +151,19 @@ All dependencies will be resolved by using the [Composer](https://getcomposer.or
     - [_page](src/Cms/_page.php) - Trait that provides some practical methods to work with page route within the CMS
     - [_popup](src/Cms/_popup.php) - Trait that provides some initial configuration for a CMS popup route
     - [_relation](src/Cms/_relation.php) - Trait that provides some initial configuration for a CMS relation route
-    - [_rowsFeed](src/Cms/_rowsFeed.php) - Trait that grants methods related to a rows feed (with a load-more)
     - [_specific](src/Cms/_specific.php) - Trait that provides commonly used methods for the specific routes of the CMS
     - [_specificAddMulti](src/Cms/_specificAddMulti.php) - Trait that provides common methods between the specificAdd and specificMulti routes
     - [_specificNav](src/Cms/_specificNav.php) - Trait that provides a method for the specific navigation
     - [_specificRelation](src/Cms/_specificRelation.php) - Trait that provides methods to make an enumSet input
     - [_specificSubmit](src/Cms/_specificSubmit.php) - Trait that provides commonly used methods for the specific submit routes of the CMS
+    - [_tableRelation](src/Cms/_tableRelation.php) - Trait that provides methods for a table relation selector
     - [_template](src/Cms/_template.php) - Trait that grants the methods to generate the CMS HTML template
 - [Col](src/Col.php) - Extended class to represent an existing column within a table, adds cms config
     - [Auto](src/Col/Auto.php) - Class for the auto column, generate value automatically using the data from other cells
-    - [Context](src/Col/Context.php) - Class for the CMS context column, updates itself automatically on commit
     - [ContextType](src/Col/ContextType.php) - Class for the contextType column, a checkbox set relation with all boot types
+    - [Crypt](src/Col/Crypt.php) - Extended class for a column with crypted data
     - [Date](src/Col/Date.php) - Extended class for a date column, supports many date formats
     - [Email](src/Col/Email.php) - Extended class for a column managing email
-    - [EnvType](src/Col/EnvType.php) - Class for the CMS envType column, updates itself automatically on commit
     - [Error](src/Col/Error.php) - Extended class for a column that manages an error object
     - [Excerpt](src/Col/Excerpt.php) - Class for a column which contains an excerpt of a longer value
     - [Files](src/Col/Files.php) - Extended abstract class extended by the media and medias cols
@@ -185,7 +193,7 @@ All dependencies will be resolved by using the [Composer](https://getcomposer.or
     - [UserPassword](src/Col/UserPassword.php) - Class for the column which manages the active field for the user row
     - [UserRole](src/Col/UserRole.php) - Class for the column which manages the role field for the user row
     - [Video](src/Col/Video.php) - Extended abstract class for a column containing a video from a third-party service
-- [Cols](src/Cols.php) - Extended class for a collection of many columns within a same table
+    - [_jsonRelation](src/Col/_jsonRelation.php) - Trait with common methods for jsonArrayRelation columns
 - [Db](src/Db.php) - Extended class used to query the database, adds cms logic
 - [Lang](src/Lang)
     - [En](src/Lang/En.php) - English language content used by this namespace
@@ -210,12 +218,14 @@ All dependencies will be resolved by using the [Composer](https://getcomposer.or
     - [_download](src/Route/_download.php) - Trait that provides most methods necessary to make a download route
     - [_formSubmit](src/Route/_formSubmit.php) - Trait that provides methods and logic necessary to make a form submit route
     - [_modal](src/Route/_modal.php) - Trait that provides some initial configuration for modal routes
+    - [_rowsFeed](src/Route/_rowsFeed.php) - Trait that grants methods related to a rows feed (with a load-more)
     - [_searchGet](src/Route/_searchGet.php) - Trait that grants methods for search route via GET
     - [_searchPost](src/Route/_searchPost.php) - Trait that grants methods for search route via POST
     - [_specificPointer](src/Route/_specificPointer.php) - Trait that grants methods to deal with a specific resource represent by a pointer (table/id)
     - [_specificPrimary](src/Route/_specificPrimary.php) - Trait that provides most methods used for a specific route using a primary segment
     - [_specificSlug](src/Route/_specificSlug.php) - Trait with methods to work with a specific resource represented by an URI slug
 - [Row](src/Row.php) - Extended class to represent a row within a table, adds cms config
+    - [CacheRoute](src/Row/CacheRoute.php) - Class to store rendered route caches, with cms config
     - [Contact](src/Row/Contact.php) - Class to work with a row of the contact table, stores contact messages
     - [Email](src/Row/Email.php) - Class to deal with a row of the email table, with cms config
     - [Lang](src/Row/Lang.php) - Class to work with a row of the lang table, with cms config
@@ -229,6 +239,8 @@ All dependencies will be resolved by using the [Composer](https://getcomposer.or
     - [Redirection](src/Row/Redirection.php) - Class to work with a row of the redirection table, with cms config
     - [Session](src/Row/Session.php) - Extended class for a row of the session table, with cms config
     - [User](src/Row/User.php) - Extended class for a row of the user table, with cms logic
+    - [_log](src/Row/_log.php) - Trait to set permissions for a log row
+    - [_media](src/Row/_media.php) - Trait to work with a row of containing media, storage or video
     - [_meta](src/Row/_meta.php) - Trait with methods to make a row a meta-source
 - [Segment](src/Segment)
     - [_boolean](src/Segment/_boolean.php) - Trait that issues a method to deal with boolean route segment (1 or 0)
@@ -239,6 +251,7 @@ All dependencies will be resolved by using the [Composer](https://getcomposer.or
     - [_filter](src/Segment/_filter.php) - Trait to manage a complex route segment which contains filtering directive
     - [_int](src/Segment/_int.php) - Trait that issues a method to deal with a simple integer route segment
     - [_limit](src/Segment/_limit.php) - Trait that issues a method to deal with a limit route segment (max per page)
+    - [_numeric](src/Segment/_numeric.php) - Trait that issues a method to deal with a simple numeric route segment
     - [_order](src/Segment/_order.php) - Trait to manage a route segment which must contain an orderable column
     - [_orderColRelation](src/Segment/_orderColRelation.php) - Trait to work with a route segment which must contain an orderable column relation
     - [_orderTableRelation](src/Segment/_orderTableRelation.php) - Trait to manage a route segment which must contain an orderable table relation
@@ -261,12 +274,10 @@ All dependencies will be resolved by using the [Composer](https://getcomposer.or
 - [Table](src/Table.php) - Extended class to represent an existing table within a database
 
 ### Testing
-**QuidPHP/Lemur** contains 10 test classes:
+**QuidPHP/Lemur** contains 8 test classes:
 - [Boot](test/Boot.php) - Class for testing Quid\Lemur\Boot
 - [Cell](test/Cell.php) - Class for testing Quid\Lemur\Cell
-- [Cells](test/Cells.php) - Class for testing Quid\Lemur\Cells
 - [Col](test/Col.php) - Class for testing Quid\Lemur\Col
-- [Cols](test/Cols.php) - Class for testing Quid\Lemur\Cols
 - [Route](test/Route.php) - Class for testing Quid\Lemur\Route
 - [Row](test/Row.php) - Class for testing Quid\Lemur\Row
 - [Session](test/Session.php) - Class for testing Quid\Lemur\Session
@@ -282,19 +293,22 @@ All dependencies will be resolved by using the [Composer](https://getcomposer.or
 - *ES5*: All code is compatible with ES5, there is no need for any JavaScript transpiler.
 - *Strict*: All generated files declare *use strict* on the first line.
 - *IE11*: The minimum compatible browser is IE11. Older browsers will fail non-gracefully.
-- *Compiling*: The compiling and concatenation of the JS files is done on the PHP side.
+- *Compiling*: The concatenation of the JS files is done on the PHP side.
 
 ### Overview
-**QuidPHP/Lemur** contains 14 JavaScript files. Here is an overview:
+**QuidPHP/Lemur** contains 17 JavaScript files. Here is an overview:
 - [cms](js/cms)
     - [_lemur.js](js/cms/_lemur.js) - Script of common behaviours for all pages of the CMS
     - [colsSorter.js](js/cms/colsSorter.js) - Script for the col sorter component of the general page of the CMS
     - [com.js](js/cms/com.js) - Script of behaviours for the communication component of the CMS
+    - [generalComponents.js](js/cms/generalComponents.js) - Component that manages the components on the general page
+    - [homeFeed.js](js/cms/homeFeed.js) - Script for feed component with a filter on the CMS home page
     - [inputFiles.js](js/cms/inputFiles.js) - Script with logic for the file upload component of the CMS
     - [quickEdit.js](js/cms/quickEdit.js) - Script for the quickEdit component in the general page of the CMS
     - [rowsChecker.js](js/cms/rowsChecker.js) - Script for the rows checker component in the general page of the CMS
     - [specificComponents.js](js/cms/specificComponents.js) - Component that manages the panel on the specific form page of the CMS
     - [specificMulti.js](js/cms/specificMulti.js) - Component that manages the multi modification form
+    - [specificNav.js](js/cms/specificNav.js) - Component that manages the navigation box on the specific form page of the CMS
     - [specificPanel.js](js/cms/specificPanel.js) - Component that manages the panel on the specific form page of the CMS
     - [textareaExtra.js](js/cms/textareaExtra.js) - Script for a component to search and insert content within a textarea, with support for tinymce
 - [component](js/component)
@@ -310,7 +324,7 @@ All dependencies will be resolved by using the [Composer](https://getcomposer.or
 - *Compiling*: The compiling and concatenation of the SCSS files is done on the PHP side.
 
 ### Overview
-**QuidPHP/Lemur** contains 34 CSS stylesheets. Here is an overview:
+**QuidPHP/Lemur** contains 36 SCSS stylesheets. Here is an overview:
 - [cms](css/cms)
     - [_form.scss](css/cms/_form.scss) - Stylesheet with various form-related mixins
     - [_include.scss](css/cms/_include.scss) - Stylesheet with various global mixins
@@ -333,6 +347,7 @@ All dependencies will be resolved by using the [Composer](https://getcomposer.or
     - [enumSet.scss](css/cms-component/enumSet.scss) - Stylesheet for the enumSet component of the CMS
     - [fakeSelect.scss](css/cms-component/fakeSelect.scss) - Stylesheet for the fakeSelect component of the CMS
     - [filter.scss](css/cms-component/filter.scss) - Stylesheet for the filter component of the CMS
+    - [homeFeed.scss](css/cms-component/homeFeed.scss) - Stylesheet for the home feed component of the CMS
     - [inputCalendar.scss](css/cms-component/inputCalendar.scss) - Stylesheet for the input calendar of the CMS
     - [inputFiles.scss](css/cms-component/inputFiles.scss) - Stylesheet for the files upload inputs component of the CMS
     - [inputNumericRange.scss](css/cms-component/inputNumericRange.scss) - Styles for the integerRange component of the CMS
@@ -342,6 +357,7 @@ All dependencies will be resolved by using the [Composer](https://getcomposer.or
     - [rowsChecker.scss](css/cms-component/rowsChecker.scss) - Stylesheet for the rowsChecker component of the CMS
     - [searchAutoInfo.scss](css/cms-component/searchAutoInfo.scss) - Stylesheet for the main search component of the CMS
     - [searchSlide.scss](css/cms-component/searchSlide.scss) - Mixin for the searchSlide component of the CMS
+    - [specificNav.scss](css/cms-component/specificNav.scss) - Stylesheet for the speciic nav component of the CMS
     - [textareaExtra.scss](css/cms-component/textareaExtra.scss) - Stylesheet for the textarea component of the CMS (with relation inserts)
     - [tooltip.scss](css/cms-component/tooltip.scss) - Stylesheet for the tooltip component of the CMS
 - [cms-icon](css/cms-icon)
