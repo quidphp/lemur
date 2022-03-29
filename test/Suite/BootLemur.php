@@ -33,6 +33,9 @@ class BootLemur extends Test\Suite\BootCore
         'config'=>[
             Lemur\Col::class=>[
                 'generalExcerpt'=>100]],
+        'service'=>[
+            'tinymce'=>null,
+            'sortable'=>null],
         'compile'=>true,
         'compileCss'=>false,
         'compileJsOption'=>['compress'=>false],

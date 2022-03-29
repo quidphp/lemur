@@ -55,13 +55,8 @@ class Polyfill extends Main\Service
     // retourne le basename du polyfill
     final public function getBasename():?string
     {
-        $return = null;
-        $mode = $this->getMode();
-
-        if(!empty($mode))
-        $return = 'polyfill-'.$mode.'.js';
-
-        return $return;
+        $mode = $this->getMode() ?? static::throw('noMode');
+        return 'polyfill-'.$mode.'.js';
     }
 
 
