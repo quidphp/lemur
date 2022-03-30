@@ -2,7 +2,7 @@
     "name": "quidphp/lemur",
     "type": "library",
     "description": "LemurCMS, a content management system built on top of the QuidPHP framework",
-    "keywords": ["quidphp","quid","framework","cms"],
+    "keywords": ["quidphp","quid","php-framework","php-cms","lemur-cms"],
     "homepage": "https://quidphp.com",
     "license": "MIT",
     "authors": [{
