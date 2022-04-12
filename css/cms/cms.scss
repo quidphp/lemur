@@ -193,6 +193,11 @@ body > .modal {
     @include componentJsonArrayRelationSpecific();
 }
 
+// jsonArrayModel
+[data-col='jsonArrayModel'] .specific-component {
+    @include componentJsonArrayModelSpecific();
+}
+
 // tableRelation
 [data-table-relation='1'] .specific-component {
     @include componentTextareaExtraSpecific();

@@ -237,14 +237,6 @@ $red: #8d1e2d;
     }
 }
 
-// componentJsonArrayRelationSpecific
-// mixin pour le champ jsonArrayRelation dans le formulaire
-@mixin componentJsonArrayRelationSpecific() {
-    .relation-export {
-        padding-top: 10px;
-    }
-}
-
 // componentErrorSpecific
 // mixin pour le rendu de l'erreur
 @mixin componentErrorSpecific() {

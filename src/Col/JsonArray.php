@@ -15,7 +15,7 @@ use Quid\Lemur;
 use Quid\Orm;
 
 // jsonArray
-// class for a column which offers a special input for json values
+// class for a column which offers a simple input for json values
 class JsonArray extends Core\Col\JsonAlias
 {
     // config
@@ -27,18 +27,25 @@ class JsonArray extends Core\Col\JsonAlias
         'preValidate'=>'array',
         'onComplex'=>true,
         'tag'=>'inputText',
-        'clean'=>true
+        'onPrepare'=>null
     ];
 
 
     // prepare
     // arrange le tableau pour les méthode onGet et onSet
-    protected function prepare(array $return)
+    protected function prepare(array $return):?array
     {
-        if($this->getAttr('clean'))
-        $return = Base\Arr::clean($return);
+        $return = $this->attrOrMethodCall('onPrepare',$return);
 
-        return array_values($return) ?: null;
+        return (is_array($return))? (array_values($return) ?: null):null;
+    }
+
+
+    // onPrepare
+    // par défaut, passe simplement dans clean
+    protected function onPrepare(array $return):?array
+    {
+        return Base\Arr::clean($return);
     }
 
 
@@ -86,12 +93,20 @@ class JsonArray extends Core\Col\JsonAlias
         if(!empty($cell) && array_key_exists('index',$option))
         $return .= $this->beforeModel($option['index'],$value,$cell);
 
-        $html = $this->form($value,$attr,$option);
+        $html = $this->makeModelCurrent($value,$attr,$cell,$option);
         $return .= Html::div($html,'current');
 
         $return .= $this->makeModelUtils();
 
         return Html::div($return,'ele');
+    }
+
+
+    // makeModelCurrent
+    // génère le champ du modèle pour jsonArray
+    protected function makeModelCurrent($value,array $attr,?Core\Cell $cell,array $option)
+    {
+        return $this->form($value,$attr,$option);
     }
 
 

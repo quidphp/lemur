@@ -1,0 +1,42 @@
+/*
+ * This file is part of the QuidPHP package <https://quidphp.com>
+ * Author: Pierre-Philippe Emond <emondpph@gmail.com>
+ * License: https://github.com/quidphp/lemur/blob/master/LICENSE
+ */
+
+// componentJsonArrayRelationSpecific
+// mixin pour le champ jsonArrayRelation dans le formulaire
+@mixin componentJsonArrayRelationSpecific() {
+    .relation-export {
+        padding-top: 10px;
+    }
+}
+
+// componentJsonArrayModelSpecific
+// mixin pour le champ jsonArrayModel dans le formulaire
+@mixin componentJsonArrayModelSpecific() {
+    > .playground > .ele {
+        &:not(:last-child) {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid $lightGray;
+        }
+
+        .table {
+            height: auto;
+        }
+
+        .label-cell {
+            width: 150px;
+            padding-right: 15px;
+        }
+
+        textarea {
+            height: 75px;
+        }
+
+        .model-form-element:not(:first-child) {
+            padding-top: 10px;
+        }
+    }
+}
