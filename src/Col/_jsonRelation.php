@@ -12,7 +12,7 @@ use Quid\Core;
 use Quid\Orm;
 
 // _jsonRelation
-// trait with common methods for jsonArrayRelation columns
+// trait with common methods for jsonRelation columns
 trait _jsonRelation
 {
     // config

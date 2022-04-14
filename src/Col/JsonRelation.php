@@ -14,9 +14,9 @@ use Quid\Core;
 use Quid\Lemur;
 use Quid\Orm;
 
-// jsonArrayRelation
+// jsonRelation
 // class to manage a column containing a relation value to another column which is a jsonArray
-class JsonArrayRelation extends Core\ColAlias
+class JsonRelation extends Core\ColAlias
 {
     // trait
     use _jsonRelation;
@@ -24,13 +24,13 @@ class JsonArrayRelation extends Core\ColAlias
 
     // config
     protected static array $config = [
-        'cell'=>Lemur\Cell\JsonArrayRelation::class,
+        'cell'=>Lemur\Cell\JsonRelation::class,
         'required'=>true
     ];
 
 
     // onGet
-    // méthode onGet pour jsonArrayRelation
+    // méthode onGet pour jsonRelation
     final protected function onGet($return,?Orm\Cell $cell,array $option)
     {
         $return = parent::onGet($return,$cell,$option);
@@ -46,7 +46,7 @@ class JsonArrayRelation extends Core\ColAlias
 
 
     // onSet
-    // gère la logique onSet pour jsonArrayRelation
+    // gère la logique onSet pour jsonRelation
     final protected function onSet($return,?Orm\Cell $cell,array $row,array $option)
     {
         $fromCell = $this->fromCell();
@@ -63,7 +63,7 @@ class JsonArrayRelation extends Core\ColAlias
 
 
     // formComplex
-    // génère le formComplex pour jsonArrayRelation avec le relation export
+    // génère le formComplex pour jsonRelation avec le relation export
     final public function formComplex($input=true,?array $attr=null,?array $option=null):string
     {
         $return = '';
@@ -90,5 +90,5 @@ class JsonArrayRelation extends Core\ColAlias
 }
 
 // init
-JsonArrayRelation::__init();
+JsonRelation::__init();
 ?>

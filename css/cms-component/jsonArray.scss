@@ -4,17 +4,17 @@
  * License: https://github.com/quidphp/lemur/blob/master/LICENSE
  */
 
-// componentJsonArrayRelationSpecific
-// mixin pour le champ jsonArrayRelation dans le formulaire
-@mixin componentJsonArrayRelationSpecific() {
+// componentJsonRelationSpecific
+// mixin pour le champ jsonRelation dans le formulaire
+@mixin componentJsonRelationSpecific() {
     .relation-export {
         padding-top: 10px;
     }
 }
 
-// componentJsonArrayModelSpecific
-// mixin pour le champ jsonArrayModel dans le formulaire
-@mixin componentJsonArrayModelSpecific() {
+// componentJsonModelSpecific
+// mixin pour le champ jsonModel dans le formulaire
+@mixin componentJsonModelSpecific() {
     > .playground > .ele {
         &:not(:last-child) {
             margin-bottom: 20px;

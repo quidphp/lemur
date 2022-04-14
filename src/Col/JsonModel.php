@@ -11,10 +11,11 @@ namespace Quid\Lemur\Col;
 use Quid\Base;
 use Quid\Base\Html;
 use Quid\Core;
+use Quid\Orm;
 
-// jsonArrayModel
+// jsonModel
 // class for a column which offers a configurable complex input for json values
-class JsonArrayModel extends JsonArray
+class JsonModel extends JsonArray
 {
     // config
     protected static array $config = [
@@ -50,13 +51,13 @@ class JsonArrayModel extends JsonArray
 
     // prepare
     // prépare les données du formulaire
-    final protected function prepare(array $return):?array
+    final protected function prepare(array $return,?Orm\Cell $cell=null):?array
     {
         if(Base\Arr::isAssoc($return))
         $return = $this->preValidatePrepare($return);
 
         elseif(Base\Column::is($return))
-        $return = $this->attrOrMethodCall('onPrepare',$return);
+        $return = $this->attrOrMethodCall('onPrepare',$return,$cell);
 
         return (is_array($return))? (array_values($return) ?: null):null;
     }
@@ -94,5 +95,5 @@ class JsonArrayModel extends JsonArray
 }
 
 // init
-JsonArrayModel::__init();
+JsonModel::__init();
 ?>

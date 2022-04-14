@@ -188,14 +188,14 @@ body > .modal {
     @include componentAddRemoveSpecific();
 }
 
-// jsonArrayRelation
-[data-col='jsonArrayRelation'] .specific-component {
-    @include componentJsonArrayRelationSpecific();
+// jsonRelation
+[data-col='jsonRelation'] .specific-component {
+    @include componentJsonRelationSpecific();
 }
 
-// jsonArrayModel
-[data-col='jsonArrayModel'] .specific-component {
-    @include componentJsonArrayModelSpecific();
+// jsonModel
+[data-col='jsonModel'] .specific-component {
+    @include componentJsonModelSpecific();
 }
 
 // tableRelation

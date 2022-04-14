@@ -10,9 +10,9 @@ declare(strict_types=1);
 namespace Quid\Lemur\Cell;
 use Quid\Core;
 
-// jsonArrayRelation
+// jsonRelation
 // class to manage a cell containing a relation value to another cell containing a json array
-class JsonArrayRelation extends Core\CellAlias
+class JsonRelation extends Core\CellAlias
 {
     // config
     protected static array $config = [];
@@ -79,5 +79,5 @@ class JsonArrayRelation extends Core\CellAlias
 }
 
 // init
-JsonArrayRelation::__init();
+JsonRelation::__init();
 ?>

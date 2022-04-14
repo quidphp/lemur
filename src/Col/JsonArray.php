@@ -33,10 +33,9 @@ class JsonArray extends Core\Col\JsonAlias
 
     // prepare
     // arrange le tableau pour les méthode onGet et onSet
-    protected function prepare(array $return):?array
+    protected function prepare(array $return,?Orm\Cell $cell=null):?array
     {
-        $return = $this->attrOrMethodCall('onPrepare',$return);
-
+        $return = $this->attrOrMethodCall('onPrepare',$return,$cell);
         return (is_array($return))? (array_values($return) ?: null):null;
     }
 
@@ -56,7 +55,7 @@ class JsonArray extends Core\Col\JsonAlias
         $return = parent::onGet($return,$cell,$option);
 
         if(is_array($return))
-        $return = $this->prepare($return);
+        $return = $this->prepare($return,$cell);
 
         return $return;
     }
@@ -67,11 +66,9 @@ class JsonArray extends Core\Col\JsonAlias
     protected function onSet($return,?Orm\Cell $cell,array $row,array $option)
     {
         if(is_array($return))
-        $return = $this->prepare($return);
+        $return = $this->prepare($return,$cell);
 
-        $return = parent::onSet($return,$cell,$row,$option);
-
-        return $return;
+        return parent::onSet($return,$cell,$row,$option);
     }
 
 
