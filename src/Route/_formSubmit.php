@@ -116,7 +116,7 @@ trait _formSubmit
 
     // onAfterSuccessOrFailure
     // méthode appelé dans onAfter peut importe si c'est un succès ou failure
-    final protected function onAfterSuccessOrFailure():void
+    protected function onAfterSuccessOrFailure():void
     {
         return;
     }
