@@ -791,16 +791,16 @@ class En extends Core\Lang\En
                         'key'=>'Unique key of the email template'
                     ],
 
+                    // queueEmail
+                    'queueEmail'=>[
+                        'status'=>'Item status',
+                        'json'=>'Email data to send'
+                    ],
+
                     // log
                     'log'=>[
                         'type'=>'Log type',
                         'json'=>'Log data'
-                    ],
-
-                    // logSql
-                    'logSql'=>[
-                        'type'=>'Type of sql query',
-                        'json'=>'SQL data - for admin'
                     ],
 
                     // logCron
@@ -809,18 +809,30 @@ class En extends Core\Lang\En
                         'json'=>'CRON script data - for admin'
                     ],
 
-                    // logError
-                    'logError'=>[
-                        'type'=>'Type of error',
-                        'json'=>'Data and backtrace of the error - for admin'
-                    ],
-
                     // logEmail
                     'logEmail'=>[
                         'status'=>'Email sending status',
                         'email_id'=>'Link to the email template used',
                         'json'=>'Email header data',
                         'content'=>'Content of the email'
+                    ],
+
+                    // logError
+                    'logError'=>[
+                        'type'=>'Type of error',
+                        'error'=>'Data and backtrace of the error - for admin'
+                    ],
+
+                    // logHttp
+                    'logHttp'=>[
+                        'type'=>'HTTP request type',
+                        'json'=>'Additional data'
+                    ],
+
+                    // logSql
+                    'logSql'=>[
+                        'type'=>'Type of sql query',
+                        'json'=>'SQL data - for admin'
                     ],
 
                     // contact

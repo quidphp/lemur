@@ -791,16 +791,16 @@ class Fr extends Core\Lang\Fr
                         'key'=>'Clé unique du modèle de courriel. Pour administrateur'
                     ],
 
+                    // queueEmail
+                    'queueEmail'=>[
+                        'status'=>"Statut de l'élément",
+                        'json'=>'Données du courriel à envoyer'
+                    ],
+
                     // log
                     'log'=>[
                         'type'=>'Type du log',
                         'json'=>'Données du log'
-                    ],
-
-                    // logSql
-                    'logSql'=>[
-                        'type'=>'Type de la requête',
-                        'json'=>'Données SQL - pour administrateur'
                     ],
 
                     // logCron
@@ -809,18 +809,30 @@ class Fr extends Core\Lang\Fr
                         'json'=>'Données du script CRON  - pour administrateur'
                     ],
 
-                    // logError
-                    'logError'=>[
-                        'type'=>"Type d'erreur",
-                        'json'=>"Données et backtrace de l'erreur - pour administrateur"
-                    ],
-
                     // logEmail
                     'logEmail'=>[
                         'status'=>"Statut de l'envoie courriel",
                         'email_id'=>'Lien vers le modèle courriel utilisé',
                         'json'=>"Données d'en-tête de l'envoie courriel",
                         'content'=>'Contenu du courriel'
+                    ],
+
+                    // logError
+                    'logError'=>[
+                        'type'=>"Type d'erreur",
+                        'error'=>"Données et backtrace de l'erreur - pour administrateur"
+                    ],
+
+                    // logHttp
+                    'logHttp'=>[
+                        'type'=>'Type de requête HTTP',
+                        'json'=>'Tableau de données additionnelles'
+                    ],
+
+                    // logSql
+                    'logSql'=>[
+                        'type'=>'Type de la requête',
+                        'json'=>'Données SQL - pour administrateur'
                     ],
 
                     // contact
