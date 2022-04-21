@@ -261,6 +261,7 @@ class Route extends Base\Test
         assert(count($obj->help(true)) === 11);
 
         // access
+        assert($obj::response() instanceof Main\ResponseCurrent);
         assert($obj::session() instanceof Core\Session);
         assert($obj::sessionCom() instanceof Core\Com);
         assert($obj::sessionUser() instanceof Core\Row\User);

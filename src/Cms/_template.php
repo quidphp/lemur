@@ -97,7 +97,7 @@ trait _template
         $flush .= Html::divOp('inner');
 
         if($this->flushBeforeMain())
-        Base\Buffer::flushEcho($flush);
+        static::response()->flushEchoBody($flush);
         else
         $r .= $flush;
 

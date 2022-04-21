@@ -43,6 +43,9 @@ abstract class Files extends Core\Cell\Files
     final protected function commonGeneralOutput(?int $index=null,?array $option=null):string
     {
         $return = '';
+        $boot = static::boot();
+        $typePrimary = $boot->typePrimary();
+        $hostPriority = $boot->host(true,$typePrimary);
         $col = $this->col();
         $table = $this->table();
         $download = $table->hasPermission('download');
@@ -71,7 +74,7 @@ abstract class Files extends Core\Cell\Files
                 if(!empty($file))
                 {
                     if($withLegend === true)
-                    $legendLink = $original->pathToUri();
+                    $legendLink = $original->pathToUri(true,$hostPriority);
 
                     $img = Html::img($file);
 
@@ -83,7 +86,7 @@ abstract class Files extends Core\Cell\Files
             else
             {
                 if($withLegend === true)
-                $legendLink = $file->pathToUri();
+                $legendLink = $file->pathToUri(true,$hostPriority);
 
                 $return .= Html::div(null,'media-placeholder');
             }
