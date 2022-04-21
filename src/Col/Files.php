@@ -187,6 +187,7 @@ abstract class Files extends Core\Col\Files
         $isImage = ($exists === true && $file instanceof Main\File\Image);
         $basename = ($exists === true)? $file->basename():false;
         $download = $table->hasPermission('download');
+        $hostPriority = $this->getHostPriority();
 
         if(is_string($basename))
         $basename = Base\Str::excerpt(50,$basename);
@@ -194,10 +195,7 @@ abstract class Files extends Core\Col\Files
 
         if($exists === true)
         {
-            $html .= Html::span($basename,'filename');
-
-            if($file->isFilePathToUri())
-            $html = Html::a($file,$basename,'filename');
+            $html .= Html::spanOr($file->pathToUri(true,$hostPriority),$basename,'filename');
 
             if($download === true)
             {
@@ -251,6 +249,7 @@ abstract class Files extends Core\Col\Files
             $versions = $this->versions();
             $cellVersions = $value->version($index);
             $lang = $this->db()->lang();
+            $hostPriority = $this->getHostPriority();
 
             if(!empty($versions))
             {
@@ -263,10 +262,11 @@ abstract class Files extends Core\Col\Files
 
                     if(!empty($file))
                     {
-                        if($file->isFilePathToUri())
+                        $pathToUri = $file->pathToUri(true,$hostPriority);
+                        if(!empty($pathToUri))
                         {
                             $uri = Base\Str::excerpt(50,$file->pathToUri());
-                            $liHtml .= Html::a($file,$uri);
+                            $liHtml .= Html::a($pathToUri,$uri);
                         }
 
                         $liHtml .= Html::span($file->size(true),'filesize');
@@ -283,6 +283,18 @@ abstract class Files extends Core\Col\Files
         }
 
         return $return;
+    }
+
+
+    // getHostPriority
+    // retourne le host priority a utilisé (boot typePrimary)
+    // si c'est cms, renvoie vers app par défaut
+    final public function getHostPriority():string
+    {
+        $boot = static::boot();
+        $typePrimary = $boot->typePrimary();
+
+        return $boot->host(true,$typePrimary);
     }
 }
 

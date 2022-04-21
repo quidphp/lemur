@@ -43,10 +43,8 @@ abstract class Files extends Core\Cell\Files
     final protected function commonGeneralOutput(?int $index=null,?array $option=null):string
     {
         $return = '';
-        $boot = static::boot();
-        $typePrimary = $boot->typePrimary();
-        $hostPriority = $boot->host(true,$typePrimary);
         $col = $this->col();
+        $hostPriority = $col->getHostPriority();
         $table = $this->table();
         $download = $table->hasPermission('download');
         $withLegend = $col->hasPermission('mediaLegend');
