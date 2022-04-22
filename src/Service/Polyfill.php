@@ -24,7 +24,7 @@ class Polyfill extends Main\Service
         'github'=>['https://github.com/Financial-Times/polyfill-service','https://github.com/jonathantneal/element-qsa-scope'],
         'paths'=>[
             'basename'=>null,
-            'serverFrom'=>'[vendorInclude]/service/%basename%',
+            'serverFrom'=>'[vendorInclude]/js/%basename%',
             'serverTo'=>'[publicJs]/%basename%',
             'public'=>'js/%basename%'],
         'mode'=>null // choix ie11 ou edge

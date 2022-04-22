@@ -24,7 +24,7 @@ class Sortable extends Main\Service
         'github'=>'https://github.com/SortableJS/sortablejs',
         'paths'=>[
             'basename'=>'sortable.js',
-            'serverFrom'=>'[vendorInclude]/service/%basename%',
+            'serverFrom'=>'[vendorInclude]/js/%basename%',
             'serverTo'=>'[publicJs]/%basename%',
             'public'=>'js/%basename%']
     ];
