@@ -19,6 +19,7 @@ abstract class Boot extends Core\Boot
         'types'=>['cms'], // ajout cms comme type
         'finderShortcut'=>[ // shortcut pour finder
             'vendorFront'=>'[vendor]/quidphp/front',
+            'vendorInclude'=>'[vendor]/quidphp/include',
             'vendorLemur'=>'[vendor]/quidphp/lemur'],
         'roles'=>[
             'editor'=>[60]],

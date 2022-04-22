@@ -27,7 +27,7 @@ class TinyMce extends Main\Service
             'serverFrom'=>'[vendor]/tinymce/%basename%',
             'serverTo'=>'[publicJs]/%basename%',
             'public'=>'js/%basename%/tinymce.min.js',
-            'extra'=>['[vendorLemur]/service/%basename%/langs'=>'[publicJs]/%basename%/langs']]
+            'extra'=>['[vendorInclude]/service/%basename%/langs'=>'[publicJs]/%basename%/langs']]
     ];
 
 
