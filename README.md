@@ -36,6 +36,7 @@ Once installed, the **Quid\Lemur** namespace will be available within your PHP a
 - [quidphp/routing](https://github.com/quidphp/routing) - Quid\Routing - PHP library that provides a route matching and triggering procedure
 - [quidphp/core](https://github.com/quidphp/core) - Quid\Core - PHP library that provides an extendable platform to create dynamic applications
 - [quidphp/front](https://github.com/quidphp/front) - Quid\Front - QuidPHP JavaScript and CSS front-end assets
+- [quidphp/include](https://github.com/quidphp/include) - Quid\Include - Contains third-party front-end scripts
 - [verot/class.upload.php](https://github.com/verot/class.upload.php) - Verot\Upload - A popular PHP class used for resizing images
 - [phpmailer/phpmailer](https://github.com/phpmailer/phpmailer) - PHPMailer\PHPMailer - The classic email sending library for PHP
 - [tedivm/jshrink](https://github.com/tedious/JShrink) - JShrink - Javascript Minifier built in PHP
@@ -43,11 +44,6 @@ Once installed, the **Quid\Lemur** namespace will be available within your PHP a
 - [tinymce/tinymce](https://github.com/tinymce/tinymce) - Tinymce - The world's best JavaScript library for rich text editing
 
 All dependencies will be resolved by using the [Composer](https://getcomposer.org) installation process.
-
-## Included
-**QuidPHP/Lemur** comes bundled with the following front-end packages:
-- [tinymce/tinymce](https://github.com/tinymce/tinymce) - Tinymce - French language pack for Tinymce
-- [SortableJs/Sortable](https://github.com/SortableJS/Sortable) - Sortable - A JavaScript library for reorderable drag-and-drop lists on modern browsers and touch devices
 
 ## Comment
 **QuidPHP/Lemur** code is commented and all methods are explained. However, most of the comments are written in French.
