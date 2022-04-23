@@ -179,7 +179,7 @@ Component.EnumSet = function(option)
         {
             trigSetup(Component.Sorter.call(current,$option.sorter));
             
-            aelDelegate(current,'change', "input[type='checkbox']",function(event) {
+            aelDelegate(current,'input', "input[type='checkbox']",function(event) {
                 if(Ele.match(this,":checked") === false)
                 {
                     const parent = Ele.closest(this,".choice");

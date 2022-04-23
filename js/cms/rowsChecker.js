@@ -212,7 +212,7 @@ Component.RowsChecker = function()
         });
         
         // event
-        ael(checkboxes,'change',function() {
+        ael(checkboxes,'input',function() {
             trigHdlr(this,(Ele.match(this,":checked"))? 'checkbox:check':'checkbox:uncheck',true);
         });
     }

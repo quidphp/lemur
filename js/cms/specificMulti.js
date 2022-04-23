@@ -86,7 +86,7 @@ Component.SpecificMulti = function(option)
             const $this = this;
             const checkbox = trigHdlr(this,'specificMulti:getCheckbox');
             
-            ael(checkbox,'change',function(event) {
+            ael(checkbox,'input',function(event) {
                 trigHdlr($this,'specificMulti:refresh');
             });
             
