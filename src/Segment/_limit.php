@@ -26,7 +26,7 @@ trait _limit
         {
             if($value === null)
             {
-                $table = static::tableSegment($keyValue);
+                $table = static::tableSegment($keyValue,'limit');
 
                 if(!empty($table))
                 $return = $table->limit();

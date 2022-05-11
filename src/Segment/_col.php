@@ -31,7 +31,7 @@ trait _col
 
         elseif($type === 'match')
         {
-            $table = static::tableSegment($keyValue);
+            $table = static::tableSegment($keyValue,'col');
 
             if(!empty($table) && $table->hasCol($value))
             $return = $table->col($value);

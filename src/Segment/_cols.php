@@ -40,7 +40,7 @@ trait _cols
 
         elseif($type === 'match')
         {
-            $table = static::tableSegment($keyValue);
+            $table = static::tableSegment($keyValue,'cols');
 
             if(!empty($table))
             {

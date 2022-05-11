@@ -24,7 +24,7 @@ trait _direction
 
         elseif($type === 'match')
         {
-            $table = static::tableSegment($keyValue);
+            $table = static::tableSegment($keyValue,'direction');
 
             if(!empty($table))
             {

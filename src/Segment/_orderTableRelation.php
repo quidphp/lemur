@@ -29,7 +29,7 @@ trait _orderTableRelation
 
             else
             {
-                $table = static::tableSegment($keyValue);
+                $table = static::tableSegment($keyValue,'orderTableRelation');
 
                 if(!empty($table) && static::isValidOrder($value,$table->relation()))
                 $return = $value;

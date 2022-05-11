@@ -20,7 +20,7 @@ trait _filter
     final public static function structureSegmentFilter(string $type,$value,array &$keyValue)
     {
         $return = false;
-        $table = static::tableSegment($keyValue);
+        $table = static::tableSegment($keyValue,'filter');
 
         if(!empty($table))
         {

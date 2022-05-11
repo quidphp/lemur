@@ -25,7 +25,7 @@ trait _order
 
         elseif($type === 'match')
         {
-            $table = static::tableSegment($keyValue);
+            $table = static::tableSegment($keyValue,'order');
 
             if(!empty($table))
             {

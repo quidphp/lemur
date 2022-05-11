@@ -31,7 +31,7 @@ trait _colRelation
 
         elseif($type === 'match')
         {
-            $table = static::tableSegment($keyValue);
+            $table = static::tableSegment($keyValue,'colRelation');
             if(!empty($table) && $table->hasCol($value))
             {
                 $col = $table->col($value);

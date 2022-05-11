@@ -19,7 +19,7 @@ trait _slug
     final public static function structureSegmentSlug(string $type,$value,array &$keyValue,?string $lang=null)
     {
         $return = false;
-        $table = static::tableSegment($keyValue);
+        $table = static::tableSegment($keyValue,'slug');
 
         if(!empty($table))
         {

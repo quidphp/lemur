@@ -31,7 +31,7 @@ trait _primary
 
         elseif($type === 'match')
         {
-            $table = static::tableSegment($keyValue);
+            $table = static::tableSegment($keyValue,'primary');
 
             if(!empty($table) && (is_int($value) || $value instanceof Core\Row | $value instanceof Core\Cell))
             {

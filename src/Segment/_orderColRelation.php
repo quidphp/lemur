@@ -29,7 +29,7 @@ trait _orderColRelation
 
             else
             {
-                $table = static::tableSegment($keyValue);
+                $table = static::tableSegment($keyValue,'orderColRelation');
                 $col = $keyValue['col'] ?? null;
 
                 if(!empty($table) && !empty($col) && $table->hasCol($col))
