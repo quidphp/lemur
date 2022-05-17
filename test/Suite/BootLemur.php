@@ -28,12 +28,13 @@ class BootLemur extends Test\Suite\BootCore
         'assert'=>[
             'namespaces'=>[
                 Lemur::class=>Test\Lemur::class],
-            'frontEnd'=>['front'=>'[vendorFront]','lemur'=>'[vendorLemur]'],
+            'frontEnd'=>['node'=>'[vendorNode]','front'=>'[vendorFront]','lemur'=>'[vendorLemur]'],
             'assertJs'=>true],
         'config'=>[
             Lemur\Col::class=>[
                 'generalExcerpt'=>100]],
         'service'=>[
+            'node'=>[Lemur\Service\Node::class,['test'=>true]],
             'tinymce'=>null,
             'sortable'=>null],
         'compile'=>true,
@@ -65,12 +66,13 @@ class Home extends Lemur\Cms\Home
     protected static array $config = [
         'selectedUri'=>false,
         'jsInit'=>'document.addEventListener("DOMContentLoaded", function() {
+            console.log(Quid);
             const attr = [["data-success-color","data-success"],["data-failure-color","data-failure"]];
             const jsDiv = Quid.Doc.scopedQuery(this,"#javascript");
             if(jsDiv != null)
             {
                 const span = Quid.Ele.scopedQuery(jsDiv,"span:last-child");
-                const index = (Quid.TestSuite() === true)? 0:1;
+                const index = (Quid.TestSuite(Quid.Test) === true)? 0:1;
                 const color = Quid.Ele.getAttr(jsDiv,attr[index][0]);
                 const text = Quid.Ele.getAttr(jsDiv,attr[index][1]);
                 Quid.Ele.setHtml(span,text);
