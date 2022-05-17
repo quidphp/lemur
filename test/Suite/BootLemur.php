@@ -66,7 +66,6 @@ class Home extends Lemur\Cms\Home
     protected static array $config = [
         'selectedUri'=>false,
         'jsInit'=>'document.addEventListener("DOMContentLoaded", function() {
-            console.log(Quid);
             const attr = [["data-success-color","data-success"],["data-failure-color","data-failure"]];
             const jsDiv = Quid.Doc.scopedQuery(this,"#javascript");
             if(jsDiv != null)
