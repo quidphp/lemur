@@ -19,6 +19,7 @@ abstract class Boot extends Core\Boot
         'types'=>['cms'], // ajout cms comme type
         'finderShortcut'=>[ // shortcut pour finder
             'vendorNode'=>'[vendor]/quidphp/node',
+            'vendorBrowser'=>'[vendor]/quidphp/browser',
             'vendorFront'=>'[vendor]/quidphp/front',
             'vendorInclude'=>'[vendor]/quidphp/include',
             'vendorLemur'=>'[vendor]/quidphp/lemur'],
@@ -26,10 +27,6 @@ abstract class Boot extends Core\Boot
             'editor'=>[60]],
 
         'compileJs'=>[
-            'browser'=>[
-                'to'=>'[publicJs]/browser.js',
-                'from'=>[
-                    0=>'[vendorFront]/js/browser']],
             'navigation'=>[
                 'to'=>'[publicJs]/navigation.js',
                 'from'=>[
@@ -50,7 +47,7 @@ abstract class Boot extends Core\Boot
         '@cms'=>[
             'service'=>[
                 'polyfill'=>Service\Polyfill::class,
-                'node'=>Service\Node::class,
+                'browser'=>Service\Browser::class,
                 'sortable'=>Service\Sortable::class,
                 'tinymce'=>Service\TinyMce::class],
             'option'=>[

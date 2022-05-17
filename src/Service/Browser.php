@@ -11,9 +11,9 @@ namespace Quid\Lemur\Service;
 use Quid\Main;
 use Quid\Routing;
 
-// node
-// class to integrate the node javascript library
-class Node extends Main\Service
+// browser
+// class to integrate the quidphp-browser javascript library
+class Browser extends Main\Service
 {
     // trait
     use Routing\_service;
@@ -21,22 +21,22 @@ class Node extends Main\Service
 
     // config
     protected static array $config = [
-        'github'=>'https://github.com/quidphp/node',
+        'github'=>'https://github.com/quidphp/browser',
         'test'=>false,
         'es5'=>true,
         'paths'=>[
             'basename'=>null,
-            'serverFrom'=>'[vendorNode]/dist/%basename%',
+            'serverFrom'=>'[vendorBrowser]/dist/%basename%',
             'serverTo'=>'[publicJs]/%basename%',
             'public'=>'js/%basename%']
     ];
 
 
     // getBasename
-    // retourne le basename du script node
+    // retourne le basename du script browser
     final public function getBasename():string
     {
-        $return = 'node';
+        $return = 'browser';
         $test = $this->getAttr('test');
         $es5 = $this->getAttr('es5');
 
@@ -63,5 +63,5 @@ class Node extends Main\Service
 }
 
 // init
-Node::__init();
+Browser::__init();
 ?>

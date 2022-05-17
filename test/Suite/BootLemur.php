@@ -34,7 +34,7 @@ class BootLemur extends Test\Suite\BootCore
             Lemur\Col::class=>[
                 'generalExcerpt'=>100]],
         'service'=>[
-            'node'=>[Lemur\Service\Node::class,['test'=>true]],
+            'browser'=>[Lemur\Service\Browser::class,['test'=>true]],
             'tinymce'=>null,
             'sortable'=>null],
         'compile'=>true,
@@ -66,6 +66,7 @@ class Home extends Lemur\Cms\Home
     protected static array $config = [
         'selectedUri'=>false,
         'jsInit'=>'document.addEventListener("DOMContentLoaded", function() {
+            console.log(Quid);
             const attr = [["data-success-color","data-success"],["data-failure-color","data-failure"]];
             const jsDiv = Quid.Doc.scopedQuery(this,"#javascript");
             if(jsDiv != null)
