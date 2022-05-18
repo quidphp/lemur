@@ -23,7 +23,7 @@ class Navigation extends Main\Service
     protected static array $config = [
         'github'=>'https://github.com/quidphp/navigation',
         'test'=>false,
-        'es5'=>true,
+        'transpile'=>true,
         'paths'=>[
             'basename'=>null,
             'serverFrom'=>'[vendorNavigation]/dist/%basename%',
@@ -38,13 +38,13 @@ class Navigation extends Main\Service
     {
         $return = 'navigation';
         $test = $this->getAttr('test');
-        $es5 = $this->getAttr('es5');
+        $transpile = $this->getAttr('transpile');
 
         if($test === true)
         $return .= '-test';
 
-        if($es5 === true)
-        $return .= '-es5';
+        if($transpile === false)
+        $return .= '-es';
 
         $return .= '.js';
 
