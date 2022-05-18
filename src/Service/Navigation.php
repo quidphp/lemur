@@ -7,7 +7,7 @@ declare(strict_types=1);
  * License: https://github.com/quidphp/lemur/blob/master/LICENSE
  */
 
-namespace Quid\Lemur\Navigation;
+namespace Quid\Lemur\Service;
 use Quid\Main;
 use Quid\Routing;
 
