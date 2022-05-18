@@ -18,8 +18,9 @@ abstract class Boot extends Core\Boot
     protected static array $config = [
         'types'=>['cms'], // ajout cms comme type
         'finderShortcut'=>[ // shortcut pour finder
-            'vendorNode'=>'[vendor]/quidphp/node',
+            'vendorJavascript'=>'[vendor]/quidphp/javascript',
             'vendorBrowser'=>'[vendor]/quidphp/browser',
+            'vendorNavigation'=>'[vendor]/quidphp/navigation',
             'vendorFront'=>'[vendor]/quidphp/front',
             'vendorInclude'=>'[vendor]/quidphp/include',
             'vendorLemur'=>'[vendor]/quidphp/lemur'],
