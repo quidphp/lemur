@@ -20,7 +20,7 @@
         "quidphp/core": "dev-master",
         "quidphp/javascript": "dev-master",
         "quidphp/browser": "dev-master",
-        "quidphp/javascript": "dev-master",
+        "quidphp/navigation": "dev-master",
         "quidphp/front": "dev-master",
         "quidphp/include": "dev-master",
         "verot/class.upload.php": "^2.0",
