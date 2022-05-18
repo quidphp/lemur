@@ -28,11 +28,6 @@ abstract class Boot extends Core\Boot
             'editor'=>[60]],
 
         'compileJs'=>[
-            'navigation'=>[
-                'to'=>'[publicJs]/navigation.js',
-                'from'=>[
-                    0=>'[vendorFront]/js/import',
-                    1=>'[vendorFront]/js/navigation']],
             'component'=>[
                 'to'=>'[publicJs]/component.js',
                 'from'=>[
@@ -48,7 +43,7 @@ abstract class Boot extends Core\Boot
         '@cms'=>[
             'service'=>[
                 'polyfill'=>Service\Polyfill::class,
-                'browser'=>Service\Browser::class,
+                'navigation'=>Service\Navigation::class,
                 'sortable'=>Service\Sortable::class,
                 'tinymce'=>Service\TinyMce::class],
             'option'=>[

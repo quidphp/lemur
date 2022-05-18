@@ -7,13 +7,13 @@ declare(strict_types=1);
  * License: https://github.com/quidphp/lemur/blob/master/LICENSE
  */
 
-namespace Quid\Lemur\Service;
+namespace Quid\Lemur\Navigation;
 use Quid\Main;
 use Quid\Routing;
 
-// browser
-// class to integrate the quidphp-browser javascript library
-class Browser extends Main\Service
+// navigation
+// class to integrate the quidphp-navigation javascript module
+class Navigation extends Main\Service
 {
     // trait
     use Routing\_service;
@@ -21,22 +21,22 @@ class Browser extends Main\Service
 
     // config
     protected static array $config = [
-        'github'=>'https://github.com/quidphp/browser',
+        'github'=>'https://github.com/quidphp/navigation',
         'test'=>false,
         'es5'=>true,
         'paths'=>[
             'basename'=>null,
-            'serverFrom'=>'[vendorBrowser]/dist/%basename%',
+            'serverFrom'=>'[vendorNavigation]/dist/%basename%',
             'serverTo'=>'[publicJs]/%basename%',
             'public'=>'js/%basename%']
     ];
 
 
     // getBasename
-    // retourne le basename du script browser
+    // retourne le basename du module navigation
     final public function getBasename():string
     {
-        $return = 'browser';
+        $return = 'navigation';
         $test = $this->getAttr('test');
         $es5 = $this->getAttr('es5');
 
@@ -63,5 +63,5 @@ class Browser extends Main\Service
 }
 
 // init
-Browser::__init();
+Navigation::__init();
 ?>
