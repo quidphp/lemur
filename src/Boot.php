@@ -31,8 +31,8 @@ abstract class Boot extends Core\Boot
             'component'=>[
                 'to'=>'[publicJs]/component.js',
                 'from'=>[
-                    0=>'[vendorFront]/js/import',
-                    1=>'[vendorFront]/js/component',
+                    0=>'[vendorFront]/init.js',
+                    1=>'[vendorFront]/js',
                     2=>'[vendorLemur]/js/component']]],
 
         'compileJsOption'=>[
@@ -55,19 +55,19 @@ abstract class Boot extends Core\Boot
                 'cms'=>[
                     'to'=>'[publicCss]/cms.css',
                     'from'=>[
-                        0=>'[vendorFront]/css/include',
-                        1=>'[vendorFront]/css/component',
+                        0=>'[vendorNavigation]/css',
+                        1=>'[vendorFront]/css',
                         2=>'[vendorLemur]/css/cms-component',
                         8=>'[vendorLemur]/css/cms']],
                 'icon'=>[
                     'to'=>'[publicCss]/cms-icon.css',
                     'from'=>[
-                        0=>'[vendorFront]/css/include',
+                        0=>'[vendorNavigation]/css',
                         1=>'[vendorLemur]/css/cms-icon']],
                 'tinymce'=>[
                     'to'=>'[publicCss]/cms-tinymce.css',
                     'from'=>[
-                        0=>'[vendorFront]/css/include',
+                        0=>'[vendorNavigation]/css',
                         1=>'[vendorLemur]/css/cms-component',
                         3=>'[vendorLemur]/css/cms-tinymce']]],
 
@@ -75,7 +75,7 @@ abstract class Boot extends Core\Boot
                 'cms'=>[
                     'to'=>'[publicJs]/cms.js',
                     'from'=>[
-                        0=>'[vendorFront]/js/import',
+                        0=>'[vendorFront]/init.js',
                         1=>'[vendorLemur]/js/cms']]]]
     ];
 

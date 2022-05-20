@@ -28,7 +28,7 @@ class BootLemur extends Test\Suite\BootCore
         'assert'=>[
             'namespaces'=>[
                 Lemur::class=>Test\Lemur::class],
-            'frontEnd'=>['node'=>'[vendorNode]','front'=>'[vendorFront]','lemur'=>'[vendorLemur]'],
+            'frontEnd'=>['javascript'=>'[vendorJavascript]','browser'=>'[vendorBrowser]','navigation'=>'[vendorNavigation]','front'=>'[vendorFront]','lemur'=>'[vendorLemur]'],
             'assertJs'=>true],
         'config'=>[
             Lemur\Col::class=>[
@@ -44,7 +44,7 @@ class BootLemur extends Test\Suite\BootCore
             'test'=>[
                 'to'=>'[publicJs]/test.js',
                 'from'=>[
-                    0=>'[vendorFront]/js/import',
+                    0=>'[vendorFront]/js/_init.js',
                     1=>'[vendorFront]/js/test']]]
     ];
 }
