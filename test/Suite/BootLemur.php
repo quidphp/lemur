@@ -35,7 +35,7 @@ class BootLemur extends Test\Suite\BootCore
             Lemur\Col::class=>[
                 'generalExcerpt'=>100]],
         'service'=>[
-            'browser'=>[Lemur\Service\Navigation::class,['test'=>true]],
+            'navigation'=>[Lemur\Service\Navigation::class,['test'=>true]],
             'tinymce'=>null,
             'sortable'=>null],
         'compile'=>true,
