@@ -29,6 +29,7 @@ class BootLemur extends Test\Suite\BootCore
             'namespaces'=>[
                 Lemur::class=>Test\Lemur::class],
             'frontEnd'=>['javascript'=>'[vendorJavascript]','browser'=>'[vendorBrowser]','navigation'=>'[vendorNavigation]','front'=>'[vendorFront]','lemur'=>'[vendorLemur]'],
+            'frontEndWithPhp'=>['lemur'=>true],
             'assertJs'=>true],
         'config'=>[
             Lemur\Col::class=>[
