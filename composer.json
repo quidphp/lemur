@@ -13,10 +13,10 @@
     }],
     "require": {
         "php": ">=8.1.0",
-        "quidphp/navigation": "dev-master",
-        "quidphp/front": "dev-master",
-        "quidphp/include": "dev-master",
-        "quidphp/core": "dev-master",
+        "quidphp/core": "5.31.*",
+        "quidphp/navigation": "5.31.*",
+        "quidphp/front": "5.31.*",
+        "quidphp/include": "5.31.*",
         "tinymce/tinymce": "^6.0"
     },
     "autoload": {

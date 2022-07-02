@@ -12,7 +12,7 @@
 **QuidPHP/Lemur** is available as an open-source software under the [MIT license](LICENSE).
 
 ## Documentation
-**QuidPHP/Lemur** documentation is being written. Once ready, it will be available at [QuidPHP/Docs](https://github.com/quidphp/docs).
+**QuidPHP/Lemur** documentation is available at [QuidPHP/Docs](https://github.com/quidphp/docs).
 
 ## Installation
 **QuidPHP/Lemur** can be easily installed with [Composer](https://getcomposer.org). It is available on [Packagist](https://packagist.org/packages/quidphp/lemur).
@@ -23,30 +23,22 @@ Once installed, the **Quid\Lemur** namespace will be available within your PHP a
 
 ## Requirement
 **QuidPHP/Lemur** requires the following:
-- PHP 7.4, 8.0 or 8.1
-- Mysql (>= 8.0) or MariaDB (>= 10.5) database
-- All other requirements specified in [quidphp/core](https://github.com/quidphp/core)
-- Minimal browser: Internet Explorer 11
+- PHP 8.1
+- All requirements of [quidphp/core](https://github.com/quidphp/core)
+- Any modern browser (not Internet Explorer)
 
 ## Dependency
 **QuidPHP/Lemur** has the following dependencies:
-- [quidphp/base](https://github.com/quidphp/base) - Quid\Base - PHP library that provides a set of low-level static methods
-- [quidphp/main](https://github.com/quidphp/main) - Quid\Main - PHP library that provides a set of base objects and collections 
-- [quidphp/orm](https://github.com/quidphp/orm) - Quid\Orm - PHP library that provides database access and a comprehensive ORM
-- [quidphp/routing](https://github.com/quidphp/routing) - Quid\Routing - PHP library that provides a route matching and triggering procedure
 - [quidphp/core](https://github.com/quidphp/core) - Quid\Core - PHP library that provides an extendable platform to create dynamic applications
-- [quidphp/front](https://github.com/quidphp/front) - Quid\Front - QuidPHP JavaScript and CSS front-end assets
-- [quidphp/include](https://github.com/quidphp/include) - Quid\Include - Contains third-party front-end scripts
-- [verot/class.upload.php](https://github.com/verot/class.upload.php) - Verot\Upload - A popular PHP class used for resizing images
-- [phpmailer/phpmailer](https://github.com/phpmailer/phpmailer) - PHPMailer\PHPMailer - The classic email sending library for PHP
-- [tedivm/jshrink](https://github.com/tedious/JShrink) - JShrink - Javascript Minifier built in PHP
-- [scssphp/scssphp](https://github.com/scssphp/scssphp) - ScssPhp\ScssPhp - SCSS compiler written in PHP
+- [quidphp/navigation](https://github.com/quidphp/navigation) - Javascript module for navigating a website without reloading
+- [quidphp/front](https://github.com/quidphp/front) - JavaScript and CSS assets for basic components
+- [quidphp/include](https://github.com/quidphp/include) - Contains third-party front-end scripts
 - [tinymce/tinymce](https://github.com/tinymce/tinymce) - Tinymce - The world's best JavaScript library for rich text editing
 
 All dependencies will be resolved by using the [Composer](https://getcomposer.org) installation process.
 
 ## Comment
-**QuidPHP/Lemur** code is commented and all methods are explained. However, most of the comments are written in French.
+**QuidPHP/Lemur** code is commented and all methods are explained (in French).
 
 ## PHP
 

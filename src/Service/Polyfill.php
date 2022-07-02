@@ -25,7 +25,7 @@ class Polyfill extends Main\Service
         'polyfill.io'=>'https://polyfill.io/v3/polyfill.js?version=3.110.1&features=URL%2Csmoothscroll&flags=gated%2Calways',
         'paths'=>[
             'basename'=>'polyfill.js',
-            'serverFrom'=>'[vendorInclude]/js/%basename%',
+            'serverFrom'=>'[vendorInclude]/src/%basename%',
             'serverTo'=>'[publicJs]/%basename%',
             'public'=>'js/%basename%']
     ];

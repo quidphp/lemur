@@ -45,8 +45,8 @@ class BootLemur extends Test\Suite\BootCore
             'test'=>[
                 'to'=>'[publicJs]/test.js',
                 'from'=>[
-                    0=>'[vendorFront]/js/_init.js',
-                    1=>'[vendorFront]/js/test']]]
+                    0=>'[vendorFront]/init.js',
+                    1=>'[vendorFront]/test']]]
     ];
 }
 }
