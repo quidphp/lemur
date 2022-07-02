@@ -52,14 +52,14 @@ All dependencies will be resolved by using the [Composer](https://getcomposer.or
 - *Coding*: No curly braces are used in a IF statement if the condition can be resolved in only one statement.
 
 ### Overview
-**QuidPHP/Lemur** contains 203 classes and traits. Here is an overview:
+**QuidPHP/Lemur** contains 205 classes and traits. Here is an overview:
 - [Boot](src/Boot.php) - Extended abstract class for the object that bootstraps the cms
 - [Cell](src/Cell.php) - Extended class to represent an existing cell within a row
     - [Crypt](src/Cell/Crypt.php) - Extended class for a cell with crypted data
     - [Files](src/Cell/Files.php) - Abstract class extended by the media and medias cells
     - [JsonArray](src/Cell/JsonArray.php) - Class to manage a cell containing a json array
-    - [JsonArrayRelation](src/Cell/JsonArrayRelation.php) - Class to manage a cell containing a relation value to another cell containing a json array
     - [JsonExport](src/Cell/JsonExport.php) - Class for a cell that contains json which should be exported (similar to var_export)
+    - [JsonRelation](src/Cell/JsonRelation.php) - Class to manage a cell containing a relation value to another cell containing a json array
     - [Media](src/Cell/Media.php) - Class to work with a cell containing a value which is a link to a file
     - [Medias](src/Cell/Medias.php) - Class to manage a cell containing a value which is a link to many files
     - [Money](src/Cell/Money.php) - Class to manage a cell managing money (money formatted string)
@@ -157,9 +157,10 @@ All dependencies will be resolved by using the [Composer](https://getcomposer.or
     - [Files](src/Col/Files.php) - Extended abstract class extended by the media and medias cols
     - [Fragment](src/Col/Fragment.php) - Class for a column which contains URI fragments
     - [IntegerRange](src/Col/IntegerRange.php) - Class for an integer column that supports range
-    - [JsonArray](src/Col/JsonArray.php) - Class for a column which offers a special input for json values
-    - [JsonArrayRelation](src/Col/JsonArrayRelation.php) - Class to manage a column containing a relation value to another column which is a jsonArray
+    - [JsonArray](src/Col/JsonArray.php) - Class for a column which offers a simple input for json values
     - [JsonExport](src/Col/JsonExport.php) - Class for a column that contains json which should be exported
+    - [JsonModel](src/Col/JsonModel.php) - Class for a column which offers a configurable complex input for json values
+    - [JsonRelation](src/Col/JsonRelation.php) - Class to manage a column containing a relation value to another column which is a jsonArray
     - [Media](src/Col/Media.php) - Extended class to work with a column containing a value which is a link to a file
     - [Medias](src/Col/Medias.php) - Class to work with a column containing a value which is a link to many files
     - [Money](src/Col/Money.php) - Class for a column managing money (money formatted string)
@@ -181,7 +182,7 @@ All dependencies will be resolved by using the [Composer](https://getcomposer.or
     - [UserPassword](src/Col/UserPassword.php) - Class for the column which manages the active field for the user row
     - [UserRole](src/Col/UserRole.php) - Class for the column which manages the role field for the user row
     - [Video](src/Col/Video.php) - Extended abstract class for a column containing a video from a third-party service
-    - [_jsonRelation](src/Col/_jsonRelation.php) - Trait with common methods for jsonArrayRelation columns
+    - [_jsonRelation](src/Col/_jsonRelation.php) - Trait with common methods for jsonRelation columns
 - [Db](src/Db.php) - Extended class used to query the database, adds cms logic
 - [Lang](src/Lang)
     - [En](src/Lang/En.php) - English language content used by this namespace
@@ -255,6 +256,7 @@ All dependencies will be resolved by using the [Composer](https://getcomposer.or
     - [_timestampMonth](src/Segment/_timestampMonth.php) - Trait to work with a route segment which contains the timestamp of a month
     - [_yes](src/Segment/_yes.php) - Trait that issues a method to deal with yes route segment
 - [Service](src/Service)
+    - [Navigation](src/Service/Navigation.php) - Class to integrate the quidphp-navigation javascript module
     - [Polyfill](src/Service/Polyfill.php) - Class to integrate javascript polyfills
     - [Sortable](src/Service/Sortable.php) - Class to integrate the sortable javascript library
     - [TinyMce](src/Service/TinyMce.php) - Class that provides a method to integrate the Tinymce WYSIWYG editor
@@ -275,35 +277,34 @@ All dependencies will be resolved by using the [Composer](https://getcomposer.or
 
 **QuidPHP/Lemur** testsuite can be run by creating a new [QuidPHP/Assert](https://github.com/quidphp/assert) project.
 
-## JS
+## JavaScript
 
 ### Convention
 - *ES5*: All code is compatible with ES5, there is no need for any JavaScript transpiler.
 - *Strict*: All generated files declare *use strict* on the first line.
-- *IE11*: The minimum compatible browser is IE11. Older browsers will fail non-gracefully.
 - *Compiling*: The concatenation of the JS files is done on the PHP side.
 
 ### Overview
 **QuidPHP/Lemur** contains 17 JavaScript files. Here is an overview:
 - [cms](js/cms)
-    - [_lemur.js](js/cms/_lemur.js) - Script of common behaviours for all pages of the CMS
-    - [colsSorter.js](js/cms/colsSorter.js) - Script for the col sorter component of the general page of the CMS
-    - [com.js](js/cms/com.js) - Script of behaviours for the communication component of the CMS
-    - [generalComponents.js](js/cms/generalComponents.js) - Component that manages the components on the general page
-    - [homeFeed.js](js/cms/homeFeed.js) - Script for feed component with a filter on the CMS home page
-    - [inputFiles.js](js/cms/inputFiles.js) - Script with logic for the file upload component of the CMS
-    - [quickEdit.js](js/cms/quickEdit.js) - Script for the quickEdit component in the general page of the CMS
-    - [rowsChecker.js](js/cms/rowsChecker.js) - Script for the rows checker component in the general page of the CMS
-    - [specificComponents.js](js/cms/specificComponents.js) - Component that manages the panel on the specific form page of the CMS
-    - [specificMulti.js](js/cms/specificMulti.js) - Component that manages the multi modification form
-    - [specificNav.js](js/cms/specificNav.js) - Component that manages the navigation box on the specific form page of the CMS
-    - [specificPanel.js](js/cms/specificPanel.js) - Component that manages the panel on the specific form page of the CMS
-    - [textareaExtra.js](js/cms/textareaExtra.js) - Script for a component to search and insert content within a textarea, with support for tinymce
+    - [_lemur](js/cms/_lemur.js) - Script of common behaviours for all pages of the CMS
+    - [colsSorter](js/cms/colsSorter.js) - Script for the col sorter component of the general page of the CMS
+    - [com](js/cms/com.js) - Script of behaviours for the communication component of the CMS
+    - [generalComponents](js/cms/generalComponents.js) - Component that manages the components on the general page
+    - [homeFeed](js/cms/homeFeed.js) - Script for feed component with a filter on the CMS home page
+    - [inputFiles](js/cms/inputFiles.js) - Script with logic for the file upload component of the CMS
+    - [quickEdit](js/cms/quickEdit.js) - Script for the quickEdit component in the general page of the CMS
+    - [rowsChecker](js/cms/rowsChecker.js) - Script for the rows checker component in the general page of the CMS
+    - [specificComponents](js/cms/specificComponents.js) - Component that manages the panel on the specific form page of the CMS
+    - [specificMulti](js/cms/specificMulti.js) - Component that manages the multi modification form
+    - [specificNav](js/cms/specificNav.js) - Component that manages the navigation box on the specific form page of the CMS
+    - [specificPanel](js/cms/specificPanel.js) - Component that manages the panel on the specific form page of the CMS
+    - [textareaExtra](js/cms/textareaExtra.js) - Script for a component to search and insert content within a textarea, with support for tinymce
 - [component](js/component)
-    - [addRemove.js](js/component/addRemove.js) - Script of behaviours for an add-remove input component
-    - [enumSet.js](js/component/enumSet.js) - Script for an enumSet component (search in a relation)
-    - [sorter.js](js/component/sorter.js) - Script with drag and drop related sorting functionnalities, uses Sortable
-    - [tinymce.js](js/component/tinymce.js) - Component to manage a Tinymce wysiwyg input
+    - [addRemove](js/component/addRemove.js) - Script of behaviours for an add-remove input component
+    - [enumSet](js/component/enumSet.js) - Script for an enumSet component (search in a relation)
+    - [sorter](js/component/sorter.js) - Script with drag and drop related sorting functionnalities, uses Sortable
+    - [tinymce](js/component/tinymce.js) - Component to manage a Tinymce wysiwyg input
 	
 ## CSS
 
@@ -312,44 +313,45 @@ All dependencies will be resolved by using the [Composer](https://getcomposer.or
 - *Compiling*: The compiling and concatenation of the SCSS files is done on the PHP side.
 
 ### Overview
-**QuidPHP/Lemur** contains 36 SCSS stylesheets. Here is an overview:
+**QuidPHP/Lemur** contains 37 SCSS stylesheets. Here is an overview:
 - [cms](css/cms)
-    - [_form.scss](css/cms/_form.scss) - Stylesheet with various form-related mixins
-    - [_include.scss](css/cms/_include.scss) - Stylesheet with various global mixins
-    - [cms.scss](css/cms/cms.scss) - Stylesheet containing the root styling rules as well as common classes for the CMS
-    - [general.scss](css/cms/general.scss) - Stylesheet for the general navigation page of the CMS
-    - [home.scss](css/cms/home.scss) - Stylesheet for the home route of the CMS
-    - [interface.scss](css/cms/interface.scss) - Stylesheet for the main interface of the CMS
-    - [modal.scss](css/cms/modal.scss) - Stylesheet for the modal and the modal routes
-    - [nobody.scss](css/cms/nobody.scss) - Stylesheet for the nobody routes of the CMS
-    - [specific.scss](css/cms/specific.scss) - Stylesheet for the specific form page of the CMS
+    - [_form](css/cms/_form.scss) - Stylesheet with various form-related mixins
+    - [_include](css/cms/_include.scss) - Stylesheet with various global mixins
+    - [cms](css/cms/cms.scss) - Stylesheet containing the root styling rules as well as common classes for the CMS
+    - [general](css/cms/general.scss) - Stylesheet for the general navigation page of the CMS
+    - [home](css/cms/home.scss) - Stylesheet for the home route of the CMS
+    - [interface](css/cms/interface.scss) - Stylesheet for the main interface of the CMS
+    - [modal](css/cms/modal.scss) - Stylesheet for the modal and the modal routes
+    - [nobody](css/cms/nobody.scss) - Stylesheet for the nobody routes of the CMS
+    - [specific](css/cms/specific.scss) - Stylesheet for the specific form page of the CMS
 - [cms-component](css/cms-component)
-    - [_include.scss](css/cms-component/_include.scss) - Stylesheet for various simple components of the CMS
-    - [addRemove.scss](css/cms-component/addRemove.scss) - Stylesheet for the addRemove form component of the CMS
-    - [block.scss](css/cms-component/block.scss) - Stylesheet for the block component of the CMS
-    - [burger.scss](css/cms-component/burger.scss) - Stylesheet for the burger component of the CMS
-    - [calendar.scss](css/cms-component/calendar.scss) - Stylesheet for the calendar component of the cms
-    - [clickOpen.scss](css/cms-component/clickOpen.scss) - Stylesheet related to clickOpen components for the CMS
-    - [colsSorter.scss](css/cms-component/colsSorter.scss) - Stylesheet for the colsSorter component of the CMS
-    - [com.scss](css/cms-component/com.scss) - Stylesheet for the communication component of the CMS
-    - [enumSet.scss](css/cms-component/enumSet.scss) - Stylesheet for the enumSet component of the CMS
-    - [fakeSelect.scss](css/cms-component/fakeSelect.scss) - Stylesheet for the fakeSelect component of the CMS
-    - [filter.scss](css/cms-component/filter.scss) - Stylesheet for the filter component of the CMS
-    - [homeFeed.scss](css/cms-component/homeFeed.scss) - Stylesheet for the home feed component of the CMS
-    - [inputCalendar.scss](css/cms-component/inputCalendar.scss) - Stylesheet for the input calendar of the CMS
-    - [inputFiles.scss](css/cms-component/inputFiles.scss) - Stylesheet for the files upload inputs component of the CMS
-    - [inputNumericRange.scss](css/cms-component/inputNumericRange.scss) - Styles for the integerRange component of the CMS
-    - [mainNav.scss](css/cms-component/mainNav.scss) - Stylesheet for the main navigation component of the CMS
-    - [modal.scss](css/cms-component/modal.scss) - Stylesheet for the modal component of the CMS
-    - [quickEdit.scss](css/cms-component/quickEdit.scss) - Stylesheet for the quickEdit component of the CMS
-    - [rowsChecker.scss](css/cms-component/rowsChecker.scss) - Stylesheet for the rowsChecker component of the CMS
-    - [searchAutoInfo.scss](css/cms-component/searchAutoInfo.scss) - Stylesheet for the main search component of the CMS
-    - [searchSlide.scss](css/cms-component/searchSlide.scss) - Mixin for the searchSlide component of the CMS
-    - [specificNav.scss](css/cms-component/specificNav.scss) - Stylesheet for the speciic nav component of the CMS
-    - [textareaExtra.scss](css/cms-component/textareaExtra.scss) - Stylesheet for the textarea component of the CMS (with relation inserts)
-    - [tooltip.scss](css/cms-component/tooltip.scss) - Stylesheet for the tooltip component of the CMS
+    - [_include](css/cms-component/_include.scss) - Stylesheet for various simple components of the CMS
+    - [addRemove](css/cms-component/addRemove.scss) - Stylesheet for the addRemove form component of the CMS
+    - [block](css/cms-component/block.scss) - Stylesheet for the block component of the CMS
+    - [burger](css/cms-component/burger.scss) - Stylesheet for the burger component of the CMS
+    - [calendar](css/cms-component/calendar.scss) - Stylesheet for the calendar component of the cms
+    - [clickOpen](css/cms-component/clickOpen.scss) - Stylesheet related to clickOpen components for the CMS
+    - [colsSorter](css/cms-component/colsSorter.scss) - Stylesheet for the colsSorter component of the CMS
+    - [com](css/cms-component/com.scss) - Stylesheet for the communication component of the CMS
+    - [enumSet](css/cms-component/enumSet.scss) - Stylesheet for the enumSet component of the CMS
+    - [fakeSelect](css/cms-component/fakeSelect.scss) - Stylesheet for the fakeSelect component of the CMS
+    - [filter](css/cms-component/filter.scss) - Stylesheet for the filter component of the CMS
+    - [homeFeed](css/cms-component/homeFeed.scss) - Stylesheet for the home feed component of the CMS
+    - [inputCalendar](css/cms-component/inputCalendar.scss) - Stylesheet for the input calendar of the CMS
+    - [inputFiles](css/cms-component/inputFiles.scss) - Stylesheet for the files upload inputs component of the CMS
+    - [inputNumericRange](css/cms-component/inputNumericRange.scss) - Styles for the integerRange component of the CMS
+    - [jsonArray](css/cms-component/jsonArray.scss) - Mixin pour le champ jsonRelation dans le formulaire
+    - [mainNav](css/cms-component/mainNav.scss) - Stylesheet for the main navigation component of the CMS
+    - [modal](css/cms-component/modal.scss) - Stylesheet for the modal component of the CMS
+    - [quickEdit](css/cms-component/quickEdit.scss) - Stylesheet for the quickEdit component of the CMS
+    - [rowsChecker](css/cms-component/rowsChecker.scss) - Stylesheet for the rowsChecker component of the CMS
+    - [searchAutoInfo](css/cms-component/searchAutoInfo.scss) - Stylesheet for the main search component of the CMS
+    - [searchSlide](css/cms-component/searchSlide.scss) - Mixin for the searchSlide component of the CMS
+    - [specificNav](css/cms-component/specificNav.scss) - Stylesheet for the speciic nav component of the CMS
+    - [textareaExtra](css/cms-component/textareaExtra.scss) - Stylesheet for the textarea component of the CMS (with relation inserts)
+    - [tooltip](css/cms-component/tooltip.scss) - Stylesheet for the tooltip component of the CMS
 - [cms-icon](css/cms-icon)
-    - [base64.scss](css/cms-icon/base64.scss) - Stylesheet containing all CMS icons in base64
-    - [icon.scss](css/cms-icon/icon.scss) - Stylesheet generating rules for the base64 icons
+    - [base64](css/cms-icon/base64.scss) - Stylesheet containing all CMS icons in base64
+    - [icon](css/cms-icon/icon.scss) - Stylesheet generating rules for the base64 icons
 - [cms-tinymce](css/cms-tinymce)
-    - [tinymce.scss](css/cms-tinymce/tinymce.scss) - Stylesheet providing default styling for the Tinymce wysiwyg editor
+    - [tinymce](css/cms-tinymce/tinymce.scss) - Stylesheet providing default styling for the Tinymce wysiwyg editor
