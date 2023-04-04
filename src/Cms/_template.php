@@ -173,7 +173,7 @@ trait _template
             if($this->hasPermission('sessionInfo'))
             {
                 $route = PopupSession::make();
-                $popup = ($route->canTrigger());
+                $popup = $route->canTrigger();
                 $attr = ['popup-trigger'];
                 $html = '';
 

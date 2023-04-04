@@ -53,7 +53,7 @@ abstract class Files extends Core\Cell\Files
         if(!empty($file))
         {
             $hasVersion = $this->hasVersion();
-            $isImage = ($file instanceof Main\File\Image);
+            $isImage = $file instanceof Main\File\Image;
             $value = $file->basename();
             $value = Base\Str::excerpt(35,$value);
             $legendLink = null;
@@ -115,7 +115,7 @@ abstract class Files extends Core\Cell\Files
             $row = $this->row();
             $rowName = $row->cellName()->value();
             $name = $file->basename();
-            $isImage = ($file instanceof Main\File\Image);
+            $isImage = $file instanceof Main\File\Image;
             $uri = $file->pathToUri();
 
             if($isImage === false || !empty($uri))

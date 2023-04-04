@@ -54,7 +54,7 @@ class SpecificRelation extends Core\RouteAlias
             if($relation->isRelationTable())
             {
                 $relationTable = $relation->relationTable();
-                $return = ($relationTable->hasPermission('relation','specificRelation'));
+                $return = $relationTable->hasPermission('relation','specificRelation');
             }
 
             else

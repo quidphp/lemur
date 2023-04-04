@@ -50,7 +50,7 @@ class Range extends Core\Col\JsonAlias
             $return = 'range';
 
             elseif($context === 'validate')
-            $return = (Base\Arr::isRange($this->get($value)));
+            $return = Base\Arr::isRange($this->get($value));
 
             return $return;
         };

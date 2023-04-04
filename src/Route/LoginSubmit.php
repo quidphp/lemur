@@ -125,7 +125,7 @@ abstract class LoginSubmit extends Core\RouteAlias
         $request = $this->request();
         $return['credential'] = (string) $request->get('username');
         $return['password'] = $this->password();
-        $return['remember'] = ($request->exists('remember'));
+        $return['remember'] = $request->exists('remember');
         $return['redirect'] = $request->get('redirect');
 
         return $return;

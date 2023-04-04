@@ -266,7 +266,7 @@ class Slug extends Core\ColAlias
             if(!empty($cell))
             $notIn = $cell->rowPrimary();
 
-            $return = ($this->isUnique($value,$notIn));
+            $return = $this->isUnique($value,$notIn);
         }
 
         return $return;

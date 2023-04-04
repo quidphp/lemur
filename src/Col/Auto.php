@@ -98,7 +98,7 @@ class Auto extends Core\ColAlias
             $value = Base\Arr::trimClean($value);
 
             if($hasSegment === true)
-            $value = ((count($value) === count($cols)))? Base\Segment::sets(null,$value,$segment):null;
+            $value = (count($value) === count($cols))? Base\Segment::sets(null,$value,$segment):null;
 
             else
             $value = (!empty($value))? current($value):null;

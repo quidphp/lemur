@@ -185,7 +185,7 @@ trait _generalRelation
         $label = $this->relationExcerptOutput($label,$key);
 
         $label = Html::div($label,'label-content');
-        $active = (in_array($key,$selected,true));
+        $active = in_array($key,$selected,true);
         $filter = $current;
 
         $filter[$name] = [$key];

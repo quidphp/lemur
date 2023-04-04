@@ -58,7 +58,7 @@ class GeneralRelation extends Core\RouteAlias
             if($relation->isRelationTable())
             {
                 $relationTable = $relation->relationTable();
-                $return = ($relationTable->hasPermission('relation','generalRelation'));
+                $return = $relationTable->hasPermission('relation','generalRelation');
             }
         }
 
