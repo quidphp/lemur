@@ -684,7 +684,7 @@ class Fr extends Core\Lang\Fr
                         'thumbnail'=>"Image miniature pour représenter l'élément",
                         'icon'=>"Icône pour représenter l'élément",
                         'background'=>"Lie une image d'arrière-plan à l'élément",
-                        'video'=>"Lie une vidéo au à l'élément",
+                        'video'=>"Lie une vidéo à l'élément",
                         'userAdd'=>"Utilisateur qui a ajouté l'élément",
                         'dateAdd'=>"Date et heure de l'ajout de l'élément",
                         'userModify'=>"Utilisateur qui a fait la dernière modification sur l'élément",
