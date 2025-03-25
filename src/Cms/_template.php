@@ -417,7 +417,7 @@ trait _template
 
     // footer
     // génère le footer pour toutes les pages du cms
-    final protected function footer():string
+    protected function footer():string
     {
         $r = '';
         $boot = static::boot();
